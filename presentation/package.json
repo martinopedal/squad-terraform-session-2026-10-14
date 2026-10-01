@@ -1,0 +1,22 @@
+{
+  "name": "copilot-squad-terraform-presentation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline Reveal.js conference presentation for Martin and Haflidi.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "serve": "python -m http.server 4173 --bind 127.0.0.1 --directory ..",
+    "test": "node --test --test-reporter=spec tests\\media-policy.test.mjs && .venv\\Scripts\\python.exe tests\\check_deck.py"
+  },
+  "dependencies": {
+    "marked": "15.0.12",
+    "reveal.js": "5.2.1"
+  },
+  "devDependencies": {
+    "axe-core": "4.10.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

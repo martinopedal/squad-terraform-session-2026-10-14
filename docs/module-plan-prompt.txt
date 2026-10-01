@@ -1,0 +1,13 @@
+@docs/module-contract.md @QUALITY.md @AGENTS.md
+
+Use the Squad agent in native Plan mode to plan the public reusable Terraform module described in the contract.
+
+Read only this public repository and public official sources. Do not inspect parent directories, personal files, private organization configuration, cloud accounts, credentials, or Terraform state.
+
+Do not create or edit Terraform code yet. Do not deploy, commit, push, import resources, enable autopilot, or approve tools automatically.
+
+Give a short implementation plan with exact files, one runtime-code owner, an independent test/review handoff, tests and expected evidence, and unresolved service-side prerequisites. Keep the child module separate from the caller's providers/backend and from Kubernetes application resources.
+
+The user wants public source with the presentation and a separately versioned module. Real deployment values and state stay in the approved private ALZ integration. The intended target is a fresh private Corp cluster, not an Online or public-network fallback.
+
+After presenting the plan, wait for human approval before implementation. The session will record the genuine CLI interaction; do not simulate commands or successful results.

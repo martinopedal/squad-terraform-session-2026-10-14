@@ -51,3 +51,24 @@ test-results/
 playwright-report/
 screenshots/
 qa/
+
+# Private working material must not be copied into the public repository.
+workstreams/
+archive/
+demo/policy-evidence/
+*.tfbackend
+tfplan
+takes/
+.squad/.first-run
+.squad/memory/audit.jsonl
+.squad/memory/index.json
+# Squad: ignore runtime state (logs, inbox, sessions)
+# Note: .squad/casting/* is identity and MUST be committed to main, not ignored
+.squad/orchestration-log/
+.squad/log/
+.squad/decisions/inbox/
+.squad/sessions/
+.squad/.scratch/
+.squad/.cache/
+# Squad: SubSquad activation file (local to this machine)
+.squad-workstream
