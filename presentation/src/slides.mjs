@@ -39,12 +39,12 @@ export const slides = [
   {
     id: 's03-baseline', title: 'Start with the code you have.', time: '04:00-05:00',
     layer: 'Terraform / source evidence', kind: 'baseline', sources: [upstream],
-    tip: 'Separate inherited source, preparation, and the new change.',
+    tip: 'Disclose the source, qualified reference, clean checkpoint, and recorded change.',
     content: `<div class="baseline-facts"><div class="source-pin"><span class="eyebrow">Inherited public source</span><strong>e9a9a48</strong></div>
       <div class="stat"><strong>10</strong><span>existing negative test cases<br><em>Not a passing test claim.</em></span></div>
       <p class="supporting">Root declarations overlap.<br>An active provider sits outside the mocks.</p></div>
       <div>${code('sku = {\n  name = "Base"\n  tier = "Standard"\n}', 'Inherited resource excerpt')}
-      <p class="code-caption">Documentation describes Automatic.<br>The discrepancy is observed, not AI-attributed.</p></div>`
+      <p class="code-caption">Inherited mismatch, not AI-attributed.<br>Qualify first; disclose the later clean run.</p></div>`
   },
   {
     id: 's04-layers', title: 'One workflow. Three distinct layers.', time: '05:00-08:00',
@@ -255,7 +255,7 @@ export function renderSection(slide, index, noteHTML, evidence, media) {
     : isAppendix ? 'Answer from the verified reference, then return to Q&A. Do not start an unplanned live demonstration.'
       : 'Use the static slide and its spoken explanation. Keep any unresolved evidence labeled pending.';
   const captureRule = slide.kind === 'demo'
-    ? '<p><strong>Capture surface:</strong> Genuine Copilot CLI with Squad selected, standalone or in a real integrated terminal. Recording automation is external, off-screen tooling, not a Squad feature.</p>'
+    ? '<p><strong>Capture surface:</strong> Genuine Copilot CLI with Squad selected, standalone or in a real integrated terminal. Recording automation is external, off-screen tooling, not a Squad feature. Qualify code before filming, then capture genuine new execution from a disclosed clean checkpoint. Do not present preparation as filmed first-ever implementation.</p>'
     : '';
   return `<section id="${slide.id}" class="slide-${slide.kind}" role="region" aria-labelledby="${slide.id}-title" data-stage-time="${slide.time}" ${isAppendix ? 'data-appendix="true"' : ''}>
     <div class="slide-content">

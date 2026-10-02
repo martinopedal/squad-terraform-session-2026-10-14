@@ -53,6 +53,7 @@ def main():
         "failedRequests": [],
         "expectedFixtureCancellations": [],
         "slides": [],
+        "overview": [],
         "checks": {},
         "failures": [],
         "limits": [
@@ -147,6 +148,20 @@ def main():
                     !m.available || (m.reviewed === true && m.selectedAgent === 'squad' &&
                     ['native-copilot-cli','integrated-terminal'].includes(m.sourceSurface)))
             """))
+            baseline_notes = page.locator("#s03-baseline aside.notes").text_content()
+            check("disclosed clean-run narration", all(phrase in baseline_notes for phrase in
+                  ["module now exists", "passed local qualification before filming", "disclosed clean checkpoint", "first implementation"]))
+            check("all chapter notes distinguish preparation from footage", page.evaluate("""() =>
+                [...document.querySelectorAll('.slide-demo aside.notes')].every(n =>
+                    n.textContent.includes('Qualify code before filming') &&
+                    n.textContent.includes('genuine new execution from a disclosed clean checkpoint'))
+            """))
+            check("local qualification is separate from pending Azure evidence",
+                  page.locator("#s15-proof .status").all_text_contents() == ["Inspected", "52 passed", "2 passed", "Pending", "Pending"])
+            check("published module revision is bound to the evidence",
+                  page.evaluate("window.presentationBuild.moduleRevision") == "883795608d7c873e7b47b3acd375e0b58819458a")
+            license_text = (ROOT / "src" / "third-party-licenses.txt").read_text(encoding="utf-8").strip()
+            check("complete bundled licenses preserved", license_text in (ROOT / "index.html").read_text(encoding="utf-8"))
             page.add_script_tag(path=str(ROOT / "node_modules" / "axe-core" / "axe.min.js"))
 
             slide_info = page.locator(".slides > section").evaluate_all("""nodes => nodes.map(s => ({
@@ -208,6 +223,68 @@ def main():
                         if overflow or violations:
                             report["failures"].append(f"{slide['id']} {width} f{fragment}: overflow={len(overflow)} a11y={len(violations)}")
                 print(f"Captured {width}x{height}: {len(slide_info)} slides and every fragment.", flush=True)
+
+            normal_slide_protection = """() => {
+                const current = Reveal.getCurrentSlide();
+                return !Reveal.isOverview() && [...document.querySelectorAll('.slides > section')].every(slide =>
+                    !slide.querySelector('.slide-content').inert &&
+                    (slide === current
+                        ? !slide.inert && !slide.hidden && slide.getAttribute('aria-hidden') !== 'true'
+                        : slide.inert && slide.hidden && slide.getAttribute('aria-hidden') === 'true'));
+            }"""
+            for width, height in [(1280, 720), (1920, 1080)]:
+                label = f"{width}x{height}"
+                page.set_viewport_size({"width": width, "height": height})
+                page.goto(f"{url}?overview-regression={width}#/s04-layers", wait_until="networkidle")
+                page.wait_for_function("() => Reveal.isReady() && Reveal.getCurrentSlide().id === 's04-layers'")
+                check(f"normal-slide accessibility before overview {label}", page.evaluate(normal_slide_protection))
+                page.keyboard.press("Escape")
+                page.wait_for_function("() => Reveal.isOverview()")
+                thumbnails = page.evaluate("""() => ['s03-baseline', 's05-parallel'].map(id => {
+                    const slide = document.getElementById(id);
+                    const content = slide.querySelector('.slide-content');
+                    const heading = slide.querySelector('h1,h2');
+                    const r = slide.getBoundingClientRect();
+                    const title = heading.getBoundingClientRect();
+                    const style = getComputedStyle(slide);
+                    return {id, width:r.width, height:r.height, display:style.display, opacity:style.opacity,
+                        rendered: r.width > 100 && r.height > 50 && r.left >= 0 && r.right <= innerWidth &&
+                            r.top >= 0 && r.bottom <= innerHeight && title.width > 0 && title.height > 0 &&
+                            style.display !== 'none' && style.visibility === 'visible' && Number(style.opacity) > .99,
+                        sectionInert: slide.inert, contentInert: content.inert,
+                        pointerTarget: document.elementFromPoint(r.x+r.width/2, r.y+r.height/2)?.closest('section')?.id};
+                })""")
+                screenshot = f"overview-{label}.png"
+                page.screenshot(path=str(QA / screenshot))
+                report["overview"].append({"viewport": [width, height], "screenshot": screenshot, "thumbnails": thumbnails})
+                check(f"inactive overview thumbnails visible {label}", all(item["rendered"] for item in thumbnails), thumbnails)
+                check(f"overview surface clickable and controls inert {label}", all(
+                    not item["sectionInert"] and item["contentInert"] and item["pointerTarget"] == item["id"]
+                    for item in thumbnails))
+                check(f"overview keeps unattached media hidden {label}",
+                      page.locator("video:not([hidden])").count() == 0)
+                page.locator("#s05-parallel").click(timeout=1500)
+                page.wait_for_function("() => !Reveal.isOverview() && Reveal.getCurrentSlide().id === 's05-parallel'")
+                check(f"pointer selects inactive overview slide {label}",
+                      page.evaluate("Reveal.getCurrentSlide().id") == "s05-parallel")
+                check(f"accessibility restored after overview click {label}", page.evaluate(normal_slide_protection))
+                page.keyboard.press("Escape")
+                page.wait_for_function("() => Reveal.isOverview()")
+                focus_stays_outside_thumbnails = True
+                for _ in range(6):
+                    page.keyboard.press("Tab")
+                    focus_stays_outside_thumbnails &= page.evaluate(
+                        "() => !document.activeElement.closest('.slides > section')")
+                check(f"overview tab skips thumbnail controls {label}", focus_stays_outside_thumbnails)
+                page.keyboard.press("ArrowRight")
+                page.wait_for_function("() => Reveal.isOverview() && Reveal.getCurrentSlide().id === 's06-contract'")
+                check(f"overview keyboard changes selection {label}",
+                      "Fit the platform" in page.locator("#navigation-status").text_content())
+                page.keyboard.press("Escape")
+                page.wait_for_function("() => !Reveal.isOverview()")
+                check(f"overview keyboard commits selected slide {label}",
+                      page.evaluate("Reveal.getCurrentSlide().id") == "s06-contract")
+                check(f"accessibility restored after overview keyboard {label}", page.evaluate(normal_slide_protection))
 
             page.set_viewport_size({"width": 1280, "height": 720})
             page.evaluate("Reveal.slide(0,0,-1); document.activeElement.blur()")

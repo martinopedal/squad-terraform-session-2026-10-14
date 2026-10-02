@@ -10,6 +10,8 @@ Martin hosts the opening, owns the brief, and normally drives the presentation. 
 
 The current package has honest recording slots, not completed footage. Play a chapter only when approved footage is attached. Otherwise leave its viewing guide visible and deliver the same explanation without pretending that a command ran. The main narration describes what to inspect rather than inventing a particular result. The evidence slide is the authority for current completion status. Local test success, a real Azure plan, deployment, and policy read-back are separate claims.
 
+Delivery follows `build_then_record_clean_run`: qualify the source before filming, then capture genuine new execution from a disclosed clean checkpoint. Keep the upstream pin, qualification revision, and recording checkpoint distinct, including prepared code and starting Squad state. Identify the change actually executed in each take. This is not first-ever implementation footage, and current code qualification has not been filmed. Do not present earlier logs as output from the later recorded run.
+
 Every product chapter must show genuine Copilot CLI with Squad selected, either standalone or in a real integrated terminal. Capture automation stays off-screen as external tooling, not a Squad feature. Do not substitute custom viewers, artifact-pilot frames, fabricated screenshots, or terminal output for native recordings.
 
 All environment references are generic. Public module code and examples are separate from private environment inputs, backend/state, identities, and secrets. No personal memory, private policy evidence, or unreviewed terminal history should appear on screen.
@@ -22,7 +24,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Martin:** A useful agent session should leave something another engineer can consume. Today that something is a reusable Terraform module for private AKS in an existing Azure landing zone. I'm Martin, and this is Haflidi. We'll connect the Copilot CLI features you can use tomorrow with the team conventions that Squad adds.
 
-**Haflidi:** We'll start with existing code, not an empty folder. We'll separate reusable infrastructure from environment configuration, put checks around the contract, and explain the decisions as we go. The recordings make the teaching sequence inspectable. They don't make the model deterministic. First, let's compare two attempts without turning them into a competition.
+**Haflidi:** We'll start with existing code and qualify it before filming. Later clips will show genuine new execution from a disclosed clean checkpoint, not its first-ever implementation. We'll explain the module boundary, checks, and decisions as we go. Recording makes the sequence inspectable; it doesn't make the model deterministic. First, compare two attempts without turning them into a competition.
 
 ## demo-c1 | 01:00-04:00 | C1: Same task, different agent choices
 
@@ -30,7 +32,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Haflidi:** In these two attempts, the useful comparison is a choice that affects our module. Does the agent preserve a validation rule? Does it notice that provider configuration belongs in the consumer root? Does it propose a test for the actual resource body? We aren't counting words or judging which response sounds more confident. If both attempts make the same sound choice, that's a valid result.
 
-**Martin:** Start with the inputs. We need the same reviewed source checkpoint, the same task, and an explicitly selected model. The model selector is a native CLI control. It helps us record what we asked to do the work. It doesn't freeze a hosted service forever, and we shouldn't pretend that a model name is a reproducible build identifier.
+**Martin:** Start with the inputs. We need the same disclosed clean checkpoint, the same prepared code and task, and an explicitly selected model. The model selector is a native CLI control. It helps us record what we asked to do the work. It doesn't freeze a hosted service forever; a model name is not a reproducible build identifier.
 
 **Haflidi:** A fresh conversation alone isn't enough. Instructions, skills, tool access, and repository-backed decisions can change the task. If the first run writes a decision and the second reads it, we've changed the experiment. Keep separate working copies and equivalent starting team state. Don't delete personal or global memory to manufacture a clean story. Record the permission boundary as well; an unavailable source can change the answer without telling us anything about model quality.
 
@@ -38,11 +40,11 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 ## s03-baseline | 04:00-05:00 | Start with the code you have
 
-> DRIVER Martin. No clip. Read the source pin, not private paths. Hold the source strip for five seconds. Handoff to Haflidi for the product map. Tip: distinguish inherited code, preparation, and new work.
+> DRIVER Martin. No clip. Read the inherited source pin, not private paths. Distinguish it from the qualification revision and future recording checkpoint. Hold the source strip for five seconds. Handoff to Haflidi for the product map. Tip: disclose preparation and the actual recorded change.
 
 **Martin:** Our starting point is the public AKS root module at the revision shown here. It already has typed inputs, outputs, and ten negative test cases. It also has real quality issues: overlapping root declarations, an active provider outside the test mocks, and documentation that doesn't match the requested SKU.
 
-**Haflidi:** Those are inherited findings, not evidence that an AI caused them. We're extracting a reusable infrastructure boundary and repairing the relevant contract. Preparation, new edits, and later checks need separate evidence. Keep the original pin intact so another person can tell which behavior came from upstream and which change we're asking them to trust.
+**Haflidi:** Those are inherited findings, not evidence of AI causation. The reusable module now exists and passed local qualification before filming. Later clips will show new execution from a disclosed clean checkpoint. Keep upstream source, qualification, and the recorded change separate. Prepared code is disclosed context, not a claim that this was its first implementation.
 
 ## s04-layers | 05:00-08:00 | One workflow, three distinct layers
 
@@ -86,13 +88,13 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 ## demo-c2 | 12:00-16:00 | C2: Pin the brief and approve a plan
 
-> DRIVER Martin. C2, 04:00 total. Use `/plan` or `Shift+Tab` until the visible CLI shows Plan. The pinned executable also accepts `--plan` or `--mode plan`; `-i` retains an interactive session. Never use `--plan --mode autopilot`: it auto-approves the plan. Inspect `/instructions`, explicit `@file` references, and `/session plan`. Capture targets: 00:00-00:30 actual Plan indicator and context; 00:30-01:30 facts/assumptions; 01:30-02:30 proposed plan artifact; 02:30-03:15 real human revision; 03:15-04:00 approval and visible exit to implementation mode. About 40 seconds are observation, not additional pauses. No edits before approval. Handoff to Haflidi at 16:00. Tip: a planning prompt isn't the same as native Plan mode.
+> DRIVER Martin. C2, 04:00 total. Use `/plan` or `Shift+Tab` until the visible CLI shows Plan. The pinned executable also accepts `--plan` or `--mode plan`; `-i` retains an interactive session. Never use `--plan --mode autopilot`: it auto-approves the plan. Inspect `/instructions`, explicit `@file` references, and `/session plan`. Capture targets: 00:00-00:30 actual Plan indicator and disclosed checkpoint; 00:30-01:30 facts/assumptions; 01:30-02:30 proposed plan artifact; 02:30-03:15 real human revision; 03:15-04:00 approval and visible exit to implementation mode. About 40 seconds are observation, not additional pauses. No edits in this recorded run before approval; prior source qualification is separate. Handoff to Haflidi at 16:00. Tip: a planning prompt isn't the same as native Plan mode.
 
 **Martin:** Activate native Plan mode and show its indicator and plan artifact. GitHub documents direct project-write guards, with limits for ambiguous shell or MCP actions. A Markdown plan alone has none of those controls. Typing make a plan isn't the same as changing modes. Keep the actual repository and interactive context visible, then inspect the proposal before implementation.
 
 **Haflidi:** The file references do useful work. We include the current infrastructure, variables, provider requirements, and existing tests. We inspect the effective instructions rather than assuming they are current. In this source, some instruction claims were stale. Review and clean that context in the working lab, retain the preparation diff, and exclude inherited custom extensions from the native-feature demonstration.
 
-**Martin:** The prompt asks for a reusable infrastructure module and a private-network consumer example. It preserves AzAPI, states which existing platform resources we must not take over, and separates application resources from infrastructure. It also asks for proposed file changes, owners, exact checks, and unresolved prerequisites. That is much more useful than asking the agent to improve everything.
+**Martin:** The prompt defines the demonstrated change to the reusable module and its private-network consumer example. Identify prepared code already in the checkpoint. Preserve AzAPI, existing platform ownership, and the separate application boundary. Ask for affected files, owners, exact checks, and unresolved prerequisites. That gives the recorded run a useful task without pretending the whole module is being implemented for the first time.
 
 **Martin:** A concrete stop condition helps too: return the proposed interface and checks before writing files. If a prerequisite is unresolved, ask for that decision rather than filling the gap with a default. That keeps a convenient guess from becoming our deployment contract.
 
@@ -184,7 +186,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Haflidi:** Begin with the command and exit status, not the summary. A real nonzero result tells us the check did not pass. Read enough context to identify what it actually rejected. A structural Terraform error, an assertion failure, and a cloud permission error are different problems. We should not narrate one as another just because all three are red on screen.
 
-**Martin:** For the inherited source, we already know there are root-boundary defects and a SKU documentation mismatch. Those are useful starting facts. If a new implementation introduces a different problem, label it as new. If the demonstration uses a controlled mutation, label it as seeded before showing the result. None of those labels diminishes the lesson. They make the evidence honest.
+**Martin:** Preparation may already include repairs for the inherited root and SKU issues. A later take doesn't recreate their first discovery. Show an actual failure from that new execution or a clearly labeled controlled mutation. The command and repair must run for real. Don't present earlier qualification logs as if they were captured during the later recording.
 
 **Haflidi:** Review connects the finding to a file, requirement, and check. Squad names the next owner. Ordinary test repair isn't formal rejection. If the designated reviewer formally rejects an artifact, a different independent author must revise it; the rejected author doesn't produce or advise on that revision. This is coordination protocol, not a filesystem lock or merge approval. Preserve the actual failure and repair.
 
@@ -196,7 +198,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Martin:** Record the tool and provider selections with those results. If a dependency changed during the repair, disclose that change and review its effect. Otherwise two similar command lines may be checking different configurations without the viewer knowing.
 
-**Haflidi:** Leave the actual outcome on screen long enough to read. If a rerun still fails, keep it and continue the investigation. Editing out waiting is fine when the cut is labeled. Editing a failed attempt into first-try success is not. The value of a recorded workflow is that people can follow the correction, including the human intervention.
+**Haflidi:** Leave the actual outcome on screen long enough to read. If the clean run still fails, retain that result and investigate. Disclose earlier preparation rather than claiming first-try engineering success. Within the new take, preserve the real correction and human intervention. Labeled cuts can remove waiting; they cannot replace a command's outcome with an earlier result.
 
 **Martin:** Our tip is to hand over the repair diff together with the unchanged check and its real output. That gives the reviewer a concrete basis for acceptance. It still doesn't establish Azure deployability. Haflidi, I'll take the controls back while we separate the evidence levels and the claims each can support.
 
@@ -204,7 +206,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 > DRIVER Martin. No clip. Read actual status labels from the evidence register. Never announce a pending gate as passed. Pause about 20 seconds across the rows. Haflidi leads interpretation; Martin leads handoff. Tip: a check proves only what it checks.
 
-**Haflidi:** This slide separates five kinds of evidence. The first is source inspection. We can describe inherited files, known declarations, and observed local diagnostics. The second is module checks. The third is a runnable consumer example. Then come a real resource plan and Azure read-back. The labels beside those rows describe the current package; they are not a progress animation.
+**Haflidi:** This slide separates five kinds of evidence. The source was inspected, and the public module passed fifty-two mocked contract cases and two caller cases. Both deliberate mutations failed as expected, then passed after restoration. A real resource plan and Azure read-back still need separate evidence. Local qualification is not filmed or deployed evidence. Read each status as its own claim, not a progress animation.
 
 **Martin:** Formatting checks presentation of configuration. Validation checks Terraform's structure and provider-facing consistency. Lint checks particular rules. Tests assert what their authors wrote. These checks complement one another, but they aren't substitutes. A nicely formatted module can ask for the wrong resource. A positive assertion can ignore an important input. A mock can miss service behavior.
 
@@ -258,11 +260,11 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 ## demo-c7 | 45:00-48:00 | C7: Reviewed diff to approved Terraform change
 
-> DRIVER Martin. C7, 03:00. Show `/diff` for module/consumer changes, checks, actual resource plan if approved evidence exists, and the human decision. Reserve about 35 seconds for inspection. Azure read-back remains pending unless real evidence is supplied. No apply on stage. Handoff to Martin at 48:00. Tip: approve a specific artifact and scope.
+> DRIVER Martin. C7, 03:00. Show `/diff` for the actual change in this take. Identify preparation/qualification evidence separately. Show checks, an actual resource plan only if approved evidence exists, and the human decision. Reserve about 35 seconds for inspection. Azure read-back remains pending unless real evidence is supplied. No apply on stage. Handoff to Martin at 48:00. Tip: approve a specific artifact and scope.
 
 **Haflidi:** Review the change as a consumer would. The module should have a defined input and output contract. The example root should show how to configure providers, own its backend, and supply approved network inputs. The documentation should identify prerequisites rather than bury them in a command that only works in the author's environment.
 
-**Martin:** The diff should also make extraction visible. Which resources moved into the reusable module? Which provider and application concerns stayed outside it? Which tests and instructions changed with the interface? We need that context to avoid presenting all inherited infrastructure as newly generated code.
+**Martin:** Distinguish the preparation diff from changes executed in this take. Source history explains the module extraction and provider boundary. The recorded diff shows the actual new change. Identify its starting checkpoint and relevant checks, rather than presenting prepared infrastructure as newly authored or old qualification output as fresh capture.
 
 **Haflidi:** Next, compare the real check results with the accepted requirements. If a real resource plan is available, inspect the intended fresh workload resources and the target boundary. No estate imports, scope moves, or policy exceptions become acceptable because they're convenient for the recording. Keep private values out of the public evidence.
 
@@ -296,7 +298,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Martin:** Check the diff and the tests, then check what they actually establish. Local validation, isolated contract tests, a consumer example, a real plan, and Azure read-back answer different questions. Keep pending gates visible. Don't replace the private-network requirement with a public default just to make the demonstration end neatly.
 
-**Haflidi:** Recordings let us spend the room's time on decisions instead of waiting for another agent response. Keep the genuine sequence, label cuts, and preserve meaningful mistakes. On stage, we can pause at the point where a human changes the outcome. That is why the clip controls and readable evidence matter more than a fast edit.
+**Haflidi:** Qualifying code before filming gives us a reviewed reference for the later run. It does not turn that preparation into recorded history. Disclose the clean checkpoint, capture genuine new execution, and preserve meaningful outcomes. On stage, we can pause where a human changes the decision. Readable evidence matters more than making the work appear unrehearsed.
 
 **Martin:** The public code is the reusable part. Your environment inputs, state, and secrets are not conference material. Take the working pattern back to one bounded change in your own repository. If the next engineer can find the contract, run the relevant check, and understand the handoff, the tools have done useful work.
 

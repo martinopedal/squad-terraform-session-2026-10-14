@@ -1,0 +1,99 @@
+# Public project handoff
+
+Updated October 2, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
+
+## Current result
+
+- Reveal.js presentation version **0.10**, with 22 main slides and six appendix slides.
+- Martin/Haflidi talk track: **5,504 main spoken words**, balanced 2,739 / 2,765, plus a separate 652-word prepared Q&A fallback.
+- Exact session budget: **26 minutes of recorded chapters, 27 minutes of other live explanation, and seven minutes of Q&A**. Both speakers narrate the silent clips; that narration is already inside the 53 content minutes.
+- Sessionize copy: 294-word description/outcomes, 52-word pitch, and both speaker names.
+- Copilot CLI/Squad feature research with 34 first-party references and a C1-C7 operator runbook.
+- Public reusable Terraform module and synthetic caller, locally qualified without Azure.
+
+The package is not stage-ready: **zero of seven native recordings are attached**, and no Azure deployment/read-back or full human rehearsal is complete.
+
+## Public locations
+
+- [Live Reveal presentation](https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/)
+- [Session repository](https://github.com/martinopedal/squad-terraform-session-2026-10-14)
+- [Independent module repository](https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp)
+- [Module-copy manifest](terraform/module-source.json)
+- [Full speaker script](docs/talk-track.md)
+- [Sessionize text](docs/sessionize.md)
+- [Feature guide](docs/feature-guide.md)
+- [C1-C7 demo runbook](docs/demo-runbook.md)
+
+The module is pinned to `883795608d7c873e7b47b3acd375e0b58819458a`. Its 23-file Git tree is `40b628f7983e8cc099b21dcbdf5ad4657de01814`. The copy under `terraform/modules/aks-automatic-corp` must retain that same tree.
+
+## Verified and unverified
+
+| Area | Evidence |
+| --- | --- |
+| Terraform local qualification | Terraform 1.16.4 / Windows AMD64, AzAPI 2.12.0, TFLint 0.64.0. Both roots passed formatting, validation, and lint. |
+| Contract tests | 52 module cases and two caller cases passed, all plan-mode mocks. |
+| Mutation proof | Wrong SKU and public-API mutations each failed the intended assertion; the unchanged 52-case suite passed after each exact restoration. |
+| Module review | Independent static and publication-safety reviews passed for the qualified source. |
+| Presentation checks | Ten media-policy tests, 97 browser/content checks, and 66 slide/fragment captures across two resolutions. The updated evidence slide was visually inspected. |
+| Hosted module CI | **Blocked:** workflow permission is missing; no hosted CI success is claimed. |
+| Azure | **Not deployed.** Corp target/budget, effective policy, dependencies, real plan, and read-back remain separate gates. |
+| Recordings | Genuine clean runs are still required; no custom viewer footage is accepted. |
+
+See [the module evidence summary](terraform/modules/aks-automatic-corp/VALIDATION.md). Local mocks do not establish private DNS, firewall routing, RBAC, policy compliance, or Azure service acceptance.
+
+## Resume presentation work
+
+From the repository root:
+
+```powershell
+python -m http.server 4173 --bind 127.0.0.1
+```
+
+Open `http://127.0.0.1:4173/presentation/`. Use `S` for speaker notes, `N` for named navigation, and Escape for overview. Preserve the fixed keyboard-focus and overview behavior.
+
+For the existing Windows development environment:
+
+```powershell
+Set-Location .\presentation
+npm run build
+npm test
+```
+
+For a fresh checkout, follow `presentation/README.md` to install the pinned dependencies and browser test environment. Never publish `node_modules`, `.venv`, QA screenshots, or private test artifacts.
+
+## Resume source qualification
+
+Use the module README's isolated local-provider setup and preserve its lock files. The synthetic caller is an offline fixture, not a deployment configuration with real IDs.
+
+```powershell
+Set-Location .\terraform\modules\aks-automatic-corp
+terraform fmt -check -recursive
+terraform init -backend=false -input=false -lockfile=readonly
+terraform validate -no-color
+tflint --config=.tflint.hcl --no-color
+terraform test -filter=tests\contract.tftest.hcl -no-color
+```
+
+Run each command separately, inspect the exit code, and stop on failure. Initialize/test `examples\corp-existing` separately with its synthetic var-file as documented there.
+
+Terraform 1.14.8 is a declared minimum, not a locally verified runtime. A CI workflow for 1.14.8 and 1.16.4 is prepared in the private working area but was not published because the current GitHub login lacks `workflow` scope. An authorized maintainer can grant that scope and publish the reviewed workflow later. Do not bypass it or call the local result a CI pass.
+
+## Recording decision
+
+The user approved **build first, then record a genuine clean run**. Stay in the normal Copilot CLI shell with Squad selected. Disclose the prepared checkpoint and record actual new execution, not a reconstruction presented as the first implementation.
+
+Direct FFmpeg `gdigrab` capture of the GPU terminal produced black frames. Use an accepted normal window recorder after a real frame/motion check. Do not reopen the retired custom artifact viewer, capture unrelated desktop content, or auto-approve CLI permissions.
+
+Follow `docs/demo-runbook.md`. Add only genuinely reviewed footage through `presentation/src/media.json`; preserve its native-surface, selected-agent, take-ID, and content-review requirements.
+
+## Azure and private integration
+
+Reuse the existing approved Corp platform. The public child receives resource IDs; a private consumer owns actual providers, credentials, state, and deployment wiring. Do not rebuild the ALZ, import platform state, move a subscription to avoid policy, or add an exemption for the demo.
+
+The approved region preference is `swedencentral`; the actual nonproduction Corp subscription, budget, expiry, and cleanup owner still need confirmation. Changing code, planning Azure resources, applying a saved plan, and publishing recordings are different approvals.
+
+## Working rules
+
+Back up before replacing a version. Keep one runtime writer per file and independent review. Preserve license notices in the module and single-file deck. Publish only reviewed files; use the manifest to keep both module copies identical.
+
+The private coordinator handoff contains exact worktree paths, evidence locations, agent IDs, authentication blockers, and the remaining operational sequence. Do not copy those private records into this repository.

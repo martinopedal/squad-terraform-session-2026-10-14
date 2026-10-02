@@ -11,7 +11,9 @@ The demo starts from an existing public AKS Terraform root configuration. Its in
 
 The original root mixed infrastructure and Kubernetes application configuration. Local checks identified structural, formatting, lint, and test-isolation failures. The public reusable module must establish its own clean boundary and validation evidence rather than carry those failures into a new repository.
 
-The authoritative module release and the copy under `terraform\modules\aks-automatic-corp\` must match. A publication manifest will record the exact module revision and file hashes when source is published.
+The independently published module is pinned to `883795608d7c873e7b47b3acd375e0b58819458a`. Its source tree and the copy under `terraform\modules\aks-automatic-corp\` must match. [The publication manifest](../terraform/module-source.json) records the exact revision, Git tree, and file blob hashes.
+
+The source release contains 23 files. A credential-free CI workflow is prepared locally but is not published because the current GitHub login lacks workflow permission. Neither source copy includes that unactivated workflow.
 
 The existing landing-zone implementation is a dependency of the private deployment environment, not source to copy into this repository. Public examples use placeholders and explicit platform-owned inputs. No real environment identifiers, state, secrets, or private policy evidence are included here.
 

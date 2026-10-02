@@ -12,6 +12,8 @@ python -m http.server 4173 --bind 127.0.0.1 --directory ..
 
 Press `S` or select **Speaker notes** to open current/next slides, the complete spoken notes, and the timer. Allow the local popup. The spoken script appears first; expand **Operator cues and timing** for capture details and handoffs. Use arrows or Page Up/Down to advance, Home/End for the first/last slide, Escape for overview, and **Chapters** for named navigation. Video controls retain their native keyboard behavior while focused. There is no automatic slide advance or video autoplay.
 
+In overview, click a thumbnail or use arrows to select a slide, then Escape to return to it. Thumbnail links and video controls remain inert. On exit, only the active slide becomes interactive; the approved presenter-shortcut behavior is unchanged.
+
 The 22 main slides allocate 26 minutes to silent chapter video with live narration, 27 minutes to other live explanation, and seven minutes to Q&A. Six appendix slides are question-driven references, not additional scheduled content. [The talk track](../docs/talk-track.md) includes both speakers and a separately labeled prepared Q&A fallback.
 
 ## Build
@@ -34,6 +36,8 @@ Before each content revision, preserve the previous generated HTML outside the r
 No chapter recording or deployment success is supplied with this build. The chapter cards state **Recording not attached yet**. They are viewing guides, not simulated CLI interfaces or executed evidence.
 
 Only genuine Copilot CLI with Squad selected, standalone or in a real integrated terminal, qualifies as product footage. Capture controllers stay off-screen as external tooling. Do not attach custom-viewer recordings, artifact-pilot frames, or fabricated terminal output.
+
+The approved workflow is `build_then_record_clean_run`. Source qualification may finish before filming. Later clips must capture genuine new execution from a disclosed clean checkpoint, not pretend to be the first-ever implementation. Record the qualification revision, take-start checkpoint, prepared code and Squad state, and the actual change executed in the take. Do not substitute prior qualification output for newly captured results. Current qualification has not been filmed.
 
 For a temporary local rehearsal, choose **Open local MP4** on a chapter. The browser reads that file locally; nothing is uploaded. Native controls support play, pause, seek, and replay. The selection lasts only until reload and stays labeled **Local preview: review pending**.
 

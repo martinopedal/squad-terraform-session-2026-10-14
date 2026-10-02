@@ -6,7 +6,7 @@ A two-speaker session by **Martin and Haflidi** on using GitHub Copilot CLI and 
 
 ## What this repository contains
 
-The presentation shell and speaker material are built and reviewed. The Terraform module is being implemented and qualified. Genuine demo recordings and Azure deployment evidence remain pending.
+The presentation shell and speaker material are built and reviewed. The public Terraform module passed local qualification: 52 module cases, two caller cases, and two fail-restore-pass mutation proofs. Hosted CI, genuine demo recordings, and Azure deployment evidence remain pending.
 
 | Path | Content |
 | --- | --- |
@@ -17,7 +17,9 @@ The presentation shell and speaker material are built and reviewed. The Terrafor
 | `scripts\recording\` | Controlled-window capture and verification tools |
 | `terraform\modules\aks-automatic-corp\` | Public source copy of the independently versioned demo module |
 
-The module's separate repository is [terraform-azapi-aks-automatic-corp](https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp). The presentation copy will identify its source revision and matching file hashes.
+The module's separate repository is [terraform-azapi-aks-automatic-corp](https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp), pinned here to `883795608d7c873e7b47b3acd375e0b58819458a`. The [source manifest](terraform/module-source.json) binds the matching presentation copy. See the module's [qualification summary](terraform/modules/aks-automatic-corp/VALIDATION.md) for the exact boundary.
+
+The [C1-C7 operator runbook](docs/demo-runbook.md) provides current-shell commands, native prompts, speaker handoffs, and recording checkpoints. Use it for the later genuine clean demonstration, not as a claim that the recording already exists.
 
 ## Open the presentation
 

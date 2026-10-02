@@ -14,7 +14,7 @@ Martin and Haflidi show how native GitHub Copilot CLI features and Squad work to
 
 We start with the files and decisions that shape the work. Native Plan mode makes the proposed change visible before implementation. Explicit file context, reviewed instructions, skills, and MCP lookups help the agent work with the right information. Squad adds roles, routing, ownership, handoffs, and repository-backed decisions. Parallel work stays bounded, and a human still reviews what changed.
 
-Short recordings of genuine Copilot CLI sessions with Squad selected support live explanation by both speakers. We'll inspect the plan, follow a handoff, read a meaningful failed check, and discuss the repair. Along the way, we'll use diff and review tools, resume a session with its decisions intact, and explain model, context, and usage controls. Useful extras such as worktrees, recovery, bounded automation, and cloud delegation stay in a concise reference section.
+Code qualification comes first. Later recordings show genuine new Copilot CLI execution with Squad selected from a disclosed clean checkpoint, not the first-ever implementation. Both speakers narrate the decisions live. We'll inspect the plan, follow a handoff, read a meaningful failed check, and discuss the repair. We'll also use diff and review tools, resume with decisions intact, and explain model, context, and usage controls. Worktrees, recovery, bounded automation, and cloud delegation stay in a concise reference section.
 
 You'll leave able to choose an appropriate CLI or Squad workflow, define a module boundary, and connect an agent's claim to evidence. You'll also know why passing local tests, a reviewed Terraform plan, and observed Azure behavior are different milestones.
 
@@ -41,6 +41,6 @@ Turn an existing AKS codebase into a reusable Terraform module with GitHub Copil
 
 ## Editorial status
 
-The module extraction and private-network consumer path supersede the earlier root-only scenario. The inherited source has real quality issues; the talk does not claim they were AI-caused or already repaired. Module validation, approved recordings, real policy/deployment evidence, and public release confirmation must be checked before advertising the session as fully recorded or deployed. No speaker biography, surname, or employer has been inferred.
+The reusable module and private-network consumer are public and passed local qualification: 52 module mock cases, two caller cases, and both mutation proofs. Hosted CI, genuine recordings, and Azure evidence remain pending. The approved `build_then_record_clean_run` approach permits qualification before filming; current qualification has not been filmed. Later footage must identify prepared code and its clean starting checkpoint. No speaker biography, surname, or employer has been inferred.
 
 Product demonstrations require genuine native CLI or real integrated-terminal footage. Recording automation is external, behind-the-scenes tooling, not a Squad feature.

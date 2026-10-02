@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp",
+  "revision": "883795608d7c873e7b47b3acd375e0b58819458a",
+  "gitTree": "40b628f7983e8cc099b21dcbdf5ad4657de01814",
+  "copyPath": "terraform/modules/aks-automatic-corp",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "gitBlobSha": "6313b56c57848efce05faa7aa7e901ccfc2886ea",
+      "mode": "100644"
+    },
+    {
+      "path": ".gitignore",
+      "gitBlobSha": "6abbe4a9d34d9855633067f8ff553d674dd3cc31",
+      "mode": "100644"
+    },
+    {
+      "path": ".terraform.lock.hcl",
+      "gitBlobSha": "d8c5eb740f1b71afe85b2d4745b43d6843399610",
+      "mode": "100644"
+    },
+    {
+      "path": ".tflint.hcl",
+      "gitBlobSha": "e36453c4c9c395c1bb52738ea7ce9f484cf1a20c",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/corp-existing/.terraform.lock.hcl",
+      "gitBlobSha": "d8c5eb740f1b71afe85b2d4745b43d6843399610",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/corp-existing/main.tf",
+      "gitBlobSha": "8925d2a50d85dedab30ebd925def7359ccb52418",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/corp-existing/outputs.tf",
+      "gitBlobSha": "df7b7913521ad3b4c21a539cf23b103c005ac706",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/corp-existing/providers.tf",
+      "gitBlobSha": "53429a0f5d348dbf5664e0588dd9c6112bfb44cf",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/corp-existing/README.md",
+      "gitBlobSha": "85b1c23682c650e6d6c59170cf4e13d04d699b8e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/corp-existing/terraform.tf",
+      "gitBlobSha": "66f21d46eba3db602f638a21be0af35c1a4ea7a0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/corp-existing/terraform.tfvars.example",
+      "gitBlobSha": "8cffe3750d0567afc157048d5da09e124de1a927",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/corp-existing/tests/example.tftest.hcl",
+      "gitBlobSha": "db76da91f2fa04bd5c83c3db5ad6a82718ed504a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/corp-existing/variables.tf",
+      "gitBlobSha": "8d98f9897b250a23681fb53be87bce0c47aae410",
+      "mode": "100644"
+    },
+    {
+      "path": "LICENSE",
+      "gitBlobSha": "617808fe208453c082fa9bbbae4b82e8a12042b1",
+      "mode": "100644"
+    },
+    {
+      "path": "locals.tf",
+      "gitBlobSha": "a1ca269e9b9e5e60ef91a3cf52b9bafd139b8c94",
+      "mode": "100644"
+    },
+    {
+      "path": "main.tf",
+      "gitBlobSha": "483c4b52892263f91fbfd5503dd6d4455d56ebac",
+      "mode": "100644"
+    },
+    {
+      "path": "NOTICE.md",
+      "gitBlobSha": "28c963d8f4ca9313083637ac13ea93f6efddf48d",
+      "mode": "100644"
+    },
+    {
+      "path": "outputs.tf",
+      "gitBlobSha": "978acd75f6d5bf889b43eb9868d46867309f2fc8",
+      "mode": "100644"
+    },
+    {
+      "path": "README.md",
+      "gitBlobSha": "600b8d27a3a0dc2c1808c9e89d69644abd0886ff",
+      "mode": "100644"
+    },
+    {
+      "path": "terraform.tf",
+      "gitBlobSha": "96021583bada1e77c6ea413c4cb451c354ccd21a",
+      "mode": "100644"
+    },
+    {
+      "path": "tests/contract.tftest.hcl",
+      "gitBlobSha": "ae6f72b279f673f2e20b8444994da8953a240572",
+      "mode": "100644"
+    },
+    {
+      "path": "VALIDATION.md",
+      "gitBlobSha": "0fbac5c7c443b6ce51d4a65f2a1f6d240c6b7c25",
+      "mode": "100644"
+    },
+    {
+      "path": "variables.tf",
+      "gitBlobSha": "c29a89dfe3069bad8ae874b6db7ab90aad445deb",
+      "mode": "100644"
+    }
+  ],
+  "qualification": {
+    "terraform": "1.16.4",
+    "platform": "windows_amd64",
+    "azapi": "2.12.0",
+    "moduleTestsPassed": 52,
+    "callerTestsPassed": 2,
+    "mutationProofsPassed": 2,
+    "hostedCI": "not-installed-workflow-permission-required",
+    "azureDeployment": "not-performed",
+    "nativeDemoRecordings": "pending"
+  },
+  "notes": [
+    "Git blob hashes describe the LF-normalized published source.",
+    "Both public source trees must have the same Git tree hash.",
+    "A local unactivated CI workflow is intentionally excluded from both published copies."
+  ]
+}

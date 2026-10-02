@@ -1,6 +1,14 @@
 # Record the real Copilot CLI and Squad session
 
-Record the actual Copilot CLI terminal with Squad selected. The PowerShell/Python
+Record the current real Copilot CLI shell with Squad selected. Keep using this
+shell; don't open a replacement terminal or custom UI. Follow
+[demo-runbook.md](demo-runbook.md) for the C1-C7 operator sequence.
+
+The user selected `build_then_record_clean_run`: qualify the code first, then
+film genuine new execution from a disclosed clean checkpoint. Qualification
+work is not already-filmed evidence or the first recorded implementation.
+
+The PowerShell/Python
 helper is external FFmpeg recording tooling, not a Copilot CLI or Squad feature.
 It captures an existing, explicitly approved window; it does not open an app,
 render a replacement UI, watch source files, or answer permission prompts.
@@ -9,31 +17,52 @@ The custom viewer has been retired. Its private test recordings are **not produc
 footage** and must not appear in the public demo. There is no approved native
 Plan-mode or permission-interaction recording yet.
 
-## Choose the native window before capture
+## Keep the chosen native shell
 
-The operator must agree one of these targets and review its visible content:
+Review the current shell's visible content and its containing window:
 
 | Target | What to select | Boundary |
 | --- | --- | --- |
-| Dedicated Windows Terminal or console | The real Copilot CLI session with Squad selected | Use one dedicated window, a unique stable title, and no unrelated tabs. |
-| Dedicated VS Code window | The integrated terminal running the real Copilot CLI with Squad selected | Capture includes the entire editor window, not just the terminal. Close unrelated tabs and panels. |
+| Current terminal/console | The real Copilot CLI session with Squad selected | Keep the current window, a stable title, and no unrelated visible content. |
+| Current VS Code integrated terminal, if already in use | The real Copilot CLI with Squad selected | Window capture includes the editor, not just the terminal. Close unrelated tabs and panels. |
 
-Start from the public repository and use its documented native entry point:
+In the existing interactive CLI, confirm `/cwd`, select Squad with `/agent`, and
+enter native Plan mode:
 
-```powershell
-copilot --agent squad --plan
+```text
+/agent squad
+/plan
 ```
 
-This is an operator action, not something the recorder launches. Confirm the
+These are operator actions, not something the recorder launches. Confirm the
 selected agent and native Plan-mode indicator in the real UI. Authenticate
 before recording, remove private context, and leave permissions under human
 control. Do not add blanket allow flags or combine planning with autopilot.
 
-No new window or capture is authorized by these instructions alone. The next
-step is agreement on the actual terminal's exact title/PID and a review of its
-content. Native recording readiness remains pending a first-frame check.
+No new window or capture is authorized by this document. The current product
+shell stays in place. Capture readiness still requires a checked recording
+method and review of actual frames.
 
-## Preflight without recording
+## Known GPU-terminal limitation and normal capture
+
+The observed `gdigrab` attempt against the GPU-rendered terminal produced black
+frames. Successful encoding, progress counters, and a decodable file are not
+proof that the real UI was captured. Do not substitute old custom-viewer pilots
+or move the demonstration to another app to conceal this limitation.
+
+Use normal OBS Window Capture, preferably its Windows Graphics Capture method,
+or a Windows recorder that can explicitly select the current application window.
+Keep microphone/desktop audio disabled. Capture only the agreed window, not the
+whole display. This is external recording tooling, not a Squad capability.
+Installation/configuration and a new capture still require their own approval.
+
+After authorization, record a short bounded window test, review the first frame
+and visible motion, and stop if it is black, frozen, unreadable, or exposes
+private content. Then record the actual clean run. Use the recorder's normal
+controls/hotkeys; no extra terminal is required. Record take IDs, wall/media
+times, and chapter cues alongside the footage.
+
+## Optional FFmpeg preflight without recording
 
 Use Python 3.12 or later, PowerShell, FFmpeg, and ffprobe on Windows. No Tk,
 browser, or additional Python package is required. Run the helper from this
@@ -58,10 +87,11 @@ HWND, requires one exact-title match, checks storage/tools, and rejects minimize
 or ambiguous windows. It does not capture pixels or prove that Squad is selected.
 `ReviewedCli` records explicit approval of this chosen window only.
 
-## First-frame review, then the actual session
+## Optional FFmpeg-managed takes
 
-Only after the operator agrees the target and authorizes a short window test,
-run a bounded pilot in a separate control terminal:
+The helper remains available only if capture of the current window is separately
+shown to work. It is not the preferred route for the observed black-frame case.
+An already agreed off-screen controller may run it attached to the session:
 
 ```powershell
 .\scripts\recording\Record-Demo.ps1 -Action Record `
@@ -75,7 +105,8 @@ The command stays attached and records only the resolved HWND. It writes
 no private content. Do not enter a demo prompt or change Terraform before this
 review. First-frame approval is not a Copilot permission approval.
 
-From another control terminal, after inspecting the image:
+That same external controller can send the following requests after an operator
+reviews the image. Don't open another terminal for the product demonstration:
 
 ```powershell
 $captureRoot = Join-Path (Split-Path (Get-Location)) 'recordings'
@@ -89,8 +120,8 @@ $captureRoot = Join-Path (Split-Path (Get-Location)) 'recordings'
 
 Review the extracted frames and actual video for correct pixels, motion, and
 legibility. If capture is black or frozen, stop and report the limitation.
-Don't switch to desktop capture or substitute a custom app. An operator-managed
-window recorder is an alternative only after separate agreement and a new test.
+Don't switch to desktop capture or substitute a custom app. Use the normal
+window-capture route above if the current terminal cannot be captured by GDI.
 
 After that pilot passes and the operator approves the session, rerun `Record`
 with a new ID such as `native-session01` and an explicit limit up to 7,200
@@ -115,6 +146,11 @@ private manifests, progress/error logs, markers, and verification reports.
 Markers retain wall time, encoded media time, sample age, and observed lag.
 Align edits against real frames, not just the last progress timestamp.
 
+These helper filenames/actions apply to FFmpeg-managed takes only. They do not
+control OBS or attach to a Windows recorder. For normal recordings, preserve
+the original video and a separate reviewed `take.json` with matching provenance.
+Do not fabricate a helper manifest or claim `ApproveFrame` inspected the pixels.
+
 One recorded window cannot show every parallel worker. Film the coordinator's
 real task views, handoffs, results, and permission decisions. Keep approved
 prompts, task IDs, timestamps, diffs, and check results as separately labeled
@@ -134,6 +170,10 @@ Keep raw media/logs outside Git and cloud sync. Allow at least 3 GiB for the
 pilot and budget longer recordings from the measured rate.
 
 ## Export reviewed native chapters
+
+The helper commands below require its own finalized take. For OBS/Windows media,
+use the normal editor/remux workflow with source ranges, actual durations, and
+source/export hashes. Preserve the original and review the resulting pixels.
 
 Use a new export name each time. A full export remuxes without re-encoding;
 a chapter re-encodes for the requested cut. Both record actual duration,

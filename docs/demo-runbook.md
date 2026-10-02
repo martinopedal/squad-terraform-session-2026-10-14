@@ -1,0 +1,195 @@
+# Run C1-C7 in the real CLI
+
+Use `build_then_record_clean_run`: qualify the module first, then record genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Don't open another terminal or substitute a viewer. This run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
+
+Local module qualification passed: 52 module cases, two caller cases, and both mutation proofs. These are instructions for a later genuine recording, not an executed transcript of that run. Hosted CI and minimum-version qualification remain pending. Azure target, budget, plan, and apply remain deferred.
+
+## Prepare the checkpoint and capture
+
+Martin operates; Haflidi checks evidence. In [feature-guide.md](feature-guide.md), H1-H4/S0 mean help probes; D means documented, not exercised. Follow [talk-track.md](talk-track.md) for the 53+7-minute delivery.
+
+In the current CLI, use `/cwd` to confirm the public repository. Execute PowerShell blocks through the `!` shell escape in this same window. Each block is one shell invocation; shell variables don't carry into later CLI turns.
+
+Programmatic `-p` is batch output, not interactive Plan-mode footage; don't use it for these chapters.
+
+Save `copilot --version`, `squad --version`, `terraform version`, and `tflint --version` in `evidence\versions.txt`; pin resolved executables/packages and hashes. Prior CLI probes differed between 1.0.88 and 1.0.89; `--no-auto-update` isn't version selection. The module requires Terraform `>=1.14.8,<2.0`, locked AzAPI 2.12.0, and configured TFLint 0.64.0.
+
+Wait for an approved qualification commit containing the module. From that checkpoint, create new sparse worktrees without resetting existing work. Copy public definitions, not histories, logs, or personal memory:
+
+```powershell
+$pin = (git rev-parse HEAD).Trim()
+git cat-file -e "${pin}:terraform/modules/aks-automatic-corp/tests/contract.tftest.hcl"
+if ($LASTEXITCODE) { throw 'The reviewed module checkpoint is not committed yet.' }
+$take = Join-Path (Split-Path (Get-Location)) ('clean-run-' + [guid]::NewGuid().ToString('N'))
+New-Item -ItemType Directory "$take\evidence" | Out-Null
+$paths = @('AGENTS.md','QUALITY.md','PUBLICATION.md',
+  '.github\agents\','.github\skills\','terraform\modules\aks-automatic-corp\',
+  '.squad\team.md','.squad\routing.md','.squad\decisions.md','.squad\config.json',
+  '.squad\casting\registry.json','.squad\casting\policy.json',
+  '.squad\agents\*\charter.md','.squad\templates\')
+$patterns = $paths | ForEach-Object { '/' + $_.Replace('\','/') }
+foreach ($run in 'A','B','guided') {
+  git worktree add --detach --no-checkout "$take\$run" $pin
+  if ($LASTEXITCODE) { throw 'Worktree creation failed.' }
+  git -C "$take\$run" sparse-checkout set --no-cone -- @patterns
+  if ($LASTEXITCODE) { throw 'Sparse checkout failed.' }
+}
+$pin | Set-Content "$take\evidence\checkpoint.txt"
+git -C "$take\guided" ls-files -s -- 'terraform\modules\aks-automatic-corp' |
+  Set-Content "$take\evidence\checkpoint-tree.txt"
+$take
+```
+
+Review the checkpoint's public decision ledger before copying it; never substitute the coordinator's private `.squad`. Git sparse patterns use Git's slash syntax. Keep the printed take location private. Enter `/cwd` with the actual A, B, or guided path when instructed below.
+
+Pre-stage a filesystem-only provider mirror and `offline\terraform.tfrc` beside the worktrees, following the module README. Terraform subprocesses must be uncredentialed and network-restricted, separately from CLI/model access. Stop if isolation is unavailable. Never use cached Azure login, direct download fallback, or ordinary `terraform plan`.
+
+**R0:** approve the chosen existing terminal's content. Normal OBS/Windows window capture is acceptable after a short, authorized first-frame/motion check. `gdigrab` produced black frames on the GPU-rendered terminal; encoded frames alone prove nothing. Keep external recorder controls off-screen, microphone off, and no desktop fallback.
+
+**R1:** slate checkpoint, model, prepared code, and "clean demonstration after qualification." Keep `A.mkv`, `B.mkv`, and an uninterrupted `guided.mkv`. Haflidi records UTC/media offsets in `evidence\chapters.csv`. Use unique, take-prefixed session names; names below are suffixes.
+
+## C1: Compare two plans | 3 minutes
+
+Martin drives; Haflidi compares. In A, use `/new`, `/agent` and select **Squad**, `/model`, `/plan`, and `/rename C1-A`. Repeat in B as `C1-B`, with identical model, instructions, permissions, and public starting team state:
+
+```text
+Plan only: add alternate_network_payload to the existing module contract tests.
+Use pod 172.21.0.0/16, service 10.241.0.0/16, and DNS 10.241.0.10.
+Assert propagation into the requested body while preserving the private API.
+Don't edit files or deploy. Identify affected files, one writer, and checks.
+```
+
+Save approved prompt/result excerpts as `c1-a.txt` and `c1-b.txt` under evidence. Compare one consequence, not verbosity. Identical outcomes are valid. Don't use `/fork` as a fresh comparison or retry until results differ. Start the guided pass separately.
+
+## C2: Revise and approve | 4 minutes
+
+Martin drives; Haflidi challenges scope. In guided, use `/new`, `/rename guided-clean-run`, `/agent` and select Squad, `/instructions`, then `/plan`. Show the mode indicator.
+
+Show only reviewed project instructions; keep global paths and unrelated session pickers off-screen.
+
+```text
+@terraform\modules\aks-automatic-corp\main.tf
+@terraform\modules\aks-automatic-corp\variables.tf
+@terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl
+This is prepared, qualified code. Plan the C1 regression test and its README
+explanation. Keep all eight inputs, six outputs, and the AzAPI resource intact.
+Plan a separately labeled enablePrivateCluster mutation and repair.
+No implementation, Azure lookup, apply, dependency upgrade, or state operation.
+```
+
+Inspect `/session plan`. Revise genuinely: "Put unchanged payload assertions and offline checks before documentation; exclude infrastructure redesign." Save accepted criteria in `c2-approved-plan.md`. Explicitly approve only that scope, leave Plan mode through the actual UI, and show the new mode. Approval does not authorize deployment.
+
+## C3: Assign one writer | 4 minutes
+
+Martin operates; Haflidi reads returned evidence.
+
+```text
+Squad: lead is the sole HCL writer for main.tf and tests/contract.tftest.hcl.
+Implement alternate_network_payload with the existing AzAPI mock and plan mode.
+Reviewer inspects assertions read-only. Devrel updates only the README's test
+explanation after the test is agreed. Return actual task IDs, paths, diffs,
+commands, exits, and unresolved issues. No other edits or deployments.
+```
+
+Show reviewed roster/charters, `/tasks`, actual starts, and handoffs. Record `c3-handoffs.md`; don't treat assignment as completion. No nested fleet or concurrent writers on the test file.
+
+## C4: Invoke guidance and a source | 4 minutes
+
+Martin drives; Haflidi explains the claim. Use `/skills info test-discipline`, then:
+
+```text
+Invoke test-discipline now. Identify which existing contract assertions must
+remain unchanged during the mutation. Through the configured Microsoft Learn
+MCP, perform only a read-only search/fetch for AKS Automatic private/custom
+network requirements. Cite the source/version relevant to private API access
+and hosted-system subnets. Don't contact an Azure account or change providers.
+```
+
+Show the actual skill invocation, MCP call/result, and one scoped permission decision. Approve only the inspected read-only request, never blanket interpreter access. Save `c4-source.md` with URL, retrieval time, tool, and limitation. Missing skill/server or a failed lookup stays failed/pending, not invented footage.
+
+## C5: Seed, fail, repair | 5 minutes
+
+Haflidi takes control; Martin explains the repair. Run this block before mutation:
+
+```powershell
+$PSNativeCommandUseErrorActionPreference = $false
+$env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path
+$env:CHECKPOINT_DISABLE = '1'; $env:TF_IN_AUTOMATION = '1'
+if (Get-ChildItem Env: | Where-Object Name -Match '^(ARM_|AZURE_|TF_VAR_|TF_CLI_ARGS)') {
+  throw 'Remove inherited credentials/overrides in the isolated child, without displaying values.'
+}
+$phase = 'before' # Repeat as seeded-failure and repaired, using new log names.
+$log = "..\evidence\c5-$phase.log"
+if (Test-Path $log) { throw 'Keep the previous result; choose a new take.' }
+terraform -chdir='terraform\modules\aks-automatic-corp' init -backend=false -input=false -lockfile=readonly
+if ($LASTEXITCODE) { throw 'Offline initialization failed.' }
+terraform -chdir='terraform\modules\aks-automatic-corp' test `
+  -no-color 2>&1 | Tee-Object $log
+$code = $LASTEXITCODE
+$code | Set-Content "..\evidence\c5-$phase.exit.txt"
+"Exit: $code"
+if ($phase -ne 'seeded-failure' -and $code) { throw 'Clean check failed.' }
+if ($phase -eq 'seeded-failure' -and -not $code) { throw 'Mutation was not detected.' }
+```
+
+Stop if the unmutated run fails. Preserve `main.tf` and its SHA-256 as `main.before-seed.tf` and `main.before-seed.sha256` in evidence. On screen, label **DELIBERATE LAB MUTATION, NOT AN AI-DISCOVERED DEFECT**:
+
+```text
+Lead: in this disposable worktree only, change
+body.properties.apiServerAccessProfile.enablePrivateCluster from true to false.
+Change nothing else. Keep the tests, mocks, provider, and permissions unchanged.
+```
+
+Rerun the identical block with phase `seeded-failure`. Require a nonzero exit and the `private_automatic_contract` assertion: "The API must remain private with public FQDN disabled and VNet integration enabled." Syntax/authentication failures do not satisfy this checkpoint.
+
+Use `/review`: "Read-only review of this labeled mutation; identify the violated assertion." Ask lead to restore only that field, inspect `/diff`, and rerun as `repaired`. Require exit zero and the original `main.tf` hash. Ordinary repair is not formal Squad rejection. Hand controls back to Martin.
+
+## C6: Save and resume | 3 minutes
+
+Martin operates; Haflidi verifies the recovered reason:
+
+```text
+Scribe: record the public-only decision in .squad\decisions.md: private API
+invariant, caller-owned provider/backend, added network-payload regression,
+labeled mutation/restoration, exact checks, and deferred Azure target/budget.
+Do not copy histories, credentials, or full conversations.
+```
+
+Show the actual record. Use `/new`, then `/resume guided-clean-run`, `/cwd`, `/context`, and `/usage`. Ask: "Read the saved decision; cite its file and the constraints for the next change." Save `c6-decision.md`, not unrelated session listings or personal memory.
+
+## C7: Validate the consumer and review | 3 minutes
+
+Martin drives; Haflidi reviews. In the same approved isolated context, record commands and stop at the first failure:
+
+```powershell
+$PSNativeCommandUseErrorActionPreference = $false
+$env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path
+$env:CHECKPOINT_DISABLE = '1'; $env:TF_IN_AUTOMATION = '1'
+if (Get-ChildItem Env: | Where-Object Name -Match '^(ARM_|AZURE_|TF_VAR_|TF_CLI_ARGS)') {
+  throw 'Inherited credentials/overrides are not permitted.'
+}
+function Check($id, $exe, [string[]]$argv) {
+  $log = "..\evidence\c7-$id.log"
+  if (Test-Path $log) { throw 'Result already exists.' }
+  "$exe $($argv -join ' ')" | Set-Content $log
+  & $exe @argv 2>&1 | Tee-Object -FilePath $log -Append
+  $code = $LASTEXITCODE
+  $code | Set-Content "$log.exit.txt"
+  if ($code) { throw "$id failed: $code" }
+}
+$m = 'terraform\modules\aks-automatic-corp'
+$e = "$m\examples\corp-existing"
+Check fmt terraform @("-chdir=$m",'fmt','-check','-recursive')
+Check init terraform @("-chdir=$m",'init','-backend=false','-input=false','-lockfile=readonly')
+Check validate terraform @("-chdir=$m",'validate','-no-color')
+Check lint tflint @("--chdir=$m",'--config=.tflint.hcl','--no-color')
+Check module terraform @("-chdir=$m",'test','-no-color')
+Check example-init terraform @("-chdir=$e",'init','-backend=false','-input=false','-lockfile=readonly')
+Check example-validate terraform @("-chdir=$e",'validate','-no-color')
+Check example terraform @("-chdir=$e",'test','-no-color','-var-file=terraform.tfvars.example')
+Check diff git @('--no-pager','diff','--',$m)
+```
+
+Inspect `/diff` and `/review`. Preserve `c7-final.diff`, file hashes, and the human code-only acceptance. Both suites mock AzAPI and use plan-mode runs; `MockOnly` and `.invalid` outputs are not Azure results. Stop on unexpected providers, live authentication, dependency drift, unrelated edits, or any failed clean check.
+
+**R2:** finalize and visually review the master. Preserve prompts, task IDs, hashes, exits, cuts, and source time ranges in `take.json`. Separate the upstream pins in `NOTICE.md`, qualification revision, and recording checkpoint. Earlier logs never become later execution evidence. Keep off-screen results labeled, raw evidence private, and unreviewed media unattached. Export 3/4/4/4/5/3/3 minutes: 26 recorded, 27 other live, seven Q&A. No real apply is permitted.

@@ -28,7 +28,12 @@
 
   function updateNavigation() {
     const current = Reveal.getCurrentSlide();
-    slideElements.forEach(slide => { slide.inert = slide !== current; });
+    const overview = Reveal.isOverview();
+    slideElements.forEach(slide => {
+      // Overview surfaces select slides; their links and media controls stay inert.
+      slide.inert = !overview && slide !== current;
+      slide.querySelector('.slide-content').inert = overview;
+    });
     document.querySelectorAll('[data-nav]').forEach(link => {
       if (link.dataset.nav === current.id) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
@@ -184,6 +189,8 @@
   }).then(() => {
     updateNavigation();
     Reveal.on('slidechanged', updateNavigation);
+    Reveal.on('overviewshown', updateNavigation);
+    Reveal.on('overviewhidden', updateNavigation);
     reducedMotion.addEventListener('change', event => Reveal.configure({ transition: event.matches ? 'none' : 'fade' }));
   }).catch(error => reportError('The presentation could not start. Check the local package and build output.', error));
 })();

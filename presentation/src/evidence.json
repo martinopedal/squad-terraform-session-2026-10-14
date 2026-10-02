@@ -1,10 +1,10 @@
 {
   "sourceRevision": "e9a9a481b9b5bf3a4af8046cb602895c89a9ac24",
-  "moduleRevision": null,
+  "moduleRevision": "883795608d7c873e7b47b3acd375e0b58819458a",
   "checks": [
     { "id": "source", "label": "Inherited source", "status": "Inspected", "detail": "Existing tests and root-boundary defects identified." },
-    { "id": "local", "label": "Module checks", "status": "Pending", "detail": "Formatting, validation, lint, isolated tests, and mutation check." },
-    { "id": "consumer", "label": "Consumer example", "status": "Pending", "detail": "Reusable module interface and private-network inputs." },
+    { "id": "local", "label": "Module checks", "status": "52 passed", "detail": "Mocked contracts and both mutation proofs passed locally." },
+    { "id": "consumer", "label": "Consumer example", "status": "2 passed", "detail": "Synthetic caller and output forwarding; no Azure deployment." },
     { "id": "plan", "label": "Real resource plan", "status": "Pending", "detail": "Authorized Corp scope, private state, and human review." },
     { "id": "azure", "label": "Azure read-back", "status": "Pending", "detail": "Private API, DNS, routing, identity, and policy results." }
   ]

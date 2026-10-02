@@ -1,5 +1,5 @@
 {
-  "version": "0.8",
+  "version": "0.10",
   "status": "draft; recordings and Azure evidence pending",
   "changes": [
     "0.1 - 2026-09-30: build the offline presentation and two-speaker delivery.",
@@ -9,6 +9,8 @@
     "0.5 - 2026-09-30: keep spoken delivery visible first in speaker view, with expandable operator cues.",
     "0.6 - 2026-10-01: apply verified Plan-mode, handoff, permission, review-protocol, usage, and appendix corrections without changing the session clock.",
     "0.7 - 2026-10-01: require reviewed native CLI footage with Squad selected; keep external capture tooling and synthetic playback imagery out of product demos.",
-    "0.8 - 2026-10-01: independent coordinator revision restores presenter shortcuts after controls and embeds complete bundle licenses."
+    "0.8 - 2026-10-01: independent coordinator revision restores presenter shortcuts after controls and embeds complete bundle licenses.",
+    "0.9 - 2026-10-01: repair overview thumbnails and selection while preserving R1 shortcuts; disclose qualification before genuine clean-run recording.",
+    "0.10 - 2026-10-02: bind the public module revision and actual 52-plus-2 local results; retain pending native recordings and Azure gates."
   ]
 }
