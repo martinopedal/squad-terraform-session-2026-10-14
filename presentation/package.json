@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Offline Reveal.js conference presentation for Martin and Haflidi.",
+  "description": "Offline Reveal.js conference presentation for Martin Opedal and Haflidi Fridthjofsson.",
   "scripts": {
     "build": "node scripts/build.mjs",
     "serve": "python -m http.server 4173 --bind 127.0.0.1 --directory ..",

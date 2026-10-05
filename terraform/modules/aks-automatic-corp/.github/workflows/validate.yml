@@ -1,0 +1,80 @@
+name: Terraform contracts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: terraform-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        terraform: ["1.14.8", "1.16.4"]
+    env:
+      TF_IN_AUTOMATION: "true"
+      TF_INPUT: "0"
+      CHECKPOINT_DISABLE: "1"
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+      - uses: terraform-linters/setup-tflint@90f302c255ef959cbfb4bd10581afecdb7ece3e6 # v4
+        with:
+          tflint_version: v0.64.0
+      - name: Show qualification toolchain
+        run: |
+          terraform version
+          tflint --version
+      - name: Check formatting
+        run: |
+          terraform fmt -check -recursive
+          terraform fmt -check - < examples/corp-existing/terraform.tfvars.example
+      - name: Initialize and validate the module
+        run: |
+          terraform init -backend=false -input=false -lockfile=readonly
+          terraform validate -no-color
+      - name: Lint the module
+        run: |
+          tflint --init
+          tflint --config=.tflint.hcl --no-color
+      - name: Test the private contract without Azure
+        run: terraform test -filter=tests/contract.tftest.hcl -no-color
+      - name: Initialize and validate the caller
+        working-directory: examples/corp-existing
+        run: |
+          terraform init -backend=false -input=false -lockfile=readonly
+          terraform validate -no-color
+          tflint --config=../../.tflint.hcl --no-color
+      - name: Test the synthetic caller without Azure
+        working-directory: examples/corp-existing
+        run: terraform test -filter=tests/example.tftest.hcl -var-file=terraform.tfvars.example -no-color
+
+  agent-setup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+      - name: Check native agent setup
+        run: node .github/skills/qualify-agent-setup/check.mjs
+      - name: Test native agent setup checker
+        run: node --test .github/skills/qualify-agent-setup/check.test.mjs

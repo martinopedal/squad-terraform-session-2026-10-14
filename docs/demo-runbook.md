@@ -2,7 +2,7 @@
 
 Use `build_then_record_clean_run`: qualify the module first, then record genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Don't open another terminal or substitute a viewer. This run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
 
-Local module qualification passed: 52 module cases, two caller cases, and both mutation proofs. These are instructions for a later genuine recording, not an executed transcript of that run. Hosted CI and minimum-version qualification remain pending. Azure target, budget, plan, and apply remain deferred.
+Local module qualification passed: 52 module cases, two caller cases, and both mutation proofs. Hosted Terraform matrix CI run 36990206303 passed on commit b7133679a89b1e2b36677400d659a03907c0f3f6. Native agent-setup CI passed in run 37286068987 on commit 00787f59ac19e3db0c3869a96ff45805c6cb523d, and final module verification run 37286237657 passed on commit 02e10e56bc15cc30c3193dce3ddc8e608cb87daf. These are instructions for a later genuine recording, not an executed transcript of that run. Azure target, budget, plan, and apply remain deferred.
 
 ## Prepare the checkpoint and capture
 
@@ -11,6 +11,27 @@ Martin operates; Haflidi checks evidence. In [feature-guide.md](feature-guide.md
 In the current CLI, use `/cwd` to confirm the public repository. Execute PowerShell blocks through the `!` shell escape in this same window. Each block is one shell invocation; shell variables don't carry into later CLI turns.
 
 Programmatic `-p` is batch output, not interactive Plan-mode footage; don't use it for these chapters.
+
+The file-backed native coder, [validator](../.github/agents/terraform-validator.agent.md), reviewer, MCP grounding, and
+[qualification skill](../.github/skills/qualify-agent-setup/SKILL.md) are described
+in [CONTRIBUTING.md](../CONTRIBUTING.md). Before choosing a new take checkpoint,
+have the operator run its Node readiness/negative checks. Inspect `/agent list`
+and verify all three profiles: `terraform-coder`, `terraform-validator`, and
+`terraform-reviewer`. Inspect `/instructions` and `/mcp`; `/mcp` should show the
+`microsoft-learn` and `terraform` servers for coder/reviewer, not validator.
+MCP policy is hosted first. Microsoft Learn is cloud-hosted; HashiCorp has no
+documented hosted Terraform MCP, so Terraform MCP uses Docker. Pre-flight Docker
+Desktop and the exact pinned Terraform MCP image with:
+
+```powershell
+docker pull hashicorp/terraform-mcp-server:1.3.0@sha256:423a6b8e2ee06affcf090892f40c86469caba45fd2448ffa8ca5d717a174f7d5
+```
+
+The native Terraform MCP binary is not used for this demo. Restart Copilot in
+this same window only if discovery is stale, then inspect again. Static checks and MCP discovery are not footage or proof of profile
+activation. Squad remains the coordinator; the narrow-tool lane uses explicit
+native selections, not an assumption that general-purpose Squad tasks inherit
+profile tool filters.
 
 Save `copilot --version`, `squad --version`, `terraform version`, and `tflint --version` in `evidence\versions.txt`; pin resolved executables/packages and hashes. Prior CLI probes differed between 1.0.88 and 1.0.89; `--no-auto-update` isn't version selection. The module requires Terraform `>=1.14.8,<2.0`, locked AzAPI 2.12.0, and configured TFLint 0.64.0.
 
@@ -22,8 +43,10 @@ git cat-file -e "${pin}:terraform/modules/aks-automatic-corp/tests/contract.tfte
 if ($LASTEXITCODE) { throw 'The reviewed module checkpoint is not committed yet.' }
 $take = Join-Path (Split-Path (Get-Location)) ('clean-run-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory "$take\evidence" | Out-Null
-$paths = @('AGENTS.md','QUALITY.md','PUBLICATION.md',
-  '.github\agents\','.github\skills\','terraform\modules\aks-automatic-corp\',
+$paths = @('AGENTS.md','QUALITY.md','PUBLICATION.md','README.md','CONTRIBUTING.md','.gitignore',
+  '.github\agents\','.github\skills\','.github\instructions\','.github\copilot-instructions.md',
+  '.github\pull_request_template.md','docs\','presentation\README.md','presentation\index.html',
+  'terraform\module-source.json','terraform\modules\aks-automatic-corp\',
   '.squad\team.md','.squad\routing.md','.squad\decisions.md','.squad\config.json',
   '.squad\casting\registry.json','.squad\casting\policy.json',
   '.squad\agents\*\charter.md','.squad\templates\')
@@ -84,14 +107,25 @@ Inspect `/session plan`. Revise genuinely: "Put unchanged payload assertions and
 Martin operates; Haflidi reads returned evidence.
 
 ```text
-Squad: lead is the sole HCL writer for main.tf and tests/contract.tftest.hcl.
-Implement alternate_network_payload with the existing AzAPI mock and plan mode.
-Reviewer inspects assertions read-only. Devrel updates only the README's test
-explanation after the test is agreed. Return actual task IDs, paths, diffs,
-commands, exits, and unresolved issues. No other edits or deployments.
+Squad: lead owns scope and prepares the bounded native terraform-coder brief for
+main.tf and tests/contract.tftest.hcl. No general-purpose task edits those files.
+The brief adds alternate_network_payload with the existing AzAPI mock and plan
+mode. Reviewer prepares read-only acceptance criteria. Devrel owns only the
+README's test explanation after agreement. Return actual task IDs where used,
+file owners, checks, and unresolved issues. No deployment or other edits.
 ```
 
-Show reviewed roster/charters, `/tasks`, actual starts, and handoffs. Record `c3-handoffs.md`; don't treat assignment as completion. No nested fleet or concurrent writers on the test file.
+Show reviewed roster/charters, `/tasks`, `/agent list`, actual starts, and
+handoffs. The list must include `terraform-coder`, `terraform-validator`, and
+`terraform-reviewer`. Inspect `/mcp` while coder/reviewer are selected to show the
+`microsoft-learn` and `terraform` servers, and note that validator has no MCP
+servers. Then use `/agent terraform-coder` in this same window, supply the
+accepted brief, and observe the actual edit tool and changed files. The validator,
+not this profile, runs commands in C5/C7 after human approval of each command.
+Return to `/agent squad` for C4 and coordination. Record `c3-handoffs.md`,
+including actual profile selection; do not invent a task ID for manual selection
+or treat assignment as completion. No nested fleet or concurrent writers on the
+test file.
 
 ## C4: Invoke guidance and a source | 4 minutes
 
@@ -105,11 +139,21 @@ network requirements. Cite the source/version relevant to private API access
 and hosted-system subnets. Don't contact an Azure account or change providers.
 ```
 
-Show the actual skill invocation, MCP call/result, and one scoped permission decision. Approve only the inspected read-only request, never blanket interpreter access. Save `c4-source.md` with URL, retrieval time, tool, and limitation. Missing skill/server or a failed lookup stays failed/pending, not invented footage.
+Show the actual skill invocation, `/mcp` output with `microsoft-learn` and
+`terraform`, the read-only MCP call/result, and one scoped permission decision.
+Approve only the inspected read-only request, never blanket interpreter access.
+Save `c4-source.md` with URL, retrieval time, tool, server/version, and
+limitation. Missing skill/server or a failed lookup stays failed/pending, not
+invented footage.
 
 ## C5: Seed, fail, repair | 5 minutes
 
-Haflidi takes control; Martin explains the repair. Run this block before mutation:
+Haflidi takes control; Martin explains the repair. Select
+`/agent terraform-validator`, confirm its `read`, `search`, and `execute` tools,
+and approve each command separately under native prompts. The validator has no
+`edit` tool, but its shell can still write files; the command list is enforced
+only by its instructions and native approval prompts. It must stop on failure.
+Run this block before mutation:
 
 ```powershell
 $PSNativeCommandUseErrorActionPreference = $false
@@ -135,14 +179,20 @@ if ($phase -eq 'seeded-failure' -and -not $code) { throw 'Mutation was not detec
 Stop if the unmutated run fails. Preserve `main.tf` and its SHA-256 as `main.before-seed.tf` and `main.before-seed.sha256` in evidence. On screen, label **DELIBERATE LAB MUTATION, NOT AN AI-DISCOVERED DEFECT**:
 
 ```text
-Lead: in this disposable worktree only, change
+Native terraform-coder: in this disposable worktree only, change
 body.properties.apiServerAccessProfile.enablePrivateCluster from true to false.
 Change nothing else. Keep the tests, mocks, provider, and permissions unchanged.
 ```
 
 Rerun the identical block with phase `seeded-failure`. Require a nonzero exit and the `private_automatic_contract` assertion: "The API must remain private with public FQDN disabled and VNet integration enabled." Syntax/authentication failures do not satisfy this checkpoint.
 
-Use `/review`: "Read-only review of this labeled mutation; identify the violated assertion." Ask lead to restore only that field, inspect `/diff`, and rerun as `repaired`. Require exit zero and the original `main.tf` hash. Ordinary repair is not formal Squad rejection. Hand controls back to Martin.
+Select `/agent terraform-coder` before the mutation/repair requests. Use `/review`:
+"Read-only review of this labeled mutation; identify the violated assertion."
+The built-in review command is distinct from the configured native reviewer;
+do not claim it inherits that profile's tools. Ask the coder to restore only
+that field, inspect `/diff`, and have the operator rerun as `repaired`.
+Require exit zero and the original `main.tf` hash. Ordinary repair is not formal
+Squad rejection. Return to `/agent squad` for C6. Hand controls back to Martin.
 
 ## C6: Save and resume | 3 minutes
 
@@ -159,7 +209,9 @@ Show the actual record. Use `/new`, then `/resume guided-clean-run`, `/cwd`, `/c
 
 ## C7: Validate the consumer and review | 3 minutes
 
-Martin drives; Haflidi reviews. In the same approved isolated context, record commands and stop at the first failure:
+Martin drives; Haflidi reviews. Select `/agent terraform-validator` in the same
+approved isolated context, approve each command separately, record commands, and
+stop at the first failure:
 
 ```powershell
 $PSNativeCommandUseErrorActionPreference = $false
@@ -191,5 +243,13 @@ Check diff git @('--no-pager','diff','--',$m)
 ```
 
 Inspect `/diff` and `/review`. Preserve `c7-final.diff`, file hashes, and the human code-only acceptance. Both suites mock AzAPI and use plan-mode runs; `MockOnly` and `.invalid` outputs are not Azure results. Stop on unexpected providers, live authentication, dependency drift, unrelated edits, or any failed clean check.
+
+For the independent native-profile acceptance, preserve the public handoff and
+use `/new` followed by `/agent terraform-reviewer` in this same window. Supply
+the exact diff, files, revision, MCP citations, and sanitized validator results.
+Record the actual review rather than treating a profile switch in the author's
+context as independent. Return findings to Squad and the human maintainer. This
+additional handoff must be rehearsed within the chapter budget; no completed take
+or timing qualification is implied by adding the instructions.
 
 **R2:** finalize and visually review the master. Preserve prompts, task IDs, hashes, exits, cuts, and source time ranges in `take.json`. Separate the upstream pins in `NOTICE.md`, qualification revision, and recording checkpoint. Earlier logs never become later execution evidence. Keep off-screen results labeled, raw evidence private, and unreviewed media unattached. Export 3/4/4/4/5/3/3 minutes: 26 recorded, 27 other live, seven Q&A. No real apply is permitted.

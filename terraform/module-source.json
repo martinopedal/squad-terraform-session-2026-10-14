@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "repository": "https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp",
-  "revision": "883795608d7c873e7b47b3acd375e0b58819458a",
-  "gitTree": "40b628f7983e8cc099b21dcbdf5ad4657de01814",
+  "revision": "02e10e56bc15cc30c3193dce3ddc8e608cb87daf",
+  "gitTree": "a9f29eddc0023e1158ce5f981dc112eabbce669a",
   "copyPath": "terraform/modules/aks-automatic-corp",
   "files": [
     {
@@ -11,8 +11,58 @@
       "mode": "100644"
     },
     {
+      "path": ".github/agents/terraform-coder.agent.md",
+      "gitBlobSha": "bc308bdfca41b0f49434a517249c28120100bad1",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/agents/terraform-reviewer.agent.md",
+      "gitBlobSha": "d8f9e31c3ef628c853569f5fa167467f24e1f13c",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/agents/terraform-validator.agent.md",
+      "gitBlobSha": "878c58ac80619d4192bd82cfa307ede5b24c3c21",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "gitBlobSha": "298960fb0e4a2063dbf835aa2ea6aa453aa9dfc1",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/instructions/terraform.instructions.md",
+      "gitBlobSha": "a9f9fa8226395a7acadae6ac3be6183ded3b9d94",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "gitBlobSha": "ec4297540b72301b5a8446670577b4a8f9712f9c",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/skills/qualify-agent-setup/SKILL.md",
+      "gitBlobSha": "4f02fd8a22bc0b3fd8ae69a7e065dd87afda3255",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/skills/qualify-agent-setup/check.mjs",
+      "gitBlobSha": "de21e89c339aa2b9c8cfe698c278762380fca71f",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/skills/qualify-agent-setup/check.test.mjs",
+      "gitBlobSha": "7faee767c75984c70dcc2e37a30328dd3965edaa",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/workflows/validate.yml",
+      "gitBlobSha": "b5dbeba50729a8bbdbfbe326d6aa0d5b7ddb3b59",
+      "mode": "100644"
+    },
+    {
       "path": ".gitignore",
-      "gitBlobSha": "6abbe4a9d34d9855633067f8ff553d674dd3cc31",
+      "gitBlobSha": "955c0e8c1481f93865e30de0ae0fe6a67d90cef1",
       "mode": "100644"
     },
     {
@@ -26,8 +76,43 @@
       "mode": "100644"
     },
     {
+      "path": "AGENTS.md",
+      "gitBlobSha": "6720e005e74a8e6ffe15d23c89b9d4529a6300f1",
+      "mode": "100644"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "gitBlobSha": "41c2cf5532693daf5f07be0f4a75fe18b7a65fe9",
+      "mode": "100644"
+    },
+    {
+      "path": "LICENSE",
+      "gitBlobSha": "617808fe208453c082fa9bbbae4b82e8a12042b1",
+      "mode": "100644"
+    },
+    {
+      "path": "NOTICE.md",
+      "gitBlobSha": "28c963d8f4ca9313083637ac13ea93f6efddf48d",
+      "mode": "100644"
+    },
+    {
+      "path": "README.md",
+      "gitBlobSha": "047701788b2107e5c4e9795b09a9220e22817dfe",
+      "mode": "100644"
+    },
+    {
+      "path": "VALIDATION.md",
+      "gitBlobSha": "ca1101f4121568d2cc34575b30e82b6dd29e05e4",
+      "mode": "100644"
+    },
+    {
       "path": "examples/corp-existing/.terraform.lock.hcl",
       "gitBlobSha": "d8c5eb740f1b71afe85b2d4745b43d6843399610",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/corp-existing/README.md",
+      "gitBlobSha": "85b1c23682c650e6d6c59170cf4e13d04d699b8e",
       "mode": "100644"
     },
     {
@@ -43,11 +128,6 @@
     {
       "path": "examples/corp-existing/providers.tf",
       "gitBlobSha": "53429a0f5d348dbf5664e0588dd9c6112bfb44cf",
-      "mode": "100644"
-    },
-    {
-      "path": "examples/corp-existing/README.md",
-      "gitBlobSha": "85b1c23682c650e6d6c59170cf4e13d04d699b8e",
       "mode": "100644"
     },
     {
@@ -71,11 +151,6 @@
       "mode": "100644"
     },
     {
-      "path": "LICENSE",
-      "gitBlobSha": "617808fe208453c082fa9bbbae4b82e8a12042b1",
-      "mode": "100644"
-    },
-    {
       "path": "locals.tf",
       "gitBlobSha": "a1ca269e9b9e5e60ef91a3cf52b9bafd139b8c94",
       "mode": "100644"
@@ -86,18 +161,8 @@
       "mode": "100644"
     },
     {
-      "path": "NOTICE.md",
-      "gitBlobSha": "28c963d8f4ca9313083637ac13ea93f6efddf48d",
-      "mode": "100644"
-    },
-    {
       "path": "outputs.tf",
       "gitBlobSha": "978acd75f6d5bf889b43eb9868d46867309f2fc8",
-      "mode": "100644"
-    },
-    {
-      "path": "README.md",
-      "gitBlobSha": "600b8d27a3a0dc2c1808c9e89d69644abd0886ff",
       "mode": "100644"
     },
     {
@@ -108,11 +173,6 @@
     {
       "path": "tests/contract.tftest.hcl",
       "gitBlobSha": "ae6f72b279f673f2e20b8444994da8953a240572",
-      "mode": "100644"
-    },
-    {
-      "path": "VALIDATION.md",
-      "gitBlobSha": "0fbac5c7c443b6ce51d4a65f2a1f6d240c6b7c25",
       "mode": "100644"
     },
     {
@@ -128,13 +188,13 @@
     "moduleTestsPassed": 52,
     "callerTestsPassed": 2,
     "mutationProofsPassed": 2,
-    "hostedCI": "not-installed-workflow-permission-required",
+    "hostedCI": "passed run 37286237657 on 02e10e56bc15cc30c3193dce3ddc8e608cb87daf; contracts 1.14.8, contracts 1.16.4, and agent-setup succeeded; agent-setup first passed run 37286068987 on 00787f59ac19e3db0c3869a96ff45805c6cb523d",
     "azureDeployment": "not-performed",
     "nativeDemoRecordings": "pending"
   },
   "notes": [
     "Git blob hashes describe the LF-normalized published source.",
     "Both public source trees must have the same Git tree hash.",
-    "A local unactivated CI workflow is intentionally excluded from both published copies."
+    "Hosted CI is credential-free and does not prove Azure acceptance."
   ]
 }

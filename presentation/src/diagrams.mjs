@@ -111,3 +111,31 @@ export const consumption = () => svg('consumer-map', 1152, 304,
    ${text(539, 274, 'Kubernetes access and lifecycle stay separate', 23)}
    ${path('M 382 91 H 502', 'consumer-map')}
    ${text(394, 69, 'calls', 20, 400, '#424242')}`);
+
+
+export const agentSetup = () => svg('agent-setup-map', 1152, 304,
+  'Repository guidance feeds both Squad coordination and three narrow native Terraform profiles. The operator explicitly selects coder, validator, and reviewer profiles. MCP sources provide read-only documentation and Squad memory.',
+  `${rect(1, 7, 326, 130, '#EEF0FF', '#464FEB')}
+   ${text(24, 45, 'ALWAYS-ON REPO GUIDANCE', 17, 600, '#2E37BE')}
+   ${text(24, 82, 'AGENTS.md', 26, 600)}
+   ${text(24, 114, '.github\\copilot-instructions.md', 19)}
+   ${rect(1, 168, 326, 86, '#FAFAFA')}
+   ${text(24, 202, 'HCL APPLYTO RULES', 17, 600, '#424242')}
+   ${text(24, 232, 'terraform.instructions.md', 21, 600)}
+   ${rect(414, 42, 318, 181, '#FAFAFA', '#1B1B1B')}
+   ${text(439, 82, 'SQUAD COORDINATOR', 17, 600, '#424242')}
+   ${text(439, 121, 'squad.agent.md', 27, 600)}
+   ${text(439, 158, '.squad\\team + routing', 22)}
+   ${text(439, 191, 'charters + decisions', 22)}
+   ${rect(826, 7, 326, 247, '#EEF0FF', '#464FEB')}
+   ${text(850, 45, 'NATIVE TERRAFORM PROFILES', 17, 600, '#2E37BE')}
+   ${text(850, 84, 'terraform-coder', 24, 600)}
+   ${text(850, 117, 'edit + read-only docs', 19)}
+   ${text(850, 157, 'terraform-validator', 24, 600)}
+   ${text(850, 190, 'offline checks only', 19)}
+   ${text(850, 228, 'terraform-reviewer', 23, 600)}
+   ${text(850, 249, 'read-only review + docs, separate context', 15)}
+   ${path('M 333 77 H 405', 'agent-setup-map')}
+   ${path('M 733 132 H 817', 'agent-setup-map')}
+   ${path('M 333 211 H 405 V 162', 'agent-setup-map')}
+   ${text(444, 284, 'MCP: Microsoft Learn, Terraform registry docs, squad_state memory', 21, 600, '#2E37BE')}`);

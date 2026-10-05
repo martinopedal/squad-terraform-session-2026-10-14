@@ -35,7 +35,7 @@ Do not fabricate native CLI screens, terminal output, deployment results, or a s
 
 The Reveal deck must have readable text/code, accurate diagrams, accessible contrast, keyboard navigation, speaker notes, working local media controls, and offline behavior.
 
-Martin and Haflidi's talk track must cover the content, including narration over the recorded chapters, with explicit timing and handoffs. Keep questions within the 60-minute slot.
+The talk track for Martin Opedal and Haflidi Fridthjofsson must cover the content, including narration over the recorded chapters, with explicit timing and handoffs. Keep questions within the 60-minute slot.
 
 ## Release evidence
 

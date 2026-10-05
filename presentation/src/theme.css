@@ -83,15 +83,17 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .slide-hero .slide-content { position: relative; }
 .slide-hero .slide-header { position: relative; padding-top: 8px; }
 .slide-hero .slide-body { display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px; }
-.hero-copy { display: flex; flex-direction: column; gap: 25px; justify-content: center; }
+.hero-copy { display: flex; flex-direction: column; gap: 14px; justify-content: center; }
 .hero-lede { font-size: 36px; color: var(--ms-blue-dark); font-weight: 600; line-height: 1.17 !important; }
 .hero-description { font-size: 27px; color: var(--ink-700); }
-.hero-art { position: absolute; right: 64px; top: 185px; width: 440px; }
-.hero-art svg { max-height: 360px; }
-.speakers { display: flex; align-items: center; gap: 24px; font-size: 28px; font-weight: 650; margin-top: 2px; }
-.speaker-separator { height: 25px; width: 2px; background: var(--ms-blue); }
+.hero-art { position: absolute; right: 64px; top: 160px; width: 420px; }
+.hero-art svg { max-height: 340px; }
+.speakers { display: grid; gap: 6px; margin-top: 2px; max-width: 620px; }
+.speaker-card { display: grid; gap: 2px; padding-left: 14px; border-left: 3px solid var(--ms-blue); }
+.speaker-card strong { font-size: 23px; line-height: 1.15; color: var(--ms-blue-dark); }
+.speaker-card em { font-size: 15px; line-height: 1.25; font-style: normal; color: var(--ink-700); }
 .session-meta { font-size: 18px; color: var(--ink-700); }
-.slide-hero .slide-footer { min-height: 70px; }
+.slide-hero .slide-footer { min-height: 62px; }
 .slide-baseline .slide-body { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
 .source-pin { display: flex; flex-direction: column; gap: 5px; }
 .source-pin strong { font-family: var(--mono); font-size: 42px; font-weight: 500; letter-spacing: -.035em; }
@@ -195,3 +197,29 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .presentation-tools button { min-height: 32px; font-size: 12px; padding: 5px 8px; }
   .navigation-columns { grid-template-columns: 1fr; }
 }
+
+
+.slide-news .slide-body { justify-content: center; }
+.news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.news-grid > div { min-height: 146px; background: var(--bg-1); border-top: 3px solid var(--ms-blue); padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
+.news-grid strong { color: var(--ms-blue-dark); font-family: var(--mono); font-size: 15px; font-weight: 650; }
+.news-grid span { font-size: 24px; font-weight: 650; line-height: 1.15; }
+.news-grid em { font-style: normal; color: var(--ink-700); font-size: 18px; line-height: 1.25; }
+.news-grid code { font-size: .9em; color: var(--ms-blue-dark); }
+.slide-news .source-links { gap: 13px; font-size: 13px; }
+
+.slide-squad-update .slide-body { justify-content: center; }
+.squad-timeline { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.squad-timeline > div { display: grid; grid-template-columns: 142px 1fr; gap: 26px; align-items: center; min-height: 78px; border-left: 5px solid var(--ms-blue); background: var(--bg-1); padding: 16px 22px; }
+.squad-timeline strong { color: var(--ms-blue-dark); font-family: var(--mono); font-size: 30px; font-weight: 500; }
+.squad-timeline span { color: var(--ink-700); font-size: 23px; line-height: 1.25; }
+.squad-timeline code { color: var(--ms-blue-dark); font-size: .82em; }
+.slide-squad-update .source-links { gap: 16px; font-size: 14px; }
+
+.slide-agent-setup .slide-body { justify-content: start; gap: 10px; }
+.slide-agent-setup .figure-svg svg { max-height: 258px; }
+.agent-notes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.agent-notes-grid > div { background: var(--bg-1); border-left: 4px solid var(--ms-blue); padding: 10px 12px; display: flex; flex-direction: column; gap: 5px; min-height: 106px; }
+.agent-notes-grid strong { font-size: 17px; font-weight: 650; }
+.agent-notes-grid span { font-size: 14px; color: var(--ink-700); line-height: 1.22; }
+.agent-notes-grid code { color: var(--ms-blue-dark); font-size: .86em; }

@@ -27,3 +27,15 @@
 **I handle:** Architecture, design reviews, technical planning, blocker resolution
 
 **I don't handle:** Writing production code (that's the team's job), security audits (security agent), documentation (docs agent)
+
+## Native Terraform handoff
+
+Own the contract, file boundaries, and acceptance criteria. Give the operator
+an explicit brief for
+[terraform-coder](../../../.github/agents/terraform-coder.agent.md); that native
+profile, not a concurrent lead task, is the assigned file writer in the
+narrow-tool lane. Its `read`/`search`/`edit` filter and selected read-only MCP docs tools apply
+only when actually selected. A general-purpose Squad task does not inherit them
+from this charter.
+The operator runs checks; an independent reviewer inspects the returned diff.
+Keep publication and private-consumer deployment as separate human gates.

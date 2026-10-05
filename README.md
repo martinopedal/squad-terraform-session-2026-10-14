@@ -1,12 +1,12 @@
 # GitHub Copilot CLI and Squad for Terraform
 
-A two-speaker session by **Martin and Haflidi** on using GitHub Copilot CLI and Squad together to build, check, and review Terraform for Azure.
+A two-speaker session by **Martin Opedal, Enterprise Cloud Solution Architect, Microsoft** and **Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft** on using GitHub Copilot CLI and Squad together to build, check, and review Terraform for Azure.
 
 **Session:** October 14, 2026, 10:00-11:00, UTC+02:00, Room 6.
 
 ## What this repository contains
 
-The presentation shell and speaker material are built and reviewed. The public Terraform module passed local qualification: 52 module cases, two caller cases, and two fail-restore-pass mutation proofs. Hosted CI, genuine demo recordings, and Azure deployment evidence remain pending.
+The presentation shell and speaker material are built and reviewed. The public Terraform module passed local qualification: 52 module cases, two caller cases, two fail-restore-pass mutation proofs, and hosted Terraform matrix CI run 36990206303 on commit b7133679a89b1e2b36677400d659a03907c0f3f6. Native agent-setup CI passed in run 37286068987 on commit 00787f59ac19e3db0c3869a96ff45805c6cb523d, and final module verification run 37286237657 passed on commit 02e10e56bc15cc30c3193dce3ddc8e608cb87daf; genuine demo recordings and Azure deployment evidence remain pending.
 
 | Path | Content |
 | --- | --- |
@@ -19,11 +19,54 @@ The presentation shell and speaker material are built and reviewed. The public T
 
 The module's separate repository is [terraform-azapi-aks-automatic-corp](https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp), pinned here to `883795608d7c873e7b47b3acd375e0b58819458a`. The [source manifest](terraform/module-source.json) binds the matching presentation copy. See the module's [qualification summary](terraform/modules/aks-automatic-corp/VALIDATION.md) for the exact boundary.
 
+That manifest identifies the published baseline, not later uncommitted files.
+After agent setup changes, the maintainer must publish the module and refresh
+the binding before claiming a new matching release.
+
 The [C1-C7 operator runbook](docs/demo-runbook.md) provides current-shell commands, native prompts, speaker handoffs, and recording checkpoints. Use it for the later genuine clean demonstration, not as a claim that the recording already exists.
+
+## Native agents alongside the existing Squad
+
+[CONTRIBUTING.md](CONTRIBUTING.md) wires the file-backed
+[terraform-coder](.github/agents/terraform-coder.agent.md),
+[terraform-validator](.github/agents/terraform-validator.agent.md), and
+[terraform-reviewer](.github/agents/terraform-reviewer.agent.md) into the
+existing [Squad routing](.squad/routing.md). Select them through `/agent` in the
+current CLI window; do not reinstall Squad. Root profiles are needed for root
+discovery even though the module copy contains the same supporting files.
+
+The coder has `read`, `search`, `edit`, and selected read-only MCP docs tools.
+The validator has `read`, `search`, and `execute`, is manual-selection only, and
+has no `edit` tool, but its shell can still write files; the command list is
+enforced only by its instructions and native approval prompts. The reviewer has
+`read`, `search`, and selected read-only MCP docs tools. Squad scopes and receives the
+handoff; the human maintainer owns acceptance. Native permission prompts and
+separate publication/private-consumer apply gates remain in place.
+
+Coder and reviewer ground claims through Microsoft Learn and Terraform Registry
+MCP servers. MCP policy is hosted first: Microsoft Learn is cloud-hosted, while
+HashiCorp has no documented hosted Terraform MCP, so Terraform MCP uses Docker
+with the pinned image. Docker Desktop and network access are required for
+Learn/registry docs. Copilot CLI and Copilot cloud agent honor `mcp-servers`; VS
+Code ignores that frontmatter. MCP results are documentation lookups, not
+validation or Azure acceptance. The native Terraform MCP binary is not used for
+this demo.
+
+The [qualification skill](.github/skills/qualify-agent-setup/SKILL.md) provides
+executable static and negative checks using existing Node.js and Git:
+
+```powershell
+node .github\skills\qualify-agent-setup\check.mjs
+node --test .github\skills\qualify-agent-setup\check.test.mjs
+```
+
+These checks prove setup integrity, not a genuine native agent run, MCP server
+startup, independent review, or Azure acceptance. See the contributing guide for
+full module-copy comparison.
 
 ## Open the presentation
 
-The built [Reveal presentation](presentation/index.html) has 22 main slides and six appendix slides. Its 60-minute structure includes 26 minutes of silent recorded chapters with live narration, 27 minutes of other live explanation, and seven minutes of Q&A. The complete speaker script covers the content and includes a prepared Q&A fallback.
+The built [Reveal presentation](presentation/index.html) has 25 main slides and six appendix slides. Its 60-minute structure includes 26 minutes of silent recorded chapters with live narration, 27 minutes of other live explanation, and seven minutes of Q&A. The complete speaker script covers the content and includes a prepared Q&A fallback.
 
 For speaker notes, serve the clone locally:
 

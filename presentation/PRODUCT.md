@@ -8,7 +8,7 @@ brand
 
 ## Users
 
-Infrastructure engineers watch a projected 16:9 screen in Room 6. Martin and Haflidi deliver the session together, using a separate speaker window and silent local clips. The operator needs predictable controls without internet access.
+Infrastructure engineers watch a projected 16:9 screen in Room 6. Martin Opedal, Enterprise Cloud Solution Architect, Microsoft, and Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft, deliver the session together using a separate speaker window and silent local clips. The operator needs predictable controls without internet access.
 
 ## Product purpose
 

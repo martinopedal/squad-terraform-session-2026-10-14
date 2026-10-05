@@ -72,3 +72,9 @@ takes/
 .squad/.cache/
 # Squad: SubSquad activation file (local to this machine)
 .squad-workstream
+
+# Disposable native-agent checks and local-only operator configuration
+.agentic-checks/
+.vscode/mcp.json
+*.tfrc
+.terraformrc

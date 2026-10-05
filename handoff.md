@@ -35,7 +35,7 @@ The module is pinned to `883795608d7c873e7b47b3acd375e0b58819458a`. Its 23-file 
 | Mutation proof | Wrong SKU and public-API mutations each failed the intended assertion; the unchanged 52-case suite passed after each exact restoration. |
 | Module review | Independent static and publication-safety reviews passed for the qualified source. |
 | Presentation checks | Ten media-policy tests, 97 browser/content checks, and 66 slide/fragment captures across two resolutions. The updated evidence slide was visually inspected. |
-| Hosted module CI | **Blocked:** workflow permission is missing; no hosted CI success is claimed. |
+| Hosted module CI | Terraform matrix run 36990206303 passed at b7133679a89b1e2b36677400d659a03907c0f3f6; native agent setup passed run 37286068987 at 00787f59ac19e3db0c3869a96ff45805c6cb523d; final module run 37286237657 passed at 02e10e56bc15cc30c3193dce3ddc8e608cb87daf. |
 | Azure | **Not deployed.** Corp target/budget, effective policy, dependencies, real plan, and read-back remain separate gates. |
 | Recordings | Genuine clean runs are still required; no custom viewer footage is accepted. |
 
@@ -76,7 +76,7 @@ terraform test -filter=tests\contract.tftest.hcl -no-color
 
 Run each command separately, inspect the exit code, and stop on failure. Initialize/test `examples\corp-existing` separately with its synthetic var-file as documented there.
 
-Terraform 1.14.8 is a declared minimum, not a locally verified runtime. A CI workflow for 1.14.8 and 1.16.4 is prepared in the private working area but was not published because the current GitHub login lacks `workflow` scope. An authorized maintainer can grant that scope and publish the reviewed workflow later. Do not bypass it or call the local result a CI pass.
+Terraform 1.14.8 is a declared minimum and is covered by hosted Linux Terraform matrix run 36990206303 at b7133679a89b1e2b36677400d659a03907c0f3f6, alongside Terraform 1.16.4. The native agent-setup release published the module first, verified the agent-setup job in run 37286068987, then re-verified the final module documentation commit in run 37286237657 before mirroring the module into this session repository. Do not claim Azure acceptance from these credential-free checks.
 
 ## Recording decision
 

@@ -13,7 +13,7 @@ The original root mixed infrastructure and Kubernetes application configuration.
 
 The independently published module is pinned to `883795608d7c873e7b47b3acd375e0b58819458a`. Its source tree and the copy under `terraform\modules\aks-automatic-corp\` must match. [The publication manifest](../terraform/module-source.json) records the exact revision, Git tree, and file blob hashes.
 
-The source release contains 23 files. A credential-free CI workflow is prepared locally but is not published because the current GitHub login lacks workflow permission. Neither source copy includes that unactivated workflow.
+The original source release contained 23 files. The independent module repository now has a credential-free workflow; Terraform matrix run 36990206303 passed on commit b7133679a89b1e2b36677400d659a03907c0f3f6. This release adds the native agent setup files and agent-setup workflow job. Agent setup passed in run 37286068987 on commit 00787f59ac19e3db0c3869a96ff45805c6cb523d, and final module verification passed in run 37286237657 on commit 02e10e56bc15cc30c3193dce3ddc8e608cb87daf.
 
 The existing landing-zone implementation is a dependency of the private deployment environment, not source to copy into this repository. Public examples use placeholders and explicit platform-owned inputs. No real environment identifiers, state, secrets, or private policy evidence are included here.
 

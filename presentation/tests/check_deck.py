@@ -100,7 +100,7 @@ def main():
             manifest = page.evaluate("window.presentationBuild")
             report["deckVersion"] = manifest["version"]
             report["htmlSHA256"] = hashlib.sha256((ROOT / "index.html").read_bytes()).hexdigest()
-            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 28 and manifest["mainSlides"] == 22 and manifest["appendixSlides"] == 6)
+            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 31 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 6)
             check("26/27/7 clock", [manifest[k] for k in ("recordedMinutes", "liveMinutes", "qaMinutes")] == [26, 27, 7])
             check("main spoken words", 5300 <= manifest["spokenWords"] <= 5900, manifest["spokenWords"])
             check("prepared Q&A words", 650 <= manifest["qaWords"] <= 800, manifest["qaWords"])
@@ -235,12 +235,12 @@ def main():
             for width, height in [(1280, 720), (1920, 1080)]:
                 label = f"{width}x{height}"
                 page.set_viewport_size({"width": width, "height": height})
-                page.goto(f"{url}?overview-regression={width}#/s04-layers", wait_until="networkidle")
-                page.wait_for_function("() => Reveal.isReady() && Reveal.getCurrentSlide().id === 's04-layers'")
+                page.goto(f"{url}?overview-regression={width}#/s07-agent-setup", wait_until="networkidle")
+                page.wait_for_function("() => Reveal.isReady() && Reveal.getCurrentSlide().id === 's07-agent-setup'")
                 check(f"normal-slide accessibility before overview {label}", page.evaluate(normal_slide_protection))
                 page.keyboard.press("Escape")
                 page.wait_for_function("() => Reveal.isOverview()")
-                thumbnails = page.evaluate("""() => ['s03-baseline', 's05-parallel'].map(id => {
+                thumbnails = page.evaluate("""() => ['s04-layers', 's05-parallel'].map(id => {
                     const slide = document.getElementById(id);
                     const content = slide.querySelector('.slide-content');
                     const heading = slide.querySelector('h1,h2');
@@ -365,7 +365,7 @@ def main():
             check("notes current and next", notes.locator("#current-slide iframe").count() == 1 and notes.locator("#upcoming-slide iframe").count() == 1)
             check("notes full spoken script", "A useful agent session" in notes.locator(".speaker-controls-notes .value").inner_text())
             check("notes timer advances", timer_before != timer_after)
-            page.evaluate("Reveal.slide(6,0,-1)")
+            page.evaluate("Reveal.slide(9,0,-1)")
             notes.wait_for_function("() => document.querySelector('.speaker-controls-notes .value').textContent.includes('direct project-write guards')")
             cues = notes.locator(".operator-cues summary")
             cues.click()
@@ -374,7 +374,7 @@ def main():
             check("spoken notes visible before operator details", not notes.locator(".operator-cues").evaluate("e => e.open")
                   and "Activate native Plan mode" in notes.locator(".speaker-controls-notes .value").inner_text())
             notes.screenshot(path=str(QA / "speaker-view.png"))
-            page.evaluate("Reveal.slide(5,0,-1)")
+            page.evaluate("Reveal.slide(8,0,-1)")
             notes.close()
             page.bring_to_front()
             check("notes return preserves control focus", page.evaluate("document.activeElement.id") == "open-notes")

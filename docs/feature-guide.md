@@ -6,9 +6,9 @@ The example is a reusable Terraform module for a fresh, private AKS Automatic cl
 
 ## Evidence and availability
 
-Reviewed September 30, 2026. We read current GitHub documentation and pinned Squad's default `dev` branch at `93aec83accb44e08c39e4a799f13b55208215a13`. The stable `main` comparison is `5e086cece467686b2d3c6950241cf87bca5fffe8`. Squad is alpha; documentation and coordinator templates sometimes disagree.
+Reviewed September 30, 2026. We read current GitHub documentation and pinned Squad's default `dev` branch at `93aec83accb44e08c39e4a799f13b55208215a13`. The stable `main` comparison is `5e086cece467686b2d3c6950241cf87bca5fffe8`. Squad was alpha at that review. Squad 1.0.0 (October 3) and 1.0.1 (October 4) are stabilization releases with no breaking command changes from 0.13.1, and the demo machine uses 1.0.1. See [whats-new.md](whats-new.md). Documentation and coordinator templates still sometimes disagree.
 
-Local probes used Copilot CLI **1.0.88** directly and Squad **0.13.0**. The unqualified `copilot` command returned **1.0.89**, so a command name alone isn't a version pin.
+Local probes used Copilot CLI **1.0.88** directly and Squad **0.13.0**, before the 1.0 releases. The unqualified `copilot` command returned **1.0.89**, so a command name alone isn't a version pin.
 
 | Evidence code | What was verified |
 | --- | --- |

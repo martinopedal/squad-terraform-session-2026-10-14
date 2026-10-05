@@ -1,34 +1,54 @@
 {
+  "schema": "squad-agent-provenance/v1",
+  "schema_version": 1,
+  "generated_at": "2026-09-30T14:36:42.444Z",
+  "revision": 1,
   "agents": {
     "lead": {
-      "created_at": "2026-09-30T14:36:42.444Z",
+      "display_name": "lead",
       "persistent_name": "lead",
+      "role": "Terraform architecture and task boundaries",
       "universe": "preset:default",
-      "status": "active"
+      "status": "active",
+      "created_at": "2026-09-30T14:36:42.444Z",
+      "updated_at": "2026-09-30T14:36:42.444Z"
     },
     "reviewer": {
-      "created_at": "2026-09-30T14:36:42.444Z",
+      "display_name": "reviewer",
       "persistent_name": "reviewer",
+      "role": "Code, evidence, and rehearsal review",
       "universe": "preset:default",
-      "status": "active"
+      "status": "active",
+      "created_at": "2026-09-30T14:36:42.444Z",
+      "updated_at": "2026-09-30T14:36:42.444Z"
     },
     "devrel": {
-      "created_at": "2026-09-30T14:36:42.444Z",
+      "display_name": "devrel",
       "persistent_name": "devrel",
+      "role": "Demo experience and recording",
       "universe": "preset:default",
-      "status": "active"
+      "status": "active",
+      "created_at": "2026-09-30T14:36:42.444Z",
+      "updated_at": "2026-09-30T14:36:42.444Z"
     },
     "security": {
-      "created_at": "2026-09-30T14:36:42.444Z",
+      "display_name": "security",
       "persistent_name": "security",
+      "role": "Corp integration and publication boundaries",
       "universe": "preset:default",
-      "status": "active"
+      "status": "active",
+      "created_at": "2026-09-30T14:36:42.444Z",
+      "updated_at": "2026-09-30T14:36:42.444Z"
     },
     "docs": {
-      "created_at": "2026-09-30T14:36:42.444Z",
+      "display_name": "docs",
       "persistent_name": "docs",
+      "role": "Reveal presentation and speaker material",
       "universe": "preset:default",
-      "status": "active"
+      "status": "active",
+      "created_at": "2026-09-30T14:36:42.444Z",
+      "updated_at": "2026-09-30T14:36:42.444Z"
     }
-  }
+  },
+  "transaction_id": "d392c603-7709-4918-852b-f86456bf9710"
 }

@@ -1,5 +1,5 @@
 {
-  "version": "0.10",
+  "version": "0.12",
   "status": "draft; recordings and Azure evidence pending",
   "changes": [
     "0.1 - 2026-09-30: build the offline presentation and two-speaker delivery.",
@@ -11,6 +11,8 @@
     "0.7 - 2026-10-01: require reviewed native CLI footage with Squad selected; keep external capture tooling and synthetic playback imagery out of product demos.",
     "0.8 - 2026-10-01: independent coordinator revision restores presenter shortcuts after controls and embeds complete bundle licenses.",
     "0.9 - 2026-10-01: repair overview thumbnails and selection while preserving R1 shortcuts; disclose qualification before genuine clean-run recording.",
-    "0.10 - 2026-10-02: bind the public module revision and actual 52-plus-2 local results; retain pending native recordings and Azure gates."
+    "0.10 - 2026-10-02: bind the public module revision and actual 52-plus-2 local results; retain pending native recordings and Azure gates.",
+    "0.11 - 2026-10-05: add big-news, what's-new-in-Squad and agent-setup slides; Squad 1.0.1; rebalance non-chapter timing.",
+    "0.12 - 2026-10-05: show user-provided speaker names, titles, and Microsoft employer on the opening slide."
   ]
 }

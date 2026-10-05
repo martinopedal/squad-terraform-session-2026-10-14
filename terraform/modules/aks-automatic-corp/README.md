@@ -4,6 +4,37 @@ This child module declares a fresh, private AKS Automatic cluster using caller-s
 
 **Offline qualification passed on Terraform 1.16.4 with AzAPI 2.12.0.** All 52 module cases and both caller cases passed, including fail-restore-pass proofs for two deliberate mutations. The combined private/Automatic/hosted-system/UDR request has not been accepted in Azure. See [validation status and evidence](#validation-status-and-evidence).
 
+## Agent setup
+
+Use [CONTRIBUTING.md](CONTRIBUTING.md) for the file-backed
+[terraform-coder](.github/agents/terraform-coder.agent.md),
+[terraform-validator](.github/agents/terraform-validator.agent.md),
+[read-only reviewer](.github/agents/terraform-reviewer.agent.md), and
+[local qualification skill](.github/skills/qualify-agent-setup/SKILL.md).
+Select profiles through `/agent` in the existing Copilot CLI window.
+
+The three-lane flow is: Squad or the maintainer scopes the work,
+`terraform-coder` edits, `terraform-validator` runs only approved offline checks
+under native prompts, and a separate `/new` context with `terraform-reviewer`
+reviews the exact diff and sanitized results before human acceptance. The coder
+can edit but has no shell. The validator has no `edit` tool, but its shell
+can still write files; the command list is enforced only by its instructions
+and native approval prompts. The reviewer is read-only.
+
+Coder and reviewer have read-only MCP grounding for Microsoft Learn and the
+public Terraform Registry. MCP policy is hosted first. Microsoft Learn is cloud-hosted; HashiCorp has no
+documented hosted Terraform MCP, so Terraform MCP uses Docker. Docker Desktop
+must be running and pre-pull `hashicorp/terraform-mcp-server:1.3.0@sha256:423a6b8e2ee06affcf090892f40c86469caba45fd2448ffa8ca5d717a174f7d5`. Network access is required for Microsoft
+Learn and registry docs. The native Terraform MCP binary is not used for this
+demo.
+Copilot CLI and Copilot cloud agent honor `mcp-servers`; VS Code custom agents
+ignore that frontmatter. MCP results are documentation lookups, not validation or
+Azure acceptance, and private inputs must never be sent to an MCP server.
+
+This independent repository needs no Squad installation. The session repository
+uses the same profiles alongside its existing Squad coordinator. Configuration
+readiness is not evidence that a native agent ran or that Azure accepted a request.
+
 ## Resource and ownership boundary
 
 The module manages only `azapi_resource.this`, of type `Microsoft.ContainerService/managedClusters@2026-04-01`. AKS creates additional service-managed infrastructure; one Terraform resource is not the complete Azure footprint.
@@ -117,7 +148,7 @@ Qualification ran on October 1, 2026, using Terraform 1.16.4 on Windows AMD64, A
 
 Static checks and mocked tests cannot clear the environment gates. The platform owner must verify supported private Automatic networking, API/system/user subnet requirements, UDR/firewall compatibility, DNS, identity, region, quota, monitoring, and policy. Cleanup must account for `prevent_destroy` and service-managed resources.
 
-A credential-free CI workflow is prepared locally but is not installed in this repository yet: publication needs GitHub workflow permission. Hosted CI and the declared minimum-version run remain pending. A later genuine clean recording must disclose the qualification work; this implementation is not already-filmed evidence.
+Hosted CI is active for the independent module repository. Terraform matrix run 36990206303 passed on commit b7133679a89b1e2b36677400d659a03907c0f3f6 for Terraform 1.14.8 and 1.16.4. The native agent-setup job passed in hosted run 37286068987 on commit 00787f59ac19e3db0c3869a96ff45805c6cb523d; the contracts (1.14.8), contracts (1.16.4), and agent-setup jobs all concluded success. A later genuine clean recording must disclose the qualification work; this implementation is not already-filmed evidence.
 
 ## Attribution
 

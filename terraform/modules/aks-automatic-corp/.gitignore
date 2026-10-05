@@ -25,3 +25,17 @@ crash.*.log
 kubeconfig*
 evidence/
 .validation/
+
+# Machine-local agent configuration and disposable qualification copies
+.copilot/
+.mcp.json
+.vscode/mcp.json
+.azure/
+.squad/
+.agentic-checks/
+archive/
+private/
+recordings/
+handoff.md
+*.tfrc
+.terraformrc

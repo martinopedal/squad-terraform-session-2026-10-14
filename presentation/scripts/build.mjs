@@ -40,7 +40,7 @@ for (const [id, block] of blocks) {
 const spokenWords = speakers.Martin + speakers.Haflidi;
 const descriptionWords = words(sessionize.split('## Description and outcomes\n')[1].split('\n## ')[0]);
 const pitchWords = words(sessionize.split('## Elevator pitch\n')[1].split('\n## ')[0]);
-if (slides.length !== 28 || slides.filter(slide => !slide.id.startsWith('a-')).length !== 22) throw new Error('Expected 22 main slides and six appendix slides.');
+if (slides.length !== 31 || slides.filter(slide => !slide.id.startsWith('a-')).length !== 25) throw new Error('Expected 25 main slides and six appendix slides.');
 if (spokenWords < 5300 || spokenWords > 5900 || qaWords < 650 || qaWords > 800) throw new Error(`Spoken script length is out of range: ${spokenWords} main, ${qaWords} Q&A.`);
 if (Math.abs(speakers.Martin - speakers.Haflidi) / spokenWords > .1) throw new Error('Speaker contributions differ by more than 10%.');
 if (descriptionWords < 250 || descriptionWords > 350 || pitchWords < 45 || pitchWords > 65) throw new Error('Sessionize word count is out of range.');
@@ -73,7 +73,7 @@ for (const chapter of chapters) {
 }
 
 const build = {
-  version: version.version, mainSlides: 22, appendixSlides: 6,
+  version: version.version, mainSlides: 25, appendixSlides: 6,
   recordedMinutes: clock.recorded / 60, liveMinutes: clock.live / 60, qaMinutes: clock.qa / 60,
   spokenWords, speakers, qaWords, descriptionWords, pitchWords,
   chapters, media, sourceRevision: evidence.sourceRevision, moduleRevision: evidence.moduleRevision,
@@ -82,7 +82,7 @@ const build = {
 };
 const scriptTag = (label, value) => `<script data-bundle="${label}">${value.replace(/\/\/# sourceMappingURL=.*$/gm, '').replace(/<\/script/gi, '<\\/script')}</script>`;
 const navLink = slide => `<a href="#/${slide.id}" data-nav="${slide.id}">${escape(slide.chapter ? slide.chapter + ': ' + slide.title : slide.title)}</a>`;
-const overviewIDs = ['s01-outcome', 's04-layers', 's06-contract', 's15-proof', 's20-consumer', 's22-questions'];
+const overviewIDs = ['s01-outcome', 's04-news', 's04-layers', 's07-agent-setup', 's06-contract', 's15-proof', 's20-consumer', 's22-questions'];
 const navigation = `<dialog class="navigation-dialog" aria-labelledby="navigation-title"><header><h2 id="navigation-title">Go to a chapter or reference</h2><button type="button">Close</button></header>
   <div class="navigation-columns"><div><h3>Story</h3>${slides.filter(slide => overviewIDs.includes(slide.id)).map(navLink).join('')}</div>
   <div><h3>Recorded chapter slots</h3>${slides.filter(slide => slide.chapter).map(navLink).join('')}</div>
@@ -106,7 +106,7 @@ Runtime, theme, notes, and small assets are inlined. Long local MP4s are the doc
 <!--
 ${licenses}
 -->
-<meta name="author" content="Martin and Haflidi">
+<meta name="author" content="Martin Opedal; Haflidi Fridthjofsson">
 <meta name="description" content="Practical Copilot CLI and Squad workflows for a reusable Terraform module and private Azure landing-zone consumption.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23464FEB'/%3E%3Ctext x='9' y='44' font-family='monospace' font-size='36' fill='white'%3E%7B%7D%3C/text%3E%3C/svg%3E">
 <style data-bundle="reveal-css">${coreCSS.replace(/\/\*# sourceMappingURL=.*?\*\//g, '')}</style>
@@ -129,6 +129,6 @@ await writeFile(join(root, 'index.html'), html, 'utf8');
 await writeFile(join(root, 'qa/build-manifest.json'), JSON.stringify({
   ...build, htmlBytes: Buffer.byteLength(html), htmlSHA256: createHash('sha256').update(html).digest('hex')
 }, null, 2) + '\n');
-console.log(`Built index.html: 22 main + 6 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} Q&A words.`);
+console.log(`Built index.html: 25 main + 6 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} Q&A words.`);
 console.log(`Timing 26 recorded / 27 live / 7 Q&A. Attached chapters: ${Object.values(media).filter(item => item.available).length}/7.`);
 console.log(`Sessionize: ${descriptionWords}-word description; ${pitchWords}-word pitch. HTML ${(Buffer.byteLength(html) / 1024).toFixed(0)} KiB.`);

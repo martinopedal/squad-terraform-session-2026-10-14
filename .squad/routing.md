@@ -7,6 +7,7 @@ How to decide who handles what.
 | Work Type | Route To | Examples |
 |-----------|----------|----------|
 | Scope and module contract | lead | Bound a Terraform change, define inputs and acceptance criteria, resolve dependencies |
+| Bounded Terraform implementation | lead | Prepare the owned-file brief for the operator's native terraform-coder selection |
 | Code and evidence review | reviewer | Check the exact diff, tests, unsupported claims, and reproducibility |
 | Demo and recording | devrel | Capture genuine work, prepare examples, preserve take provenance |
 | Corp and public/private boundary | security | Review access, platform ownership, effective policy assumptions, and public artifacts |
@@ -18,6 +19,39 @@ here only when their agent names also exist in the casting registry.
 Assign one runtime writer per Terraform file. Independent research, test authoring, and documentation can run in parallel after the interface is agreed. Separate agent contexts do not isolate the filesystem.
 
 Do not infer current execution from this routing table. Show actual delegated tasks, owners, and results. Keep deployment and publication approvals separate from code review.
+
+## Native profile handoff
+
+Keep Squad selected for planning and coordination. For code changes, lead
+prepares the scope, named files, preserved invariants, documentation sources,
+and acceptance checks. The operator selects
+[terraform-coder](../.github/agents/terraform-coder.agent.md) through
+`/agent terraform-coder` in the same window and supplies that brief. The coder is
+the sole writer for those files; other Squad tasks must not race it.
+
+For offline qualification, follow [CONTRIBUTING.md](../CONTRIBUTING.md); the operator selects
+[terraform-validator](../.github/agents/terraform-validator.agent.md). The
+validator is manual-only and has `execute`. It has no `edit` tool, but its
+shell can still write files; the command list is enforced only by its
+instructions and native approval prompts. It stops and reports on the first
+failure instead of repairing or relaxing tests.
+
+For independent review, use `/new`, select
+[terraform-reviewer](../.github/agents/terraform-reviewer.agent.md), and supply
+the exact diff, changed-file list, source revision, MCP citations, and sanitized
+validator results. Return to `/agent squad` for the real handoff and human
+acceptance. Record observed profile selections and actual task IDs only where
+tasks were really launched; a manual selection is not a delegated task.
+
+Coder and reviewer include read-only MCP documentation lookups through Microsoft
+Learn and Terraform Registry servers; validator has no MCP servers. MCP policy is
+hosted first: Microsoft Learn is cloud-hosted, while Terraform MCP uses Docker
+because HashiCorp has no documented hosted option. Docker Desktop, the pinned
+image `hashicorp/terraform-mcp-server:1.3.0@sha256:423a6b8e2ee06affcf090892f40c86469caba45fd2448ffa8ca5d717a174f7d5`, and network access are prerequisites. The native Terraform MCP
+binary is not used for this demo. These native profiles are
+not extra cast members. The unchanged coordinator can spawn general-purpose
+tasks; linking a profile from a charter does not select it or narrow that task's
+tools. Preserve permission prompts and never send private inputs to MCP servers.
 
 ## Issue Routing
 
