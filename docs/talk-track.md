@@ -242,7 +242,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 > DRIVER Martin. No clip. Read actual status labels from the evidence register. Never announce a pending gate as passed. Pause about 15 seconds across the rows. Haflidi leads interpretation; Martin leads handoff. Tip: a check proves only what it checks.
 
-**Haflidi:** This slide separates five kinds of evidence. The source was inspected. The public module passed fifty-two mocked contract cases and two caller cases. Both deliberate mutations failed as expected, then passed after restoration. A real resource plan and Azure read-back still need separate evidence. Local qualification is not filmed or deployed evidence.
+**Haflidi:** This slide separates five kinds of evidence. The source was inspected. The public module passed fifty-two mocked contract cases and two caller cases. Both deliberate mutations failed as expected, then passed after restoration. A private resource plan, approved apply, and ARM read-back now have separate sanitized evidence for the pinned runtime module revision. Local qualification is still not filmed evidence.
 
 **Martin:** Each check proves only its own claim. Formatting checks presentation. Validation checks Terraform structure and provider-facing consistency. Lint checks configured rules. Tests assert what their authors wrote. A clean mock can still miss live service behavior, subnet capacity, effective policy, or identity permissions.
 
@@ -250,7 +250,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Martin:** A real Terraform plan would add environment-specific evidence, but it still would not be an apply. Exit code zero means unchanged, two means proposed changes, and one means an error. The raw plan may contain private identifiers, so the public material should show only a reviewed summary.
 
-**Haflidi:** Azure read-back is a separate gate. Private API access, DNS, routes, identity, and policy results are distinct observations. If those are pending, say pending. The module can be useful without pretending every environment gate has closed.
+**Haflidi:** Azure read-back is a separate gate, and for this module it was supplied by the private IaC consumer. We can say the sanitized facts: Automatic SKU, private API with VNet integration, UDR, OIDC and workload identity, custom private DNS, and Succeeded provisioning. We still do not show private IDs, state, run URLs, or FQDNs.
 
 ## s16-continuity | 40:00-41:00 | Save the reason, not just the chat
 
@@ -290,7 +290,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 ## demo-c7 | 46:00-49:00 | C7: Reviewed diff to approved Terraform change
 
-> DRIVER Martin. C7, 03:00. Show `/diff` for the actual change in this take. Identify preparation/qualification evidence separately. Show checks, an actual resource plan only if approved evidence exists, and the human decision. Reserve about 35 seconds for inspection. Azure read-back remains pending unless real evidence is supplied. No apply on stage. Handoff to Martin at 49:00. Tip: approve a specific artifact and scope.
+> DRIVER Martin. C7, 03:00. Show `/diff` for the actual change in this take. Identify preparation/qualification evidence separately. Show checks, an actual resource plan only if approved evidence exists, and the human decision. Reserve about 35 seconds for inspection. Use the supplied sanitized Azure read-back only; no apply on stage and no private target details. Handoff to Martin at 49:00. Tip: approve a specific artifact and scope.
 
 **Haflidi:** Review the change as a consumer would. The module should have a defined input and output contract. The example root should show how to configure providers, own its backend, and supply approved network inputs. The documentation should identify prerequisites rather than bury them in a command that only works in the author's environment.
 
@@ -326,7 +326,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Haflidi:** Use skills for repeatable procedures and MCP for a specific source or tool. Approve the narrow action that is needed. A Markdown plan describes intended work; it isn't a permission system. A role describes responsibility; it isn't isolation from the filesystem or cloud.
 
-**Martin:** Check the diff and the tests, then check what they establish. Local validation, isolated contract tests, a consumer example, a real plan, and Azure read-back answer different questions. Keep pending gates visible. Don't switch to a public default just to make the demo end neatly.
+**Martin:** Check the diff and the tests, then check what they establish. Local validation, isolated contract tests, a consumer example, a real plan, and Azure read-back answer different questions. Keep remaining gates visible: recordings, native profile selection, and full rehearsal still need evidence. Don't switch to a public default just to make the demo end neatly.
 
 **Haflidi:** Qualify code before filming, then capture genuine new execution from a disclosed checkpoint. The public handoff is the module, the decisions, and the evidence status. If the next engineer can find the contract, run the check, and understand the handoff, the tools have done useful work.
 
@@ -388,4 +388,4 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 ## a-evidence | Appendix | Know which gate you are reading
 
-> Reference only. Keep the full upstream source pin, reviewed module revision, and exact check evidence with the release. For a detailed Terraform plan, exit codes are 0 for unchanged, 2 for proposed changes, and 1 for error. Private scope, state, network compatibility, policy evaluation, and authorized read-back remain separate gates.
+> Reference only. Keep the full upstream source pin, reviewed module revision, and exact check evidence with the release. For a detailed Terraform plan, exit codes are 0 for unchanged, 2 for proposed changes, and 1 for error. Private scope, state, network compatibility, policy evaluation, and authorized read-back remain separate gates; the October 5 validation closes them only for the cited private consumer run.

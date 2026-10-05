@@ -59,7 +59,7 @@ def main():
         "limits": [
             "Actual C1-C7 footage is not attached; content, duration, and recording provenance remain pending.",
             "Media controls use a synthetic playback fixture, not CLI footage.",
-            "No Azure deployment, policy evaluation, or human 60-minute rehearsal is performed by this test."
+            "No Azure deployment or policy evaluation is performed by this test; it checks only the sanitized published evidence text."
         ]
     }
 
@@ -100,7 +100,7 @@ def main():
             manifest = page.evaluate("window.presentationBuild")
             report["deckVersion"] = manifest["version"]
             report["htmlSHA256"] = hashlib.sha256((ROOT / "index.html").read_bytes()).hexdigest()
-            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 31 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 6)
+            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 32 and manifest["openingSlides"] == 1 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 6)
             check("26/27/7 clock", [manifest[k] for k in ("recordedMinutes", "liveMinutes", "qaMinutes")] == [26, 27, 7])
             check("main spoken words", 5300 <= manifest["spokenWords"] <= 5900, manifest["spokenWords"])
             check("prepared Q&A words", 650 <= manifest["qaWords"] <= 800, manifest["qaWords"])
@@ -156,10 +156,10 @@ def main():
                     n.textContent.includes('Qualify code before filming') &&
                     n.textContent.includes('genuine new execution from a disclosed clean checkpoint'))
             """))
-            check("local qualification is separate from pending Azure evidence",
-                  page.locator("#s15-proof .status").all_text_contents() == ["Inspected", "52 passed", "2 passed", "Pending", "Pending"])
+            check("local qualification is separate from Azure validation evidence",
+                  page.locator("#s15-proof .status").all_text_contents() == ["Inspected", "52 passed", "2 passed", "Approved", "Succeeded"])
             check("published module revision is bound to the evidence",
-                  page.evaluate("window.presentationBuild.moduleRevision") == "883795608d7c873e7b47b3acd375e0b58819458a")
+                  page.evaluate("window.presentationBuild.moduleRevision") == "b01256eb9b1ea6046b9bb8a403662f724a7b6fa7")
             license_text = (ROOT / "src" / "third-party-licenses.txt").read_text(encoding="utf-8").strip()
             check("complete bundled licenses preserved", license_text in (ROOT / "index.html").read_text(encoding="utf-8"))
             page.add_script_tag(path=str(ROOT / "node_modules" / "axe-core" / "axe.min.js"))
@@ -289,15 +289,19 @@ def main():
             page.set_viewport_size({"width": 1280, "height": 720})
             page.evaluate("Reveal.slide(0,0,-1); document.activeElement.blur()")
             page.keyboard.press("ArrowRight")
-            check("arrow navigation", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
+            check("arrow navigation from opening", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            page.keyboard.press("PageDown")
+            check("Page Down to first chapter", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
             page.keyboard.press("PageUp")
             check("Page Up", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
             page.keyboard.press("End")
             check("End", page.evaluate("Reveal.getCurrentSlide().id") == "a-evidence")
             page.keyboard.press("Home")
-            check("Home", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            check("Home", page.evaluate("Reveal.getCurrentSlide().id") == "opening")
             page.keyboard.press("PageDown")
-            check("Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
+            check("Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            page.keyboard.press("PageDown")
+            check("Second Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
             page.keyboard.press("Escape")
             check("overview", page.evaluate("Reveal.isOverview()"))
             page.keyboard.press("Escape")
@@ -311,7 +315,7 @@ def main():
             page.keyboard.press("ArrowRight")
             check("arrow after pointer chapter selection", page.evaluate("Reveal.getCurrentSlide().id") == "a-handoffs")
             page.keyboard.press("Home")
-            check("Home after pointer chapter selection", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            check("Home after pointer chapter selection", page.evaluate("Reveal.getCurrentSlide().id") == "opening")
             page.keyboard.press("Escape")
             check("overview after pointer chapter selection", page.evaluate("Reveal.isOverview()"))
             page.keyboard.press("Escape")
@@ -342,12 +346,12 @@ def main():
             check("menu escape and focus return", not page.locator(".navigation-dialog").is_visible()
                   and page.evaluate("document.activeElement.id") == "open-navigation")
             page.keyboard.press("Home")
-            check("Home after menu dismissal", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            check("Home after menu dismissal", page.evaluate("Reveal.getCurrentSlide().id") == "opening")
             page.keyboard.press("Space")
             check("focused chapter button retains native activation", page.locator(".navigation-dialog").is_visible()
-                  and page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+                  and page.evaluate("Reveal.getCurrentSlide().id") == "opening")
             page.keyboard.press("Escape")
-            page.evaluate("Reveal.slide(0,0,-1); document.activeElement.blur()")
+            page.evaluate("Reveal.slide(1,0,-1); document.activeElement.blur()")
             page.keyboard.press("Tab")
             check("visible focus", page.evaluate("""() => {
                 const s = getComputedStyle(document.activeElement);
@@ -365,7 +369,7 @@ def main():
             check("notes current and next", notes.locator("#current-slide iframe").count() == 1 and notes.locator("#upcoming-slide iframe").count() == 1)
             check("notes full spoken script", "A useful agent session" in notes.locator(".speaker-controls-notes .value").inner_text())
             check("notes timer advances", timer_before != timer_after)
-            page.evaluate("Reveal.slide(9,0,-1)")
+            page.evaluate("Reveal.slide(10,0,-1)")
             notes.wait_for_function("() => document.querySelector('.speaker-controls-notes .value').textContent.includes('direct project-write guards')")
             cues = notes.locator(".operator-cues summary")
             cues.click()
@@ -374,14 +378,14 @@ def main():
             check("spoken notes visible before operator details", not notes.locator(".operator-cues").evaluate("e => e.open")
                   and "Activate native Plan mode" in notes.locator(".speaker-controls-notes .value").inner_text())
             notes.screenshot(path=str(QA / "speaker-view.png"))
-            page.evaluate("Reveal.slide(8,0,-1)")
+            page.evaluate("Reveal.slide(9,0,-1)")
             notes.close()
             page.bring_to_front()
             check("notes return preserves control focus", page.evaluate("document.activeElement.id") == "open-notes")
             page.keyboard.press("ArrowRight")
             check("arrow after notes-button round trip", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c2")
             page.keyboard.press("Home")
-            check("Home after notes-button round trip", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            check("Home after notes-button round trip", page.evaluate("Reveal.getCurrentSlide().id") == "opening")
             page.keyboard.press("Escape")
             check("overview after notes-button round trip", page.evaluate("Reveal.isOverview()"))
             page.keyboard.press("Escape")
@@ -392,7 +396,7 @@ def main():
                                 "-i", "testsrc2=size=640x360:rate=30", "-t", "4", "-c:v", "libx264",
                                 "-pix_fmt", "yuv420p", "-an", "-metadata", "title=Playback fixture, not demo footage",
                                 str(fixture)], check=True, capture_output=True)
-                page.evaluate("Reveal.slide(1,0,-1)")
+                page.evaluate("Reveal.slide(2,0,-1)")
                 invalid = Path(temporary) / "invalid-selection.txt"
                 invalid.write_text("File-selection test, not video footage.", encoding="utf-8")
                 page.locator('#demo-c1 input[type="file"]').set_input_files(str(invalid))
@@ -429,9 +433,9 @@ def main():
                 video.evaluate("v => { v.currentTime = 0; return v.play(); }")
                 page.wait_for_timeout(200)
                 check("replay", video.evaluate("v => !v.paused && v.currentTime < 1"))
-                page.evaluate("Reveal.slide(2,0,-1)")
+                page.evaluate("Reveal.slide(3,0,-1)")
                 check("pause on slide exit", video.evaluate("v => v.paused"))
-                page.evaluate("Reveal.slide(1,0,-1)")
+                page.evaluate("Reveal.slide(2,0,-1)")
                 check("no autoplay on re-entry", video.evaluate("v => v.paused"))
                 check("no media decode or source error", video.evaluate("v => v.error === null"))
                 page.screenshot(path=str(artifacts / "media-playback-fixture.png"))

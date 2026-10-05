@@ -1,17 +1,17 @@
 # Public project handoff
 
-Updated October 2, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
+Updated October 5, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
 
 ## Current result
 
-- Reveal.js presentation version **0.10**, with 22 main slides and six appendix slides.
+- Reveal.js presentation version **0.14**, with one opening slide, 25 main slides, and six appendix slides.
 - Martin/Haflidi talk track: **5,504 main spoken words**, balanced 2,739 / 2,765, plus a separate 652-word prepared Q&A fallback.
 - Exact session budget: **26 minutes of recorded chapters, 27 minutes of other live explanation, and seven minutes of Q&A**. Both speakers narrate the silent clips; that narration is already inside the 53 content minutes.
 - Sessionize copy: 294-word description/outcomes, 52-word pitch, and both speaker names.
 - Copilot CLI/Squad feature research with 34 first-party references and a C1-C7 operator runbook.
-- Public reusable Terraform module and synthetic caller, locally qualified without Azure.
+- Public reusable Terraform module and synthetic caller, locally qualified and privately Azure-validated through IaC.
 
-The package is not stage-ready: **zero of seven native recordings are attached**, and no Azure deployment/read-back or full human rehearsal is complete.
+The package is not stage-ready: **zero of seven native recordings are attached**. Azure deployment/read-back is complete only for the sanitized October 5 private IaC validation; native profile selection and full human rehearsal are still incomplete.
 
 ## Public locations
 
@@ -24,7 +24,7 @@ The package is not stage-ready: **zero of seven native recordings are attached**
 - [Feature guide](docs/feature-guide.md)
 - [C1-C7 demo runbook](docs/demo-runbook.md)
 
-The module is pinned to `883795608d7c873e7b47b3acd375e0b58819458a`. Its 23-file Git tree is `40b628f7983e8cc099b21dcbdf5ad4657de01814`. The copy under `terraform/modules/aks-automatic-corp` must retain that same tree.
+The module is pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. Its 35-file Git tree is `068e88ecc484ba4b4c4353653c1be7a99e8b5ab8`. The copy under `terraform/modules/aks-automatic-corp` must retain that same tree.
 
 ## Verified and unverified
 
@@ -34,9 +34,9 @@ The module is pinned to `883795608d7c873e7b47b3acd375e0b58819458a`. Its 23-file 
 | Contract tests | 52 module cases and two caller cases passed, all plan-mode mocks. |
 | Mutation proof | Wrong SKU and public-API mutations each failed the intended assertion; the unchanged 52-case suite passed after each exact restoration. |
 | Module review | Independent static and publication-safety reviews passed for the qualified source. |
-| Presentation checks | Ten media-policy tests, 97 browser/content checks, and 66 slide/fragment captures across two resolutions. The updated evidence slide was visually inspected. |
-| Hosted module CI | Terraform matrix run 36990206303 passed at b7133679a89b1e2b36677400d659a03907c0f3f6; native agent setup passed run 37286068987 at 00787f59ac19e3db0c3869a96ff45805c6cb523d; final module run 37286237657 passed at 02e10e56bc15cc30c3193dce3ddc8e608cb87daf. |
-| Azure | **Not deployed.** Corp target/budget, effective policy, dependencies, real plan, and read-back remain separate gates. |
+| Presentation checks | Ten media-policy tests, 99 browser/content checks, and slide/fragment captures across two resolutions. The updated evidence slide was visually inspected. |
+| Hosted module CI | Terraform matrix run 36990206303 passed at b7133679a89b1e2b36677400d659a03907c0f3f6; native agent setup passed run 37286068987 at 00787f59ac19e3db0c3869a96ff45805c6cb523d; final module run 37286237657 passed at 02e10e56bc15cc30c3193dce3ddc8e608cb87daf; Azure-validation docs release run 37305768318 passed at b01256eb9b1ea6046b9bb8a403662f724a7b6fa7. |
+| Azure | **Privately validated.** Private IaC PR workflow planned, environment-approved, applied, and read back runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized public facts only. |
 | Recordings | Genuine clean runs are still required; no custom viewer footage is accepted. |
 
 See [the module evidence summary](terraform/modules/aks-automatic-corp/VALIDATION.md). Local mocks do not establish private DNS, firewall routing, RBAC, policy compliance, or Azure service acceptance.
@@ -76,7 +76,7 @@ terraform test -filter=tests\contract.tftest.hcl -no-color
 
 Run each command separately, inspect the exit code, and stop on failure. Initialize/test `examples\corp-existing` separately with its synthetic var-file as documented there.
 
-Terraform 1.14.8 is a declared minimum and is covered by hosted Linux Terraform matrix run 36990206303 at b7133679a89b1e2b36677400d659a03907c0f3f6, alongside Terraform 1.16.4. The native agent-setup release published the module first, verified the agent-setup job in run 37286068987, then re-verified the final module documentation commit in run 37286237657 before mirroring the module into this session repository. Do not claim Azure acceptance from these credential-free checks.
+Terraform 1.14.8 is a declared minimum and is covered by hosted Linux Terraform matrix run 36990206303 at b7133679a89b1e2b36677400d659a03907c0f3f6, alongside Terraform 1.16.4. The native agent-setup release published the module first, verified the agent-setup job in run 37286068987, and re-verified the final module documentation commit in run 37286237657. This Azure-validation release published the module first again and verified run 37305768318 before mirroring the module into this session repository. Do not claim Azure acceptance from credential-free checks alone; cite the separate private IaC validation.
 
 ## Recording decision
 
@@ -90,7 +90,7 @@ Follow `docs/demo-runbook.md`. Add only genuinely reviewed footage through `pres
 
 Reuse the existing approved Corp platform. The public child receives resource IDs; a private consumer owns actual providers, credentials, state, and deployment wiring. Do not rebuild the ALZ, import platform state, move a subscription to avoid policy, or add an exemption for the demo.
 
-The approved region preference is `swedencentral`; the actual nonproduction Corp subscription, budget, expiry, and cleanup owner still need confirmation. Changing code, planning Azure resources, applying a saved plan, and publishing recordings are different approvals.
+The sanitized private validation used `swedencentral` and Kubernetes 1.35.8. Subscription, tenant, IPs, resource IDs, identity names, private run URLs, and FQDNs remain private. Changing code, planning another Azure environment, applying a saved plan, and publishing recordings are different approvals.
 
 ## Working rules
 

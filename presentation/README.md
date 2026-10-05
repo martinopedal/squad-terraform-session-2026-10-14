@@ -14,7 +14,7 @@ Press `S` or select **Speaker notes** to open current/next slides, the complete 
 
 In overview, click a thumbnail or use arrows to select a slide, then Escape to return to it. Thumbnail links and video controls remain inert. On exit, only the active slide becomes interactive; the approved presenter-shortcut behavior is unchanged.
 
-The 22 main slides allocate 26 minutes to silent chapter video with live narration, 27 minutes to other live explanation, and seven minutes to Q&A. Six appendix slides are question-driven references, not additional scheduled content. [The talk track](../docs/talk-track.md) includes both speakers and a separately labeled prepared Q&A fallback.
+The first slide is a pre-show NIC 2026 opening page and does not consume session time. The 25 timed main slides allocate 26 minutes to silent chapter video with live narration, 27 minutes to other live explanation, and seven minutes to Q&A. Six appendix slides are question-driven references, not additional scheduled content. [The talk track](../docs/talk-track.md) includes both speakers and a separately labeled prepared Q&A fallback.
 
 ## Build
 
@@ -25,9 +25,9 @@ npm ci --no-audit --no-fund
 npm run build
 ```
 
-Edit `src\slides.mjs` for composition, `src\theme.css` for the fixed Fluent design, and `src\runtime.js` for presenter/media behavior. The build reads complete notes from `..\docs\talk-track.md`. Keep its stable slide headings. Diagrams are authored as static SVG in `src\diagrams.mjs` and inlined at build time, with no browser diagram renderer.
+Edit `src\slides.mjs` for composition, `src\theme.css` for the fixed NIC 2026 template treatment, and `src\runtime.js` for presenter/media behavior. The build reads complete notes from `..\docs\talk-track.md`. Keep its stable slide headings. Diagrams are authored as static SVG in `src\diagrams.mjs` and inlined at build time, with no browser diagram renderer.
 
-The design is fixed: 1280 x 720, white and near-white surfaces, `#464FEB` accent, dark readable text, system fonts, and restrained motion. This is a screen-only deck. No print or PowerPoint output is maintained.
+The design is fixed: 1280 x 720, official NIC 2026 cyan and ink surfaces, embedded Roboto, NIC26 logos, and restrained motion. This is a screen-only deck. No print or PowerPoint output is maintained.
 
 Before each content revision, preserve the previous generated HTML outside the release package. Increment `src\version.json` in the same revision. Keep `0.x` until the presenters approve the final content.
 
@@ -47,7 +47,7 @@ Retain provenance and edit records outside the deck's public package. Durations,
 
 Pin and display the actual recording executable's version. The [verified feature guide](../docs/feature-guide.md) probed CLI 1.0.88 directly, while the unqualified command resolved to 1.0.89. `--no-auto-update` is not a version selector. C2 must retain interactive Plan mode and human approval; never use the auto-approving `--plan --mode autopilot` combination. Rehearse current documented guards and instruction inheritance in the chosen build instead of treating help as UI evidence.
 
-Update `src\evidence.json` only from approved, sanitized evidence. A source inspection is not a test pass. Local tests aren't proof of Azure deployment or policy compliance. Do not insert private scope names, account identifiers, state, credentials, raw plans, or private policy links.
+Update `src\evidence.json` only from approved, sanitized evidence. A source inspection is not a test pass. Local tests aren't proof of Azure deployment or policy compliance; cite only approved sanitized Azure validation facts. Do not insert private scope names, account identifiers, state, credentials, raw plans, or private policy links.
 
 Long MP4 files are the documented exception to single-file delivery. Keep `index.html` and `media\` together. Internet access is not needed for slides, notes, or local video. Public source links are optional reading, not runtime dependencies.
 
@@ -63,6 +63,6 @@ npm test
 
 The check first exercises native-footage metadata and pending-slot behavior, then starts its own loopback server. It blocks external browser requests, captures every slide/fragment at 1280 x 720 and 1920 x 1080, and checks structure, overflow, contrast/accessibility, keyboard navigation, notes, and media behavior. A synthetic playback fixture tests browser controls only; its screenshot stays in ignored `.test-artifacts\`, outside public QA assets and chapter media. The check shuts down its server and browser when finished.
 
-Results and screenshots go to `qa\`. Automated checks do not replace looking at the screenshots, reviewing the recordings, or a full two-speaker rehearsal. The final QA report distinguishes tested presentation behavior from pending footage and Azure evidence.
+Results and screenshots go to `qa\`. Automated checks do not replace looking at the screenshots, reviewing the recordings, or a full two-speaker rehearsal. The final QA report distinguishes tested presentation behavior from pending footage, native profile-selection evidence, and sanitized Azure validation limits.
 
 Local verification and visual-review reports remain under ignored `qa\` and reviewer artifact directories. They contain build/browser results, per-slide observations, and the remaining stage-release gates. They are not part of the public package; public release summaries must be sanitized separately.

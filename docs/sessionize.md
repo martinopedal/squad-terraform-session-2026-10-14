@@ -1,6 +1,6 @@
 # Sessionize copy
 
-Conference organizers can use this copy for the session listing. Attendees can use it to judge the topic, level, prerequisites, and expected outcomes. This is submission-ready copy, not a claim that recordings, publication, or Azure deployment are complete.
+Conference organizers can use this copy for the session listing. Attendees can use it to judge the topic, level, prerequisites, and expected outcomes. This is submission-ready copy, not a claim that recordings or full rehearsal are complete; the Azure deployment claim is limited to the sanitized private IaC validation described below.
 
 ## Title
 
@@ -18,7 +18,7 @@ Code qualification comes first. Later recordings show genuine new Copilot CLI ex
 
 You'll leave able to choose an appropriate CLI or Squad workflow, define a module boundary, and connect an agent's claim to evidence. You'll also know why passing local tests, a reviewed Terraform plan, and observed Azure behavior are different milestones.
 
-Public module code and generic examples remain separate from environment inputs, identities, backend/state, and secrets. Live policy and deployment evidence depend on an authorized environment and remain explicit gates, not promises hidden in the demo.
+Public code and examples stay separate from private inputs, identities, backend/state, and secrets. The October 5 Azure validation is cited only as sanitized, revision-bound evidence, not reusable environment data.
 
 ## Elevator pitch
 
@@ -41,6 +41,6 @@ Turn an existing AKS codebase into a reusable Terraform module with GitHub Copil
 
 ## Editorial status
 
-The reusable module and private-network consumer are public and passed local qualification: 52 module mock cases, two caller cases, and both mutation proofs. The independent module repository also passed hosted Linux CI on Terraform 1.14.8 and 1.16.4 in run 36990206303 at b7133679a89b1e2b36677400d659a03907c0f3f6; native agent-setup CI passed in run 37286068987 on commit 00787f59ac19e3db0c3869a96ff45805c6cb523d, and final module verification run 37286237657 passed on commit 02e10e56bc15cc30c3193dce3ddc8e608cb87daf. The session repository's module copy, genuine recordings, and Azure evidence remain pending. The approved `build_then_record_clean_run` approach permits qualification before filming; current qualification has not been filmed. Later footage must identify prepared code and its clean starting checkpoint. Speaker names, titles, and employer are user-provided; no bios, handles, or emails are included.
+The reusable module and private-network consumer are public and passed local qualification: 52 module mock cases, two caller cases, and both mutation proofs. The independent module repository passed hosted Linux CI on Terraform 1.14.8 and 1.16.4, native agent-setup CI, and release run 37305768318. A private IaC consumer deployed and read back runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf` on October 5, 2026, with sanitized ARM assertions for Automatic SKU, private API/VNet integration, UDR, OIDC/workload identity, custom private DNS, and Succeeded provisioning. Genuine recordings, native profile selection, and full rehearsal remain pending. The approved `build_then_record_clean_run` approach permits qualification before filming; current qualification has not been filmed. Later footage must identify prepared code and its clean starting checkpoint. Speaker names, titles, and employer are user-provided; no bios, handles, or emails are included.
 
 Product demonstrations require genuine native CLI or real integrated-terminal footage. Recording automation is external, behind-the-scenes tooling, not a Squad feature.

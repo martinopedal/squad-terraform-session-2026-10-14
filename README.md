@@ -6,7 +6,7 @@ A two-speaker session by **Martin Opedal, Enterprise Cloud Solution Architect, M
 
 ## What this repository contains
 
-The presentation shell and speaker material are built and reviewed. The public Terraform module passed local qualification: 52 module cases, two caller cases, two fail-restore-pass mutation proofs, and hosted Terraform matrix CI run 36990206303 on commit b7133679a89b1e2b36677400d659a03907c0f3f6. Native agent-setup CI passed in run 37286068987 on commit 00787f59ac19e3db0c3869a96ff45805c6cb523d, and final module verification run 37286237657 passed on commit 02e10e56bc15cc30c3193dce3ddc8e608cb87daf; genuine demo recordings and Azure deployment evidence remain pending.
+The presentation shell and speaker material are built and reviewed. The public Terraform module passed local qualification: 52 module cases, two caller cases, two fail-restore-pass mutation proofs, hosted Terraform matrix CI, native agent-setup CI, and an IaC-based Azure validation in a private Corp landing-zone consumer. Genuine demo recordings, native profile-selection footage, and full human rehearsal remain pending.
 
 | Path | Content |
 | --- | --- |
@@ -17,11 +17,9 @@ The presentation shell and speaker material are built and reviewed. The public T
 | `scripts\recording\` | Controlled-window capture and verification tools |
 | `terraform\modules\aks-automatic-corp\` | Public source copy of the independently versioned demo module |
 
-The module's separate repository is [terraform-azapi-aks-automatic-corp](https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp), pinned here to `883795608d7c873e7b47b3acd375e0b58819458a`. The [source manifest](terraform/module-source.json) binds the matching presentation copy. See the module's [qualification summary](terraform/modules/aks-automatic-corp/VALIDATION.md) for the exact boundary.
+The module's separate repository is [terraform-azapi-aks-automatic-corp](https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp), pinned here to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. The [source manifest](terraform/module-source.json) binds the matching presentation copy. See the module's [qualification summary](terraform/modules/aks-automatic-corp/VALIDATION.md) for the exact boundary.
 
-That manifest identifies the published baseline, not later uncommitted files.
-After agent setup changes, the maintainer must publish the module and refresh
-the binding before claiming a new matching release.
+That manifest identifies the published module-copy binding. Azure validation used private consumer code pinned to runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; this docs-only module revision records the result without publishing private inputs.
 
 The [C1-C7 operator runbook](docs/demo-runbook.md) provides current-shell commands, native prompts, speaker handoffs, and recording checkpoints. Use it for the later genuine clean demonstration, not as a claim that the recording already exists.
 
@@ -80,14 +78,14 @@ Open `http://127.0.0.1:4173/presentation/` and press `S` for speaker view or `N`
 
 The module and its generic examples are public. Real subscription/resource identifiers, environment inputs, credentials, private policy evidence, and Terraform state remain outside this repository.
 
-The demonstration reuses an existing Azure Landing Zones Corp environment. The public module consumes approved platform resources; it does not deploy a new landing zone or import existing estate resources.
+The demonstration reuses an existing Azure Landing Zones Corp environment. The public module consumes approved platform resources; it does not deploy a new landing zone or import existing estate resources. The October 5 validation ran through a private platform pull-request workflow and publishes only sanitized results.
 
 ## Evidence boundary
 
 The starting AKS root configuration has known validation and documentation issues. It is not a verified deployable module. The project records the actual implementation and repair work, then keeps code checks, Azure deployment evidence, and presentation evidence separate.
 
-A successful format, lint, or mocked test does not prove Azure service acceptance or policy compliance. Deployment requires an approved nonproduction Corp target, verified prerequisites, and human review of the actual resource plan.
+Format, lint, and mocked tests remain separate from Azure service acceptance. The October 5 private validation supplied one approved Corp target, reviewed PR plan/apply, and ARM read-back; later environments still require their own plan, policy, identity, DNS, routing, and cleanup evidence.
 
 The user approved code-first qualification followed by a genuine clean recorded run from a disclosed checkpoint. Earlier unrecorded work will not be relabeled as footage.
 
-No completed recordings or end-to-end Azure validation are claimed by the current build. Read [QUALITY.md](QUALITY.md) and [PUBLICATION.md](PUBLICATION.md) for the evidence and release boundaries.
+No completed recordings, native profile-selection footage, or full human rehearsal are claimed by the current build. The Azure claim is limited to the sanitized private IaC validation summarized above. Read [QUALITY.md](QUALITY.md) and [PUBLICATION.md](PUBLICATION.md) for the evidence and release boundaries.

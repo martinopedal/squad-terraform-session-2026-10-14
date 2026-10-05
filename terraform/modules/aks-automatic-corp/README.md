@@ -2,7 +2,7 @@
 
 This child module declares a fresh, private AKS Automatic cluster using caller-supplied network, identity, and DNS resource IDs. Platform engineers can use this guide to understand the interface, run isolated local checks, and identify the prerequisites for a separately approved private consumer.
 
-**Offline qualification passed on Terraform 1.16.4 with AzAPI 2.12.0.** All 52 module cases and both caller cases passed, including fail-restore-pass proofs for two deliberate mutations. The combined private/Automatic/hosted-system/UDR request has not been accepted in Azure. See [validation status and evidence](#validation-status-and-evidence).
+**Offline qualification passed on Terraform 1.16.4 with AzAPI 2.12.0, and an IaC-based Azure validation succeeded on October 5, 2026.** All 52 module cases and both caller cases passed, including fail-restore-pass proofs for two deliberate mutations. A private platform repository deployed the module revision `02e10e56bc15cc30c3193dce3ddc8e608cb87daf` through a pull-request workflow with plan on PR and an environment-approved apply. Sanitized ARM read-back confirmed the private AKS Automatic contract described below. See [validation status and evidence](#validation-status-and-evidence).
 
 ## Agent setup
 
@@ -142,13 +142,13 @@ Qualification ran on October 1, 2026, using Terraform 1.16.4 on Windows AMD64, A
 | Module positive/negative contract tests | 52 passed: four positive, 48 targeted negatives | [Local qualification](VALIDATION.md#executed-local-qualification) |
 | Caller example and output forwarding | 2 passed with the explicit synthetic var-file | [Local qualification](VALIDATION.md#executed-local-qualification) |
 | Labeled mutation, expected assertion failure, restoration, and rerun | Both mutations detected; unchanged suite passed after each restoration | [Mutation proof](VALIDATION.md#mutation-proof) |
-| Authorized nonproduction Corp target and budget | Deferred by the user | Pending separate decision |
-| Source-scope/private-policy assumptions and effective Azure policy | Unverified | Pending authorized verification |
-| Real resource plan, deployment/read-back, and cleanup | Unverified; no authorization implied | Pending separate approval and evidence |
+| Authorized nonproduction Corp target and budget | Approved for the private validation run | Sanitized public summary only |
+| Source-scope/private-policy assumptions and effective Azure policy | Validated in the private platform workflow for this run | Private policy evidence is not published |
+| Real resource plan, deployment/read-back, and cleanup | Passed for module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf` on October 5, 2026 | [Azure validation](VALIDATION.md#azure-validation) |
 
-Static checks and mocked tests cannot clear the environment gates. The platform owner must verify supported private Automatic networking, API/system/user subnet requirements, UDR/firewall compatibility, DNS, identity, region, quota, monitoring, and policy. Cleanup must account for `prevent_destroy` and service-managed resources.
+Static checks and mocked tests do not clear environment gates by themselves. For the October 5 validation, a private platform workflow deployed into a Corp private landing-zone subscription with an AVNM-managed hub-and-spoke spoke, IPAM-allocated address space, forced tunnelling to the hub firewall, and explicit AKS egress rules. ARM read-back asserted `sku.name = Automatic`, private API server with API-server VNet integration on the delegated API subnet, `outboundType = userDefinedRouting`, local accounts disabled, OIDC issuer and workload identity enabled, the custom `private.<region>.azmk8s.io` private DNS zone, and `provisioningState = Succeeded` in `swedencentral` on Kubernetes 1.35.8. Subscription, tenant, resource IDs, private repository names, identity names, run URLs, IPs, and FQDNs are intentionally omitted. Cleanup must account for `prevent_destroy` and service-managed resources.
 
-Hosted CI is active for the independent module repository. Terraform matrix run 36990206303 passed on commit b7133679a89b1e2b36677400d659a03907c0f3f6 for Terraform 1.14.8 and 1.16.4. The native agent-setup job passed in hosted run 37286068987 on commit 00787f59ac19e3db0c3869a96ff45805c6cb523d; the contracts (1.14.8), contracts (1.16.4), and agent-setup jobs all concluded success. A later genuine clean recording must disclose the qualification work; this implementation is not already-filmed evidence.
+Hosted CI is active for the independent module repository. Terraform matrix run 36990206303 passed on commit b7133679a89b1e2b36677400d659a03907c0f3f6 for Terraform 1.14.8 and 1.16.4. The native agent-setup job passed in hosted run 37286068987 on commit 00787f59ac19e3db0c3869a96ff45805c6cb523d; the contracts (1.14.8), contracts (1.16.4), and agent-setup jobs all concluded success. The October 5 Azure validation proves the private IaC consumer path for the pinned module revision; native profile selection, recordings, and full human rehearsal remain pending.
 
 ## Attribution
 

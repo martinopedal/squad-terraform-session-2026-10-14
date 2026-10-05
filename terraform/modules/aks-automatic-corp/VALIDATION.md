@@ -1,6 +1,6 @@
 # Qualification evidence
 
-The module and synthetic caller passed local qualification on October 1, 2026. This is not an Azure deployment or policy-compliance result.
+The module and synthetic caller passed local qualification on October 1, 2026. A separate IaC-based Azure validation succeeded on October 5, 2026 for module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`. Private environment identifiers and private workflow links are intentionally omitted.
 
 ## Executed local qualification
 
@@ -52,8 +52,17 @@ The credential-free module workflow is installed in the independent module repos
 
 The local results above establish the Windows Terraform 1.16.4 qualification. Hosted Linux CI establishes the credential-free Terraform 1.14.8/1.16.4 matrix for the published module commit named above. CI provider downloads are not an air-gapped execution claim.
 
+
+## Azure validation
+
+On October 5, 2026, the module was deployed from a private platform repository through a pull-request workflow: plan on PR, followed by an environment-approved apply. The private consumer pinned module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf` and targeted a Corp private landing-zone subscription with an AVNM-managed hub-and-spoke spoke, IPAM-allocated address space, forced tunnelling to the hub firewall, and explicit AKS egress rules.
+
+A sanitized ARM read-back job asserted the deployed cluster contract: `sku.name = Automatic`; private API server with API-server VNet integration on the delegated API subnet; `outboundType = userDefinedRouting`; local accounts disabled; OIDC issuer and workload identity enabled; the custom private DNS zone `private.<region>.azmk8s.io`; and `provisioningState = Succeeded`. The region was `swedencentral`, and the observed Kubernetes version was 1.35.8.
+
+Operational lessons from the private validation are part of the public learning while private details stay private: the IPAM-linked VNet required IPAM Pool User for the deploying identity, the AKS resource provider, and the cluster identity; the Corp Deny-Subnet-Without-Nsg policy required subnets with inline NSGs; and this module's `prevent_destroy` correctly blocked a replace after a failed create, with recovery through untaint plus an in-place update.
+
+This public summary does not include subscription or tenant IDs, IP addresses, resource IDs, private repository names, identity names, private workflow run URLs, or the cluster FQDN. It does not claim that the public examples contain deployable real inputs.
+
 ## Remaining environment gates
 
-Before a real deployment, separately confirm the authorized Corp scope and budget, supported region/quota, subnet properties, UDR/firewall compatibility, private DNS, identity permissions, monitoring, effective policies, and the actual resource plan.
-
-Only a reviewed and approved real deployment with matching read-back can establish Azure service acceptance. No such deployment, new recording, or human stage rehearsal is claimed here.
+The October 5 private validation established Azure service acceptance for the pinned module revision and that authorized private consumer path. Any later environment still needs its own reviewed scope, budget, plan, policy, identity, DNS, routing, and cleanup evidence. Native profile selection, genuine recordings, and the full human stage rehearsal remain pending. Do not reuse this sanitized summary as a substitute for private operational records.

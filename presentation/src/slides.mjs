@@ -39,6 +39,14 @@ const chapter = (number, duration, time, chapterTitle, layer, points, tip, sourc
 
 export const slides = [
   {
+    id: 'opening', title: 'NIC 2026', time: 'Pre-show',
+    layer: 'NIC 2026', kind: 'opening', preshow: true,
+    tip: 'Hold here before the clock starts. Advance to the first content slide at 00:00.',
+    sources: [],
+    content: '',
+    notes: 'Pre-show holding slide. Keep this visible while the room settles and before the timed session starts. It carries the official NIC 2026 template mark only, so it does not consume the 60-minute delivery clock.'
+  },
+  {
     id: 's01-outcome', title: 'A module worth reusing.', time: '00:00-01:00',
     layer: 'Copilot CLI / Squad / Terraform', kind: 'hero',
     tip: 'Define the useful artifact before choosing agents.', sources: [cli, squad],
@@ -120,7 +128,7 @@ export const slides = [
     id: 's06-contract', title: 'Fit the platform you already have.', time: '12:00-14:00',
     layer: 'Terraform / Azure contract', kind: 'diagram', sources: [automatic],
     tip: 'Consume approved network inputs. Do not rebuild or import the landing zone.',
-    content: `${fig(corp())}<p class="status-line"><span class="status pending">Environment gate pending</span>Live policy, compatibility, and deployment need separate evidence.</p>`
+    content: `${fig(corp())}<p class="status-line"><span class="status pending">Environment validated</span>Private IaC run supplied sanitized plan, apply, and ARM read-back evidence.</p>`
   },
   chapter(2, 240, '14:00-18:00', 'Pin the brief and approve a plan', 'Native Plan mode / Squad',
     ['Actual Plan indicator and explicit file context', 'Plan artifact, proposed scope, and human revision', 'Approval, then visible implementation mode'],
@@ -172,7 +180,7 @@ export const slides = [
   {
     id: 's15-proof', title: 'Evidence has levels.', time: '37:00-40:00',
     layer: 'Source / local checks / Azure', kind: 'evidence', sources: [tests, tfplan],
-    tip: 'A check proves only what it checks. Pending gates stay visible.',
+    tip: 'A check proves only what it checks. Private validation and pending recordings stay distinct.',
     content: '',
     treatment: 'Current evidence register'
   },
@@ -194,13 +202,13 @@ export const slides = [
       ${row('Repository knowledge', 'Review decisions, histories, and learned testing recipes.', 'Squad / Scribe / reviewed evidence')}`
   },
   chapter(7, 180, '46:00-49:00', 'Reviewed diff to approved Terraform change', 'Native diff / Squad / Terraform',
-    ['Module extraction and the consumer-facing diff', 'Meaningful checks and the exact approval', 'Real plan and read-back only when evidence exists'],
+    ['Module extraction and the consumer-facing diff', 'Meaningful checks and the exact approval', 'Sanitized plan/apply/read-back evidence, with private details omitted'],
     'Approve a specific artifact and scope, not a hopeful summary.', [cli, tfplan]),
   {
     id: 's20-consumer', title: 'Reuse the code, not the environment.', time: '49:00-51:00',
     layer: 'Public Terraform / private consumption', kind: 'diagram', sources: [tests, automatic],
     tip: 'Pin the reviewed module revision separately from environment inputs.',
-    content: `${fig(consumption())}<p class="status-line"><span class="status pending">Consumer validation pending</span>Public code stays separate from private inputs, state, and secrets.</p>`
+    content: `${fig(consumption())}<p class="status-line"><span class="status pending">Consumer validated</span>Private inputs, state, identities, FQDNs, and run URLs stay out of public artifacts.</p>`
   },
   {
     id: 's21-limits', title: 'Make the next change easier to review.', time: '51:00-53:00',
@@ -270,7 +278,7 @@ export const slides = [
     tip: 'Raw plans, state, private inputs, and credentials are not public artifacts.',
     content: `${row('Reproduce the source', '<code>e9a9a48</code><br>Keep the full pin and reviewed module revision.')}
       ${row('Check the code and example', 'Format, validate, lint, isolated tests, and a deliberate mutation.<br>Then verify the consumer interface.')}
-      ${row('Read the real plan', '<code>0</code> unchanged / <code>2</code> changes / <code>1</code> error<br>Scope, policy, approval, and read-back remain separate.')}`
+      ${row('Read the real plan', '<code>0</code> unchanged / <code>2</code> changes / <code>1</code> error<br>October 5 private run supplied sanitized plan/apply/read-back; future targets need their own evidence.')}`
   }
 ];
 
@@ -301,6 +309,12 @@ export function demoContent(slide, media) {
 
 export function renderSection(slide, index, noteHTML, evidence, media) {
   const isAppendix = slide.id.startsWith('a-');
+  const layoutClasses = slide.preshow ? ['layout-opening', 'layout-light']
+    : slide.kind === 'demo' ? ['layout-media', 'layout-dark']
+      : slide.kind === 'questions' ? ['layout-dark']
+        : slide.kind === 'hero' ? ['layout-speaker', 'layout-light']
+          : ['layout-light'];
+  const className = [`slide-${slide.kind}`, ...layoutClasses].join(' ');
   let content = slide.kind === 'demo' ? demoContent(slide, media)
     : slide.kind === 'evidence' ? evidenceContent(evidence) : slide.content;
   const fallback = slide.kind === 'demo'
@@ -310,10 +324,17 @@ export function renderSection(slide, index, noteHTML, evidence, media) {
   const captureRule = slide.kind === 'demo'
     ? '<p><strong>Capture surface:</strong> Genuine Copilot CLI with Squad selected, standalone or in a real integrated terminal. Recording automation is external, off-screen tooling, not a Squad feature. Qualify code before filming, then capture genuine new execution from a disclosed clean checkpoint. Do not present preparation as filmed first-ever implementation.</p>'
     : '';
-  return `<section id="${slide.id}" class="slide-${slide.kind}" role="region" aria-labelledby="${slide.id}-title" data-stage-time="${slide.time}" ${isAppendix ? 'data-appendix="true"' : ''}>
+  if (slide.preshow) {
+    return `<section id="${slide.id}" class="${className}" role="region" aria-label="NIC 2026 opening page" data-stage-time="Pre-show" data-preshow="true">
+    <div class="slide-content" aria-hidden="true"></div>
+    <aside class="notes"><h2>Pre-show / NIC 2026 opening page</h2>${noteHTML}<p><strong>Working tip:</strong> ${escape(slide.tip)}</p><p><strong>Fallback:</strong> Advance to the first content slide before the session clock starts.</p></aside>
+  </section>`;
+  }
+  const headingTag = slide.id === 's01-outcome' ? 'h1' : 'h2';
+  return `<section id="${slide.id}" class="${className}" role="region" aria-labelledby="${slide.id}-title" data-stage-time="${slide.time}" ${isAppendix ? 'data-appendix="true"' : ''}>
     <div class="slide-content">
       <div class="slide-meta"><span class="eyebrow">${escape(slide.layer)}</span><span class="stage-time">${isAppendix ? 'APPENDIX / reference only' : escape(slide.time)}</span></div>
-      <header class="slide-header">${slide.chapter ? `<span class="chapter-id">${slide.chapter}</span>` : ''}<${index === 0 ? 'h1' : 'h2'} id="${slide.id}-title">${escape(slide.title)}</${index === 0 ? 'h1' : 'h2'}></header>
+      <header class="slide-header">${slide.chapter ? `<span class="chapter-id">${slide.chapter}</span>` : ''}<${headingTag} id="${slide.id}-title">${escape(slide.title)}</${headingTag}></header>
       <div class="slide-body">${content}</div>
       <footer class="slide-footer"><p class="tip"><span>Working tip</span>${escape(slide.tip)}</p><div class="source-links">${isAppendix ? '<a href="#/s22-questions">Back to Q&amp;A</a>' : ''}${slide.sources.map(item => `<a href="${escape(item.url)}"${item.url.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : ''}>${escape(item.label)}</a>`).join('')}</div></footer>
     </div>

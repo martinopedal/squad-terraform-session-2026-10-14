@@ -2,7 +2,7 @@
 
 Use `build_then_record_clean_run`: qualify the module first, then record genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Don't open another terminal or substitute a viewer. This run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
 
-Local module qualification passed: 52 module cases, two caller cases, and both mutation proofs. Hosted Terraform matrix CI run 36990206303 passed on commit b7133679a89b1e2b36677400d659a03907c0f3f6. Native agent-setup CI passed in run 37286068987 on commit 00787f59ac19e3db0c3869a96ff45805c6cb523d, and final module verification run 37286237657 passed on commit 02e10e56bc15cc30c3193dce3ddc8e608cb87daf. These are instructions for a later genuine recording, not an executed transcript of that run. Azure target, budget, plan, and apply remain deferred.
+Local module qualification passed: 52 module cases, two caller cases, and both mutation proofs. Hosted Terraform matrix CI run 36990206303 passed, native agent-setup CI passed in run 37286068987, final module verification passed in run 37286237657, and docs-only Azure-validation release CI passed in run 37305768318. A private IaC consumer deployed and read back the module on October 5, 2026, pinned to runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized facts are public, private inputs are not. These are instructions for a later genuine recording, not an executed transcript of that run. Native profile selection, recordings, and full rehearsal remain pending.
 
 ## Prepare the checkpoint and capture
 
@@ -201,7 +201,7 @@ Martin operates; Haflidi verifies the recovered reason:
 ```text
 Scribe: record the public-only decision in .squad\decisions.md: private API
 invariant, caller-owned provider/backend, added network-payload regression,
-labeled mutation/restoration, exact checks, and deferred Azure target/budget.
+labeled mutation/restoration, exact checks, and the sanitized Azure-validation boundary without exposing private target details.
 Do not copy histories, credentials, or full conversations.
 ```
 

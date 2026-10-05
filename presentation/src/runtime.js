@@ -38,7 +38,8 @@
       if (link.dataset.nav === current.id) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     });
-    liveMessage.textContent = `${current.dataset.stageTime}: ${current.querySelector('h1,h2').textContent}`;
+    const label = current.querySelector('h1,h2')?.textContent || current.getAttribute('aria-label') || current.id;
+    liveMessage.textContent = `${current.dataset.stageTime}: ${label}`;
   }
 
   function openMenu() {
@@ -75,15 +76,15 @@
     const style = speakerDocument.createElement('style');
     style.id = 'conference-notes-style';
     style.textContent = `
-      .speaker-controls-notes .value { font-family: 'Segoe UI', system-ui, sans-serif; color: #1B1B1B; }
+      .speaker-controls-notes .value { font-family: 'Roboto', system-ui, sans-serif; color: #1A1B1B; }
       .speaker-controls-notes .value h2 { font-size: 21px; line-height: 1.25; margin: 0 0 14px; }
       .speaker-controls-notes .value p { font-size: 18px; line-height: 1.45; margin: 0 0 16px; }
-      .speaker-controls-notes .value blockquote { font-size: 14px; margin: 0 0 18px; padding: 8px 12px; border-left: 3px solid #464FEB; background: #EEF0FF; }
+      .speaker-controls-notes .value blockquote { font-size: 14px; margin: 0 0 18px; padding: 8px 12px; border-left: 3px solid #1A1B1B; background: #98F8FE; }
       .speaker-controls-notes .value blockquote p { font-size: 14px; line-height: 1.4; margin: 0; }
       .speaker-controls-notes .value details { margin: 0 0 16px; }
-      .speaker-controls-notes .value summary { font-size: 14px; font-weight: 600; color: #2E37BE; background: #EEF0FF; padding: 8px 10px; cursor: pointer; }
-      .speaker-controls-notes .value summary:focus-visible { outline: 3px solid #2E37BE; outline-offset: 2px; }
-      .speaker-controls-notes .value strong { color: #2E37BE; }
+      .speaker-controls-notes .value summary { font-size: 14px; font-weight: 600; color: #1A1B1B; background: #98F8FE; padding: 8px 10px; cursor: pointer; }
+      .speaker-controls-notes .value summary:focus-visible { outline: 3px solid #1A1B1B; outline-offset: 2px; }
+      .speaker-controls-notes .value strong { color: #1A1B1B; }
     `;
     speakerDocument.head.append(style);
   });

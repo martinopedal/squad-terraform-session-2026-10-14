@@ -19,7 +19,7 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - Introduce both speakers with full name, title, and Microsoft employer.
 Takeaway: the output must be inspectable by another engineer.
 Demo cue: none.
-Don't say: Azure deployment happened.
+Say: Azure validation happened only through the private IaC consumer, with sanitized read-back facts. Don't expose private IDs or imply public examples are deployable.
 
 ### 01:00-04:00, C1, Haflidi lead
 - Same brief, same checkpoint, same model.
@@ -158,7 +158,7 @@ Don't say: the mutation was an AI-discovered defect.
 ### 37:00-40:00, s15-proof, Haflidi
 - Source inspection, local mocks, consumer example, plan, and read-back are separate.
 - Current local evidence is 52 module checks and two caller checks.
-- Plan and Azure read-back remain pending.
+- Private plan/apply and Azure read-back passed on October 5 for the pinned runtime module revision; recordings and native profile selection remain pending.
 Takeaway: a check proves only what it checks.
 Demo cue: read status labels exactly.
 Don't say: mocks are Azure acceptance.
@@ -191,10 +191,10 @@ Don't say: CLI compaction maintains Squad decisions.
 - Review as a consumer would.
 - Use `terraform-validator` for the offline suite.
 - Use `terraform-reviewer` for independent read-only acceptance.
-- Keep deployment evidence pending unless supplied.
+- Use only the supplied sanitized deployment/read-back facts; keep private target details off screen.
 Takeaway: approve a specific artifact and scope.
 Demo cue: `/diff`, offline checks, review handoff.
-Don't say: approved code equals deployed Azure behavior.
+Don't say: approved code alone equals deployed Azure behavior; cite the separate October 5 IaC validation when needed.
 
 ### 49:00-51:00, s20-consumer, Martin
 - Public module is reusable; environment inputs stay private.

@@ -16,11 +16,11 @@ Teach useful Copilot CLI and Squad workflows through a reusable Terraform module
 
 ## Voice and identity
 
-Direct, readable, evidence-led. Preserve the Fluent system already implemented in `src\theme.css`: Segoe UI/system typography, white and near-white surfaces, dark text, and the established `#464FEB` accent. Code uses a single monospace stack.
+Direct, readable, evidence-led. Preserve the official NIC 2026 system now implemented in `src\theme.css`: cyan and ink surfaces, embedded Roboto typography, NIC26 logos, and no Fluent accent palette. Code uses a single monospace stack.
 
 ## Anti-references
 
-No generic command catalog, repeated decorative card grid, remote fonts, gradients, dashboard decoration, fake terminal output, or success-shaped recording placeholders. No PowerPoint or print layout.
+No generic command catalog, repeated decorative card grid, remote fonts, gradients, dashboard decoration, fake terminal output, success-shaped recording placeholders, or Fluent-blue carryover. No PowerPoint or print layout.
 
 ## Design principles
 
@@ -31,4 +31,4 @@ No generic command catalog, repeated decorative card grid, remote fonts, gradien
 
 ## Accessibility and delivery
 
-Normal text needs 4.5:1 contrast and large text 3:1. Preserve keyboard access, visible focus, reduced motion, descriptive graphics, native media controls, and complete spoken notes. Test every slide and fragment at 1280 x 720 and 1920 x 1080, then inspect the captures. Keep 22 main slides, six optional references, and the 26/27/7-minute delivery contract.
+Normal text needs 4.5:1 contrast and large text 3:1. Preserve keyboard access, visible focus, reduced motion, descriptive graphics, native media controls, and complete spoken notes. Test every slide and fragment at 1280 x 720 and 1920 x 1080, then inspect the captures. Keep one pre-show opening page, 25 timed main slides, six optional references, and the 26/27/7-minute delivery contract.

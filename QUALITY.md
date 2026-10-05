@@ -15,7 +15,7 @@ Use the [HashiCorp style guide](https://developer.hashicorp.com/terraform/langua
 - Document the example's prerequisites and run it from a clean root. Environment-specific overrides are not public sample values.
 - Require explicit review of changes to tests, lint suppressions, lifecycle guards, expected failures, and resource addresses.
 
-Passing static and mocked checks does not demonstrate Azure service acceptance.
+Passing static and mocked checks does not demonstrate Azure service acceptance. A separate private IaC validation may be cited only with its exact revision, sanitized read-back facts, and remaining limits.
 
 ## Corp integration
 
@@ -41,4 +41,4 @@ The talk track for Martin Opedal and Haflidi Fridthjofsson must cover the conten
 
 Record the source revision, tool versions, commands, actual exit codes, result summaries, and limitations. Use four outcomes: pass, fail, blocked, or not applicable with a reason.
 
-A blocked Azure target does not prevent publishing clearly labeled generic source and local evidence. It does prevent describing the demo as deployed or validated end to end on Azure.
+A blocked Azure target does not prevent publishing clearly labeled generic source and local evidence. The October 5 private validation permits the limited claim that this module revision was deployed and read back through the approved private consumer path; it still does not complete recordings, native profile selection, full rehearsal, or future-environment approval.

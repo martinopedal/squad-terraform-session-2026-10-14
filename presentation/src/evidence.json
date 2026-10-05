@@ -1,11 +1,36 @@
 {
   "sourceRevision": "e9a9a481b9b5bf3a4af8046cb602895c89a9ac24",
-  "moduleRevision": "883795608d7c873e7b47b3acd375e0b58819458a",
+  "moduleRevision": "b01256eb9b1ea6046b9bb8a403662f724a7b6fa7",
   "checks": [
-    { "id": "source", "label": "Inherited source", "status": "Inspected", "detail": "Existing tests and root-boundary defects identified." },
-    { "id": "local", "label": "Module checks", "status": "52 passed", "detail": "Mocked contracts and both mutation proofs passed locally." },
-    { "id": "consumer", "label": "Consumer example", "status": "2 passed", "detail": "Synthetic caller and output forwarding; no Azure deployment." },
-    { "id": "plan", "label": "Real resource plan", "status": "Pending", "detail": "Authorized Corp scope, private state, and human review." },
-    { "id": "azure", "label": "Azure read-back", "status": "Pending", "detail": "Private API, DNS, routing, identity, and policy results." }
+    {
+      "id": "source",
+      "label": "Inherited source",
+      "status": "Inspected",
+      "detail": "Existing tests and root-boundary defects identified."
+    },
+    {
+      "id": "local",
+      "label": "Module checks",
+      "status": "52 passed",
+      "detail": "Mocked contracts and both mutation proofs passed locally."
+    },
+    {
+      "id": "consumer",
+      "label": "Consumer example",
+      "status": "2 passed",
+      "detail": "Synthetic caller and output forwarding; no private inputs."
+    },
+    {
+      "id": "plan",
+      "label": "Private IaC plan/apply",
+      "status": "Approved",
+      "detail": "PR plan and environment-approved apply pinned runtime module commit 02e10e56bc15cc30c3193dce3ddc8e608cb87daf."
+    },
+    {
+      "id": "azure",
+      "label": "Azure read-back",
+      "status": "Succeeded",
+      "detail": "Automatic, private API/VNet integration, UDR, disabled local accounts, OIDC/workload identity, custom private DNS, swedencentral, Kubernetes 1.35.8."
+    }
   ]
 }

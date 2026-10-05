@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "repository": "https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp",
-  "revision": "02e10e56bc15cc30c3193dce3ddc8e608cb87daf",
-  "gitTree": "a9f29eddc0023e1158ce5f981dc112eabbce669a",
+  "revision": "b01256eb9b1ea6046b9bb8a403662f724a7b6fa7",
+  "gitTree": "068e88ecc484ba4b4c4353653c1be7a99e8b5ab8",
   "copyPath": "terraform/modules/aks-automatic-corp",
   "files": [
     {
@@ -97,12 +97,12 @@
     },
     {
       "path": "README.md",
-      "gitBlobSha": "047701788b2107e5c4e9795b09a9220e22817dfe",
+      "gitBlobSha": "a2ccc57a27ff1ce2afb496d817082f30b3026a69",
       "mode": "100644"
     },
     {
       "path": "VALIDATION.md",
-      "gitBlobSha": "ca1101f4121568d2cc34575b30e82b6dd29e05e4",
+      "gitBlobSha": "c7115516aff01187baf5abb7592ab36bda161bc3",
       "mode": "100644"
     },
     {
@@ -188,13 +188,16 @@
     "moduleTestsPassed": 52,
     "callerTestsPassed": 2,
     "mutationProofsPassed": 2,
-    "hostedCI": "passed run 37286237657 on 02e10e56bc15cc30c3193dce3ddc8e608cb87daf; contracts 1.14.8, contracts 1.16.4, and agent-setup succeeded; agent-setup first passed run 37286068987 on 00787f59ac19e3db0c3869a96ff45805c6cb523d",
-    "azureDeployment": "not-performed",
-    "nativeDemoRecordings": "pending"
+    "hostedCI": "passed run 37305768318 on b01256eb9b1ea6046b9bb8a403662f724a7b6fa7; contracts 1.14.8, contracts 1.16.4, and agent-setup succeeded",
+    "azureValidation": "passed on 2026-10-05 from a private IaC PR workflow pinned to runtime module commit 02e10e56bc15cc30c3193dce3ddc8e608cb87daf; sanitized ARM read-back asserted Automatic SKU, private API/VNet integration, UDR, disabled local accounts, OIDC/workload identity, custom private DNS, provisioningState Succeeded, swedencentral, Kubernetes 1.35.8",
+    "azureDeployment": "performed in private Corp landing-zone consumer; sensitive identifiers omitted",
+    "nativeDemoRecordings": "pending",
+    "nativeProfileSelection": "not-verified"
   },
   "notes": [
     "Git blob hashes describe the LF-normalized published source.",
     "Both public source trees must have the same Git tree hash.",
-    "Hosted CI is credential-free and does not prove Azure acceptance."
+    "Azure validation was performed in a private consumer and does not publish private inputs, state, identities, run URLs, IP addresses, resource IDs, or FQDNs.",
+    "Native profile selection, recordings, and full human rehearsal remain pending."
   ]
 }
