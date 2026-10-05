@@ -27,6 +27,23 @@ Desktop and the exact pinned Terraform MCP image with:
 docker pull hashicorp/terraform-mcp-server:1.3.0@sha256:423a6b8e2ee06affcf090892f40c86469caba45fd2448ffa8ca5d717a174f7d5
 ```
 
+Start the demo window with only the profiles' own MCP servers. Every server in
+your user-level `~/.copilot/mcp-config.json` starts in every session, so OAuth
+servers open `localhost:<port>` sign-in tabs and slow startup enough that
+agent-scoped tools can arrive after the first turn:
+
+```powershell
+$off = (Get-Content "$HOME\.copilot\mcp-config.json" -Raw | ConvertFrom-Json).mcpServers.PSObject.Properties.Name |
+  ForEach-Object { '--disable-mcp-server', $_ }
+copilot --disable-builtin-mcps @off
+```
+
+After selecting a profile, wait until `/mcp` lists `microsoft-learn` and
+`terraform` as connected before the first prompt. In the October 5 dry run,
+batch `-p` runs without this wait sometimes reported the MCP tools as missing
+("tool catalog changed before tool could be invoked"). With user servers
+disabled, the coder reached Microsoft Learn in 4 of 4 runs.
+
 The native Terraform MCP binary is not used for this demo. Restart Copilot in
 this same window only if discovery is stale, then inspect again. Static checks and MCP discovery are not footage or proof of profile
 activation. Squad remains the coordinator; the narrow-tool lane uses explicit
@@ -56,6 +73,8 @@ foreach ($run in 'A','B','guided') {
   if ($LASTEXITCODE) { throw 'Worktree creation failed.' }
   git -C "$take\$run" sparse-checkout set --no-cone -- @patterns
   if ($LASTEXITCODE) { throw 'Sparse checkout failed.' }
+  git -C "$take\$run" checkout -q --detach
+  if ($LASTEXITCODE) { throw 'Checkout failed.' }
 }
 $pin | Set-Content "$take\evidence\checkpoint.txt"
 git -C "$take\guided" ls-files -s -- 'terraform\modules\aks-automatic-corp' |
@@ -65,7 +84,7 @@ $take
 
 Review the checkpoint's public decision ledger before copying it; never substitute the coordinator's private `.squad`. Git sparse patterns use Git's slash syntax. Keep the printed take location private. Enter `/cwd` with the actual A, B, or guided path when instructed below.
 
-Pre-stage a filesystem-only provider mirror and `offline\terraform.tfrc` beside the worktrees, following the module README. Terraform subprocesses must be uncredentialed and network-restricted, separately from CLI/model access. Stop if isolation is unavailable. Never use cached Azure login, direct download fallback, or ordinary `terraform plan`.
+Pre-stage a filesystem-only provider mirror and `offline\terraform.tfrc` beside the worktrees, following the module README. One online staging step populates the mirror: from the module directory, `terraform providers mirror -platform=windows_amd64 C:\terraform-offline\providers`. Then copy the README's `terraform.tfrc` to `$take\offline\`. Terraform subprocesses must be uncredentialed and network-restricted, separately from CLI/model access. Stop if isolation is unavailable. Never use cached Azure login, direct download fallback, or ordinary `terraform plan`.
 
 **R0:** approve the chosen existing terminal's content. Normal OBS/Windows window capture is acceptable after a short, authorized first-frame/motion check. `gdigrab` produced black frames on the GPU-rendered terminal; encoded frames alone prove nothing. Keep external recorder controls off-screen, microphone off, and no desktop fallback.
 
@@ -159,7 +178,7 @@ Run this block before mutation:
 $PSNativeCommandUseErrorActionPreference = $false
 $env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path
 $env:CHECKPOINT_DISABLE = '1'; $env:TF_IN_AUTOMATION = '1'
-if (Get-ChildItem Env: | Where-Object Name -Match '^(ARM_|AZURE_|TF_VAR_|TF_CLI_ARGS)') {
+if (Get-ChildItem Env: | Where-Object Name -Match '^(ARM_|AZURE_(?!CORE_)|TF_VAR_|TF_CLI_ARGS)') {
   throw 'Remove inherited credentials/overrides in the isolated child, without displaying values.'
 }
 $phase = 'before' # Repeat as seeded-failure and repaired, using new log names.
@@ -217,7 +236,7 @@ stop at the first failure:
 $PSNativeCommandUseErrorActionPreference = $false
 $env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path
 $env:CHECKPOINT_DISABLE = '1'; $env:TF_IN_AUTOMATION = '1'
-if (Get-ChildItem Env: | Where-Object Name -Match '^(ARM_|AZURE_|TF_VAR_|TF_CLI_ARGS)') {
+if (Get-ChildItem Env: | Where-Object Name -Match '^(ARM_|AZURE_(?!CORE_)|TF_VAR_|TF_CLI_ARGS)') {
   throw 'Inherited credentials/overrides are not permitted.'
 }
 function Check($id, $exe, [string[]]$argv) {
