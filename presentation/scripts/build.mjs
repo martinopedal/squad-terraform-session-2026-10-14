@@ -56,9 +56,9 @@ for (const [id, block] of blocks) {
 const spokenWords = speakers.Martin + speakers.Haflidi;
 const descriptionWords = words(sessionize.split('## Description and outcomes\n')[1].split('\n## ')[0]);
 const pitchWords = words(sessionize.split('## Elevator pitch\n')[1].split('\n## ')[0]);
-if (slides.length !== 32 || slides.filter(slide => slide.preshow).length !== 1 ||
+if (slides.length !== 34 || slides.filter(slide => slide.preshow).length !== 1 ||
     slides.filter(slide => !slide.id.startsWith('a-') && !slide.preshow).length !== 25) {
-  throw new Error('Expected one opening slide, 25 timed main slides, and six appendix slides.');
+  throw new Error('Expected one opening slide, 25 timed main slides, and eight appendix slides.');
 }
 if (spokenWords < 5300 || spokenWords > 5900 || qaWords < 650 || qaWords > 800) throw new Error(`Spoken script length is out of range: ${spokenWords} main, ${qaWords} Q&A.`);
 if (Math.abs(speakers.Martin - speakers.Haflidi) / spokenWords > .1) throw new Error('Speaker contributions differ by more than 10%.');
@@ -92,7 +92,7 @@ for (const chapter of chapters) {
 }
 
 const build = {
-  version: version.version, openingSlides: 1, mainSlides: 25, appendixSlides: 6,
+  version: version.version, openingSlides: 1, mainSlides: 25, appendixSlides: 8,
   recordedMinutes: clock.recorded / 60, liveMinutes: clock.live / 60, qaMinutes: clock.qa / 60,
   spokenWords, speakers, qaWords, descriptionWords, pitchWords,
   chapters, media, sourceRevision: evidence.sourceRevision, moduleRevision: evidence.moduleRevision,
@@ -148,6 +148,6 @@ await writeFile(join(root, 'index.html'), html, 'utf8');
 await writeFile(join(root, 'qa/build-manifest.json'), JSON.stringify({
   ...build, htmlBytes: Buffer.byteLength(html), htmlSHA256: createHash('sha256').update(html).digest('hex')
 }, null, 2) + '\n');
-console.log(`Built index.html: 1 opening + 25 timed main + 6 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} Q&A words.`);
+console.log(`Built index.html: 1 opening + 25 timed main + 8 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} Q&A words.`);
 console.log(`Timing 26 recorded / 27 live / 7 Q&A. Attached chapters: ${Object.values(media).filter(item => item.available).length}/7.`);
 console.log(`Sessionize: ${descriptionWords}-word description; ${pitchWords}-word pitch. HTML ${(Buffer.byteLength(html) / 1024).toFixed(0)} KiB.`);

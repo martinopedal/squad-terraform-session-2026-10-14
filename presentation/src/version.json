@@ -1,5 +1,5 @@
 {
-  "version": "0.14",
+  "version": "0.15",
   "status": "draft; recordings and native profile selection pending; Azure validation sanitized",
   "changes": [
     "0.1 - 2026-09-30: build the offline presentation and two-speaker delivery.",
@@ -15,6 +15,7 @@
     "0.11 - 2026-10-05: add big-news, what's-new-in-Squad and agent-setup slides; Squad 1.0.1; rebalance non-chapter timing.",
     "0.12 - 2026-10-05: show user-provided speaker names, titles, and Microsoft employer on the opening slide.",
     "0.13 - 2026-10-05: adopt the official NIC 2026 template (cyan/ink layouts, Roboto, NIC26 logo).",
-    "0.14 - 2026-10-05: record IaC-based Azure validation of the module; recordings still pending."
+    "0.14 - 2026-10-05: record IaC-based Azure validation of the module; recordings still pending.",
+    "0.15 - 2026-10-06: add question-driven appendix slides for the Online landing-zone variant and the rerunnable prompt pack; main 60-minute clock unchanged."
   ]
 }

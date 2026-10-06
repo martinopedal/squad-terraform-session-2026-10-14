@@ -14,6 +14,9 @@ const tests = source('Terraform tests', 'https://developer.hashicorp.com/terrafo
 const tfplan = source('Terraform plan', 'https://developer.hashicorp.com/terraform/cli/commands/plan');
 const guide = source('Feature guide', '../docs/feature-guide.md');
 const whatsNew = source('What is new', '../docs/whats-new.md');
+const onlineDemo = source('Online variant', '../docs/online-demo.md');
+const promptPack = source('Prompt pack', '../docs/prompt-pack.md');
+const upstreamRepo = source('Module repository', 'https://github.com/martinopedal/terraform-azapi-aks-automatic');
 const cliGA = source('Copilot CLI GA', 'https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available/');
 const agentHQ = source('Agent HQ', 'https://github.blog/news-insights/company-news/welcome-home-agents/');
 const agentHQAgents = source('Claude and Codex in Agent HQ', 'https://github.blog/news-insights/company-news/pick-your-agent-use-claude-and-codex-on-agent-hq/');
@@ -230,7 +233,9 @@ export const slides = [
       <a href="#/a-handoffs"><span>03</span>Local or cloud work</a>
       <a href="#/a-integrations"><span>04</span>Editor and tool context</a>
       <a href="#/a-squad-ops"><span>05</span>Squad operations</a>
-      <a href="#/a-evidence"><span>06</span>Evidence and prerequisites</a></div>`
+      <a href="#/a-evidence"><span>06</span>Evidence and prerequisites</a>
+      <a href="#/a-online"><span>07</span>Online landing zone</a>
+      <a href="#/a-prompts"><span>08</span>Prompts you can rerun</a></div>`
   },
   {
     id: 'a-cli-controls', title: 'Branch and recover deliberately.', time: 'Appendix',
@@ -279,6 +284,22 @@ export const slides = [
     content: `${row('Reproduce the source', '<code>e9a9a48</code><br>Keep the full pin and reviewed module revision.')}
       ${row('Check the code and example', 'Format, validate, lint, isolated tests, and a deliberate mutation.<br>Then verify the consumer interface.')}
       ${row('Read the real plan', '<code>0</code> unchanged / <code>2</code> changes / <code>1</code> error<br>October 5 private run supplied sanitized plan/apply/read-back; future targets need their own evidence.')}`
+  },
+  {
+    id: 'a-online', title: 'Same module, Online landing zone.', time: 'Appendix',
+    layer: 'Terraform / Azure landing zone / GitHub Actions', kind: 'reference', sources: [onlineDemo, upstreamRepo],
+    tip: 'Guardrails are design inputs. None were bypassed with exemptions.',
+    content: `${row('Thin root, same module', '<code>deployments/online</code> with <code>source = "../.."</code><br>BYO VNet, NSG on every subnet, NAT Gateway egress, managed NGINX.')}
+      ${row('Guardrails we hit', 'Private-only state storage. Subnets must have an NSG.<br>RBAC Writer cannot create namespaces: managed namespace via ARM.')}
+      ${row('Secure chain and proof', 'OIDC, human gate, ephemeral VNet runner, no plan artifact.<br>API server allows only the runner IP. HTTPS 200 or the run fails.')}`
+  },
+  {
+    id: 'a-prompts', title: 'Prompts you can rerun.', time: 'Appendix',
+    layer: 'Copilot CLI / Squad / MCP', kind: 'reference', sources: [promptPack, guide],
+    tip: 'Repeatable is measured, not assumed: five fresh runs, at least four green.',
+    content: `${row('Guardrails first', 'Read effective policy and RBAC at the target before design.<br>Then ground API facts through Learn and Terraform MCP.')}
+      ${row('One lane per step', 'Squad lead plans. <code>terraform-coder</code> edits.<br><code>terraform-validator</code> checks. <code>terraform-reviewer</code> reviews in <code>/new</code>.')}
+      ${row('Consume like a customer', 'Thin root owns providers, backend, network.<br>Deploy through the pipeline and prove the result.')}`
   }
 ];
 

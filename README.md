@@ -14,6 +14,8 @@ The presentation shell and speaker material are built and reviewed. The public T
 | [`docs\talk-track.md`](docs/talk-track.md) | Timed Martin/Haflidi script, handoffs, and prepared Q&A |
 | [`docs\sessionize.md`](docs/sessionize.md) | Updated title, abstract, outcomes, pitch, and speaker metadata |
 | [`docs\feature-guide.md`](docs/feature-guide.md) | Source-verified Copilot CLI and Squad features and practical use cases |
+| [`docs\prompt-pack.md`](docs/prompt-pack.md) | Rerunnable prompts for building a module like this with Squad, the native lanes, and MCP |
+| [`docs\online-demo.md`](docs/online-demo.md) | Appendix: the upstream module deployed to an ALZ Online subscription through a gated pipeline, with evidence and findings |
 | `scripts\recording\` | Controlled-window capture and verification tools |
 | `terraform\modules\aks-automatic-corp\` | Public source copy of the independently versioned demo module |
 
@@ -64,7 +66,7 @@ full module-copy comparison.
 
 ## Open the presentation
 
-The built [Reveal presentation](presentation/index.html) has 25 main slides and six appendix slides. Its 60-minute structure includes 26 minutes of silent recorded chapters with live narration, 27 minutes of other live explanation, and seven minutes of Q&A. The complete speaker script covers the content and includes a prepared Q&A fallback.
+The built [Reveal presentation](presentation/index.html) has 25 main slides and eight appendix slides. Its 60-minute structure includes 26 minutes of silent recorded chapters with live narration, 27 minutes of other live explanation, and seven minutes of Q&A. The complete speaker script covers the content and includes a prepared Q&A fallback.
 
 For speaker notes, serve the clone locally:
 
