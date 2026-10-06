@@ -242,3 +242,35 @@ Don't say: prepared fallback questions came from the audience.
 **How do we share team knowledge safely?** Put public decisions with the module. Keep private scope mapping, state, credentials, and personal memory out of public artifacts.
 
 **Does computer use change this demo?** No. It is public preview, useful for GUI-only tools, but this Terraform demo stays in CLI, files, docs, and offline checks.
+
+## Appendix cues (question-driven, no scheduled time)
+
+### a-online, either speaker
+- Same module, thin root: `deployments/online`, `source = "../.."`.
+- Guardrails decide the design: private state, NSG on every subnet, RBAC Writer cannot create namespaces.
+- Secure chain: PR, protected branch, human gate, OIDC, one job, no plan artifact.
+- Locked API server: only the runner's static egress IP.
+- Proof, not hope: HTTPS 200 and a forced redirect, or the pipeline fails.
+- Honest label: Standard SKU with Automatic-style features, not the Automatic SKU.
+Takeaway: a simpler topology still meets the same guardrails.
+Don't say: we exempted a policy, or the demo runs from a laptop.
+
+### a-prompts, either speaker
+- Guardrails first, then sourced API facts through MCP.
+- One lane per step: lead plans, coder edits, validator runs the oracle, reviewer in `/new`.
+- Consume like a customer, deploy through the pipeline.
+- Repeatable is measured: five fresh runs, at least four green.
+Takeaway: narrow the choices and make every claim checkable.
+Don't say: the prompts make the model deterministic.
+
+## More likely questions (Online variant)
+
+**Why did the first Online applies fail?** Real guardrails and real API rules: the landing zone denied subnets without NSGs; AKS required a user-assigned identity for BYO subnets; `outboundType none` now means network-isolated. Each failure became a design input or a tested module fix.
+
+**What did the real consumer find in the module?** Six things. Fixed with tests written first: honor `user_assigned_identity_id` whenever set, allow `userAssignedNATGateway`, and two perpetual drifts (`metricsProfile`, `serviceMeshProfile`). Documented: `count` keyed on an ID unknown at plan time, and the upstream module deploys the Standard SKU with Automatic-style features; AKS rejected an in-place switch to Automatic.
+
+**Is the Online cluster AKS Automatic?** Not by SKU. It is Standard SKU with node auto-provisioning, Cilium, Entra RBAC, workload identity, and managed NGINX. The validated Automatic SKU is the Corp module from the main talk. Say this plainly.
+
+**Why not a GitHub-hosted runner?** Tenant policy keeps Terraform state private, and the API server only accepts the runner's egress IP. An ephemeral, VNet-integrated runner with no managed identity is the smallest compliant option.
+
+**Is a public API server safe?** It is Entra-only with local accounts disabled, limited to authorized IPs, and fronted by a human-gated pipeline. For Corp, use the private cluster path from the main talk.
