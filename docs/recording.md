@@ -189,8 +189,8 @@ source/output hashes, and provenance without changing the master.
 
 The export helper refuses retired custom-viewer takes. Keep those raw pilots
 private as diagnostics; decoding successfully did not make them product footage.
-Keep C1-C7 at 180, 240, 240, 240, 300, 180, and 180 seconds, including reading
-pauses. Label cuts, seeded defects, accelerated waits, retakes, and later
+Keep C0-C7 at 180, 180, 240, 240, 240, 300, 180, and 180 seconds, including reading
+pauses. C0 is captured on the clean demo VM per [clean-machine-demo.md](clean-machine-demo.md). Label cuts, seeded defects, accelerated waits, retakes, and later
 evidence honestly. Review each public export before placing it in Reveal.
 
 The later 60-minute two-speaker audio recording requires separate consent and

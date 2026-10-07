@@ -56,9 +56,9 @@ for (const [id, block] of blocks) {
 const spokenWords = speakers.Martin + speakers.Haflidi;
 const descriptionWords = words(sessionize.split('## Description and outcomes\n')[1].split('\n## ')[0]);
 const pitchWords = words(sessionize.split('## Elevator pitch\n')[1].split('\n## ')[0]);
-if (slides.length !== 36 || slides.filter(slide => slide.preshow).length !== 1 ||
+if (slides.length !== 37 || slides.filter(slide => slide.preshow).length !== 1 ||
     slides.filter(slide => !slide.id.startsWith('a-') && !slide.preshow).length !== 25) {
-  throw new Error('Expected one opening slide, 25 timed main slides, and ten appendix slides.');
+  throw new Error('Expected one opening slide, 25 timed main slides, and eleven appendix slides.');
 }
 if (spokenWords < 5300 || spokenWords > 5900 || qaWords < 650 || qaWords > 800) throw new Error(`Spoken script length is out of range: ${spokenWords} main, ${qaWords} Q&A.`);
 if (Math.abs(speakers.Martin - speakers.Haflidi) / spokenWords > .1) throw new Error('Speaker contributions differ by more than 10%.');
@@ -66,7 +66,7 @@ if (descriptionWords < 250 || descriptionWords > 350 || pitchWords < 45 || pitch
 if (new Set(slides.map(slide => slide.id)).size !== slides.length) throw new Error('Duplicate slide ID.');
 for (const slide of slides) if (!slide.preshow && !blocks.has(slide.id)) throw new Error(`Missing complete notes for ${slide.id}.`);
 const chapters = slides.filter(slide => slide.chapter).map(slide => ({ id: slide.chapter, title: slide.title, duration: slide.duration, slide: slide.id }));
-if (chapters.reduce((sum, chapter) => sum + chapter.duration, 0) !== 1560) throw new Error('Recorded chapter budget must be 26 minutes.');
+if (chapters.reduce((sum, chapter) => sum + chapter.duration, 0) !== 1740) throw new Error('Recorded chapter budget must be 29 minutes.');
 const toSeconds = value => value.split(':').reduce((sum, component) => sum * 60 + Number(component), 0);
 const clock = { recorded: 0, live: 0, qa: 0 };
 let previousEnd = 0;
@@ -77,7 +77,7 @@ for (const slide of slides.filter(item => !item.id.startsWith('a-') && !item.pre
   clock[slide.chapter ? 'recorded' : slide.id === 's22-questions' ? 'qa' : 'live'] += end - start;
   previousEnd = end;
 }
-if (previousEnd !== 3600 || clock.recorded !== 1560 || clock.live !== 1620 || clock.qa !== 420) throw new Error('The actual slide clock must retain 26/27/7 minutes.');
+if (previousEnd !== 3600 || clock.recorded !== 1740 || clock.live !== 1440 || clock.qa !== 420) throw new Error('The actual slide clock must retain 29/24/7 minutes.');
 for (const chapter of chapters) {
   const item = media[chapter.id];
   let present = false;
@@ -92,7 +92,7 @@ for (const chapter of chapters) {
 }
 
 const build = {
-  version: version.version, openingSlides: 1, mainSlides: 25, appendixSlides: 10,
+  version: version.version, openingSlides: 1, mainSlides: 25, appendixSlides: 11,
   recordedMinutes: clock.recorded / 60, liveMinutes: clock.live / 60, qaMinutes: clock.qa / 60,
   spokenWords, speakers, qaWords, descriptionWords, pitchWords,
   chapters, media, sourceRevision: evidence.sourceRevision, moduleRevision: evidence.moduleRevision,
@@ -148,6 +148,6 @@ await writeFile(join(root, 'index.html'), html, 'utf8');
 await writeFile(join(root, 'qa/build-manifest.json'), JSON.stringify({
   ...build, htmlBytes: Buffer.byteLength(html), htmlSHA256: createHash('sha256').update(html).digest('hex')
 }, null, 2) + '\n');
-console.log(`Built index.html: 1 opening + 25 timed main + 10 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} Q&A words.`);
-console.log(`Timing 26 recorded / 27 live / 7 Q&A. Attached chapters: ${Object.values(media).filter(item => item.available).length}/7.`);
+console.log(`Built index.html: 1 opening + 25 timed main + 11 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} Q&A words.`);
+console.log(`Timing 29 recorded / 24 live / 7 Q&A. Attached chapters: ${Object.values(media).filter(item => item.available).length}/8.`);
 console.log(`Sessionize: ${descriptionWords}-word description; ${pitchWords}-word pitch. HTML ${(Buffer.byteLength(html) / 1024).toFixed(0)} KiB.`);

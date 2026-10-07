@@ -1,7 +1,7 @@
 const nativeSurfaces = new Set(['native-copilot-cli', 'integrated-terminal']);
 
 export function resolveMediaEntry(chapterId, entry, present) {
-  if (!/^C[1-7]$/.test(chapterId) || !entry || entry.file !== `media/${chapterId}.mp4`) {
+  if (!/^C[0-7]$/.test(chapterId) || !entry || entry.file !== `media/${chapterId}.mp4`) {
     throw new Error(`Unexpected local media path for ${chapterId}.`);
   }
   if (typeof entry.reviewed !== 'boolean') {

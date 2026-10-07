@@ -58,33 +58,17 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Haflidi:** Two more notes are fresh. Agent Skills launched in December, and skills plus MCP are GA in Copilot code review. Computer use entered public preview on October 1 with `/computer on`, `show`, and `off`, per-app approval, and admin disable. We do not use computer use in this Terraform demo.
 
-**Martin:** Finally, Squad reached 1.0 on October 3, with 1.0.1 on October 4. The demo machine uses Squad 1.0.1. Be precise: GitHub Releases, WinGet, and Homebrew carry 1.0.1, while npm latest is still 0.13.1 as of October 5.
+**Martin:** Finally, Squad reached 1.0 on October 3, with 1.0.1 on October 4. It stabilizes what 0.11 to 0.13 added: presets, `squad_state` memory tools, the Fact Checker, `squad health`, and the advisory reviewer, with no breaking command changes from 0.13.1. The demo uses Squad 1.0.1 from GitHub Releases, WinGet, or Homebrew; npm latest was still 0.13.1 on October 5, and Haflidi installs it from zero in a few minutes.
 
-## s05-squad-news | 06:00-07:00 | What is new in Squad, 0.11 to 1.0
+## s04-layers | 06:00-07:00 | One workflow, three distinct layers
 
-> DRIVER Martin. No clip. Treat this as version orientation for the team layer. Haflidi owns the npm and stability caveats. Tip: say Squad 1.0.1 for the demo.
+> DRIVER Martin. Reveal the product-map connector, then the artifact boundary. Hold each for five seconds. Haflidi explains the CLI and tool layers; Martin explains Squad. Handoff to Martin at 07:00. Tip: name which product supplies each behavior.
 
-**Haflidi:** The Squad change from 0.11 to 1.0 is less about a new demo trick and more about making the team layer safer to explain. Version 0.11 added presets, the registry, cross-squad discovery, Copilot App sub-sessions, `squad_state` memory tools, and the improved Fact Checker. That gave the coordinator a clearer memory and verification story.
+**Haflidi:** Copilot CLI is the execution environment: Plan mode, file context, custom agents, tool access, permissions, subagents, review, and session controls. You can use all of that without Squad. The third layer is tools and evidence: Terraform, Git, Microsoft Learn, and MCP servers return artifacts, and none of them becomes correct just because an agent invoked it.
 
-**Martin:** Version 0.12 brought GitHub Agentic Workflows into the product flow: `/squad research`, `/squad plan`, `/squad cast`, and `/squad implement`. It also started the standalone distribution work, so Squad was no longer only an npm global package in the design.
+**Martin:** Squad adds a repository-backed team layer: a roster, narrow charters, routing and handoffs, and decisions a later task can recover. It runs through the CLI; it doesn't replace it. The human sets a bounded objective, the CLI runs the work, Squad organizes the responsibilities, and the result comes back as files, decisions, and check output we can inspect.
 
-**Haflidi:** Version 0.13 added `squad health`, hardened the workflow integration, added an advisory reviewer step, and generated the Team Capabilities block. Version 1.0 stabilized that line. There are no breaking command changes from 0.13.1, and the blanket alpha disclaimer is gone.
-
-**Martin:** For this session, say Squad 1.0.1. Also say the distribution channel. The standalone GitHub Release, WinGet, and Homebrew paths have moved to 1.0.1. `npm install -g @bradygaster/squad-cli@latest` still resolves to 0.13.1 until npm catches up.
-
-## s04-layers | 07:00-09:00 | One workflow, three distinct layers
-
-> DRIVER Martin. Reveal the product-map connector, then the artifact boundary. Hold each for five seconds. Haflidi explains the first layer; Martin explains Squad. Handoff to Martin at 09:00. Tip: name which product supplies each behavior.
-
-**Haflidi:** Copilot CLI is the execution environment. It supplies Plan mode, file context, custom agents, tool access, permissions, subagents, review, and session controls. You can use those capabilities without Squad. If one small change fits one clear conversation, that may be enough.
-
-**Martin:** Squad adds a repository-backed team layer. Its roster says who is available. Charters narrow responsibilities. Routing and handoffs describe where work goes next. Decisions and histories help a later task recover why a change happened. Squad runs through the CLI; it doesn't replace the CLI with a Terraform engine.
-
-**Haflidi:** The third layer is tools and evidence. Terraform, Git, Microsoft Learn, and MCP servers return information or artifacts. None of them becomes correct because an agent invoked it. We still need to ask what a command checked, which version it used, and whether the result applies to this module.
-
-**Martin:** The human sets a bounded objective. The CLI runs the work. Squad organizes the responsibilities. The result should come back as files, decisions, and check output that a human can inspect. An agent summary helps, but it is not a substitute for those artifacts.
-
-## s07-agent-setup | 09:00-10:00 | Meet the agent setup
+## s07-agent-setup | 07:00-08:00 | Meet the agent setup
 
 > DRIVER Martin. No clip. Trace the diagram from always-on instructions to Squad and then to the three native profiles. Tip: tool filters are availability limits, not a sandbox.
 
@@ -96,17 +80,25 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Haflidi:** MCP is scoped to information sources here: Microsoft Learn, the HashiCorp Terraform registry docs, and `squad_state` for Squad memory. Tool filters reduce what is available to a profile. They do not create a security boundary, and generic Squad tasks do not inherit those profile filters automatically.
 
-## s05-parallel | 10:00-12:00 | Give parallel work separate owners
+## demo-c0 | 08:00-11:00 | C0: From zero to a squad
+
+> DRIVER Haflidi. C0, 03:00 total. Recorded on the clean Windows 11 demo VM (reached only through Azure Bastion), never on a presenter laptop where the tools already exist. At clip 00:00 show the clean machine (no Git, Copilot CLI, or Squad), 00:30 the three winget installs, 01:15 `copilot` and `/login`, 01:50 `squad init`, 02:15 `copilot --agent squad` with the proposed roster confirmed, 02:45 `squad doctor`. Live fallback: the same VM, reset by the pipeline's recreate-vm action. Handoff to Martin at 11:00. Tip: install, init, hire, verify.
+
+**Haflidi:** Everything you have seen so far ran on machines that already had the tools. So we recorded a clean start. This is a fresh Windows 11 virtual machine, reached only through Azure Bastion, deployed by the same kind of gated pipeline as the rest of the demo. It has winget and PowerShell 7, because Copilot CLI needs PowerShell 6 or later and Windows still ships 5.1. It has no Git, no Copilot CLI, and no Squad.
+
+**Haflidi:** Three winget installs: Git, `GitHub.Copilot`, and `bradygaster.Squad`. Then `copilot` and `/login` to authenticate with our GitHub account. Squad 1.0.1 comes from WinGet here, which matters, because npm latest still pointed at 0.13.1 earlier this month.
+
+**Martin:** In the cloned repository, `squad init` is a terminal command, not something you ask the agent to do. It scaffolds the coordinator and templates. The team itself is hired in the next step, and that is where the human stays in charge.
+
+**Haflidi:** `copilot --agent squad`, describe the project, and Init Mode proposes a roster: a few specialists, plus Scribe, Ralph, Rai, and Fact Checker. Nothing is written until we confirm. After that, `.squad\` holds the team, routing, and decisions, and it is reviewable in Git like any other change. `squad doctor` confirms the setup. Five steps from zero, and a setup check is not a Terraform test, so we still verify the work itself.
+
+## s05-parallel | 11:00-12:00 | Give parallel work separate owners
 
 > DRIVER Martin. No clip. Trace the ownership lanes from brief to handoff. Allow ten seconds to read the file boundaries. Handoff to Haflidi for the module contract. Tip: one writer per shared Terraform surface.
 
-**Martin:** Parallel work helps when the outputs can be independent. The infrastructure writer owns the module implementation. A test author owns the isolated test cases against the agreed interface. Documentation can describe consumption once that interface is stable. A reviewer reads the combined change and reports a finding with a file, requirement, and check. These are responsibilities, not a promise that four agents are better than one.
+**Martin:** Parallel work helps when the outputs are independent. The infrastructure writer owns the module, a test author owns the tests against the agreed interface, documentation follows once that interface is stable, and a reviewer reports findings with a file, a requirement, and a check. Copilot CLI already supports parallel subagents and fleet; Squad adds the roster and routing conventions for this repository.
 
-**Haflidi:** The critical boundary is the file, not just the job title. Two agents called architect and engineer can still overwrite the same Terraform block. Give each task an artifact owner and a stopping point. If the interface changes, pause the dependent work and hand over the new contract. Don't let the test author guess a different public input name.
-
-**Martin:** Copilot CLI already supports parallel subagents. Fleet is another native way to distribute work. Squad adds the roster and routing conventions we want for this repository. We don't need to nest fleet inside Squad just to display another command. Use the simplest arrangement that makes ownership and review clear.
-
-**Haflidi:** Separate conversations aren't filesystem isolation, and worktrees don't isolate credentials. The lead still owns integration. Before another fan-out, ask whether the task is independent, whether its result can be checked, and whether the extra context and usage are worth it. For this module, a small team with precise handoffs is enough.
+**Haflidi:** The boundary is the file, not the job title. Give each task one artifact owner and a stopping point, and pause dependent work when the interface changes. Separate conversations aren't filesystem isolation, and worktrees don't isolate credentials. For this module, a small team with precise handoffs is enough.
 
 ## s06-contract | 12:00-14:00 | Fit the platform you already have
 
@@ -392,7 +384,11 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 ## a-online | Appendix | Same module, Online landing zone
 
-> Reference only. Answer "can this run somewhere simpler?" Keywords: same module, thin root, guardrails decide, proof not hope. The root `deployments/online` consumes the module with `source = "../.."` and owns providers, backend, network, and the namespace. Three landing-zone controls shaped it: storage forced private (state through a private endpoint, so an ephemeral VNet-integrated runner), `Deny-Subnet-Without-Nsg` (the AKS-managed VNet was rejected, so BYO subnets with NSGs and an explicit NAT Gateway), and AKS RBAC Writer cannot create namespaces (managed namespace through ARM). Nothing was exempted. The chain: PR, protected branch, human environment gate, OIDC, plan and apply in one job with no plan artifact, a public API server that accepts only the runner's static egress IP, Entra-only kubeconfig, and a proof step that fails unless HTTPS returns 200 and HTTP redirects. The real runs found seven issues: five module fixes written test-first (user-assigned identity for BYO subnets, `userAssignedNATGateway` egress, two perpetual drifts, and the SKU: the module sent `Base`, now `cluster_sku = "Automatic"` with managed system node pools), one root fix (no module-level `depends_on`), and one documented (`count` on a plan-time-unknown ID). The cluster was rebuilt as the Automatic SKU because Base to Automatic migration is not supported. Detail and evidence: `docs/online-demo.md`. Do not show subscription, tenant, or principal IDs.
+> Reference only. Answer "can this run somewhere simpler?" Keywords: same module, thin root, guardrails decide, proof not hope. The root `deployments/online` consumes the module with `source = "../.."` and owns providers, backend, network, and the namespace. Three landing-zone controls shaped it: storage forced private (state through a private endpoint, so an ephemeral VNet-integrated runner), `Deny-Subnet-Without-Nsg` (the AKS-managed VNet was rejected, so BYO subnets with NSGs and an explicit NAT Gateway), and AKS RBAC Writer cannot create namespaces (managed namespace through ARM). Nothing was exempted. The chain: PR, protected branch, human environment gate, OIDC, plan and apply in one job with no plan artifact, a public API server that accepts only the runner's static egress IP, Entra-only kubeconfig, and a proof step that fails unless HTTPS returns 200 and HTTP redirects. The real runs found seven issues: five module fixes written test-first (user-assigned identity for BYO subnets, `userAssignedNATGateway` egress, two perpetual drifts, and the SKU: the module sent `Base`, now `cluster_sku = "Automatic"` with managed system node pools), one root fix (no module-level `depends_on`), and one fixed later in the module (`count` on a plan-time-unknown subnet ID, now the explicit `use_external_subnets` flag with a regression test). The cluster was rebuilt as the Automatic SKU because Base to Automatic migration is not supported. Detail and evidence: `docs/online-demo.md`. Do not show subscription, tenant, or principal IDs.
+
+## a-security | Appendix | What AI found that the scanners did not
+
+> Reference only. Answer "how did AI help security, and what does GHAS already do?" Keywords: GHAS baseline, silent gaps, oracle, human approval. Both public repositories run CodeQL default setup, secret scanning with push protection, and Dependabot security updates, with zero open alerts on October 7, and `main` requires six checks including Checkov, TFLint, and Trivy. The agent found what produces no alert: Checkov's parser had rejected the module's `main.tf` since August, so the cluster definition was never scanned; the Security Scan workflow had been disabled for inactivity; a feature monitor reported green while crashing; approving a gate right after dispatch silently failed; and a VM cleanliness check could not see per-user installs. Microsoft Learn through MCP supplied product rules such as Base to Automatic migration not being supported. Each claim was then re-checked by a test or read-back: 22 module tests, 28 read-back checks, 14 VM checks. Every merge and every Azure write had a human decision. Gaps stay visible: single-maintainer admin merges, identifiers in history, and Checkov not reading azapi bodies. Detail: `docs/security-case.md`.
 
 ## a-prompts | Appendix | Prompts you can rerun
 

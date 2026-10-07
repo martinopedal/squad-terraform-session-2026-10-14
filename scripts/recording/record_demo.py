@@ -568,7 +568,7 @@ def main():
     parser.add_argument("--window-title")
     parser.add_argument("--window-pid", type=int)
     parser.add_argument("--max-seconds", type=int, default=90)
-    parser.add_argument("--chapter", default="Slate", choices=("Slate", "Pilot", "C1", "C2", "C3", "C4", "C5", "C6", "C7"))
+    parser.add_argument("--chapter", default="Slate", choices=("Slate", "Pilot", "C0", "C1", "C2", "C3", "C4", "C5", "C6", "C7"))
     parser.add_argument("--label", default="")
     parser.add_argument("--export-name")
     parser.add_argument("--start-seconds", type=float, default=0)

@@ -1,4 +1,5 @@
 {
+  "C0": { "file": "media/C0.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null },
   "C1": { "file": "media/C1.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null },
   "C2": { "file": "media/C2.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null },
   "C3": { "file": "media/C3.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null },

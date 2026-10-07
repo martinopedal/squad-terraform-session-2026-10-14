@@ -12,6 +12,8 @@ The presentation shell and speaker material are built and reviewed. The public T
 | --- | --- |
 | [`presentation`](presentation/README.md) | Offline-capable Reveal.js presentation with speaker notes |
 | [`docs\talk-track.md`](docs/talk-track.md) | Timed Martin/Haflidi script, handoffs, and prepared Q&A |
+| [`docs\run-plan.md`](docs/run-plan.md) | Countdown, recording plan, minute-by-minute run sheet, preflight, fallbacks |
+| [`docs\clean-machine-demo.md`](docs/clean-machine-demo.md) | C0: from-zero Copilot CLI and Squad install on the clean demo VM |
 | [`docs\sessionize.md`](docs/sessionize.md) | Updated title, abstract, outcomes, pitch, and speaker metadata |
 | [`docs\feature-guide.md`](docs/feature-guide.md) | Source-verified Copilot CLI and Squad features and practical use cases |
 | [`docs\prompt-pack.md`](docs/prompt-pack.md) | Rerunnable prompts for building a module like this with Squad, the native lanes, and MCP |
@@ -23,7 +25,7 @@ The module's separate repository is [terraform-azapi-aks-automatic-corp](https:/
 
 That manifest identifies the published module-copy binding. Azure validation used private consumer code pinned to runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; this docs-only module revision records the result without publishing private inputs.
 
-The [C1-C7 operator runbook](docs/demo-runbook.md) provides current-shell commands, native prompts, speaker handoffs, and recording checkpoints. Use it for the later genuine clean demonstration, not as a claim that the recording already exists.
+The [C0-C7 operator runbook](docs/demo-runbook.md) provides current-shell commands, native prompts, speaker handoffs, and recording checkpoints; C0 runs on the clean demo VM per [clean-machine-demo.md](docs/clean-machine-demo.md). Use it for the later genuine clean demonstration, not as a claim that the recording already exists.
 
 ## Native agents alongside the existing Squad
 
@@ -66,7 +68,9 @@ full module-copy comparison.
 
 ## Open the presentation
 
-The built [Reveal presentation](presentation/index.html) has 25 main slides and ten appendix slides. Its 60-minute structure includes 26 minutes of silent recorded chapters with live narration, 27 minutes of other live explanation, and seven minutes of Q&A. The complete speaker script covers the content and includes a prepared Q&A fallback.
+[![All 37 slides of the deck: select to open the live presentation](presentation/preview/overview.jpg)](https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/)
+
+The built [Reveal presentation](presentation/index.html) ([slide-by-slide preview](presentation/README.md#preview)) has 25 main slides and eleven appendix slides. Its 60-minute structure includes 29 minutes of silent recorded chapters (C0-C7) with live narration, 24 minutes of other live explanation, and seven minutes of Q&A. The complete speaker script covers the content and includes a prepared Q&A fallback.
 
 For speaker notes, serve the clone locally:
 

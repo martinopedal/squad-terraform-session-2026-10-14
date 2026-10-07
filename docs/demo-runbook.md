@@ -1,4 +1,6 @@
-# Run C1-C7 in the real CLI
+# Run C0-C7 in the real CLI
+
+C0 (from zero to a squad) is recorded on the clean Windows 11 demo VM, not in this checkpoint shell. Follow [clean-machine-demo.md](clean-machine-demo.md) for C0. Everything below covers C1-C7.
 
 Use `build_then_record_clean_run`: qualify the module first, then record genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Don't open another terminal or substitute a viewer. This run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
 
@@ -271,4 +273,4 @@ context as independent. Return findings to Squad and the human maintainer. This
 additional handoff must be rehearsed within the chapter budget; no completed take
 or timing qualification is implied by adding the instructions.
 
-**R2:** finalize and visually review the master. Preserve prompts, task IDs, hashes, exits, cuts, and source time ranges in `take.json`. Separate the upstream pins in `NOTICE.md`, qualification revision, and recording checkpoint. Earlier logs never become later execution evidence. Keep off-screen results labeled, raw evidence private, and unreviewed media unattached. Export 3/4/4/4/5/3/3 minutes: 26 recorded, 27 other live, seven Q&A. No real apply is permitted.
+**R2:** finalize and visually review the master. Preserve prompts, task IDs, hashes, exits, cuts, and source time ranges in `take.json`. Separate the upstream pins in `NOTICE.md`, qualification revision, and recording checkpoint. Earlier logs never become later execution evidence. Keep off-screen results labeled, raw evidence private, and unreviewed media unattached. Export 3/3/4/4/4/5/3/3 minutes for C0-C7: 29 recorded, 24 other live, seven Q&A. No real apply is permitted.

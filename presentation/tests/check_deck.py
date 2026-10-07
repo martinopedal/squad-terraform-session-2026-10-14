@@ -57,7 +57,7 @@ def main():
         "checks": {},
         "failures": [],
         "limits": [
-            "Actual C1-C7 footage is not attached; content, duration, and recording provenance remain pending.",
+            "Actual C0-C7 footage is not attached; content, duration, and recording provenance remain pending.",
             "Media controls use a synthetic playback fixture, not CLI footage.",
             "No Azure deployment or policy evaluation is performed by this test; it checks only the sanitized published evidence text."
         ]
@@ -100,8 +100,8 @@ def main():
             manifest = page.evaluate("window.presentationBuild")
             report["deckVersion"] = manifest["version"]
             report["htmlSHA256"] = hashlib.sha256((ROOT / "index.html").read_bytes()).hexdigest()
-            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 36 and manifest["openingSlides"] == 1 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 10)
-            check("26/27/7 clock", [manifest[k] for k in ("recordedMinutes", "liveMinutes", "qaMinutes")] == [26, 27, 7])
+            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 37 and manifest["openingSlides"] == 1 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 11)
+            check("29/24/7 clock", [manifest[k] for k in ("recordedMinutes", "liveMinutes", "qaMinutes")] == [29, 24, 7])
             check("main spoken words", 5300 <= manifest["spokenWords"] <= 5900, manifest["spokenWords"])
             check("prepared Q&A words", 650 <= manifest["qaWords"] <= 800, manifest["qaWords"])
             check("balanced speakers", abs(manifest["speakers"]["Martin"] - manifest["speakers"]["Haflidi"]) < 0.1 * manifest["spokenWords"], manifest["speakers"])
@@ -139,7 +139,7 @@ def main():
                 check(name, all(phrase in rendered_notes for phrase in phrases))
             check("inlined resources", page.locator("script[src], link[rel=stylesheet]").count() == 0)
             check("public document link", context.request.get(f"http://127.0.0.1:{server.server_port}/docs/feature-guide.md").ok)
-            check("no placeholder terminal", page.locator(".media-pending").count() == 7 and page.locator("video[src]").count() == 0)
+            check("no placeholder terminal", page.locator(".media-pending").count() == 8 and page.locator("video[src]").count() == 0)
             check("native-only chapter policy", page.evaluate("""() =>
                 [...document.querySelectorAll('.slide-demo aside.notes')].every(n =>
                     n.textContent.includes('Genuine Copilot CLI with Squad selected') &&
@@ -240,7 +240,7 @@ def main():
                 check(f"normal-slide accessibility before overview {label}", page.evaluate(normal_slide_protection))
                 page.keyboard.press("Escape")
                 page.wait_for_function("() => Reveal.isOverview()")
-                thumbnails = page.evaluate("""() => ['s04-layers', 's05-parallel'].map(id => {
+                thumbnails = page.evaluate("""() => ['s04-layers', 'demo-c0'].map(id => {
                     const slide = document.getElementById(id);
                     const content = slide.querySelector('.slide-content');
                     const heading = slide.querySelector('h1,h2');

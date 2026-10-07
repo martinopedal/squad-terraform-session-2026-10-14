@@ -4,11 +4,11 @@ Updated October 5, 2026. This file describes the public deliverables and the rem
 
 ## Current result
 
-- Reveal.js presentation version **0.16**, with one opening slide, 25 main slides, and ten appendix slides (0.15 added the Online landing-zone variant and the rerunnable prompt pack; 0.16 adds Squad bootstrapping and use cases).
+- Reveal.js presentation version **0.17**, with one opening slide, 25 main slides, and eleven appendix slides (0.15 added the Online landing-zone variant and the rerunnable prompt pack; 0.16 Squad bootstrapping and use cases; 0.17 adds the C0 from-zero chapter and the security case).
 - Martin/Haflidi talk track: **5,504 main spoken words**, balanced 2,739 / 2,765, plus a separate 652-word prepared Q&A fallback.
 - Exact session budget: **26 minutes of recorded chapters, 27 minutes of other live explanation, and seven minutes of Q&A**. Both speakers narrate the silent clips; that narration is already inside the 53 content minutes.
 - Sessionize copy: 294-word description/outcomes, 52-word pitch, and both speaker names.
-- Copilot CLI/Squad feature research with 34 first-party references and a C1-C7 operator runbook.
+- Copilot CLI/Squad feature research with 34 first-party references and a C0-C7 operator runbook (C0 on the clean demo VM).
 - Public reusable Terraform module and synthetic caller, locally qualified and privately Azure-validated through IaC.
 
 The package is not stage-ready: **zero of seven native recordings are attached**. Azure deployment/read-back is complete only for the sanitized October 5 private IaC validation; native profile selection and full human rehearsal are still incomplete.
@@ -22,7 +22,9 @@ The package is not stage-ready: **zero of seven native recordings are attached**
 - [Full speaker script](docs/talk-track.md)
 - [Sessionize text](docs/sessionize.md)
 - [Feature guide](docs/feature-guide.md)
-- [C1-C7 demo runbook](docs/demo-runbook.md)
+- [C0-C7 demo runbook](docs/demo-runbook.md)
+- [Run plan: countdown, run sheet, preflight](docs/run-plan.md)
+- [C0 clean-machine demo](docs/clean-machine-demo.md)
 
 The module is pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. Its 35-file Git tree is `068e88ecc484ba4b4c4353653c1be7a99e8b5ab8`. The copy under `terraform/modules/aks-automatic-corp` must retain that same tree.
 
