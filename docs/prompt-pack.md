@@ -138,5 +138,7 @@ These came from the real pipeline runs and are now part of the prompts above:
 - **Read guardrails first.** Private-only storage, NSG-required subnets, and RBAC limits shaped the design more than any code choice.
 - **Root, not module, owns the environment.** Adding providers to the module would have broken another consumer; a thin root fixed it.
 - **Known at plan time.** A module that checks `var.subnet_id != null` in `count` fails when the caller creates the subnet in the same root. Pass deterministic IDs, or give the module a boolean input.
+- **No module-level `depends_on`.** It defers the module's data sources whenever a dependency has a pending change, which can force a resource replacement. Order with resource references instead.
+- **Read back the real resource.** The module promised AKS Automatic but sent the Standard SKU; only an Azure read-back caught it.
 - **Public repo, no plan artifact.** Plan and apply in one gated job, so a plan file is never downloadable.
 - **Prove it.** The pipeline fails unless the app answers over HTTPS and redirects HTTP.

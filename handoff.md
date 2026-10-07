@@ -4,7 +4,7 @@ Updated October 5, 2026. This file describes the public deliverables and the rem
 
 ## Current result
 
-- Reveal.js presentation version **0.15**, with one opening slide, 25 main slides, and eight appendix slides (0.15 adds the Online landing-zone variant and the rerunnable prompt pack).
+- Reveal.js presentation version **0.16**, with one opening slide, 25 main slides, and ten appendix slides (0.15 added the Online landing-zone variant and the rerunnable prompt pack; 0.16 adds Squad bootstrapping and use cases).
 - Martin/Haflidi talk track: **5,504 main spoken words**, balanced 2,739 / 2,765, plus a separate 652-word prepared Q&A fallback.
 - Exact session budget: **26 minutes of recorded chapters, 27 minutes of other live explanation, and seven minutes of Q&A**. Both speakers narrate the silent clips; that narration is already inside the 53 content minutes.
 - Sessionize copy: 294-word description/outcomes, 52-word pitch, and both speaker names.

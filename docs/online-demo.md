@@ -16,10 +16,11 @@ Source: [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martin
 
 | Layer | Choice | Why |
 | --- | --- | --- |
-| Network | BYO VNet, NSG on every subnet | Landing zone denies subnets without an NSG |
+| Cluster | **AKS Automatic SKU** with managed system node pools (`cluster_sku = "Automatic"`) | Azure Policy, Key Vault secrets provider, node resource group lockdown, and Automatic defaults managed by AKS |
+| Network | BYO VNet, NSG on every subnet, dedicated system node subnet | Landing zone denies subnets without an NSG; Automatic requires a system node subnet |
 | Egress | NAT Gateway on the node subnet, static public IP | `egress_type = "userAssignedNATGateway"`; stable egress IP |
 | API server | Public endpoint limited to authorized IPs, VNet integration, Entra RBAC only | Only the deploy runner's static egress IP; local accounts disabled |
-| Identity | User-assigned, Network Contributor on the two AKS subnets only | Granted before the cluster exists; AKS requires it for BYO subnets |
+| Identity | User-assigned, Network Contributor on the VNet | Granted before the cluster exists; required by AKS for BYO subnets and Node Auto-Provisioning |
 | Ingress | AKS App Routing (managed NGINX), HTTPS only | No extra controller to run; HTTP redirects to HTTPS |
 | Namespace | AKS managed namespace (ARM) | Pod Security `restricted`, default-deny ingress and egress, quota |
 | App | Distroless, non-root ASP.NET Core sample (MCR), pinned by digest | Read-only root filesystem, no shell, probes and limits |
@@ -43,9 +44,10 @@ None of these were bypassed with exemptions. Each one became an input to the des
 | `outboundType = none` now means a network-isolated cluster (`bootstrapProfile.artifactSource = Cache`) | Failed apply; Microsoft Learn lists `userAssignedNATGateway` for custom VNets | Fixed: `egress_type` accepts `userAssignedNATGateway` |
 | `count` keyed on `external_node_subnet_id != null` is unknown when the caller creates the subnet | `Invalid count argument` at plan | Documented; root passes plan-time-known IDs; boolean input planned |
 | Perpetual drift: `metricsProfile` and `serviceMeshProfile` sent as null, AKS echoes values back | Every plan showed one in-place change (about 6 minutes per apply) | Fixed: send the API's own shape |
-| The module sends `sku.name = "Base"` (AKS Standard SKU) with Automatic-style features | Azure read-back; an in-place switch to `Automatic` was rejected (needs Azure Policy, Key Vault secrets provider, ephemeral OS disks, SSH disabled on the system pool) | Documented and pinned by a guard test; true Automatic needs the Corp module's `hostedSystemProfile` shape and a rebuild |
+| The module sent `sku.name = "Base"` (AKS Standard SKU) despite its Automatic name | Azure read-back; an in-place switch was rejected, and Microsoft Learn states Base to Automatic migration is not supported | Fixed: opt-in `cluster_sku = "Automatic"` (managed system node pools, API `2026-04-01`, the Corp module's validated shape); the Online cluster was rebuilt |
+| Module-level `depends_on` in the root forced a cluster replacement whenever a dependency had a pending change | Convergence plan wanted to replace the cluster; `prevent_destroy` blocked it | Fixed in the root: implicit ordering through resource references and a `terraform_data` anchor |
 
-This is the point of consuming your own module like a customer: the Corp path had never exercised these combinations.
+This is the point of consuming your own module like a customer: the Corp path had never exercised these combinations. Seven findings: six fixed (five in the module with tests written first, one in the root) and one documented (`count` keyed on a plan-time-unknown ID).
 
 ## The secure deployment chain
 
@@ -80,17 +82,16 @@ All in the public repository [`martinopedal/terraform-azapi-aks-automatic`](http
 
 | Claim | Evidence |
 | --- | --- |
-| Deployed through the pipeline and proven over HTTPS | Actions run 37480835592: apply, app rollout, HTTPS 200 with page title "Welcome to .NET - aspnetapp", `force-ssl-redirect` true, TLS present |
-| No drift after the module fixes | Plan-only runs 37481481669 and 37485919880: "No changes. Your infrastructure matches the configuration." |
+| AKS Automatic SKU deployed through the pipeline and proven over HTTPS | Actions runs 37586137417 (Automatic cluster created) and 37589702715: app rollout, HTTPS 200 with page title "Welcome to .NET - aspnetapp", `force-ssl-redirect` true, TLS present |
+| No drift | Plan-only run 37590220057 and a second check: "No changes. Your infrastructure matches the configuration." |
 | HTTP redirects to HTTPS | External check from the internet: `http://` returns 308 to `https://`. (The runner's NSG allows outbound 443 only, so the pipeline proves the redirect from the live Ingress configuration.) |
-| Security settings | Azure read-back: Entra RBAC, local accounts disabled, user-assigned identity, `outboundType = userAssignedNATGateway`, API server authorized IPs limited to the runner's egress IP, VNet integration, workload identity, OIDC issuer, image cleaner, stable and NodeImage upgrade channels |
+| Security settings | Azure read-back: SKU Automatic/Standard, managed system node pools, Azure Policy and Key Vault secrets provider add-ons, node resource group lockdown ReadOnly, Entra RBAC, local accounts disabled, user-assigned identity, `outboundType = userAssignedNATGateway`, API server authorized IPs limited to the runner's egress IP, VNet integration, workload identity, OIDC issuer, image cleaner, stable and NodeImage upgrade channels |
 | Least privilege in the cluster | Pipeline identity: `can-i create deployments -n online-demo` = yes; listing cluster nodes = forbidden |
-| Module changes are tested | Module suite: 15 passed, 0 failed (each fix written as a failing test first) |
-| Change history | Pull requests #118 to #134 |
+| Module changes are tested | Module suite: 20 passed, 0 failed (each fix written as a failing test first) |
+| Change history | Pull requests #118 to #137; module release v0.5.0 |
 
 ## Limits
 
-- The cluster is AKS Standard SKU with Automatic-style features (node auto-provisioning, Azure CNI Overlay with Cilium, Entra RBAC, workload identity, managed NGINX), not the Automatic SKU. See the findings table.
 - The ingress uses the NGINX default certificate. For production, store the certificate in Key Vault (the module can grant the App Routing identity access).
 - The runner is started manually per run; it is a demo control, not a scaled runner pool.
 - One module finding remains open (`count` on a plan-time-unknown ID); see the findings table.
