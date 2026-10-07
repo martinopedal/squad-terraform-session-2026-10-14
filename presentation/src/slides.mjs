@@ -31,6 +31,7 @@ const squad012 = source('Squad v0.12.0', 'https://github.com/bradygaster/squad/r
 const squad013 = source('Squad v0.13.0', 'https://github.com/bradygaster/squad/releases/tag/v0.13.0');
 const squad100 = source('Squad v1.0.0', 'https://github.com/bradygaster/squad/releases/tag/v1.0.0');
 const squad101 = source('Squad v1.0.1', 'https://github.com/bradygaster/squad/releases/tag/v1.0.1');
+const squadHelp = source('Squad setup skill', '../.github/skills/squad-help/SKILL.md');
 const small = text => `<p class="supporting">${text}</p>`;
 const row = (label, text, detail = '') => `<div class="reference-row"><div><h3>${label}</h3>${detail ? small(detail) : ''}</div><p>${text}</p></div>`;
 
@@ -235,7 +236,9 @@ export const slides = [
       <a href="#/a-squad-ops"><span>05</span>Squad operations</a>
       <a href="#/a-evidence"><span>06</span>Evidence and prerequisites</a>
       <a href="#/a-online"><span>07</span>Online landing zone</a>
-      <a href="#/a-prompts"><span>08</span>Prompts you can rerun</a></div>`
+      <a href="#/a-prompts"><span>08</span>Prompts you can rerun</a>
+      <a href="#/a-bootstrap"><span>09</span>Start a squad</a>
+      <a href="#/a-use-cases"><span>10</span>When Squad earns its place</a></div>`
   },
   {
     id: 'a-cli-controls', title: 'Branch and recover deliberately.', time: 'Appendix',
@@ -289,7 +292,7 @@ export const slides = [
     id: 'a-online', title: 'Same module, Online landing zone.', time: 'Appendix',
     layer: 'Terraform / Azure landing zone / GitHub Actions', kind: 'reference', sources: [onlineDemo, upstreamRepo],
     tip: 'Guardrails are design inputs. None were bypassed with exemptions.',
-    content: `${row('Thin root, same module', '<code>deployments/online</code> with <code>source = "../.."</code><br>BYO VNet, NSG on every subnet, NAT Gateway egress, managed NGINX.')}
+    content: `${row('Thin root, same module', '<code>cluster_sku = "Automatic"</code>, managed system node pools.<br>BYO VNet, NSG on every subnet, NAT Gateway egress, managed NGINX.')}
       ${row('Guardrails we hit', 'Private-only state storage. Subnets must have an NSG.<br>RBAC Writer cannot create namespaces: managed namespace via ARM.')}
       ${row('Secure chain and proof', 'OIDC, human gate, ephemeral VNet runner, no plan artifact.<br>API server allows only the runner IP. HTTPS 200 or the run fails.')}`
   },
@@ -300,6 +303,22 @@ export const slides = [
     content: `${row('Guardrails first', 'Read effective policy and RBAC at the target before design.<br>Then ground API facts through Learn and Terraform MCP.')}
       ${row('One lane per step', 'Squad lead plans. <code>terraform-coder</code> edits.<br><code>terraform-validator</code> checks. <code>terraform-reviewer</code> reviews in <code>/new</code>.')}
       ${row('Consume like a customer', 'Thin root owns providers, backend, network.<br>Deploy through the pipeline and prove the result.')}`
+  },
+  {
+    id: 'a-bootstrap', title: 'Start a squad in five steps.', time: 'Appendix',
+    layer: 'Squad 1.0.1 / Copilot CLI', kind: 'reference', sources: [squad101, squadHelp, guide],
+    tip: 'Init Mode proposes the team first. Nothing is written until you confirm.',
+    content: `${row('Install and scaffold', '<code>winget install --id bradygaster.Squad --exact</code><br>Then <code>squad init</code> in the repository terminal.')}
+      ${row('Hire the team', '<code>copilot --agent squad</code>, describe the project.<br>Confirm the proposed roster; <code>.squad\\</code> is created and committed.')}
+      ${row('Verify and keep current', '<code>squad doctor</code> and <code>squad health</code>.<br>Back up first: <code>squad upgrade</code> keeps team state, replaces templates.')}`
+  },
+  {
+    id: 'a-use-cases', title: 'When Squad earns its place.', time: 'Appendix',
+    layer: 'Copilot CLI runs the work / Squad decides who and remembers why', kind: 'reference', sources: [cli, squad, guide],
+    tip: 'Small, well-understood edit? Use one Copilot CLI session and skip Squad.',
+    content: `${row('Work across owners', 'Module, tests, and docs in parallel.<br>One writer per file, handoffs that name the next check.')}
+      ${row('Work that outlives a session', 'Decisions in <code>.squad\\decisions.md</code>, histories per member.<br>Resume tomorrow, or hand over to a colleague.')}
+      ${row('Backlog and review', 'Issues routed by <code>squad:{member}</code> labels; Ralph keeps it moving.<br>A rejected change is revised by a different author.')}`
   }
 ];
 

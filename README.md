@@ -66,7 +66,7 @@ full module-copy comparison.
 
 ## Open the presentation
 
-The built [Reveal presentation](presentation/index.html) has 25 main slides and eight appendix slides. Its 60-minute structure includes 26 minutes of silent recorded chapters with live narration, 27 minutes of other live explanation, and seven minutes of Q&A. The complete speaker script covers the content and includes a prepared Q&A fallback.
+The built [Reveal presentation](presentation/index.html) has 25 main slides and ten appendix slides. Its 60-minute structure includes 26 minutes of silent recorded chapters with live narration, 27 minutes of other live explanation, and seven minutes of Q&A. The complete speaker script covers the content and includes a prepared Q&A fallback.
 
 For speaker notes, serve the clone locally:
 

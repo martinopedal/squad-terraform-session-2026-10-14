@@ -243,7 +243,47 @@ Don't say: prepared fallback questions came from the audience.
 
 **Does computer use change this demo?** No. It is public preview, useful for GUI-only tools, but this Terraform demo stays in CLI, files, docs, and offline checks.
 
+## Squad and Copilot CLI: set up, use cases, how they fit
+
+### How they work together (one line first)
+- **Copilot CLI runs the work. Squad decides who does it and remembers why.**
+- CLI = execution surface: model, tools, permissions, Plan mode, MCP, `/diff`, `/review`, `/resume`.
+- Squad = a custom agent inside the CLI (`copilot --agent squad`) plus repo state in `.squad\`: team, routing, decisions, histories.
+- Squad spawns members as real CLI tasks; native profiles (`/agent terraform-coder` etc.) narrow a lane; MCP grounds facts; humans approve.
+- Neither replaces Terraform checks, the CLI's permission prompts, or human acceptance.
+
+### Bootstrap, simplest path (5 steps)
+1. **Prereqs:** Copilot CLI, a Git repo. GitHub CLI only for issue routing.
+2. **Install:** `winget install --id bradygaster.Squad --exact` (or Homebrew, GitHub Releases). npm `latest` was still 0.13.1 on Oct 5.
+3. **Scaffold:** `squad init` in the repo terminal. Shell command, not an agent request.
+4. **Hire:** `copilot --agent squad`, describe the project. Init Mode proposes the roster; **nothing is written until you confirm**. Commit `.squad\`.
+5. **Verify:** `squad doctor`, `squad health`. Before `squad upgrade`, back up: team, routing, decisions, histories, config are kept; coordinator and templates are replaced.
+
+Best simple start: one repo, three to five specialists, built-ins (Scribe, Ralph, Rai, Fact Checker) come with it. Add narrow native profiles only where a lane needs limits.
+
+### Usual use cases
+- **Cross-owner work:** module + tests + docs in parallel, one writer per file, named handoffs.
+- **Work that outlives a session:** decisions and histories let you resume or hand over.
+- **Backlog flow:** issues with `squad:{member}` labels; Ralph keeps the queue moving.
+- **Review discipline:** a rejected change is revised by a different author.
+- **Spec intake:** paste a PRD; the lead decomposes it into owned work items.
+- **Skip it:** a small, well-understood edit that fits one CLI session.
+
 ## Appendix cues (question-driven, no scheduled time)
+
+### a-bootstrap, either speaker
+- Install, init, hire, verify, upgrade safely.
+- Init Mode asks first; confirm before files exist.
+- Commit `.squad\`; back up before upgrade.
+Takeaway: five steps, and the team is reviewable in Git from minute one.
+Don't say: `squad init` is a prompt, or npm gives you 1.0.
+
+### a-use-cases, either speaker
+- CLI runs the work; Squad decides who and remembers why.
+- Cross-owner work, long-running work, backlog and review.
+- Skip it for small single-lane edits.
+Takeaway: use Squad where ownership and memory matter.
+Don't say: more agents means better results.
 
 ### a-online, either speaker
 - Same module, thin root: `deployments/online`, `source = "../.."`.
@@ -251,7 +291,7 @@ Don't say: prepared fallback questions came from the audience.
 - Secure chain: PR, protected branch, human gate, OIDC, one job, no plan artifact.
 - Locked API server: only the runner's static egress IP.
 - Proof, not hope: HTTPS 200 and a forced redirect, or the pipeline fails.
-- Honest label: Standard SKU with Automatic-style features, not the Automatic SKU.
+- AKS Automatic SKU: managed system node pools, rebuilt because Base cannot convert.
 Takeaway: a simpler topology still meets the same guardrails.
 Don't say: we exempted a policy, or the demo runs from a laptop.
 
@@ -267,9 +307,9 @@ Don't say: the prompts make the model deterministic.
 
 **Why did the first Online applies fail?** Real guardrails and real API rules: the landing zone denied subnets without NSGs; AKS required a user-assigned identity for BYO subnets; `outboundType none` now means network-isolated. Each failure became a design input or a tested module fix.
 
-**What did the real consumer find in the module?** Six things. Fixed with tests written first: honor `user_assigned_identity_id` whenever set, allow `userAssignedNATGateway`, and two perpetual drifts (`metricsProfile`, `serviceMeshProfile`). Documented: `count` keyed on an ID unknown at plan time, and the upstream module deploys the Standard SKU with Automatic-style features; AKS rejected an in-place switch to Automatic.
+**What did the real consumer find in the module?** Seven things. Fixed in the module with tests written first: honor `user_assigned_identity_id`, allow `userAssignedNATGateway`, two perpetual drifts, and the SKU itself (it sent `Base`; now `cluster_sku = "Automatic"` is an opt-in). Fixed in the root: a module-level `depends_on` that forced replacement. Documented: `count` keyed on an ID unknown at plan time.
 
-**Is the Online cluster AKS Automatic?** Not by SKU. It is Standard SKU with node auto-provisioning, Cilium, Entra RBAC, workload identity, and managed NGINX. The validated Automatic SKU is the Corp module from the main talk. Say this plainly.
+**Is the Online cluster really AKS Automatic?** Yes, verified by read-back: SKU Automatic with managed system node pools. It was rebuilt, because Microsoft Learn states Base to Automatic migration is not supported, and an in-place attempt was rejected.
 
 **Why not a GitHub-hosted runner?** Tenant policy keeps Terraform state private, and the API server only accepts the runner's egress IP. An ephemeral, VNet-integrated runner with no managed identity is the smallest compliant option.
 

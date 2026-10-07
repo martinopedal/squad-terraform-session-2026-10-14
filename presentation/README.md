@@ -14,7 +14,7 @@ Press `S` or select **Speaker notes** to open current/next slides, the complete 
 
 In overview, click a thumbnail or use arrows to select a slide, then Escape to return to it. Thumbnail links and video controls remain inert. On exit, only the active slide becomes interactive; the approved presenter-shortcut behavior is unchanged.
 
-The first slide is a pre-show NIC 2026 opening page and does not consume session time. The 25 timed main slides allocate 26 minutes to silent chapter video with live narration, 27 minutes to other live explanation, and seven minutes to Q&A. Eight appendix slides are question-driven references, not additional scheduled content. [The talk track](../docs/talk-track.md) includes both speakers and a separately labeled prepared Q&A fallback.
+The first slide is a pre-show NIC 2026 opening page and does not consume session time. The 25 timed main slides allocate 26 minutes to silent chapter video with live narration, 27 minutes to other live explanation, and seven minutes to Q&A. Ten appendix slides are question-driven references, not additional scheduled content. [The talk track](../docs/talk-track.md) includes both speakers and a separately labeled prepared Q&A fallback.
 
 ## Build
 
