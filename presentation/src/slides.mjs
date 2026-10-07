@@ -16,6 +16,7 @@ const guide = source('Feature guide', '../docs/feature-guide.md');
 const whatsNew = source('What is new', '../docs/whats-new.md');
 const onlineDemo = source('Online variant', '../docs/online-demo.md');
 const promptPack = source('Prompt pack', '../docs/prompt-pack.md');
+const securityCase = source('Security case', '../docs/security-case.md');
 const upstreamRepo = source('Module repository', 'https://github.com/martinopedal/terraform-azapi-aks-automatic');
 const cliGA = source('Copilot CLI GA', 'https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available/');
 const agentHQ = source('Agent HQ', 'https://github.blog/news-insights/company-news/welcome-home-agents/');
@@ -32,6 +33,8 @@ const squad013 = source('Squad v0.13.0', 'https://github.com/bradygaster/squad/r
 const squad100 = source('Squad v1.0.0', 'https://github.com/bradygaster/squad/releases/tag/v1.0.0');
 const squad101 = source('Squad v1.0.1', 'https://github.com/bradygaster/squad/releases/tag/v1.0.1');
 const squadHelp = source('Squad setup skill', '../.github/skills/squad-help/SKILL.md');
+const cliInstall = source('Install Copilot CLI', 'https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-cli');
+const cleanMachine = source('Clean-machine runbook', '../docs/clean-machine-demo.md');
 const small = text => `<p class="supporting">${text}</p>`;
 const row = (label, text, detail = '') => `<div class="reference-row"><div><h3>${label}</h3>${detail ? small(detail) : ''}</div><p>${text}</p></div>`;
 
@@ -77,36 +80,24 @@ export const slides = [
     id: 's04-news', title: 'Big news this year.', time: '05:00-06:00',
     layer: 'GitHub Copilot / Squad timeline', kind: 'news',
     tip: 'Use the new controls deliberately. Computer use is not part of this Terraform demo.',
-    sources: [whatsNew, cliGA, agentHQ, agentHQAgents, billing, limits, skills, reviewSkills, computerUse, computerUseDocs, squad100, squad101],
+    sources: [whatsNew, cliGA, agentHQ, agentHQAgents, billing, limits, skills, reviewSkills, computerUse, computerUseDocs, squad011, squad012, squad013, squad100, squad101],
     content: `<div class="news-grid">
       <div><strong>2026-02-25</strong><span>Copilot CLI GA</span><em>Plan mode, agents, skills, plugins, MCP, and review controls ship for all subscribers.</em></div>
       <div><strong>2025-10-28 / 2026-02-04</strong><span>Agent HQ</span><em>Launched at Universe. Claude and Codex are public preview in Agent HQ.</em></div>
       <div><strong>2026-06-01 / 2026-07-01</strong><span>AI Credits and limits</span><em>Usage-based billing is effective. <code>/limits</code> and <code>--max-ai-credits</code> matter.</em></div>
       <div><strong>2025-12-18 / 2026-07-29</strong><span>Skills and MCP mature</span><em>Agent Skills launch. Skills plus MCP reach GA for Copilot code review.</em></div>
       <div><strong>2026-10-01</strong><span>Computer use, public preview</span><em><code>/computer on|show|off</code>, per-app approval, admin disable. We do not use it here.</em></div>
-      <div><strong>2026-10-03 / 2026-10-04</strong><span>Squad 1.0 and 1.0.1</span><em>GitHub Releases, WinGet, and Homebrew. npm latest remains <code>0.13.1</code> on Oct 5.</em></div>
+      <div><strong>2026-10-03 / 2026-10-04</strong><span>Squad 1.0 and 1.0.1</span><em>Stabilizes 0.11-0.13: presets, <code>squad_state</code>, <code>squad health</code>. WinGet and Homebrew; npm latest <code>0.13.1</code> on Oct 5.</em></div>
     </div>`
   },
   {
-    id: 's05-squad-news', title: 'What is new in Squad, 0.11 to 1.0.', time: '06:00-07:00',
-    layer: 'Squad 1.0.1 used for the demo', kind: 'squad-update',
-    tip: 'Say 1.0.1 for this demo. Do not claim npm latest has caught up.',
-    sources: [whatsNew, squad011, squad012, squad013, squad100, squad101],
-    content: `<div class="squad-timeline">
-      <div><strong>0.11</strong><span>Presets, registry, cross-squad discovery, <code>squad_state</code> memory tools, and improved Fact Checker.</span></div>
-      <div><strong>0.12</strong><span>GitHub Agentic Workflows: <code>/squad research</code>, <code>plan</code>, <code>cast</code>, and <code>implement</code>. Standalone packaging code lands.</span></div>
-      <div><strong>0.13</strong><span><code>squad health</code>, advisory reviewer, generated Team Capabilities block, and first standalone binary assets.</span></div>
-      <div><strong>1.0 / 1.0.1</strong><span>Stabilization, no breaking changes from 0.13.1, alpha disclaimer removed, Homebrew and WinGet publishing repaired.</span></div>
-    </div>`
-  },
-  {
-    id: 's04-layers', title: 'One workflow. Three distinct layers.', time: '07:00-09:00',
+    id: 's04-layers', title: 'One workflow. Three distinct layers.', time: '06:00-07:00',
     layer: 'Native CLI / Squad / external tools', kind: 'diagram', sources: [cli, squad],
     tip: 'Name the layer before troubleshooting the behavior.',
     content: fig(layers())
   },
   {
-    id: 's07-agent-setup', title: 'Meet the agent setup.', time: '09:00-10:00',
+    id: 's07-agent-setup', title: 'Meet the agent setup.', time: '07:00-08:00',
     layer: 'Repository guidance / native profiles / MCP', kind: 'agent-setup',
     tip: 'Squad coordinates decisions. The operator selects narrow native profiles for narrow lanes.',
     sources: [guide],
@@ -117,8 +108,11 @@ export const slides = [
       <div><strong>Tool boundary</strong><span>Filters limit availability, not sandboxing. Generic Squad tasks do not inherit them.</span></div>
     </div>`
   },
+  chapter(0, 180, '08:00-11:00', 'From zero to a squad', 'Clean Windows 11 / WinGet / Copilot CLI / Squad',
+    ['Clean VM reached only through Bastion; no Git, CLI, or Squad yet', 'WinGet installs, /login, then squad init in the repository', 'Init Mode proposes the roster; confirm, then squad doctor'],
+    'Install, init, hire, verify. Nothing is written until you confirm the roster.', [cliInstall, squad101, cleanMachine]),
   {
-    id: 's05-parallel', title: 'Give parallel work separate owners.', time: '10:00-12:00',
+    id: 's05-parallel', title: 'Give parallel work separate owners.', time: '11:00-12:00',
     layer: 'Native subagents / Squad routing', kind: 'ownership', sources: [cli, squad],
     tip: 'One writer per shared Terraform surface. Every task has a stop condition.',
     content: `<div role="table" aria-label="Artifact ownership and handoffs"><div class="lane-header" role="row"><span role="columnheader">Owner</span><span role="columnheader">Artifact</span><span role="columnheader">Handoff</span></div>
@@ -295,6 +289,14 @@ export const slides = [
     content: `${row('Thin root, same module', '<code>cluster_sku = "Automatic"</code>, managed system node pools.<br>BYO VNet, NSG on every subnet, NAT Gateway egress, managed NGINX.')}
       ${row('Guardrails we hit', 'Private-only state storage. Subnets must have an NSG.<br>RBAC Writer cannot create namespaces: managed namespace via ARM.')}
       ${row('Secure chain and proof', 'OIDC, human gate, ephemeral VNet runner, no plan artifact.<br>API server allows only the runner IP. HTTPS 200 or the run fails.')}`
+  },
+  {
+    id: 'a-security', title: 'What AI found that the scanners did not.', time: 'Appendix',
+    layer: 'GHAS / MCP / skills / tests', kind: 'reference', sources: [securityCase, onlineDemo],
+    tip: 'GHAS sees code, secrets, and advisories. Silent gaps need an agent and an oracle.',
+    content: `${row('GHAS baseline, zero open', 'CodeQL, secret scanning with push protection, Dependabot.<br>Six required checks incl. Checkov, TFLint, Trivy.')}
+      ${row('Found by the agent', 'Checkov skipped <code>main.tf</code> since August. A scan was off for inactivity.<br>A monitor was falsely green. Two approval and cleanliness races.')}
+      ${row('Made checkable', 'Learn via MCP for product rules. Skills for secrets and review.<br>22 module tests, 28 read-back checks, a human on every merge.')}`
   },
   {
     id: 'a-prompts', title: 'Prompts you can rerun.', time: 'Appendix',

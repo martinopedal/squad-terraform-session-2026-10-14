@@ -42,20 +42,12 @@ Don't say: this was the first implementation.
 - Agent HQ: 2025-10-28. Claude and Codex public preview: 2026-02-04.
 - AI Credits effective: 2026-06-01. CLI limits preview: 2026-07-01.
 - Computer use preview: 2026-10-01, not used here.
+- Squad 1.0 / 1.0.1 (Oct 3-4): stabilizes 0.11-0.13 (presets, `squad_state`, `squad health`); WinGet and Homebrew. No breaking change from 0.13.1.
 Takeaway: the platform moved from preview pieces to governable engineering controls.
-Demo cue: point to dates and status labels.
-Don't say: computer use is GA, or part of this Terraform recording.
+Demo cue: point to dates and status labels; end on the Squad tile.
+Don't say: computer use is GA, or part of this Terraform recording; npm latest is 1.0.1.
 
-### 06:00-07:00, s05-squad-news, Haflidi
-- 0.11: presets, registry, cross-squad discovery, `squad_state`, Fact Checker.
-- 0.12: `/squad research`, `plan`, `cast`, and `implement`.
-- 0.13: `squad health`, advisory reviewer, Team Capabilities block.
-- 1.0 and 1.0.1: stabilization and distribution fixes.
-Takeaway: Squad 1.0.1 is the demo version, with no breaking change from 0.13.1.
-Demo cue: no live command.
-Don't say: npm latest is 1.0.1.
-
-### 07:00-09:00, s04-layers, Haflidi then Martin
+### 06:00-07:00, s04-layers, Haflidi then Martin
 - CLI hosts execution.
 - Squad coordinates responsibilities.
 - Terraform, Git, Learn, and MCP provide evidence.
@@ -64,7 +56,7 @@ Takeaway: a good agent workflow returns files, decisions, and checks.
 Demo cue: trace the diagram arrows.
 Don't say: Squad replaces Terraform or Copilot CLI.
 
-### 09:00-10:00, s07-agent-setup, Martin
+### 07:00-08:00, s07-agent-setup, Martin
 - `AGENTS.md` and Copilot instructions are always-on repo guidance.
 - Squad owns routing and decisions through `.squad\`.
 - Operator explicitly selects `terraform-coder`, `terraform-validator`, and `terraform-reviewer`.
@@ -72,8 +64,18 @@ Don't say: Squad replaces Terraform or Copilot CLI.
 Takeaway: profiles create narrow lanes, not a sandbox.
 Demo cue: point left to right through the setup diagram.
 Don't say: generic Squad tasks inherit the profile filters.
+Handoff: "Haflidi, show them how you get here from nothing."
 
-### 10:00-12:00, s05-parallel, Martin
+### 08:00-11:00, C0 From zero to a squad, Haflidi lead
+- Clean Windows 11 VM, reached only through Bastion. No Git, CLI, or Squad installed.
+- `winget install` Git, GitHub CLI, PowerShell 7, Copilot CLI, Squad. Show versions.
+- `copilot`, `/login`, then `squad init` in the repo terminal (a shell command, not a prompt).
+- `copilot --agent squad`: Init Mode proposes a roster, nothing is written until you confirm. `squad doctor`.
+Takeaway: install, init, hire, verify. The team is reviewable in Git from minute one.
+Demo cue: recorded clip; live fallback is the same VM via `scripts\Connect-DemoVm.ps1`.
+Don't say: `squad init` is an agent request; npm gives you 1.0; the VM is a presenter laptop.
+
+### 11:00-12:00, s05-parallel, Martin
 - Parallel work needs independent artifacts.
 - One writer owns a shared Terraform surface.
 - Handoffs name file, check, and next owner.
@@ -295,6 +297,14 @@ Don't say: more agents means better results.
 Takeaway: a simpler topology still meets the same guardrails.
 Don't say: we exempted a policy, or the demo runs from a laptop.
 
+### a-security, either speaker
+- GHAS baseline: CodeQL, secret scanning with push protection, Dependabot; zero open alerts. Six required checks on `main`.
+- The agent found what raises no alert: Checkov skipped `main.tf` since August; Security Scan disabled for inactivity; a falsely green monitor; an approval race; a VM check blind to per-user installs.
+- MCP (Microsoft Learn) supplied product rules; skills enforce secret handling and reviewer lockout.
+- Every claim re-checked: 22 module tests, 28 read-back checks, 14 VM checks. A human approved every merge and Azure write.
+Takeaway: GHAS covers code, secrets, and advisories; the agent plus an oracle closes the silent gaps.
+Don't say: AI made it secure, or there are no gaps (single-maintainer admin merges, IDs in history, Checkov cannot read azapi bodies).
+
 ### a-prompts, either speaker
 - Guardrails first, then sourced API facts through MCP.
 - One lane per step: lead plans, coder edits, validator runs the oracle, reviewer in `/new`.
@@ -307,7 +317,7 @@ Don't say: the prompts make the model deterministic.
 
 **Why did the first Online applies fail?** Real guardrails and real API rules: the landing zone denied subnets without NSGs; AKS required a user-assigned identity for BYO subnets; `outboundType none` now means network-isolated. Each failure became a design input or a tested module fix.
 
-**What did the real consumer find in the module?** Seven things. Fixed in the module with tests written first: honor `user_assigned_identity_id`, allow `userAssignedNATGateway`, two perpetual drifts, and the SKU itself (it sent `Base`; now `cluster_sku = "Automatic"` is an opt-in). Fixed in the root: a module-level `depends_on` that forced replacement. Documented: `count` keyed on an ID unknown at plan time.
+**What did the real consumer find in the module?** Seven things, all now fixed. Fixed in the module with tests written first: honor `user_assigned_identity_id`, allow `userAssignedNATGateway`, two perpetual drifts, and the SKU itself (it sent `Base`; now `cluster_sku = "Automatic"` is an opt-in). Fixed in the root: a module-level `depends_on` that forced replacement. Fixed in the module (#145): `count` keyed on a subnet ID unknown at plan time, now an explicit `use_external_subnets` flag with a caller-fixture regression test.
 
 **Is the Online cluster really AKS Automatic?** Yes, verified by read-back: SKU Automatic with managed system node pools. It was rebuilt, because Microsoft Learn states Base to Automatic migration is not supported, and an in-place attempt was rejected.
 

@@ -1,9 +1,10 @@
 {
-  "C1": { "file": "media/C1.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null },
-  "C2": { "file": "media/C2.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null },
-  "C3": { "file": "media/C3.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null },
-  "C4": { "file": "media/C4.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null },
-  "C5": { "file": "media/C5.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null },
-  "C6": { "file": "media/C6.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null },
-  "C7": { "file": "media/C7.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null }
+  "C0": {"file": "media/C0.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null},
+  "C1": {"file": "media/C1.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null},
+  "C2": {"file": "media/C2.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null},
+  "C3": {"file": "media/C3.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null},
+  "C4": {"file": "media/C4.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null},
+  "C5": {"file": "media/C5.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null},
+  "C6": {"file": "media/C6.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null},
+  "C7": {"file": "media/C7.mp4", "reviewed": false, "takeId": null, "sourceSurface": null, "selectedAgent": null}
 }
