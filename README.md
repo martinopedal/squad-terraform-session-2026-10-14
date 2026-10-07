@@ -68,7 +68,9 @@ full module-copy comparison.
 
 ## Open the presentation
 
-The built [Reveal presentation](presentation/index.html) has 25 main slides and eleven appendix slides. Its 60-minute structure includes 29 minutes of silent recorded chapters (C0-C7) with live narration, 24 minutes of other live explanation, and seven minutes of Q&A. The complete speaker script covers the content and includes a prepared Q&A fallback.
+[![All 37 slides of the deck: select to open the live presentation](presentation/preview/overview.jpg)](https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/)
+
+The built [Reveal presentation](presentation/index.html) ([slide-by-slide preview](presentation/README.md#preview)) has 25 main slides and eleven appendix slides. Its 60-minute structure includes 29 minutes of silent recorded chapters (C0-C7) with live narration, 24 minutes of other live explanation, and seven minutes of Q&A. The complete speaker script covers the content and includes a prepared Q&A fallback.
 
 For speaker notes, serve the clone locally:
 
