@@ -2,13 +2,13 @@
 
 This is an evidence-based account of the controls around the Online AKS demo and the demo VM. Each claim names how to check it. Identifiers stay private. Gaps are listed at the end, not hidden.
 
-Evidence date: 2026-10-07. Module repository: [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic).
+Evidence date: 2026-10-07. Demo-env repository: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env). Module repository: [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic), which now holds only the reusable module.
 
 ## 1. The delivery chain
 
 | Control | Evidence |
 |---|---|
-| All change through pull requests to a protected `main` | Branch protection: 6 required checks (Terraform Validate, Style Check, CodeQL, Checkov, TFLint, Trivy IaC Scan), strict (up to date), 1 approving review |
+| All change through pull requests to protected `main` branches | Demo-env checks: Terraform Validate, Trivy IaC Scan, Checkov, TFLint. Module checks: Terraform Validate, Style Check, CodeQL, Checkov, TFLint, Trivy IaC Scan. Both are strict (up to date) with 1 approving review |
 | Human gate before any Azure write | `online` environment: required reviewer, protected branches only, admin bypass off |
 | No stored cloud secrets | GitHub OIDC federation to a user-assigned identity; the workflow holds no client secret |
 | Private state | Tenant policy forces `publicNetworkAccess=Disabled` on storage; state is reached only through a private endpoint. `Test-OnlineSecurity.ps1` proves anonymous internet access is refused |
@@ -34,7 +34,7 @@ The Azure Landing Zone policies were treated as requirements. No exemption was r
 
 ## 4. GitHub Advanced Security baseline
 
-Both public repositories: CodeQL default setup, secret scanning with push protection, Dependabot security updates. Open alerts on 2026-10-07: 0 code scanning, 0 secret scanning, 0 Dependabot. Session-repo CodeQL alerts (11) were dismissed individually with written reasons: 2 false positives (blob URL handling), 9 in vendored third-party bundles.
+The module and demo-env repositories: CodeQL default setup, secret scanning with push protection, Dependabot security updates. Open alerts on 2026-10-07: 0 code scanning, 0 secret scanning, 0 Dependabot. Session-repo CodeQL alerts (11) were dismissed individually with written reasons: 2 false positives (blob URL handling), 9 in vendored third-party bundles.
 
 GHAS covers what it can see: source code, committed secrets, dependency advisories, and the IaC scanners' SARIF. It does not know that a policy will deny a subnet, that an API version needs a field, or that a scanner silently skipped a file.
 
@@ -73,11 +73,17 @@ What made the AI output trustworthy enough to merge:
 
 ## Reproduce
 
-From the module repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set:
+From the demo-env repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set:
 
 ```powershell
 ./scripts/Test-OnlineSecurity.ps1     # 28 checks, exit 1 on failure
 ./scripts/Test-DemoVm.ps1             # 14 checks, exit 1 on failure
+```
+
+From the module repository:
+
+```powershell
 terraform test                        # module contract and regression tests
 gh api repos/martinopedal/terraform-azapi-aks-automatic/branches/main/protection
+gh api repos/martinopedal/aks-automatic-demo-env/branches/main/protection
 ```

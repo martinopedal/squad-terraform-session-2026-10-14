@@ -1,10 +1,10 @@
 # Public project handoff
 
-Updated October 5, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
+Updated October 7, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
 
 ## Current result
 
-- Reveal.js presentation version **0.17**, with one opening slide, 25 main slides, and eleven appendix slides (0.15 added the Online landing-zone variant and the rerunnable prompt pack; 0.16 Squad bootstrapping and use cases; 0.17 adds the C0 from-zero chapter and the security case).
+- Reveal.js presentation version **0.17.1**, with one opening slide, 25 main slides, and eleven appendix slides (0.15 added the Online landing-zone variant and the rerunnable prompt pack; 0.16 Squad bootstrapping and use cases; 0.17 adds the C0 from-zero chapter and the security case; 0.17.1 updates references for the separate demo-env repository).
 - Martin/Haflidi talk track: **5,504 main spoken words**, balanced 2,739 / 2,765, plus a separate 652-word prepared Q&A fallback.
 - Exact session budget: **26 minutes of recorded chapters, 27 minutes of other live explanation, and seven minutes of Q&A**. Both speakers narrate the silent clips; that narration is already inside the 53 content minutes.
 - Sessionize copy: 294-word description/outcomes, 52-word pitch, and both speaker names.
@@ -17,6 +17,8 @@ The package is not stage-ready: **zero of seven native recordings are attached**
 
 - [Live Reveal presentation](https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/)
 - [Session repository](https://github.com/martinopedal/squad-terraform-session-2026-10-14)
+- [Reusable module repository](https://github.com/martinopedal/terraform-azapi-aks-automatic)
+- [Online/demo-VM environment repository](https://github.com/martinopedal/aks-automatic-demo-env)
 - [Independent module repository](https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp)
 - [Module-copy manifest](terraform/module-source.json)
 - [Full speaker script](docs/talk-track.md)
