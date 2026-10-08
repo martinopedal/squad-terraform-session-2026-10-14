@@ -42,16 +42,30 @@ const row = (label, text, detail = '') => `<div class="reference-row"><div><h3>$
 const demoRuns = {
   C0: {
     goal: 'Install, initialize, hire, and verify Squad on a clean Windows 11 VM.',
-    command: String.raw`$wg = '--exact', '--source', 'winget', '--accept-package-agreements', '--accept-source-agreements', '--silent'
+    screenCommand: String.raw`Clean VM: prove Git, Copilot CLI, and Squad are absent.
+winget install Git.Git, GitHub.Copilot, bradygaster.Squad
+/login, clone the public module repo, then run squad init
+copilot --agent squad; paste the small-team prompt; confirm roster
+squad doctor`,
+    command: String.raw`$PSVersionTable.PSVersion; Get-Command git, copilot, squad -ErrorAction SilentlyContinue
+$wg = '--exact', '--source', 'winget', '--accept-package-agreements', '--accept-source-agreements', '--silent'
 winget install --id Git.Git @wg
 winget install --id GitHub.Copilot @wg
 winget install --id bradygaster.Squad @wg
+$env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
 git --version; copilot --version; squad --version
-copilot        # /login, then /exit
+copilot
+/login
+/exit
 git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git $HOME\demo\aks-module
 Set-Location $HOME\demo\aks-module
 squad init
+git status --short
 copilot --agent squad
+We maintain a reusable Terraform module for AKS Automatic on azapi that deploys into an
+existing Azure landing zone. Work is Terraform module code, terraform test contract tests,
+and consumer documentation. Propose a small team.
+# Confirm the proposed roster, then /exit.
 squad doctor`,
     expected: 'Tools install, Init Mode proposes a roster after confirmation, and squad doctor reports 10 passed.',
     driver: 'Haflidi drives on the clean VM; Martin watches time.',
@@ -60,8 +74,12 @@ squad doctor`,
   },
   C1: {
     goal: 'Compare two equivalent Plan-mode attempts without sharing later state.',
+    screenCommand: String.raw`/new; /agent; select Squad; /model; /plan; /rename C1-A
+Paste the alternate_network_payload plan-only prompt.
+Repeat as C1-B with the same model, permissions, and team state.`,
     command: String.raw`/new
-/agent Squad
+/agent
+# select Squad
 /model
 /plan
 /rename C1-A
@@ -77,18 +95,23 @@ Don't edit files or deploy. Identify affected files, one writer, and checks.
   },
   C2: {
     goal: 'Turn the scoped Terraform change into a reviewed native Plan-mode artifact.',
+    screenCommand: String.raw`/new; /rename guided-clean-run; /agent; select Squad
+/instructions; /plan; attach main.tf, variables.tf, and contract.tftest.hcl
+Paste the scoped planning prompt, revise it, then inspect /session plan.`,
     command: String.raw`/new
 /rename guided-clean-run
-/agent Squad
+/agent
+# select Squad
 /instructions
 /plan
 @terraform\modules\aks-automatic-corp\main.tf
 @terraform\modules\aks-automatic-corp\variables.tf
 @terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl
-This is prepared, qualified code. Plan the C1 regression test and its README explanation.
-Keep all eight inputs, six outputs, and the AzAPI resource intact.
+This is prepared, qualified code. Plan the C1 regression test and its README
+explanation. Keep all eight inputs, six outputs, and the AzAPI resource intact.
 Plan a separately labeled enablePrivateCluster mutation and repair.
 No implementation, Azure lookup, apply, dependency upgrade, or state operation.
+Put unchanged payload assertions and offline checks before documentation; exclude infrastructure redesign.
 /session plan`,
     expected: 'The visible plan is revised by a human, approved only for code/test/docs scope, then implementation mode is shown.',
     driver: 'Martin drives; Haflidi challenges scope.',
@@ -97,28 +120,37 @@ No implementation, Azure lookup, apply, dependency upgrade, or state operation.
   },
   C3: {
     goal: 'Route one writing lane with the clarified B1v2 brief.',
-    command: String.raw`/agent Squad
+    screenCommand: String.raw`/agent; select Squad; /tasks; /agent list; /mcp
+/agent terraform-coder
+Paste the B1v2 brief: add alternate_network_payload with four separate asserts, each with error_message.
+/agent squad`,
+    command: String.raw`/agent
+# select Squad
 /tasks
 /agent list
+/mcp
 /agent terraform-coder
-Squad: lead owns scope and prepares the bounded native terraform-coder brief for main.tf and tests/contract.tftest.hcl.
-The brief adds alternate_network_payload with the existing AzAPI mock and plan mode.
-Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16, and DNS service IP 10.241.0.10.
-Write four separate assert blocks: pod CIDR, service CIDR, DNS service IP, and API server stays private.
-Each assert gets its own error_message. No deployment or other edits.`,
+Work only in terraform\modules\aks-automatic-corp.
+
+Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16 and DNS service IP 10.241.0.10. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file.
+/agent squad`,
     expected: 'The writer lane starts, changed files are visible, and the handoff names owners, checks, and unresolved issues.',
     driver: 'Martin operates; Haflidi reads returned evidence.',
-    pointAt: 'Point at Squad selection, roster/routing, terraform-coder selection, actual edits, and c3-handoffs.md.',
+    pointAt: 'Point at Squad selection, roster/routing (team list and routing rules), terraform-coder selection, the four-assert test edit, and c3-handoffs.md.',
     fallback: 'Use B1v2 eval evidence: 5/5 under pinned conditions after the clarified four-assert brief; no causal claim and the live run still has to pass. Custom subagents don\'t inherit repository instructions by default; include-custom-instructions: true opts in. Confirm the behavior in this build.'
   },
   C4: {
     goal: 'Use a skill and a read-only source lookup to change the work, not just decorate it.',
+    screenCommand: String.raw`/skills info test-discipline; /mcp
+Paste the source-grounding prompt.
+/permissions`,
     command: String.raw`/skills info test-discipline
-Invoke test-discipline now. Identify which existing contract assertions must remain unchanged during the mutation.
-Through the configured Microsoft Learn MCP, perform only a read-only search/fetch for AKS Automatic private/custom network requirements.
-Cite the source/version relevant to private API access and hosted-system subnets.
-Don't contact an Azure account or change providers.
 /mcp
+Invoke test-discipline now. Identify which existing contract assertions must
+remain unchanged during the mutation. Through the configured Microsoft Learn
+MCP, perform only a read-only search/fetch for AKS Automatic private/custom
+network requirements. Cite the source/version relevant to private API access
+and hosted-system subnets. Don't contact an Azure account or change providers.
 /permissions`,
     expected: 'The notes identify the invoked skill, the source URL/version, the narrow approval, and the limitation if lookup fails.',
     driver: 'Martin drives; Haflidi explains the source claim.',
@@ -127,16 +159,44 @@ Don't contact an Azure account or change providers.
   },
   C5: {
     goal: 'Run the offline oracle, seed one labeled mutation, repair narrowly, and rerun the same check.',
-    command: String.raw`/agent terraform-validator
-$env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path
-$env:CHECKPOINT_DISABLE = '1'; $env:TF_IN_AUTOMATION = '1'
-$phase = 'before' # repeat as seeded-failure and repaired
-terraform -chdir='terraform\modules\aks-automatic-corp' init -backend=false -input=false -lockfile=readonly
-terraform -chdir='terraform\modules\aks-automatic-corp' test -no-color
-/agent terraform-coder
-Native terraform-coder: change enablePrivateCluster from true to false. Change nothing else.
-/review "Read-only review of this labeled mutation; identify the violated assertion."
-/diff`,
+    screenCommand: String.raw`/agent terraform-validator
+Run the C5 block three times: before, seeded-failure, repaired.
+/agent terraform-coder: change enablePrivateCluster true -> false, then restore only that field.
+/review; /diff; rerun the same validator block.`,
+    command: [
+      '/agent terraform-validator',
+      '$PSNativeCommandUseErrorActionPreference = $false',
+      String.raw`$env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path`,
+      String.raw`$env:CHECKPOINT_DISABLE = '1'; $env:TF_IN_AUTOMATION = '1'`,
+      String.raw`if (Get-ChildItem Env: | Where-Object Name -Match '^(ARM_|AZURE_(?!CORE_)|TF_VAR_|TF_CLI_ARGS)') {`,
+      String.raw`  throw 'Remove inherited credentials/overrides in the isolated child, without displaying values.'`,
+      '}',
+      String.raw`$phase = 'before' # Repeat as seeded-failure and repaired, using new log names.`,
+      String.raw`$log = '..\evidence\c5-$phase.log'`,
+      String.raw`if (Test-Path $log) { throw 'Keep the previous result; choose a new take.' }`,
+      String.raw`terraform -chdir='terraform\modules\aks-automatic-corp' init -backend=false -input=false -lockfile=readonly`,
+      String.raw`if ($LASTEXITCODE) { throw 'Offline initialization failed.' }`,
+      "terraform -chdir='terraform\\modules\\aks-automatic-corp' test `",
+      '  -no-color 2>&1 | Tee-Object $log',
+      '$code = $LASTEXITCODE',
+      String.raw`$code | Set-Content '..\evidence\c5-$phase.exit.txt'`,
+      '"Exit: $code"',
+      String.raw`if ($phase -ne 'seeded-failure' -and $code) { throw 'Clean check failed.' }`,
+      String.raw`if ($phase -eq 'seeded-failure' -and -not $code) { throw 'Mutation was not detected.' }`,
+      '/agent terraform-coder',
+      'Native terraform-coder: in this disposable worktree only, change',
+      'body.properties.apiServerAccessProfile.enablePrivateCluster from true to false.',
+      'Change nothing else. Keep the tests, mocks, provider, and permissions unchanged.',
+      "# Rerun the same block with $phase = 'seeded-failure'.",
+      '/review',
+      'Read-only review of this labeled mutation; identify the violated assertion.',
+      '/agent terraform-coder',
+      'Restore only body.properties.apiServerAccessProfile.enablePrivateCluster to true.',
+      'Change nothing else.',
+      '/diff',
+      '/agent terraform-validator',
+      "# Rerun the same block with $phase = 'repaired'."
+    ].join('\n'),
     expected: 'Before and repaired runs exit zero; seeded-failure exits nonzero for the private API assertion, with the original hash restored.',
     driver: 'Haflidi takes control; Martin explains the repair.',
     pointAt: 'Point at command, exit code, deliberate mutation label, failing assertion, /review, /diff, and the repaired rerun.',
@@ -144,8 +204,13 @@ Native terraform-coder: change enablePrivateCluster from true to false. Change n
   },
   C6: {
     goal: 'Save the public reason, resume the right session, and verify the next task reads it.',
-    command: String.raw`/agent Squad
-Scribe: record the public-only decision in .squad\decisions.md: private API invariant, caller-owned provider/backend, added network-payload regression, labeled mutation/restoration, exact checks, and the sanitized Azure-validation boundary without exposing private target details.
+    screenCommand: String.raw`Scribe: record the public-only decision in .squad\decisions.md.
+/new; /resume guided-clean-run; /cwd; /context; /usage
+Ask the resumed task to cite the decision and next constraints.`,
+    command: String.raw`Scribe: record the public-only decision in .squad\decisions.md: private API
+invariant, caller-owned provider/backend, added network-payload regression,
+labeled mutation/restoration, exact checks, and the sanitized Azure-validation boundary without exposing private target details.
+Do not copy histories, credentials, or full conversations.
 /new
 /resume guided-clean-run
 /cwd
@@ -159,14 +224,36 @@ Read the saved decision; cite its file and the constraints for the next change.`
   },
   C7: {
     goal: 'Validate the consumer-facing artifact, inspect the diff, and hand it to an independent reviewer.',
+    screenCommand: String.raw`/agent terraform-validator
+Run the C7 offline suite: fmt, init, validate, tflint, module test, example init/validate/test, diff.
+/diff; /new; /agent terraform-reviewer`,
     command: String.raw`/agent terraform-validator
+$PSNativeCommandUseErrorActionPreference = $false
 $env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path
+$env:CHECKPOINT_DISABLE = '1'; $env:TF_IN_AUTOMATION = '1'
+if (Get-ChildItem Env: | Where-Object Name -Match '^(ARM_|AZURE_(?!CORE_)|TF_VAR_|TF_CLI_ARGS)') {
+  throw 'Inherited credentials/overrides are not permitted.'
+}
+function Check($id, $exe, [string[]]$argv) {
+  $log = "..\evidence\c7-$id.log"
+  if (Test-Path $log) { throw 'Result already exists.' }
+  "$exe $($argv -join ' ')" | Set-Content $log
+  & $exe @argv 2>&1 | Tee-Object -FilePath $log -Append
+  $code = $LASTEXITCODE
+  $code | Set-Content "$log.exit.txt"
+  if ($code) { throw "$id failed: $code" }
+}
+$m = 'terraform\modules\aks-automatic-corp'
+$e = "$m\examples\corp-existing"
 Check fmt terraform @("-chdir=$m",'fmt','-check','-recursive')
 Check init terraform @("-chdir=$m",'init','-backend=false','-input=false','-lockfile=readonly')
 Check validate terraform @("-chdir=$m",'validate','-no-color')
 Check lint tflint @("--chdir=$m",'--config=.tflint.hcl','--no-color')
 Check module terraform @("-chdir=$m",'test','-no-color')
+Check example-init terraform @("-chdir=$e",'init','-backend=false','-input=false','-lockfile=readonly')
+Check example-validate terraform @("-chdir=$e",'validate','-no-color')
 Check example terraform @("-chdir=$e",'test','-no-color','-var-file=terraform.tfvars.example')
+Check diff git @('--no-pager','diff','--',$m)
 /diff
 /new
 /agent terraform-reviewer`,
@@ -196,7 +283,7 @@ const presenterNotes = new Map([
   ['s10-tool-roles', notePlan('Haflidi', 'Instructions, skills, and MCP each have a different job.', 'Keep all three columns visible; do not treat /mcp as source verification by itself.', 'Instructions, skills, MCP columns.', 'Hand to Martin for source grounding.')],
   ['s12-source-check', notePlan('Haflidi', 'An assertion should inspect the generated resource body, not a reassuring variable name.', 'Reveal the source claim, decision, and illustrative assertion.', 'Automatic SKU/private contract and the code example label.', 'Hand to Haflidi for test coverage.')],
   ['s13-test-gap', notePlan('Haflidi', 'Keep negative tests, add positive contract assertions, and test the test with a labeled mutation.', 'Explain oracle = the scripted pass/fail check, and say B1 failed 0/5 until the brief stated four asserts.', 'Negative/positive cases and mutation strip.', 'Haflidi takes live-demo control for C5.')],
-  ['s15-proof', notePlan('Haflidi with Martin handoff.', 'Evidence has levels: 52 module cases, 2 caller cases, private IaC validation, Online 29/29, and VM 14/14 answer different questions.', 'Read status labels exactly and say runtime checks are evidence for checked behavior, not proof of everything.', 'Inspected, 52 passed, 2 passed, Approved, Succeeded.', 'Martin takes continuity slide.')],
+  ['s15-proof', notePlan('Haflidi with Martin handoff.', 'Evidence has levels: 52 module cases, 2 caller cases, private IaC validation, Online 29/29, and VM 14/14 answer different questions.', 'Read status labels exactly and say runtime checks are evidence for checked behavior, not evidence for everything.', 'Inspected, 52 passed, 2 passed, Approved, Succeeded.', 'Martin takes continuity slide.')],
   ['s16-continuity', notePlan('Martin', 'Save the reason, not the whole chat. The next task must read the decision.', 'Trace decision into the next task.', 'Conversation, native memory, and repository knowledge distinction.', 'Hand to Haflidi for resume.')],
   ['s18-memory', notePlan('Martin', 'Conversation context, native memory, and Squad knowledge have different owners.', 'Keep personal memory closed and explain compaction versus team-state hygiene.', 'Conversation, Native memory, Repository knowledge rows.', 'Hand to Haflidi for final review.')],
   ['s20-consumer', notePlan('Martin', 'Reuse the module code, not the private environment.', 'Point from consumer root into the module and then to private configuration boundary.', 'Module pin, caller-owned inputs, and no private state/secrets.', 'Hand to Haflidi for operating rules.')],
@@ -210,7 +297,7 @@ const presenterNotes = new Map([
   ['a-evidence', notePlan('Haflidi', 'Use this appendix for evidence-gate questions.', 'Separate source reproduction, local checks, consumer example, private plan/apply, and read-back.', '0/2/1 Terraform plan exit meanings and no raw private plans.', 'Return to Q&A.')],
   ['a-online', notePlan('Martin', 'Use this appendix for Online landing-zone questions.', 'Cite the same module, thin root, guardrails, runtime checks, and runs 37771532872/37772290635.', 'HTTPS 200 by hostname, title verified, Test-OnlineSecurity 29/29, no private IDs.', 'Return to Q&A.')],
   ['a-security', notePlan('Haflidi', 'Use this appendix for security questions.', 'Explain GHAS baseline, silent gaps, oracle = scripted pass/fail check, and human approvals.', '52+2 local checks, 29/29 Online, 14/14 demo VM, zero open GHAS alerts on Oct 7.', 'Return to Q&A.')],
-  ['a-prompts', notePlan('Martin', 'Use this appendix for repeatability and prompt questions.', 'State the measured eval: B1 0/5, B2 5/5, B3 4/5 after disclosed harness-bug rescore, B1v2 5/5 after clarified brief.', 'No deterministic claim; B1v2 changed the brief and the live run still has to pass.', 'Return to Q&A.')],
+  ['a-prompts', notePlan('Martin', 'Use this appendix for repeatability and prompt questions.', 'State the measured eval: B1 0/5, B2 5/5, B3 4/5 after disclosed harness-bug rescore, B1v2 5/5 after clarified brief.', 'No identical-output claim; B1v2 changed the brief and the live run still has to pass.', 'Return to Q&A.')],
   ['a-bootstrap', notePlan('Haflidi', 'Use this appendix for starting Squad.', 'Walk the five steps: prerequisites, install, squad init, copilot --agent squad, confirm roster, squad doctor, backup before upgrade.', 'WinGet Squad 1.0.1 and docs/playbook.md after PR #7.', 'Return to Q&A.')],
   ['a-use-cases', notePlan('Martin', 'Use this appendix for when Squad earns its place.', 'Say Copilot CLI runs the work; Squad decides who does it and remembers why.', 'Cross-owner work, long-lived decisions, issue/review flow.', 'Return to Q&A.')]
 ]);
@@ -324,7 +411,7 @@ export const slides = [
       <p class="boundary-warning fragment" data-fragment-index="0">Fresh workload only. Existing state migration needs a separate review.</p>`
   },
   chapter(3, 240, '20:00-24:00', 'Activate Squad and route independent work', 'Native custom agents / Squad',
-    ['Selected agent, roster, charters, and routing', 'Actual task starts and owned file edits', 'A concrete result and a named handoff'],
+    ['Selected agent, roster (team list), charters (role instructions), and routing', 'Actual task starts and owned file edits', 'A concrete result and a named handoff'],
     'Pass essential constraints explicitly. A role assignment is not completed work.', [cli, squad, guide]),
   {
     id: 's10-tool-roles', title: 'Give context the right job.', time: '24:00-25:00',
@@ -470,7 +557,7 @@ export const slides = [
     tip: 'Guardrails are design inputs. None were bypassed with exemptions.',
     content: `${row('Thin root, same module', 'Consumer repo pins the module by tag <code>v0.6.0</code>.<br><code>cluster_sku = "Automatic"</code>, BYO VNet, NAT Gateway egress, managed NGINX.')}
       ${row('Guardrails we hit', 'Private-only state storage. Subnets must have an NSG.<br>RBAC Writer cannot create namespaces: managed namespace via ARM.')}
-      ${row('Branded app and runtime check', 'NIC 2026 page with speakers section at <code>aks-online-demo.swedencentral.cloudapp.azure.com</code>; default NGINX self-signed warning expected because no trusted certificate is configured.<br>Runs 37771532872 and 37772290635: No changes, HTTPS 200 by hostname, title verified; the check reads the App Routing controller Service.')}`
+      ${row('Branded app and runtime check', 'NIC 2026 page with speakers section at <code>aks-online-demo.swedencentral.cloudapp.azure.com</code>; default NGINX self-signed warning expected because no trusted certificate is configured.<br>Runs 37771532872 and 37772290635: No changes, HTTPS 200 by hostname, title verified; the check reads the App Routing controller Service, Azure&#39;s managed NGINX ingress add-on for AKS.')}`
   },
   {
     id: 'a-security', title: 'What AI found that the scanners did not.', time: 'Appendix',
@@ -516,7 +603,7 @@ export function demoContent(slide) {
   const run = demoRuns[slide.chapter];
   return `<div class="live-demo-card" data-chapter="${slide.chapter}">
     <p class="demo-goal"><span>Goal</span>${escape(run.goal)}</p>
-    ${code(run.command, `${slide.chapter} live command / prompt`, 'powershell')}
+    ${code(run.screenCommand || run.command, `${slide.chapter} live command / prompt`, 'powershell')}
     <p class="demo-expected"><span>Expected result</span>${escape(run.expected)}</p>
   </div>`;
 }

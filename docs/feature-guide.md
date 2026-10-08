@@ -2,7 +2,7 @@
 
 Use Copilot CLI to turn an AKS requirement into inspected code, and Squad to keep ownership and decisions intact across tasks.
 
-The example is a reusable Terraform module for a fresh, private AKS Automatic cluster using supplied network inputs. Provider/backend configuration belongs to the caller. The inherited starting point is a root module, not a finished library. Prompts below are examples, not executed transcripts or proof of Azure compatibility.
+The example is a reusable Terraform module for a fresh, private AKS Automatic cluster using supplied network inputs. Provider/backend configuration belongs to the caller. The inherited starting point is a root module, not a finished library. Prompts below are examples, not executed transcripts or Azure compatibility evidence.
 
 ## Evidence and availability
 
@@ -76,7 +76,7 @@ For the same workflows applied end to end through a real pipeline, see [online-d
 
 **IDE and LSP.** `/ide` connects editor selection, diagnostics, and visual diffs; `/lsp` manages configured language services. Ask: "Explain the selected HCL diagnostic, then return a focused correction to the module owner." Tip: check the selected workspace and server before interpreting diagnostics. CLI's inspect-only `lsp list` doesn't start a server. Terraform language support and IDE integration need setup; pre-approved writes can skip the IDE approval diff. APPENDIX C5; H2/H4, D; [G13], [G2].
 
-**Programmatic CLI.** `-p`/`--prompt` executes one prompt and exits, useful for repeatable public-diff summaries or release-note drafts. Ask: "Summarize this approved module diff and list consumer-facing changes; don't modify files or contact services." Squad can supply the selected profile and accepted context. Tip: use explicit inputs, tool availability, selective approvals, and real output/exit records. Documentation permits selective approvals despite a broad-approval phrase in top-level help. This read-only permission recipe still needs rehearsal. Programmatic output is not interactive Plan-mode evidence or deterministic generation. APPENDIX C7; H1/H3, D; [G17].
+**Programmatic CLI.** `-p`/`--prompt` executes one prompt and exits, useful for repeatable public-diff summaries or release-note drafts. Ask: "Summarize this approved module diff and list consumer-facing changes; don't modify files or contact services." Squad can supply the selected profile and accepted context. Tip: use explicit inputs, tool availability, selective approvals, and real output/exit records. Documentation permits selective approvals despite a broad-approval phrase in top-level help. This read-only permission recipe still needs rehearsal. Programmatic output is not interactive Plan-mode evidence or identical generation. APPENDIX C7; H1/H3, D; [G17].
 
 **Bounded autopilot.** Autopilot continues a defined local objective without a new user prompt after each step. Example: "Complete only the approved example documentation and stop after its checks." Squad supplies ownership and stopping criteria, not new permission guarantees. Tip: set explicit continuation and credit limits, and inspect effective permissions. Limited mode denies requests needing approval; unattended execution can stop incomplete. Keep this separate from the human-reviewed Plan-mode clip and never recommend blanket grants as a prerequisite for the talk. APPENDIX C3/C7; H1/H2/H3, D; [G14].
 

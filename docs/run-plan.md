@@ -23,7 +23,7 @@ Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck 
 
 Every demo chapter is delivered live in genuine native Copilot CLI with the agent shown on screen. Optional fallback recordings/screenshots are evidence only; they are not required for the deck to work. Label cuts, sped-up waits, and seeded defects if a fallback take is used.
 
-C3-C5 film the implementation loop with the B1v2 `alternate_network_payload` brief, a separate clarified follow-up written after seeing B1: four separate assert blocks, each with its own `error_message`. B1v2 met the pre-registered at-least-four-of-five bar at 5/5 in this eval; original B1 remains 0/5 and was not rescored, and the filmed run still has to pass on camera.
+C3-C5 run the implementation loop live with the B1v2 `alternate_network_payload` brief, a separate clarified follow-up written after seeing B1: four separate assert blocks, each with its own `error_message`. B1v2 met the pre-registered at-least-four-of-five bar at 5/5 in this eval; original B1 remains 0/5 and was not rescored, and the live run still has to pass.
 
 | Chapter | Length | Lead | Operator | Where | Runbook | Status |
 |---|---|---|---|---|---|---|
@@ -40,7 +40,7 @@ C3-C5 film the implementation loop with the B1v2 `alternate_network_payload` bri
 
 Each demo slide shows the goal, the command or prompt to type, and the expected result. If the live path stalls, use the slide's speaker-note **Offline fallback** line and move on at the slot end.
 
-| Time | Slide | Lead | Clip | Cue and fallback |
+| Time | Slide | Lead | Demo | Cue and fallback |
 |---|---|---|---|---|
 | 00:00-01:00 | s01-outcome | Martin | | Introduce both speakers; honesty rule before any demo |
 | 01:00-04:00 | demo-c1 | Haflidi | C1 | `/model`, selected agent, one consequence |
