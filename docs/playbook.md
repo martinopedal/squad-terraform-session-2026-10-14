@@ -312,7 +312,7 @@ Work only in terraform\modules\aks-automatic-corp.
 Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16 and DNS service IP 10.241.0.10. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file.
 ```
 
-Expected result: one new plan-mode test run with four separate asserts. Original **B1 scored 0/5** because the brief did not specify the separate-assert shape required by the oracle. The initial handoff said B1v2 was pending; the private evaluation file later recorded **B1v2 5/5** on 2026-10-08. Re-check the latest private evidence before presenting the score.
+Expected result: one new plan-mode test run with four separate asserts, each with its own `error_message`. Original **B1 scored 0/5** because the ambiguous brief did not specify the separate-assert shape required by the stricter pre-registered oracle; it was not rescored. B1v2 used the clarified brief above, the same command flags and `claude-sonnet-5`, and five fresh worktrees from base `4689d3c`: **B1v2 5/5 green, repeatable**, with runs between 61 and 114 seconds and no failure modes. The story is precision in the brief, not luck: the ambiguous brief failed the stricter oracle 5/5 times in the same way, and stating the expected test shape fixed it 5/5. Per the October 5 plan, film the C3-C5 loop with this B1v2 brief because it met the `>=4/5` bar. Do not call it deterministic.
 
 ### Programmatic command shape
 
