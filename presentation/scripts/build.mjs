@@ -66,18 +66,18 @@ if (descriptionWords < 250 || descriptionWords > 350 || pitchWords < 45 || pitch
 if (new Set(slides.map(slide => slide.id)).size !== slides.length) throw new Error('Duplicate slide ID.');
 for (const slide of slides) if (!slide.preshow && !blocks.has(slide.id)) throw new Error(`Missing complete notes for ${slide.id}.`);
 const chapters = slides.filter(slide => slide.chapter).map(slide => ({ id: slide.chapter, title: slide.title, duration: slide.duration, slide: slide.id }));
-if (chapters.reduce((sum, chapter) => sum + chapter.duration, 0) !== 1740) throw new Error('Recorded chapter budget must be 29 minutes.');
+if (chapters.reduce((sum, chapter) => sum + chapter.duration, 0) !== 1740) throw new Error('Live demo chapter budget must be 29 minutes.');
 const toSeconds = value => value.split(':').reduce((sum, component) => sum * 60 + Number(component), 0);
-const clock = { recorded: 0, live: 0, qa: 0 };
+const clock = { demo: 0, live: 0, qa: 0 };
 let previousEnd = 0;
 for (const slide of slides.filter(item => !item.id.startsWith('a-') && !item.preshow)) {
   const [start, end] = slide.time.split('-').map(toSeconds);
   if (start !== previousEnd || end <= start) throw new Error(`Discontinuous slide clock at ${slide.id}.`);
   if (slide.chapter && end - start !== slide.duration) throw new Error(`Clip and stage duration disagree at ${slide.id}.`);
-  clock[slide.chapter ? 'recorded' : slide.id === 's22-questions' ? 'qa' : 'live'] += end - start;
+  clock[slide.chapter ? 'demo' : slide.id === 's22-questions' ? 'qa' : 'live'] += end - start;
   previousEnd = end;
 }
-if (previousEnd !== 3600 || clock.recorded !== 1740 || clock.live !== 1440 || clock.qa !== 420) throw new Error('The actual slide clock must retain 29/24/7 minutes.');
+if (previousEnd !== 3600 || clock.demo !== 1740 || clock.live !== 1440 || clock.qa !== 420) throw new Error('The actual slide clock must retain 29/24/7 minutes.');
 for (const chapter of chapters) {
   const item = media[chapter.id];
   let present = false;
@@ -86,14 +86,12 @@ for (const chapter of chapters) {
     if (error.code !== 'ENOENT') throw error;
   }
   media[chapter.id] = resolveMediaEntry(chapter.id, item, present);
-  if (present && !media[chapter.id].available) {
-    console.warn(`${chapter.id}: local file excluded because it is unreviewed. The recording slot remains pending.`);
-  }
+  if (present && !media[chapter.id].available) console.warn(`${chapter.id}: local fallback video excluded because it is unreviewed.`);
 }
 
 const build = {
   version: version.version, openingSlides: 1, mainSlides: 25, appendixSlides: 11,
-  recordedMinutes: clock.recorded / 60, liveMinutes: clock.live / 60, qaMinutes: clock.qa / 60,
+  demoMinutes: clock.demo / 60, liveMinutes: clock.live / 60, qaMinutes: clock.qa / 60,
   spokenWords, speakers, qaWords, descriptionWords, pitchWords,
   chapters, media, sourceRevision: evidence.sourceRevision, moduleRevision: evidence.moduleRevision,
   runtime: 'reveal.js 5.2.1', highlight: `highlight.js ${highlightVersion} (BSD-3-Clause)`,
@@ -104,7 +102,7 @@ const navLink = slide => `<a href="#/${slide.id}" data-nav="${slide.id}">${escap
 const overviewIDs = ['s01-outcome', 's04-news', 's04-layers', 's07-agent-setup', 's06-contract', 's15-proof', 's20-consumer', 's22-questions'];
 const navigation = `<dialog class="navigation-dialog" aria-labelledby="navigation-title"><header><h2 id="navigation-title">Go to a chapter or reference</h2><button type="button">Close</button></header>
   <div class="navigation-columns"><div><h3>Story</h3>${slides.filter(slide => overviewIDs.includes(slide.id)).map(navLink).join('')}</div>
-  <div><h3>Recorded chapter slots</h3>${slides.filter(slide => slide.chapter).map(navLink).join('')}</div>
+  <div><h3>Live demo chapters</h3>${slides.filter(slide => slide.chapter).map(navLink).join('')}</div>
   <div><h3>Optional references</h3>${slides.filter(slide => slide.id.startsWith('a-')).map(navLink).join('')}</div></div>
   <p class="navigation-help">Arrow keys: slides and fragments. S: speaker notes. Escape: overview or close this menu. N: this menu.</p></dialog>`;
 const sections = slides.map((slide, index) => {
@@ -149,5 +147,5 @@ await writeFile(join(root, 'qa/build-manifest.json'), JSON.stringify({
   ...build, htmlBytes: Buffer.byteLength(html), htmlSHA256: createHash('sha256').update(html).digest('hex')
 }, null, 2) + '\n');
 console.log(`Built index.html: 1 opening + 25 timed main + 11 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} Q&A words.`);
-console.log(`Timing 29 recorded / 24 live / 7 Q&A. Attached chapters: ${Object.values(media).filter(item => item.available).length}/8.`);
+console.log('Timing 29 live-demo / 24 explanation / 7 Q&A.');
 console.log(`Sessionize: ${descriptionWords}-word description; ${pitchWords}-word pitch. HTML ${(Buffer.byteLength(html) / 1024).toFixed(0)} KiB.`);

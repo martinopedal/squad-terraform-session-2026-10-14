@@ -1,6 +1,6 @@
 {
-  "version": "0.18.3",
-  "status": "draft; recordings and native profile selection pending; Azure validation sanitized",
+  "version": "0.19.0",
+  "status": "draft; live demo chapters with optional fallback recordings; Azure validation sanitized",
   "changes": [
     "0.1 - 2026-09-30: build the offline presentation and two-speaker delivery.",
     "0.2 - 2026-09-30: resolve title-card overflow, clarify input direction, and improve spoken-note readability.",
@@ -11,11 +11,11 @@
     "0.7 - 2026-10-01: require reviewed native CLI footage with Squad selected; keep external capture tooling and synthetic playback imagery out of product demos.",
     "0.8 - 2026-10-01: independent coordinator revision restores presenter shortcuts after controls and embeds complete bundle licenses.",
     "0.9 - 2026-10-01: repair overview thumbnails and selection while preserving R1 shortcuts; disclose qualification before genuine clean-run recording.",
-    "0.10 - 2026-10-02: bind the public module revision and actual 52-plus-2 local results; retain pending native recordings and Azure gates.",
+    "0.10 - 2026-10-02: bind the public module revision and actual 52-plus-2 local results; retain unattached fallback evidence and Azure gates.",
     "0.11 - 2026-10-05: add big-news, what's-new-in-Squad and agent-setup slides; Squad 1.0.1; rebalance non-chapter timing.",
     "0.12 - 2026-10-05: show user-provided speaker names, titles, and Microsoft employer on the opening slide.",
     "0.13 - 2026-10-05: adopt the official NIC 2026 template (cyan/ink layouts, Roboto, NIC26 logo).",
-    "0.14 - 2026-10-05: record IaC-based Azure validation of the module; recordings still pending.",
+    "0.14 - 2026-10-05: add IaC-based Azure validation of the module; fallback evidence still unattached.",
     "0.15 - 2026-10-06: add question-driven appendix slides for the Online landing-zone variant and the rerunnable prompt pack; main 60-minute clock unchanged.",
     "0.16 - 2026-10-07: add appendix slides for bootstrapping Squad (five steps) and when Squad earns its place next to Copilot CLI; Online variant now on the AKS Automatic SKU; main 60-minute clock unchanged.",
     "0.17 - 2026-10-07: add recorded chapter C0 From zero to a squad (clean Windows 11 VM, 3 min, Haflidi) after the agent-setup slide; Squad news merged into Big news; s04-layers and s05-parallel tightened to 1 minute each; clock 29 recorded / 24 live / 7 Q&A. Appendix a-security (evidence-based security case: GHAS baseline, what the agent found, how claims were made checkable).",
@@ -23,6 +23,7 @@
     "0.18 - 2026-10-08: refresh Online demo evidence for the branded NIC 2026 page, 29/29 security check pass, controller-Service runtime check, Haflidi's local VM access, and the Oct 8 repeatability eval; main clock unchanged.",
     "0.18.1 - 2026-10-08: record B1v2 5/5 after a clarified four-assert brief and set C3-C5 to film that B1v2 loop; main clock unchanged.",
     "0.18.2 - 2026-10-08: apply Rai's B1v2 wording without claiming causality or a guaranteed live rerun; main clock unchanged.",
-    "0.18.3 - 2026-10-08: update validated Copilot CLI and Squad versions, and add the PR #7 playbook pointer to bootstrap notes; main clock unchanged."
+    "0.18.3 - 2026-10-08: update validated Copilot CLI and Squad versions, and add the PR #7 playbook pointer to bootstrap notes; main clock unchanged.",
+    "0.19.0 - 2026-10-08: convert C0-C7 from fallback cards to live-demo slides with command blocks, expected results, and presenter notes for every slide; recordings are optional fallback only and the 60-minute clock remains unchanged."
   ]
 }

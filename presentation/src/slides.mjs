@@ -39,25 +39,191 @@ const cleanMachine = source('Clean-machine runbook', '../docs/clean-machine-demo
 const small = text => `<p class="supporting">${text}</p>`;
 const row = (label, text, detail = '') => `<div class="reference-row"><div><h3>${label}</h3>${detail ? small(detail) : ''}</div><p>${text}</p></div>`;
 
-const noteOverrides = new Map([
-  ['demo-c0', `<p><strong>Access update:</strong> Haflidi uses a local VM account through Azure Bastion because B2B guests cannot use Entra VM sign-in. Martin uses Entra sign-in with MFA. The local password is handed over out of band and never shown or written.</p>`],
-  ['a-bootstrap-append', `<p>For the step-by-step copy-paste flow, point people to <code>docs/playbook.md</code>; the link resolves after PR #7 merges.</p>`],
-  ['a-online', `<blockquote><p>Reference only. Answer "can this run somewhere simpler?" Keywords: same module, thin root, guardrails constrain, runtime evidence not hope. The demo-env repo root <code>deployments/online</code> consumes the module by tag <code>v0.6.0</code> and owns providers, backend, network, and the namespace. Three landing-zone controls shaped it: storage forced private, <code>Deny-Subnet-Without-Nsg</code>, and AKS RBAC Writer cannot create namespaces. Nothing was exempted. The refreshed app is the branded NIC 2026 page at <code>https://aks-online-demo.swedencentral.cloudapp.azure.com/</code>; the browser warning is expected because no trusted certificate is configured and the demo presents the default NGINX self-signed certificate; production should use a Key Vault-backed certificate. PR #10 replaced the ASP.NET sample with <code>nginx-unprivileged</code> pinned by digest, retained pod hardening and CSP headers, shows serving pod and render time, and explains brief to code to check to plan to approve to verify. PR #11 adds the speakers section. Apply runs 37771532872 and 37772290635 succeeded with "No changes", DNS resolving to the ingress endpoint, HTTPS 200 by hostname, and title "AKS Automatic | NIC 2026 demo". The runtime check now reads the App Routing controller Service, not stale Ingress status. Detail docs still need a follow-up update; do not show subscription, tenant, principal IDs, or ingress IPs.</p></blockquote>`],
-  ['a-security', `<blockquote><p>Reference only. Answer "how did AI help security, and what does GHAS already do?" Keywords: GHAS baseline, silent gaps, oracle, human approval. The module and demo-env repositories run CodeQL default setup, secret scanning with push protection, and Dependabot security updates, with zero open alerts on October 7. Module <code>main</code> requires Terraform Validate, Style Check, CodeQL, Checkov, TFLint, and Trivy; demo-env <code>main</code> requires Terraform Validate, Checkov, TFLint, and Trivy. The agent found what produces no alert: skipped Checkov parsing, disabled scheduled scans, a crashing green monitor, approval and VM-cleanliness races, and product-rule gaps. Each claim was re-checked by a test or read-back: 52 module contract cases plus 2 caller/example cases, 29 Online security checks passing at 13:48 on 2026-10-08, and 14 demo VM checks. Every merge and every Azure write had a human decision. Gaps stay visible: single-maintainer admin merges, identifiers in history, and Checkov not reading azapi bodies. Detail docs still need a follow-up update.</p></blockquote>`],
-  ['a-prompts', `<blockquote><p>Reference only. Answer "how do I get similar results with my agents?" Keywords: guardrails first, one lane per step, state the oracle's rules in the brief, measure repeatability. Step 1 reads effective policy and RBAC at the target before design; step 2 grounds API facts through Microsoft Learn and Terraform Registry MCP with citations. Then <code>terraform-coder</code> edits, <code>terraform-validator</code> runs fixed offline commands, and <code>terraform-reviewer</code> reviews in a fresh <code>/new</code> context. Consume through a thin root and deploy through the pipeline. Repeatability was measured on Oct 8 as the original three briefs plus the B1v2 clarified-brief follow-up, five fresh runs each from base <code>4689d3c</code> with <code>claude-sonnet-5</code> pinned and a pre-registered at-least-four-of-five bar: original <code>alternate_network_payload</code> stayed 0/5 and was not rescored; B1v2 stated four separate assert blocks, each with its own <code>error_message</code>, and went 5/5 in this eval; <code>seeded-mutation-repair</code> 5/5; <code>forbidden-tag-characters</code> 4/5 after disclosed harness-bug rescore from saved diffs, with run 2 still red for an out-of-scope README edit. B1v2 changed the brief while the base, model, flags, and five-run count stayed fixed; this eval does not isolate causality or guarantee a live rerun. Prompts: <code>docs/prompt-pack.md</code>. Do not generalize beyond this eval.</p></blockquote>`]
+const demoRuns = {
+  C0: {
+    goal: 'Install, initialize, hire, and verify Squad on a clean Windows 11 VM.',
+    command: String.raw`$wg = '--exact', '--source', 'winget', '--accept-package-agreements', '--accept-source-agreements', '--silent'
+winget install --id Git.Git @wg
+winget install --id GitHub.Copilot @wg
+winget install --id bradygaster.Squad @wg
+git --version; copilot --version; squad --version
+copilot        # /login, then /exit
+git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git $HOME\demo\aks-module
+Set-Location $HOME\demo\aks-module
+squad init
+copilot --agent squad
+squad doctor`,
+    expected: 'Tools install, Init Mode proposes a roster after confirmation, and squad doctor reports 10 passed.',
+    driver: 'Haflidi drives on the clean VM; Martin watches time.',
+    pointAt: 'Point at version output, the .squad\\ files from squad init, the roster confirmation, and the doctor pass count.',
+    fallback: 'Use evidence screenshots from Test-DemoVm.ps1 14/14 and the pre-connected VM; if install stalls past 60 seconds, state the stall and move on.'
+  },
+  C1: {
+    goal: 'Compare two equivalent Plan-mode attempts without sharing later state.',
+    command: String.raw`/new
+/agent Squad
+/model
+/plan
+/rename C1-A
+Plan only: add alternate_network_payload to the existing module contract tests.
+Use pod 172.21.0.0/16, service 10.241.0.0/16, and DNS 10.241.0.10.
+Assert propagation into the requested body while preserving the private API.
+Don't edit files or deploy. Identify affected files, one writer, and checks.
+# Repeat as /rename C1-B with the same model, tools, permissions, and public team state.`,
+    expected: 'Two plan artifacts expose one meaningful decision or show that both runs made the same sound choice.',
+    driver: 'Martin drives; Haflidi compares the two results.',
+    pointAt: 'Point at /model, the selected Squad agent, equal inputs, and one consequence in the plans.',
+    fallback: 'Use saved c1-a.txt and c1-b.txt excerpts from the prepared evidence; do not retry live until outputs differ.'
+  },
+  C2: {
+    goal: 'Turn the scoped Terraform change into a reviewed native Plan-mode artifact.',
+    command: String.raw`/new
+/rename guided-clean-run
+/agent Squad
+/instructions
+/plan
+@terraform\modules\aks-automatic-corp\main.tf
+@terraform\modules\aks-automatic-corp\variables.tf
+@terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl
+This is prepared, qualified code. Plan the C1 regression test and its README explanation.
+Keep all eight inputs, six outputs, and the AzAPI resource intact.
+Plan a separately labeled enablePrivateCluster mutation and repair.
+No implementation, Azure lookup, apply, dependency upgrade, or state operation.
+/session plan`,
+    expected: 'The visible plan is revised by a human, approved only for code/test/docs scope, then implementation mode is shown.',
+    driver: 'Martin drives; Haflidi challenges scope.',
+    pointAt: 'Point at the Plan indicator, the @file context, /session plan, the real revision, and the exit from Plan mode.',
+    fallback: 'Use c2-approved-plan.md and screenshots of the Plan indicator; approval still does not authorize Azure apply. Speaker checks: direct project-write guards, ambiguous shell or MCP limits, A Markdown plan alone is not enforcement. Never use --plan --mode autopilot because it auto-approves.'
+  },
+  C3: {
+    goal: 'Route one writing lane with the clarified B1v2 brief.',
+    command: String.raw`/agent Squad
+/tasks
+/agent list
+/agent terraform-coder
+Squad: lead owns scope and prepares the bounded native terraform-coder brief for main.tf and tests/contract.tftest.hcl.
+The brief adds alternate_network_payload with the existing AzAPI mock and plan mode.
+Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16, and DNS service IP 10.241.0.10.
+Write four separate assert blocks: pod CIDR, service CIDR, DNS service IP, and API server stays private.
+Each assert gets its own error_message. No deployment or other edits.`,
+    expected: 'The writer lane starts, changed files are visible, and the handoff names owners, checks, and unresolved issues.',
+    driver: 'Martin operates; Haflidi reads returned evidence.',
+    pointAt: 'Point at Squad selection, roster/routing, terraform-coder selection, actual edits, and c3-handoffs.md.',
+    fallback: 'Use B1v2 eval evidence: 5/5 under pinned conditions after the clarified four-assert brief; no causal claim and the live run still has to pass. Custom subagents don\'t inherit repository instructions by default; include-custom-instructions: true opts in. Confirm the behavior in this build.'
+  },
+  C4: {
+    goal: 'Use a skill and a read-only source lookup to change the work, not just decorate it.',
+    command: String.raw`/skills info test-discipline
+Invoke test-discipline now. Identify which existing contract assertions must remain unchanged during the mutation.
+Through the configured Microsoft Learn MCP, perform only a read-only search/fetch for AKS Automatic private/custom network requirements.
+Cite the source/version relevant to private API access and hosted-system subnets.
+Don't contact an Azure account or change providers.
+/mcp
+/permissions`,
+    expected: 'The notes identify the invoked skill, the source URL/version, the narrow approval, and the limitation if lookup fails.',
+    driver: 'Martin drives; Haflidi explains the source claim.',
+    pointAt: 'Point at the skill invocation, the MCP server, the specific source result, and the scoped permission prompt.',
+    fallback: 'Use c4-source.md with retrieval time, tool, server/version, and limitation; a failed live lookup stays failed. Permission checks: --available-tools controls visibility, --allow-tool approves, --deny-tool wins, and denying write doesn\'t block shell writes.'
+  },
+  C5: {
+    goal: 'Run the offline oracle, seed one labeled mutation, repair narrowly, and rerun the same check.',
+    command: String.raw`/agent terraform-validator
+$env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path
+$env:CHECKPOINT_DISABLE = '1'; $env:TF_IN_AUTOMATION = '1'
+$phase = 'before' # repeat as seeded-failure and repaired
+terraform -chdir='terraform\modules\aks-automatic-corp' init -backend=false -input=false -lockfile=readonly
+terraform -chdir='terraform\modules\aks-automatic-corp' test -no-color
+/agent terraform-coder
+Native terraform-coder: change enablePrivateCluster from true to false. Change nothing else.
+/review "Read-only review of this labeled mutation; identify the violated assertion."
+/diff`,
+    expected: 'Before and repaired runs exit zero; seeded-failure exits nonzero for the private API assertion, with the original hash restored.',
+    driver: 'Haflidi takes control; Martin explains the repair.',
+    pointAt: 'Point at command, exit code, deliberate mutation label, failing assertion, /review, /diff, and the repaired rerun.',
+    fallback: 'Use saved c5-before, c5-seeded-failure, and c5-repaired logs; B1v2 was 5/5 in eval, but the live run still must pass. Ordinary test repair isn\'t formal rejection; a formal rejection requires a different independent author, the rejected author doesn\'t produce or advise on that revision, and it is not a filesystem lock.'
+  },
+  C6: {
+    goal: 'Save the public reason, resume the right session, and verify the next task reads it.',
+    command: String.raw`/agent Squad
+Scribe: record the public-only decision in .squad\decisions.md: private API invariant, caller-owned provider/backend, added network-payload regression, labeled mutation/restoration, exact checks, and the sanitized Azure-validation boundary without exposing private target details.
+/new
+/resume guided-clean-run
+/cwd
+/context
+/usage
+Read the saved decision; cite its file and the constraints for the next change.`,
+    expected: 'The resumed task cites the decision file and constraints; context and usage are inspected before more work.',
+    driver: 'Haflidi leads; Martin verifies the recovered reason.',
+    pointAt: 'Point at the decision record, the resumed session name, the cited file, /context, and /usage.',
+    fallback: 'Use c6-decision.md and session screenshots; do not display personal memory or unrelated sessions.'
+  },
+  C7: {
+    goal: 'Validate the consumer-facing artifact, inspect the diff, and hand it to an independent reviewer.',
+    command: String.raw`/agent terraform-validator
+$env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path
+Check fmt terraform @("-chdir=$m",'fmt','-check','-recursive')
+Check init terraform @("-chdir=$m",'init','-backend=false','-input=false','-lockfile=readonly')
+Check validate terraform @("-chdir=$m",'validate','-no-color')
+Check lint tflint @("--chdir=$m",'--config=.tflint.hcl','--no-color')
+Check module terraform @("-chdir=$m",'test','-no-color')
+Check example terraform @("-chdir=$e",'test','-no-color','-var-file=terraform.tfvars.example')
+/diff
+/new
+/agent terraform-reviewer`,
+    expected: 'Offline checks pass, the diff is reviewed with sanitized evidence, and the human approves a specific artifact and scope.',
+    driver: 'Haflidi leads review; Martin drives the validator/reviewer handoff.',
+    pointAt: 'Point at offline check exits, c7-final.diff, file hashes, reviewer findings, and the code-only human acceptance.',
+    fallback: 'Use c7-final.diff, saved exit logs, Online apply runs 37771532872/37772290635, Test-OnlineSecurity 29/29, and Test-DemoVm 14/14; no private IDs.'
+  }
+};
+
+const notePlan = (driver, say, doText, point, handoff) => `<p><strong>Driver:</strong> ${escape(driver)}</p><ol class="presenter-plan"><li><strong>Say:</strong> ${escape(say)}</li><li><strong>Do:</strong> ${escape(doText)}</li><li><strong>Point at:</strong> ${escape(point)}</li><li><strong>Hand-off:</strong> ${escape(handoff)}</li></ol>`;
+const demoNotes = chapter => {
+  const run = demoRuns[chapter];
+  return `<p><strong>Driver:</strong> ${escape(run.driver)}</p><ol class="presenter-plan"><li><strong>Say:</strong> ${escape(run.goal)} Keep this as a live demo; optional recordings are fallback evidence, not a dependency.</li><li><strong>Type:</strong></li></ol>${code(run.command, `${chapter} live command / prompt`, 'powershell')}<ol class="presenter-plan" start="3"><li><strong>Point at:</strong> ${escape(run.pointAt)}</li><li><strong>Expected:</strong> ${escape(run.expected)}</li><li><strong>Hand-off:</strong> ${escape(chapter === 'C5' ? 'Haflidi hands controls back to Martin for evidence levels.' : chapter === 'C7' ? 'Martin takes back the deck for the consumer slide.' : 'Use the next slide transition line in the run plan.')}</li></ol><p><strong>Offline fallback:</strong> ${escape(run.fallback)}</p>`;
+};
+
+const presenterNotes = new Map([
+  ['opening', notePlan('Operator', 'Hold the NIC 2026 opening page while the room settles.', 'Confirm timer, speaker notes, and local deck server are ready.', 'NIC mark and blank stage clock.', 'Advance to s01-outcome at 00:00.')],
+  ['s01-outcome', notePlan('Martin opens; Haflidi adds the honesty rule.', 'A useful agent session leaves a reusable Terraform module, not just a confident transcript.', 'Introduce both speakers and state that live demos will show commands and evidence boundaries.', 'Module outcome, private landing-zone consumer, and both speaker cards.', 'Martin hands to Haflidi for C1: compare two attempts without making it a competition.')],
+  ['s03-baseline', notePlan('Martin', 'This starts from inherited public code. The source pin is evidence, not a quality claim.', 'Read the pin, say the module now exists, passed local qualification before delivery, and starts live demos from a disclosed clean checkpoint; avoid private paths and never claim first implementation.', 'e9a9a48, 10 existing negative cases, root/provider issues.', 'Martin hands to the news/product-map sequence.')],
+  ['s04-news', notePlan('Martin with Haflidi status checks.', 'Copilot CLI is GA; Squad 1.0.1 is the demo install; computer use is preview and not used here.', 'Read only dated source tiles and status labels.', 'CLI GA, Agent HQ, AI Credits, Skills/MCP, Computer use preview, Squad 1.0.1.', 'Martin moves to the layer map.')],
+  ['s04-layers', notePlan('Haflidi then Martin', 'Name the layer before troubleshooting: CLI runs work, Squad coordinates, Terraform and sources return evidence.', 'Trace arrows from CLI to Squad to external tools.', 'The three layers and artifact boundary.', 'Martin leads into agent setup.')],
+  ['s07-agent-setup', notePlan('Martin', 'Always-on instructions, Squad, native profiles, and MCP are different controls.', 'Trace the diagram left to right and define coder, validator, and reviewer lanes.', 'AGENTS.md, .squad\\, terraform-coder, terraform-validator, terraform-reviewer.', 'Hand to Haflidi: show how we get here from nothing.')],
+  ['s05-parallel', notePlan('Martin', 'Parallel work needs owners and handoffs, not more uncoordinated agents.', 'Read the lane table and name one writer per Terraform surface.', 'Owner, artifact, and handoff columns.', 'Hand to Haflidi for the module contract.')],
+  ['s06-contract', notePlan('Haflidi', 'The module consumes approved existing network inputs; it does not create a landing zone.', 'Point from platform-owned network into the module.', 'Caller-owned provider/backend/state and private Automatic requirements.', 'Hand to Martin for native Plan mode.')],
+  ['s08-plan-boundary', notePlan('Haflidi', 'Extract a module, not an environment. Existing estate migration is a separate review.', 'Reveal the warning and contrast module vs consumer root.', 'Typed inputs/outputs, provider requirements, and consumer-owned backend/auth.', 'Hand to Martin for Squad routing.')],
+  ['s10-tool-roles', notePlan('Haflidi', 'Instructions, skills, and MCP each have a different job.', 'Keep all three columns visible; do not treat /mcp as source verification by itself.', 'Instructions, skills, MCP columns.', 'Hand to Martin for source grounding.')],
+  ['s12-source-check', notePlan('Haflidi', 'An assertion should inspect the generated resource body, not a reassuring variable name.', 'Reveal the source claim, decision, and illustrative assertion.', 'Automatic SKU/private contract and the code example label.', 'Hand to Haflidi for test coverage.')],
+  ['s13-test-gap', notePlan('Haflidi', 'Keep negative tests, add positive contract assertions, and test the test with a labeled mutation.', 'Explain oracle = the scripted pass/fail check, and say B1 failed 0/5 until the brief stated four asserts.', 'Negative/positive cases and mutation strip.', 'Haflidi takes live-demo control for C5.')],
+  ['s15-proof', notePlan('Haflidi with Martin handoff.', 'Evidence has levels: 52 module cases, 2 caller cases, private IaC validation, Online 29/29, and VM 14/14 answer different questions.', 'Read status labels exactly and say runtime checks are evidence for checked behavior, not proof of everything.', 'Inspected, 52 passed, 2 passed, Approved, Succeeded.', 'Martin takes continuity slide.')],
+  ['s16-continuity', notePlan('Martin', 'Save the reason, not the whole chat. The next task must read the decision.', 'Trace decision into the next task.', 'Conversation, native memory, and repository knowledge distinction.', 'Hand to Haflidi for resume.')],
+  ['s18-memory', notePlan('Martin', 'Conversation context, native memory, and Squad knowledge have different owners.', 'Keep personal memory closed and explain compaction versus team-state hygiene.', 'Conversation, Native memory, Repository knowledge rows.', 'Hand to Haflidi for final review.')],
+  ['s20-consumer', notePlan('Martin', 'Reuse the module code, not the private environment.', 'Point from consumer root into the module and then to private configuration boundary.', 'Module pin, caller-owned inputs, and no private state/secrets.', 'Hand to Haflidi for operating rules.')],
+  ['s21-limits', notePlan('Haflidi then Martin', 'Bound the work, inspect what changed, and leave a useful handoff.', 'Hold the three rules; say more agents cannot vote a contract into correctness.', 'Three closing rules and final statement.', 'Martin opens Q&A at 53:00.')],
+  ['s22-questions', notePlan('Martin hosts; Haflidi answers selected technical questions.', 'Ask which part the audience wants to inspect. If quiet, use prepared questions.', 'Open only the relevant appendix, then return to this slide.', 'Appendix links for Online, security, prompts, bootstrap, and use cases.', 'Close at 11:00 with the public handoff and explicit evidence limits.')],
+  ['a-cli-controls', notePlan('Martin', 'Use this appendix for branching and recovery questions.', 'Explain /fork, /worktree, /rewind, and /resume without promising Azure rollback.', 'Command rows and worktree caveat.', 'Return to Q&A.')],
+  ['a-automation', notePlan('Martin', 'Use this appendix for bounded automation and cost-control questions.', 'Explain /autopilot, -p, /fleet, /subagents, /limits, and soft accounting, including five default continuations when relevant.', 'Soft credit limits, parent/subagents share accounting, and compaction can consume credits.', 'Return to Q&A.')],
+  ['a-handoffs', notePlan('Haflidi', 'Use this appendix for local versus cloud-agent work.', 'Contrast local work, /delegate draft-PR cloud work, and /remote steering of a still-running local session.', 'host must remain online, and draft-PR output still needs review.', 'Return to Q&A.')],
+  ['a-integrations', notePlan('Haflidi', 'Use this appendix for editor, plugin, and research questions.', 'Explain /ide, /lsp, /plugin, /research, and /rubber-duck as optional context sources.', 'Availability is not setup evidence.', 'Return to Q&A.')],
+  ['a-squad-ops', notePlan('Martin', 'Use this appendix for Squad maintenance questions.', 'Mention status, doctor, export/import, nap --dry-run, loop, and triage.', 'Back up before import; round-trip fidelity is not guaranteed; triage can mutate labels without --execute; execution runners may use broad permission flags; distinguish .github\\skills from .squad\\skills.', 'Return to Q&A.')],
+  ['a-evidence', notePlan('Haflidi', 'Use this appendix for evidence-gate questions.', 'Separate source reproduction, local checks, consumer example, private plan/apply, and read-back.', '0/2/1 Terraform plan exit meanings and no raw private plans.', 'Return to Q&A.')],
+  ['a-online', notePlan('Martin', 'Use this appendix for Online landing-zone questions.', 'Cite the same module, thin root, guardrails, runtime checks, and runs 37771532872/37772290635.', 'HTTPS 200 by hostname, title verified, Test-OnlineSecurity 29/29, no private IDs.', 'Return to Q&A.')],
+  ['a-security', notePlan('Haflidi', 'Use this appendix for security questions.', 'Explain GHAS baseline, silent gaps, oracle = scripted pass/fail check, and human approvals.', '52+2 local checks, 29/29 Online, 14/14 demo VM, zero open GHAS alerts on Oct 7.', 'Return to Q&A.')],
+  ['a-prompts', notePlan('Martin', 'Use this appendix for repeatability and prompt questions.', 'State the measured eval: B1 0/5, B2 5/5, B3 4/5 after disclosed harness-bug rescore, B1v2 5/5 after clarified brief.', 'No deterministic claim; B1v2 changed the brief and the live run still has to pass.', 'Return to Q&A.')],
+  ['a-bootstrap', notePlan('Haflidi', 'Use this appendix for starting Squad.', 'Walk the five steps: prerequisites, install, squad init, copilot --agent squad, confirm roster, squad doctor, backup before upgrade.', 'WinGet Squad 1.0.1 and docs/playbook.md after PR #7.', 'Return to Q&A.')],
+  ['a-use-cases', notePlan('Martin', 'Use this appendix for when Squad earns its place.', 'Say Copilot CLI runs the work; Squad decides who does it and remembers why.', 'Cross-owner work, long-lived decisions, issue/review flow.', 'Return to Q&A.')]
 ]);
 
 export function applyNoteFactOverrides(slideId, noteHTML) {
-  if (slideId === 'a-bootstrap') return `${noteHTML}${noteOverrides.get('a-bootstrap-append')}`;
-  const override = noteOverrides.get(slideId);
-  if (!override) return noteHTML;
-  return slideId.startsWith('a-') ? override : `${noteHTML}${override}`;
+  if (/^demo-c[0-7]$/.test(slideId)) return demoNotes(`C${slideId.at(-1)}`);
+  return presenterNotes.get(slideId) || noteHTML;
 }
 
 const chapter = (number, duration, time, chapterTitle, layer, points, tip, sources) => ({
   id: `demo-c${number}`, title: chapterTitle, time, layer, kind: 'demo',
   chapter: `C${number}`, duration, points, tip, sources,
-  treatment: 'SHOW target / footage pending'
+  treatment: 'LIVE demo'
 });
 
 export const slides = [
@@ -85,7 +251,7 @@ export const slides = [
   {
     id: 's03-baseline', title: 'Start with the code you have.', time: '04:00-05:00',
     layer: 'Terraform / source evidence', kind: 'baseline', sources: [upstream],
-    tip: 'Disclose the source, qualified reference, clean checkpoint, and recorded change.',
+    tip: 'Disclose the source, qualified reference, clean checkpoint, and live-demo change.',
     content: `<div class="baseline-facts"><div class="source-pin"><span class="eyebrow">Inherited public source</span><strong>e9a9a48</strong></div>
       <div class="stat"><strong>10</strong><span>existing negative test cases<br><em>Not a passing test claim.</em></span></div>
       <p class="supporting">Root declarations overlap.<br>An active provider sits outside the mocks.</p></div>
@@ -194,7 +360,7 @@ export const slides = [
   {
     id: 's15-proof', title: 'Evidence has levels.', time: '37:00-40:00',
     layer: 'Source / local checks / Azure', kind: 'evidence', sources: [tests, tfplan],
-    tip: 'A check proves only what it checks. Private validation and pending recordings stay distinct.',
+    tip: 'A check proves only what it checks. Private validation and live-demo evidence stay distinct.',
     content: '',
     treatment: 'Current evidence register'
   },
@@ -346,23 +512,13 @@ export function evidenceContent(evidence) {
       <span role="cell" class="status ${item.status === 'Pending' ? 'pending' : 'observed'}">${escape(item.status)}</span><p role="cell">${escape(item.detail)}</p></div>`).join('')}</div>`;
 }
 
-export function demoContent(slide, media) {
-  const file = media[slide.chapter];
-  const attached = Boolean(file.available);
-  const status = attached ? 'Reviewed native recording attached' : 'Recording not attached yet';
-  return `<div class="media-well" data-chapter="${slide.chapter}">
-    <div class="media-pending"${attached ? ' hidden' : ''}>
-      <div class="chapter-art" aria-hidden="true">${slide.chapter}</div>
-      <div class="pending-copy"><p class="recording-label">Native CLI recording slot / ${String(slide.duration / 60).padStart(2, '0')}:00</p>
-        <h3>Recording not attached yet</h3><p class="pending-explanation">Viewing guide, not executed evidence.</p>
-        <ol>${slide.points.map(point => `<li>${point}</li>`).join('')}</ol></div>
-    </div>
-    <video controls playsinline preload="metadata" aria-label="${escape(slide.chapter + ': ' + slide.title)}" ${attached ? `src="${escape(file.file)}"` : 'hidden'}></video>
-  </div>
-  <div class="media-tools"><p class="media-status" role="status">${escape(status)}</p>
-    <button type="button" class="attach-video" data-chapter="${slide.chapter}">Open local MP4<span class="visually-hidden"> for ${slide.chapter}</span></button>
-    <input type="file" accept="video/mp4,.mp4" data-chapter="${slide.chapter}" class="video-file" hidden>
-    <span class="local-only">Local only. Nothing uploads.</span></div>`;
+export function demoContent(slide) {
+  const run = demoRuns[slide.chapter];
+  return `<div class="live-demo-card" data-chapter="${slide.chapter}">
+    <p class="demo-goal"><span>Goal</span>${escape(run.goal)}</p>
+    ${code(run.command, `${slide.chapter} live command / prompt`, 'powershell')}
+    <p class="demo-expected"><span>Expected result</span>${escape(run.expected)}</p>
+  </div>`;
 }
 
 export function renderSection(slide, index, noteHTML, evidence, media) {
@@ -376,11 +532,11 @@ export function renderSection(slide, index, noteHTML, evidence, media) {
   let content = slide.kind === 'demo' ? demoContent(slide, media)
     : slide.kind === 'evidence' ? evidenceContent(evidence) : slide.content;
   const fallback = slide.kind === 'demo'
-    ? 'If media is absent or fails, keep the clearly labeled viewing guide. Do not narrate an unobserved result.'
+    ? 'If the live CLI stalls, use the Offline fallback line in these notes and keep the same chapter timing.'
     : isAppendix ? 'Answer from the verified reference, then return to Q&A. Do not start an unplanned live demonstration.'
-      : 'Use the static slide and its spoken explanation. Keep any unresolved evidence labeled pending.';
+      : 'Use the static slide and its spoken explanation. Keep any unresolved evidence labeled unresolved.';
   const captureRule = slide.kind === 'demo'
-    ? '<p><strong>Capture surface:</strong> Genuine Copilot CLI with Squad selected, standalone or in a real integrated terminal. Recording automation is external, off-screen tooling, not a Squad feature. Qualify code before filming, then capture genuine new execution from a disclosed clean checkpoint. Do not present preparation as filmed first-ever implementation.</p>'
+    ? '<p><strong>Live surface:</strong> Genuine Copilot CLI with Squad selected, standalone or in a real integrated terminal. Optional fallback captures are evidence only when reviewed; the live chapter remains the planned delivery. Qualify code first, then execute from a disclosed clean checkpoint.</p>'
     : '';
   if (slide.preshow) {
     return `<section id="${slide.id}" class="${className}" role="region" aria-label="NIC 2026 opening page" data-stage-time="Pre-show" data-preshow="true">

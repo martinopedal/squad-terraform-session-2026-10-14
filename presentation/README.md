@@ -40,7 +40,7 @@ Press `S` or select **Speaker notes** to open current/next slides, the complete 
 
 In overview, click a thumbnail or use arrows to select a slide, then Escape to return to it. Thumbnail links and video controls remain inert. On exit, only the active slide becomes interactive; the approved presenter-shortcut behavior is unchanged.
 
-The first slide is a pre-show NIC 2026 opening page and does not consume session time. The 25 timed main slides allocate 29 minutes to silent chapter video (C0-C7) with live narration, 24 minutes to other live explanation, and seven minutes to Q&A. Eleven appendix slides are question-driven references, not additional scheduled content. [The talk track](../docs/talk-track.md) includes both speakers and a separately labeled prepared Q&A fallback.
+The first slide is a pre-show NIC 2026 opening page and does not consume session time. The 25 timed main slides allocate 29 minutes to live demo chapters (C0-C7), 24 minutes to other explanation, and seven minutes to Q&A. Eleven appendix slides are question-driven references, not additional scheduled content. [The talk track](../docs/talk-track.md) includes both speakers and a separately labeled prepared Q&A fallback.
 
 ## Build
 
@@ -59,21 +59,21 @@ The design is fixed: 1280 x 720, official NIC 2026 cyan and ink surfaces, embedd
 
 Before each content revision, preserve the previous generated HTML outside the release package. Increment `src\version.json` in the same revision. Keep `0.x` until the presenters approve the final content.
 
-## Attach recordings and evidence
+## Live demos and optional fallback evidence
 
-No chapter recording or deployment success is supplied with this build. The chapter cards state **Recording not attached yet**. They are viewing guides, not simulated CLI interfaces or executed evidence.
+C0-C7 are live demo slides. Each chapter card shows the goal, the command or prompt to type, and the expected result. Speaker notes contain the driver, what to point at, the hand-off line, and an **Offline fallback** line. Recordings are optional fallback evidence, not a deck dependency.
 
-Only genuine Copilot CLI with Squad selected, standalone or in a real integrated terminal, qualifies as product footage. Capture controllers stay off-screen as external tooling. Do not attach custom-viewer recordings, artifact-pilot frames, or fabricated terminal output.
+Only genuine Copilot CLI with Squad selected, standalone or in a real integrated terminal, qualifies as fallback product evidence. Capture controllers stay off-screen as external tooling. Do not use custom-viewer recordings, artifact-pilot frames, or fabricated terminal output.
 
-The approved workflow is `build_then_record_clean_run`. Source qualification may finish before filming. Later clips must capture genuine new execution from a disclosed clean checkpoint, not pretend to be the first-ever implementation. Record the qualification revision, take-start checkpoint, prepared code and Squad state, and the actual change executed in the take. Do not substitute prior qualification output for newly captured results. Current qualification has not been filmed.
+Source qualification may finish before delivery. The live chapter must execute from a disclosed clean checkpoint or explicitly use the Offline fallback line. Do not substitute prior qualification output for a live result. If optional fallback recordings are used later, record the qualification revision, take-start checkpoint, prepared code and Squad state, and the actual change executed in the take.
 
-For a temporary local rehearsal, choose **Open local MP4** on a chapter. The browser reads that file locally; nothing is uploaded. Native controls support play, pause, seek, and replay. The selection lasts only until reload and stays labeled **Local preview: review pending**.
+Deck 0.19 removes on-screen media attachment controls. Keep fallback recordings/screenshots outside the public package unless presenters explicitly decide to publish them in a later build.
 
-For a persistent package, place the seven reviewed files at `media\C1.mp4` through `media\C7.mp4`. In `src\media.json`, set `reviewed: true`, a nonempty `takeId`, `sourceSurface` to `native-copilot-cli` or `integrated-terminal`, and `selectedAgent` to `squad`. Then rebuild. Unreviewed files never attach automatically; the build reports their exclusion and keeps the slot pending.
+The legacy `src\media.json` file remains harmless metadata for optional fallback review, but the current live deck does not render media placeholders or local MP4 controls.
 
-Retain provenance and edit records outside the deck's public package. Durations, including title cards, must be 3, 4, 4, 4, 5, 3, and 3 minutes. The build rejects unsupported surfaces or incomplete reviewed entries. Those metadata checks are not image analysis: the recording owner must verify the actual UI, selected agent, content, and duration before approving a clip.
+Retain provenance and edit records outside the deck's public package. Durations are unchanged: C0 3 minutes, C1 3, C2 4, C3 4, C4 4, C5 5, C6 3, and C7 3. The fallback owner must verify the actual UI, selected agent, content, and duration before citing a capture.
 
-Pin and display the actual recording executable's version. Current validation is Copilot CLI 1.0.93 and Squad 1.0.1 on October 8, 2026; earlier probes in the [verified feature guide](../docs/feature-guide.md) are explicitly historical. `--no-auto-update` is not a version selector. C2 must retain interactive Plan mode and human approval; never use the auto-approving `--plan --mode autopilot` combination. Rehearse current documented guards and instruction inheritance in the chosen build instead of treating help as UI evidence.
+Pin and display the actual live-demo executable versions. Current validation is Copilot CLI 1.0.93 and Squad 1.0.1 on October 8, 2026; earlier probes in the [verified feature guide](../docs/feature-guide.md) are explicitly historical. `--no-auto-update` is not a version selector. C2 must retain interactive Plan mode and human approval; never use the auto-approving `--plan --mode autopilot` combination. Rehearse current documented guards and instruction inheritance in the chosen build instead of treating help as UI evidence.
 
 Update `src\evidence.json` only from approved, sanitized evidence. A source inspection is not a test pass. Local tests aren't proof of Azure deployment or policy compliance; cite only approved sanitized Azure validation facts. Do not insert private scope names, account identifiers, state, credentials, raw plans, or private policy links.
 
@@ -89,8 +89,8 @@ python -m venv .venv
 npm test
 ```
 
-The check first exercises native-footage metadata and pending-slot behavior, then starts its own loopback server. It blocks external browser requests, captures every slide/fragment at 1280 x 720 and 1920 x 1080, and checks structure, overflow, contrast/accessibility, keyboard navigation, notes, and media behavior. A synthetic playback fixture tests browser controls only; its screenshot stays in ignored `.test-artifacts\`, outside public QA assets and chapter media. The check shuts down its server and browser when finished.
+The check first exercises the live-demo slide contract, then starts its own loopback server. It blocks external browser requests, captures every slide/fragment at 1280 x 720 and 1920 x 1080, and checks structure, overflow, contrast/accessibility, keyboard navigation, notes, and offline packaging. The check shuts down its server and browser when finished.
 
-Results and screenshots go to `qa\`. Automated checks do not replace looking at the screenshots, reviewing the recordings, or a full two-speaker rehearsal. The final QA report distinguishes tested presentation behavior from pending footage, native profile-selection evidence, and sanitized Azure validation limits.
+Results and screenshots go to `qa\`. Automated checks do not replace looking at the screenshots or running a full two-speaker rehearsal. The final QA report distinguishes tested presentation behavior from live CLI execution, native profile-selection evidence, and sanitized Azure validation limits.
 
 Local verification and visual-review reports remain under ignored `qa\` and reviewer artifact directories. They contain build/browser results, per-slide observations, and the remaining stage-release gates. They are not part of the public package; public release summaries must be sanitized separately.
