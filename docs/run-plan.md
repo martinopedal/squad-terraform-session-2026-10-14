@@ -8,7 +8,7 @@ Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck 
 
 | Day | Who | What | Done when |
 |---|---|---|---|
-| Wed 07 Oct | Martin | Deck 0.18 with C0, runbooks, demo VM proven clean, Online facts refreshed | `npm test` green; `Test-DemoVm.ps1` 14/14; `Test-OnlineSecurity.ps1` 29/29 |
+| Wed 07 Oct | Martin | Deck 0.18 with C0, runbooks, demo VM cleanliness checks passed, Online facts refreshed | `npm test` green; `Test-DemoVm.ps1` 14/14; `Test-OnlineSecurity.ps1` 29/29 |
 | Thu 08 Oct | Haflidi | Accept repo and environment invites; read talk track; receive the VM local account out of band | Haflidi can open the deck and reach the VM through Bastion; Martin uses Entra sign-in with MFA |
 | Thu 08 Oct | Both | Rehearsal 1: read-through with the clock, slides only, 60 minutes on Teams | Each section within plus or minus 30 seconds |
 | Thu 08-Fri 09 | Haflidi | Record C0 on the VM (clean reset first) | `media/C0.mp4` reviewed, 3:00 |
@@ -74,7 +74,7 @@ Timing rule: at each checkpoint, if more than 60 seconds behind, apply the next 
 
 From the demo-env repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set off screen:
 
-- [ ] `.\scripts\Invoke-GatedRun.ps1 -Workflow deploy-online.yml -Inputs 'apply=false' -StartRunner` succeeds with no changes (proves runner, OIDC, gate, state). Latest known plan/apply runs 37771532872 and 37772290635 succeeded with "No changes".
+- [ ] `.\scripts\Invoke-GatedRun.ps1 -Workflow deploy-online.yml -Inputs 'apply=false' -StartRunner` succeeds with no changes (checks runner, OIDC, gate, state). Latest known plan/apply runs 37771532872 and 37772290635 succeeded with "No changes".
 - [ ] `.\scripts\Test-OnlineSecurity.ps1` reports 29/29 passed (latest recorded full pass: 2026-10-08 13:48; HTTPS 200 by hostname, redirect, authorized IPs, Entra-only, policy).
 - [ ] `.\scripts\Invoke-GatedRun.ps1 -Workflow deploy-demo-vm.yml -Inputs 'action=recreate-vm' -StartRunner`, then `.\scripts\Test-DemoVm.ps1` reports 14/14 including the clean-start checks.
 - [ ] Deck: `npm test` in `presentation\` passes; all 8 clips open from the presentation laptop's `media\` folder.
