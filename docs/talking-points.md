@@ -111,6 +111,7 @@ Don't say: deleting awkward root files is a repair.
 - Show Squad selected in the repository.
 - Show only relevant roster and routing.
 - Select `/agent terraform-coder` for the writing lane.
+- B1v2 score line stays pending: **B1v2 score: PENDING (TBD-B1V2)**.
 - Return with actual files and handoff evidence.
 Takeaway: assignment is not completion.
 Demo cue: `/agent`, `/tasks`, handoff, changed files.
@@ -143,6 +144,7 @@ Don't say: illustrative assertion is passing output.
 ### 30:00-32:00, s13-test-gap, Haflidi
 - Keep negative cases.
 - Add positive contract assertions.
+- If the oracle has a rule, say it in the brief.
 - Test the test with a deliberate mutation.
 Takeaway: a mock suite is useful only when it can fail for the right reason.
 Demo cue: hand playback to Haflidi.
@@ -310,7 +312,7 @@ Don't say: AI made it secure, or there are no gaps (single-maintainer admin merg
 - Guardrails first, then sourced API facts through MCP.
 - One lane per step: lead plans, coder edits, validator runs the oracle, reviewer in `/new`.
 - Consume like a customer, deploy through the pipeline.
-- In the October 8 eval, repeatability was measured as five fresh runs with a pre-registered `>= 4/5` green bar. Results: B1 0/5, B2 5/5, B3 4/5 after a disclosed harness-bug rescore from saved diffs, with no Copilot rerun and the out-of-scope README edit still red. Treat this as a measured checkpoint, not a guarantee.
+- In the October 8 eval, repeatability was measured as five fresh runs with a pre-registered `>= 4/5` green bar. Results: B1 0/5, B2 5/5, B3 4/5 after a disclosed harness-bug rescore from saved diffs, with no Copilot rerun and the out-of-scope README edit still red. B1v2 re-measures a clarified B1 brief with the assert-shape rule stated; result: **B1v2 score: PENDING (TBD-B1V2)**. Lesson: if the oracle has a rule, say it in the brief. Treat this as a measured checkpoint, not a guarantee.
 Takeaway: narrow the choices and make every claim checkable.
 Don't say: the prompts make the model deterministic.
 

@@ -132,10 +132,17 @@ Martin operates; Haflidi reads returned evidence.
 Squad: lead owns scope and prepares the bounded native terraform-coder brief for
 main.tf and tests/contract.tftest.hcl. No general-purpose task edits those files.
 The brief adds alternate_network_payload with the existing AzAPI mock and plan
-mode. Reviewer prepares read-only acceptance criteria. Devrel owns only the
-README's test explanation after agreement. Return actual task IDs where used,
-file owners, checks, and unresolved issues. No deployment or other edits.
+mode. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16, and DNS
+service IP 10.241.0.10. Write four separate assert blocks, one each: the pod
+CIDR, the service CIDR, the DNS service IP, and the API server stays private.
+Each assert gets its own error_message. Reviewer prepares read-only acceptance
+criteria. Devrel owns only the README's test explanation after agreement. Return
+actual task IDs where used, file owners, checks, and unresolved issues. No
+deployment or other edits.
 ```
+
+This matches the B1v2 brief used in the October 8 re-measurement, so the filmed
+run matches what was measured.
 
 Show reviewed roster/charters, `/tasks`, `/agent list`, actual starts, and
 handoffs. The list must include `terraform-coder`, `terraform-validator`, and
