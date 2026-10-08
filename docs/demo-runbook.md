@@ -2,6 +2,10 @@
 
 C0 (from zero to a squad) runs live on the clean Windows 11 demo VM, not in this checkpoint shell. Follow [clean-machine-demo.md](clean-machine-demo.md) for C0. Everything below covers the live C1-C7 operator sequence.
 
+**C0 Pre-staged:** VM recreated or verified clean; Bastion already connected; PowerShell 7 tab open; package source agreements accepted by flags; terminal zoom set; no secrets in clipboard.
+
+**C0 Cut at 2:15:** If installs or login are not complete, state the live stall, show fallback evidence, and move to `s05-parallel`. Do not spend Q&A time on installing tools.
+
 Use `qualify_then_run_clean_checkpoint` as the provenance rule: qualify the module first, then run genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Optional recordings are fallback evidence only. Don't open another terminal or substitute a viewer. This live run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
 
 Local module qualification passed: 52 module cases, two caller cases, and both mutation evidence checks. Hosted Terraform matrix CI run 36990206303 passed, native agent-setup CI passed in run 37286068987, final module verification passed in run 37286237657, and docs-only Azure-validation release CI passed in run 37305768318. A private IaC consumer deployed and read back the module on October 5, 2026, pinned to runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized facts are public, private inputs are not. These are instructions for the live run, not an executed transcript. Native profile selection, optional fallback recordings, and full rehearsal remain separate gates.
@@ -95,6 +99,10 @@ Pre-stage a filesystem-only provider mirror and `offline\terraform.tfrc` beside 
 
 ## C1: Compare two plans | 3 minutes
 
+**Pre-staged:** both C1 prompt blocks ready; sessions named C1-A/C1-B; same model and permission profile visible; saved excerpts ready if output drifts.
+
+**Cut at 2:15:** If C1-B is still generating, stop comparison at one clear C1-A consequence and use the saved C1-B excerpt.
+
 Haflidi leads and narrates; Martin operates the two clean worktrees. In A, use `/new`, `/agent` and select **Squad**, `/model`, `/plan`, and `/rename C1-A`. Repeat in B as `C1-B`, with identical model, instructions, permissions, and public starting team state:
 
 ```text
@@ -107,6 +115,10 @@ Don't edit files or deploy. Identify affected files, one writer, and checks.
 Save approved prompt/result excerpts as `c1-a.txt` and `c1-b.txt` under evidence. Compare one consequence, not verbosity. Identical outcomes are valid. Don't use `/fork` as a fresh comparison or retry until results differ. Start the guided pass separately.
 
 ## C2: Revise and approve | 4 minutes
+
+**Pre-staged:** checkpoint shell open; file paths copied; approval language rehearsed; Plan-mode fallback screenshot ready.
+
+**Cut at 3:00:** If the plan is not ready, use the saved approved plan and state that approval covers only repository changes.
 
 Martin drives; Haflidi challenges scope. In guided, use `/new`, `/rename guided-clean-run`, `/agent` and select Squad, `/instructions`, then `/plan`. Show the mode indicator.
 
@@ -125,6 +137,10 @@ No implementation, Azure lookup, apply, dependency upgrade, or state operation.
 Inspect `/session plan`. Revise genuinely: "Put unchanged payload assertions and offline checks before documentation; exclude infrastructure redesign." Save accepted criteria in `c2-approved-plan.md`. Explicitly approve only that scope, leave Plan mode through the actual UI, and show the new mode. Approval does not authorize deployment.
 
 ## C3: Assign one writer | 4 minutes
+
+**Pre-staged:** B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal claim from B1v2 to live result.
+
+**Cut at 3:00:** If the coder is still generating, stop the live turn, use the saved B1v2 excerpt, and move to C4 with the same boundary.
 
 Martin operates; Haflidi reads returned evidence.
 
@@ -157,6 +173,10 @@ test file.
 
 ## C4: Invoke guidance and a source | 4 minutes
 
+**Pre-staged:** Docker Desktop running; required MCP servers already connected; fallback `c4-source` excerpt sanitized; one retry allowed, not a retry loop.
+
+**Cut at 3:00:** If MCP or Docker is not healthy, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.
+
 Martin drives; Haflidi explains the claim. Use `/skills info test-discipline`, then:
 
 ```text
@@ -175,6 +195,10 @@ limitation. Missing skill/server or a failed lookup stays failed/pending, not
 invented output.
 
 ## C5: Seed, fail, repair | 5 minutes
+
+**Pre-staged:** validator shell ready; environment scrub command copied; three log names chosen; seeded mutation can be applied from fallback if the model turn runs long.
+
+**Cut at 3:45:** If the repair is not ready, stop live mutation work, show saved seeded-failure and repaired logs, then continue. Haflidi runs the validator.
 
 Haflidi takes control; Martin explains the repair. Select
 `/agent terraform-validator`, confirm its `read`, `search`, and `execute` tools,
@@ -224,6 +248,10 @@ Squad rejection. Return to `/agent squad` for C6. Hand controls back to Martin.
 
 ## C6: Save and resume | 3 minutes
 
+**Pre-staged:** decision excerpt sanitized and ready; unrelated personal memory or session list not shown; resume target known.
+
+**Cut at 2:15:** If resume or search is slow, show the decision file and state the constraints directly.
+
 Martin operates; Haflidi verifies the recovered reason:
 
 ```text
@@ -236,6 +264,10 @@ Do not copy histories, credentials, or full conversations.
 Show the actual record. Use `/new`, then `/resume guided-clean-run`, `/cwd`, `/context`, and `/usage`. Ask: "Read the saved decision; cite its file and the constraints for the next change." Save `c6-decision.md`, not unrelated session listings or personal memory.
 
 ## C7: Validate the consumer and review | 3 minutes
+
+**Pre-staged:** offline suite can run from a prepared shell; logs have no private IDs; reviewer prompt copied; no private plans or raw state on screen.
+
+**Cut at 2:15:** If the full suite is not done, show the saved green exits and diff; do not run a second suite live.
 
 Martin drives; Haflidi reviews. Select `/agent terraform-validator` in the same
 approved isolated context, approve each command separately, record commands, and

@@ -4,11 +4,11 @@ This script lets Martin Opedal, Enterprise Cloud Solution Architect, Microsoft a
 
 ## Delivery contract
 
-The main script includes narration over 29 minutes of live demo operation. It does not add 29 minutes to the spoken running time. The other live segments total 24 minutes. Bracketed cues and blockquotes are operator instructions, not spoken words. Read speaker paragraphs at about 120 words per minute; use the remaining time for the explicit observation pauses, handoffs, and slide changes. Do not accelerate code reading to recover time.
+The main script includes narration over 29 minutes of live demo operation. It does not add 29 minutes to the spoken running time. Spoken non-demo content totals 19 minutes, with 5 minutes held as slack inside the 53-minute main flow. Bracketed cues and blockquotes are operator instructions, not spoken words. Read speaker paragraphs at about 120 words per minute; use the remaining time for the explicit observation pauses, handoffs, and slide changes. Do not accelerate code reading to recover time.
 
 Martin Opedal hosts the opening, owns the brief, and normally drives the presentation. Haflidi Fridthjofsson leads review, evidence interpretation, and the Q&A. The non-speaking presenter watches the clock and prepares the next cue. At C5, Haflidi takes control while Martin explains the implementation response. They hand control back explicitly after the chapter.
 
-The demo chapters are live C0-C7 with the same timings: 29 minutes of demo, 24 minutes of other live content, and Q&A at 53:00. If a live path stalls, use an optional fallback: reviewed evidence screenshots, stored run results, or an approved recording of the same commands. Do not depend on a media manifest, a reserved video slot, or unattached video.
+The demo chapters are live C0-C7 with the same timings: 29 minutes of demo, 19 minutes of spoken non-demo content, a protected 5:00 slack bank, and Q&A at 53:00. If a live path stalls, use the 75% cut line and an optional fallback: reviewed evidence screenshots, stored run results, or an approved recording of the same commands. Do not depend on a media manifest, a reserved video slot, or unattached video.
 
 Delivery follows `qualify_then_run_clean_checkpoint` as a provenance rule: qualify the source first, then run the live chapter from a disclosed clean checkpoint. Keep the upstream pin, qualification revision, and live checkpoint distinct, including prepared code and starting Squad state. Identify the change executed in the live run. This is not first-ever implementation. Do not present earlier logs as fresh live output.
 
@@ -29,6 +29,8 @@ Preflight still matters: pin the actual CLI executable/package and show its vers
 ## demo-c1 | 01:00-04:00 | C1: Same task, different agent choices
 
 > DRIVER Haflidi. C1, 03:00 total. Martin operates the two shells. Handoff to Martin at 04:00. Tip: hold inputs fixed, including repository memory.
+
+**Cut at 2:15:** If C1-B is still generating, stop comparison at one clear C1-A consequence and use the saved C1-B excerpt.
 
 **Who drives:** Haflidi narrates the comparison. Martin types.
 
@@ -57,27 +59,21 @@ Repeat in the second clean worktree as `C1-B` with the same model, permissions, 
 
 **Haflidi:** In these two attempts, the useful comparison is a choice that affects our module. Does the agent preserve a validation rule? Does it keep provider configuration in the consumer root? Does it propose a test for the actual resource body? Two runs do not establish an error rate. They show why controlled inputs, visible tools, and explicit checks matter.
 
-## s03-baseline | 04:00-05:00 | Start with the code you have
+## s03-baseline | 04:00-04:30 | Start with the code you have
 
-> DRIVER Martin. No clip. Read the inherited source pin, not private paths. Distinguish it from the qualification revision and future live checkpoint. Hold the source strip for five seconds. Handoff to Haflidi for the product map. Tip: disclose preparation and the actual live change.
+> DRIVER Martin. No clip. Read the inherited source pin, not private paths. Bank 04:30-05:00 as slack. Handoff to Haflidi for the product map. Tip: disclose preparation and the actual live change.
 
-**Martin:** Our starting point is the public AKS root module at the revision shown here. It already has typed inputs, outputs, and ten negative test cases. It also has real quality issues: overlapping root declarations, an active provider outside the test mocks, and documentation that doesn't match the requested SKU.
+**Martin:** Our starting point is the public AKS root module at the revision shown here. It had useful inputs, outputs, and tests, plus inherited issues: overlapping root declarations, an active provider outside mocks, and SKU documentation drift.
 
-**Haflidi:** Those are inherited findings, not evidence of AI causation. The reusable module now exists and passed local qualification before live delivery. Later live chapters show new execution from a disclosed clean checkpoint. Keep upstream source, qualification, and the live change separate. Prepared code is disclosed context, not a claim that this was its first implementation.
+**Haflidi:** Those are inherited findings, not AI causation. Qualification happened before live delivery. Later chapters run from a disclosed clean checkpoint, so keep source, qualification, and the live change separate.
 
-## s04-news | 05:00-06:00 | Big news this year
+## s04-news | 05:00-05:30 | Big news this year
 
-> DRIVER Martin. No clip. Keep this to the dated source table. Haflidi calls out the preview boundaries. Tip: computer use is not part of this Terraform demo.
+> DRIVER Martin. No clip. One headline plus Squad version. Bank 05:30-06:00 as slack. Tip: computer use is not part of this Terraform demo.
 
-**Martin:** A lot changed between last October and this October. The anchor for this talk is February 25, 2026: Copilot CLI reached GA with Plan mode, custom agents, skills, plugins, MCP, review, diff, and undo controls in the terminal. That is why we can treat the CLI as a normal engineering surface, not just a preview experiment.
+**Martin:** The headline is that Copilot CLI is GA, so Plan mode, agents, skills, MCP, review, diff, and undo controls are now a normal terminal surface for engineering work.
 
-**Haflidi:** The control plane also widened. Agent HQ launched at Universe on October 28, 2025, and Claude plus Codex entered public preview there on February 4, 2026. Custom-agent status is per surface and worth rechecking before stage: CLI is included in CLI GA, GitHub sources conflict for JetBrains, and VS Code ignores `mcp-servers` frontmatter according to the custom-agents reference. Do not say GA everywhere.
-
-**Martin:** Billing changed too. AI Credits became effective June 1, and the CLI added `/limits` and `--max-ai-credits` on July 1. Those controls matter when a Terraform task fans out into agents or long checks.
-
-**Haflidi:** Two more notes are fresh. Agent Skills launched in December, and skills plus MCP are GA in Copilot code review. Computer use entered public preview on October 1 with `/computer on`, `show`, and `off`, per-app approval, and admin disable. We do not use computer use in this Terraform demo.
-
-**Martin:** Finally, Squad v1.0.0 and v1.0.1 release tags exist, and the demo uses 1.0.1 from GitHub Releases, WinGet, or Homebrew. The pinned reference docs at `93aec83` still carry Experimental or alpha wording, so docs may lag releases. npm latest was still 0.13.1 on October 5, and Haflidi installs Squad from zero in a few minutes.
+**Haflidi:** Around it, Agent HQ, AI Credits, and computer use have moved, but this demo stays in CLI, files, docs, and offline Terraform checks. Squad 1.0.1 is what we use today. Some pinned docs and npm still lag the release tags.
 
 ## s04-layers | 06:00-07:00 | One workflow, three distinct layers
 
@@ -102,6 +98,8 @@ Repeat in the second clean worktree as `C1-B` with the same model, permissions, 
 ## demo-c0 | 08:00-11:00 | C0: From zero to a squad
 
 > DRIVER Haflidi. C0, 03:00 total. Martin supports the VM connection. Handoff to Martin at 11:00. Tip: install, init, hire, verify.
+
+**Cut at 2:15:** If installs or login are not complete, state the live stall, show fallback evidence, and move to `s05-parallel`. Do not spend Q&A time on installs.
 
 **Who drives:** Haflidi drives the clean Windows 11 VM through Bastion. Martin watches time and credentials stay off-screen.
 
@@ -181,6 +179,8 @@ squad doctor
 
 > DRIVER Martin. C2, 04:00 total. Haflidi challenges scope. Handoff to Haflidi at 18:00. Tip: a planning prompt is not native Plan mode.
 
+**Cut at 3:00:** If the plan is not ready, use the saved approved plan and state that approval covers only repository changes.
+
 **Who drives:** Martin types. Haflidi checks whether the plan preserves the module boundary.
 
 **Commands and prompt to type:**
@@ -242,6 +242,8 @@ Inspect:
 
 > DRIVER Martin. C3, 04:00. Haflidi reads returned evidence. Handoff to Haflidi at 24:00. Tip: assignment is not completion.
 
+**Cut at 3:00:** If the coder is still generating, stop the live turn, use the saved B1v2 excerpt, and move to C4 with the same boundary.
+
 **Who drives:** Martin operates Squad and the native coder profile. Haflidi checks the handoff.
 
 **Commands and prompt to type:**
@@ -277,17 +279,19 @@ Return to Squad:
 
 **Martin:** The point is ownership. The coder gets one writing lane and one exact brief. The handoff must name files, checks, and unresolved issues. A profile switch alone is not evidence of correctness.
 
-## s10-tool-roles | 24:00-25:00 | Give context the right job
+## s10-tool-roles | 24:00-24:30 | Give context the right job
 
-> DRIVER Martin. No clip. Keep all three columns visible. Pause five seconds. Handoff to Martin for C4. Tip: instructions, skills, and MCP are not interchangeable.
+> DRIVER Martin. No clip. Keep only the instructions, skills, and MCP distinction. Bank 24:30-25:00 as slack. Handoff to Martin for C4. Tip: they are not interchangeable.
 
-**Haflidi:** Instructions describe persistent repository expectations. File references bring particular code into the current task. A skill packages a focused working recipe that we invoke when it fits. MCP connects the CLI to tools or information outside its immediate conversation.
+**Haflidi:** Instructions are persistent expectations. Skills are repeatable procedures. MCP connects the CLI to a source or tool.
 
-**Martin:** Keep those purposes separate. Don't paste an entire procedure into always-on instructions when a skill would fit better. Don't ask a stale repository comment to settle a current service requirement. And don't call a tool manager screen source verification. We need to see the guidance used, the source returned, and the decision it changes. The recipe tells us how to work; the source tells us what a service currently supports.
+**Martin:** Keep them separate. A recipe tells us how to work; a source tells us what a service currently supports. We still need the human decision that changes the code.
 
 ## demo-c4 | 25:00-29:00 | C4: Ground the work with tools
 
 > DRIVER Martin. C4, 04:00. Haflidi explains the source claim. Handoff to Haflidi at 29:00. Tip: ask for the source property that changes the code.
+
+**Cut at 3:00:** If MCP or Docker is not healthy, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.
 
 **Who drives:** Martin types. Haflidi checks source fit and permission scope.
 
@@ -330,21 +334,21 @@ Inspect:
 
 **Martin:** The assertion shown here illustrates that shape. It is not a passing test result. The actual test must match the reviewed module and provider behavior. Pair it with the private-network and managed-system-pool contract, and keep source versions in the decision record. A one-line SKU edit isn't the whole implementation.
 
-## s13-test-gap | 30:00-32:00 | Test both sides of the boundary
+## s13-test-gap | 30:00-31:00 | Test both sides of the boundary
 
-> DRIVER Martin. No clip. Trace negative input cases, positive resource assertions, and mutation. Allow ten seconds of reading. Handoff of demo control to Haflidi for C5. Tip: enumerate every active provider before running tests.
+> DRIVER Martin. No clip. Move B1/B2/B3 detail to appendix. Bank 31:00-32:00 as slack. Handoff of demo control to Haflidi for C5. Tip: enumerate active providers before running tests.
 
-**Haflidi:** Existing negative tests answer useful questions: does this invalid combination fail, and does the error identify the problem? They don't necessarily establish that a valid combination produces the right Azure resource. Keep those cases, but add positive contract assertions and checks for useful outputs. The consumer example also needs to exercise the supported interface.
+**Haflidi:** Keep the negative tests, but add positive assertions against the generated resource body and useful outputs. The consumer example also needs to exercise the supported interface.
 
-**Martin:** First make the tests safe to run. In the inherited root, the mocks cover two providers, while another loaded file brings in Kubernetes and an authentication path. A plan-mode test doesn't magically isolate every provider. Review all configuration that Terraform loads, separate application resources, and verify the mocks before running the suite.
+**Martin:** First make the tests safe to run. A plan-mode test does not isolate every loaded provider. Review the configuration Terraform loads, separate application resources, and verify the mocks.
 
-**Haflidi:** Then test the test. A deliberate small mutation should make the intended assertion fail. Change the contract under controlled conditions, retain the failure, restore the implementation, and rerun the same check. Label that mutation as deliberate. That is evidence the assertion can detect that particular defect, not that every possible deployment problem is covered. Check the failure reason too; a syntax error would not validate the intended contract assertion. B1's 0/5 result is the cautionary example: an ambiguous brief failed the same way five times, while the clarified B1v2 brief that stated the four-assert shape was 5/5 green under pinned conditions. If the oracle has a rule, say it in the brief.
-
-**Martin:** The useful repair loop preserves the requirement. We don't loosen a condition because the implementation finds it inconvenient. We ask whether the test, the implementation, or the original assumption is wrong, and we use the source to decide. Haflidi, take the controls for the failure and review sequence.
+**Haflidi:** Then test the test with a deliberate mutation. Retain the failure, restore the implementation, and rerun the same check. That is evidence for the specific defect it detects, not every deployment problem. If the oracle has a rule, say it in the brief.
 
 ## demo-c5 | 32:00-37:00 | C5: Catch a mistake and repair it
 
 > DRIVER Haflidi. C5, 05:00. Martin explains the repair. Hand control back to Martin at 37:00. Tip: preserve cause and effect.
+
+**Cut at 3:45:** If the repair is not ready, stop live mutation work, show saved seeded-failure and repaired logs, then continue. Haflidi runs the validator.
 
 **Who drives:** Haflidi selects `terraform-validator` and runs checks. Martin explains the code response.
 
@@ -385,19 +389,15 @@ Run the same C5 block with `$phase = 'repaired'`.
 
 **Haflidi:** Start with the real exit code. A syntax error, assertion failure, and cloud permission problem are different. The repair must match the failure and the same check must run again.
 
-## s15-proof | 37:00-40:00 | Evidence has levels
+## s15-proof | 37:00-39:00 | Evidence has levels
 
-> DRIVER Martin. No clip. Read actual status labels from the evidence register. Never announce a pending gate as passed. Pause about 15 seconds across the rows. Haflidi leads interpretation; Martin leads handoff. Tip: a check is evidence only for what it checks.
+> DRIVER Martin. No clip. Use "runtime check" and "runtime evidence" language. Bank 39:00-40:00 as slack. Never announce a pending gate as passed. Tip: a check is evidence only for what it checks.
 
-**Haflidi:** This slide separates five kinds of evidence. The source was inspected. The public module passed fifty-two mocked contract cases and two caller cases. Both deliberate mutations failed as expected, then passed after restoration. A private resource plan, approved apply, and ARM read-back now have separate sanitized evidence for the pinned runtime module revision. Local qualification is still not live evidence.
+**Haflidi:** This slide separates source inspection, local contract tests, consumer checks, plan/apply evidence, and Azure read-back. The public module had local mocked coverage and mutation checks. The private IaC consumer supplied separate sanitized runtime evidence for the pinned module revision.
 
-**Martin:** Each check is evidence only for its own claim. Formatting checks presentation. Validation checks Terraform structure and provider-facing consistency. Lint checks configured rules. Tests assert what their authors wrote. A clean mock can still miss live service behavior, subnet capacity, effective policy, or identity permissions.
+**Martin:** Each check is evidence only for its own claim. Formatting checks presentation. Validation checks Terraform structure and provider-facing consistency. Tests assert what their authors wrote. A clean mock can still miss live service behavior, subnet capacity, effective policy, or identity permissions.
 
-**Haflidi:** The consumer example matters because reuse is a claim about another person's starting point. Can they see which values are required, where providers and backend live, and which outputs to expect? Can they do that without seeing our private scope, state, or credentials?
-
-**Martin:** A real Terraform plan would add environment-specific evidence, but it still would not be an apply. Exit code zero means unchanged, two means proposed changes, and one means an error. The raw plan may contain private identifiers, so the public material should show only a reviewed summary.
-
-**Haflidi:** Azure read-back is a separate gate, and for this module it was supplied by the private IaC consumer. We can say the sanitized facts: Automatic SKU, private API with VNet integration, UDR, OIDC and workload identity, custom private DNS, and Succeeded provisioning. We still do not show private IDs, state, run URLs, or FQDNs.
+**Haflidi:** Azure read-back is a separate gate. We can say the sanitized facts: Automatic SKU, private API with VNet integration, UDR, OIDC and workload identity, custom private DNS, and Succeeded provisioning. We still do not show private IDs, state, run URLs, or FQDNs.
 
 ## s16-continuity | 40:00-41:00 | Save the reason, not just the chat
 
@@ -410,6 +410,8 @@ Run the same C5 block with `$phase = 'repaired'`.
 ## demo-c6 | 41:00-44:00 | C6: Resume with decisions intact
 
 > DRIVER Haflidi. C6, 03:00. Martin operates the session. Handoff to Martin at 44:00. Tip: confirm that the reason reached the resumed task.
+
+**Cut at 2:15:** If resume or search is slow, show the decision file and state the constraints directly.
 
 **Who drives:** Haflidi leads the continuity check. Martin types.
 
@@ -441,21 +443,21 @@ Read the saved decision; cite its file and the constraints for the next change.
 
 **Haflidi:** Resume brings back a session. It does not show that the repository decision was read. The live check is the citation: file, constraint, and next action.
 
-## s18-memory | 44:00-46:00 | Three places to keep context
+## s18-memory | 44:00-45:00 | Three places to keep context
 
-> DRIVER Martin. No clip. Keep personal memory closed. Allow ten seconds to read the comparison. Handoff to Haflidi for C7. Tip: separate CLI compaction from team-state hygiene.
+> DRIVER Martin. No clip. Keep personal memory closed. Bank 45:00-46:00 as slack. Handoff to Haflidi for C7. Tip: separate CLI compaction from team-state hygiene.
 
-**Martin:** There are three different mechanisms worth separating. Conversation context helps the current session continue its work. Native memory can retain useful facts, but we won't display personal memory contents. Squad's decisions and histories are repository-backed team knowledge. They have different owners and different review needs.
+**Martin:** Conversation context, native memory, and Squad's repository-backed decisions have different owners and review needs. We won't display personal memory contents.
 
-**Haflidi:** Compaction summarizes conversation context; it doesn't maintain Squad's decision ledger. Before reducing context, save the accepted module boundary, source, and unresolved prerequisite. After resuming, verify that the next owner read the relevant record. Don't quietly change the team state between comparison runs. Repository knowledge has its own review lifecycle, with maintenance references in the appendix. The contract should remain small enough for a human to inspect.
+**Haflidi:** Before reducing context, save the accepted module boundary, source, and unresolved prerequisite where the next owner can review them. Private environment mapping stays in the environment's controlled location.
 
-**Martin:** The rule I use is to put a requirement where the next owner can find and review it. The public module's contract belongs with the code and documentation. Private environment mapping stays in the environment's controlled location. A decision can link to a public requirement without copying private account details into a team history.
-
-**Haflidi:** A reviewed testing recipe is useful portable knowledge. Retain the defect it detects, the evidence, and the limits, so another task can reuse the method. That is earned guidance, not model retraining. Keep the public lesson separate from private inputs and unrelated conversations. We can now review the consumer-facing change without reopening every earlier discussion.
+**Martin:** Retain the defect a recipe detects, the evidence for it, and its limits. That is useful team knowledge, not permission to publish private inputs or unrelated conversations.
 
 ## demo-c7 | 46:00-49:00 | C7: Reviewed diff to approved Terraform change
 
 > DRIVER Haflidi. C7, 03:00. Martin supports the final handoff. Handoff to Martin at 49:00. Tip: approve a specific artifact and scope.
+
+**Cut at 2:15:** If the full suite is not done, show the saved green exits and diff; do not run a second suite live.
 
 **Who drives:** Haflidi leads validation and review. Martin names the human acceptance boundary.
 
@@ -485,29 +487,25 @@ Supply the exact diff, files, revision, MCP citations, and sanitized validator r
 
 ## s20-consumer | 49:00-51:00 | Reuse the code, not the environment
 
-> DRIVER Martin. No clip. Point from the consumer root into the module, then to private configuration. Pause ten seconds. Handoff to Haflidi for operating rules. Tip: version the module separately from environment inputs.
+> DRIVER Martin. No clip. 0:00-0:30 diagram; 0:30-1:00 live reveal; 1:00-1:35 gate; 1:35-2:00 runtime checks and boundary. Certificate warning is expected. Handoff to Haflidi for operating rules. Tip: version the module separately from environment inputs.
 
-**Martin:** The public session material includes the reusable module and a sanitized consumption example. The same module tree is intended for its own repository so consumers can pin a reviewed revision independently of the slide deck. Publication and release claims need their own verification. Don't guess a version tag because the example would look cleaner with one.
+**Martin:** First, the boundary. The public material includes the reusable module and a sanitized consumer example. Consumers pin reviewed module code; they do not copy our private environment inputs, backend, state, identities, or secrets.
 
-**Haflidi:** In an existing landing zone, the consumer supplies the approved scope and network contract. It owns backend configuration and authentication. The module doesn't need to know an organization's private topology to describe its requirements. The public example should teach that boundary using generic values, with no state, secrets, or real environment inputs alongside it.
+**Martin:** Now open `https://aks-online-demo.swedencentral.cloudapp.azure.com/`. If the browser shows the expected certificate warning, name it and continue. Point at the pipeline flow, the serving pod name, and the speakers section.
 
-**Martin:** Keep infrastructure and application delivery separate. A Kubernetes application root may need cluster access and its own lifecycle. That isn't a reason to pull live cluster authentication into a mocked infrastructure test. Separate roots let us explain who owns each operation and which check can run without reaching a live service. That separation also makes the public example easier to review and maintain.
+**Haflidi:** The delivery line is: gated pipeline PR → plan → human approval → apply. The outside-in runtime checks are 29/29: hostname HTTPS response, expected title, redirects, and security posture checks.
 
-**Haflidi:** Before calling the module reusable, verify the example from a clean starting point. Check the interface, outputs, dependencies, and documented prerequisites. Then assess the actual environment separately. Reuse saves repeated implementation work; it doesn't remove the platform owner's responsibility for the network, identity, policy, and state decisions around it.
+**Martin:** If the app is unreachable, use the offline screenshot plus apply runs 37771532872 and 37772290635 as fallback evidence. Then return to the same boundary: reuse the module code, not the private environment.
 
-## s21-limits | 51:00-53:00 | Make the next change easier to review
+## s21-limits | 51:00-52:30 | Make the next change easier to review
 
-> DRIVER Martin. No clip. Hold the three operating rules without extra fragments. Allow about 10 seconds for reflection and the Q&A transition. Haflidi closes the content; Martin opens the floor at 53:00. Tip: keep the artifact, the reason, and the check together.
+> DRIVER Martin. No clip. Three rules only. Bank 52:30-53:00 as slack. Haflidi closes the content; Martin opens the floor at 53:00. Tip: keep the artifact, the reason, and the check together.
 
-**Haflidi:** The useful habits fit a normal engineering day. Use native Plan mode when the change has decisions worth resolving before edits. Attach the files and instructions that matter. Ask for the smallest module boundary that satisfies the consumer, the behavior that must remain unchanged, and the checks that provide evidence for it.
+**Haflidi:** Rule one: use Plan mode when the change has decisions worth resolving before edits. Attach the files and instructions that matter, then approve only the narrow code change.
 
-**Martin:** Use Squad when named ownership and handoffs help. Keep independent tasks independent. Keep one writer on a shared Terraform surface. Let the reviewer return an exact finding and let Scribe retain the reason for an accepted decision. More agents cannot vote a resource contract into correctness.
+**Martin:** Rule two: use Squad when named ownership and handoffs help. Keep independent tasks independent, one writer on a shared Terraform surface, and a reviewer who returns exact findings.
 
-**Haflidi:** Use skills for repeatable procedures and MCP for a specific source or tool. Approve the narrow action that is needed. A Markdown plan describes intended work; it isn't a permission system. A role describes responsibility; it isn't isolation from the filesystem or cloud.
-
-**Martin:** Check the diff and the tests, then check what they establish. Local validation, isolated contract tests, a consumer example, a real plan, and Azure read-back answer different questions. Keep remaining gates visible: optional fallback recordings, native profile selection, and full rehearsal still need evidence. Don't switch to a public default just to make the demo end neatly.
-
-**Haflidi:** Qualify code before the demo, then run genuine new execution from a disclosed checkpoint. The public handoff is the module, the decisions, and the evidence status. If the next engineer can find the contract, run the check, and understand the handoff, the tools have done useful work.
+**Haflidi:** Rule three: use skills for repeatable procedures and MCP for a specific source or tool. Check the diff and the tests, then say what they establish. Martin, open Q&A.
 
 ## s22-questions | 53:00-60:00 | Questions and prepared fallback
 

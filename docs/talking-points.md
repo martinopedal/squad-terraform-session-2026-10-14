@@ -23,6 +23,7 @@ Say: Azure validation happened only through the private IaC consumer, with sanit
 
 ### 01:00-04:00, C1, Haflidi lead
 - Who drives: Haflidi narrates; Martin types in A and B.
+- Cut at 2:15: if C1-B is still generating, use one C1-A consequence and the saved C1-B excerpt.
 - Type: `/new`, `/agent` Squad, `/model`, `/plan`, `/rename C1-A`; repeat as `C1-B`.
 - Prompt: `Plan only: add alternate_network_payload...` with pod `172.21.0.0/16`, service `10.241.0.0/16`, DNS `10.241.0.10`, preserve private API, no edits or deploy.
 - Point at: selected model, same prompt, selected agent, one consequence in the plan.
@@ -31,22 +32,21 @@ Say: Azure validation happened only through the private IaC consumer, with sanit
 Takeaway: two attempts are useful only when the inputs are controlled.
 Don't say: two runs establish a model error rate.
 
-### 04:00-05:00, s03-baseline, Martin
-- Start from inherited public source.
-- Separate inherited issues from AI-caused issues.
+### 04:00-04:30, s03-baseline, Martin
+- Source pin, inherited issues, and live checkpoint are separate.
 - Qualification happened before the live run.
+- Bank 04:30-05:00 as slack.
 Takeaway: disclose preparation before you run the clean demo.
 Demo cue: source pin and mismatch excerpt.
 Don't say: this was the first implementation.
 
-### 05:00-06:00, s04-news, Martin
-- Copilot CLI GA: 2026-02-25.
-- Agent HQ: 2025-10-28. Claude and Codex public preview: 2026-02-04.
-- AI Credits effective: 2026-06-01. CLI limits preview: 2026-07-01.
-- Computer use preview: 2026-10-01, not used here.
-- Squad 1.0 / 1.0.1 (Oct 3-4): release tags exist; the demo uses 1.0.1 from WinGet/Homebrew/GitHub Releases. Pinned docs at `93aec83` may still carry Experimental/alpha wording; npm latest was 0.13.1.
-Takeaway: the platform moved from preview pieces to governable engineering controls.
-Demo cue: point to dates and status labels; end on the Squad tile.
+### 05:00-05:30, s04-news, Martin
+- Copilot CLI is GA; the terminal is a normal engineering surface.
+- Squad 1.0.1 is the demo version; docs and npm may lag release tags.
+- Computer use is not part of this Terraform demo.
+- Bank 05:30-06:00 as slack.
+Takeaway: use the current controls, but keep status labels honest.
+Demo cue: one headline plus the Squad tile.
 Don't say: computer use is GA, or part of this Terraform live demo; npm latest is 1.0.1.
 
 ### 06:00-07:00, s04-layers, Haflidi then Martin
@@ -70,6 +70,7 @@ Handoff: "Haflidi, show them how you get here from nothing."
 
 ### 08:00-11:00, C0 From zero to a squad, Haflidi lead
 - Who drives: Haflidi on the clean Windows 11 VM; Martin keeps credentials off-screen.
+- Cut at 2:15: if installs or login are not complete, state the stall, show fallback evidence, and move on.
 - Type: show Git/Copilot/Squad are absent; run `$wg = ...`; install `Git.Git`, `GitHub.Copilot`, and `bradygaster.Squad` with `@wg`; refresh `PATH`; show versions; `copilot`; `/login`; `/exit`; clone the public module; `squad init`; `git status --short`; `copilot --agent squad`; confirm roster; `/exit`; `squad doctor`.
 - Prompt: `We maintain a reusable Terraform module for AKS Automatic on AzAPI (Terraform provider for Azure ARM/preview resources)... Propose a small team.`
 - Point at: no tools installed, versions, `squad init` output, `git status --short`, proposed roster, confirmation, `squad doctor` pass.
@@ -96,6 +97,7 @@ Don't say: the demo creates a landing zone.
 
 ### 14:00-18:00, C2, Martin lead
 - Who drives: Martin types; Haflidi challenges scope.
+- Cut at 3:00: if the plan is not ready, use the saved approved plan and name the repository-change boundary.
 - Type: `/new`, `/rename guided-clean-run`, `/agent` Squad, `/instructions`, `/plan`.
 - Prompt: reference `main.tf`, `variables.tf`, and `tests\contract.tftest.hcl`; plan the C1 regression and README explanation; keep eight inputs, six outputs, and AzAPI intact; plan labeled mutation and repair; no implementation, Azure lookup, apply, dependency upgrade, or state operation.
 - Revise: `Put unchanged payload assertions and offline checks before documentation; exclude infrastructure redesign.` Then inspect `/session plan`.
@@ -115,6 +117,7 @@ Don't say: deleting awkward root files is a repair.
 
 ### 20:00-24:00, C3, Martin lead
 - Who drives: Martin operates Squad and `terraform-coder`; Haflidi checks handoff evidence.
+- Cut at 3:00: if the coder is still generating, stop live work and use the saved B1v2 excerpt.
 - Type: `/agent` Squad, `/tasks`, `/agent list`, `/mcp`, `/agent terraform-coder`.
 - Prompt: B1v2 brief exactly: work only in `terraform\modules\aks-automatic-corp`; add `alternate_network_payload` in `tests\contract.tftest.hcl`; reuse AzAPI mock and `command = plan`; pod `172.21.0.0/16`, service `10.241.0.0/16`, DNS `10.241.0.10`; four separate asserts; each has `error_message`; change only the test; no deploy, provider, or lock-file change.
 - Point at: selected Squad agent, relevant roster/routing, coder profile, changed test file, handoff.
@@ -123,16 +126,18 @@ Don't say: deleting awkward root files is a repair.
 Takeaway: assignment is not completion.
 Don't say: a profile switch establishes correctness.
 
-### 24:00-25:00, s10-tool-roles, Haflidi
+### 24:00-24:30, s10-tool-roles, Haflidi
 - Instructions are persistent expectations.
 - Skills are repeatable procedures.
 - MCP is a source or tool connection.
+- Bank 24:30-25:00 as slack.
 Takeaway: context types have different jobs.
 Demo cue: keep three columns visible.
 Don't say: opening `/mcp` is source verification.
 
 ### 25:00-29:00, C4, Martin lead
 - Who drives: Martin types; Haflidi checks source fit.
+- Cut at 3:00: if MCP or Docker is not healthy, show the fallback excerpt and say the lookup failed live.
 - Type: `/skills info test-discipline`, `/mcp`, then `/permissions`.
 - Prompt: invoke test-discipline; identify unchanged contract assertions; use Microsoft Learn MCP only for read-only AKS Automatic private/custom-network source; cite source/version; no Azure account, provider change, or write.
 - Point at: skill invocation, MCP result, source URL/version, one narrow permission approval.
@@ -149,17 +154,18 @@ Takeaway: assert the resource, not the reassurance.
 Demo cue: reveal code example.
 Don't say: illustrative assertion is passing output.
 
-### 30:00-32:00, s13-test-gap, Haflidi
+### 30:00-31:00, s13-test-gap, Haflidi
 - Keep negative cases.
 - Add positive contract assertions.
-- If the oracle (scripted pass/fail check) has a rule, say it in the brief.
 - Test the test with a deliberate mutation.
+- Bank 31:00-32:00 as slack.
 Takeaway: a mock suite is useful only when it can fail for the right reason.
 Demo cue: hand control to Haflidi.
 Don't say: plan-mode tests isolate every provider automatically.
 
 ### 32:00-37:00, C5, Haflidi lead
 - Who drives: Haflidi runs `terraform-validator`; Martin explains the repair.
+- Cut at 3:45: if repair is not ready, show saved seeded-failure and repaired logs; Haflidi runs the validator.
 - Type: `/agent terraform-validator`; run the C5 PowerShell block with `$phase = 'before'`; `/agent terraform-coder`; seed `enablePrivateCluster` from `true` to `false`; rerun with `$phase = 'seeded-failure'`; `/review`; restore only that field; `/diff`; rerun with `$phase = 'repaired'`.
 - Point at: command, exit status, failure assertion, labeled mutation, review, repair diff, identical rerun.
 - Handoff: "Martin, the local check caught and repaired this mutation; separate that from Azure evidence."
@@ -167,11 +173,12 @@ Don't say: plan-mode tests isolate every provider automatically.
 Takeaway: preserve cause and effect. A runtime check is not Azure acceptance evidence.
 Don't say: the mutation was an AI-discovered defect.
 
-### 37:00-40:00, s15-proof, Haflidi
-- Source inspection, local mocks, consumer example, plan, and read-back are separate.
-- Current local evidence is 52 module checks and two caller checks.
-- Private plan/apply and Azure read-back passed on October 5 for the pinned runtime module revision; optional fallback recordings and native profile selection remain separate gates.
-Takeaway: a check is evidence only for what it checks.
+### 37:00-39:00, s15-proof, Haflidi
+- Source inspection, local mocks, consumer checks, plan/apply, and read-back are separate gates.
+- A runtime check is evidence only for what it checks.
+- Private consumer read-back applies only to the pinned runtime module revision.
+- Bank 39:00-40:00 as slack.
+Takeaway: use runtime check/evidence language and keep limits visible.
 Demo cue: read status labels exactly.
 Don't say: mocks are Azure acceptance.
 
@@ -185,6 +192,7 @@ Don't say: resume shows current repository decisions were read.
 
 ### 41:00-44:00, C6, Haflidi lead
 - Who drives: Haflidi leads continuity; Martin types.
+- Cut at 2:15: if resume or search is slow, show the decision file and state the constraints.
 - Type: Scribe prompt to record public-only decision: private API invariant, caller-owned provider/backend, added network-payload regression, labeled mutation/restoration, exact checks, sanitized Azure-validation boundary, no private details.
 - Then type: `/new`, `/resume guided-clean-run`, `/cwd`, `/context`, `/usage`, and `Read the saved decision; cite its file and the constraints for the next change.`
 - Point at: decision file, resumed session, cited constraint, `/context`, `/usage`.
@@ -193,16 +201,18 @@ Don't say: resume shows current repository decisions were read.
 Takeaway: long-running work needs recoverable reasons.
 Don't say: personal memory is safe to display.
 
-### 44:00-46:00, s18-memory, Martin
+### 44:00-45:00, s18-memory, Martin
 - Conversation context, native memory, and Squad knowledge have different owners.
-- Save accepted boundaries before compaction.
+- Save accepted boundaries where the next owner can review them.
 - Keep private environment mapping out of public team history.
+- Bank 45:00-46:00 as slack.
 Takeaway: put requirements where the next owner can review them.
 Demo cue: no personal memory screen.
 Don't say: CLI compaction maintains Squad decisions.
 
 ### 46:00-49:00, C7, Haflidi lead
 - Who drives: Haflidi leads validation and review; Martin names the acceptance boundary.
+- Cut at 2:15: if the full suite is not done, show saved green exits and diff; do not rerun.
 - Type: `/agent terraform-validator`; run the C7 PowerShell block from `demo-runbook.md`; `/diff`; `/new`; `/agent terraform-reviewer`; provide exact diff, files, revision, MCP citations, and sanitized validator results.
 - Point at: offline checks, diff, reviewer findings, and human code-only acceptance.
 - Handoff: "Martin, we can approve this artifact and name the remaining gates; we are not claiming a stage apply."
@@ -211,18 +221,19 @@ Takeaway: approve a specific artifact and scope.
 Don't say: approved code alone equals deployed Azure behavior; cite the separate runtime evidence when needed.
 
 ### 49:00-51:00, s20-consumer, Martin
-- Public module is reusable; environment inputs stay private.
-- Consumer owns providers, backend, auth, and state.
-- Application delivery belongs in a separate root.
+- 0:00-0:30: point at the consumer-to-module diagram.
+- 0:30-1:00: open `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; certificate warning is expected; point at pipeline flow, serving pod name, and speakers.
+- 1:00-1:35: say "gated pipeline PR → plan → human approval → apply".
+- 1:35-2:00: outside-in runtime checks are 29/29; fallback is the offline screenshot plus runs 37771532872/37772290635.
 Takeaway: reuse the code, not the environment.
-Demo cue: trace consumer into module.
+Demo cue: live reveal, then boundary.
 Don't say: public example includes real values.
 
-### 51:00-53:00, s21-limits, Haflidi then Martin
+### 51:00-52:30, s21-limits, Haflidi then Martin
 - Use Plan mode for real decisions.
 - Use Squad for ownership and handoffs.
 - Use skills and MCP with source provenance.
-- Keep evidence gates visible.
+- Bank 52:30-53:00 as slack; Martin opens Q&A at 53:00.
 Takeaway: artifact, reason, and check belong together.
 Demo cue: hold the three closing rules.
 Don't say: more agents can vote correctness into existence.
