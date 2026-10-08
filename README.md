@@ -6,7 +6,7 @@ A two-speaker session by **Martin Opedal, Enterprise Cloud Solution Architect, M
 
 ## What this repository contains
 
-The presentation shell and speaker material are built and reviewed. The public Terraform module passed local qualification: 52 module cases, two caller cases, two fail-restore-pass mutation proofs, hosted Terraform matrix CI, native agent-setup CI, and an IaC-based Azure validation in a private Corp landing-zone consumer. Genuine demo recordings, native profile-selection footage, and full human rehearsal remain pending.
+The presentation shell and speaker material are built and reviewed. The public Terraform module passed local qualification: 52 module cases, two caller cases, two fail-restore-pass mutation evidence checks, hosted Terraform matrix CI, native agent-setup CI, and an IaC-based Azure validation in a private Corp landing-zone consumer. Genuine demo recordings, native profile-selection footage, and full human rehearsal remain pending.
 
 | Path | Content |
 | --- | --- |
@@ -63,7 +63,7 @@ node .github\skills\qualify-agent-setup\check.mjs
 node --test .github\skills\qualify-agent-setup\check.test.mjs
 ```
 
-These checks prove setup integrity, not a genuine native agent run, MCP server
+These checks provide evidence for setup integrity, not a genuine native agent run, MCP server
 startup, independent review, or Azure acceptance. See the contributing guide for
 full module-copy comparison.
 

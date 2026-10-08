@@ -27,7 +27,7 @@ Say: Azure validation happened only through the private IaC consumer, with sanit
 - Prompt: `Plan only: add alternate_network_payload...` with pod `172.21.0.0/16`, service `10.241.0.0/16`, DNS `10.241.0.10`, preserve private API, no edits or deploy.
 - Point at: selected model, same prompt, selected agent, one consequence in the plan.
 - Handoff: "Martin, take the controlled brief into Plan mode."
-- Offline fallback: `c1-a.txt`, `c1-b.txt`, eval results B1 0/5, B2 5/5, B3 4/5 after harness-bug rescore, B1v2 5/5.
+- Offline fallback: `c1-a.txt`, `c1-b.txt`, eval results B1 0/5, B2 5/5, B3 4/5 after a disclosed harness-bug rescore from 0/5 (saved diffs, no rerun), B1v2 5/5.
 Takeaway: two attempts are useful only when the inputs are controlled.
 Don't say: two runs establish a model error rate.
 
@@ -70,7 +70,7 @@ Handoff: "Haflidi, show them how you get here from nothing."
 
 ### 08:00-11:00, C0 From zero to a squad, Haflidi lead
 - Who drives: Haflidi on the clean Windows 11 VM; Martin keeps credentials off-screen.
-- Type: prove Git/Copilot/Squad are absent; run `$wg = ...`; install `Git.Git`, `GitHub.Copilot`, and `bradygaster.Squad` with `@wg`; refresh `PATH`; show versions; `copilot`; `/login`; `/exit`; clone the public module; `squad init`; `git status --short`; `copilot --agent squad`; confirm roster; `/exit`; `squad doctor`.
+- Type: show Git/Copilot/Squad are absent; run `$wg = ...`; install `Git.Git`, `GitHub.Copilot`, and `bradygaster.Squad` with `@wg`; refresh `PATH`; show versions; `copilot`; `/login`; `/exit`; clone the public module; `squad init`; `git status --short`; `copilot --agent squad`; confirm roster; `/exit`; `squad doctor`.
 - Prompt: `We maintain a reusable Terraform module for AKS Automatic on AzAPI (Terraform provider for Azure ARM/preview resources)... Propose a small team.`
 - Point at: no tools installed, versions, `squad init` output, `git status --short`, proposed roster, confirmation, `squad doctor` pass.
 - Handoff: "Martin, we have a reviewable team in Git; now show bounded work."
@@ -121,7 +121,7 @@ Don't say: deleting awkward root files is a repair.
 - Handoff: "Haflidi, the writer returned a file change; now ground the requirement."
 - Offline fallback: `c3-handoffs.md`, saved diff, B1 0/5 -> B1v2 5/5. The live run still has to pass.
 Takeaway: assignment is not completion.
-Don't say: a profile switch proves correctness.
+Don't say: a profile switch establishes correctness.
 
 ### 24:00-25:00, s10-tool-roles, Haflidi
 - Instructions are persistent expectations.
@@ -143,7 +143,7 @@ Don't say: a failed lookup succeeded.
 
 ### 29:00-30:00, s12-source-check, Haflidi
 - Follow source claim into the resource body.
-- A variable name does not prove the generated contract.
+- A variable name does not establish the generated contract.
 - Keep source versions with the assertion.
 Takeaway: assert the resource, not the reassurance.
 Demo cue: reveal code example.
@@ -163,7 +163,7 @@ Don't say: plan-mode tests isolate every provider automatically.
 - Type: `/agent terraform-validator`; run the C5 PowerShell block with `$phase = 'before'`; `/agent terraform-coder`; seed `enablePrivateCluster` from `true` to `false`; rerun with `$phase = 'seeded-failure'`; `/review`; restore only that field; `/diff`; rerun with `$phase = 'repaired'`.
 - Point at: command, exit status, failure assertion, labeled mutation, review, repair diff, identical rerun.
 - Handoff: "Martin, the local check caught and repaired this mutation; separate that from Azure evidence."
-- Offline fallback: preserved C5 logs, file hashes, B2 5/5 seeded-repair eval, B3 4/5 after harness-bug rescore.
+- Offline fallback: preserved C5 logs, file hashes, B2 5/5 seeded-repair eval, B3 4/5 after a disclosed harness-bug rescore from 0/5 (saved diffs, no rerun).
 Takeaway: preserve cause and effect. A runtime check is not Azure acceptance evidence.
 Don't say: the mutation was an AI-discovered defect.
 
@@ -171,7 +171,7 @@ Don't say: the mutation was an AI-discovered defect.
 - Source inspection, local mocks, consumer example, plan, and read-back are separate.
 - Current local evidence is 52 module checks and two caller checks.
 - Private plan/apply and Azure read-back passed on October 5 for the pinned runtime module revision; optional fallback recordings and native profile selection remain separate gates.
-Takeaway: a check proves only what it checks.
+Takeaway: a check is evidence only for what it checks.
 Demo cue: read status labels exactly.
 Don't say: mocks are Azure acceptance.
 
@@ -181,7 +181,7 @@ Don't say: mocks are Azure acceptance.
 - Scribe records, the next task must read.
 Takeaway: continuity is something you verify.
 Demo cue: trace decision map.
-Don't say: resume proves current repository decisions were read.
+Don't say: resume shows current repository decisions were read.
 
 ### 41:00-44:00, C6, Haflidi lead
 - Who drives: Haflidi leads continuity; Martin types.
@@ -251,7 +251,7 @@ Don't say: prepared fallback questions came from the audience.
 
 **Why not autopilot the whole task?** Autopilot can help with a finite task and clear permissions. It does not settle environment authority or deployment consent.
 
-**Why are mocked tests not enough?** They check the contract you wrote. They do not prove subnet capacity, DNS, policy, identity, or service behavior in Azure.
+**Why are mocked tests not enough?** They check the contract you wrote. They do not establish subnet capacity, DNS, policy, identity, or service behavior in Azure.
 
 **How do we share team knowledge safely?** Put public decisions with the module. Keep private scope mapping, state, credentials, and personal memory out of public artifacts.
 
@@ -260,7 +260,7 @@ Don't say: prepared fallback questions came from the audience.
 ## Squad and Copilot CLI: set up, use cases, how they fit
 
 ### How they work together (one line first)
-- **Copilot CLI runs the work. Squad decides who does it and remembers why.**
+- **Copilot CLI runs the work. Squad routing assigns an accountable owner and records why.**
 - CLI = execution surface: model, tools, permissions, Plan mode, MCP, `/diff`, `/review`, `/resume`.
 - Squad = a custom agent inside the CLI (`copilot --agent squad`) plus repo state in `.squad\`: team, routing, decisions, histories.
 - Squad spawns members as real CLI tasks; native profiles (`/agent terraform-coder` etc.) narrow a lane; MCP grounds facts; humans approve.
@@ -295,7 +295,7 @@ Takeaway: five steps, and the team is reviewable in Git from minute one.
 Don't say: `squad init` is a prompt, or npm gives you 1.0.
 
 ### a-use-cases, either speaker
-- CLI runs the work; Squad decides who and remembers why.
+- CLI runs the work; Squad routing assigns owner and records why.
 - Cross-owner work, long-running work, backlog and review.
 - Skip it for small single-lane edits.
 Takeaway: use Squad where ownership and memory matter.
@@ -325,7 +325,7 @@ Don't say: AI made it secure, or there are no gaps (single-maintainer admin merg
 - One lane per step: lead plans, coder edits, validator runs the scripted pass/fail oracle, reviewer in `/new`.
 - Consume like a customer, deploy through the pipeline.
 - Step-by-step: [playbook](playbook.md).
-- In the October 8 eval, repeatability was measured as five fresh runs with a pre-registered `>= 4/5` green bar. Results: B1 0/5 because all five ambiguous-brief runs used two assert blocks, B2 5/5, and B3 4/5 after a disclosed harness-bug rescore from saved diffs, with no Copilot rerun and the out-of-scope README edit still red. B1v2 was a separate clarified follow-up after seeing B1; the B1v2 brief stated the four-assert shape and was 5/5 green under the same pinned conditions, with 61-114 s runs and no failure modes observed in those five runs. C3-C5 use that B1v2 loop because it met the October 5 `>= 4/5` bar, but the live run still has to pass. Lesson: state the oracle's rules in the brief. Treat this as a measured checkpoint, not a guarantee.
+- In the October 8 eval, repeatability was measured as five fresh runs with a pre-registered `>= 4/5` green bar. Results: B1 0/5 because all five ambiguous-brief runs used two assert blocks, B2 5/5, and B3 4/5 after a disclosed harness-bug rescore from 0/5 (saved diffs, no rerun), with the out-of-scope README edit still red. B1v2 was a separate clarified follow-up after seeing B1; the B1v2 brief stated the four-assert shape and was 5/5 green under the same pinned conditions, with 61-114 s runs and no failure modes observed in those five runs. C3-C5 use that B1v2 loop because it met the October 5 `>= 4/5` bar, but the live run still has to pass. Lesson: state the oracle's rules in the brief. Treat this as a measured checkpoint, not a guarantee.
 Takeaway: narrow the choices and make every claim checkable.
 Don't say: the prompts guarantee future outcomes.
 

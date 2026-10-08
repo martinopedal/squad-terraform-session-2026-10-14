@@ -4,7 +4,7 @@ C0 (from zero to a squad) runs live on the clean Windows 11 demo VM, not in this
 
 Use `qualify_then_run_clean_checkpoint` as the provenance rule: qualify the module first, then run genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Optional recordings are fallback evidence only. Don't open another terminal or substitute a viewer. This live run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
 
-Local module qualification passed: 52 module cases, two caller cases, and both mutation proofs. Hosted Terraform matrix CI run 36990206303 passed, native agent-setup CI passed in run 37286068987, final module verification passed in run 37286237657, and docs-only Azure-validation release CI passed in run 37305768318. A private IaC consumer deployed and read back the module on October 5, 2026, pinned to runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized facts are public, private inputs are not. These are instructions for the live run, not an executed transcript. Native profile selection, optional fallback recordings, and full rehearsal remain separate gates.
+Local module qualification passed: 52 module cases, two caller cases, and both mutation evidence checks. Hosted Terraform matrix CI run 36990206303 passed, native agent-setup CI passed in run 37286068987, final module verification passed in run 37286237657, and docs-only Azure-validation release CI passed in run 37305768318. A private IaC consumer deployed and read back the module on October 5, 2026, pinned to runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized facts are public, private inputs are not. These are instructions for the live run, not an executed transcript. Native profile selection, optional fallback recordings, and full rehearsal remain separate gates.
 
 ## Prepare the checkpoint and optional fallback capture
 
@@ -48,7 +48,7 @@ batch `-p` runs without this wait sometimes reported the MCP tools as missing
 disabled, the coder reached Microsoft Learn in 4 of 4 runs.
 
 The native Terraform MCP binary is not used for this demo. MCP means Model Context Protocol: external tools or sources connected to the CLI. Restart Copilot in
-this same window only if discovery is stale, then inspect again. Static checks and MCP discovery are not proof of profile
+this same window only if discovery is stale, then inspect again. Static checks and MCP discovery are not evidence of profile
 activation. Squad remains the coordinator; the narrow-tool lane uses explicit
 native selections, not an assumption that general-purpose Squad tasks inherit
 profile tool filters.
@@ -89,13 +89,13 @@ Review the checkpoint's public decision ledger before copying it; never substitu
 
 Pre-stage a filesystem-only provider mirror and `offline\terraform.tfrc` beside the worktrees, following the module README. One online staging step populates the mirror: from the module directory, `terraform providers mirror -platform=windows_amd64 C:\terraform-offline\providers`. Then copy the README's `terraform.tfrc` to `$take\offline\`. Terraform subprocesses must be uncredentialed and network-restricted, separately from CLI/model access. Stop if isolation is unavailable. Never use cached Azure login, direct download fallback, or ordinary `terraform plan`.
 
-**Optional fallback capture R0:** approve the chosen existing terminal's content before any recording fallback. Normal OBS/Windows window capture is acceptable after a short, authorized first-frame/motion check. `gdigrab` produced black frames on the GPU-rendered terminal; encoded frames alone prove nothing. Keep external recorder controls off-screen, microphone off, and no desktop fallback.
+**Optional fallback capture R0:** approve the chosen existing terminal's content before any recording fallback. Normal OBS/Windows window capture is acceptable after a short, authorized first-frame/motion check. `gdigrab` produced black frames on the GPU-rendered terminal; encoded frames alone establish nothing. Keep external recorder controls off-screen, microphone off, and no desktop fallback.
 
 **Live slate R1:** state checkpoint, model, prepared code, and "clean demonstration after qualification." If an optional fallback recording is made, keep `A.mkv`, `B.mkv`, and an uninterrupted `guided.mkv`, and have Haflidi record UTC/media offsets in `evidence\chapters.csv`. Use unique, take-prefixed session names; names below are suffixes.
 
 ## C1: Compare two plans | 3 minutes
 
-Martin drives; Haflidi compares. In A, use `/new`, `/agent` and select **Squad**, `/model`, `/plan`, and `/rename C1-A`. Repeat in B as `C1-B`, with identical model, instructions, permissions, and public starting team state:
+Haflidi leads and narrates; Martin operates the two clean worktrees. In A, use `/new`, `/agent` and select **Squad**, `/model`, `/plan`, and `/rename C1-A`. Repeat in B as `C1-B`, with identical model, instructions, permissions, and public starting team state:
 
 ```text
 Plan only: add alternate_network_payload to the existing module contract tests.
@@ -141,8 +141,7 @@ actual task IDs where used, file owners, checks, and unresolved issues. No
 deployment or other edits.
 ```
 
-This matches the B1v2 brief used for the live C3-C5 loop (5/5 green in the
-October 8 re-measurement), so the live run matches what was measured.
+This matches the B1v2 brief used for the live C3-C5 loop (5/5 green in the October 8 re-measurement); that is prior evidence only, and the live run still has to pass.
 
 Show reviewed roster/charters, `/tasks`, `/agent list`, actual starts, and
 handoffs. The list must include `terraform-coder`, `terraform-validator`, and
@@ -228,8 +227,8 @@ Squad rejection. Return to `/agent squad` for C6. Hand controls back to Martin.
 Martin operates; Haflidi verifies the recovered reason:
 
 ```text
-Scribe: record the public-only decision in .squad\decisions.md: private API
-invariant, caller-owned provider/backend, added network-payload regression,
+Scribe records decisions in `.squad\decisions\inbox\`; use `/new`, `/rename`, and `/tasks` to keep sessions organized.
+Record the public-only decision: private API invariant, caller-owned provider/backend, added network-payload regression,
 labeled mutation/restoration, exact checks, and the sanitized Azure-validation boundary without exposing private target details.
 Do not copy histories, credentials, or full conversations.
 ```

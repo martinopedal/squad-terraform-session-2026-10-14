@@ -23,7 +23,7 @@ Source: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/
 | Identity | User-assigned, Network Contributor on the VNet | Granted before the cluster exists; required by AKS for BYO subnets and Node Auto-Provisioning |
 | Ingress | Dedicated AKS App Routing `NginxIngressController`, HTTPS only, Azure default DNS label | The public demo URL is `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; HTTP redirects to HTTPS |
 | Namespace | AKS managed namespace (ARM) | Pod Security `restricted`, default-deny ingress and egress, quota |
-| App | Branded NIC 2026 page served by `nginx-unprivileged` pinned by digest, with the same pod hardening and CSP headers | Replaces the ASP.NET sample; the page shows the serving pod, render time, speaker details, and the flow (shown on the page as "brief→code→check→plan→approve→prove") |
+| App | Branded NIC 2026 page served by `nginx-unprivileged` pinned by digest, with the same pod hardening and CSP headers | Replaces the ASP.NET sample; the page shows the serving pod, render time, speaker details, and the flow from brief and code through checks, planning, approval, and evidence |
 
 ## Guardrails we hit, and the compliant answer
 
