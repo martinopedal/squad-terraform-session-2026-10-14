@@ -269,9 +269,10 @@ Show the actual record. Use `/new`, then `/resume guided-clean-run`, `/cwd`, `/c
 
 **Cut at 2:15:** If the full suite is not done, show the saved green exits and diff; do not run a second suite live.
 
-Martin drives; Haflidi reviews. Select `/agent terraform-validator` in the same
-approved isolated context, approve each command separately, record commands, and
-stop at the first failure:
+Haflidi leads validation and review; Martin supports and names the acceptance
+boundary. Select `/agent terraform-validator` in the same approved isolated
+context, approve each command separately, record commands, and stop at the first
+failure:
 
 ```powershell
 $PSNativeCommandUseErrorActionPreference = $false
@@ -313,3 +314,13 @@ additional handoff must be rehearsed within the chapter budget; no completed tak
 or timing qualification is implied by adding the instructions.
 
 **Optional fallback capture R2:** finalize and visually review the master if recording fallback is used. Preserve prompts, task IDs, hashes, exits, cuts, and source time ranges in `take.json`. Separate the upstream pins in `NOTICE.md`, qualification revision, and live checkpoint. Earlier logs never become later live execution evidence. Keep off-screen results labeled, raw evidence private, and unreviewed media unattached. Keep C0-C7 at 3/3/4/4/4/5/3/3 minutes: 29 minutes of live demo, 24 minutes of other live content, seven minutes of Q&A. Optional exports use those same cuts. No real apply is permitted.
+
+## s20-consumer: Reuse the code, not the environment | 49:00-51:00
+
+This two-minute section follows C7. Keep it short and preserve the boundary
+between reviewed module code and private environment inputs.
+
+- **0:00-0:30:** show the consumer-to-module diagram.
+- **0:30-1:00:** open `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; the certificate warning is expected. Point at the pipeline flow, serving pod name, and speakers section.
+- **1:00-1:35:** say "gated pipeline PR → plan → human approval → apply."
+- **1:35-2:00:** state that the outside-in runtime checks are 29/29. If the app is unreachable, use the offline screenshot plus apply runs 37771532872 and 37772290635 as fallback evidence.
