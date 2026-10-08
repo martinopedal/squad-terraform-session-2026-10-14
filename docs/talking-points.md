@@ -67,7 +67,7 @@ Don't say: generic Squad tasks inherit the profile filters.
 Handoff: "Haflidi, show them how you get here from nothing."
 
 ### 08:00-11:00, C0 From zero to a squad, Haflidi lead
-- Clean Windows 11 VM, reached only through Bastion. No Git, CLI, or Squad installed.
+- Clean Windows 11 VM, reached only through Bastion. Martin uses Entra sign-in with MFA; Haflidi uses a local account because B2B guests cannot use Entra VM sign-in, with the credential handed over out of band. No Git, CLI, or Squad installed.
 - `winget install` Git, GitHub CLI, PowerShell 7, Copilot CLI, Squad. Show versions.
 - `copilot`, `/login`, then `squad init` in the repo terminal (a shell command, not a prompt).
 - `copilot --agent squad`: Init Mode proposes a roster, nothing is written until you confirm. `squad doctor`.
@@ -292,7 +292,8 @@ Don't say: more agents means better results.
 - Guardrails decide the design: private state, NSG on every subnet, RBAC Writer cannot create namespaces.
 - Secure chain: PR, protected branch, human gate, OIDC, one job, no plan artifact.
 - Locked API server: only the runner's static egress IP.
-- Runtime evidence, not hope: HTTPS 200 and a forced redirect, or the pipeline fails.
+- Runtime evidence, not hope: `https://aks-online-demo.swedencentral.cloudapp.azure.com/` returns HTTPS 200 by hostname with title "AKS Automatic | NIC 2026 demo"; HTTP redirects; DNS matches the ingress IP.
+- Page is the branded NIC 2026 demo with pod, render time, flow, and speakers, served by pinned `nginx-unprivileged`.
 - AKS Automatic SKU: managed system node pools, rebuilt because Base cannot convert.
 Takeaway: a simpler topology still meets the same guardrails.
 Don't say: we exempted a policy, or the demo runs from a laptop.
@@ -301,7 +302,7 @@ Don't say: we exempted a policy, or the demo runs from a laptop.
 - GHAS baseline: CodeQL, secret scanning with push protection, Dependabot; zero open alerts. Module has six required checks; demo-env has four IaC checks.
 - The agent found what raises no alert: Checkov skipped `main.tf` since August; Security Scan disabled for inactivity; a falsely green monitor; an approval race; a VM check blind to per-user installs.
 - MCP (Microsoft Learn) supplied product rules; skills enforce secret handling and reviewer lockout.
-- Every claim re-checked: 52 module contract cases plus 2 caller/example Terraform test cases; 29 Online read-back checks including negative tests from the internet, with 28/28 the latest full pass on record; 14 VM checks. A human approved every merge and Azure write.
+- Every claim re-checked: 52 module contract cases plus 2 caller/example Terraform test cases; 29/29 Online read-back checks including negative tests from the internet; 14 VM checks. A human approved every merge and Azure write.
 Takeaway: GHAS covers code, secrets, and advisories; the agent plus an oracle closes the silent gaps.
 Don't say: AI made it secure, or there are no gaps (single-maintainer admin merges, IDs in history, Checkov cannot read azapi bodies).
 

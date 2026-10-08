@@ -117,7 +117,7 @@ step 1 require. Pass IDs the module uses in count as values known at plan
 time. Do not put environment values in the module.
 ```
 
-Then deploy through the pipeline, never from a laptop: plan, read the plan, approve the environment gate, apply, and prove the result (HTTPS 200 and HTTP to HTTPS redirect for the demo app). The Online example is in the demo-env repository under `deployments/online/` and `.github/workflows/deploy-online.yml`.
+Then deploy through the pipeline, never from a laptop: plan, read the plan, approve the environment gate, apply, and capture runtime evidence (HTTPS 200 by hostname, HTTP to HTTPS redirect, and DNS matching the App Routing controller Service address for the demo app). The Online example is in the demo-env repository under `deployments/online/` and `.github/workflows/deploy-online.yml`.
 
 ## 7. Record the reason (Squad, Scribe)
 
@@ -141,4 +141,4 @@ These came from the real pipeline runs and are now part of the prompts above:
 - **No module-level `depends_on`.** It defers the module's data sources whenever a dependency has a pending change, which can force a resource replacement. Order with resource references instead.
 - **Read back the real resource.** The module promised AKS Automatic but sent the Standard SKU; only an Azure read-back caught it.
 - **Public repo, no plan artifact.** Plan and apply in one gated job, so a plan file is never downloadable.
-- **Prove it.** The pipeline fails unless the app answers over HTTPS and redirects HTTP.
+- **Runtime evidence.** The pipeline fails unless the app answers over HTTPS by hostname, redirects HTTP, and the hostname resolves to the App Routing controller Service address.

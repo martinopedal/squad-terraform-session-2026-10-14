@@ -23,7 +23,7 @@ Source: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/
 | Identity | User-assigned, Network Contributor on the VNet | Granted before the cluster exists; required by AKS for BYO subnets and Node Auto-Provisioning |
 | Ingress | Dedicated AKS App Routing `NginxIngressController`, HTTPS only, Azure default DNS label | The public demo URL is `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; HTTP redirects to HTTPS |
 | Namespace | AKS managed namespace (ARM) | Pod Security `restricted`, default-deny ingress and egress, quota |
-| App | Branded NIC demo page | Replaces the ASP.NET sample; the browser-facing runtime-check target is the session demo page |
+| App | Branded NIC 2026 page served by `nginx-unprivileged` pinned by digest, with the same pod hardening and CSP headers | Replaces the ASP.NET sample; the page shows the serving pod, render time, speaker details, and the brief→code→check→plan→approve→prove flow |
 
 ## Guardrails we hit, and the compliant answer
 
@@ -58,7 +58,7 @@ This is the point of consuming your own module like a customer: the Corp path ha
 5. **One job** on an ephemeral, VNet-integrated runner: plan, apply, app deploy, runtime check. The plan is never uploaded as an artifact (public repository).
 6. **Locked API server**: only the runner's static egress IP is authorized; the value comes from the GitHub environment, not code.
 7. **App deploy** with an Entra-only kubeconfig (`kubelogin`) and namespace-scoped writes.
-8. **Runtime check step**: fails unless the hostname returns HTTPS 200 and HTTP 308 to HTTPS; results go to the run summary.
+8. **Runtime check step**: fails unless the hostname returns HTTPS 200, HTTP 308 to HTTPS, and DNS resolves to the App Routing controller Service address; results go to the run summary.
 
 ## Run it
 
@@ -92,7 +92,10 @@ Current demo-environment code lives in [`martinopedal/aks-automatic-demo-env`](h
 | Module changes are tested | Module suite: 20 passed, 0 failed (each fix written as a failing test first) |
 | Change history | Historical module pull requests #118 to #137; module release v0.6.0; demo environment extracted to its own repository |
 | Re-validated after extraction (2026-10-08, demo-env repo) | Plan-only run 37749232571: "No changes"; apply run 37749775898: HTTPS 200, `force-ssl-redirect` true, TLS present; demo VM plan run 37750404627: "No changes"; `Test-OnlineSecurity.ps1` 28/28 and `Test-DemoVm.ps1` 14/14. The module repository no longer holds any deployment environment or Azure federated credential |
-| Hostname and dedicated App Routing controller (2026-10-08, demo-env repo) | demo-env PR #9 created a dedicated `NginxIngressController` named `online-demo` with Azure default DNS label `aks-online-demo`. Apply run 37762119783 recorded `https://aks-online-demo.swedencentral.cloudapp.azure.com/` returning 200 and HTTP returning 308 by hostname. The run was marked failed only because the runtime check compared DNS against stale Ingress status after the class switch; demo-env PR #10 fixed the check to read the controller service. `Test-OnlineSecurity.ps1` now has 29 checks, including hostname resolution to the ingress address. The latest full pass on record remains 28/28. |
+| Hostname and dedicated App Routing controller history (2026-10-08, demo-env repo) | demo-env PR #9 created a dedicated `NginxIngressController` named `online-demo` with Azure default DNS label `aks-online-demo`. Apply run 37762119783 recorded `https://aks-online-demo.swedencentral.cloudapp.azure.com/` returning 200 and HTTP returning 308 by hostname. The run was marked failed only because the runtime check compared DNS against stale Ingress status after the class switch; demo-env PR #10 fixed the check to read the App Routing controller Service. |
+| Branded NIC 2026 page and Service-based proof (2026-10-08, demo-env repo) | demo-env PR #10 (`dca35cd`) replaced the ASP.NET sample with the branded NIC 2026 page. Apply run 37771532872 succeeded with plan "No changes"; DNS matched the ingress IP from the App Routing controller Service; HTTPS returned 200 by hostname; page title was "AKS Automatic \| NIC 2026 demo". |
+| Speaker section and latest apply (2026-10-08, demo-env repo) | demo-env PR #11 (`2b0b35b`) added "Your speakers" with Martin's photo, opedal.tech, LinkedIn, and GitHub plus Haflidi's initials and GitHub. Apply run 37772290635 succeeded with plan "No changes"; DNS matched the ingress IP; HTTPS returned 200 by hostname; page title was "AKS Automatic \| NIC 2026 demo". |
+| Online security checks (2026-10-08, 13:48) | `Test-OnlineSecurity.ps1` 29/29 PASS for `https://aks-online-demo.swedencentral.cloudapp.azure.com/`, including hostname resolution to the ingress address. The browser warning is expected because the demo uses the NGINX self-signed certificate. |
 
 ## Limits
 
