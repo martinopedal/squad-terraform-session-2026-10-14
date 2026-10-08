@@ -42,11 +42,15 @@ const row = (label, text, detail = '') => `<div class="reference-row"><div><h3>$
 const demoRuns = {
   C0: {
     goal: 'Install, initialize, hire, and verify Squad on a clean Windows 11 VM.',
-    screenCommand: String.raw`Clean VM: show Git, Copilot CLI, and Squad are absent.
+    screenCommand: String.raw`Clean VM: Git, Copilot CLI, and Squad are absent.
 (abridged — full prompt in notes)
-winget install Git.Git, GitHub.Copilot, bradygaster.Squad
-/login, clone the public module repo, then run squad init
-copilot --agent squad; paste the small-team prompt; confirm roster
+$wg = '--exact', '--source', 'winget', '--accept-package-agreements', '--accept-source-agreements', '--silent'
+winget install --id Git.Git @wg
+winget install --id GitHub.Copilot @wg
+winget install --id bradygaster.Squad @wg
+Run Copilot /login, clone the public module repo, then squad init.
+copilot --agent squad
+Paste the small-team prompt and confirm roster.
 squad doctor`,
     command: String.raw`$PSVersionTable.PSVersion; Get-Command git, copilot, squad -ErrorAction SilentlyContinue
 $wg = '--exact', '--source', 'winget', '--accept-package-agreements', '--accept-source-agreements', '--silent'
@@ -108,7 +112,9 @@ Don't edit files or deploy. Identify affected files, one writer, and checks.
 /rename guided-clean-run
 /agent
 # select Squad
-/instructions; /plan; attach main.tf, variables.tf, and contract.tftest.hcl
+/instructions
+/plan
+Attach main.tf, variables.tf, and contract.tftest.hcl.
 Paste the scoped planning prompt, revise it, then inspect /session plan.`,
     command: String.raw`/new
 /rename guided-clean-run
@@ -191,8 +197,11 @@ and hosted-system subnets. Don't contact an Azure account or change providers.
     screenCommand: String.raw`(abridged — full prompt in notes)
 /agent terraform-validator
 Run the C5 block three times: before, seeded-failure, repaired.
-/agent terraform-coder: change enablePrivateCluster true -> false, then restore only that field.
-/review; /diff; rerun the same validator block.`,
+/agent terraform-coder
+Ask for the enablePrivateCluster true -> false mutation, then restore only that field.
+/review
+/diff
+Rerun the same validator block.`,
     command: [
       '/agent terraform-validator',
       '$PSNativeCommandUseErrorActionPreference = $false',
@@ -236,7 +245,11 @@ Run the C5 block three times: before, seeded-failure, repaired.
     goal: 'Save the public reason, resume the right session, and verify the next task reads it.',
     screenCommand: String.raw`(abridged — full prompt in notes)
 Scribe: record the public-only decision under .squad\decisions\inbox\ (Scribe later merges decisions.md).
-/new; /resume guided-clean-run; /cwd; /context; /usage
+/new
+/resume guided-clean-run
+/cwd
+/context
+/usage
 Ask the resumed task to cite the decision and next constraints.`,
     command: String.raw`Scribe: record the public-only decision under .squad\decisions\inbox\ for later merge into .squad\decisions.md.
 Decision: private API invariant, caller-owned provider/backend, added network-payload regression,
@@ -258,7 +271,9 @@ Read the saved decision; cite its file and the constraints for the next change.`
     screenCommand: String.raw`(abridged — full prompt in notes)
 /agent terraform-validator
 Run the C7 offline suite: fmt, init, validate, tflint, module test, example init/validate/test, diff.
-/diff; /new; /agent terraform-reviewer`,
+/diff
+/new
+/agent terraform-reviewer`,
     command: String.raw`/agent terraform-validator
 $PSNativeCommandUseErrorActionPreference = $false
 $env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path
