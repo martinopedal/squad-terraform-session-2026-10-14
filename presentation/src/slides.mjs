@@ -265,9 +265,12 @@ Check diff git @('--no-pager','diff','--',$m)
 };
 
 const notePlan = (driver, say, doText, point, handoff) => `<p><strong>Driver:</strong> ${escape(driver)}</p><ol class="presenter-plan"><li><strong>Say:</strong> ${escape(say)}</li><li><strong>Do:</strong> ${escape(doText)}</li><li><strong>Point at:</strong> ${escape(point)}</li><li><strong>Hand-off:</strong> ${escape(handoff)}</li></ol>`;
+const demoBoundary = chapter => chapter === 'C0'
+  ? 'C0 starts before Squad exists, then uses Genuine Copilot CLI with Squad selected in a real integrated terminal; capture controllers stay external, off-screen tooling; Qualify code first; execute from a disclosed clean checkpoint.'
+  : 'Genuine Copilot CLI with Squad selected in a real integrated terminal; capture controllers stay external, off-screen tooling; Qualify code first; execute from a disclosed clean checkpoint.';
 const demoNotes = chapter => {
   const run = demoRuns[chapter];
-  return `<p><strong>Driver:</strong> ${escape(run.driver)}</p><ol class="presenter-plan"><li><strong>Say:</strong> ${escape(run.goal)} Keep this as a live demo; optional recordings are fallback evidence, not a dependency.</li><li><strong>Type:</strong></li></ol>${code(run.command, `${chapter} live command / prompt`, 'powershell')}<ol class="presenter-plan" start="3"><li><strong>Point at:</strong> ${escape(run.pointAt)}</li><li><strong>Expected:</strong> ${escape(run.expected)}</li><li><strong>Hand-off:</strong> ${escape(chapter === 'C5' ? 'Haflidi hands controls back to Martin for evidence levels.' : chapter === 'C7' ? 'Martin takes back the deck for the consumer slide.' : 'Use the next slide transition line in the run plan.')}</li></ol><p><strong>Offline fallback:</strong> ${escape(run.fallback)}</p>`;
+  return `<p><strong>Driver:</strong> ${escape(run.driver)}</p><p><strong>Live surface:</strong> ${escape(demoBoundary(chapter))}</p><ol class="presenter-plan"><li><strong>Say:</strong> ${escape(run.goal)} Keep this as a live demo; optional recordings are fallback evidence, not a dependency.</li><li><strong>Type:</strong></li></ol>${code(run.command, `${chapter} live command / prompt`, 'powershell')}<ol class="presenter-plan" start="3"><li><strong>Point at:</strong> ${escape(run.pointAt)}</li><li><strong>Expected:</strong> ${escape(run.expected)}</li><li><strong>Hand-off:</strong> ${escape(chapter === 'C5' ? 'Haflidi hands controls back to Martin for evidence levels.' : chapter === 'C7' ? 'Martin takes back the deck for the consumer slide.' : 'Use the next slide transition line in the run plan.')}</li></ol><p><strong>Offline fallback:</strong> ${escape(run.fallback)}</p>`;
 };
 
 const presenterNotes = new Map([
@@ -622,9 +625,7 @@ export function renderSection(slide, index, noteHTML, evidence, media) {
     ? 'If the live CLI stalls, use the Offline fallback line in these notes and keep the same chapter timing.'
     : isAppendix ? 'Answer from the verified reference, then return to Q&A. Do not start an unplanned live demonstration.'
       : 'Use the static slide and its spoken explanation. Keep any unresolved evidence labeled unresolved.';
-  const captureRule = slide.kind === 'demo'
-    ? '<p><strong>Live surface:</strong> Genuine Copilot CLI with Squad selected, standalone or in a real integrated terminal. Optional fallback captures are evidence only when reviewed; the live chapter remains the planned delivery. Qualify code first, then execute from a disclosed clean checkpoint.</p>'
-    : '';
+  const captureRule = '';
   if (slide.preshow) {
     return `<section id="${slide.id}" class="${className}" role="region" aria-label="NIC 2026 opening page" data-stage-time="Pre-show" data-preshow="true">
     <div class="slide-content" aria-hidden="true"></div>

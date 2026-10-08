@@ -150,6 +150,27 @@ def main():
                     n.textContent.includes('Expected:') &&
                     n.querySelector('pre code'))
             """))
+            check("live demo notes state provenance boundary", page.evaluate("""() => {
+                const demos = [...document.querySelectorAll('.slide-demo aside.notes')];
+                return demos.length === 8 && demos.every(n => {
+                    const text = n.textContent;
+                    return text.includes('Live surface:') &&
+                        text.includes('Genuine Copilot CLI with Squad selected') &&
+                        text.includes('real integrated terminal') &&
+                        text.includes('Qualify code first') &&
+                        text.includes('disclosed clean checkpoint') &&
+                        text.includes('Offline fallback:');
+                });
+            }"""))
+            check("C0 explicitly states pre-Squad boundary",
+                  "C0 starts before Squad exists" in page.locator("#demo-c0 aside.notes").text_content())
+            check("native-only chapter policy", page.evaluate("""() =>
+                [...document.querySelectorAll('.slide-demo aside.notes')].every(n =>
+                    n.textContent.includes('external, off-screen tooling')) &&
+                Object.values(window.presentationBuild.media).every(m =>
+                    !m.available || (m.reviewed === true && m.selectedAgent === 'squad' &&
+                    ['native-copilot-cli','integrated-terminal'].includes(m.sourceSurface)))
+            """))
             baseline_notes = page.locator("#s03-baseline aside.notes").text_content()
             check("disclosed clean-run narration", all(phrase in baseline_notes for phrase in
                   ["module now exists", "passed local qualification before delivery", "disclosed clean checkpoint", "first implementation"]))

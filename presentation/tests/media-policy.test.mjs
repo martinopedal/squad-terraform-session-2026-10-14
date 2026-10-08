@@ -27,6 +27,18 @@ test('each live demo slide has presenter notes with an offline fallback', () => 
   }
 });
 
+test('each live demo slide states the live provenance boundary', () => {
+  for (const slide of demoSlides) {
+    const notes = applyNoteFactOverrides(slide.id, '');
+    assert.match(notes, /Genuine Copilot CLI with Squad selected/);
+    assert.match(notes, /real integrated terminal/);
+    assert.match(notes, /external, off-screen tooling/);
+    assert.match(notes, /Qualify code first/);
+    assert.match(notes, /disclosed clean checkpoint/);
+  }
+  assert.match(applyNoteFactOverrides('demo-c0', ''), /C0 starts before Squad exists/);
+});
+
 test('demo timings and chapter IDs remain unchanged', () => {
   assert.deepEqual(demoSlides.map(slide => [slide.chapter, slide.duration]), [
     ['C1', 180],
