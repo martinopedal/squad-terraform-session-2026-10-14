@@ -24,7 +24,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Martin:** A useful agent session should leave something another engineer can consume. Today that something is a reusable Terraform module for private AKS in an existing Azure landing zone. I'm Martin, and this is Haflidi. We'll connect the Copilot CLI features you can use tomorrow with the team conventions that Squad adds.
 
-**Haflidi:** We'll start with existing code and qualify it before filming. Later clips will show genuine new execution from a disclosed clean checkpoint, not its first-ever implementation. We'll explain the module boundary, checks, and decisions as we go. Recording makes the sequence inspectable; it doesn't make the model deterministic. First, compare two attempts without turning them into a competition.
+**Haflidi:** We'll start with existing code and qualify it before filming. Later clips will show genuine new execution from a disclosed clean checkpoint, not its first-ever implementation. We'll explain the module boundary, checks, and decisions as we go. Recording makes the sequence inspectable; it does not guarantee future runs. First, compare two attempts without turning them into a competition.
 
 ## demo-c1 | 01:00-04:00 | C1: Same task, different agent choices
 
@@ -150,7 +150,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Haflidi:** Open only the roster and charter details needed for this change. The audience needs to see the implementation owner, test owner, reviewer, and the routing rule that connects them. We don't need every specialist that happens to be configured. The useful question is which role owns the next artifact and what it must return.
 
-**Martin:** The implementation task should return the module diff and a description of its public interface. The test task should return specific cases and the commands used to run them. Documentation waits for the interface it describes. Each task has a stop condition, and none gets permission to deploy just because its charter says infrastructure engineer.
+**Martin:** The implementation task should return the module diff and a description of its public interface. For C3-C5, the recorded loop uses the B1v2 clarified brief: four separate assert blocks, each with its own `error_message`. It met the Oct 8 bar at 5/5 in this eval; original B1 remains 0/5 and was not rescored. The difference was the brief, not more retries. The test task should return specific cases and the commands used to run them. Documentation waits for the interface it describes. Each task has a stop condition, and none gets permission to deploy just because its charter says infrastructure engineer.
 
 **Martin:** When implementation starts, I explicitly select `/agent terraform-coder`. That profile can read, search, edit, and use read-only documentation MCP servers. It is the writing lane, not the validation or review lane.
 
@@ -392,7 +392,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 ## a-prompts | Appendix | Prompts you can rerun
 
-> Reference only. Answer "how do I get similar results with my agents?" Keywords: guardrails first, one lane per step, an oracle decides, measure repeatability. Step 1 reads effective policy and RBAC at the target before design; step 2 grounds API facts through Microsoft Learn and Terraform Registry MCP with citations. Then `terraform-coder` edits, `terraform-validator` runs fixed offline commands, and `terraform-reviewer` reviews in a fresh `/new` context. Consume through a thin root and deploy through the pipeline. Repeatable is measured: five fresh runs from one checkpoint, at least four green, no reruns until green. Prompts: `docs/prompt-pack.md`. Do not claim the model is deterministic.
+> Reference only. Answer "how do I get similar results with my agents?" Keywords: guardrails first, one lane per step, state the oracle's rules in the brief, measure repeatability. Step 1 reads effective policy and RBAC at the target before design; step 2 grounds API facts through Microsoft Learn and Terraform Registry MCP with citations. Then `terraform-coder` edits, `terraform-validator` runs fixed offline commands, and `terraform-reviewer` reviews in a fresh `/new` context. Consume through a thin root and deploy through the pipeline. Oct 8 measured the original three briefs plus the B1v2 clarified-brief follow-up with five fresh runs each from base `4689d3c` and an at-least-four-of-five bar: original B1 stayed 0/5 and was not rescored; B1v2 stated four separate assert blocks, each with its own `error_message`, and was 5/5 in this eval; B2 was 5/5; B3 was 4/5 after the disclosed harness-bug rescore. The difference was the brief, not more retries. Prompts: `docs/prompt-pack.md`. Do not generalize beyond this eval.
 
 ## a-bootstrap | Appendix | Start a squad in five steps
 

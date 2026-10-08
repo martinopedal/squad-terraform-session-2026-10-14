@@ -23,14 +23,16 @@ Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck 
 
 Every clip is genuine native Copilot CLI output with the agent shown on screen. Label cuts, sped-up waits and seeded defects in the clip. Never attach an unreviewed clip.
 
+C3-C5 film the implementation loop with the B1v2 `alternate_network_payload` brief: four separate assert blocks, each with its own `error_message`. B1v2 met the pre-registered at-least-four-of-five bar at 5/5 in this eval; original B1 remains 0/5 and was not rescored.
+
 | Clip | Length | Lead | Operator | Where | Runbook | Status |
 |---|---|---|---|---|---|---|
 | C0 From zero to a squad | 3:00 | Haflidi | Haflidi | Clean demo VM via Bastion | clean-machine-demo.md | pending |
 | C1 Same task, different choices | 3:00 | Haflidi | Martin | Checkpoint shell, Squad selected | demo-runbook.md C1 | pending |
 | C2 Pin the brief, approve a plan | 4:00 | Martin | Martin | Checkpoint shell, Plan mode | demo-runbook.md C2 | pending |
-| C3 Activate Squad, route work | 4:00 | Martin | Martin | `/agent terraform-coder` | demo-runbook.md C3 | pending |
-| C4 Ground with tools | 4:00 | Martin | Martin | Skills, MCP, permissions | demo-runbook.md C4 | pending |
-| C5 Catch a mistake, repair | 5:00 | Haflidi | Martin | `terraform-validator`, seeded mutation | demo-runbook.md C5 | pending |
+| C3 Activate Squad, route work | 4:00 | Martin | Martin | B1v2 brief; `/agent terraform-coder` | demo-runbook.md C3 | pending |
+| C4 Ground with tools | 4:00 | Martin | Martin | B1v2 brief; skills, MCP, permissions | demo-runbook.md C4 | pending |
+| C5 Catch a mistake, repair | 5:00 | Haflidi | Martin | B1v2 brief; `terraform-validator`, seeded mutation | demo-runbook.md C5 | pending |
 | C6 Resume with decisions | 3:00 | Haflidi | Martin | `/resume`, decisions file | demo-runbook.md C6 | pending |
 | C7 Reviewed diff | 3:00 | Haflidi | Martin | `terraform-reviewer`, offline suite | demo-runbook.md C7 | pending |
 
@@ -51,12 +53,12 @@ Clip = press **Open local MP4** on the chapter slide. If a clip fails, stay on t
 | 12:00-14:00 | s06-contract | Haflidi | | Platform-owned network into module |
 | 14:00-18:00 | demo-c2 | Martin | C2 | `/plan`, approved criteria |
 | 18:00-20:00 | s08-plan-boundary | Haflidi | | Boundary warning reveal |
-| 20:00-24:00 | demo-c3 | Martin | C3 | `/agent`, `/tasks`, handoff |
+| 20:00-24:00 | demo-c3 | Martin | C3 | B1v2 brief, `/agent`, `/tasks`, handoff |
 | 24:00-25:00 | s10-tool-roles | Haflidi | | Three columns |
-| 25:00-29:00 | demo-c4 | Martin | C4 | `/skills`, MCP lookup, `/permissions`. **Checkpoint 2: 29:00** |
+| 25:00-29:00 | demo-c4 | Martin | C4 | B1v2 source grounding, `/skills`, MCP lookup, `/permissions`. **Checkpoint 2: 29:00** |
 | 29:00-30:00 | s12-source-check | Haflidi | | Reveal the assertion |
 | 30:00-32:00 | s13-test-gap | Haflidi | | First cut if behind: shorten to 1 minute |
-| 32:00-37:00 | demo-c5 | Haflidi | C5 | Command, exit code, rerun |
+| 32:00-37:00 | demo-c5 | Haflidi | C5 | B1v2 check command, exit code, rerun |
 | 37:00-40:00 | s15-proof | Haflidi | | Read status labels exactly. **Checkpoint 3: 40:00** |
 | 40:00-41:00 | s16-continuity | Martin | | Decision map |
 | 41:00-44:00 | demo-c6 | Haflidi | C6 | `/resume`, `/context`, `/usage` |
