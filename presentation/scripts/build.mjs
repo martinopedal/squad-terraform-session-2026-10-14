@@ -45,12 +45,11 @@ const blocks = new Map(talk.split(/^## /m).filter(part => /^(s\d\d-|demo-c|a-)/.
   .map(part => [part.split(' | ')[0], part.slice(part.indexOf('\n') + 1).trim()]));
 const words = value => (value.match(/\b\w+(?:['-]\w+)*\b/g) || []).length;
 const speakers = { Martin: 0, Haflidi: 0 };
-let qaWords = 0;
+const qaWords = 0;
 for (const [id, block] of blocks) {
   for (const name of Object.keys(speakers)) {
     const count = [...block.matchAll(new RegExp(`\\*\\*${name}:\\*\\* (.+)`, 'g'))].reduce((sum, match) => sum + words(match[1]), 0);
-    if (id === 's22-questions') qaWords += count;
-    else if (!id.startsWith('a-')) speakers[name] += count;
+    if (!id.startsWith('a-') && id !== 's22-questions') speakers[name] += count;
   }
 }
 const spokenWords = speakers.Martin + speakers.Haflidi;
@@ -60,28 +59,34 @@ if (slides.length !== 37 || slides.filter(slide => slide.preshow).length !== 1 |
     slides.filter(slide => !slide.id.startsWith('a-') && !slide.preshow).length !== 25) {
   throw new Error('Expected one opening slide, 25 timed main slides, and eleven appendix slides.');
 }
-if (spokenWords < 5300 || spokenWords > 5900 || qaWords < 650 || qaWords > 800) throw new Error(`Spoken script length is out of range: ${spokenWords} main, ${qaWords} Q&A.`);
+if (spokenWords < 5300 || spokenWords > 5900 || qaWords !== 0) throw new Error(`Spoken script length is out of range: ${spokenWords} main, ${qaWords} scheduled Q&A.`);
 if (Math.abs(speakers.Martin - speakers.Haflidi) / spokenWords > .1) throw new Error('Speaker contributions differ by more than 10%.');
 if (descriptionWords < 250 || descriptionWords > 350 || pitchWords < 45 || pitchWords > 65) throw new Error('Sessionize word count is out of range.');
 if (new Set(slides.map(slide => slide.id)).size !== slides.length) throw new Error('Duplicate slide ID.');
 for (const slide of slides) if (!slide.preshow && !blocks.has(slide.id)) throw new Error(`Missing complete notes for ${slide.id}.`);
 const chapters = slides.filter(slide => slide.chapter).map(slide => ({ id: slide.chapter, title: slide.title, duration: slide.duration, slide: slide.id }));
-if (chapters.reduce((sum, chapter) => sum + chapter.duration, 0) !== 1740) throw new Error('Live demo chapter budget must be 29 minutes.');
-const protectedSlackSeconds = 300;
+const expectedChapterDurations = [180, 180, 240, 240, 240, 300, 180, 180];
+if (chapters.reduce((sum, chapter) => sum + chapter.duration, 0) !== 1740 ||
+    chapters.some((chapter, index) => chapter.id !== `C${index}` || chapter.duration !== expectedChapterDurations[index])) {
+  throw new Error('Live demo chapter budget must be C0-C7 = 3/3/4/4/4/5/3/3 minutes, totaling 29 minutes.');
+}
+const protectedSlackSeconds = 0;
+const closeBufferSeconds = 120;
 const toSeconds = value => value.split(':').reduce((sum, component) => sum * 60 + Number(component), 0);
-const clock = { demo: 0, explanation: 0, qa: 0 };
+const clock = { intro: 0, demo: 0, explanation: 0, close: 0, qa: 0 };
 let previousEnd = 0;
 for (const slide of slides.filter(item => !item.id.startsWith('a-') && !item.preshow)) {
   const [start, end] = slide.time.split('-').map(toSeconds);
   if (start !== previousEnd || end <= start) throw new Error(`Discontinuous slide clock at ${slide.id}.`);
   if (slide.chapter && end - start !== slide.duration) throw new Error(`Clip and stage duration disagree at ${slide.id}.`);
-  clock[slide.chapter ? 'demo' : slide.id === 's22-questions' ? 'qa' : 'explanation'] += end - start;
+  const bucket = slide.chapter ? 'demo' : slide.id === 's01-outcome' ? 'intro' : slide.id === 's22-questions' ? 'close' : 'explanation';
+  clock[bucket] += end - start;
   previousEnd = end;
 }
-if (previousEnd !== 3600 || clock.demo !== 1740 || clock.explanation !== 1440 ||
-    clock.explanation - protectedSlackSeconds !== 1140 || protectedSlackSeconds !== 300 || clock.qa !== 420 ||
-    previousEnd - clock.qa !== 3180) {
-  throw new Error('The actual slide clock must retain 29 demo / 19 explanation / 5 protected slack / 7 Q&A minutes, with Q&A at 53:00.');
+if (previousEnd !== 3600 || clock.intro !== 180 || clock.demo !== 1740 || clock.explanation !== 1560 ||
+    clock.close !== closeBufferSeconds || clock.qa !== 0 || protectedSlackSeconds !== 0 ||
+    previousEnd - clock.close !== 3480) {
+  throw new Error('The actual slide clock must retain 3 intro / 29 demo / 26 explanation / 0 slack / 0 scheduled Q&A / 2 close-buffer minutes, with content ending at 58:00.');
 }
 for (const chapter of chapters) {
   const item = media[chapter.id];
@@ -96,9 +101,11 @@ for (const chapter of chapters) {
 
 const build = {
   version: version.version, openingSlides: 1, mainSlides: 25, appendixSlides: 11,
-  demoMinutes: clock.demo / 60, explanationMinutes: (clock.explanation - protectedSlackSeconds) / 60,
-  protectedSlackMinutes: protectedSlackSeconds / 60, nonDemoSlideMinutes: clock.explanation / 60,
-  mainFlowMinutes: (previousEnd - clock.qa) / 60, qaMinutes: clock.qa / 60, qnaStart: '53:00',
+  demoMinutes: clock.demo / 60, introMinutes: clock.intro / 60, explanationMinutes: clock.explanation / 60,
+  protectedSlackMinutes: protectedSlackSeconds / 60, closeBufferMinutes: clock.close / 60,
+  nonDemoSlideMinutes: (clock.intro + clock.explanation + clock.close) / 60,
+  contentEnd: '58:00', mainFlowMinutes: (previousEnd - clock.close) / 60,
+  qaMinutes: clock.qa / 60, qnaStart: null, questions: 'if time allows',
   timedSlideMinutes: previousEnd / 60,
   spokenWords, speakers, qaWords, descriptionWords, pitchWords,
   chapters, media, sourceRevision: evidence.sourceRevision, moduleRevision: evidence.moduleRevision,
@@ -154,6 +161,6 @@ await writeFile(join(root, 'index.html'), html, 'utf8');
 await writeFile(join(root, 'qa/build-manifest.json'), JSON.stringify({
   ...build, htmlBytes: Buffer.byteLength(html), htmlSHA256: createHash('sha256').update(html).digest('hex')
 }, null, 2) + '\n');
-console.log(`Built index.html: 1 opening + 25 timed main + 11 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} Q&A words.`);
-console.log('Timing 29 demo / 19 explanation / 5 protected slack / 7 Q&A; Q&A starts at 53:00.');
+console.log(`Built index.html: 1 opening + 25 timed main + 11 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} scheduled Q&A words.`);
+console.log('Timing 3 intro / 29 demo / 26 explanation / 0 slack / 2 close buffer; questions if time allows.');
 console.log(`Sessionize: ${descriptionWords}-word description; ${pitchWords}-word pitch. HTML ${(Buffer.byteLength(html) / 1024).toFixed(0)} KiB.`);

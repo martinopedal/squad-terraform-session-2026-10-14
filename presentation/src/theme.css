@@ -95,6 +95,26 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .speaker-card em { font-size: 12px; line-height: 1.15; font-style: normal; color: inherit; }
 .session-meta { font-size: 14px; color: inherit; }
 
+
+#s01-outcome .slide-content { padding: 62px 72px 86px; }
+#s01-outcome .slide-header { position: static; justify-content: flex-start; text-align: left; min-height: 42px; padding: 0; }
+#s01-outcome .slide-body { position: static; inset: auto; height: auto; flex: 1; align-items: stretch; text-align: left; justify-content: center; }
+#s01-outcome .intro-grid { width: 100%; display: grid; grid-template-columns: 1.12fr .88fr; gap: 42px; align-items: center; }
+#s01-outcome .hero-copy { align-items: stretch; }
+#s01-outcome .hero-lede { font-size: 42px; line-height: 1.06 !important; }
+#s01-outcome .hero-description { font-size: 24px; line-height: 1.25; }
+.intro-takeaways { padding-left: 22px !important; font-size: 20px; line-height: 1.22; }
+.intro-takeaways li { margin-bottom: 8px; }
+.honesty-rule { border-left: 4px solid currentColor; padding-left: 16px; font-size: 19px; line-height: 1.24 !important; }
+.live-speakers { display: grid; gap: 15px; }
+.live-speaker-card { display: flex; gap: 18px; align-items: center; border: 2px solid currentColor; padding: 18px 20px; min-height: 125px; }
+.speaker-initials { width: 74px; height: 74px; border-radius: 50%; border: 2px solid currentColor; display: inline-flex; align-items: center; justify-content: center; font-size: 25px; font-weight: 700; flex: 0 0 auto; }
+.live-speaker-card h3 { font-size: 25px; margin-bottom: 4px !important; }
+.live-speaker-card p { font-size: 17px; opacity: .88; margin-bottom: 9px !important; }
+.live-speaker-card a { display: inline-block; border: 1px solid currentColor; padding: 3px 12px; border-radius: 999px; font-size: 16px; text-decoration: none; }
+.close-buffer-line { font-size: 23px; line-height: 1.3 !important; margin-bottom: 8px !important; }
+#s22-questions .appendix-links a { padding: 12px 0; font-size: 22px; }
+
 .slide-baseline .slide-body { display: grid; grid-template-columns: 1fr 1fr; gap: 42px; align-items: center; }
 .source-pin { display: flex; flex-direction: column; gap: 5px; }
 .source-pin strong { font-family: var(--mono); font-size: 42px; font-weight: 500; letter-spacing: -.035em; }
@@ -218,3 +238,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .presentation-tools button { min-height: 32px; font-size: 12px; padding: 5px 8px; }
   .navigation-columns { grid-template-columns: 1fr; }
 }
+
+#s05-parallel .lane-header, #s05-parallel .lane { padding: 8px 14px; }
+#s05-parallel .lane { min-height: 50px; font-size: 19px; }
+#s05-parallel .lane-header { font-size: 14px; }
+#s05-parallel .ownership-note { font-size: 18px; padding-top: 12px; }
+#s05-parallel .slide-body { justify-content: center; }

@@ -33,7 +33,7 @@ test('each live demo slide has presenter notes with an offline fallback', () => 
     assert.match(notes, /Offline fallback:/);
     assert.match(notes, /Timing:/);
     assert.match(notes, /Pre-staged:/);
-    assert.match(notes, /Cut at \d:\d\d \(75%\):/);
+    assert.match(notes, /Cut at \d{2}:\d{2} \(75%\):/);
     assert.match(notes, /Point at:/);
     assert.match(notes, /Expected:/);
   }
@@ -67,10 +67,10 @@ test('each live demo slide states the live provenance boundary', () => {
   assert.match(applyNoteFactOverrides('demo-c0', ''), /C0 starts before Squad exists/);
 });
 
-test('demo timings and chapter IDs remain unchanged', () => {
+test('demo timings and chapter IDs follow the run plan', () => {
   assert.deepEqual(demoSlides.map(slide => [slide.chapter, slide.duration]), [
-    ['C1', 180],
     ['C0', 180],
+    ['C1', 180],
     ['C2', 240],
     ['C3', 240],
     ['C4', 240],

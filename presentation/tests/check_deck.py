@@ -101,12 +101,27 @@ def main():
             report["deckVersion"] = manifest["version"]
             report["htmlSHA256"] = hashlib.sha256((ROOT / "index.html").read_bytes()).hexdigest()
             check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 37 and manifest["openingSlides"] == 1 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 11)
-            check("timing budget with slack",
-                  [manifest[k] for k in ("demoMinutes", "explanationMinutes", "protectedSlackMinutes", "qaMinutes",
-                                         "nonDemoSlideMinutes", "mainFlowMinutes", "timedSlideMinutes", "qnaStart")]
-                  == [29, 19, 5, 7, 24, 53, 60, "53:00"])
+            check("timing budget with close buffer",
+                  [manifest[k] for k in ("demoMinutes", "introMinutes", "explanationMinutes", "protectedSlackMinutes",
+                                         "closeBufferMinutes", "qaMinutes", "nonDemoSlideMinutes", "mainFlowMinutes",
+                                         "timedSlideMinutes", "contentEnd", "qnaStart", "questions")]
+                  == [29, 3, 26, 0, 2, 0, 31, 58, 60, "58:00", None, "if time allows"])
+            check("chapter lengths", [chapter["duration"] // 60 for chapter in manifest["chapters"]] == [3, 3, 4, 4, 4, 5, 3, 3]
+                  and [chapter["id"] for chapter in manifest["chapters"]] == [f"C{i}" for i in range(8)], manifest["chapters"])
+            check("intro and contiguous clocks", page.evaluate("""() => {
+                const toSeconds = value => value.split(':').reduce((sum, part) => sum * 60 + Number(part), 0);
+                let end = 0;
+                const slides = [...document.querySelectorAll('.slides > section:not([data-appendix]):not([data-preshow])')];
+                return slides[0].id === 's01-outcome' && slides[0].dataset.stageTime === '00:00-03:00' &&
+                    slides.every(slide => {
+                        const [start, stop] = slide.dataset.stageTime.split('-').map(toSeconds);
+                        const ok = start === end && stop > start;
+                        end = stop;
+                        return ok;
+                    }) && end === 3600;
+            }"""))
             check("main spoken words", 5300 <= manifest["spokenWords"] <= 5900, manifest["spokenWords"])
-            check("prepared Q&A words", 650 <= manifest["qaWords"] <= 800, manifest["qaWords"])
+            check("no scheduled Q&A words", manifest["qaWords"] == 0, manifest["qaWords"])
             check("balanced speakers", abs(manifest["speakers"]["Martin"] - manifest["speakers"]["Haflidi"]) < 0.1 * manifest["spokenWords"], manifest["speakers"])
             check("plugins", page.evaluate("['notes','highlight'].every(id => Object.keys(Reveal.getPlugins()).includes(id))"))
             check("no autoplay", page.evaluate("Reveal.getConfig().autoPlayMedia === false && Reveal.getConfig().autoSlide === 0 && !document.querySelector('video[autoplay]')"))
@@ -163,9 +178,9 @@ def main():
             s20_notes = page.locator("#s20-consumer aside.notes").text_content()
             check("s20 live reveal notes", all(phrase in s20_notes for phrase in
                   ["0:30-1:00 live reveal", "self-signed cert warning is expected", "pre-accepted",
-                   "pipeline flow", "serving pod name", "speakers section", "Offline fallback:",
+                   "pipeline flow", "serving pod name", "speakers section", "1:00-2:10", "Offline fallback:",
                    "37771532872/37772290635", "Test-OnlineSecurity 29/29 at 13:48 on Oct 8",
-                   "a-online and a-security"]))
+                   "appendix/hallway depth"]))
             check("live demo notes state provenance boundary", page.evaluate("""() => {
                 const demos = [...document.querySelectorAll('.slide-demo aside.notes')];
                 return demos.length === 8 && demos.every(n => {
@@ -325,7 +340,7 @@ def main():
             page.keyboard.press("ArrowRight")
             check("arrow navigation from opening", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
             page.keyboard.press("PageDown")
-            check("Page Down to first chapter", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
+            check("Page Down to first timed content", page.evaluate("Reveal.getCurrentSlide().id") == "s03-baseline")
             page.keyboard.press("PageUp")
             check("Page Up", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
             page.keyboard.press("End")
@@ -335,7 +350,7 @@ def main():
             page.keyboard.press("PageDown")
             check("Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
             page.keyboard.press("PageDown")
-            check("Second Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
+            check("Second Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "s03-baseline")
             page.keyboard.press("Escape")
             check("overview", page.evaluate("Reveal.isOverview()"))
             page.keyboard.press("Escape")
@@ -364,7 +379,7 @@ def main():
             page.wait_for_function("() => !document.querySelector('.navigation-dialog').open && document.activeElement.id === 'open-navigation'")
             check("keyboard-only chapter selection", page.evaluate("Reveal.getCurrentSlide().id") == "s06-contract")
             page.keyboard.press("ArrowRight")
-            check("arrow after keyboard-only chapter selection", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c2")
+            check("arrow after keyboard-only chapter selection", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
             page.keyboard.press("End")
             check("End after keyboard-only chapter selection", page.evaluate("Reveal.getCurrentSlide().id") == "a-use-cases")
             page.locator("#open-navigation").click()
@@ -401,9 +416,9 @@ def main():
             notes.wait_for_timeout(1200)
             timer_after = notes.locator(".timer .seconds-value").inner_text()
             check("notes current and next", notes.locator("#current-slide iframe").count() == 1 and notes.locator("#upcoming-slide iframe").count() == 1)
-            check("notes full presenter plan", "A useful agent session leaves" in notes.locator(".speaker-controls-notes .value").inner_text())
+            check("notes full presenter plan", "live terminal/browser work" in notes.locator(".speaker-controls-notes .value").inner_text())
             check("notes timer advances", timer_before != timer_after)
-            page.evaluate("Reveal.slide(10,0,-1)")
+            page.evaluate("Reveal.slide(11,0,-1)")
             notes.wait_for_function("() => document.querySelector('.speaker-controls-notes .value').textContent.includes('/session plan')")
             check("notes follow slide", "Offline fallback:" in notes.locator(".speaker-controls-notes .value").inner_text())
             check("notes show live command block", "/session plan" in notes.locator(".speaker-controls-notes .value").inner_text())
@@ -413,7 +428,7 @@ def main():
             page.bring_to_front()
             check("notes return preserves control focus", page.evaluate("document.activeElement.id") == "open-notes")
             page.keyboard.press("ArrowRight")
-            check("arrow after notes-button round trip", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c2")
+            check("arrow after notes-button round trip", page.evaluate("Reveal.getCurrentSlide().id") == "s08-plan-boundary")
             page.keyboard.press("Home")
             check("Home after notes-button round trip", page.evaluate("Reveal.getCurrentSlide().id") == "opening")
             page.keyboard.press("Escape")
