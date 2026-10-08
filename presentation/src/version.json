@@ -25,6 +25,6 @@
     "0.18.2 - 2026-10-08: apply Rai's B1v2 wording without claiming causality or a guaranteed live rerun; main clock unchanged.",
     "0.18.3 - 2026-10-08: update validated Copilot CLI and Squad versions, and add the PR #7 playbook pointer to bootstrap notes; main clock unchanged.",
     "0.19.0 - 2026-10-08: convert C0-C7 from fallback cards to live-demo slides with command blocks, expected results, and presenter notes for every slide; recordings are optional fallback only and the 60-minute clock remains unchanged.",
-    "0.19.1 - 2026-10-08: align presenter notes with the playbook/runbooks, keep full commands in notes and readable abbreviated commands on slides, and remove old placeholder wording from the delivery story."
+    "0.19.1 - 2026-10-08: align presenter notes with the playbook/runbooks, keep full commands in notes with visibly labeled abridged commands on slides, fix owner and decision-inbox wording, and remove old placeholder wording from the delivery story."
   ]
 }

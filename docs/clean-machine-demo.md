@@ -27,7 +27,7 @@ $env:AZURE_SUBSCRIPTION_ID_ONLINE = '<online subscription id>'   # never on scre
 .\scripts\Connect-DemoVm.ps1        # opens the Bastion RDP session
 ```
 
-If `Test-DemoVm.ps1` reports the VM is not clean (an earlier take installed tools), reset it first: run `deploy-demo-vm.yml` in the demo-env repo with action `recreate-vm`, approve the `online` gate, and wait for the proof job (about 15-20 minutes including policy-driven extensions).
+If `Test-DemoVm.ps1` reports the VM is not clean (an earlier take installed tools), reset it first: run `deploy-demo-vm.yml` in the demo-env repo with action `recreate-vm`, approve the `online` gate, and wait for the verification job (about 15-20 minutes including policy-driven extensions).
 
 On the VM: close notifications, set display scaling to 125%, open **Windows Terminal**, and pick the **PowerShell** (7) profile from the dropdown, not Windows PowerShell. Font size 16 or larger. Hide the Bastion toolbar.
 
@@ -80,7 +80,7 @@ Never push from the VM. The clone is a local demo copy; the four generated workf
 ## Reset between takes
 
 - Fast reset (same VM): delete `$HOME\demo`, then `winget uninstall --id bradygaster.Squad`, `GitHub.Copilot`, `Git.Git`; sign out of GitHub in Edge. Use this only for rehearsal.
-- Clean reset (for rehearsal, delivery, or fallback capture): `deploy-demo-vm.yml` action `recreate-vm` in the demo-env repo. It replaces the VM, OS disk, and VM-scoped extensions and re-proves the clean state.
+- Clean reset (for rehearsal, delivery, or fallback capture): `deploy-demo-vm.yml` action `recreate-vm` in the demo-env repo. It replaces the VM, OS disk, and VM-scoped extensions and re-checks the clean state.
 
 ## Offline fallback (if the live chapter stalls)
 
@@ -100,5 +100,5 @@ The admin password (ephemeral, workflow-generated), subscription and tenant IDs,
 | `squad` not recognized after install | Current shell PATH is stale | Run the PATH refresh line from block 1 |
 | `squad.ps1 cannot be loaded` | Execution policy in a 5.1 tab | Use PowerShell 7 (`RemoteSigned`), or run `squad.exe` directly |
 | WinGet source agreement prompt | First WinGet use for the profile | The `--accept-*` flags in block 1 handle it |
-| VM stuck "Updating" after recreate | Landing-zone policy is adding AMA, ChangeTracking, and other extensions | Wait; the pipeline proof waits for a terminal state |
+| VM stuck "Updating" after recreate | Landing-zone policy is adding AMA, ChangeTracking, and other extensions | Wait; the pipeline verification waits for a terminal state |
 | Bastion RDP fails | CLI `bastion` extension missing or MFA token expired | `az extension add -n bastion`; rerun `Connect-DemoVm.ps1` |

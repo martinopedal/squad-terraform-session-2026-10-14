@@ -1,6 +1,6 @@
 # Run plan: NIC 2026, "From prompt to reusable Terraform"
 
-Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi Fridthjofsson. Deck 0.19: 1 opening page, 25 timed slides, 11 appendix references; 29 minutes live demo chapters, 24 minutes explanation, 7 Q&A.
+Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi Fridthjofsson. Deck 0.19.1: 1 opening page, 25 timed slides, 11 appendix references; 29 minutes live demo chapters, 24 minutes explanation, 7 Q&A.
 
 Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck build), [talking-points.md](talking-points.md) (cheat sheet), [demo-runbook.md](demo-runbook.md) (C1-C7), [clean-machine-demo.md](clean-machine-demo.md) (C0), [online-demo.md](online-demo.md) (Online landing zone). Online and demo-VM operator scripts live in the demo-env repository under `scripts\`.
 
@@ -8,13 +8,13 @@ Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck 
 
 | Day | Who | What | Done when |
 |---|---|---|---|
-| Wed 07 Oct | Martin | Deck 0.19 live-demo contract with C0, runbooks, demo VM cleanliness checks passed, Online facts refreshed | `npm test` green; `Test-DemoVm.ps1` 14/14; `Test-OnlineSecurity.ps1` 29/29 |
+| Wed 07 Oct | Martin | Deck 0.19.1 live-demo contract with C0, runbooks, demo VM cleanliness checks passed, Online facts refreshed | `npm test` green; `Test-DemoVm.ps1` 14/14; `Test-OnlineSecurity.ps1` 29/29 |
 | Thu 08 Oct | Haflidi | Accept repo and environment invites; read talk track; receive the VM local account out of band | Haflidi can open the deck and reach the VM through Bastion; Martin uses Entra sign-in with MFA |
 | Thu 08 Oct | Both | Rehearsal 1: read-through with the clock, slides only, 60 minutes on Teams | Each section within plus or minus 30 seconds |
 | Thu 08-Fri 09 | Haflidi | Rehearse live C0 on the VM (clean reset first); optionally capture fallback evidence | C0 completes in 3:00 or fallback evidence is labeled |
 | Fri 09 Oct | Martin drives, Haflidi checks | Rehearse live C1-C4 in the native CLI with Squad selected | Commands and expected outputs match the deck |
 | Sat 10-Sun 11 | Martin, Haflidi | Rehearse live C5-C7; optionally capture fallback takes | All 8 demo chapters have a live path and offline fallback evidence |
-| Mon 12 Oct | Both | Rebuild deck (0.19), Rehearsal 2: full timed run with live demos | Under 53:00 before Q&A |
+| Mon 12 Oct | Both | Rebuild deck (0.19.1), Rehearsal 2: full timed run with live demos | Under 53:00 before Q&A |
 | Tue 13 Oct | Both | Dress rehearsal on the presentation laptop; T-24h preflight; `recreate-vm` | Preflight all green |
 | Wed 14 Oct | Both | T-2h and T-15m preflight; deliver | Session ends at 11:00 |
 | By 31 Oct | Martin | Destroy demo VM and Online demo; stop backup protection | Resource groups empty, no cost |
@@ -32,8 +32,8 @@ C3-C5 run the implementation loop live with the B1v2 `alternate_network_payload`
 | C2 Pin the brief, approve a plan | 4:00 | Martin | Martin | Checkpoint shell, Plan mode | demo-runbook.md C2 | live rehearsal |
 | C3 Activate Squad, route work | 4:00 | Martin | Martin | B1v2 brief; `/agent terraform-coder` | demo-runbook.md C3 | live rehearsal |
 | C4 Ground with tools | 4:00 | Martin | Martin | B1v2 brief; skills, MCP, permissions | demo-runbook.md C4 | live rehearsal |
-| C5 Catch a mistake, repair | 5:00 | Haflidi | Martin | B1v2 brief; `terraform-validator`, seeded mutation | demo-runbook.md C5 | live rehearsal |
-| C6 Resume with decisions | 3:00 | Haflidi | Martin | `/resume`, decisions file | demo-runbook.md C6 | live rehearsal |
+| C5 Catch a mistake, repair | 5:00 | Haflidi | Haflidi | B1v2 brief; `terraform-validator`, seeded mutation | demo-runbook.md C5 | live rehearsal |
+| C6 Resume with decisions | 3:00 | Haflidi | Martin | `/resume`, decision inbox | demo-runbook.md C6 | live rehearsal |
 | C7 Reviewed diff | 3:00 | Haflidi | Martin | `terraform-reviewer`, offline suite | demo-runbook.md C7 | live rehearsal |
 
 ## Minute-by-minute run sheet

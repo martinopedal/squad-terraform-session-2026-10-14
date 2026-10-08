@@ -42,7 +42,8 @@ const row = (label, text, detail = '') => `<div class="reference-row"><div><h3>$
 const demoRuns = {
   C0: {
     goal: 'Install, initialize, hire, and verify Squad on a clean Windows 11 VM.',
-    screenCommand: String.raw`Clean VM: prove Git, Copilot CLI, and Squad are absent.
+    screenCommand: String.raw`Clean VM: show Git, Copilot CLI, and Squad are absent.
+(abridged — full prompt in notes)
 winget install Git.Git, GitHub.Copilot, bradygaster.Squad
 /login, clone the public module repo, then run squad init
 copilot --agent squad; paste the small-team prompt; confirm roster
@@ -52,6 +53,7 @@ $wg = '--exact', '--source', 'winget', '--accept-package-agreements', '--accept-
 winget install --id Git.Git @wg
 winget install --id GitHub.Copilot @wg
 winget install --id bradygaster.Squad @wg
+# New tools are on PATH for new shells; refresh this one instead of opening another window.
 $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
 git --version; copilot --version; squad --version
 copilot
@@ -74,7 +76,13 @@ squad doctor`,
   },
   C1: {
     goal: 'Compare two equivalent Plan-mode attempts without sharing later state.',
-    screenCommand: String.raw`/new; /agent; select Squad; /model; /plan; /rename C1-A
+    screenCommand: String.raw`(abridged — full prompt in notes)
+/new
+/agent
+# select Squad
+/model
+/plan
+/rename C1-A
 Paste the alternate_network_payload plan-only prompt.
 Repeat as C1-B with the same model, permissions, and team state.`,
     command: String.raw`/new
@@ -89,13 +97,17 @@ Assert propagation into the requested body while preserving the private API.
 Don't edit files or deploy. Identify affected files, one writer, and checks.
 # Repeat as /rename C1-B with the same model, tools, permissions, and public team state.`,
     expected: 'Two plan artifacts expose one meaningful decision or show that both runs made the same sound choice.',
-    driver: 'Martin drives; Haflidi compares the two results.',
+    driver: 'Haflidi leads/narrates; Martin types.',
     pointAt: 'Point at /model, the selected Squad agent, equal inputs, and one consequence in the plans.',
     fallback: 'Use saved c1-a.txt and c1-b.txt excerpts from the prepared evidence; do not retry live until outputs differ.'
   },
   C2: {
     goal: 'Turn the scoped Terraform change into a reviewed native Plan-mode artifact.',
-    screenCommand: String.raw`/new; /rename guided-clean-run; /agent; select Squad
+    screenCommand: String.raw`(abridged — full prompt in notes)
+/new
+/rename guided-clean-run
+/agent
+# select Squad
 /instructions; /plan; attach main.tf, variables.tf, and contract.tftest.hcl
 Paste the scoped planning prompt, revise it, then inspect /session plan.`,
     command: String.raw`/new
@@ -120,7 +132,12 @@ Put unchanged payload assertions and offline checks before documentation; exclud
   },
   C3: {
     goal: 'Route one writing lane with the clarified B1v2 brief.',
-    screenCommand: String.raw`/agent; select Squad; /tasks; /agent list; /mcp
+    screenCommand: String.raw`(abridged — full prompt in notes)
+/agent
+# select Squad
+/tasks
+/agent list
+/mcp
 /agent terraform-coder
 Paste the B1v2 brief: add alternate_network_payload with four separate asserts, each with error_message.
 /agent squad`,
@@ -129,6 +146,16 @@ Paste the B1v2 brief: add alternate_network_payload with four separate asserts, 
 /tasks
 /agent list
 /mcp
+Squad: lead owns scope and prepares the bounded native terraform-coder brief for
+main.tf and tests/contract.tftest.hcl. No general-purpose task edits those files.
+The brief adds alternate_network_payload with the existing AzAPI mock and plan
+mode. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16, and DNS
+service IP 10.241.0.10. Write four separate assert blocks, one each: the pod
+CIDR, the service CIDR, the DNS service IP, and the API server stays private.
+Each assert gets its own error_message. Reviewer prepares read-only acceptance
+criteria. Devrel owns only the README's test explanation after agreement. Return
+actual task IDs where used, file owners, checks, and unresolved issues. No
+deployment or other edits.
 /agent terraform-coder
 Work only in terraform\modules\aks-automatic-corp.
 
@@ -141,7 +168,9 @@ Add one run block named alternate_network_payload to tests\contract.tftest.hcl. 
   },
   C4: {
     goal: 'Use a skill and a read-only source lookup to change the work, not just decorate it.',
-    screenCommand: String.raw`/skills info test-discipline; /mcp
+    screenCommand: String.raw`(abridged — full prompt in notes)
+/skills info test-discipline
+/mcp
 Paste the source-grounding prompt.
 /permissions`,
     command: String.raw`/skills info test-discipline
@@ -159,7 +188,8 @@ and hosted-system subnets. Don't contact an Azure account or change providers.
   },
   C5: {
     goal: 'Run the offline oracle, seed one labeled mutation, repair narrowly, and rerun the same check.',
-    screenCommand: String.raw`/agent terraform-validator
+    screenCommand: String.raw`(abridged — full prompt in notes)
+/agent terraform-validator
 Run the C5 block three times: before, seeded-failure, repaired.
 /agent terraform-coder: change enablePrivateCluster true -> false, then restore only that field.
 /review; /diff; rerun the same validator block.`,
@@ -172,14 +202,14 @@ Run the C5 block three times: before, seeded-failure, repaired.
       String.raw`  throw 'Remove inherited credentials/overrides in the isolated child, without displaying values.'`,
       '}',
       String.raw`$phase = 'before' # Repeat as seeded-failure and repaired, using new log names.`,
-      String.raw`$log = '..\evidence\c5-$phase.log'`,
+      String.raw`$log = "..\evidence\c5-$phase.log"`,
       String.raw`if (Test-Path $log) { throw 'Keep the previous result; choose a new take.' }`,
       String.raw`terraform -chdir='terraform\modules\aks-automatic-corp' init -backend=false -input=false -lockfile=readonly`,
       String.raw`if ($LASTEXITCODE) { throw 'Offline initialization failed.' }`,
       "terraform -chdir='terraform\\modules\\aks-automatic-corp' test `",
       '  -no-color 2>&1 | Tee-Object $log',
       '$code = $LASTEXITCODE',
-      String.raw`$code | Set-Content '..\evidence\c5-$phase.exit.txt'`,
+      String.raw`$code | Set-Content "..\evidence\c5-$phase.exit.txt"`,
       '"Exit: $code"',
       String.raw`if ($phase -ne 'seeded-failure' -and $code) { throw 'Clean check failed.' }`,
       String.raw`if ($phase -eq 'seeded-failure' -and -not $code) { throw 'Mutation was not detected.' }`,
@@ -204,11 +234,12 @@ Run the C5 block three times: before, seeded-failure, repaired.
   },
   C6: {
     goal: 'Save the public reason, resume the right session, and verify the next task reads it.',
-    screenCommand: String.raw`Scribe: record the public-only decision in .squad\decisions.md.
+    screenCommand: String.raw`(abridged — full prompt in notes)
+Scribe: record the public-only decision under .squad\decisions\inbox\ (Scribe later merges decisions.md).
 /new; /resume guided-clean-run; /cwd; /context; /usage
 Ask the resumed task to cite the decision and next constraints.`,
-    command: String.raw`Scribe: record the public-only decision in .squad\decisions.md: private API
-invariant, caller-owned provider/backend, added network-payload regression,
+    command: String.raw`Scribe: record the public-only decision under .squad\decisions\inbox\ for later merge into .squad\decisions.md.
+Decision: private API invariant, caller-owned provider/backend, added network-payload regression,
 labeled mutation/restoration, exact checks, and the sanitized Azure-validation boundary without exposing private target details.
 Do not copy histories, credentials, or full conversations.
 /new
@@ -224,7 +255,8 @@ Read the saved decision; cite its file and the constraints for the next change.`
   },
   C7: {
     goal: 'Validate the consumer-facing artifact, inspect the diff, and hand it to an independent reviewer.',
-    screenCommand: String.raw`/agent terraform-validator
+    screenCommand: String.raw`(abridged — full prompt in notes)
+/agent terraform-validator
 Run the C7 offline suite: fmt, init, validate, tflint, module test, example init/validate/test, diff.
 /diff; /new; /agent terraform-reviewer`,
     command: String.raw`/agent terraform-validator
@@ -300,9 +332,9 @@ const presenterNotes = new Map([
   ['a-evidence', notePlan('Haflidi', 'Use this appendix for evidence-gate questions.', 'Separate source reproduction, local checks, consumer example, private plan/apply, and read-back.', '0/2/1 Terraform plan exit meanings and no raw private plans.', 'Return to Q&A.')],
   ['a-online', notePlan('Martin', 'Use this appendix for Online landing-zone questions.', 'Cite the same module, thin root, guardrails, runtime checks, and runs 37771532872/37772290635.', 'HTTPS 200 by hostname, title verified, Test-OnlineSecurity 29/29, no private IDs.', 'Return to Q&A.')],
   ['a-security', notePlan('Haflidi', 'Use this appendix for security questions.', 'Explain GHAS baseline, silent gaps, oracle = scripted pass/fail check, and human approvals.', '52+2 local checks, 29/29 Online, 14/14 demo VM, zero open GHAS alerts on Oct 7.', 'Return to Q&A.')],
-  ['a-prompts', notePlan('Martin', 'Use this appendix for repeatability and prompt questions.', 'State the measured eval: B1 0/5, B2 5/5, B3 4/5 after disclosed harness-bug rescore, B1v2 5/5 after clarified brief.', 'No identical-output claim; B1v2 changed the brief and the live run still has to pass.', 'Return to Q&A.')],
+  ['a-prompts', notePlan('Martin', 'Use this appendix for repeatability and prompt questions.', 'State the measured eval: B1 0/5, B2 5/5, B3 4/5 (rescored from 0/5 after a disclosed harness bug; saved diffs, no rerun), B1v2 5/5 after clarified brief.', 'No identical-output claim; B1v2 changed the brief and the live run still has to pass.', 'Return to Q&A.')],
   ['a-bootstrap', notePlan('Haflidi', 'Use this appendix for starting Squad.', 'Walk the five steps: prerequisites, install, squad init, copilot --agent squad, confirm roster, squad doctor, backup before upgrade.', 'WinGet Squad 1.0.1 and docs/playbook.md after PR #7.', 'Return to Q&A.')],
-  ['a-use-cases', notePlan('Martin', 'Use this appendix for when Squad earns its place.', 'Say Copilot CLI runs the work; Squad decides who does it and remembers why.', 'Cross-owner work, long-lived decisions, issue/review flow.', 'Return to Q&A.')]
+  ['a-use-cases', notePlan('Martin', 'Use this appendix for when Squad earns its place.', 'Say Copilot CLI runs the work; Squad routing assigns an accountable owner and records why.', 'Cross-owner work, long-lived decisions, issue/review flow.', 'Return to Q&A.')]
 ]);
 
 export function applyNoteFactOverrides(slideId, noteHTML) {
@@ -450,7 +482,7 @@ export const slides = [
   {
     id: 's15-proof', title: 'Evidence has levels.', time: '37:00-40:00',
     layer: 'Source / local checks / Azure', kind: 'evidence', sources: [tests, tfplan],
-    tip: 'A check proves only what it checks. Private validation and live-demo evidence stay distinct.',
+    tip: 'A check is evidence only for what it checks. Private validation and live-demo evidence stay distinct.',
     content: '',
     treatment: 'Current evidence register'
   },
@@ -576,7 +608,7 @@ export const slides = [
     tip: 'Measure repeatability; do not assume it. Oct 8: B1v2 was 5/5 in this eval after the brief stated the oracle rules.',
     content: `${row('Guardrails first', 'Read effective policy and RBAC at the target before design.<br>Then ground API facts through Learn and Terraform MCP.')}
       ${row('One lane per step', 'Squad lead plans. <code>terraform-coder</code> edits.<br><code>terraform-validator</code> checks. <code>terraform-reviewer</code> reviews in <code>/new</code>.')}
-      ${row('Measured repeatability', 'Oct 8 eval: original <code>alternate_network_payload</code> (B1) stayed 0/5 and was not rescored; B1v2 used a clarified brief with four separate assert blocks, each with its own <code>error_message</code>, and was 5/5 in this eval; <code>seeded-mutation-repair</code> 5/5; <code>forbidden-tag-characters</code> 4/5 after disclosed harness-bug rescore from saved diffs, no Copilot rerun; run 2 stayed red for an out-of-scope README edit.<br>B1v2 met the pre-registered at-least-four-of-five bar; brief changed; base, model, flags fixed; not a guarantee.')}`
+      ${row('Measured repeatability', 'Oct 8 eval: original <code>alternate_network_payload</code> (B1) stayed 0/5 and was not rescored; B1v2 used a clarified brief with four separate assert blocks, each with its own <code>error_message</code>, and was 5/5 in this eval; <code>seeded-mutation-repair</code> 5/5; <code>forbidden-tag-characters</code> B3 4/5*.<br><em>*B3 4/5 (rescored from 0/5 after a disclosed harness bug; saved diffs, no rerun); run 2 stayed red for an out-of-scope README edit.</em><br>B1v2 met the pre-registered at-least-four-of-five bar; brief changed; base, model, flags fixed; not a guarantee; the live run still has to pass.')}`
   },
   {
     id: 'a-bootstrap', title: 'Start a squad in five steps.', time: 'Appendix',
@@ -588,10 +620,10 @@ export const slides = [
   },
   {
     id: 'a-use-cases', title: 'When Squad earns its place.', time: 'Appendix',
-    layer: 'Copilot CLI runs the work / Squad decides who and remembers why', kind: 'reference', sources: [cli, squad, guide],
+    layer: 'Copilot CLI runs the work / Squad routing assigns owner and records why', kind: 'reference', sources: [cli, squad, guide],
     tip: 'Small, well-understood edit? Use one Copilot CLI session and skip Squad.',
     content: `${row('Work across owners', 'Module, tests, and docs in parallel.<br>One writer per file, handoffs that name the next check.')}
-      ${row('Work that outlives a session', 'Decisions in <code>.squad\\decisions.md</code>, histories per member.<br>Resume tomorrow, or hand over to a colleague.')}
+      ${row('Work that outlives a session', 'Decision inbox entries under <code>.squad\\decisions\\inbox\\</code>; Scribe later merges <code>decisions.md</code>.<br>Resume tomorrow, or hand over to a colleague.')}
       ${row('Backlog and review', 'Issues routed by <code>squad:{member}</code> labels; Ralph keeps it moving.<br>A rejected change is revised by a different author.')}`
   }
 ];

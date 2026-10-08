@@ -67,7 +67,7 @@ Only genuine Copilot CLI with Squad selected, standalone or in a real integrated
 
 Source qualification may finish before delivery. The live chapter must execute from a disclosed clean checkpoint or explicitly use the Offline fallback line. Do not substitute prior qualification output for a live result. If optional fallback recordings are used later, record the qualification revision, take-start checkpoint, prepared code and Squad state, and the actual change executed in the take.
 
-Deck 0.19 removes on-screen media attachment controls. Keep fallback recordings/screenshots outside the public package unless presenters explicitly decide to publish them in a later build.
+Deck 0.19.1 removes on-screen media attachment controls. Keep fallback recordings/screenshots outside the public package unless presenters explicitly decide to publish them in a later build.
 
 The legacy `src\media.json` file remains harmless metadata for optional fallback review, but the current live deck does not render media placeholders or local MP4 controls.
 
