@@ -25,24 +25,28 @@ Common oracle commands were `terraform fmt -check -recursive`, `terraform init -
 | Brief | Task | Green runs | Repeatability bar | Oracle evidence | Notes |
 | --- | --- | ---: | --- | --- | --- |
 | B1 | `alternate_network_payload` | 0/5 | Failed | Every run passed 53/53 module contract tests and 2/2 example tests | All five runs asserted the pod CIDR, service CIDR, DNS service IP, and private API server value, but used two assert blocks. The pre-registered rule required at least three assert blocks, so the result is reported as fail and was not rescored. |
-| B1v2 | `alternate_network_payload_clarified_assert_shape` | **B1v2 score: PENDING (TBD-B1V2)** | Pending | Pending re-measurement result | Clarified brief asks for four separate assert blocks, each with its own `error_message`; the pre-registered B1v2 rule requires `>= 4` asserts. |
+| B1v2 | `alternate_network_payload_clarified_assert_shape` | 5/5 | Passed | Five fresh runs from base `4689d3c` were green under the same pinned conditions | Clarified brief asked for four separate assert blocks, each with its own `error_message`; run durations were 61.04-113.658 s, with no failure modes observed. |
 | B2 | `seeded-mutation-repair` | 5/5 | Passed | Every run passed 52/52 module contract tests and 2/2 example tests | The seeded repair met the oracle in all five fresh runs. |
 | B3 | `forbidden-tag-characters` | 4/5 | Passed | Every rescored B3 run passed 53/53 module contract tests and 2/2 example tests | Original automated B3 was 0/5 because the oracle failed before scoring after the bad `-AllowedFiles` invocation. After fixing the harness bug, saved `final.diff` artifacts were rescored without rerunning Copilot; final B3 was 4/5, and run 2 stayed red for the out-of-scope README edit. |
 
 ### B1v2: clarified brief (re-measurement)
 
-B1v2 exists because the original B1 brief did not state the `>= 3` assert-block rule explicitly. All five original B1 runs passed the Terraform checks, but each used two assert blocks, so original B1 stays 0/5 and is not rescored.
+B1v2 exists because the original B1 brief did not state the `>= 3` assert-block rule explicitly. All five original B1 runs passed the Terraform checks, but each used two assert blocks. The pre-registered oracle required at least three assert blocks, so original B1 stays 0/5 and is not rescored.
 
 The clarified B1v2 brief says: "Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16 and DNS service IP 10.241.0.10. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file."
 
-B1v2 uses the same harness and pins as the original eval, per the eval agent. Because the clearer brief was measured after seeing the B1 result, it measures whether saying the oracle rule in the brief changes the outcome; it is not a retroactive pass for B1. B1v2 result: **B1v2 score: PENDING (TBD-B1V2)**.
+Method: B1v2 used five fresh runs from base `4689d3c`, model `claude-sonnet-5`, and the same harness, flags, allowed tools, and pins as the original eval. Its pre-registered oracle required `>= 4` separate assert blocks. It was a separate brief written after seeing B1, not a retroactive pass for B1.
+
+Result: 5/5 green, meeting the `>= 4/5` bar. The five runs lasted 108.031 s, 97.131 s, 87.806 s, 61.04 s, and 113.658 s (61-114 s rounded), and no failure modes were observed. The ambiguous B1 brief failed the stricter oracle 5/5 times in the same way: it produced two assert blocks. Stating the expected test shape in the brief produced 5/5 green under the same pinned conditions. That is consistent with brief precision being the difference, not more retries.
+
+This is still a five-run checkpoint. It is repeatable in this eval under pinned conditions, not a guarantee and not evidence that the model is deterministic.
 
 ## What this shows
 
-- Under these pins and prompts, two of three briefs met the pre-registered `>= 4/5` repeatability bar.
+- Under these pins and prompts, two of the three original briefs met the pre-registered `>= 4/5` repeatability bar; the separate B1v2 clarified-brief follow-up also met it.
 - B1 is an important failure because the functional tests passed while the style and maintainability rule failed. The harness oracle, not the model summary, marked the result.
 - B3 shows why file-scope checks matter. Passing tests did not excuse an out-of-scope edit.
-- The sample is small: 15 runs across three briefs. Treat it as a measured checkpoint, not a statistical guarantee.
+- The sample is small: the original eval was 15 runs across three briefs, plus one five-run clarified follow-up. Treat it as a measured checkpoint, not a statistical guarantee.
 
 ## What this does not show
 

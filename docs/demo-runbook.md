@@ -141,8 +141,8 @@ actual task IDs where used, file owners, checks, and unresolved issues. No
 deployment or other edits.
 ```
 
-This matches the B1v2 brief used in the October 8 re-measurement, so the filmed
-run matches what was measured.
+This matches the B1v2 brief used for the filmed C3-C5 loop (5/5 green in the
+October 8 re-measurement), so the filmed run matches what was measured.
 
 Show reviewed roster/charters, `/tasks`, `/agent list`, actual starts, and
 handoffs. The list must include `terraform-coder`, `terraform-validator`, and
