@@ -6,7 +6,7 @@ Record the current real Copilot CLI shell with Squad selected. Keep using this
 shell; don't open a replacement terminal or custom UI. Follow
 [demo-runbook.md](demo-runbook.md) for the C1-C7 operator sequence.
 
-The user selected `build_then_record_clean_run`: qualify the code first, then
+The user selected `qualify_then_run_clean_checkpoint`: qualify the code first, then
 film genuine new execution from a disclosed clean checkpoint. Qualification
 work is not already-filmed evidence or the first recorded implementation.
 

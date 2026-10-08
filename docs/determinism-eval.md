@@ -1,10 +1,10 @@
 # Repeatability eval: three Terraform briefs, five runs each
 
-Audience: engineers using Copilot CLI and Squad for bounded Terraform changes. You will learn what we measured, what passed, what failed, and how to read the result without calling the model deterministic.
+Audience: engineers using Copilot CLI and Squad for bounded Terraform changes. You will learn what we measured, what passed, what failed, and how to read the result without claiming identical model behavior.
 
 ## Purpose
 
-The eval measures repeatability for small Terraform maintenance briefs under pinned conditions. It does not try to establish deterministic model behavior, general agent quality, or Azure deployment correctness. The useful question was: from the same starting point, how often does the run reach the pre-registered oracle?
+The eval measures repeatability for small Terraform maintenance briefs under pinned conditions. It does not try to establish identical model behavior, general agent quality, or Azure deployment correctness. The useful question was: from the same starting point, how often does the run reach the pre-registered oracle?
 
 ## Method
 
@@ -50,7 +50,7 @@ This is still a five-run checkpoint. It is repeatable only in this eval under pi
 
 ## What this does not show
 
-- It does not establish that Copilot CLI, the model, Terraform, or Squad are deterministic.
+- It does not establish that Copilot CLI, the model, Terraform, or Squad produce identical output across runs.
 - It does not establish that future runs will behave the same after model, CLI, MCP, prompt, or repository changes.
 - It does not establish that deployed Azure resources are correct or secure. This eval used offline Terraform oracles.
 

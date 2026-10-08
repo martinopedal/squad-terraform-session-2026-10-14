@@ -10,7 +10,7 @@ Martin Opedal hosts the opening, owns the brief, and normally drives the present
 
 The demo chapters are live C0-C7 with the same timings: 29 minutes of demo, 24 minutes of other live content, and Q&A at 53:00. If a live path stalls, use an optional fallback: reviewed evidence screenshots, stored run results, or an approved recording of the same commands. Do not depend on a media manifest, a reserved video slot, or unattached video.
 
-Delivery follows `build_then_record_clean_run` as a provenance rule: qualify the source first, then run the live chapter from a disclosed clean checkpoint. Keep the upstream pin, qualification revision, and live checkpoint distinct, including prepared code and starting Squad state. Identify the change executed in the live run. This is not first-ever implementation. Do not present earlier logs as fresh live output.
+Delivery follows `qualify_then_run_clean_checkpoint` as a provenance rule: qualify the source first, then run the live chapter from a disclosed clean checkpoint. Keep the upstream pin, qualification revision, and live checkpoint distinct, including prepared code and starting Squad state. Identify the change executed in the live run. This is not first-ever implementation. Do not present earlier logs as fresh live output.
 
 Every product chapter must show genuine Copilot CLI with Squad selected, either standalone or in a real integrated terminal. MCP means Model Context Protocol, a way to connect the CLI to external tools or sources. Capture or recording tools stay off-screen as optional fallback infrastructure, not Squad features. Do not substitute custom viewers, fabricated screenshots, or terminal output for the live product.
 
@@ -85,7 +85,7 @@ Repeat in the second clean worktree as `C1-B` with the same model, permissions, 
 
 **Haflidi:** Copilot CLI is the execution environment: Plan mode, file context, custom agents, tool access, permissions, subagents, review, and session controls. You can use all of that without Squad. The third layer is tools and evidence: Terraform, Git, Microsoft Learn, and MCP servers return artifacts, and none of them becomes correct just because an agent invoked it.
 
-**Martin:** Squad adds a repository-backed team layer: a roster, narrow charters, routing and handoffs, and decisions a later task can recover. It runs through the CLI; it doesn't replace it. The human sets a bounded objective, the CLI runs the work, Squad organizes the responsibilities, and the result comes back as files, decisions, and check output we can inspect.
+**Martin:** Squad adds a repository-backed team layer: a roster, meaning the team list; narrow charters, meaning role instructions; routing and handoffs; and decisions a later task can recover. It runs through the CLI; it doesn't replace it. The human sets a bounded objective, the CLI runs the work, Squad organizes the responsibilities, and the result comes back as files, decisions, and check output we can inspect.
 
 ## s07-agent-setup | 07:00-08:00 | Meet the agent setup
 
@@ -93,11 +93,11 @@ Repeat in the second clean worktree as `C1-B` with the same model, permissions, 
 
 **Martin:** Before we use the team, show the audience the configuration shape. `AGENTS.md` and `.github\copilot-instructions.md` are always-on repository guidance. The Terraform instruction file applies to HCL, so Terraform edits carry stricter source and validation rules than a normal prose change.
 
-**Haflidi:** Squad is the coordinator. `.github\agents\squad.agent.md` points the CLI to the coordinator, and `.squad\` contains the team, routing rules, charters, and decisions. Squad owns the shared decisions and handoffs. It is not a Terraform sandbox.
+**Haflidi:** Squad is the coordinator. `.github\agents\squad.agent.md` points the CLI to the coordinator, and `.squad\` contains the team roster, routing rules, role charters, and decisions. Squad owns the shared decisions and handoffs. It is not a Terraform sandbox.
 
 **Martin:** The narrow native profiles are selected explicitly by the operator. I choose `/agent terraform-coder` for read, search, edit, and read-only documentation sources. I choose `/agent terraform-validator` for offline `fmt`, `init -backend=false`, `validate`, `tflint`, and `terraform test`. It never plans or applies. I choose `/agent terraform-reviewer` for a separate read-only review context.
 
-**Haflidi:** MCP is scoped to information sources here: Microsoft Learn, the HashiCorp Terraform registry docs, and `squad_state` for Squad memory. Tool filters reduce what is available to a profile. They do not create a security boundary, and generic Squad tasks do not inherit those profile filters automatically.
+**Haflidi:** MCP means Model Context Protocol. It is scoped to information sources here: Microsoft Learn, the HashiCorp Terraform registry docs, and `squad_state` for Squad memory. Tool filters reduce what is available to a profile. They do not create a security boundary, and generic Squad tasks do not inherit those profile filters automatically.
 
 ## demo-c0 | 08:00-11:00 | C0: From zero to a squad
 
@@ -108,10 +108,13 @@ Repeat in the second clean worktree as `C1-B` with the same model, permissions, 
 **Commands and prompt to type:**
 
 ```powershell
-winget install --id Git.Git --exact
-winget install --id GitHub.Copilot --exact
-winget install --id Microsoft.PowerShell --exact
-winget install --id bradygaster.Squad --exact
+$PSVersionTable.PSVersion; Get-Command git, copilot, squad -ErrorAction SilentlyContinue
+$wg = '--exact', '--source', 'winget', '--accept-package-agreements', '--accept-source-agreements', '--silent'
+winget install --id Git.Git @wg
+winget install --id GitHub.Copilot @wg
+winget install --id bradygaster.Squad @wg
+$env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
+git --version; copilot --version; squad --version
 copilot
 ```
 
@@ -119,28 +122,34 @@ Inside Copilot CLI:
 
 ```text
 /login
+/exit
 ```
 
 Back in the repository terminal:
 
 ```powershell
+git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git $HOME\demo\aks-module
+Set-Location $HOME\demo\aks-module
 squad init
+git status --short
 copilot --agent squad
 ```
 
 Then type:
 
 ```text
-We maintain a reusable Terraform module for AKS Automatic on azapi that deploys into an existing Azure landing zone. Work is Terraform module code, terraform test contract tests, and consumer documentation. Propose a small team.
+We maintain a reusable Terraform module for AKS Automatic on azapi that deploys into an
+existing Azure landing zone. Work is Terraform module code, terraform test contract tests,
+and consumer documentation. Propose a small team.
 ```
 
-Verify:
+Confirm the proposed roster. Then exit the CLI and verify:
 
 ```powershell
 squad doctor
 ```
 
-**Point at the output:** Show the clean machine, the installed versions, `squad init` output, the proposed roster, the human confirmation, and `squad doctor` passing. Explain that `squad init` is a shell command, not an agent prompt.
+**Point at the output:** Show the clean machine, installed versions, `squad init` output, the Git status, the proposed roster, the human confirmation, and `squad doctor` passing. Say AzAPI is the Terraform provider for Azure ARM and preview resources. Explain that `squad init` is a shell command, not an agent prompt.
 
 **Handoff line:** "Martin, we have a reviewable team in Git; now show how the work stays bounded."
 
@@ -264,7 +273,7 @@ Return to Squad:
 
 **Handoff line:** "Haflidi, the writer returned a file change; now we ground the requirement with guidance and source evidence."
 
-**Offline fallback:** Use `c3-handoffs.md`, saved diffs, and the eval record: B1 0/5 to B1v2 5/5 after clarifying the four-assert oracle rule. Do not claim a causal proof beyond this measured checkpoint.
+**Offline fallback:** Use `c3-handoffs.md`, saved diffs, and the eval record: B1 0/5 to B1v2 5/5 after clarifying the four-assert oracle rule. Do not claim a causal conclusion beyond this measured checkpoint.
 
 **Martin:** The point is ownership. The coder gets one writing lane and one exact brief. The handoff must name files, checks, and unresolved issues. A profile switch alone proves nothing.
 
@@ -368,7 +377,7 @@ Change nothing else.
 
 Run the same C5 block with `$phase = 'repaired'`.
 
-**Point at the output:** Show the command, exit status, failure assertion, `/review`, repair diff, and identical rerun. Say "deliberate lab mutation, not an AI-discovered defect." B1v2 met the `>= 4/5` eval bar, but this live runtime check must still pass and is not proof of Azure behavior.
+**Point at the output:** Show the command, exit status, failure assertion, `/review`, repair diff, and identical rerun. Say "deliberate lab mutation, not an AI-discovered defect." B1v2 met the `>= 4/5` eval bar, but this live runtime check must still pass and is not Azure acceptance evidence.
 
 **Handoff line:** "Martin, the local check caught and repaired this mutation; separate that from Azure evidence."
 
@@ -562,7 +571,7 @@ Supply the exact diff, files, revision, MCP citations, and sanitized validator r
 
 ## a-online | Appendix | Same module, Online landing zone
 
-> Reference only. Answer "can this run somewhere simpler?" Keywords: same module, thin root, guardrails constrain, runtime evidence not hope. The demo-env repo root `deployments/online` consumes the module by tag `v0.6.0` and owns providers, backend, network, and the namespace. Three landing-zone controls shaped it: storage forced private (state through a private endpoint, so an ephemeral VNet-integrated runner), `Deny-Subnet-Without-Nsg` (the AKS-managed VNet was rejected, so BYO subnets with NSGs and an explicit NAT Gateway), and AKS RBAC Writer cannot create namespaces (managed namespace through ARM). Nothing was exempted. The chain: PR, protected branch, human environment gate, OIDC, plan and apply in one job with no plan artifact, a public API server that accepts only the runner's static egress IP, Entra-only kubeconfig, and a runtime check step that fails unless the hostname returns HTTPS 200, HTTP redirects, and DNS resolves to the App Routing controller Service address. The current page at `https://aks-online-demo.swedencentral.cloudapp.azure.com/` is the branded NIC 2026 demo, served by pinned `nginx-unprivileged`, showing the serving pod, render time, flow, and speakers; apply runs 37771532872 and 37772290635 both ended with plan "No changes", DNS matching the ingress IP, HTTPS 200 by hostname, and title "AKS Automatic | NIC 2026 demo". `Test-OnlineSecurity.ps1` is 29/29 PASS. The real runs found seven issues: five module fixes written test-first (user-assigned identity for BYO subnets, `userAssignedNATGateway` egress, two perpetual drifts, and the SKU: the module sent `Base`, now `cluster_sku = "Automatic"` with managed system node pools), one root fix (no module-level `depends_on`), and one fixed later in the module (`count` on a plan-time-unknown subnet ID, now the explicit `use_external_subnets` flag with a regression test). The cluster was rebuilt as the Automatic SKU because Base to Automatic migration is not supported. Detail and evidence: `docs/online-demo.md`. Do not show subscription, tenant, or principal IDs.
+> Reference only. Answer "can this run somewhere simpler?" Keywords: same module, thin root, guardrails constrain, runtime evidence not hope. The demo-env repo root `deployments/online` consumes the module by tag `v0.6.0` and owns providers, backend, network, and the namespace. Three landing-zone controls shaped it: storage forced private (state through a private endpoint, so an ephemeral VNet-integrated runner), `Deny-Subnet-Without-Nsg` (the AKS-managed VNet was rejected, so BYO subnets with NSGs and an explicit NAT Gateway), and AKS RBAC Writer cannot create namespaces (managed namespace through ARM). Nothing was exempted. The chain: PR, protected branch, human environment gate, OIDC, plan and apply in one job with no plan artifact, a public API server that accepts only the runner's static egress IP, Entra-only kubeconfig, and a runtime check step that fails unless the hostname returns HTTPS 200, HTTP redirects, and DNS resolves to the App Routing controller Service address. App Routing is Azure's managed NGINX ingress add-on for AKS. The current page at `https://aks-online-demo.swedencentral.cloudapp.azure.com/` is the branded NIC 2026 demo, served by pinned `nginx-unprivileged`, showing the serving pod, render time, flow, and speakers; apply runs 37771532872 and 37772290635 both ended with plan "No changes", DNS matching the ingress IP, HTTPS 200 by hostname, and title "AKS Automatic | NIC 2026 demo". `Test-OnlineSecurity.ps1` is 29/29 PASS. The real runs found seven issues: five module fixes written test-first (user-assigned identity for BYO subnets, `userAssignedNATGateway` egress, two perpetual drifts, and the SKU: the module sent `Base`, now `cluster_sku = "Automatic"` with managed system node pools), one root fix (no module-level `depends_on`), and one fixed later in the module (`count` on a plan-time-unknown subnet ID, now the explicit `use_external_subnets` flag with a regression test). The cluster was rebuilt as the Automatic SKU because Base to Automatic migration is not supported. Detail and evidence: `docs/online-demo.md`. Do not show subscription, tenant, or principal IDs.
 
 ## a-security | Appendix | What AI found that the scanners did not
 

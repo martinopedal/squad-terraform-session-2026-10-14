@@ -2,7 +2,7 @@
 
 C0 (from zero to a squad) runs live on the clean Windows 11 demo VM, not in this checkpoint shell. Follow [clean-machine-demo.md](clean-machine-demo.md) for C0. Everything below covers the live C1-C7 operator sequence.
 
-Use `build_then_record_clean_run` as the provenance rule: qualify the module first, then run genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Optional recordings are fallback evidence only. Don't open another terminal or substitute a viewer. This live run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
+Use `qualify_then_run_clean_checkpoint` as the provenance rule: qualify the module first, then run genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Optional recordings are fallback evidence only. Don't open another terminal or substitute a viewer. This live run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
 
 Local module qualification passed: 52 module cases, two caller cases, and both mutation proofs. Hosted Terraform matrix CI run 36990206303 passed, native agent-setup CI passed in run 37286068987, final module verification passed in run 37286237657, and docs-only Azure-validation release CI passed in run 37305768318. A private IaC consumer deployed and read back the module on October 5, 2026, pinned to runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized facts are public, private inputs are not. These are instructions for the live run, not an executed transcript. Native profile selection, optional fallback recordings, and full rehearsal remain separate gates.
 
@@ -47,7 +47,7 @@ batch `-p` runs without this wait sometimes reported the MCP tools as missing
 ("tool catalog changed before tool could be invoked"). With user servers
 disabled, the coder reached Microsoft Learn in 4 of 4 runs.
 
-The native Terraform MCP binary is not used for this demo. Restart Copilot in
+The native Terraform MCP binary is not used for this demo. MCP means Model Context Protocol: external tools or sources connected to the CLI. Restart Copilot in
 this same window only if discovery is stale, then inspect again. Static checks and MCP discovery are not proof of profile
 activation. Squad remains the coordinator; the narrow-tool lane uses explicit
 native selections, not an assumption that general-purpose Squad tasks inherit

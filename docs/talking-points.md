@@ -62,7 +62,7 @@ Don't say: Squad replaces Terraform or Copilot CLI.
 - `AGENTS.md` and Copilot instructions are always-on repo guidance.
 - Squad owns routing and decisions through `.squad\`.
 - Operator explicitly selects `terraform-coder`, `terraform-validator`, and `terraform-reviewer`.
-- MCP is used for read-only docs and Squad memory.
+- MCP (Model Context Protocol) is used for read-only docs and Squad memory.
 Takeaway: profiles create narrow lanes, not a sandbox.
 Demo cue: point left to right through the setup diagram.
 Don't say: generic Squad tasks inherit the profile filters.
@@ -70,9 +70,9 @@ Handoff: "Haflidi, show them how you get here from nothing."
 
 ### 08:00-11:00, C0 From zero to a squad, Haflidi lead
 - Who drives: Haflidi on the clean Windows 11 VM; Martin keeps credentials off-screen.
-- Type: `winget install --id Git.Git --exact`; `winget install --id GitHub.Copilot --exact`; `winget install --id Microsoft.PowerShell --exact`; `winget install --id bradygaster.Squad --exact`; `copilot`; `/login`; `squad init`; `copilot --agent squad`; `squad doctor`.
-- Prompt: `We maintain a reusable Terraform module for AKS Automatic on azapi... Propose a small team.`
-- Point at: no tools installed, versions, `squad init` output, proposed roster, confirmation, `squad doctor` pass.
+- Type: prove Git/Copilot/Squad are absent; run `$wg = ...`; install `Git.Git`, `GitHub.Copilot`, and `bradygaster.Squad` with `@wg`; refresh `PATH`; show versions; `copilot`; `/login`; `/exit`; clone the public module; `squad init`; `git status --short`; `copilot --agent squad`; confirm roster; `/exit`; `squad doctor`.
+- Prompt: `We maintain a reusable Terraform module for AKS Automatic on AzAPI (Terraform provider for Azure ARM/preview resources)... Propose a small team.`
+- Point at: no tools installed, versions, `squad init` output, `git status --short`, proposed roster, confirmation, `squad doctor` pass.
 - Handoff: "Martin, we have a reviewable team in Git; now show bounded work."
 - Offline fallback: same VM via `scripts\Connect-DemoVm.ps1`; if unavailable, use `Test-DemoVm.ps1` 14/14 and setup screenshots.
 Takeaway: install, init, hire, verify. The team is reviewable in Git from minute one.
@@ -152,7 +152,7 @@ Don't say: illustrative assertion is passing output.
 ### 30:00-32:00, s13-test-gap, Haflidi
 - Keep negative cases.
 - Add positive contract assertions.
-- If the oracle has a rule, say it in the brief.
+- If the oracle (scripted pass/fail check) has a rule, say it in the brief.
 - Test the test with a deliberate mutation.
 Takeaway: a mock suite is useful only when it can fail for the right reason.
 Demo cue: hand control to Haflidi.
@@ -164,7 +164,7 @@ Don't say: plan-mode tests isolate every provider automatically.
 - Point at: command, exit status, failure assertion, labeled mutation, review, repair diff, identical rerun.
 - Handoff: "Martin, the local check caught and repaired this mutation; separate that from Azure evidence."
 - Offline fallback: preserved C5 logs, file hashes, B2 5/5 seeded-repair eval, B3 4/5 after harness-bug rescore.
-Takeaway: preserve cause and effect. A runtime check is not proof of Azure behavior.
+Takeaway: preserve cause and effect. A runtime check is not Azure acceptance evidence.
 Don't say: the mutation was an AI-discovered defect.
 
 ### 37:00-40:00, s15-proof, Haflidi
@@ -317,12 +317,12 @@ Don't say: we exempted a policy, or the demo runs from a laptop.
 - The agent found what raises no alert: Checkov skipped `main.tf` since August; Security Scan disabled for inactivity; a falsely green monitor; an approval race; a VM check blind to per-user installs.
 - MCP (Microsoft Learn) supplied product rules; skills enforce secret handling and reviewer lockout.
 - Every claim re-checked: 52 module contract cases plus 2 caller/example Terraform test cases; 29/29 Online read-back checks including negative tests from the internet; 14 VM checks. A human approved every merge and Azure write.
-Takeaway: GHAS covers code, secrets, and advisories; the agent plus an oracle closes the silent gaps.
+Takeaway: GHAS covers code, secrets, and advisories; the agent plus a scripted pass/fail oracle closes the silent gaps.
 Don't say: AI made it secure, or there are no gaps (single-maintainer admin merges, IDs in history, Checkov cannot read azapi bodies).
 
 ### a-prompts, either speaker
 - Guardrails first, then sourced API facts through MCP.
-- One lane per step: lead plans, coder edits, validator runs the oracle, reviewer in `/new`.
+- One lane per step: lead plans, coder edits, validator runs the scripted pass/fail oracle, reviewer in `/new`.
 - Consume like a customer, deploy through the pipeline.
 - Step-by-step: [playbook](playbook.md).
 - In the October 8 eval, repeatability was measured as five fresh runs with a pre-registered `>= 4/5` green bar. Results: B1 0/5 because all five ambiguous-brief runs used two assert blocks, B2 5/5, and B3 4/5 after a disclosed harness-bug rescore from saved diffs, with no Copilot rerun and the out-of-scope README edit still red. B1v2 was a separate clarified follow-up after seeing B1; the B1v2 brief stated the four-assert shape and was 5/5 green under the same pinned conditions, with 61-114 s runs and no failure modes observed in those five runs. C3-C5 use that B1v2 loop because it met the October 5 `>= 4/5` bar, but the live run still has to pass. Lesson: state the oracle's rules in the brief. Treat this as a measured checkpoint, not a guarantee.
