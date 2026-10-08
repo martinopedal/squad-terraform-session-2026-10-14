@@ -1,6 +1,6 @@
 # Presenter talking points — Martin Opedal, Enterprise Cloud Solution Architect, Microsoft; Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft
 
-Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track.md). Recording details: [demo-runbook.md](demo-runbook.md). Product update detail: [whats-new.md](whats-new.md). Deck URL: <https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/>.
+Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track.md). Live demo runbook: [demo-runbook.md](demo-runbook.md). Product update detail: [whats-new.md](whats-new.md). Deck URL: <https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/>.
 
 ## Opening hooks / big news
 
@@ -15,25 +15,27 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 ### 00:00-01:00, s01-outcome, Martin
 - Define the useful artifact: reusable Terraform module.
 - Name the boundary: private AKS in an existing landing zone.
-- Set the recording honesty rule before any demo.
+- Set the live-demo honesty rule before any demo.
 - Introduce both speakers with full name, title, and Microsoft employer.
 Takeaway: the output must be inspectable by another engineer.
 Demo cue: none.
 Say: Azure validation happened only through the private IaC consumer, with sanitized read-back facts. Don't expose private IDs or imply public examples are deployable.
 
 ### 01:00-04:00, C1, Haflidi lead
-- Same brief, same checkpoint, same model.
-- Compare one design decision, not verbosity.
-- Repository memory and tool access can change results.
+- Who drives: Haflidi narrates; Martin types in A and B.
+- Type: `/new`, `/agent` Squad, `/model`, `/plan`, `/rename C1-A`; repeat as `C1-B`.
+- Prompt: `Plan only: add alternate_network_payload...` with pod `172.21.0.0/16`, service `10.241.0.0/16`, DNS `10.241.0.10`, preserve private API, no edits or deploy.
+- Point at: selected model, same prompt, selected agent, one consequence in the plan.
+- Handoff: "Martin, take the controlled brief into Plan mode."
+- Offline fallback: `c1-a.txt`, `c1-b.txt`, eval results B1 0/5, B2 5/5, B3 4/5 after harness-bug rescore, B1v2 5/5.
 Takeaway: two attempts are useful only when the inputs are controlled.
-Demo cue: show `/model`, selected agent, and one consequence.
 Don't say: two runs establish a model error rate.
 
 ### 04:00-05:00, s03-baseline, Martin
 - Start from inherited public source.
 - Separate inherited issues from AI-caused issues.
-- Qualification happened before filming.
-Takeaway: disclose preparation before you narrate a clean run.
+- Qualification happened before the live run.
+Takeaway: disclose preparation before you run the clean demo.
 Demo cue: source pin and mismatch excerpt.
 Don't say: this was the first implementation.
 
@@ -45,12 +47,12 @@ Don't say: this was the first implementation.
 - Squad 1.0 / 1.0.1 (Oct 3-4): release tags exist; the demo uses 1.0.1 from WinGet/Homebrew/GitHub Releases. Pinned docs at `93aec83` may still carry Experimental/alpha wording; npm latest was 0.13.1.
 Takeaway: the platform moved from preview pieces to governable engineering controls.
 Demo cue: point to dates and status labels; end on the Squad tile.
-Don't say: computer use is GA, or part of this Terraform recording; npm latest is 1.0.1.
+Don't say: computer use is GA, or part of this Terraform live demo; npm latest is 1.0.1.
 
 ### 06:00-07:00, s04-layers, Haflidi then Martin
 - CLI hosts execution.
 - Squad coordinates responsibilities.
-- Terraform, Git, Learn, and MCP provide evidence.
+- Terraform, Git, Learn, and MCP (Model Context Protocol) provide evidence.
 - Name the layer before troubleshooting.
 Takeaway: a good agent workflow returns files, decisions, and checks.
 Demo cue: trace the diagram arrows.
@@ -67,12 +69,13 @@ Don't say: generic Squad tasks inherit the profile filters.
 Handoff: "Haflidi, show them how you get here from nothing."
 
 ### 08:00-11:00, C0 From zero to a squad, Haflidi lead
-- Clean Windows 11 VM, reached only through Bastion. Martin uses Entra sign-in with MFA; Haflidi uses a local account because B2B guests cannot use Entra VM sign-in, with the credential handed over out of band. No Git, CLI, or Squad installed.
-- `winget install` Git, GitHub CLI, PowerShell 7, Copilot CLI, Squad. Show versions.
-- `copilot`, `/login`, then `squad init` in the repo terminal (a shell command, not a prompt).
-- `copilot --agent squad`: Init Mode proposes a roster, nothing is written until you confirm. `squad doctor`.
+- Who drives: Haflidi on the clean Windows 11 VM; Martin keeps credentials off-screen.
+- Type: `winget install --id Git.Git --exact`; `winget install --id GitHub.Copilot --exact`; `winget install --id Microsoft.PowerShell --exact`; `winget install --id bradygaster.Squad --exact`; `copilot`; `/login`; `squad init`; `copilot --agent squad`; `squad doctor`.
+- Prompt: `We maintain a reusable Terraform module for AKS Automatic on azapi... Propose a small team.`
+- Point at: no tools installed, versions, `squad init` output, proposed roster, confirmation, `squad doctor` pass.
+- Handoff: "Martin, we have a reviewable team in Git; now show bounded work."
+- Offline fallback: same VM via `scripts\Connect-DemoVm.ps1`; if unavailable, use `Test-DemoVm.ps1` 14/14 and setup screenshots.
 Takeaway: install, init, hire, verify. The team is reviewable in Git from minute one.
-Demo cue: recorded clip; live fallback is the same VM via `scripts\Connect-DemoVm.ps1`.
 Don't say: `squad init` is an agent request; npm gives you 1.0; the VM is a presenter laptop.
 
 ### 11:00-12:00, s05-parallel, Martin
@@ -92,11 +95,14 @@ Demo cue: point from platform-owned network into module.
 Don't say: the demo creates a landing zone.
 
 ### 14:00-18:00, C2, Martin lead
-- Show native Plan mode, not just a Markdown plan.
-- Inspect instructions and exact file context.
-- Human revision happens before implementation.
+- Who drives: Martin types; Haflidi challenges scope.
+- Type: `/new`, `/rename guided-clean-run`, `/agent` Squad, `/instructions`, `/plan`.
+- Prompt: reference `main.tf`, `variables.tf`, and `tests\contract.tftest.hcl`; plan the C1 regression and README explanation; keep eight inputs, six outputs, and AzAPI intact; plan labeled mutation and repair; no implementation, Azure lookup, apply, dependency upgrade, or state operation.
+- Revise: `Put unchanged payload assertions and offline checks before documentation; exclude infrastructure redesign.` Then inspect `/session plan`.
+- Point at: Plan indicator, effective instructions, file references, accepted criteria, visible exit from Plan mode.
+- Handoff: "Haflidi, the scope is approved; next we assign one writer."
+- Offline fallback: `c2-approved-plan.md` and screenshots of Plan mode, `/instructions`, and `/session plan`.
 Takeaway: approval authorizes a code change, not an Azure apply.
-Demo cue: `/plan`, `/session plan`, approved criteria.
 Don't say: `--plan --mode autopilot` is safe for this chapter.
 
 ### 18:00-20:00, s08-plan-boundary, Haflidi
@@ -108,13 +114,13 @@ Demo cue: reveal boundary warning.
 Don't say: deleting awkward root files is a repair.
 
 ### 20:00-24:00, C3, Martin lead
-- Show Squad selected in the repository.
-- Show only relevant roster and routing.
-- Select `/agent terraform-coder` for the writing lane.
-- B1v2 result: 5/5 green in the October 8 re-measurement, meeting the `>= 4/5` bar; C3-C5 films that clarified brief per the October 5 plan.
-- Return with actual files and handoff evidence.
+- Who drives: Martin operates Squad and `terraform-coder`; Haflidi checks handoff evidence.
+- Type: `/agent` Squad, `/tasks`, `/agent list`, `/mcp`, `/agent terraform-coder`.
+- Prompt: B1v2 brief exactly: work only in `terraform\modules\aks-automatic-corp`; add `alternate_network_payload` in `tests\contract.tftest.hcl`; reuse AzAPI mock and `command = plan`; pod `172.21.0.0/16`, service `10.241.0.0/16`, DNS `10.241.0.10`; four separate asserts; each has `error_message`; change only the test; no deploy, provider, or lock-file change.
+- Point at: selected Squad agent, relevant roster/routing, coder profile, changed test file, handoff.
+- Handoff: "Haflidi, the writer returned a file change; now ground the requirement."
+- Offline fallback: `c3-handoffs.md`, saved diff, B1 0/5 -> B1v2 5/5. The live run still has to pass.
 Takeaway: assignment is not completion.
-Demo cue: `/agent`, `/tasks`, handoff, changed files.
 Don't say: a profile switch proves correctness.
 
 ### 24:00-25:00, s10-tool-roles, Haflidi
@@ -126,11 +132,13 @@ Demo cue: keep three columns visible.
 Don't say: opening `/mcp` is source verification.
 
 ### 25:00-29:00, C4, Martin lead
-- Invoke a skill because it changes the work.
-- Use MCP for a specific source and version.
-- Approve only the narrow tool action.
+- Who drives: Martin types; Haflidi checks source fit.
+- Type: `/skills info test-discipline`, `/mcp`, then `/permissions`.
+- Prompt: invoke test-discipline; identify unchanged contract assertions; use Microsoft Learn MCP only for read-only AKS Automatic private/custom-network source; cite source/version; no Azure account, provider change, or write.
+- Point at: skill invocation, MCP result, source URL/version, one narrow permission approval.
+- Handoff: "Haflidi, we have the source and invariant; take the fail-repair loop."
+- Offline fallback: `c4-source.md` with retrieval time, tool, server/version, and limitation. If lookup fails live, say it failed.
 Takeaway: source provenance is part of the engineering artifact.
-Demo cue: `/skills`, MCP lookup, `/permissions`.
 Don't say: a failed lookup succeeded.
 
 ### 29:00-30:00, s12-source-check, Haflidi
@@ -147,23 +155,22 @@ Don't say: illustrative assertion is passing output.
 - If the oracle has a rule, say it in the brief.
 - Test the test with a deliberate mutation.
 Takeaway: a mock suite is useful only when it can fail for the right reason.
-Demo cue: hand playback to Haflidi.
+Demo cue: hand control to Haflidi.
 Don't say: plan-mode tests isolate every provider automatically.
 
 ### 32:00-37:00, C5, Haflidi lead
-- Select `terraform-validator` for offline checks under permission prompts.
-- Show command, exit status, and failure reason.
-- Label controlled mutation honestly.
-- This is the filmed loop because B1v2 met the October 5 `>= 4/5` bar; still show command, exit status, repair, and rerun.
-- Repair narrowly and rerun the same check.
-Takeaway: preserve cause and effect.
-Demo cue: command result, `/review`, `/diff`, rerun.
+- Who drives: Haflidi runs `terraform-validator`; Martin explains the repair.
+- Type: `/agent terraform-validator`; run the C5 PowerShell block with `$phase = 'before'`; `/agent terraform-coder`; seed `enablePrivateCluster` from `true` to `false`; rerun with `$phase = 'seeded-failure'`; `/review`; restore only that field; `/diff`; rerun with `$phase = 'repaired'`.
+- Point at: command, exit status, failure assertion, labeled mutation, review, repair diff, identical rerun.
+- Handoff: "Martin, the local check caught and repaired this mutation; separate that from Azure evidence."
+- Offline fallback: preserved C5 logs, file hashes, B2 5/5 seeded-repair eval, B3 4/5 after harness-bug rescore.
+Takeaway: preserve cause and effect. A runtime check is not proof of Azure behavior.
 Don't say: the mutation was an AI-discovered defect.
 
 ### 37:00-40:00, s15-proof, Haflidi
 - Source inspection, local mocks, consumer example, plan, and read-back are separate.
 - Current local evidence is 52 module checks and two caller checks.
-- Private plan/apply and Azure read-back passed on October 5 for the pinned runtime module revision; recordings and native profile selection remain pending.
+- Private plan/apply and Azure read-back passed on October 5 for the pinned runtime module revision; optional fallback recordings and native profile selection remain separate gates.
 Takeaway: a check proves only what it checks.
 Demo cue: read status labels exactly.
 Don't say: mocks are Azure acceptance.
@@ -177,11 +184,13 @@ Demo cue: trace decision map.
 Don't say: resume proves current repository decisions were read.
 
 ### 41:00-44:00, C6, Haflidi lead
-- Show public-only decision record.
-- Resume the relevant session, not unrelated history.
-- Inspect context and usage.
+- Who drives: Haflidi leads continuity; Martin types.
+- Type: Scribe prompt to record public-only decision: private API invariant, caller-owned provider/backend, added network-payload regression, labeled mutation/restoration, exact checks, sanitized Azure-validation boundary, no private details.
+- Then type: `/new`, `/resume guided-clean-run`, `/cwd`, `/context`, `/usage`, and `Read the saved decision; cite its file and the constraints for the next change.`
+- Point at: decision file, resumed session, cited constraint, `/context`, `/usage`.
+- Handoff: "Martin, the reason is recoverable; now review the consumer-facing artifact."
+- Offline fallback: `c6-decision.md` and screenshots of citation, `/context`, and `/usage`.
 Takeaway: long-running work needs recoverable reasons.
-Demo cue: decision file, `/resume`, `/context`, `/usage`.
 Don't say: personal memory is safe to display.
 
 ### 44:00-46:00, s18-memory, Martin
@@ -193,13 +202,13 @@ Demo cue: no personal memory screen.
 Don't say: CLI compaction maintains Squad decisions.
 
 ### 46:00-49:00, C7, Haflidi lead
-- Review as a consumer would.
-- Use `terraform-validator` for the offline suite.
-- Use `terraform-reviewer` for independent read-only acceptance.
-- Use only the supplied sanitized deployment/read-back facts; keep private target details off screen.
+- Who drives: Haflidi leads validation and review; Martin names the acceptance boundary.
+- Type: `/agent terraform-validator`; run the C7 PowerShell block from `demo-runbook.md`; `/diff`; `/new`; `/agent terraform-reviewer`; provide exact diff, files, revision, MCP citations, and sanitized validator results.
+- Point at: offline checks, diff, reviewer findings, and human code-only acceptance.
+- Handoff: "Martin, we can approve this artifact and name the remaining gates; we are not claiming a stage apply."
+- Offline fallback: `c7-final.diff`, validator logs, Online apply runs 37771532872/37772290635, `Test-OnlineSecurity.ps1` 29/29, `Test-DemoVm.ps1` 14/14, and eval results.
 Takeaway: approve a specific artifact and scope.
-Demo cue: `/diff`, offline checks, review handoff.
-Don't say: approved code alone equals deployed Azure behavior; cite the separate October 5 IaC validation when needed.
+Don't say: approved code alone equals deployed Azure behavior; cite the separate runtime evidence when needed.
 
 ### 49:00-51:00, s20-consumer, Martin
 - Public module is reusable; environment inputs stay private.
@@ -316,9 +325,9 @@ Don't say: AI made it secure, or there are no gaps (single-maintainer admin merg
 - One lane per step: lead plans, coder edits, validator runs the oracle, reviewer in `/new`.
 - Consume like a customer, deploy through the pipeline.
 - Step-by-step: [playbook](playbook.md).
-- In the October 8 eval, repeatability was measured as five fresh runs with a pre-registered `>= 4/5` green bar. Results: B1 0/5 because all five ambiguous-brief runs used two assert blocks, B2 5/5, and B3 4/5 after a disclosed harness-bug rescore from saved diffs, with no Copilot rerun and the out-of-scope README edit still red. B1v2 was a separate clarified follow-up after seeing B1; the B1v2 brief stated the four-assert shape and was 5/5 green under the same pinned conditions, with 61-114 s runs and no failure modes observed in those five runs. C3-C5 films that B1v2 loop because it met the October 5 `>= 4/5` bar, but the filmed run still has to pass on camera. Lesson: state the oracle's rules in the brief. Treat this as a measured checkpoint, not a guarantee.
+- In the October 8 eval, repeatability was measured as five fresh runs with a pre-registered `>= 4/5` green bar. Results: B1 0/5 because all five ambiguous-brief runs used two assert blocks, B2 5/5, and B3 4/5 after a disclosed harness-bug rescore from saved diffs, with no Copilot rerun and the out-of-scope README edit still red. B1v2 was a separate clarified follow-up after seeing B1; the B1v2 brief stated the four-assert shape and was 5/5 green under the same pinned conditions, with 61-114 s runs and no failure modes observed in those five runs. C3-C5 use that B1v2 loop because it met the October 5 `>= 4/5` bar, but the live run still has to pass. Lesson: state the oracle's rules in the brief. Treat this as a measured checkpoint, not a guarantee.
 Takeaway: narrow the choices and make every claim checkable.
-Don't say: the prompts make the model deterministic.
+Don't say: the prompts guarantee future outcomes.
 
 ## More likely questions (Online variant)
 

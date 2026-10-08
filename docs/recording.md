@@ -1,5 +1,7 @@
 # Record the real Copilot CLI and Squad session
 
+> Decision 2026-10-08: recordings are optional fallback evidence for the live demo. Run C0-C7 live first; use this guide only when an approved fallback capture is needed.
+
 Record the current real Copilot CLI shell with Squad selected. Keep using this
 shell; don't open a replacement terminal or custom UI. Follow
 [demo-runbook.md](demo-runbook.md) for the C1-C7 operator sequence.

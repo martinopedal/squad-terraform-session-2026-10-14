@@ -1,20 +1,20 @@
-# Run C0-C7 in the real CLI
+# Run C0-C7 live in the real CLI
 
-C0 (from zero to a squad) is recorded on the clean Windows 11 demo VM, not in this checkpoint shell. Follow [clean-machine-demo.md](clean-machine-demo.md) for C0. Everything below covers C1-C7.
+C0 (from zero to a squad) runs live on the clean Windows 11 demo VM, not in this checkpoint shell. Follow [clean-machine-demo.md](clean-machine-demo.md) for C0. Everything below covers the live C1-C7 operator sequence.
 
-Use `build_then_record_clean_run`: qualify the module first, then record genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Don't open another terminal or substitute a viewer. This run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
+Use `build_then_record_clean_run` as the provenance rule: qualify the module first, then run genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Optional recordings are fallback evidence only. Don't open another terminal or substitute a viewer. This live run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
 
-Local module qualification passed: 52 module cases, two caller cases, and both mutation proofs. Hosted Terraform matrix CI run 36990206303 passed, native agent-setup CI passed in run 37286068987, final module verification passed in run 37286237657, and docs-only Azure-validation release CI passed in run 37305768318. A private IaC consumer deployed and read back the module on October 5, 2026, pinned to runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized facts are public, private inputs are not. These are instructions for a later genuine recording, not an executed transcript of that run. Native profile selection, recordings, and full rehearsal remain pending.
+Local module qualification passed: 52 module cases, two caller cases, and both mutation proofs. Hosted Terraform matrix CI run 36990206303 passed, native agent-setup CI passed in run 37286068987, final module verification passed in run 37286237657, and docs-only Azure-validation release CI passed in run 37305768318. A private IaC consumer deployed and read back the module on October 5, 2026, pinned to runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized facts are public, private inputs are not. These are instructions for the live run, not an executed transcript. Native profile selection, optional fallback recordings, and full rehearsal remain separate gates.
 
-## Prepare the checkpoint and capture
+## Prepare the checkpoint and optional fallback capture
 
-Martin operates; Haflidi checks evidence. In [feature-guide.md](feature-guide.md), H1-H4/S0 mean help probes; D means documented, not exercised. Follow [talk-track.md](talk-track.md) for the 53+7-minute delivery.
+Martin operates; Haflidi checks evidence. In [feature-guide.md](feature-guide.md), H1-H4/S0 mean help probes; D means documented, not exercised. Follow [talk-track.md](talk-track.md) for the live 53+7-minute delivery.
 
 In the current CLI, use `/cwd` to confirm the public repository. Execute PowerShell blocks through the `!` shell escape in this same window. Each block is one shell invocation; shell variables don't carry into later CLI turns.
 
-Programmatic `-p` is batch output, not interactive Plan-mode footage; don't use it for these chapters.
+Programmatic `-p` is batch output, not interactive Plan-mode operation; don't use it for these live chapters.
 
-The file-backed native coder, [validator](../.github/agents/terraform-validator.agent.md), reviewer, MCP grounding, and
+The file-backed native coder, [validator](../.github/agents/terraform-validator.agent.md), reviewer, MCP (Model Context Protocol) grounding, and
 [qualification skill](../.github/skills/qualify-agent-setup/SKILL.md) are described
 in [CONTRIBUTING.md](../CONTRIBUTING.md). Before choosing a new take checkpoint,
 have the operator run its Node readiness/negative checks. Inspect `/agent list`
@@ -48,7 +48,7 @@ batch `-p` runs without this wait sometimes reported the MCP tools as missing
 disabled, the coder reached Microsoft Learn in 4 of 4 runs.
 
 The native Terraform MCP binary is not used for this demo. Restart Copilot in
-this same window only if discovery is stale, then inspect again. Static checks and MCP discovery are not footage or proof of profile
+this same window only if discovery is stale, then inspect again. Static checks and MCP discovery are not proof of profile
 activation. Squad remains the coordinator; the narrow-tool lane uses explicit
 native selections, not an assumption that general-purpose Squad tasks inherit
 profile tool filters.
@@ -89,9 +89,9 @@ Review the checkpoint's public decision ledger before copying it; never substitu
 
 Pre-stage a filesystem-only provider mirror and `offline\terraform.tfrc` beside the worktrees, following the module README. One online staging step populates the mirror: from the module directory, `terraform providers mirror -platform=windows_amd64 C:\terraform-offline\providers`. Then copy the README's `terraform.tfrc` to `$take\offline\`. Terraform subprocesses must be uncredentialed and network-restricted, separately from CLI/model access. Stop if isolation is unavailable. Never use cached Azure login, direct download fallback, or ordinary `terraform plan`.
 
-**R0:** approve the chosen existing terminal's content. Normal OBS/Windows window capture is acceptable after a short, authorized first-frame/motion check. `gdigrab` produced black frames on the GPU-rendered terminal; encoded frames alone prove nothing. Keep external recorder controls off-screen, microphone off, and no desktop fallback.
+**Optional fallback capture R0:** approve the chosen existing terminal's content before any recording fallback. Normal OBS/Windows window capture is acceptable after a short, authorized first-frame/motion check. `gdigrab` produced black frames on the GPU-rendered terminal; encoded frames alone prove nothing. Keep external recorder controls off-screen, microphone off, and no desktop fallback.
 
-**R1:** slate checkpoint, model, prepared code, and "clean demonstration after qualification." Keep `A.mkv`, `B.mkv`, and an uninterrupted `guided.mkv`. Haflidi records UTC/media offsets in `evidence\chapters.csv`. Use unique, take-prefixed session names; names below are suffixes.
+**Live slate R1:** state checkpoint, model, prepared code, and "clean demonstration after qualification." If an optional fallback recording is made, keep `A.mkv`, `B.mkv`, and an uninterrupted `guided.mkv`, and have Haflidi record UTC/media offsets in `evidence\chapters.csv`. Use unique, take-prefixed session names; names below are suffixes.
 
 ## C1: Compare two plans | 3 minutes
 
@@ -141,8 +141,8 @@ actual task IDs where used, file owners, checks, and unresolved issues. No
 deployment or other edits.
 ```
 
-This matches the B1v2 brief used for the filmed C3-C5 loop (5/5 green in the
-October 8 re-measurement), so the filmed run matches what was measured.
+This matches the B1v2 brief used for the live C3-C5 loop (5/5 green in the
+October 8 re-measurement), so the live run matches what was measured.
 
 Show reviewed roster/charters, `/tasks`, `/agent list`, actual starts, and
 handoffs. The list must include `terraform-coder`, `terraform-validator`, and
@@ -173,7 +173,7 @@ Show the actual skill invocation, `/mcp` output with `microsoft-learn` and
 Approve only the inspected read-only request, never blanket interpreter access.
 Save `c4-source.md` with URL, retrieval time, tool, server/version, and
 limitation. Missing skill/server or a failed lookup stays failed/pending, not
-invented footage.
+invented output.
 
 ## C5: Seed, fail, repair | 5 minutes
 
@@ -276,9 +276,9 @@ Inspect `/diff` and `/review`. Preserve `c7-final.diff`, file hashes, and the hu
 For the independent native-profile acceptance, preserve the public handoff and
 use `/new` followed by `/agent terraform-reviewer` in this same window. Supply
 the exact diff, files, revision, MCP citations, and sanitized validator results.
-Record the actual review rather than treating a profile switch in the author's
+Capture the actual review rather than treating a profile switch in the author's
 context as independent. Return findings to Squad and the human maintainer. This
 additional handoff must be rehearsed within the chapter budget; no completed take
 or timing qualification is implied by adding the instructions.
 
-**R2:** finalize and visually review the master. Preserve prompts, task IDs, hashes, exits, cuts, and source time ranges in `take.json`. Separate the upstream pins in `NOTICE.md`, qualification revision, and recording checkpoint. Earlier logs never become later execution evidence. Keep off-screen results labeled, raw evidence private, and unreviewed media unattached. Export 3/3/4/4/4/5/3/3 minutes for C0-C7: 29 recorded, 24 other live, seven Q&A. No real apply is permitted.
+**Optional fallback capture R2:** finalize and visually review the master if recording fallback is used. Preserve prompts, task IDs, hashes, exits, cuts, and source time ranges in `take.json`. Separate the upstream pins in `NOTICE.md`, qualification revision, and live checkpoint. Earlier logs never become later live execution evidence. Keep off-screen results labeled, raw evidence private, and unreviewed media unattached. Keep C0-C7 at 3/3/4/4/4/5/3/3 minutes: 29 minutes of live demo, 24 minutes of other live content, seven minutes of Q&A. Optional exports use those same cuts. No real apply is permitted.
