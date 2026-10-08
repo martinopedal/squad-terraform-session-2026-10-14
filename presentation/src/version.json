@@ -1,5 +1,5 @@
 {
-  "version": "0.18.2",
+  "version": "0.18.3",
   "status": "draft; recordings and native profile selection pending; Azure validation sanitized",
   "changes": [
     "0.1 - 2026-09-30: build the offline presentation and two-speaker delivery.",
@@ -22,6 +22,7 @@
     "0.17.1 - 2026-10-07: update Online and demo-VM references for the separate aks-automatic-demo-env repository that pins the module by tag v0.6.0; main clock unchanged.",
     "0.18 - 2026-10-08: refresh Online demo evidence for the branded NIC 2026 page, 29/29 security check pass, controller-Service runtime check, Haflidi's local VM access, and the Oct 8 repeatability eval; main clock unchanged.",
     "0.18.1 - 2026-10-08: record B1v2 5/5 after a clarified four-assert brief and set C3-C5 to film that B1v2 loop; main clock unchanged.",
-    "0.18.2 - 2026-10-08: apply Rai's B1v2 wording without claiming causality or a guaranteed live rerun; main clock unchanged."
+    "0.18.2 - 2026-10-08: apply Rai's B1v2 wording without claiming causality or a guaranteed live rerun; main clock unchanged.",
+    "0.18.3 - 2026-10-08: update validated Copilot CLI and Squad versions, and add the PR #7 playbook pointer to bootstrap notes; main clock unchanged."
   ]
 }

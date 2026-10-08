@@ -15,7 +15,7 @@ Everything below was checked on 2026-10-07 against the deployed VM and a throwaw
 | Not installed | Git, Copilot CLI, Squad, Node (Squad's standalone bundle carries its own runtime; `squad doctor` passes without system Node) |
 | Auto-shutdown | 19:00 W. Europe |
 
-Verified package versions on 2026-10-07: `Git.Git` 2.55.0.5, `GitHub.Copilot` 1.0.92, `bradygaster.Squad` 1.0.1, `Microsoft.PowerShell` 7.6.6.0.
+Verified package versions by 2026-10-08: `Git.Git` 2.55.0.5, `GitHub.Copilot` 1.0.93 at validation; record whatever `copilot --version` reports at recording time, `bradygaster.Squad` 1.0.1, `Microsoft.PowerShell` 7.6.6.0.
 
 ## Preflight (T-30 minutes)
 
