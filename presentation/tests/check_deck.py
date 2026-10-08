@@ -57,8 +57,8 @@ def main():
         "checks": {},
         "failures": [],
         "limits": [
-            "Actual C0-C7 footage is not attached; content, duration, and recording provenance remain pending.",
-            "Media controls use a synthetic playback fixture, not CLI footage.",
+            "C0-C7 are live-demo chapters; optional fallback recordings are not required for delivery.",
+            "Browser checks verify command blocks, notes, timing, accessibility, and offline packaging, not real CLI execution.",
             "No Azure deployment or policy evaluation is performed by this test; it checks only the sanitized published evidence text."
         ]
     }
@@ -101,7 +101,7 @@ def main():
             report["deckVersion"] = manifest["version"]
             report["htmlSHA256"] = hashlib.sha256((ROOT / "index.html").read_bytes()).hexdigest()
             check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 37 and manifest["openingSlides"] == 1 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 11)
-            check("29/24/7 clock", [manifest[k] for k in ("recordedMinutes", "liveMinutes", "qaMinutes")] == [29, 24, 7])
+            check("29/24/7 clock", [manifest[k] for k in ("demoMinutes", "liveMinutes", "qaMinutes")] == [29, 24, 7])
             check("main spoken words", 5300 <= manifest["spokenWords"] <= 5900, manifest["spokenWords"])
             check("prepared Q&A words", 650 <= manifest["qaWords"] <= 800, manifest["qaWords"])
             check("balanced speakers", abs(manifest["speakers"]["Martin"] - manifest["speakers"]["Haflidi"]) < 0.1 * manifest["spokenWords"], manifest["speakers"])
@@ -139,23 +139,20 @@ def main():
                 check(name, all(phrase in rendered_notes for phrase in phrases))
             check("inlined resources", page.locator("script[src], link[rel=stylesheet]").count() == 0)
             check("public document link", context.request.get(f"http://127.0.0.1:{server.server_port}/docs/feature-guide.md").ok)
-            check("no placeholder terminal", page.locator(".media-pending").count() == 8 and page.locator("video[src]").count() == 0)
-            check("native-only chapter policy", page.evaluate("""() =>
+            check("live demo command blocks", page.locator(".slide-demo .slide-content pre code").count() == 8 and page.locator(".slide-demo video, .media-pending").count() == 0)
+            check("no recording-slot copy on screen", page.evaluate("""() =>
+                [...document.querySelectorAll('.slide-content')].every(s =>
+                    !/recording slot|not attached|pending/i.test(s.textContent))
+            """))
+            check("live demo notes have offline fallback", page.evaluate("""() =>
                 [...document.querySelectorAll('.slide-demo aside.notes')].every(n =>
-                    n.textContent.includes('Genuine Copilot CLI with Squad selected') &&
-                    n.textContent.includes('external, off-screen tooling')) &&
-                Object.values(presentationBuild.media).every(m =>
-                    !m.available || (m.reviewed === true && m.selectedAgent === 'squad' &&
-                    ['native-copilot-cli','integrated-terminal'].includes(m.sourceSurface)))
+                    n.textContent.includes('Offline fallback:') &&
+                    n.textContent.includes('Expected:') &&
+                    n.querySelector('pre code'))
             """))
             baseline_notes = page.locator("#s03-baseline aside.notes").text_content()
             check("disclosed clean-run narration", all(phrase in baseline_notes for phrase in
-                  ["module now exists", "passed local qualification before filming", "disclosed clean checkpoint", "first implementation"]))
-            check("all chapter notes distinguish preparation from footage", page.evaluate("""() =>
-                [...document.querySelectorAll('.slide-demo aside.notes')].every(n =>
-                    n.textContent.includes('Qualify code before filming') &&
-                    n.textContent.includes('genuine new execution from a disclosed clean checkpoint'))
-            """))
+                  ["module now exists", "passed local qualification before delivery", "disclosed clean checkpoint", "first implementation"]))
             check("local qualification is separate from Azure validation evidence",
                   page.locator("#s15-proof .status").all_text_contents() == ["Inspected", "52 passed", "2 passed", "Approved", "Succeeded"])
             check("published module revision is bound to the evidence",
@@ -261,8 +258,8 @@ def main():
                 check(f"overview surface clickable and controls inert {label}", all(
                     not item["sectionInert"] and item["contentInert"] and item["pointerTarget"] == item["id"]
                     for item in thumbnails))
-                check(f"overview keeps unattached media hidden {label}",
-                      page.locator("video:not([hidden])").count() == 0)
+                check(f"overview has no demo video controls {label}",
+                      page.locator(".slide-demo video, .slide-demo .attach-video").count() == 0)
                 page.locator("#s05-parallel").click(timeout=1500)
                 page.wait_for_function("() => !Reveal.isOverview() && Reveal.getCurrentSlide().id === 's05-parallel'")
                 check(f"pointer selects inactive overview slide {label}",
@@ -367,16 +364,12 @@ def main():
             notes.wait_for_timeout(1200)
             timer_after = notes.locator(".timer .seconds-value").inner_text()
             check("notes current and next", notes.locator("#current-slide iframe").count() == 1 and notes.locator("#upcoming-slide iframe").count() == 1)
-            check("notes full spoken script", "A useful agent session" in notes.locator(".speaker-controls-notes .value").inner_text())
+            check("notes full presenter plan", "A useful agent session leaves" in notes.locator(".speaker-controls-notes .value").inner_text())
             check("notes timer advances", timer_before != timer_after)
             page.evaluate("Reveal.slide(10,0,-1)")
-            notes.wait_for_function("() => document.querySelector('.speaker-controls-notes .value').textContent.includes('direct project-write guards')")
-            cues = notes.locator(".operator-cues summary")
-            cues.click()
-            check("notes follow slide", "03:15-04:00" in notes.locator(".speaker-controls-notes .value").inner_text())
-            cues.click()
-            check("spoken notes visible before operator details", not notes.locator(".operator-cues").evaluate("e => e.open")
-                  and "Activate native Plan mode" in notes.locator(".speaker-controls-notes .value").inner_text())
+            notes.wait_for_function("() => document.querySelector('.speaker-controls-notes .value').textContent.includes('/session plan')")
+            check("notes follow slide", "Offline fallback:" in notes.locator(".speaker-controls-notes .value").inner_text())
+            check("notes show live command block", "/session plan" in notes.locator(".speaker-controls-notes .value").inner_text())
             notes.screenshot(path=str(QA / "speaker-view.png"))
             page.evaluate("Reveal.slide(9,0,-1)")
             notes.close()
@@ -390,60 +383,11 @@ def main():
             check("overview after notes-button round trip", page.evaluate("Reveal.isOverview()"))
             page.keyboard.press("Escape")
 
-            with tempfile.TemporaryDirectory(prefix="playback-", dir=artifacts) as temporary:
-                fixture = Path(temporary) / "playback-test-not-demo.mp4"
-                subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-n", "-f", "lavfi",
-                                "-i", "testsrc2=size=640x360:rate=30", "-t", "4", "-c:v", "libx264",
-                                "-pix_fmt", "yuv420p", "-an", "-metadata", "title=Playback fixture, not demo footage",
-                                str(fixture)], check=True, capture_output=True)
-                page.evaluate("Reveal.slide(2,0,-1)")
-                invalid = Path(temporary) / "invalid-selection.txt"
-                invalid.write_text("File-selection test, not video footage.", encoding="utf-8")
-                page.locator('#demo-c1 input[type="file"]').set_input_files(str(invalid))
-                check("invalid file selection", "Select an MP4" in page.locator("#demo-c1 .media-status").inner_text()
-                      and not page.locator("#demo-c1 video").is_visible())
-                page.locator('#demo-c1 input[type="file"]').set_input_files(str(fixture))
-                video = page.locator("#demo-c1 video")
-                video.wait_for(state="visible")
-                page.wait_for_function("() => document.querySelector('#demo-c1 video').readyState >= 2")
-                fixture_urls.add(video.evaluate("v => v.src"))
-                check("native local media controls", video.evaluate("v => v.controls && v.paused && !v.autoplay"))
-                check("honest preview label", "review pending" in page.locator("#demo-c1 .media-status").inner_text())
-                video.focus()
-                page.keyboard.press("Space")
-                page.wait_for_timeout(350)
-                check("keyboard play without slide advance", video.evaluate("v => !v.paused && v.currentTime > 0")
-                      and page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
-                page.keyboard.press("Space")
-                check("native keyboard pause", video.evaluate("v => v.paused"))
-                before_seek = video.evaluate("v => v.currentTime")
-                page.keyboard.press("ArrowRight")
-                page.wait_for_timeout(100)
-                after_seek = video.evaluate("v => v.currentTime")
-                check("native keyboard seek forward", after_seek > before_seek + .001
-                      and page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1",
-                      {"before": before_seek, "after": after_seek})
-                page.keyboard.press("ArrowLeft")
-                page.wait_for_timeout(100)
-                after_back = video.evaluate("v => v.currentTime")
-                check("native keyboard seek back", after_back < after_seek - .001,
-                      {"before": after_seek, "after": after_back})
-                video.evaluate("v => { v.pause(); v.currentTime = 2; }")
-                check("pause and seek", video.evaluate("v => v.paused && Math.abs(v.currentTime - 2) < .2"))
-                video.evaluate("v => { v.currentTime = 0; return v.play(); }")
-                page.wait_for_timeout(200)
-                check("replay", video.evaluate("v => !v.paused && v.currentTime < 1"))
-                page.evaluate("Reveal.slide(3,0,-1)")
-                check("pause on slide exit", video.evaluate("v => v.paused"))
-                page.evaluate("Reveal.slide(2,0,-1)")
-                check("no autoplay on re-entry", video.evaluate("v => v.paused"))
-                check("no media decode or source error", video.evaluate("v => v.error === null"))
-                page.screenshot(path=str(artifacts / "media-playback-fixture.png"))
-                video.evaluate("v => { v.removeAttribute('src'); v.load(); }")
+            check("no local media controls in live-demo deck", page.locator(".attach-video, .video-file, .slide-demo video").count() == 0)
 
             page.reload(wait_until="networkidle")
             page.wait_for_function("() => Reveal.isReady()")
-            check("reload clears local preview", page.locator("video[src]").count() == 0)
+            check("reload preserves live demo command blocks", page.locator(".slide-demo .slide-content pre code").count() == 8)
             remaining_failures = []
             for request in report["failedRequests"]:
                 if request["url"] in fixture_urls and request["failure"] == "net::ERR_ABORTED":
