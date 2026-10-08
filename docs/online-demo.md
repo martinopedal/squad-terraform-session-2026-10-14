@@ -76,7 +76,7 @@ gh workflow run deploy-online.yml -f apply=false
 gh workflow run deploy-online.yml -f apply=true
 ```
 
-Approve the `online` environment in the Actions UI when prompted. The current demo URL is `https://aks-online-demo.swedencentral.cloudapp.azure.com/`. It uses the NGINX self-signed certificate by design for the demo, so accept the browser warning when opening it manually.
+Approve the `online` environment in the Actions UI when prompted. The current demo URL is `https://aks-online-demo.swedencentral.cloudapp.azure.com/`. It presents the default NGINX self-signed certificate because no trusted certificate is configured, so accept the browser warning when opening it manually.
 
 ## Evidence
 
@@ -95,11 +95,11 @@ Current demo-environment code lives in [`martinopedal/aks-automatic-demo-env`](h
 | Hostname and dedicated App Routing controller history (2026-10-08, demo-env repo) | demo-env PR #9 created a dedicated `NginxIngressController` named `online-demo` with Azure default DNS label `aks-online-demo`. Apply run 37762119783 recorded `https://aks-online-demo.swedencentral.cloudapp.azure.com/` returning 200 and HTTP returning 308 by hostname. The run was marked failed only because the runtime check compared DNS against stale Ingress status after the class switch; demo-env PR #10 fixed the check to read the App Routing controller Service. |
 | Branded NIC 2026 page and Service-based proof (2026-10-08, demo-env repo) | demo-env PR #10 (`dca35cd`) replaced the ASP.NET sample with the branded NIC 2026 page. Apply run 37771532872 succeeded with plan "No changes"; DNS matched the ingress IP from the App Routing controller Service; HTTPS returned 200 by hostname; page title was "AKS Automatic \| NIC 2026 demo". |
 | Speaker section and latest apply (2026-10-08, demo-env repo) | demo-env PR #11 (`2b0b35b`) added "Your speakers" with Martin's photo, opedal.tech, LinkedIn, and GitHub plus Haflidi's initials and GitHub. Apply run 37772290635 succeeded with plan "No changes"; DNS matched the ingress IP; HTTPS returned 200 by hostname; page title was "AKS Automatic \| NIC 2026 demo". |
-| Online security checks (2026-10-08, 13:48) | `Test-OnlineSecurity.ps1` 29/29 PASS for `https://aks-online-demo.swedencentral.cloudapp.azure.com/`, including hostname resolution to the ingress address. The browser warning is expected because the demo uses the NGINX self-signed certificate. |
+| Online security checks (2026-10-08, 13:48) | `Test-OnlineSecurity.ps1` 29/29 PASS for `https://aks-online-demo.swedencentral.cloudapp.azure.com/`, including hostname resolution to the ingress address. The browser warning is expected because no trusted certificate is configured and the demo presents the default NGINX self-signed certificate. |
 
 ## Limits
 
-- The public demo URL uses the NGINX self-signed certificate. Accept the browser warning for the demo. Let's Encrypt or a Key Vault certificate is intentionally out of scope; production should use a managed certificate from Key Vault.
+- The public demo URL presents the default NGINX self-signed certificate because no trusted certificate is configured. Accept the browser warning for the demo. Let's Encrypt is intentionally out of scope; production should use a Key Vault-backed certificate.
 - A time-boxed, break-glass RBAC grant (`AKS App Routing Controller Writer (online demo)`) lets the pipeline update the demo `NginxIngressController` resource. The ABAC condition (group `approuting.kubernetes.azure.com`, kind `nginxingresscontrollers`) uses a preview attribute; treat it as demo-only and remove it during teardown per the demo-env runbook.
 - The runner is started manually per run; it is a demo control, not a scaled runner pool.
 - One module finding remains open (`count` on a plan-time-unknown ID); see the findings table.

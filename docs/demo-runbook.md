@@ -21,8 +21,9 @@ have the operator run its Node readiness/negative checks. Inspect `/agent list`
 and verify all three profiles: `terraform-coder`, `terraform-validator`, and
 `terraform-reviewer`. Inspect `/instructions` and `/mcp`; `/mcp` should show the
 `microsoft-learn` and `terraform` servers for coder/reviewer, not validator.
-MCP policy is hosted first. Microsoft Learn is cloud-hosted; HashiCorp has no
-documented hosted Terraform MCP, so Terraform MCP uses Docker. Pre-flight Docker
+MCP policy is hosted first. Microsoft Learn is cloud-hosted. The demo uses a
+Docker-run Terraform MCP server pinned for this session; HashiCorp documents
+local deployment (including Docker) and self-hosted transports. Pre-flight Docker
 Desktop and the exact pinned Terraform MCP image with:
 
 ```powershell

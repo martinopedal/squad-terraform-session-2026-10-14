@@ -47,9 +47,9 @@ handoff; the human maintainer owns acceptance. Native permission prompts and
 separate publication/private-consumer apply gates remain in place.
 
 Coder and reviewer ground claims through Microsoft Learn and Terraform Registry
-MCP servers. MCP policy is hosted first: Microsoft Learn is cloud-hosted, while
-HashiCorp has no documented hosted Terraform MCP, so Terraform MCP uses Docker
-with the pinned image. Docker Desktop and network access are required for
+MCP servers. MCP policy is hosted first: Microsoft Learn is cloud-hosted. The demo uses a
+Docker-run Terraform MCP server pinned for this session; HashiCorp documents
+local deployment (including Docker) and self-hosted transports. Docker Desktop and network access are required for
 Learn/registry docs. Copilot CLI and Copilot cloud agent honor `mcp-servers`; VS
 Code ignores that frontmatter. MCP results are documentation lookups, not
 validation or Azure acceptance. The native Terraform MCP binary is not used for

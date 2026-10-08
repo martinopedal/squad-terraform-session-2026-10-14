@@ -8,7 +8,7 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - Agent HQ is GitHub's multi-agent control plane. Claude and Codex are public preview in Agent HQ.
 - AI Credits are effective from 2026-06-01. Mention `/limits` and `--max-ai-credits` as session controls, not hard financial guarantees.
 - Computer use is public preview as of 2026-10-01. Say clearly that this Terraform demo does not use computer use.
-- Squad is 1.0.1 for the demo. GitHub Releases, WinGet, and Homebrew have moved, while npm latest is still 0.13.1 as of 2026-10-05.
+- Squad is 1.0.1 for the demo. GitHub Releases, WinGet, and Homebrew have moved, while npm latest is still 0.13.1 as of 2026-10-05. Pinned docs may still carry Experimental/alpha wording.
 
 ## Slide and chapter cues
 
@@ -42,7 +42,7 @@ Don't say: this was the first implementation.
 - Agent HQ: 2025-10-28. Claude and Codex public preview: 2026-02-04.
 - AI Credits effective: 2026-06-01. CLI limits preview: 2026-07-01.
 - Computer use preview: 2026-10-01, not used here.
-- Squad 1.0 / 1.0.1 (Oct 3-4): stabilizes 0.11-0.13 (presets, `squad_state`, setup diagnostics); WinGet and Homebrew. No breaking change from 0.13.1.
+- Squad 1.0 / 1.0.1 (Oct 3-4): release tags exist; the demo uses 1.0.1 from WinGet/Homebrew/GitHub Releases. Pinned docs at `93aec83` may still carry Experimental/alpha wording; npm latest was 0.13.1.
 Takeaway: the platform moved from preview pieces to governable engineering controls.
 Demo cue: point to dates and status labels; end on the Squad tile.
 Don't say: computer use is GA, or part of this Terraform recording; npm latest is 1.0.1.

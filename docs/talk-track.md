@@ -4,7 +4,7 @@ This script lets Martin Opedal, Enterprise Cloud Solution Architect, Microsoft a
 
 ## Delivery contract
 
-The main script includes narration over 26 minutes of silent video. It does not add 26 minutes to the spoken running time. The other live segments total 27 minutes. Bracketed cues and blockquotes are operator instructions, not spoken words. Read speaker paragraphs at about 120 words per minute; use the remaining time for the explicit observation pauses, handoffs, and slide changes. Do not accelerate code reading to recover time.
+The main script includes narration over 29 minutes of silent video. It does not add 29 minutes to the spoken running time. The other live segments total 24 minutes. Bracketed cues and blockquotes are operator instructions, not spoken words. Read speaker paragraphs at about 120 words per minute; use the remaining time for the explicit observation pauses, handoffs, and slide changes. Do not accelerate code reading to recover time.
 
 Martin Opedal hosts the opening, owns the brief, and normally drives the presentation. Haflidi Fridthjofsson leads review, evidence interpretation, and the Q&A. The non-speaking presenter watches the clock and prepares the next cue. At C5, Haflidi takes playback control while Martin explains the implementation response. They hand control back explicitly after the chapter.
 
@@ -58,7 +58,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 **Haflidi:** Two more notes are fresh. Agent Skills launched in December, and skills plus MCP are GA in Copilot code review. Computer use entered public preview on October 1 with `/computer on`, `show`, and `off`, per-app approval, and admin disable. We do not use computer use in this Terraform demo.
 
-**Martin:** Finally, Squad reached 1.0 on October 3, with 1.0.1 on October 4. It stabilizes what 0.11 to 0.13 added: presets, `squad_state` memory tools, setup diagnostics, the Fact Checker, and the advisory reviewer, with no breaking command changes from 0.13.1. The demo uses Squad 1.0.1 from GitHub Releases, WinGet, or Homebrew; npm latest was still 0.13.1 on October 5, and Haflidi installs it from zero in a few minutes.
+**Martin:** Finally, Squad v1.0.0 and v1.0.1 release tags exist, and the demo uses 1.0.1 from GitHub Releases, WinGet, or Homebrew. The pinned reference docs at `93aec83` still carry Experimental or alpha wording, so docs may lag releases. npm latest was still 0.13.1 on October 5, and Haflidi installs Squad from zero in a few minutes.
 
 ## s04-layers | 06:00-07:00 | One workflow, three distinct layers
 

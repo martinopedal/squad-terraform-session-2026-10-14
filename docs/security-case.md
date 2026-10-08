@@ -14,7 +14,7 @@ Evidence date: 2026-10-08. Demo-env repository: [`martinopedal/aks-automatic-dem
 | Private state | Tenant policy forces `publicNetworkAccess=Disabled` on storage; state is reached only through a private endpoint. `Test-OnlineSecurity.ps1` confirms anonymous internet access is refused |
 | Ephemeral, identity-less runner | VNet-integrated Container Apps Job, one execution per run, no managed identity, outbound 443 only |
 | Locked API server | Authorized IP ranges contain only the runner's static NAT egress IP |
-| Public demo hostname | `https://aks-online-demo.swedencentral.cloudapp.azure.com/` is served through a dedicated App Routing `NginxIngressController` with an Azure default DNS label. The NGINX certificate is self-signed by design for the demo; accept the browser warning when opening it manually |
+| Public demo hostname | `https://aks-online-demo.swedencentral.cloudapp.azure.com/` is served through a dedicated App Routing `NginxIngressController` with an Azure default DNS label. The demo presents the default NGINX self-signed certificate because no trusted certificate is configured; accept the browser warning when opening it manually |
 | Time-boxed break-glass App Routing write | Custom role `AKS App Routing Controller Writer (online demo)` scopes the demo pipeline to `NginxIngressController` resources in group `approuting.kubernetes.azure.com`. The ABAC attribute is preview, the condition does not constrain the resource name, and the grant is demo-only and time-boxed, documented in the demo-env runbook, and removed during teardown |
 | No plan artifact in a public repo | Plan, apply, deploy, and runtime check run in one job; `tfplan` is never uploaded |
 | Runtime check or fail | The run fails unless the hostname returns HTTPS 200, HTTP redirects to HTTPS, and DNS resolves to the App Routing controller Service address. Apply runs 37771532872 and 37772290635 both succeeded with plan "No changes", DNS matching the ingress IP, HTTPS 200 by hostname, and page title "AKS Automatic \| NIC 2026 demo". `Test-OnlineSecurity.ps1` is 29/29 PASS at 13:48 on 2026-10-08. |
@@ -70,7 +70,7 @@ What made the AI output trustworthy enough to merge:
 - The environment gate sits before the job's plan. Mitigation: a plan-only run is reviewed first, and the apply run's plan is compared before it proceeds.
 - Real identifiers remain in git history.
 - Checkov does not interpret azapi request bodies. Cluster security properties are covered by contract tests, Azure Policy, and read-back instead.
-- The public demo hostname uses the NGINX self-signed certificate by design. Accept the browser warning for the demo; production should use a Key Vault certificate.
+- The public demo hostname presents the default NGINX self-signed certificate because no trusted certificate is configured. Accept the browser warning for the demo; production should use a Key Vault-backed certificate.
 - The Corp example manifests are not runtime-validated; their registry does not exist.
 
 ## Reproduce
