@@ -111,13 +111,13 @@ consequence, and repair. Missing evidence is blocked, not passed.
 /agent terraform-coder
 
 Create a thin root in deployments/<env>/ that consumes the module with
-source = "../..". The root owns providers, a partial backend, the network
+source = "git::https://github.com/martinopedal/terraform-azapi-aks-automatic.git?ref=v0.6.0". The root owns providers, a partial backend, the network
 (NSG on every subnet, explicit egress), and anything the guardrails from
 step 1 require. Pass IDs the module uses in count as values known at plan
 time. Do not put environment values in the module.
 ```
 
-Then deploy through the pipeline, never from a laptop: plan, read the plan, approve the environment gate, apply, and prove the result (HTTPS 200 and HTTP to HTTPS redirect for the demo app). The Online example is in the module repository under `deployments/online/` and `.github/workflows/deploy-online.yml`.
+Then deploy through the pipeline, never from a laptop: plan, read the plan, approve the environment gate, apply, and prove the result (HTTPS 200 and HTTP to HTTPS redirect for the demo app). The Online example is in the demo-env repository under `deployments/online/` and `.github/workflows/deploy-online.yml`.
 
 ## 7. Record the reason (Squad, Scribe)
 

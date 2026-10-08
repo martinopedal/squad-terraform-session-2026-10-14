@@ -8,8 +8,8 @@ Everything below was checked on 2026-10-07 against the deployed VM and a throwaw
 
 | Item | Value |
 |---|---|
-| VM | Windows 11 25H2, Entra-joined, no public IP, deployed by the gated `deploy-demo-vm.yml` pipeline in the module repo |
-| Access | Azure Bastion Standard only; RDP via `scripts\Connect-DemoVm.ps1` (Entra sign-in, MFA) |
+| VM | Windows 11 25H2, Entra-joined, no public IP, deployed by the gated `deploy-demo-vm.yml` pipeline in the demo-env repo |
+| Access | Azure Bastion Standard only; RDP via `scripts\Connect-DemoVm.ps1` from the demo-env repo (Entra sign-in, MFA) |
 | Egress | NAT Gateway; GitHub, WinGet, and npm reachable; inbound denied |
 | Preinstalled | WinGet, Windows Terminal 1.24, PowerShell 7.6.6 (pipeline-installed, hash- and signature-verified; Copilot CLI needs PowerShell 6+) |
 | Not installed | Git, Copilot CLI, Squad, Node (Squad's standalone bundle carries its own runtime; `squad doctor` passes without system Node) |
@@ -19,7 +19,7 @@ Verified package versions on 2026-10-07: `Git.Git` 2.55.0.5, `GitHub.Copilot` 1.
 
 ## Preflight (T-30 minutes)
 
-From the module repository on the operator machine:
+From the demo-env repository on the operator machine:
 
 ```powershell
 $env:AZURE_SUBSCRIPTION_ID_ONLINE = '<online subscription id>'   # never on screen
@@ -27,7 +27,7 @@ $env:AZURE_SUBSCRIPTION_ID_ONLINE = '<online subscription id>'   # never on scre
 .\scripts\Connect-DemoVm.ps1        # opens the Bastion RDP session
 ```
 
-If `Test-DemoVm.ps1` reports the VM is not clean (an earlier take installed tools), reset it first: run `deploy-demo-vm.yml` with action `recreate-vm`, approve the `online` gate, and wait for the proof job (about 15-20 minutes including policy-driven extensions).
+If `Test-DemoVm.ps1` reports the VM is not clean (an earlier take installed tools), reset it first: run `deploy-demo-vm.yml` in the demo-env repo with action `recreate-vm`, approve the `online` gate, and wait for the proof job (about 15-20 minutes including policy-driven extensions).
 
 On the VM: close notifications, set display scaling to 125%, open **Windows Terminal**, and pick the **PowerShell** (7) profile from the dropdown, not Windows PowerShell. Font size 16 or larger. Hide the Bastion toolbar.
 
@@ -80,11 +80,11 @@ Never push from the VM. The clone is a local demo copy; the four generated workf
 ## Reset between takes
 
 - Fast reset (same VM): delete `$HOME\demo`, then `winget uninstall --id bradygaster.Squad`, `GitHub.Copilot`, `Git.Git`; sign out of GitHub in Edge. Use this only for rehearsal.
-- Clean reset (for the recorded take and before the live fallback): `deploy-demo-vm.yml` action `recreate-vm`. It replaces the VM, OS disk, and VM-scoped extensions and re-proves the clean state.
+- Clean reset (for the recorded take and before the live fallback): `deploy-demo-vm.yml` action `recreate-vm` in the demo-env repo. It replaces the VM, OS disk, and VM-scoped extensions and re-proves the clean state.
 
 ## Live fallback (if the clip fails on the day)
 
-1. `scripts\Connect-DemoVm.ps1` from the presenter machine (pre-connected at T-15).
+1. `scripts\Connect-DemoVm.ps1` from the demo-env repo on the presenter machine (pre-connected at T-15).
 2. Run block 1 with the waits visible and narrate over them, or skip to block 2 on a VM that already has the tools installed from rehearsal (say so).
 3. Keep to 3 minutes. If install stalls past 60 seconds, say "this is where the clip saves us" and move to slide `s05-parallel`.
 

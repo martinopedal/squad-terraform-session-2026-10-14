@@ -18,6 +18,7 @@ const onlineDemo = source('Online variant', '../docs/online-demo.md');
 const promptPack = source('Prompt pack', '../docs/prompt-pack.md');
 const securityCase = source('Security case', '../docs/security-case.md');
 const upstreamRepo = source('Module repository', 'https://github.com/martinopedal/terraform-azapi-aks-automatic');
+const demoEnvRepo = source('Demo environment repository', 'https://github.com/martinopedal/aks-automatic-demo-env');
 const cliGA = source('Copilot CLI GA', 'https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available/');
 const agentHQ = source('Agent HQ', 'https://github.blog/news-insights/company-news/welcome-home-agents/');
 const agentHQAgents = source('Claude and Codex in Agent HQ', 'https://github.blog/news-insights/company-news/pick-your-agent-use-claude-and-codex-on-agent-hq/');
@@ -284,9 +285,9 @@ export const slides = [
   },
   {
     id: 'a-online', title: 'Same module, Online landing zone.', time: 'Appendix',
-    layer: 'Terraform / Azure landing zone / GitHub Actions', kind: 'reference', sources: [onlineDemo, upstreamRepo],
+    layer: 'Terraform / Azure landing zone / GitHub Actions', kind: 'reference', sources: [onlineDemo, demoEnvRepo, upstreamRepo],
     tip: 'Guardrails are design inputs. None were bypassed with exemptions.',
-    content: `${row('Thin root, same module', '<code>cluster_sku = "Automatic"</code>, managed system node pools.<br>BYO VNet, NSG on every subnet, NAT Gateway egress, managed NGINX.')}
+    content: `${row('Thin root, same module', 'Consumer repo pins the module by tag <code>v0.6.0</code>.<br><code>cluster_sku = "Automatic"</code>, BYO VNet, NAT Gateway egress, managed NGINX.')}
       ${row('Guardrails we hit', 'Private-only state storage. Subnets must have an NSG.<br>RBAC Writer cannot create namespaces: managed namespace via ARM.')}
       ${row('Secure chain and proof', 'OIDC, human gate, ephemeral VNet runner, no plan artifact.<br>API server allows only the runner IP. HTTPS 200 or the run fails.')}`
   },
@@ -294,7 +295,7 @@ export const slides = [
     id: 'a-security', title: 'What AI found that the scanners did not.', time: 'Appendix',
     layer: 'GHAS / MCP / skills / tests', kind: 'reference', sources: [securityCase, onlineDemo],
     tip: 'GHAS sees code, secrets, and advisories. Silent gaps need an agent and an oracle.',
-    content: `${row('GHAS baseline, zero open', 'CodeQL, secret scanning with push protection, Dependabot.<br>Six required checks incl. Checkov, TFLint, Trivy.')}
+    content: `${row('GHAS baseline, zero open', 'CodeQL, secret scanning with push protection, Dependabot.<br>Module: six checks. Demo env: Terraform Validate, Checkov, TFLint, Trivy.')}
       ${row('Found by the agent', 'Checkov skipped <code>main.tf</code> since August. A scan was off for inactivity.<br>A monitor was falsely green. Two approval and cleanliness races.')}
       ${row('Made checkable', 'Learn via MCP for product rules. Skills for secrets and review.<br>22 module tests, 28 read-back checks, a human on every merge.')}`
   },

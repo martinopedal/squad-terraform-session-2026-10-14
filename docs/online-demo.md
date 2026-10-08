@@ -2,11 +2,11 @@
 
 A question-driven appendix to the session. The main talk targets a private Corp cluster; this variant answers "what does it take to ship the same module somewhere simpler?" The honest answer: simpler topology, same guardrails, everything through a pipeline, and a module that got better because a real consumer used it.
 
-Source: [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic): `deployments/online/`, `manifests-online/`, `.github/workflows/deploy-online.yml`, `scripts/start-online-runner.ps1`.
+Source: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env): `deployments/online/`, `manifests/online/`, `.github/workflows/deploy-online.yml`, `scripts/start-online-runner.ps1`. The root pins the reusable module [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic) by tag `v0.6.0`.
 
 ## Talk it in keywords
 
-- **Same module.** Thin root `deployments/online/` with `source = "../.."`. The module stays provider-free.
+- **Same module.** Thin root `deployments/online/` in the demo-env repo with `source = "git::https://github.com/martinopedal/terraform-azapi-aks-automatic.git?ref=v0.6.0"`. The module stays provider-free.
 - **Guardrails decide the design.** Three landing-zone controls shaped the topology more than any code choice.
 - **Secure by default.** OIDC, environment gate, private state, no plan artifact, least privilege.
 - **Proof, not hope.** The pipeline fails unless the app answers over HTTPS.
@@ -51,8 +51,8 @@ This is the point of consuming your own module like a customer: the Corp path ha
 
 ## The secure deployment chain
 
-1. **Pull request** to the module repository; required review.
-2. **Dispatch** `deploy-online.yml` from a protected branch.
+1. **Pull request** to the demo-env repository; required review.
+2. **Dispatch** `deploy-online.yml` from a protected branch in the demo-env repository.
 3. **Environment gate** `online`: a human approves before any Azure token exists.
 4. **OIDC** federated credential; no stored Azure secret.
 5. **One job** on an ephemeral, VNet-integrated runner: plan, apply, app deploy, proof. The plan is never uploaded as an artifact (public repository).
@@ -63,6 +63,8 @@ This is the point of consuming your own module like a customer: the Corp path ha
 ## Run it
 
 ```powershell
+# From a clone of martinopedal/aks-automatic-demo-env.
+
 # 1. Start one ephemeral runner execution (needs az and gh).
 ./scripts/start-online-runner.ps1
 
@@ -78,7 +80,7 @@ Approve the `online` environment in the Actions UI when prompted.
 
 ## Evidence
 
-All in the public repository [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic). Identifiers for subscriptions, tenants, and principals are deliberately omitted.
+Current demo-environment code lives in [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env). Historical run IDs below were recorded before extraction in the module repository [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic) and remain valid. Identifiers for subscriptions, tenants, and principals are deliberately omitted.
 
 | Claim | Evidence |
 | --- | --- |
@@ -88,7 +90,8 @@ All in the public repository [`martinopedal/terraform-azapi-aks-automatic`](http
 | Security settings | Azure read-back: SKU Automatic/Standard, managed system node pools, Azure Policy and Key Vault secrets provider add-ons, node resource group lockdown ReadOnly, Entra RBAC, local accounts disabled, user-assigned identity, `outboundType = userAssignedNATGateway`, API server authorized IPs limited to the runner's egress IP, VNet integration, workload identity, OIDC issuer, image cleaner, stable and NodeImage upgrade channels |
 | Least privilege in the cluster | Pipeline identity: `can-i create deployments -n online-demo` = yes; listing cluster nodes = forbidden |
 | Module changes are tested | Module suite: 20 passed, 0 failed (each fix written as a failing test first) |
-| Change history | Pull requests #118 to #137; module release v0.5.0 |
+| Change history | Historical module pull requests #118 to #137; module release v0.6.0; demo environment extracted to its own repository |
+| Re-validated after extraction (2026-10-08, demo-env repo) | Plan-only run 37749232571: "No changes"; apply run 37749775898: HTTPS 200, `force-ssl-redirect` true, TLS present; demo VM plan run 37750404627: "No changes"; `Test-OnlineSecurity.ps1` 28/28 and `Test-DemoVm.ps1` 14/14. The module repository no longer holds any deployment environment or Azure federated credential |
 
 ## Limits
 

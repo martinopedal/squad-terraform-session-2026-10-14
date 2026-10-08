@@ -1,14 +1,14 @@
 # Run plan: NIC 2026, "From prompt to reusable Terraform"
 
-Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi Fridthjofsson. Deck 0.17: 1 opening page, 25 timed slides, 11 appendix references; 29 minutes recorded, 24 live, 7 Q&A.
+Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi Fridthjofsson. Deck 0.17.1: 1 opening page, 25 timed slides, 11 appendix references; 29 minutes recorded, 24 live, 7 Q&A.
 
-Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck build), [talking-points.md](talking-points.md) (cheat sheet), [demo-runbook.md](demo-runbook.md) (C1-C7), [clean-machine-demo.md](clean-machine-demo.md) (C0), [online-demo.md](online-demo.md) (Online landing zone). Operator scripts live in the module repository under `scripts\`.
+Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck build), [talking-points.md](talking-points.md) (cheat sheet), [demo-runbook.md](demo-runbook.md) (C1-C7), [clean-machine-demo.md](clean-machine-demo.md) (C0), [online-demo.md](online-demo.md) (Online landing zone). Online and demo-VM operator scripts live in the demo-env repository under `scripts\`.
 
 ## Countdown (proposed; confirm with Haflidi)
 
 | Day | Who | What | Done when |
 |---|---|---|---|
-| Wed 07 Oct | Martin | Deck 0.17 with C0, runbooks, demo VM proven clean | `npm test` green; `Test-DemoVm.ps1` 14/14 |
+| Wed 07 Oct | Martin | Deck 0.17.1 with C0, runbooks, demo VM proven clean | `npm test` green; `Test-DemoVm.ps1` 14/14 |
 | Thu 08 Oct | Haflidi | Accept repo and environment invites; read talk track; Martin resets Haflidi's VM local login | Haflidi can open the deck and Bastion |
 | Thu 08 Oct | Both | Rehearsal 1: read-through with the clock, slides only, 60 minutes on Teams | Each section within plus or minus 30 seconds |
 | Thu 08-Fri 09 | Haflidi | Record C0 on the VM (clean reset first) | `media/C0.mp4` reviewed, 3:00 |
@@ -72,7 +72,7 @@ Timing rule: at each checkpoint, if more than 60 seconds behind, apply the next 
 
 ### T-24h (Tuesday)
 
-From the module repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set off screen:
+From the demo-env repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set off screen:
 
 - [ ] `.\scripts\Invoke-GatedRun.ps1 -Workflow deploy-online.yml -Inputs 'apply=false' -StartRunner` succeeds with no changes (proves runner, OIDC, gate, state).
 - [ ] `.\scripts\Test-OnlineSecurity.ps1` reports 0 failed (HTTPS 200, redirect, authorized IPs, Entra-only, policy).

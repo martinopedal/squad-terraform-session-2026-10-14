@@ -17,7 +17,7 @@ The presentation shell and speaker material are built and reviewed. The public T
 | [`docs\sessionize.md`](docs/sessionize.md) | Updated title, abstract, outcomes, pitch, and speaker metadata |
 | [`docs\feature-guide.md`](docs/feature-guide.md) | Source-verified Copilot CLI and Squad features and practical use cases |
 | [`docs\prompt-pack.md`](docs/prompt-pack.md) | Rerunnable prompts for building a module like this with Squad, the native lanes, and MCP |
-| [`docs\online-demo.md`](docs/online-demo.md) | Appendix: the upstream module deployed to an ALZ Online subscription through a gated pipeline, with evidence and findings |
+| [`docs\online-demo.md`](docs/online-demo.md) | Appendix: the reusable module consumed by the demo-env repo in an ALZ Online subscription through a gated pipeline, with evidence and findings |
 | `scripts\recording\` | Controlled-window capture and verification tools |
 | `terraform\modules\aks-automatic-corp\` | Public source copy of the independently versioned demo module |
 
@@ -83,6 +83,8 @@ Open `http://127.0.0.1:4173/presentation/` and press `S` for speaker view or `N`
 ## Public code, separate deployment configuration
 
 The module and its generic examples are public. Real subscription/resource identifiers, environment inputs, credentials, private policy evidence, and Terraform state remain outside this repository.
+
+The reusable public module is [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic). Demo-environment roots, manifests, operational scripts, and gated deployment workflows now live in [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env), which pins the module by tag `v0.6.0`.
 
 The demonstration reuses an existing Azure Landing Zones Corp environment. The public module consumes approved platform resources; it does not deploy a new landing zone or import existing estate resources. The October 5 validation ran through a private platform pull-request workflow and publishes only sanitized results.
 

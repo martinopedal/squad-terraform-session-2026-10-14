@@ -288,7 +288,7 @@ Takeaway: use Squad where ownership and memory matter.
 Don't say: more agents means better results.
 
 ### a-online, either speaker
-- Same module, thin root: `deployments/online`, `source = "../.."`.
+- Same module, consumed by tag from a separate repo.
 - Guardrails decide the design: private state, NSG on every subnet, RBAC Writer cannot create namespaces.
 - Secure chain: PR, protected branch, human gate, OIDC, one job, no plan artifact.
 - Locked API server: only the runner's static egress IP.
@@ -298,7 +298,7 @@ Takeaway: a simpler topology still meets the same guardrails.
 Don't say: we exempted a policy, or the demo runs from a laptop.
 
 ### a-security, either speaker
-- GHAS baseline: CodeQL, secret scanning with push protection, Dependabot; zero open alerts. Six required checks on `main`.
+- GHAS baseline: CodeQL, secret scanning with push protection, Dependabot; zero open alerts. Module has six required checks; demo-env has four IaC checks.
 - The agent found what raises no alert: Checkov skipped `main.tf` since August; Security Scan disabled for inactivity; a falsely green monitor; an approval race; a VM check blind to per-user installs.
 - MCP (Microsoft Learn) supplied product rules; skills enforce secret handling and reviewer lockout.
 - Every claim re-checked: 22 module tests, 28 read-back checks, 14 VM checks. A human approved every merge and Azure write.
