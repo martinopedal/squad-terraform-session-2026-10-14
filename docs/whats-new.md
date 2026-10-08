@@ -52,10 +52,10 @@ Reviewed October 5, 2026, for the October 14 session. Every row links to a prima
 | --- | --- | --- | --- |
 | 0.11.0 | 2026-06-30 | `squad preset install`; `squad registry` for discovery-only cross-squad peers; the `cast` command replaces `hire`; Copilot App sub-sessions; memory tools through the `squad_state` MCP server; better Fact Checker scaffolding; bundled skills moved to `.github/skills/` | [Release](https://github.com/bradygaster/squad/releases/tag/v0.11.0) |
 | 0.12.0 | 2026-08-13 | GitHub Agentic Workflows: `/squad research`, `/squad plan` (scope/impl/activate), `/squad cast`, `/squad implement`; standalone `squad.exe` with winget/Homebrew packaging; `squad models refresh`; a dispatch-enforcement governance layer | [Release](https://github.com/bradygaster/squad/releases/tag/v0.12.0) |
-| 0.13.0 | 2026-08-26 | `squad health` readiness diagnostics; an advisory Squad reviewer in generated workflows; a generated **Team Capabilities** block in `squad.agent.md`; safer `squad nap` archival; first standalone binary assets | [Release](https://github.com/bradygaster/squad/releases/tag/v0.13.0) |
+| 0.13.0 | 2026-08-26 | Health-readiness diagnostics; an advisory Squad reviewer in generated workflows; a generated **Team Capabilities** block in `squad.agent.md`; safer `squad nap` archival; first standalone binary assets | [Release](https://github.com/bradygaster/squad/releases/tag/v0.13.0) |
 | 0.13.1 | 2026-08-26 | Fix: state tools persist the casting policy, registry, and history | [Release](https://github.com/bradygaster/squad/releases/tag/v0.13.1) |
 | 1.0.0 | 2026-10-03 | A stabilization release with no breaking changes from 0.13.1. The alpha disclaimer is removed | [Release](https://github.com/bradygaster/squad/releases/tag/v1.0.0) |
-| 1.0.1 | 2026-10-04 | `squad health` accepts casting persistent names; the installer fails closed on checksum problems | [Release](https://github.com/bradygaster/squad/releases/tag/v1.0.1) |
+| 1.0.1 | 2026-10-04 | Health diagnostics accept casting persistent names; the installer fails closed on checksum problems | [Release](https://github.com/bradygaster/squad/releases/tag/v1.0.1) |
 
 ### Where the news shows up in this session
 
@@ -65,5 +65,5 @@ Reviewed October 5, 2026, for the October 14 session. Every row links to a prima
 | Skills and MCP | C4: the `qualify-agent-setup` skill, Microsoft Learn MCP, and Terraform MCP lookups |
 | `/review`, `/rubber-duck`, `/diff` | C5 and C7 |
 | AI Credits, `/usage`, `/limits` | C6 and the appendix |
-| Squad 1.0, `squad health`, decisions, Scribe | C3 and C6 |
+| Squad 1.0, setup diagnostics, decisions, Scribe | C3 and C6 |
 | Computer use, Agent HQ, Copilot app, Squad Agentic Workflows | Mentioned only. None of these is part of the planned recorded workflow |

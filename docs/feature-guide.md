@@ -18,7 +18,7 @@ For the same workflows applied end to end through a real pipeline, see [online-d
 | H2 | Pinned `help commands`: interactive command availability |
 | H3 | Pinned `help permissions` and `help limits`: matching and accounting rules |
 | H4 | Pinned `instruction --help` and `lsp --help`: inspect-only interfaces |
-| S0 | Squad version, top-level help, and setup/diagnostic/export/import/triage/cost help |
+| S0 | Squad version, top-level help, and CLI reference for setup, diagnostic, state, and triage commands |
 | D | Documented behavior or template contract only; not locally exercised |
 
 `SHOW` means planned recorded evidence, `MENTION` means brief explanation, and `APPENDIX` means an optional reference. None means that a UI demonstration passed. Model access, trusted configuration, servers, and IDE connections require separate setup. Capture mechanics must pass before any enhancement or reference implementation starts.
@@ -70,7 +70,7 @@ For the same workflows applied end to end through a real pipeline, see [online-d
 
 **Models and subagent models.** `/model` selects a session model; `/subagents` controls defaults and per-agent settings. Squad adds persistent/task-specific model preferences. Ask: "Use an available code-capable model for HCL and a cheaper allowed model for prose; report what each task actually used." Tip: inspect effective settings rather than quoting Squad's model catalog as entitlement. Explicit dispatch, agent definitions, host settings, Auto behavior, and fallback affect the result. Different model names don't establish independent errors or a benchmark. SHOW C1 for model identity; APPENDIX C3; H1/H2, D; [G2], [S14].
 
-**Usage and limits.** `/usage` reports session consumption; `/limits` and `--max-ai-credits` provide opt-in limits. `squad cost` reports available orchestration-log data. Ask: "Before another review, show usage and explain which unanswered question justifies it." Tip: bound tasks and concurrency as well as credits. Pinned help says subagents share the parent limit and compaction can consume credits. The cap is soft because accounting follows a response; a continuation count isn't a money limit. SHOW C6 for usage; APPENDIX C3; H2/H3, S0, D; [G12], [S7].
+**Usage and limits.** `/usage` reports session consumption; `/limits` and `--max-ai-credits` provide opt-in limits. Ask: "Before another review, show usage and explain which unanswered question justifies it." Tip: bound tasks and concurrency as well as credits. Pinned help says subagents share the parent limit and compaction can consume credits. The cap is soft because accounting follows a response; a continuation count isn't a money limit. SHOW C6 for usage; APPENDIX C3; H2/H3, D; [G12].
 
 ## C7 and the appendix: finish work in the right place
 
@@ -86,7 +86,7 @@ For the same workflows applied end to end through a real pipeline, see [online-d
 
 | Feature | AKS use case or prompt | Tip and boundary |
 | --- | --- | --- |
-| `status`, `doctor`, `health` | Confirm which team owns the module, diagnose setup, and check team-state health before assigning work. | Read diagnostics and exit status. Installed doctor help says nonzero on required failures; the reference says it always exits cleanly. Top-level help lists `health --json`, but detailed health help is absent. No delegation success follows from healthy setup. MENTION C3; S0, D; [S7]. |
+| `status`, `doctor` | Confirm which team owns the module and diagnose setup before assigning work. | Read diagnostics, not just exit status. The pinned reference lists `doctor` and its `heartbeat` alias, and says doctor always exits cleanly because it is diagnostic. No delegation success follows from healthy setup. MENTION C3; S0, D; [S7]. |
 | `nap --dry-run` | "Preview stale planning/history cleanup after the demo, preserving accepted contract decisions." | Preview and back up before maintenance. This is Squad state hygiene, not CLI conversation compaction. APPENDIX C6; S0, D; [S7]. |
 | State strategy | Choose worktree-local state for independent comparisons or deliberate shared state for one team. | `local` is the default; `orphan` and `two-layer` are opt-in and can add Git hooks/sync. Don't assume conflict-free concurrent writers or credential isolation. APPENDIX C1/C6; S0, D; [S8], [S9]. |
 | Export/import | "Prepare a local snapshot of reviewed testing knowledge for a disposable second module project." | Inspect content and keep a separate backup before import. Help confirms local JSON interfaces, not perfect fidelity or safe overwrites. Private histories must not enter the public package. APPENDIX C6; S0, D; [S10]. |

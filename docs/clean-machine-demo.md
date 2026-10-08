@@ -63,7 +63,7 @@ squad init
 git status --short
 ```
 
-`squad init` is a terminal command, not a prompt. It is non-interactive (about 2 seconds) and writes `.squad\` with the built-ins (Scribe, Ralph, Rai, Fact Checker), `.github\agents\squad.agent.md`, Squad skills, four `squad-*` workflows, and `.mcp.json` for the `squad_state` MCP server. It does not hire the team.
+`squad init` is a terminal command, not a prompt. It is non-interactive (about 2 seconds), idempotent, and writes `.squad\` with the built-ins (Scribe, Ralph, Rai, Fact Checker), `.github\agents\squad.agent.md`, Squad skills, four `squad-*` workflows, and `.mcp.json` for the `squad_state` MCP server. It does not hire the team. If `.vscode\settings.json` would distract from the recorded diff, prefer `squad init --no-vscode-default`; plain `squad init` remains valid.
 
 Hire prompt (paste after `copilot --agent squad`):
 

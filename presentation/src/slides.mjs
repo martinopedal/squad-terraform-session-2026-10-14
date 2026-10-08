@@ -88,7 +88,7 @@ export const slides = [
       <div><strong>2026-06-01 / 2026-07-01</strong><span>AI Credits and limits</span><em>Usage-based billing is effective. <code>/limits</code> and <code>--max-ai-credits</code> matter.</em></div>
       <div><strong>2025-12-18 / 2026-07-29</strong><span>Skills and MCP mature</span><em>Agent Skills launch. Skills plus MCP reach GA for Copilot code review.</em></div>
       <div><strong>2026-10-01</strong><span>Computer use, public preview</span><em><code>/computer on|show|off</code>, per-app approval, admin disable. We do not use it here.</em></div>
-      <div><strong>2026-10-03 / 2026-10-04</strong><span>Squad 1.0 and 1.0.1</span><em>Stabilizes 0.11-0.13: presets, <code>squad_state</code>, <code>squad health</code>. WinGet and Homebrew; npm latest <code>0.13.1</code> on Oct 5.</em></div>
+      <div><strong>2026-10-03 / 2026-10-04</strong><span>Squad 1.0 and 1.0.1</span><em>Stabilizes 0.11-0.13: presets, <code>squad_state</code>, and setup hardening. WinGet and Homebrew; npm latest <code>0.13.1</code> on Oct 5.</em></div>
     </div>`
   },
   {
@@ -111,7 +111,7 @@ export const slides = [
   },
   chapter(0, 180, '08:00-11:00', 'From zero to a squad', 'Clean Windows 11 / WinGet / Copilot CLI / Squad',
     ['Clean VM reached only through Bastion; no Git, CLI, or Squad yet', 'WinGet installs, /login, then squad init in the repository', 'Init Mode proposes the roster; confirm, then squad doctor'],
-    'Install, init, hire, verify. Nothing is written until you confirm the roster.', [cliInstall, squad101, cleanMachine]),
+    'Install, init, hire, verify. squad init is safe to rerun; roster writes wait for confirmation.', [cliInstall, squad101, cleanMachine]),
   {
     id: 's05-parallel', title: 'Give parallel work separate owners.', time: '11:00-12:00',
     layer: 'Native subagents / Squad routing', kind: 'ownership', sources: [cli, squad],
@@ -270,10 +270,10 @@ export const slides = [
   {
     id: 'a-squad-ops', title: 'Keep team state useful.', time: 'Appendix',
     layer: 'Squad 1.0.1 / native CLI distinction', kind: 'reference', sources: [squad, guide],
-    tip: 'CLI /compact is conversation context. Squad nap is team-state hygiene.',
-    content: `${row('Check the setup', '<code>status / doctor / health</code><br>Team setup is not Terraform correctness.')}
-      ${row('Move and maintain state', '<code>export / import / nap --dry-run</code><br>Back up before import. Preview maintenance.')}
-      ${row('Inspect usage or route issues', '<code>cost</code> and optional Ralph<br>Logs are not a cap. Triage can change labels.')}`
+    tip: 'CLI /compact is conversation context. squad nap is team-state hygiene.',
+    content: `${row('Check the setup', '<code>squad status / squad doctor</code><br>Team setup is not Terraform correctness.')}
+      ${row('Move and maintain state', '<code>squad export / squad import / squad nap --dry-run</code><br>Back up before import. Preview maintenance.')}
+      ${row('Run bounded loops or route issues', '<code>squad loop --init</code> / <code>squad triage</code><br>Configure first. Triage can change labels.')}`
   },
   {
     id: 'a-evidence', title: 'Know which gate you are reading.', time: 'Appendix',
@@ -311,9 +311,9 @@ export const slides = [
     id: 'a-bootstrap', title: 'Start a squad in five steps.', time: 'Appendix',
     layer: 'Squad 1.0.1 / Copilot CLI', kind: 'reference', sources: [squad101, squadHelp, guide],
     tip: 'Init Mode proposes the team first. Nothing is written until you confirm.',
-    content: `${row('Install and scaffold', '<code>winget install --id bradygaster.Squad --exact</code><br>Then <code>squad init</code> in the repository terminal.')}
+    content: `${row('Install and scaffold', '<code>winget install --id bradygaster.Squad --exact</code><br>Then <code>squad init</code> in the repository terminal. Use <code>--no-vscode-default</code> only to keep the diff smaller.')}
       ${row('Hire the team', '<code>copilot --agent squad</code>, describe the project.<br>Confirm the proposed roster; <code>.squad\\</code> is created and committed.')}
-      ${row('Verify and keep current', '<code>squad doctor</code> and <code>squad health</code>.<br>Back up first: <code>squad upgrade</code> keeps team state, replaces templates.')}`
+      ${row('Verify and keep current', '<code>squad doctor</code>.<br>Back up first: <code>squad upgrade</code> keeps team state, replaces templates.')}`
   },
   {
     id: 'a-use-cases', title: 'When Squad earns its place.', time: 'Appendix',

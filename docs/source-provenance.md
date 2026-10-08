@@ -8,6 +8,7 @@ The demo starts from an existing public AKS Terraform root configuration. Its in
 | New reusable module | `alz-avm-tf-demo/terraform-azapi-aks-automatic-corp` |
 | Presentation and source copy | `martinopedal/squad-terraform-session-2026-10-14` |
 | Squad starter | Squad CLI 0.13.0; generated separately without copying private team histories |
+| Squad CLI reference | https://raw.githubusercontent.com/bradygaster/squad/93aec83accb44e08c39e4a799f13b55208215a13/docs/src/content/docs/reference/cli.md at commit `93aec83accb44e08c39e4a799f13b55208215a13`; checked 2026-10-08; used to audit command and flag mentions |
 
 The original root mixed infrastructure and Kubernetes application configuration. Local checks identified structural, formatting, lint, and test-isolation failures. The public reusable module must establish its own clean boundary and validation evidence rather than carry those failures into a new repository.
 
