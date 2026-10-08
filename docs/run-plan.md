@@ -90,7 +90,7 @@ From the demo-env repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set off s
 ### T-15m
 
 - [ ] `.\scripts\Connect-DemoVm.ps1` and leave the Bastion RDP window minimized, PowerShell 7 tab open (C0 live fallback).
-- [ ] Browser tab with the Online app at <https://aks-online-demo.swedencentral.cloudapp.azure.com/>. Accept the expected certificate warning: App Routing uses the NGINX default self-signed certificate. Confirm the title reads `AKS Automatic | NIC 2026 demo` (a-online question fallback).
+- [ ] Browser tab with the Online app at <https://aks-online-demo.swedencentral.cloudapp.azure.com/>. Accept the expected certificate warning: the demo presents the default NGINX self-signed certificate because no trusted certificate is configured; production should use a Key Vault-backed certificate. Confirm the title reads `AKS Automatic | NIC 2026 demo` (a-online question fallback).
 - [ ] Deck on the opening page; timer ready; water.
 
 ## Fallback matrix
