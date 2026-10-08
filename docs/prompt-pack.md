@@ -1,6 +1,6 @@
 # Prompt pack: build a module like this, repeatably
 
-Run these prompts in order to build or extend an AKS Automatic Terraform module with GitHub Copilot CLI, Squad, the three native agent profiles, and read-only MCP documentation lookups. They match the lanes in [AGENTS.md](../AGENTS.md) and [CONTRIBUTING.md](../CONTRIBUTING.md) and the evidence rules in [QUALITY.md](../QUALITY.md).
+Run these prompts in order to build or extend an AKS Automatic Terraform module with GitHub Copilot CLI, Squad, the three native agent profiles, and read-only MCP documentation lookups. They match the lanes in [AGENTS.md](../AGENTS.md) and [CONTRIBUTING.md](../CONTRIBUTING.md) and the evidence rules in [QUALITY.md](../QUALITY.md). Step-by-step: [playbook](playbook.md).
 
 Repeatable does not mean deterministic. A model can choose differently on two runs. These prompts narrow the choices, make every claim checkable, and make a wrong turn visible early. Measure it: run a brief five times from the same checkpoint and count green runs (see [Measure repeatability](#measure-repeatability)).
 
@@ -24,6 +24,8 @@ copilot --agent squad --plan
 ```
 
 Run `/model` and note the model for each lane. In `/mcp`, confirm `microsoft-learn` and `terraform` are connected. Keep native permission prompts on; do not use `--allow-all` or autopilot for these prompts.
+
+Headless MCP check fallback: `copilot mcp list --json` confirms configured server names without adding or removing servers.
 
 ## 0. Frame the contract (Squad lead, Plan mode)
 

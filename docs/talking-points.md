@@ -266,6 +266,8 @@ Don't say: prepared fallback questions came from the audience.
 
 Best simple start: one repo, three to five specialists, built-ins (Scribe, Ralph, Rai, Fact Checker) come with it. Add narrow native profiles only where a lane needs limits.
 
+Step-by-step: [playbook](playbook.md).
+
 ### Usual use cases
 - **Cross-owner work:** module + tests + docs in parallel, one writer per file, named handoffs.
 - **Work that outlives a session:** decisions and histories let you resume or hand over.
@@ -313,6 +315,7 @@ Don't say: AI made it secure, or there are no gaps (single-maintainer admin merg
 - Guardrails first, then sourced API facts through MCP.
 - One lane per step: lead plans, coder edits, validator runs the oracle, reviewer in `/new`.
 - Consume like a customer, deploy through the pipeline.
+- Step-by-step: [playbook](playbook.md).
 - In the October 8 eval, repeatability was measured as five fresh runs with a pre-registered `>= 4/5` green bar. Results: B1 0/5 because all five ambiguous-brief runs used two assert blocks, B2 5/5, and B3 4/5 after a disclosed harness-bug rescore from saved diffs, with no Copilot rerun and the out-of-scope README edit still red. B1v2 was a separate clarified follow-up after seeing B1; the B1v2 brief stated the four-assert shape and was 5/5 green under the same pinned conditions, with 61-114 s runs and no failure modes observed in those five runs. C3-C5 films that B1v2 loop because it met the October 5 `>= 4/5` bar, but the filmed run still has to pass on camera. Lesson: state the oracle's rules in the brief. Treat this as a measured checkpoint, not a guarantee.
 Takeaway: narrow the choices and make every claim checkable.
 Don't say: the prompts make the model deterministic.
