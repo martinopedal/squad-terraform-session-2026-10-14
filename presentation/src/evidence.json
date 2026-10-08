@@ -12,7 +12,7 @@
       "id": "local",
       "label": "Module checks",
       "status": "52 passed",
-      "detail": "Mocked contracts and both mutation proofs passed locally."
+      "detail": "Mocked contracts and both mutation checks passed locally."
     },
     {
       "id": "consumer",

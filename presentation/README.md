@@ -40,7 +40,7 @@ Press `S` or select **Speaker notes** to open current/next slides, the complete 
 
 In overview, click a thumbnail or use arrows to select a slide, then Escape to return to it. Thumbnail links and video controls remain inert. On exit, only the active slide becomes interactive; the approved presenter-shortcut behavior is unchanged.
 
-The first slide is a pre-show NIC 2026 opening page and does not consume session time. The 25 timed main slides allocate 29 minutes to live demo chapters (C0-C7), 24 minutes to other explanation, and seven minutes to Q&A. Eleven appendix slides are question-driven references, not additional scheduled content. [The talk track](../docs/talk-track.md) includes both speakers and a separately labeled prepared Q&A fallback.
+The first slide is a pre-show NIC 2026 opening page and does not consume session time. The 25 timed main slides allocate 29 minutes to live demo chapters (C0-C7), 19 minutes to other explanation, five minutes to protected slack, and seven minutes to Q&A starting at 53:00. Eleven appendix slides are question-driven references, not additional scheduled content. [The talk track](../docs/talk-track.md) includes both speakers and a separately labeled prepared Q&A fallback.
 
 ## Build
 
@@ -75,7 +75,7 @@ Retain provenance and edit records outside the deck's public package. Durations 
 
 Pin and display the actual live-demo executable versions. Current validation is Copilot CLI 1.0.93 and Squad 1.0.1 on October 8, 2026; earlier probes in the [verified feature guide](../docs/feature-guide.md) are explicitly historical. `--no-auto-update` is not a version selector. C2 must retain interactive Plan mode and human approval; never use the auto-approving `--plan --mode autopilot` combination. Rehearse current documented guards and instruction inheritance in the chosen build instead of treating help as UI evidence.
 
-Update `src\evidence.json` only from approved, sanitized evidence. A source inspection is not a test pass. Local tests aren't proof of Azure deployment or policy compliance; cite only approved sanitized Azure validation facts. Do not insert private scope names, account identifiers, state, credentials, raw plans, or private policy links.
+Update `src\evidence.json` only from approved, sanitized evidence. A source inspection is not a test pass. Local tests are not Azure deployment or policy compliance evidence; cite only approved sanitized Azure validation facts. Do not insert private scope names, account identifiers, state, credentials, raw plans, or private policy links.
 
 Long MP4 files are the documented exception to single-file delivery. Keep `index.html` and `media\` together. Internet access is not needed for slides, notes, or local video. Public source links are optional reading, not runtime dependencies.
 

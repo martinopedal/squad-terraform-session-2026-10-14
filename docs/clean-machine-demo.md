@@ -33,6 +33,8 @@ On the VM: close notifications, set display scaling to 125%, open **Windows Term
 
 ## The live chapter (target 3:00)
 
+Pre-staged before session: VM recreated or verified clean; Bastion already connected; PowerShell 7 tab open; package source agreements accepted by the install flags; terminal zoom set; no secrets in clipboard.
+
 | Clip time | Show | Command |
 |---|---|---|
 | 00:00 | Clean machine | `$PSVersionTable.PSVersion; Get-Command git, copilot, squad -ErrorAction SilentlyContinue` (prints only the version) |
@@ -41,6 +43,8 @@ On the VM: close notifications, set display scaling to 125%, open **Windows Term
 | 01:50 | Scaffold | block 2: clone the public module repo, `squad init` |
 | 02:15 | Hire | `copilot --agent squad`, describe the project, confirm the proposed roster |
 | 02:45 | Verify | `squad doctor` (expect `10 passed, 0 failed`) |
+
+Cut at 2:15 (75%): if installs or login are not complete, state the live stall, show fallback evidence, and move to `s05-parallel`. Do not spend Q&A time on installing tools.
 
 Block 1, installs:
 

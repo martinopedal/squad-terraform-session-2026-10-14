@@ -31,6 +31,9 @@ test('each live demo slide has presenter notes with an offline fallback', () => 
     assert.ok(notes.length > 500, `${slide.id} notes should include commands and cues`);
     assert.match(notes, /<pre><code\b/);
     assert.match(notes, /Offline fallback:/);
+    assert.match(notes, /Timing:/);
+    assert.match(notes, /Pre-staged:/);
+    assert.match(notes, /Cut at \d:\d\d \(75%\):/);
     assert.match(notes, /Point at:/);
     assert.match(notes, /Expected:/);
   }

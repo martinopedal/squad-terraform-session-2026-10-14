@@ -101,7 +101,10 @@ def main():
             report["deckVersion"] = manifest["version"]
             report["htmlSHA256"] = hashlib.sha256((ROOT / "index.html").read_bytes()).hexdigest()
             check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 37 and manifest["openingSlides"] == 1 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 11)
-            check("29/24/7 clock", [manifest[k] for k in ("demoMinutes", "liveMinutes", "qaMinutes")] == [29, 24, 7])
+            check("timing budget with slack",
+                  [manifest[k] for k in ("demoMinutes", "explanationMinutes", "protectedSlackMinutes", "qaMinutes",
+                                         "nonDemoSlideMinutes", "mainFlowMinutes", "timedSlideMinutes", "qnaStart")]
+                  == [29, 19, 5, 7, 24, 53, 60, "53:00"])
             check("main spoken words", 5300 <= manifest["spokenWords"] <= 5900, manifest["spokenWords"])
             check("prepared Q&A words", 650 <= manifest["qaWords"] <= 800, manifest["qaWords"])
             check("balanced speakers", abs(manifest["speakers"]["Martin"] - manifest["speakers"]["Haflidi"]) < 0.1 * manifest["spokenWords"], manifest["speakers"])
@@ -147,9 +150,22 @@ def main():
             check("live demo notes have offline fallback", page.evaluate("""() =>
                 [...document.querySelectorAll('.slide-demo aside.notes')].every(n =>
                     n.textContent.includes('Offline fallback:') &&
+                    n.textContent.includes('Timing:') &&
+                    n.textContent.includes('Pre-staged:') &&
+                    n.textContent.includes('Cut at') &&
                     n.textContent.includes('Expected:') &&
                     n.querySelector('pre code'))
             """))
+            s20_text = page.locator("#s20-consumer .slide-content").text_content()
+            check("s20 live reveal on-screen", all(phrase in s20_text for phrase in
+                  ["https://aks-online-demo.swedencentral.cloudapp.azure.com/",
+                   "Gated pipeline: PR → plan → human approval → apply; 29/29 outside-in runtime checks"]))
+            s20_notes = page.locator("#s20-consumer aside.notes").text_content()
+            check("s20 live reveal notes", all(phrase in s20_notes for phrase in
+                  ["0:30-1:00 live reveal", "self-signed cert warning is expected", "pre-accepted",
+                   "pipeline flow", "serving pod name", "speakers section", "Offline fallback:",
+                   "37771532872/37772290635", "Test-OnlineSecurity 29/29 at 13:48 on Oct 8",
+                   "a-online and a-security"]))
             check("live demo notes state provenance boundary", page.evaluate("""() => {
                 const demos = [...document.querySelectorAll('.slide-demo aside.notes')];
                 return demos.length === 8 && demos.every(n => {

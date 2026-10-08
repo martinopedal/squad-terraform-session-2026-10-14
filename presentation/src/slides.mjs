@@ -76,7 +76,11 @@ squad doctor`,
     expected: 'Tools install, Init Mode proposes a roster after confirmation, and squad doctor reports 10 passed.',
     driver: 'Haflidi drives on the clean VM; Martin watches time.',
     pointAt: 'Point at version output, the .squad\\ files from squad init, the roster confirmation, and the doctor pass count.',
-    fallback: 'Use evidence screenshots from Test-DemoVm.ps1 14/14 and the pre-connected VM; if install stalls past 60 seconds, state the stall and move on.'
+    fallback: 'Use evidence screenshots from Test-DemoVm.ps1 14/14 and the pre-connected VM; if install stalls past 60 seconds, state the stall and move on.',
+    timing: '0:20 clean check; 0:55 installs/version; 0:35 login; 0:35 clone/init/diff; 0:35 hire/doctor.',
+    preStaged: 'VM recreated or verified clean; Bastion connected; PowerShell 7 tab open; package-source agreements accepted by flags; terminal zoom set; no secrets in clipboard.',
+    cutAt: '2:15',
+    cut: 'If installs or login are not complete, state the live stall, show fallback evidence, and move to s05-parallel.'
   },
   C1: {
     goal: 'Compare two equivalent Plan-mode attempts without sharing later state.',
@@ -103,7 +107,11 @@ Don't edit files or deploy. Identify affected files, one writer, and checks.
     expected: 'Two plan artifacts expose one meaningful decision or show that both runs made the same sound choice.',
     driver: 'Haflidi leads/narrates; Martin types.',
     pointAt: 'Point at /model, the selected Squad agent, equal inputs, and one consequence in the plans.',
-    fallback: 'Use saved c1-a.txt and c1-b.txt excerpts from the prepared evidence; do not retry live until outputs differ.'
+    fallback: 'Use saved c1-a.txt and c1-b.txt excerpts from the prepared evidence; do not retry live until outputs differ.',
+    timing: '0:35 /new, Squad, /model, Plan; 0:55 C1-A prompt; 0:55 C1-B prompt; 0:35 compare one consequence.',
+    preStaged: 'Both C1 prompt blocks ready; sessions named C1-A/C1-B; same model, permissions, and team state visible; saved excerpts ready.',
+    cutAt: '2:15',
+    cut: 'If C1-B is still generating, stop at one clear C1-A consequence and use the saved C1-B excerpt.'
   },
   C2: {
     goal: 'Turn the scoped Terraform change into a reviewed native Plan-mode artifact.',
@@ -134,7 +142,11 @@ Put unchanged payload assertions and offline checks before documentation; exclud
     expected: 'The visible plan is revised by a human, approved only for code/test/docs scope, then implementation mode is shown.',
     driver: 'Martin drives; Haflidi challenges scope.',
     pointAt: 'Point at the Plan indicator, the @file context, /session plan, the real revision, and the exit from Plan mode.',
-    fallback: 'Use c2-approved-plan.md and screenshots of the Plan indicator; approval still does not authorize Azure apply. Speaker checks: direct project-write guards, ambiguous shell or MCP limits, A Markdown plan alone is not enforcement. Never use --plan --mode autopilot because it auto-approves.'
+    fallback: 'Use c2-approved-plan.md and screenshots of the Plan indicator; approval still does not authorize Azure apply. Speaker checks: direct project-write guards, ambiguous shell or MCP limits, A Markdown plan alone is not enforcement. Never use --plan --mode autopilot because it auto-approves.',
+    timing: '0:35 open clean run and attach files; 0:45 prompt; 1:20 inspect /session plan and revise; 0:45 approve boundary; 0:35 switching buffer.',
+    preStaged: 'Checkpoint shell open; file paths copied; approval language rehearsed; Plan-mode fallback screenshot ready.',
+    cutAt: '3:00',
+    cut: 'If the plan is not ready, use the saved approved plan and state that approval covers only repository changes.'
   },
   C3: {
     goal: 'Route one writing lane with the clarified B1v2 brief.',
@@ -170,7 +182,11 @@ Add one run block named alternate_network_payload to tests\contract.tftest.hcl. 
     expected: 'The writer lane starts, changed files are visible, and the handoff names owners, checks, and unresolved issues.',
     driver: 'Martin operates; Haflidi reads returned evidence.',
     pointAt: 'Point at Squad selection, roster/routing (team list and routing rules), terraform-coder selection, the four-assert test edit, and c3-handoffs.md.',
-    fallback: 'Use B1v2 eval evidence: 5/5 under pinned conditions after the clarified four-assert brief; no causal claim and the live run still has to pass. Custom subagents don\'t inherit repository instructions by default; include-custom-instructions: true opts in. Confirm the behavior in this build.'
+    fallback: 'Use B1v2 eval evidence: 5/5 under pinned conditions after the clarified four-assert brief; no causal claim and the live run still has to pass. Custom subagents don\'t inherit repository instructions by default; include-custom-instructions: true opts in. Confirm the behavior in this build.',
+    timing: '0:40 show Squad, /tasks, /agent list, /mcp; 0:35 B1v2 brief; 1:30 coder run; 0:45 return and handoff; 0:30 buffer.',
+    preStaged: 'B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal claim from eval to live result.',
+    cutAt: '3:00',
+    cut: 'If the coder is still generating, stop the live turn, use the saved B1v2 excerpt, and move to C4 with the same boundary.'
   },
   C4: {
     goal: 'Use a skill and a read-only source lookup to change the work, not just decorate it.',
@@ -190,7 +206,11 @@ and hosted-system subnets. Don't contact an Azure account or change providers.
     expected: 'The notes identify the invoked skill, the source URL/version, the narrow approval, and the limitation if lookup fails.',
     driver: 'Martin drives; Haflidi explains the source claim.',
     pointAt: 'Point at the skill invocation, the MCP server, the specific source result, and the scoped permission prompt.',
-    fallback: 'Use c4-source.md with retrieval time, tool, server/version, and limitation; a failed live lookup stays failed. Permission checks: --available-tools controls visibility, --allow-tool approves, --deny-tool wins, and denying write doesn\'t block shell writes.'
+    fallback: 'Use c4-source.md with retrieval time, tool, server/version, and limitation; a failed live lookup stays failed. Permission checks: --available-tools controls visibility, --allow-tool approves, --deny-tool wins, and denying write doesn\'t block shell writes.',
+    timing: '0:35 skill and /mcp status; 1:05 read-only lookup; 0:50 source/version and boundary; 0:40 /permissions; 0:50 buffer.',
+    preStaged: 'Docker Desktop running; required MCP servers connected; fallback c4-source excerpt sanitized; one retry allowed, not a retry loop.',
+    cutAt: '3:00',
+    cut: 'If MCP/Docker is not healthy, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.'
   },
   C5: {
     goal: 'Run the offline oracle, seed one labeled mutation, repair narrowly, and rerun the same check.',
@@ -239,7 +259,11 @@ Rerun the same validator block.`,
     expected: 'Before and repaired runs exit zero; seeded-failure exits nonzero for the private API assertion, with the original hash restored.',
     driver: 'Haflidi takes control; Martin explains the repair.',
     pointAt: 'Point at command, exit code, deliberate mutation label, failing assertion, /review, /diff, and the repaired rerun.',
-    fallback: 'Use saved c5-before, c5-seeded-failure, and c5-repaired logs; B1v2 was 5/5 in eval, but the live run still must pass. Ordinary test repair isn\'t formal rejection; a formal rejection requires a different independent author, the rejected author doesn\'t produce or advise on that revision, and it is not a filesystem lock.'
+    fallback: 'Use saved c5-before, c5-seeded-failure, and c5-repaired logs; B1v2 was 5/5 in eval, but the live run still must pass. Ordinary test repair isn\'t formal rejection; a formal rejection requires a different independent author, the rejected author doesn\'t produce or advise on that revision, and it is not a filesystem lock.',
+    timing: '0:40 clean check; 1:10 seed mutation; 0:40 intended failure; 1:15 review/restore/diff; 0:45 repaired rerun; 0:30 buffer.',
+    preStaged: 'Validator shell ready; environment scrub command copied; three log names chosen; seeded mutation can be applied from fallback if the model turn runs long.',
+    cutAt: '3:45',
+    cut: 'If the repair is not ready, stop live mutation work, show saved seeded-failure and repaired logs, then continue.'
   },
   C6: {
     goal: 'Save the public reason, resume the right session, and verify the next task reads it.',
@@ -264,7 +288,11 @@ Read the saved decision; cite its file and the constraints for the next change.`
     expected: 'The resumed task cites the decision file and constraints; context and usage are inspected before more work.',
     driver: 'Haflidi leads; Martin verifies the recovered reason.',
     pointAt: 'Point at the decision record, the resumed session name, the cited file, /context, and /usage.',
-    fallback: 'Use c6-decision.md and session screenshots; do not display personal memory or unrelated sessions.'
+    fallback: 'Use c6-decision.md and session screenshots; do not display personal memory or unrelated sessions.',
+    timing: '0:35 decision record; 0:45 /new, /resume, /cwd; 0:35 /context and /usage; 0:50 cite constraints; 0:15 buffer.',
+    preStaged: 'Decision excerpt sanitized and ready; unrelated personal memory or session list not shown; resume target known.',
+    cutAt: '2:15',
+    cut: 'If resume/search is slow, show the decision file and state the constraints directly.'
   },
   C7: {
     goal: 'Validate the consumer-facing artifact, inspect the diff, and hand it to an independent reviewer.',
@@ -307,7 +335,11 @@ Check diff git @('--no-pager','diff','--',$m)
     expected: 'Offline checks pass, the diff is reviewed with sanitized evidence, and the human approves a specific artifact and scope.',
     driver: 'Haflidi leads review; Martin drives the validator/reviewer handoff.',
     pointAt: 'Point at offline check exits, c7-final.diff, file hashes, reviewer findings, and the code-only human acceptance.',
-    fallback: 'Use c7-final.diff, saved exit logs, Online apply runs 37771532872/37772290635, Test-OnlineSecurity 29/29, and Test-DemoVm 14/14; no private IDs.'
+    fallback: 'Use c7-final.diff, saved exit logs, Online apply runs 37771532872/37772290635, Test-OnlineSecurity 29/29, and Test-DemoVm 14/14; no private IDs.',
+    timing: '1:10 offline suite or already-running exits; 0:45 /diff and sanitized boundary; 0:50 reviewer scope; 0:15 buffer.',
+    preStaged: 'Offline suite can run from a prepared shell; logs have no private IDs; reviewer prompt copied; no private plans or raw state on screen.',
+    cutAt: '2:15',
+    cut: 'If the full suite is not done, show the saved green exits and diff; do not run a second suite live.'
   }
 };
 
@@ -317,27 +349,27 @@ const demoBoundary = chapter => chapter === 'C0'
   : 'Genuine Copilot CLI with Squad selected in a real integrated terminal; capture controllers stay external, off-screen tooling; Qualify code first; execute from a disclosed clean checkpoint.';
 const demoNotes = chapter => {
   const run = demoRuns[chapter];
-  return `<p><strong>Driver:</strong> ${escape(run.driver)}</p><p><strong>Live surface:</strong> ${escape(demoBoundary(chapter))}</p><ol class="presenter-plan"><li><strong>Say:</strong> ${escape(run.goal)} Keep this as a live demo; optional recordings are fallback evidence, not a dependency.</li><li><strong>Type:</strong></li></ol>${code(run.command, `${chapter} live command / prompt`, 'powershell')}<ol class="presenter-plan" start="3"><li><strong>Point at:</strong> ${escape(run.pointAt)}</li><li><strong>Expected:</strong> ${escape(run.expected)}</li><li><strong>Hand-off:</strong> ${escape(chapter === 'C5' ? 'Haflidi hands controls back to Martin for evidence levels.' : chapter === 'C7' ? 'Martin takes back the deck for the consumer slide.' : 'Use the next slide transition line in the run plan.')}</li></ol><p><strong>Offline fallback:</strong> ${escape(run.fallback)}</p>`;
+  return `<p><strong>Driver:</strong> ${escape(run.driver)}</p><p><strong>Live surface:</strong> ${escape(demoBoundary(chapter))}</p><p><strong>Timing:</strong> ${escape(run.timing)}</p><p><strong>Pre-staged:</strong> ${escape(run.preStaged)}</p><ol class="presenter-plan"><li><strong>Say:</strong> ${escape(run.goal)} Keep this as a live demo; optional recordings are fallback evidence, not a dependency.</li><li><strong>Type:</strong></li></ol>${code(run.command, `${chapter} live command / prompt`, 'powershell')}<ol class="presenter-plan" start="3"><li><strong>Point at:</strong> ${escape(run.pointAt)}</li><li><strong>Expected:</strong> ${escape(run.expected)}</li><li><strong>Cut at ${escape(run.cutAt)} (75%):</strong> ${escape(run.cut)}</li><li><strong>Hand-off:</strong> ${escape(chapter === 'C5' ? 'Haflidi hands controls back to Martin for evidence levels.' : chapter === 'C7' ? 'Martin takes back the deck for the consumer slide.' : 'Use the next slide transition line in the run plan.')}</li></ol><p><strong>Offline fallback:</strong> ${escape(run.fallback)}</p>`;
 };
 
 const presenterNotes = new Map([
   ['opening', notePlan('Operator', 'Hold the NIC 2026 opening page while the room settles.', 'Confirm timer, speaker notes, and local deck server are ready.', 'NIC mark and blank stage clock.', 'Advance to s01-outcome at 00:00.')],
   ['s01-outcome', notePlan('Martin opens; Haflidi adds the honesty rule.', 'A useful agent session leaves a reusable Terraform module, not just a confident transcript.', 'Introduce both speakers and state that live demos will show commands and evidence boundaries.', 'Module outcome, private landing-zone consumer, and both speaker cards.', 'Martin hands to Haflidi for C1: compare two attempts without making it a competition.')],
-  ['s03-baseline', notePlan('Martin', 'This starts from inherited public code. The source pin is evidence, not a quality claim.', 'Read the pin, say the module now exists, passed local qualification before delivery, and starts live demos from a disclosed clean checkpoint; avoid private paths and never claim first implementation.', 'e9a9a48, 10 existing negative cases, root/provider issues.', 'Martin hands to the news/product-map sequence.')],
-  ['s04-news', notePlan('Martin with Haflidi status checks.', 'Copilot CLI is GA; Squad 1.0.1 is the demo install; computer use is preview and not used here.', 'Read only dated source tiles and status labels.', 'CLI GA, Agent HQ, AI Credits, Skills/MCP, Computer use preview, Squad 1.0.1.', 'Martin moves to the layer map.')],
+  ['s03-baseline', notePlan('Martin', 'This starts from inherited public code. The source pin is evidence, not a quality claim.', 'Timing: speak 0:30 and bank 0:30. Read the pin, say the module now exists, passed local qualification before delivery, and starts live demos from a disclosed clean checkpoint; never claim first implementation.', 'e9a9a48 and the inherited findings only.', 'Martin hands to the news/product-map sequence.')],
+  ['s04-news', notePlan('Martin with Haflidi status checks.', 'Copilot CLI is GA; Squad 1.0.1 is the demo install; computer use is preview and not used here.', 'Timing: speak 0:30 and bank 0:30. Read one headline plus Squad 1.0.1; leave product-tile detail for Q&A.', 'CLI GA and Squad 1.0.1; status labels only.', 'Martin moves to the layer map.')],
   ['s04-layers', notePlan('Haflidi then Martin', 'Name the layer before troubleshooting: CLI runs work, Squad coordinates, Terraform and sources return evidence.', 'Trace arrows from CLI to Squad to external tools.', 'The three layers and artifact boundary.', 'Martin leads into agent setup.')],
   ['s07-agent-setup', notePlan('Martin', 'Always-on instructions, Squad, native profiles, and MCP are different controls.', 'Trace the diagram left to right and define coder, validator, and reviewer lanes.', 'AGENTS.md, .squad\\, terraform-coder, terraform-validator, terraform-reviewer.', 'Hand to Haflidi: show how we get here from nothing.')],
   ['s05-parallel', notePlan('Martin', 'Parallel work needs owners and handoffs, not more uncoordinated agents.', 'Read the lane table and name one writer per Terraform surface.', 'Owner, artifact, and handoff columns.', 'Hand to Haflidi for the module contract.')],
   ['s06-contract', notePlan('Haflidi', 'The module consumes approved existing network inputs; it does not create a landing zone.', 'Point from platform-owned network into the module.', 'Caller-owned provider/backend/state and private Automatic requirements.', 'Hand to Martin for native Plan mode.')],
   ['s08-plan-boundary', notePlan('Haflidi', 'Extract a module, not an environment. Existing estate migration is a separate review.', 'Reveal the warning and contrast module vs consumer root.', 'Typed inputs/outputs, provider requirements, and consumer-owned backend/auth.', 'Hand to Martin for Squad routing.')],
-  ['s10-tool-roles', notePlan('Haflidi', 'Instructions, skills, and MCP each have a different job.', 'Keep all three columns visible; do not treat /mcp as source verification by itself.', 'Instructions, skills, MCP columns.', 'Hand to Martin for source grounding.')],
+  ['s10-tool-roles', notePlan('Haflidi', 'Instructions, skills, and MCP each have a different job.', 'Timing: speak 0:30 and bank 0:30. Keep only the three-column distinction; do not treat /mcp as source verification by itself.', 'Instructions, skills, MCP columns.', 'Hand to Martin for source grounding.')],
   ['s12-source-check', notePlan('Haflidi', 'An assertion should inspect the generated resource body, not a reassuring variable name.', 'Reveal the source claim, decision, and illustrative assertion.', 'Automatic SKU/private contract and the code example label.', 'Hand to Haflidi for test coverage.')],
-  ['s13-test-gap', notePlan('Haflidi', 'Keep negative tests, add positive contract assertions, and test the test with a labeled mutation.', 'Explain oracle = the scripted pass/fail check, and say B1 failed 0/5 until the brief stated four asserts.', 'Negative/positive cases and mutation strip.', 'Haflidi takes live-demo control for C5.')],
-  ['s15-proof', notePlan('Haflidi with Martin handoff.', 'Evidence has levels: 52 module cases, 2 caller cases, private IaC validation, Online 29/29, and VM 14/14 answer different questions.', 'Read status labels exactly and say runtime checks are evidence for checked behavior, not evidence for everything.', 'Inspected, 52 passed, 2 passed, Approved, Succeeded.', 'Martin takes continuity slide.')],
+  ['s13-test-gap', notePlan('Haflidi', 'Keep negative tests, add positive contract assertions, and test the test with a labeled mutation.', 'Timing: speak 1:00 and bank 1:00. Explain oracle = scripted pass/fail check; move B1/B2/B3 eval detail to the prompts appendix.', 'Negative/positive cases and mutation strip.', 'Haflidi takes live-demo control for C5.')],
+  ['s15-proof', notePlan('Haflidi with Martin handoff.', 'Evidence has levels: 52 module cases, 2 caller cases, private IaC validation, Online 29/29, and VM 14/14 answer different questions.', 'Timing: speak 2:00 and bank 1:00. Read status labels exactly and say runtime checks are evidence for checked behavior, not evidence for everything; move depth to appendix.', 'Inspected, 52 passed, 2 passed, Approved, Succeeded.', 'Martin takes continuity slide.')],
   ['s16-continuity', notePlan('Martin', 'Save the reason, not the whole chat. The next task must read the decision.', 'Trace decision into the next task.', 'Conversation, native memory, and repository knowledge distinction.', 'Hand to Haflidi for resume.')],
-  ['s18-memory', notePlan('Martin', 'Conversation context, native memory, and Squad knowledge have different owners.', 'Keep personal memory closed and explain compaction versus team-state hygiene.', 'Conversation, Native memory, Repository knowledge rows.', 'Hand to Haflidi for final review.')],
-  ['s20-consumer', notePlan('Martin', 'Reuse the module code, not the private environment.', 'Point from consumer root into the module and then to private configuration boundary.', 'Module pin, caller-owned inputs, and no private state/secrets.', 'Hand to Haflidi for operating rules.')],
-  ['s21-limits', notePlan('Haflidi then Martin', 'Bound the work, inspect what changed, and leave a useful handoff.', 'Hold the three rules; say more agents cannot vote a contract into correctness.', 'Three closing rules and final statement.', 'Martin opens Q&A at 53:00.')],
+  ['s18-memory', notePlan('Martin', 'Conversation context, native memory, and Squad knowledge have different owners.', 'Timing: speak 1:00 and bank 1:00. Keep personal memory closed; move taxonomy, /compact, and nap depth to the Squad operations appendix.', 'Conversation, Native memory, Repository knowledge rows.', 'Hand to Haflidi for final review.')],
+  ['s20-consumer', notePlan('Martin', 'Reuse the module code, not the private environment.', 'Timing: 0:00-0:30 diagram; 0:30-1:00 live reveal https://aks-online-demo.swedencentral.cloudapp.azure.com/; 1:00-1:35 gated pipeline; 1:35-2:00 runtime checks and boundary. The self-signed cert warning is expected and pre-accepted in the pre-staged browser tab. Keep a-online and a-security as Q&A depth.', 'Consumer diagram, then the branded page pipeline flow, serving pod name, speakers section, and the 29/29 runtime evidence line.', 'Hand to Haflidi: "same module, guarded consumer, now three rules for the next change."') + '<p><strong>Offline fallback:</strong> Use the prepared screenshot plus apply runs 37771532872/37772290635 and Test-OnlineSecurity 29/29 at 13:48 on Oct 8.</p>'],
+  ['s21-limits', notePlan('Haflidi then Martin', 'Bound the work, inspect what changed, and leave a useful handoff.', 'Timing: speak 1:30 and bank 0:30. Use the three rules only; no new examples.', 'Three closing rules and final statement.', 'Martin opens Q&A at 53:00.')],
   ['s22-questions', notePlan('Martin hosts; Haflidi answers selected technical questions.', 'Ask which part the audience wants to inspect. If quiet, use prepared questions.', 'Open only the relevant appendix, then return to this slide.', 'Appendix links for Online, security, prompts, bootstrap, and use cases.', 'Close at 11:00 with the public handoff and explicit evidence limits.')],
   ['a-cli-controls', notePlan('Martin', 'Use this appendix for branching and recovery questions.', 'Explain /fork, /worktree, /rewind, and /resume without promising Azure rollback.', 'Command rows and worktree caveat.', 'Return to Q&A.')],
   ['a-automation', notePlan('Martin', 'Use this appendix for bounded automation and cost-control questions.', 'Explain /autopilot, -p, /fleet, /subagents, /limits, and soft accounting, including five default continuations when relevant.', 'Soft credit limits, parent/subagents share accounting, and compaction can consume credits.', 'Return to Q&A.')],
@@ -523,9 +555,11 @@ export const slides = [
     'Approve a specific artifact and scope, not a hopeful summary.', [cli, tfplan]),
   {
     id: 's20-consumer', title: 'Reuse the code, not the environment.', time: '49:00-51:00',
-    layer: 'Public Terraform / private consumption', kind: 'diagram', sources: [tests, automatic],
+    layer: 'Public Terraform / private consumption', kind: 'diagram', sources: [tests, automatic, onlineDemo],
     tip: 'Pin the reviewed module revision separately from environment inputs.',
-    content: `${fig(consumption())}<p class="status-line"><span class="status pending">Consumer validated</span>Private inputs, state, identities, FQDNs, and run URLs stay out of public artifacts.</p>`
+    content: `${fig(consumption())}<div class="consumer-reveal"><p class="online-url">https://aks-online-demo.swedencentral.cloudapp.azure.com/</p>
+      <p>Gated pipeline: PR → plan → human approval → apply; 29/29 outside-in runtime checks</p></div>
+      <p class="status-line"><span class="status pending">Consumer validated</span>Private inputs, state, identities, and run URLs stay out of public artifacts.</p>`
   },
   {
     id: 's21-limits', title: 'Make the next change easier to review.', time: '51:00-53:00',
