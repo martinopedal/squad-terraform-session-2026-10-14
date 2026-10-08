@@ -47,25 +47,25 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .feature-badge { display: inline-flex; vertical-align: .18em; align-items: center; border: 1px solid currentColor; border-radius: 999px; padding: 1px 6px 2px; margin-left: 5px; font-size: .46em; line-height: 1.05; font-family: var(--font); font-weight: 700; letter-spacing: .01em; text-decoration: none; white-space: nowrap; }
 .news-grid .feature-badge { font-size: 10px; margin-left: 4px; padding: 1px 5px; }
 .status-line .feature-badge, .reference-row .feature-badge, .context-column .feature-badge { font-size: 12px; margin-left: 7px; }
-.copilot-lockup { width: 440px; height: 154px; background: var(--github-copilot-lockup) right center / contain no-repeat; border: 2px solid currentColor; background-color: #f6f8fa; }
-.layout-opening .copilot-lockup { position: absolute; right: 62px; bottom: 52px; width: 360px; height: 126px; color: var(--nic-ink); }
-.slide-questions .copilot-lockup { position: absolute; right: 72px; top: 56px; width: 260px; height: 92px; color: var(--nic-cyan); }
+.product-name { font-size: 42px; line-height: 1.05; font-weight: 500; letter-spacing: -.02em; }
+.layout-opening .product-name { position: absolute; right: 62px; bottom: 52px; font-size: 38px; color: var(--nic-ink); }
+.slide-questions .product-name { align-self: flex-end; font-size: 26px; color: var(--nic-cyan); }
 .slide-legal .slide-content { justify-content: center; align-items: center; text-align: left; }
 .legal-card { width: 920px; border: 3px solid currentColor; padding: 54px 66px; display: grid; gap: 18px; background: transparent; }
 .legal-card p { font-size: 34px; line-height: 1.18; }
-.autonomy-spectrum { border: 2px solid currentColor; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 9px 10px; align-items: center; font-size: 16px; line-height: 1.15; }
-.autonomy-spectrum span { border-left: 2px solid currentColor; padding-left: 9px; }
-.autonomy-spectrum span:first-child { border-left: 0; padding-left: 0; }
-.autonomy-spectrum b { font-family: var(--mono); font-size: .9em; }
-.autonomy-spectrum em { flex-basis: 100%; font-style: normal; opacity: .9; font-size: 14px; }
-.autonomy-spectrum .feature-badge { font-size: 10px; margin-left: 3px; }
+.control-spectrum { border: 2px solid currentColor; padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 7px 9px; align-items: center; font-size: 15px; line-height: 1.12; }
+.control-spectrum span { border-left: 2px solid currentColor; padding-left: 9px; }
+.control-spectrum span:first-child { border-left: 0; padding-left: 0; }
+.control-spectrum b { font-family: var(--mono); font-size: .9em; }
+.control-spectrum em { flex-basis: 100%; font-style: normal; opacity: .9; font-size: 13px; }
+.control-spectrum .feature-badge { font-size: 10px; margin-left: 3px; }
 
 .reveal .figure-svg { width: 100%; margin: 0; }
 .figure-svg svg { width: 100%; height: auto; max-height: 345px; display: block; }
 .figure-svg svg, .figure-svg svg * { font-family: var(--font) !important; }
 .diagram-caption { color: inherit; font-size: 17px; text-align: center; padding-top: 12px; }
 #s04-layers .slide-body { justify-content: start; gap: 14px; }
-#s04-layers .figure-svg svg { max-height: 332px; }
+#s04-layers .figure-svg svg { max-height: 304px; }
 .status-line { display: flex; align-items: center; gap: 17px; font-size: 21px; color: inherit; }
 .status { display: inline-flex; align-items: center; padding: 5px 11px; border: 2px solid currentColor; border-radius: 0; font-size: 17px; font-weight: 700; white-space: nowrap; color: inherit; background: transparent; }
 .status.pending, .status.observed { color: inherit; background: transparent; }
@@ -132,10 +132,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .live-speaker-card p { font-size: 17px; opacity: .88; margin-bottom: 9px !important; }
 .live-speaker-card a { display: inline-block; border: 1px solid currentColor; padding: 3px 12px; border-radius: 999px; font-size: 16px; text-decoration: none; }
 .close-buffer-line { font-size: 23px; line-height: 1.3 !important; margin-bottom: 8px !important; }
-#s22-questions .slide-header h2 { font-size: 48px; }
-#s22-questions .questions-lede { font-size: 32px; }
-#s22-questions .close-buffer-line { font-size: 21px; }
-#s22-questions .appendix-links a { padding: 9px 0; font-size: 20px; }
+#s22-questions .slide-header h2 { font-size: 44px; }
+#s22-questions .slide-body { gap: 12px; }
+#s22-questions .questions-lede { font-size: 30px; }
+#s22-questions .close-buffer-line { font-size: 20px; margin-bottom: 4px !important; }
+#s22-questions .appendix-links a { padding: 6px 0; font-size: 19px; }
 
 .slide-baseline .slide-body { display: grid; grid-template-columns: 1fr 1fr; gap: 42px; align-items: center; }
 .source-pin { display: flex; flex-direction: column; gap: 5px; }

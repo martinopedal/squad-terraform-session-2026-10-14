@@ -13,7 +13,7 @@ const assetData = async (path, type) => `data:${type};base64,${(await readFile(j
 const fontFace = async (weight, file) =>
   `@font-face{font-family:'Roboto';font-style:normal;font-weight:${weight};font-display:block;src:url("${await assetData(file, 'font/woff2')}") format('woff2');}`;
 const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, core, coreCSS, highlight, highlightCSS, notes, licenses,
-  nicLogoInk, nicLogoCyan, nicLogoLargeInk, copilotLockup, roboto400, roboto500, roboto700, cascadiaCode] = await Promise.all([
+  nicLogoInk, nicLogoCyan, nicLogoLargeInk, roboto400, roboto500, roboto700, cascadiaCode] = await Promise.all([
   read('../docs/talk-track.md'), read('../docs/sessionize.md'), read('src/theme.css'), read('src/runtime.js'),
   read('src/version.json'), read('src/media.json'), read('src/evidence.json'),
   read('node_modules/reveal.js/dist/reveal.js'), read('node_modules/reveal.js/dist/reveal.css'),
@@ -22,14 +22,13 @@ const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, c
   assetData('src/assets/nic26-logo-ink.png', 'image/png'),
   assetData('src/assets/nic26-logo-cyan.png', 'image/png'),
   assetData('src/assets/nic26-logo-large-ink.png', 'image/png'),
-  assetData('media/brand/github-copilot-lockup-examples.png', 'image/png'),
   fontFace(400, 'node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2'),
   fontFace(500, 'node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2'),
   fontFace(700, 'node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2'),
   fontFace(400, 'media/fonts/CascadiaCode.woff2')
 ]);
 const fontCSS = roboto400 + roboto500 + roboto700 + cascadiaCode.replaceAll("font-family:'Roboto'", "font-family:'Cascadia Code'");
-const assetCSS = `:root{--nic-logo-ink:url("${nicLogoInk}");--nic-logo-cyan:url("${nicLogoCyan}");--nic-logo-large-ink:url("${nicLogoLargeInk}");--github-copilot-lockup:url("${copilotLockup}");}`;
+const assetCSS = `:root{--nic-logo-ink:url("${nicLogoInk}");--nic-logo-cyan:url("${nicLogoCyan}");--nic-logo-large-ink:url("${nicLogoLargeInk}");}`;
 const version = JSON.parse(versionText);
 const media = JSON.parse(mediaText);
 const evidence = JSON.parse(evidenceText);

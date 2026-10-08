@@ -183,7 +183,7 @@ def main():
             s20_text = page.locator("#s20-consumer .slide-content").text_content()
             check("s20 live reveal on-screen", all(phrase in s20_text for phrase in
                   ["https://aks-online-demo.swedencentral.cloudapp.azure.com/",
-                   "Human or agent, every change goes through the same gates",
+                   "Whether a change is human-authored or agent-assisted, it goes through the same gates",
                    "PR → checks/scans (fmt, validate, TFLint, Trivy, Checkov) → review + protected main → Terraform plan → online environment approval → OIDC apply → runtime check"]))
             s20_notes = page.locator("#s20-consumer aside.notes").text_content()
             check("s20 live reveal notes", all(phrase in s20_notes for phrase in
@@ -235,10 +235,15 @@ def main():
                 "missing": sorted(required_badges - seen_badges),
                 "badges": badge_summary
             })
-            lockup_locations = page.locator(".slides > section:has(.copilot-lockup)").evaluate_all("nodes => nodes.map(n => n.id)")
-            check("brand lockup placement", lockup_locations == ["opening", "s22-questions"], lockup_locations)
+            product_name_locations = page.locator(".slides > section:has(.product-name)").evaluate_all("nodes => nodes.map(n => n.id)")
+            product_names = page.locator(".product-name").evaluate_all("nodes => nodes.map(n => n.textContent.trim())")
+            check("text-only product name placement", product_name_locations == ["opening", "s22-questions"] and product_names == ["GitHub Copilot", "GitHub Copilot"], {"locations": product_name_locations, "names": product_names})
             html_text = (ROOT / "index.html").read_text(encoding="utf-8")
-            check("brand asset local-only", "brand.github.com/_next/static/media" not in html_text and "github-copilot-lockup-examples.png" not in html_text)
+            check("no third-party logo images embedded", page.locator(".copilot-lockup, img[src*=\"github\" i], img[alt*=\"github\" i]").count() == 0
+                  and "brand.github.com/_next/static/media" not in html_text
+                  and "github-copilot-lockup-examples.png" not in html_text
+                  and "--github-copilot-lockup" not in html_text
+                  and "copilot-lockup" not in html_text)
             check("Cascadia Code local font and license", (ROOT / "media" / "fonts" / "CascadiaCode.woff2").is_file()
                   and (ROOT / "media" / "fonts" / "CascadiaCode-LICENSE.txt").is_file()
                   and "font-family:'Cascadia Code'" in html_text

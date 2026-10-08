@@ -38,7 +38,7 @@ Depth restored or added:
 | `s01-outcome` | 3:00 | Proper speaker intro, audience promise, and honesty rule before demos. |
 | `s07-agent-setup` + `demo-c0` | 1:00 setup slide + 3:00 live | Show the Squad bootstrap path from the playbook: prerequisites, `squad init`, `copilot --agent squad`, roster/charters, `squad doctor`. |
 | `s05-parallel` | 2:00 | Restore depth for the three agent lanes: `terraform-coder` writes, `terraform-validator` runs fixed offline checks, `terraform-reviewer` reviews in fresh context. |
-| `s13-test-gap` | 3:00 | Restore the B1 to B1v2 repeatability lesson: ambiguous brief 0/5, state the oracle's rule, clarified brief 5/5. No causal claim; the live run still has to pass. |
+| `s13-test-gap` | 3:00 | Restore the B1 to B1v2 repeatability lesson: ambiguous brief 0/5, state the oracle's rule, clarified brief 5/5. No causal or repeatability guarantee; the live run still has to pass. |
 | `s15-proof` | 3:00 | Restore evidence-depth language so "runtime evidence" is scoped and honest. |
 | `s18-memory` | 2:00 | Restore continuity depth: saved decisions are not the same as personal memory or a whole chat transcript. |
 | `s20-consumer` | 3:00 | Keep the required 30s live reveal and add enough room to explain the consumer boundary and gated pipeline. |
@@ -51,7 +51,7 @@ Depth restored or added:
 | `s01-outcome` | 00:00-03:00 | Martin opens; Haflidi adds honesty rule |  | Intro: who we are, roles, Martin `opedal.tech`, Haflidi live-page initials + GitHub only; what the audience will see and take away; disclose live vs prepared checkpoints/inherited code/fallback evidence. |
 | `s03-baseline` | 03:00-04:00 | Martin |  | Inherited public source and clean checkpoint; not first implementation. |
 | `s04-news` | 04:00-05:00 | Martin |  | CLI GA, Squad 1.0.1, and what is not used live. |
-| `s04-layers` | 05:00-06:00 | Haflidi then Martin |  | CLI runs work, Squad coordinates, tools return evidence; same slot now also places C0-C7 on the autonomy spectrum: ask, edit, plan, agent, tools/permissions, resume, gated review. `-p` stays appendix automation, not a live chapter. |
+| `s04-layers` | 05:00-06:00 | Haflidi then Martin |  | CLI runs work, Squad coordinates, tools return evidence; same slot now also reads the control spectrum as modes, not a maturity ladder: ask, edit, plan, agent, tools/permissions, resume, gated review. `-p` stays appendix automation, not a live chapter. More automation is not better by default; human approvals remain at the gates. |
 | `s07-agent-setup` | 06:00-07:00 | Martin |  | Agent setup map; hand to C0 bootstrap. |
 | `demo-c0` | 07:00-10:00 | Haflidi | C0 | Bootstrap from zero; cut at 09:15. |
 | `s05-parallel` | 10:00-12:00 | Martin |  | Three lanes and handoffs: coder, validator, reviewer. |
@@ -62,7 +62,7 @@ Depth restored or added:
 | `s10-tool-roles` | 23:00-24:00 | Haflidi |  | Instructions, skills, and MCP are different controls. |
 | `demo-c3` | 24:00-28:00 | Martin | C3 | Route B1v2 to `terraform-coder`; cut at 27:00. |
 | `s12-source-check` | 28:00-29:00 | Haflidi |  | Source claim becomes assertion. |
-| `s13-test-gap` | 29:00-32:00 | Haflidi |  | B1 0/5 -> oracle rule -> B1v2 5/5; no causal claim; live still must pass. |
+| `s13-test-gap` | 29:00-32:00 | Haflidi |  | B1 0/5 -> oracle rule -> B1v2 5/5; no causal or repeatability guarantee; live still must pass. |
 | `demo-c4` | 32:00-36:00 | Martin | C4 | Skill + read-only source lookup + permissions; cut at 35:00. |
 | `demo-c5` | 36:00-41:00 | Haflidi | C5 | Validator before/seeded/repaired; cut at 39:45. Checkpoint: must be out of C5 at 41:00. |
 | `s15-proof` | 41:00-44:00 | Haflidi with Martin handoff |  | Evidence levels; say runtime check/evidence, not proof of everything. |
@@ -72,7 +72,7 @@ Depth restored or added:
 | `demo-c7` | 50:00-53:00 | Haflidi leads review; Martin drives handoff | C7 | Offline exits, diff, reviewer scope; cut at 52:15. |
 | `s20-consumer` | 53:00-56:00 | Martin |  | 0:00-0:30 diagram; 0:30-1:00 live reveal; 1:00-2:10 same-gates mapping: PR → checks/scans (fmt, validate, TFLint, Trivy, Checkov) → review + protected main → Terraform plan → online environment approval → OIDC apply → runtime check; 2:10-3:00 boundary and honest audit caveat. Must start by 53:00; reveal is 53:30-54:00. |
 | `s21-limits` | 56:00-58:00 | Haflidi then Martin |  | Three rules for the next change; no new examples. |
-| `s22-questions` (retitled close) | 58:00-60:00 | Martin closes; Haflidi available |  | Close with "Humans set direction; agents close the loop through the same gates" and the generic day-2 loop: detect, propose, review, approve, apply, verify. Appendix remains available afterwards/hallway. "Questions if time allows" only if ahead; not scheduled Q&A. |
+| `s22-questions` (retitled close) | 58:00-60:00 | Martin closes; Haflidi available |  | Close with "Humans set direction and approve; agents help move work through the same gated loop." and the generic day-2 loop: detect, propose, review, approve, apply, verify. Appendix remains available afterwards/hallway. "Questions if time allows" only if ahead; not scheduled Q&A. |
 
 Appendix slides (`a-cli-controls`, `a-automation`, `a-handoffs`, `a-integrations`, `a-squad-ops`, `a-evidence`, `a-online`, `a-security`, `a-prompts`, `a-bootstrap`, `a-use-cases`) stay after the timed deck and are used only after the close or in hallway conversations.
 
@@ -83,7 +83,7 @@ Appendix slides (`a-cli-controls`, `a-automation`, `a-handoffs`, `a-integrations
 | C0 | 07:00-10:00 | 3:00 | 09:15 | State install/login stall, show fallback evidence, move to `s05-parallel`. |
 | C1 | 14:00-17:00 | 3:00 | 16:15 | Stop comparison at one C1-A consequence and use saved C1-B excerpt. |
 | C2 | 19:00-23:00 | 4:00 | 22:00 | Use saved approved plan; approval covers repo changes only. |
-| C3 | 24:00-28:00 | 4:00 | 27:00 | Stop live coder turn, use B1v2 eval excerpt, no causal claim. |
+| C3 | 24:00-28:00 | 4:00 | 27:00 | Stop live coder turn, use B1v2 eval excerpt, no causal or repeatability guarantee. |
 | C4 | 32:00-36:00 | 4:00 | 35:00 | Say lookup unavailable live, show fallback excerpt, do not pretend success. |
 | C5 | 36:00-41:00 | 5:00 | 39:45 | Stop mutation work, show saved before/seeded/repaired logs. |
 | C6 | 45:00-48:00 | 3:00 | 47:15 | Show decision file and state constraints directly. |
@@ -192,14 +192,14 @@ Use "runtime check" or "runtime evidence". Do not use stronger certainty languag
 Devrel deck changes for the next round:
 
 - Add an untimed legal/futures notice immediately after the opening/title page and before `s01-outcome`. It does not affect the timed contract.
-- Enrich `s04-layers` with the autonomy spectrum in the same 05:00-06:00 slot: C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools and permissions, C5 edit/repair loop, C6 resume, C7 gated review; `-p` remains appendix automation.
+- Enrich `s04-layers` with the control spectrum as modes, not a maturity ladder in the same 05:00-06:00 slot: C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools and permissions, C5 edit/repair loop, C6 resume, C7 gated review; `-p` remains appendix automation. More automation is not better by default; human approvals remain at the gates.
 - Update `s20-consumer` to the same-gates wording and verified gate map only: PR → checks/scans (fmt, validate, TFLint, Trivy, Checkov) → review + protected main → Terraform plan → online environment approval → OIDC apply → runtime check. State that the audit is the PR/review/check/environment/Actions trace and note the documented single-maintainer/admin-override gap from the security case.
 - Update `s22-questions` close with the same-gates handoff and day-2 operations loop line; keep times unchanged.
 - `s01-outcome`: retime to 00:00-03:00 and make it the intro. Include both speakers properly, audience promise, takeaways, and honesty rule. Martin: role plus `opedal.tech`. Haflidi: exact live-page treatment, initials + GitHub only, no extra personal data. Consider reusing the live page speakers section as HTML/screenshot.
 - Reorder/retime main deck to the table above: C0 before C1; `s20-consumer` at 53:00-56:00; `s21-limits` at 56:00-58:00; `s22-questions` at 58:00-60:00 and retitled/rewritten as close plus "questions if time allows".
 - `s07-agent-setup` and `demo-c0`: add playbook bootstrap steps: prerequisites/install, `squad init`, `copilot --agent squad`, roster/charters, `squad doctor`.
 - `s05-parallel`: expand to explain the three agent lanes and why they are separate: writer, validator with fixed offline checks, reviewer in fresh context.
-- `s13-test-gap` / `a-prompts`: main-flow B1 -> B1v2 lesson must say ambiguous brief 0/5, oracle required separate asserts, clarified B1v2 5/5. No causal claim; live run still has to pass.
+- `s13-test-gap` / `a-prompts`: main-flow B1 -> B1v2 lesson must say ambiguous brief 0/5, oracle required separate asserts, clarified B1v2 5/5. No causal or repeatability guarantee; live run still has to pass.
 - `s20-consumer`: keep a 30s live reveal in notes at 53:30-54:00; show branded page, pipeline flow, serving pod name, and speakers section. Keep "runtime check/evidence" language.
 - Demo notes `demo-c0` through `demo-c7`: update absolute cut-line clocks to 09:15, 16:15, 22:00, 27:00, 35:00, 39:45, 47:15, 52:15.
 - Presentation tests/build assertions currently encoding old shape:
