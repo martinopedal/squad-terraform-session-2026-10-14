@@ -1,8 +1,8 @@
 # C0: From zero to a squad (clean Windows 11 demo VM)
 
-C0 is a 3-minute recorded chapter (deck slide `demo-c0`, 08:00-11:00, Haflidi leads). It shows the from-zero install of Copilot CLI and Squad on a machine that has never had them, which a presenter laptop cannot show. The live fallback is the same VM.
+C0 is a 3-minute live chapter (deck slide `demo-c0`, 08:00-11:00, Haflidi leads). It shows the from-zero install of Copilot CLI and Squad on a machine that has never had them, which a presenter laptop cannot show. Optional recordings/screenshots are fallback evidence only.
 
-Everything below was checked on 2026-10-07 against the deployed VM and a throwaway clone. Re-run the preflight before recording because package versions move.
+Everything below was checked on 2026-10-07 against the deployed VM and a throwaway clone. Re-run the preflight before the live demo because package versions move.
 
 ## What the machine is
 
@@ -15,7 +15,7 @@ Everything below was checked on 2026-10-07 against the deployed VM and a throwaw
 | Not installed | Git, Copilot CLI, Squad, Node (Squad's standalone bundle carries its own runtime; `squad doctor` passes without system Node) |
 | Auto-shutdown | 19:00 W. Europe |
 
-Verified package versions by 2026-10-08: `Git.Git` 2.55.0.5, `GitHub.Copilot` 1.0.93 at validation; record whatever `copilot --version` reports at recording time, `bradygaster.Squad` 1.0.1, `Microsoft.PowerShell` 7.6.6.0.
+Verified package versions by 2026-10-08: `Git.Git` 2.55.0.5, `GitHub.Copilot` 1.0.93 at validation; read whatever `copilot --version` reports during rehearsal, `bradygaster.Squad` 1.0.1, `Microsoft.PowerShell` 7.6.6.0.
 
 ## Preflight (T-30 minutes)
 
@@ -31,7 +31,7 @@ If `Test-DemoVm.ps1` reports the VM is not clean (an earlier take installed tool
 
 On the VM: close notifications, set display scaling to 125%, open **Windows Terminal**, and pick the **PowerShell** (7) profile from the dropdown, not Windows PowerShell. Font size 16 or larger. Hide the Bastion toolbar.
 
-## The clip (target 3:00, cuts labeled)
+## The live chapter (target 3:00)
 
 | Clip time | Show | Command |
 |---|---|---|
@@ -63,7 +63,7 @@ squad init
 git status --short
 ```
 
-`squad init` is a terminal command, not a prompt. It is non-interactive (about 2 seconds), idempotent, and writes `.squad\` with the built-ins (Scribe, Ralph, Rai, Fact Checker), `.github\agents\squad.agent.md`, Squad skills, four `squad-*` workflows, and `.mcp.json` for the `squad_state` MCP server. It does not hire the team. If `.vscode\settings.json` would distract from the recorded diff, prefer `squad init --no-vscode-default`; plain `squad init` remains valid.
+`squad init` is a terminal command, not a prompt. It is non-interactive (about 2 seconds), idempotent, and writes `.squad\` with the built-ins (Scribe, Ralph, Rai, Fact Checker), `.github\agents\squad.agent.md`, Squad skills, four `squad-*` workflows, and `.mcp.json` for the `squad_state` MCP server. It does not hire the team. If `.vscode\settings.json` would distract from the live-demo diff, prefer `squad init --no-vscode-default`; plain `squad init` remains valid.
 
 Hire prompt (paste after `copilot --agent squad`):
 
@@ -80,13 +80,13 @@ Never push from the VM. The clone is a local demo copy; the four generated workf
 ## Reset between takes
 
 - Fast reset (same VM): delete `$HOME\demo`, then `winget uninstall --id bradygaster.Squad`, `GitHub.Copilot`, `Git.Git`; sign out of GitHub in Edge. Use this only for rehearsal.
-- Clean reset (for the recorded take and before the live fallback): `deploy-demo-vm.yml` action `recreate-vm` in the demo-env repo. It replaces the VM, OS disk, and VM-scoped extensions and re-proves the clean state.
+- Clean reset (for rehearsal, delivery, or fallback capture): `deploy-demo-vm.yml` action `recreate-vm` in the demo-env repo. It replaces the VM, OS disk, and VM-scoped extensions and re-proves the clean state.
 
-## Live fallback (if the clip fails on the day)
+## Offline fallback (if the live chapter stalls)
 
 1. `scripts\Connect-DemoVm.ps1` from the demo-env repo on the presenter machine (pre-connected at T-15).
 2. Run block 1 with the waits visible and narrate over them, or skip to block 2 on a VM that already has the tools installed from rehearsal (say so).
-3. Keep to 3 minutes. If install stalls past 60 seconds, say "this is where the clip saves us" and move to slide `s05-parallel`.
+3. Keep to 3 minutes. If install stalls past 60 seconds, say "we will use the fallback evidence for this step" and move to slide `s05-parallel`.
 
 ## Never show
 

@@ -1,6 +1,6 @@
 # Run plan: NIC 2026, "From prompt to reusable Terraform"
 
-Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi Fridthjofsson. Deck 0.18: 1 opening page, 25 timed slides, 11 appendix references; 29 minutes recorded, 24 live, 7 Q&A.
+Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi Fridthjofsson. Deck 0.19: 1 opening page, 25 timed slides, 11 appendix references; 29 minutes live demo chapters, 24 minutes explanation, 7 Q&A.
 
 Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck build), [talking-points.md](talking-points.md) (cheat sheet), [demo-runbook.md](demo-runbook.md) (C1-C7), [clean-machine-demo.md](clean-machine-demo.md) (C0), [online-demo.md](online-demo.md) (Online landing zone). Online and demo-VM operator scripts live in the demo-env repository under `scripts\`.
 
@@ -8,37 +8,37 @@ Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck 
 
 | Day | Who | What | Done when |
 |---|---|---|---|
-| Wed 07 Oct | Martin | Deck 0.18 with C0, runbooks, demo VM cleanliness checks passed, Online facts refreshed | `npm test` green; `Test-DemoVm.ps1` 14/14; `Test-OnlineSecurity.ps1` 29/29 |
+| Wed 07 Oct | Martin | Deck 0.19 live-demo contract with C0, runbooks, demo VM cleanliness checks passed, Online facts refreshed | `npm test` green; `Test-DemoVm.ps1` 14/14; `Test-OnlineSecurity.ps1` 29/29 |
 | Thu 08 Oct | Haflidi | Accept repo and environment invites; read talk track; receive the VM local account out of band | Haflidi can open the deck and reach the VM through Bastion; Martin uses Entra sign-in with MFA |
 | Thu 08 Oct | Both | Rehearsal 1: read-through with the clock, slides only, 60 minutes on Teams | Each section within plus or minus 30 seconds |
-| Thu 08-Fri 09 | Haflidi | Record C0 on the VM (clean reset first) | `media/C0.mp4` reviewed, 3:00 |
-| Fri 09 Oct | Martin drives, Haflidi checks | Record C1-C4 in the native CLI with Squad selected | 4 reviewed exports |
-| Sat 10-Sun 11 | Martin, Haflidi | Record C5-C7; retakes | 8/8 clips reviewed; `media.json` `reviewed: true` |
-| Mon 12 Oct | Both | Attach clips, rebuild deck (0.18), Rehearsal 2: full timed run with clips | Under 53:00 before Q&A |
+| Thu 08-Fri 09 | Haflidi | Rehearse live C0 on the VM (clean reset first); optionally capture fallback evidence | C0 completes in 3:00 or fallback evidence is labeled |
+| Fri 09 Oct | Martin drives, Haflidi checks | Rehearse live C1-C4 in the native CLI with Squad selected | Commands and expected outputs match the deck |
+| Sat 10-Sun 11 | Martin, Haflidi | Rehearse live C5-C7; optionally capture fallback takes | All 8 demo chapters have a live path and offline fallback evidence |
+| Mon 12 Oct | Both | Rebuild deck (0.19), Rehearsal 2: full timed run with live demos | Under 53:00 before Q&A |
 | Tue 13 Oct | Both | Dress rehearsal on the presentation laptop; T-24h preflight; `recreate-vm` | Preflight all green |
 | Wed 14 Oct | Both | T-2h and T-15m preflight; deliver | Session ends at 11:00 |
 | By 31 Oct | Martin | Destroy demo VM and Online demo; stop backup protection | Resource groups empty, no cost |
 
-## Recording plan (0 of 8 recorded)
+## Live demo plan (recordings optional fallback)
 
-Every clip is genuine native Copilot CLI output with the agent shown on screen. Label cuts, sped-up waits and seeded defects in the clip. Never attach an unreviewed clip.
+Every demo chapter is delivered live in genuine native Copilot CLI with the agent shown on screen. Optional fallback recordings/screenshots are evidence only; they are not required for the deck to work. Label cuts, sped-up waits, and seeded defects if a fallback take is used.
 
 C3-C5 film the implementation loop with the B1v2 `alternate_network_payload` brief, a separate clarified follow-up written after seeing B1: four separate assert blocks, each with its own `error_message`. B1v2 met the pre-registered at-least-four-of-five bar at 5/5 in this eval; original B1 remains 0/5 and was not rescored, and the filmed run still has to pass on camera.
 
-| Clip | Length | Lead | Operator | Where | Runbook | Status |
+| Chapter | Length | Lead | Operator | Where | Runbook | Status |
 |---|---|---|---|---|---|---|
-| C0 From zero to a squad | 3:00 | Haflidi | Haflidi | Clean demo VM via Bastion | clean-machine-demo.md | pending |
-| C1 Same task, different choices | 3:00 | Haflidi | Martin | Checkpoint shell, Squad selected | demo-runbook.md C1 | pending |
-| C2 Pin the brief, approve a plan | 4:00 | Martin | Martin | Checkpoint shell, Plan mode | demo-runbook.md C2 | pending |
-| C3 Activate Squad, route work | 4:00 | Martin | Martin | B1v2 brief; `/agent terraform-coder` | demo-runbook.md C3 | pending |
-| C4 Ground with tools | 4:00 | Martin | Martin | B1v2 brief; skills, MCP, permissions | demo-runbook.md C4 | pending |
-| C5 Catch a mistake, repair | 5:00 | Haflidi | Martin | B1v2 brief; `terraform-validator`, seeded mutation | demo-runbook.md C5 | pending |
-| C6 Resume with decisions | 3:00 | Haflidi | Martin | `/resume`, decisions file | demo-runbook.md C6 | pending |
-| C7 Reviewed diff | 3:00 | Haflidi | Martin | `terraform-reviewer`, offline suite | demo-runbook.md C7 | pending |
+| C0 From zero to a squad | 3:00 | Haflidi | Haflidi | Clean demo VM via Bastion | clean-machine-demo.md | live rehearsal |
+| C1 Same task, different choices | 3:00 | Haflidi | Martin | Checkpoint shell, Squad selected | demo-runbook.md C1 | live rehearsal |
+| C2 Pin the brief, approve a plan | 4:00 | Martin | Martin | Checkpoint shell, Plan mode | demo-runbook.md C2 | live rehearsal |
+| C3 Activate Squad, route work | 4:00 | Martin | Martin | B1v2 brief; `/agent terraform-coder` | demo-runbook.md C3 | live rehearsal |
+| C4 Ground with tools | 4:00 | Martin | Martin | B1v2 brief; skills, MCP, permissions | demo-runbook.md C4 | live rehearsal |
+| C5 Catch a mistake, repair | 5:00 | Haflidi | Martin | B1v2 brief; `terraform-validator`, seeded mutation | demo-runbook.md C5 | live rehearsal |
+| C6 Resume with decisions | 3:00 | Haflidi | Martin | `/resume`, decisions file | demo-runbook.md C6 | live rehearsal |
+| C7 Reviewed diff | 3:00 | Haflidi | Martin | `terraform-reviewer`, offline suite | demo-runbook.md C7 | live rehearsal |
 
 ## Minute-by-minute run sheet
 
-Clip = press **Open local MP4** on the chapter slide. If a clip fails, stay on the chapter slide and narrate its three points (the slide is a viewing guide).
+Each demo slide shows the goal, the command or prompt to type, and the expected result. If the live path stalls, use the slide's speaker-note **Offline fallback** line and move on at the slot end.
 
 | Time | Slide | Lead | Clip | Cue and fallback |
 |---|---|---|---|---|
@@ -68,7 +68,7 @@ Clip = press **Open local MP4** on the chapter slide. If a clip fails, stay on t
 | 51:00-53:00 | s21-limits | Haflidi then Martin | | Three closing rules |
 | 53:00-60:00 | s22-questions | Martin hosts | | Appendix only on demand: a-online, a-security, a-prompts, a-bootstrap, a-use-cases (End key) |
 
-Timing rule: at each checkpoint, if more than 60 seconds behind, apply the next cut. Never cut a clip or the honesty statements. Q&A absorbs the rest.
+Timing rule: at each checkpoint, if more than 60 seconds behind, apply the next cut. Never cut the honesty statements or hide a failed live result. Q&A absorbs the rest.
 
 ## Preflight
 
@@ -77,16 +77,16 @@ Timing rule: at each checkpoint, if more than 60 seconds behind, apply the next 
 From the demo-env repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set off screen:
 
 - [ ] `.\scripts\Invoke-GatedRun.ps1 -Workflow deploy-online.yml -Inputs 'apply=false' -StartRunner` succeeds with no changes (checks runner, OIDC, gate, state). Latest known plan/apply runs 37771532872 and 37772290635 succeeded with "No changes".
-- [ ] `.\scripts\Test-OnlineSecurity.ps1` reports 29/29 passed (latest recorded full pass: 2026-10-08 13:48; HTTPS 200 by hostname, redirect, authorized IPs, Entra-only, policy).
+- [ ] `.\scripts\Test-OnlineSecurity.ps1` reports 29/29 passed (latest full pass: 2026-10-08 13:48; HTTPS 200 by hostname, redirect, authorized IPs, Entra-only, policy).
 - [ ] `.\scripts\Invoke-GatedRun.ps1 -Workflow deploy-demo-vm.yml -Inputs 'action=recreate-vm' -StartRunner`, then `.\scripts\Test-DemoVm.ps1` reports 14/14 including the clean-start checks.
-- [ ] Deck: `npm test` in `presentation\` passes; all 8 clips open from the presentation laptop's `media\` folder.
+- [ ] Deck: `npm test` in `presentation\` passes; all 8 demo slides show command blocks and Offline fallback notes.
 - [ ] Copy the deck folder (self-contained `index.html` plus `media\`) to a USB stick.
 
 ### T-2h
 
 - [ ] Presentation laptop on power, notifications off, display duplicated at 1920x1080 (deck also verified at 1280x720).
 - [ ] Open `presentation\index.html` locally; speaker view (S) on the laptop screen.
-- [ ] Play the first 5 seconds of each clip once; audio muted.
+- [ ] Open each demo slide and speaker note; confirm the command block, expected result, and Offline fallback line.
 - [ ] `.\scripts\Test-DemoVm.ps1` passes again (auto-shutdown is 19:00, so the VM must be started if it was stopped).
 
 ### T-15m
@@ -99,9 +99,9 @@ From the demo-env repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set off s
 
 | Failure | Response |
 |---|---|
-| Clip will not play | Stay on the chapter slide, narrate its three points, move on at the slot end |
-| Venue network down | Deck and clips are local; skip live VM and Online app; appendix slides carry the evidence |
-| Demo VM unreachable | C0 clip only; say the VM is the rehearsal machine |
+| Live CLI stalls | Use the slide's Offline fallback line, name the missing live result, and move on at the slot end |
+| Venue network down | Deck is local; skip live VM and Online app; appendix slides carry the evidence |
+| Demo VM unreachable | Use C0 fallback evidence; say the VM is the rehearsal machine |
 | Online cluster question with no network | `a-online` slide; refer to demo-env PR #10/#11 and runs 37771532872 / 37772290635; do not quote ingress IPs |
-| Running long | Apply cuts at checkpoints; Q&A shrinks, never clips |
+| Running long | Apply cuts at checkpoints; Q&A shrinks, never hide failures |
 | One speaker unavailable | The other reads that speaker's lines from talk-track.md; it is complete for both voices |

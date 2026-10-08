@@ -1,6 +1,6 @@
 # What's new: GitHub Copilot and Squad, October 2025 to October 2026
 
-Reviewed October 5, 2026, for the October 14 session. Every row links to a primary source. Statuses change quickly, so recheck them before you quote one on stage. This page explains context only. It doesn't claim that any feature was recorded. The Azure claim is limited to the separate sanitized IaC validation of the Terraform module.
+Reviewed October 5, 2026, for the October 14 session; deck 0.19 presents C0-C7 as live demo chapters with optional fallback evidence. Every row links to a primary source. Statuses change quickly, so recheck them before you quote one on stage. This page explains context only. It doesn't claim that any feature was completed live. The Azure claim is limited to the separate sanitized IaC validation of the Terraform module.
 
 ## The short version
 
@@ -66,4 +66,4 @@ Reviewed October 5, 2026, for the October 14 session. Every row links to a prima
 | `/review`, `/rubber-duck`, `/diff` | C5 and C7 |
 | AI Credits, `/usage`, `/limits` | C6 and the appendix |
 | Squad 1.0, setup diagnostics, decisions, Scribe | C3 and C6 |
-| Computer use, Agent HQ, Copilot app, Squad Agentic Workflows | Mentioned only. None of these is part of the planned recorded workflow |
+| Computer use, Agent HQ, Copilot app, Squad Agentic Workflows | Mentioned only. None of these is part of the planned live Terraform workflow |
