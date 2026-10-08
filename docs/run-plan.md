@@ -23,7 +23,7 @@ Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck 
 
 Every clip is genuine native Copilot CLI output with the agent shown on screen. Label cuts, sped-up waits and seeded defects in the clip. Never attach an unreviewed clip.
 
-C3-C5 film the implementation loop with the B1v2 `alternate_network_payload` brief: four separate assert blocks, each with its own `error_message`. B1v2 met the pre-registered at-least-four-of-five bar at 5/5 in this eval; original B1 remains 0/5 and was not rescored.
+C3-C5 film the implementation loop with the B1v2 `alternate_network_payload` brief, a separate clarified follow-up written after seeing B1: four separate assert blocks, each with its own `error_message`. B1v2 met the pre-registered at-least-four-of-five bar at 5/5 in this eval; original B1 remains 0/5 and was not rescored, and the filmed run still has to pass on camera.
 
 | Clip | Length | Lead | Operator | Where | Runbook | Status |
 |---|---|---|---|---|---|---|
