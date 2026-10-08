@@ -2,7 +2,7 @@
 
 This is an evidence-based account of the controls around the Online AKS demo and the demo VM. Each claim names how to check it. Identifiers stay private. Gaps are listed at the end, not hidden.
 
-Evidence date: 2026-10-07. Demo-env repository: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env). Module repository: [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic), which now holds only the reusable module.
+Evidence date: 2026-10-07. Demo-env repository: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env). Module repository: [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic), which now holds only the reusable module and no deployment environment or Azure federated credential (removed 2026-10-08 after re-validation from the demo-env repository).
 
 ## 1. The delivery chain
 
@@ -15,7 +15,7 @@ Evidence date: 2026-10-07. Demo-env repository: [`martinopedal/aks-automatic-dem
 | Ephemeral, identity-less runner | VNet-integrated Container Apps Job, one execution per run, no managed identity, outbound 443 only |
 | Locked API server | Authorized IP ranges contain only the runner's static NAT egress IP |
 | No plan artifact in a public repo | Plan, apply, deploy, and proof run in one job; `tfplan` is never uploaded |
-| Proof or fail | The run fails unless HTTPS returns 200 and the Ingress forces HTTPS; read-back is repeated independently by `Test-OnlineSecurity.ps1` (28/28 on 2026-10-07) |
+| Proof or fail | The run fails unless HTTPS returns 200 and the Ingress forces HTTPS; read-back is repeated independently by `Test-OnlineSecurity.ps1` (28/28 on 2026-10-07, and again on 2026-10-08 from the demo-env repository) |
 
 ## 2. Platform guardrails we designed for, not around
 

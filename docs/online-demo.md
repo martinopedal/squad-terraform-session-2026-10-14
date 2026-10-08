@@ -91,6 +91,7 @@ Current demo-environment code lives in [`martinopedal/aks-automatic-demo-env`](h
 | Least privilege in the cluster | Pipeline identity: `can-i create deployments -n online-demo` = yes; listing cluster nodes = forbidden |
 | Module changes are tested | Module suite: 20 passed, 0 failed (each fix written as a failing test first) |
 | Change history | Historical module pull requests #118 to #137; module release v0.6.0; demo environment extracted to its own repository |
+| Re-validated after extraction (2026-10-08, demo-env repo) | Plan-only run 37749232571: "No changes"; apply run 37749775898: HTTPS 200, `force-ssl-redirect` true, TLS present; demo VM plan run 37750404627: "No changes"; `Test-OnlineSecurity.ps1` 28/28 and `Test-DemoVm.ps1` 14/14. The module repository no longer holds any deployment environment or Azure federated credential |
 
 ## Limits
 
