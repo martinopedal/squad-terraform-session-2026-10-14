@@ -1,6 +1,6 @@
 # Run plan: NIC 2026, "From prompt to reusable Terraform"
 
-Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi Fridthjofsson. Deck 0.17.1: 1 opening page, 25 timed slides, 11 appendix references; 29 minutes recorded, 24 live, 7 Q&A.
+Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi Fridthjofsson. Deck 0.18: 1 opening page, 25 timed slides, 11 appendix references; 29 minutes recorded, 24 live, 7 Q&A.
 
 Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck build), [talking-points.md](talking-points.md) (cheat sheet), [demo-runbook.md](demo-runbook.md) (C1-C7), [clean-machine-demo.md](clean-machine-demo.md) (C0), [online-demo.md](online-demo.md) (Online landing zone). Online and demo-VM operator scripts live in the demo-env repository under `scripts\`.
 
@@ -8,8 +8,8 @@ Sources of truth: [talk-track.md](talk-track.md) (full script, read by the deck 
 
 | Day | Who | What | Done when |
 |---|---|---|---|
-| Wed 07 Oct | Martin | Deck 0.17.1 with C0, runbooks, demo VM proven clean | `npm test` green; `Test-DemoVm.ps1` 14/14 |
-| Thu 08 Oct | Haflidi | Accept repo and environment invites; read talk track; Martin resets Haflidi's VM local login | Haflidi can open the deck and Bastion |
+| Wed 07 Oct | Martin | Deck 0.18 with C0, runbooks, demo VM proven clean, Online facts refreshed | `npm test` green; `Test-DemoVm.ps1` 14/14; `Test-OnlineSecurity.ps1` 29/29 |
+| Thu 08 Oct | Haflidi | Accept repo and environment invites; read talk track; receive the VM local account out of band | Haflidi can open the deck and reach the VM through Bastion; Martin uses Entra sign-in with MFA |
 | Thu 08 Oct | Both | Rehearsal 1: read-through with the clock, slides only, 60 minutes on Teams | Each section within plus or minus 30 seconds |
 | Thu 08-Fri 09 | Haflidi | Record C0 on the VM (clean reset first) | `media/C0.mp4` reviewed, 3:00 |
 | Fri 09 Oct | Martin drives, Haflidi checks | Record C1-C4 in the native CLI with Squad selected | 4 reviewed exports |
@@ -74,8 +74,8 @@ Timing rule: at each checkpoint, if more than 60 seconds behind, apply the next 
 
 From the demo-env repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set off screen:
 
-- [ ] `.\scripts\Invoke-GatedRun.ps1 -Workflow deploy-online.yml -Inputs 'apply=false' -StartRunner` succeeds with no changes (proves runner, OIDC, gate, state).
-- [ ] `.\scripts\Test-OnlineSecurity.ps1` reports 0 failed (HTTPS 200, redirect, authorized IPs, Entra-only, policy).
+- [ ] `.\scripts\Invoke-GatedRun.ps1 -Workflow deploy-online.yml -Inputs 'apply=false' -StartRunner` succeeds with no changes (proves runner, OIDC, gate, state). Latest known plan/apply runs 37771532872 and 37772290635 succeeded with "No changes".
+- [ ] `.\scripts\Test-OnlineSecurity.ps1` reports 29/29 passed (latest recorded full pass: 2026-10-08 13:48; HTTPS 200 by hostname, redirect, authorized IPs, Entra-only, policy).
 - [ ] `.\scripts\Invoke-GatedRun.ps1 -Workflow deploy-demo-vm.yml -Inputs 'action=recreate-vm' -StartRunner`, then `.\scripts\Test-DemoVm.ps1` reports 14/14 including the clean-start checks.
 - [ ] Deck: `npm test` in `presentation\` passes; all 8 clips open from the presentation laptop's `media\` folder.
 - [ ] Copy the deck folder (self-contained `index.html` plus `media\`) to a USB stick.
@@ -90,7 +90,7 @@ From the demo-env repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set off s
 ### T-15m
 
 - [ ] `.\scripts\Connect-DemoVm.ps1` and leave the Bastion RDP window minimized, PowerShell 7 tab open (C0 live fallback).
-- [ ] Browser tab with the Online app (the `App URL` line printed by `Test-OnlineSecurity.ps1`), certificate warning already accepted: the ingress uses the NGINX default certificate (a-online question fallback).
+- [ ] Browser tab with the Online app at <https://aks-online-demo.swedencentral.cloudapp.azure.com/>. Accept the expected certificate warning: App Routing uses the NGINX default self-signed certificate. Confirm the title reads `AKS Automatic | NIC 2026 demo` (a-online question fallback).
 - [ ] Deck on the opening page; timer ready; water.
 
 ## Fallback matrix
@@ -100,6 +100,6 @@ From the demo-env repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set off s
 | Clip will not play | Stay on the chapter slide, narrate its three points, move on at the slot end |
 | Venue network down | Deck and clips are local; skip live VM and Online app; appendix slides carry the evidence |
 | Demo VM unreachable | C0 clip only; say the VM is the rehearsal machine |
-| Online cluster question with no network | `a-online` slide; refer to the pipeline runs listed in online-demo.md |
+| Online cluster question with no network | `a-online` slide; refer to demo-env PR #10/#11 and runs 37771532872 / 37772290635; do not quote ingress IPs |
 | Running long | Apply cuts at checkpoints; Q&A shrinks, never clips |
 | One speaker unavailable | The other reads that speaker's lines from talk-track.md; it is complete for both voices |

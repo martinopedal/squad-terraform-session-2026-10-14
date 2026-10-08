@@ -9,7 +9,7 @@ Everything below was checked on 2026-10-07 against the deployed VM and a throwaw
 | Item | Value |
 |---|---|
 | VM | Windows 11 25H2, Entra-joined, no public IP, deployed by the gated `deploy-demo-vm.yml` pipeline in the demo-env repo |
-| Access | Azure Bastion Standard only; RDP via `scripts\Connect-DemoVm.ps1` from the demo-env repo (Entra sign-in, MFA) |
+| Access | Azure Bastion Standard only; RDP via `scripts\Connect-DemoVm.ps1` from the demo-env repo. Martin uses Entra sign-in with MFA; Haflidi uses a local VM account because B2B guests cannot use Entra VM sign-in. |
 | Egress | NAT Gateway; GitHub, WinGet, and npm reachable; inbound denied |
 | Preinstalled | WinGet, Windows Terminal 1.24, PowerShell 7.6.6 (pipeline-installed, hash- and signature-verified; Copilot CLI needs PowerShell 6+) |
 | Not installed | Git, Copilot CLI, Squad, Node (Squad's standalone bundle carries its own runtime; `squad doctor` passes without system Node) |
@@ -90,7 +90,7 @@ Never push from the VM. The clone is a local demo copy; the four generated workf
 
 ## Never show
 
-The admin password (ephemeral, workflow-generated), subscription and tenant IDs, Bastion resource IDs, the device-flow code after it is used, or any private repository. Guests (B2B) cannot use Entra sign-in to VMs; Haflidi needs a local account that Martin resets out of band.
+The admin password (ephemeral, workflow-generated), subscription and tenant IDs, Bastion resource IDs, the device-flow code after it is used, or any private repository. Guests (B2B) cannot use Entra sign-in to VMs; Haflidi uses a local account provisioned by the operator script and handed over out of band. Never put that password in chat or files.
 
 ## Troubleshooting
 

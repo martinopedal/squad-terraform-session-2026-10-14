@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { marked } from 'marked';
-import { title, slides, escape, renderSection } from '../src/slides.mjs';
+import { title, slides, escape, renderSection, applyNoteFactOverrides } from '../src/slides.mjs';
 import { resolveMediaEntry } from './media-policy.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -111,7 +111,7 @@ const sections = slides.map((slide, index) => {
   const completeNotes = slide.preshow ? marked.parse(slide.notes || '') : marked.parse(blocks.get(slide.id));
   const noteHTML = slide.id.startsWith('a-') ? completeNotes : completeNotes.replace(/<blockquote>([\s\S]*?)<\/blockquote>/g,
     '<details class="operator-cues"><summary>Operator cues and timing</summary><blockquote>$1</blockquote></details>');
-  return renderSection(slide, index, noteHTML, evidence, media);
+  return renderSection(slide, index, applyNoteFactOverrides(slide.id, noteHTML), evidence, media);
 }).join('\n');
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
