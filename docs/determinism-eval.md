@@ -4,7 +4,7 @@ Audience: engineers using Copilot CLI and Squad for bounded Terraform changes. Y
 
 ## Purpose
 
-The eval measures repeatability for small Terraform maintenance briefs under pinned conditions. It does not try to prove deterministic model behavior, general agent quality, or Azure deployment correctness. The useful question was: from the same starting point, how often does the run reach the pre-registered oracle?
+The eval measures repeatability for small Terraform maintenance briefs under pinned conditions. It does not try to establish deterministic model behavior, general agent quality, or Azure deployment correctness. The useful question was: from the same starting point, how often does the run reach the pre-registered oracle?
 
 ## Method
 
@@ -31,15 +31,15 @@ Common oracle commands were `terraform fmt -check -recursive`, `terraform init -
 ## What this shows
 
 - Under these pins and prompts, two of three briefs met the pre-registered `>= 4/5` repeatability bar.
-- B1 is an important failure because the functional tests passed while the style and maintainability rule failed. The oracle, not the model summary, decided the result.
+- B1 is an important failure because the functional tests passed while the style and maintainability rule failed. The harness oracle, not the model summary, marked the result.
 - B3 shows why file-scope checks matter. Passing tests did not excuse an out-of-scope edit.
 - The sample is small: 15 runs across three briefs. Treat it as a measured checkpoint, not a statistical guarantee.
 
 ## What this does not show
 
-- It does not prove Copilot CLI, the model, Terraform, or Squad are deterministic.
-- It does not prove future runs will behave the same after model, CLI, MCP, prompt, or repository changes.
-- It does not prove deployed Azure resources are correct or secure. This eval used offline Terraform oracles.
+- It does not establish that Copilot CLI, the model, Terraform, or Squad are deterministic.
+- It does not establish that future runs will behave the same after model, CLI, MCP, prompt, or repository changes.
+- It does not establish that deployed Azure resources are correct or secure. This eval used offline Terraform oracles.
 
 ## What to do next
 

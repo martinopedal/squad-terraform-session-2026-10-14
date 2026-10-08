@@ -73,7 +73,7 @@ each fact. Mark anything you could not source as unverified.
 Implement only the approved plan in these files: <list>. Keep providers and
 backend in the root, the module provider-free, typed inputs with
 validation, and lifecycle guards unchanged. Add or update the positive and
-negative tests that prove the contract change. Hand off: changed files,
+negative tests that verify the contract change. Hand off: changed files,
 contract delta, the assertion that should fail without your change, and
 sources. Do not run commands.
 ```
@@ -129,7 +129,7 @@ no subscription, tenant, or principal IDs.
 
 ## Measure repeatability
 
-Use the October 8 repeatability eval as a template: three briefs, five fresh runs each, from the same pinned base, model, tools, and allowed files. The oracle, not the model summary, decides green. Results were mixed: B1 `alternate_network_payload` was 0/5 because it used two assert blocks against a pre-registered `>= 3` rule despite passing all Terraform tests; B2 `seeded-mutation-repair` was 5/5; B3 `forbidden-tag-characters` was 4/5 after a disclosed post-hoc rescore from saved diffs following a harness `-AllowedFiles` bug fix, with no Copilot rerun; run 2 stayed red for an out-of-scope README edit. For this eval only, a brief met the pre-registered repeatability bar when at least four of five runs were green. Report misses as-is and do not rerun just to fish for green. See [the repeatability eval](determinism-eval.md).
+Use the October 8 repeatability eval as a template: three briefs, five fresh runs each, from the same pinned base, model, tools, and allowed files. The harness oracle, not the model summary, marks a run green. Results were mixed: B1 `alternate_network_payload` was 0/5 because it used two assert blocks against a pre-registered `>= 3` rule despite passing all Terraform tests; B2 `seeded-mutation-repair` was 5/5; B3 `forbidden-tag-characters` was 4/5 after a disclosed post-hoc rescore from saved diffs following a harness `-AllowedFiles` bug fix, with no Copilot rerun; run 2 stayed red for an out-of-scope README edit. For this eval only, a brief met the pre-registered repeatability bar when at least four of five runs were green. Report misses as-is and do not rerun just to fish for green. See [the repeatability eval](determinism-eval.md).
 
 ## Lessons from the Online deployment
 
