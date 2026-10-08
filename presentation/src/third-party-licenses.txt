@@ -57,6 +57,12 @@ OFL-1.1 License
 
 Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic) Roboto-Italic[wdth,wght].ttf: Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)
 
+Bundled Cascadia Code v2407.24
+OFL-1.1 License
+
+Copyright (c) 2019 - Present, Microsoft Corporation,
+with Reserved Font Name Cascadia Code.
+
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 http://scripts.sil.org/OFL

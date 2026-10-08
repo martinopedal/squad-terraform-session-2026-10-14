@@ -100,7 +100,16 @@ def main():
             manifest = page.evaluate("window.presentationBuild")
             report["deckVersion"] = manifest["version"]
             report["htmlSHA256"] = hashlib.sha256((ROOT / "index.html").read_bytes()).hexdigest()
-            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 37 and manifest["openingSlides"] == 1 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 11)
+            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 38 and manifest["openingSlides"] == 2 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 11)
+            check("legal slide untimed before s01", page.evaluate("""() => {
+                const slides = [...document.querySelectorAll('.slides > section')];
+                return slides[0].id === 'opening' &&
+                    slides[1].id === 'legal-notice' &&
+                    slides[1].dataset.preshow === 'true' &&
+                    slides[1].dataset.stageTime === 'Pre-show' &&
+                    slides[2].id === 's01-outcome' &&
+                    slides[2].dataset.stageTime === '00:00-03:00';
+            }"""))
             check("timing budget with close buffer",
                   [manifest[k] for k in ("demoMinutes", "introMinutes", "explanationMinutes", "protectedSlackMinutes",
                                          "closeBufferMinutes", "qaMinutes", "nonDemoSlideMinutes", "mainFlowMinutes",
@@ -174,10 +183,12 @@ def main():
             s20_text = page.locator("#s20-consumer .slide-content").text_content()
             check("s20 live reveal on-screen", all(phrase in s20_text for phrase in
                   ["https://aks-online-demo.swedencentral.cloudapp.azure.com/",
-                   "Gated pipeline: PR → plan → human approval → apply; 29/29 outside-in runtime checks"]))
+                   "Human or agent, every change goes through the same gates",
+                   "PR → checks/scans (fmt, validate, TFLint, Trivy, Checkov) → review + protected main → Terraform plan → online environment approval → OIDC apply → runtime check"]))
             s20_notes = page.locator("#s20-consumer aside.notes").text_content()
             check("s20 live reveal notes", all(phrase in s20_notes for phrase in
                   ["0:30-1:00 live reveal", "self-signed cert warning is expected", "pre-accepted",
+                   "gate map", "PR/review/check/environment/Actions trace", "single maintainer used an admin override",
                    "pipeline flow", "serving pod name", "speakers section", "1:00-2:10", "Offline fallback:",
                    "37771532872/37772290635", "Test-OnlineSecurity 29/29 at 13:48 on Oct 8",
                    "appendix/hallway depth"]))
@@ -209,6 +220,58 @@ def main():
                   page.locator("#s15-proof .status").all_text_contents() == ["Inspected", "52 passed", "2 passed", "Approved", "Succeeded"])
             check("published module revision is bound to the evidence",
                   page.evaluate("window.presentationBuild.moduleRevision") == "b01256eb9b1ea6046b9bb8a403662f724a7b6fa7")
+            badge_summary = page.locator(".feature-badge").evaluate_all("""nodes => nodes.map(n => ({
+                feature: n.dataset.feature,
+                text: n.textContent.trim(),
+                href: n.href
+            }))""")
+            required_badges = {
+                "Copilot CLI", "Plan mode", "custom agents", "MCP", "Skills", "-p", "/resume",
+                "/review", "/diff", "/delegate", "Rubber Duck", "AKS Automatic", "App Routing",
+                "ABAC conditions for AKS custom resources", "Bastion Entra RDP", "Terraform test", "Squad"
+            }
+            seen_badges = {item["feature"] for item in badge_summary}
+            check("feature badge coverage", required_badges.issubset(seen_badges), {
+                "missing": sorted(required_badges - seen_badges),
+                "badges": badge_summary
+            })
+            lockup_locations = page.locator(".slides > section:has(.copilot-lockup)").evaluate_all("nodes => nodes.map(n => n.id)")
+            check("brand lockup placement", lockup_locations == ["opening", "s22-questions"], lockup_locations)
+            html_text = (ROOT / "index.html").read_text(encoding="utf-8")
+            check("brand asset local-only", "brand.github.com/_next/static/media" not in html_text and "github-copilot-lockup-examples.png" not in html_text)
+            check("Cascadia Code local font and license", (ROOT / "media" / "fonts" / "CascadiaCode.woff2").is_file()
+                  and (ROOT / "media" / "fonts" / "CascadiaCode-LICENSE.txt").is_file()
+                  and "font-family:'Cascadia Code'" in html_text
+                  and "SIL OPEN FONT LICENSE Version 1.1" in (ROOT / "media" / "fonts" / "CascadiaCode-LICENSE.txt").read_text(encoding="utf-8"))
+            contrast = page.evaluate("""() => {
+                const parse = value => {
+                    value = value.trim();
+                    if (value.startsWith('#')) {
+                        const hex = value.slice(1);
+                        const full = hex.length === 3 ? [...hex].map(c => c + c).join('') : hex;
+                        return [0, 2, 4].map(i => parseInt(full.slice(i, i + 2), 16));
+                    }
+                    return value.match(/\\d+(\\.\\d+)?/g).slice(0, 3).map(Number);
+                };
+                const rel = ([r,g,b]) => [r,g,b].map(v => {
+                    v /= 255;
+                    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+                }).reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+                const ratio = (a, b) => {
+                    const [l1, l2] = [rel(a), rel(b)].sort((x, y) => y - x);
+                    return (l1 + 0.05) / (l2 + 0.05);
+                };
+                const root = getComputedStyle(document.documentElement);
+                const light = ratio(parse(root.getPropertyValue('--nic-ink')), parse(root.getPropertyValue('--nic-cyan')));
+                const dark = ratio(parse(root.getPropertyValue('--nic-cyan')), parse(root.getPropertyValue('--nic-ink')));
+                const headline = Math.min(...[...document.querySelectorAll('.slide-content h1, .slide-content h2, .slide-content h3')]
+                    .map(el => {
+                        const s = getComputedStyle(el);
+                        return {size: parseFloat(s.fontSize), ratio: ratio(parse(s.color), parse(getComputedStyle(el.closest('.slide-content')).backgroundColor))};
+                    }).filter(item => item.size >= 24).map(item => item.ratio));
+                return {bodyLight: light, bodyDark: dark, headline};
+            }""")
+            check("computed CSS contrast", contrast["bodyLight"] >= 4.5 and contrast["bodyDark"] >= 4.5 and contrast["headline"] >= 3, contrast)
             license_text = (ROOT / "src" / "third-party-licenses.txt").read_text(encoding="utf-8").strip()
             check("complete bundled licenses preserved", license_text in (ROOT / "index.html").read_text(encoding="utf-8"))
             page.add_script_tag(path=str(ROOT / "node_modules" / "axe-core" / "axe.min.js"))
@@ -338,19 +401,19 @@ def main():
             page.set_viewport_size({"width": 1280, "height": 720})
             page.evaluate("Reveal.slide(0,0,-1); document.activeElement.blur()")
             page.keyboard.press("ArrowRight")
-            check("arrow navigation from opening", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            check("arrow navigation from opening", page.evaluate("Reveal.getCurrentSlide().id") == "legal-notice")
             page.keyboard.press("PageDown")
-            check("Page Down to first timed content", page.evaluate("Reveal.getCurrentSlide().id") == "s03-baseline")
+            check("Page Down to first timed content", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
             page.keyboard.press("PageUp")
-            check("Page Up", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            check("Page Up", page.evaluate("Reveal.getCurrentSlide().id") == "legal-notice")
             page.keyboard.press("End")
             check("End", page.evaluate("Reveal.getCurrentSlide().id") == "a-use-cases")
             page.keyboard.press("Home")
             check("Home", page.evaluate("Reveal.getCurrentSlide().id") == "opening")
             page.keyboard.press("PageDown")
-            check("Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            check("Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "legal-notice")
             page.keyboard.press("PageDown")
-            check("Second Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "s03-baseline")
+            check("Second Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
             page.keyboard.press("Escape")
             check("overview", page.evaluate("Reveal.isOverview()"))
             page.keyboard.press("Escape")
@@ -400,7 +463,7 @@ def main():
             check("focused chapter button retains native activation", page.locator(".navigation-dialog").is_visible()
                   and page.evaluate("Reveal.getCurrentSlide().id") == "opening")
             page.keyboard.press("Escape")
-            page.evaluate("Reveal.slide(1,0,-1); document.activeElement.blur()")
+            page.evaluate("Reveal.slide(2,0,-1); document.activeElement.blur()")
             page.keyboard.press("Tab")
             check("visible focus", page.evaluate("""() => {
                 const s = getComputedStyle(document.activeElement);
@@ -418,12 +481,12 @@ def main():
             check("notes current and next", notes.locator("#current-slide iframe").count() == 1 and notes.locator("#upcoming-slide iframe").count() == 1)
             check("notes full presenter plan", "live terminal and browser work" in notes.locator(".speaker-controls-notes .value").inner_text())
             check("notes timer advances", timer_before != timer_after)
-            page.evaluate("Reveal.slide(11,0,-1)")
+            page.evaluate("Reveal.slide(12,0,-1)")
             notes.wait_for_function("() => document.querySelector('.speaker-controls-notes .value').textContent.includes('/session plan')")
             check("notes follow slide", "Offline fallback:" in notes.locator(".speaker-controls-notes .value").inner_text())
             check("notes show live command block", "/session plan" in notes.locator(".speaker-controls-notes .value").inner_text())
             notes.screenshot(path=str(QA / "speaker-view.png"))
-            page.evaluate("Reveal.slide(9,0,-1)")
+            page.evaluate("Reveal.slide(10,0,-1)")
             notes.close()
             page.bring_to_front()
             check("notes return preserves control focus", page.evaluate("document.activeElement.id") == "open-notes")

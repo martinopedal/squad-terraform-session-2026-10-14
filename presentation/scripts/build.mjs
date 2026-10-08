@@ -13,7 +13,7 @@ const assetData = async (path, type) => `data:${type};base64,${(await readFile(j
 const fontFace = async (weight, file) =>
   `@font-face{font-family:'Roboto';font-style:normal;font-weight:${weight};font-display:block;src:url("${await assetData(file, 'font/woff2')}") format('woff2');}`;
 const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, core, coreCSS, highlight, highlightCSS, notes, licenses,
-  nicLogoInk, nicLogoCyan, nicLogoLargeInk, roboto400, roboto500, roboto700] = await Promise.all([
+  nicLogoInk, nicLogoCyan, nicLogoLargeInk, copilotLockup, roboto400, roboto500, roboto700, cascadiaCode] = await Promise.all([
   read('../docs/talk-track.md'), read('../docs/sessionize.md'), read('src/theme.css'), read('src/runtime.js'),
   read('src/version.json'), read('src/media.json'), read('src/evidence.json'),
   read('node_modules/reveal.js/dist/reveal.js'), read('node_modules/reveal.js/dist/reveal.css'),
@@ -22,12 +22,14 @@ const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, c
   assetData('src/assets/nic26-logo-ink.png', 'image/png'),
   assetData('src/assets/nic26-logo-cyan.png', 'image/png'),
   assetData('src/assets/nic26-logo-large-ink.png', 'image/png'),
+  assetData('media/brand/github-copilot-lockup-examples.png', 'image/png'),
   fontFace(400, 'node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2'),
   fontFace(500, 'node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2'),
-  fontFace(700, 'node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2')
+  fontFace(700, 'node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2'),
+  fontFace(400, 'media/fonts/CascadiaCode.woff2')
 ]);
-const fontCSS = roboto400 + roboto500 + roboto700;
-const assetCSS = `:root{--nic-logo-ink:url("${nicLogoInk}");--nic-logo-cyan:url("${nicLogoCyan}");--nic-logo-large-ink:url("${nicLogoLargeInk}");}`;
+const fontCSS = roboto400 + roboto500 + roboto700 + cascadiaCode.replaceAll("font-family:'Roboto'", "font-family:'Cascadia Code'");
+const assetCSS = `:root{--nic-logo-ink:url("${nicLogoInk}");--nic-logo-cyan:url("${nicLogoCyan}");--nic-logo-large-ink:url("${nicLogoLargeInk}");--github-copilot-lockup:url("${copilotLockup}");}`;
 const version = JSON.parse(versionText);
 const media = JSON.parse(mediaText);
 const evidence = JSON.parse(evidenceText);
@@ -55,9 +57,14 @@ for (const [id, block] of blocks) {
 const spokenWords = speakers.Martin + speakers.Haflidi;
 const descriptionWords = words(sessionize.split('## Description and outcomes\n')[1].split('\n## ')[0]);
 const pitchWords = words(sessionize.split('## Elevator pitch\n')[1].split('\n## ')[0]);
-if (slides.length !== 37 || slides.filter(slide => slide.preshow).length !== 1 ||
+if (slides.length !== 38 || slides.filter(slide => slide.preshow).length !== 2 ||
     slides.filter(slide => !slide.id.startsWith('a-') && !slide.preshow).length !== 25) {
-  throw new Error('Expected one opening slide, 25 timed main slides, and eleven appendix slides.');
+  throw new Error('Expected two untimed pre-show slides, 25 timed main slides, and eleven appendix slides.');
+}
+const [openingSlide, legalSlide, firstTimedSlide] = slides;
+if (openingSlide.id !== 'opening' || legalSlide.id !== 'legal-notice' || !legalSlide.preshow ||
+    firstTimedSlide.id !== 's01-outcome' || firstTimedSlide.time !== '00:00-03:00') {
+  throw new Error('Legal notice must be untimed, immediately after opening, and before s01 at 00:00.');
 }
 if (spokenWords < 5300 || spokenWords > 5900 || qaWords !== 0) throw new Error(`Spoken script length is out of range: ${spokenWords} main, ${qaWords} scheduled Q&A.`);
 if (Math.abs(speakers.Martin - speakers.Haflidi) / spokenWords > .1) throw new Error('Speaker contributions differ by more than 10%.');
@@ -100,7 +107,7 @@ for (const chapter of chapters) {
 }
 
 const build = {
-  version: version.version, openingSlides: 1, mainSlides: 25, appendixSlides: 11,
+  version: version.version, openingSlides: 2, mainSlides: 25, appendixSlides: 11,
   demoMinutes: clock.demo / 60, introMinutes: clock.intro / 60, explanationMinutes: clock.explanation / 60,
   protectedSlackMinutes: protectedSlackSeconds / 60, closeBufferMinutes: clock.close / 60,
   nonDemoSlideMinutes: (clock.intro + clock.explanation + clock.close) / 60,
@@ -161,6 +168,6 @@ await writeFile(join(root, 'index.html'), html, 'utf8');
 await writeFile(join(root, 'qa/build-manifest.json'), JSON.stringify({
   ...build, htmlBytes: Buffer.byteLength(html), htmlSHA256: createHash('sha256').update(html).digest('hex')
 }, null, 2) + '\n');
-console.log(`Built index.html: 1 opening + 25 timed main + 11 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} scheduled Q&A words.`);
+console.log(`Built index.html: 2 pre-show + 25 timed main + 11 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} scheduled Q&A words.`);
 console.log('Timing 3 intro / 29 demo / 26 explanation / 0 slack / 2 close buffer; questions if time allows.');
 console.log(`Sessionize: ${descriptionWords}-word description; ${pitchWords}-word pitch. HTML ${(Buffer.byteLength(html) / 1024).toFixed(0)} KiB.`);

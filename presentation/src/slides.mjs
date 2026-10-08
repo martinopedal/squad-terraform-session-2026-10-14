@@ -20,14 +20,29 @@ const securityCase = source('Security case', '../docs/security-case.md');
 const upstreamRepo = source('Module repository', 'https://github.com/martinopedal/terraform-azapi-aks-automatic');
 const demoEnvRepo = source('Demo environment repository', 'https://github.com/martinopedal/aks-automatic-demo-env');
 const cliGA = source('Copilot CLI GA', 'https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available/');
+const cliProgrammatic = source('Copilot CLI programmatic reference', 'https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-programmatic-reference');
+const cliResume = source('Copilot CLI resume', 'https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/chronicle');
+const cliReview = source('Copilot CLI review', 'https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/agentic-code-review');
+const cliDelegate = source('Copilot CLI delegate', 'https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/delegate-tasks-to-cca');
 const agentHQ = source('Agent HQ', 'https://github.blog/news-insights/company-news/welcome-home-agents/');
 const agentHQAgents = source('Claude and Codex in Agent HQ', 'https://github.blog/news-insights/company-news/pick-your-agent-use-claude-and-codex-on-agent-hq/');
 const billing = source('AI Credits billing', 'https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/');
 const limits = source('AI-credit session limits', 'https://github.blog/changelog/2026-07-01-set-ai-credit-session-limits-in-copilot-cli-and-sdk/');
 const skills = source('Agent Skills', 'https://github.blog/changelog/2025-12-18-github-copilot-now-supports-agent-skills/');
+const azureFunctionsSkills = source('Azure Functions skills', 'https://github.com/azure/azure-functions-skills');
 const reviewSkills = source('Code review skills and MCP GA', 'https://github.blog/changelog/2026-07-29-copilot-code-review-agent-skills-and-mcp-now-generally-available/');
+const rubberDuckGA = source('Rubber Duck GA', 'https://github.blog/changelog/2026-06-02-copilot-cli-improved-ui-rubber-duck-prompt-scheduling-and-voice-input/');
+const rubberDuckBlog = source('Rubber Duck second-opinion origin', 'https://github.blog/ai-and-ml/github-copilot/github-copilot-cli-combines-model-families-for-a-second-opinion/');
 const computerUse = source('Computer use preview', 'https://github.blog/changelog/2026-10-01-github-copilot-can-now-interact-with-desktop-apps/');
 const computerUseDocs = source('Computer use docs', 'https://docs.github.com/en/copilot/concepts/agents/computer-use');
+const aksAutomaticGA = source('AKS Automatic GA', 'https://azure.microsoft.com/en-us/blog/azure-kubernetes-service-automatic-fast-and-frictionless-kubernetes-for-all/');
+const appRoutingDocs = source('AKS App Routing docs', 'https://learn.microsoft.com/en-us/azure/aks/app-routing-nginx-configuration');
+const aksAbacDocs = source('AKS ABAC custom resources preview', 'https://learn.microsoft.com/en-us/azure/aks/entra-id-authorization');
+const bastionEntraDocs = source('Bastion Entra authentication', 'https://learn.microsoft.com/en-us/azure/bastion/bastion-entra-id-authentication');
+const terraform16 = source('Terraform 1.6 test release', 'https://github.com/hashicorp/terraform/releases/tag/v1.6.0');
+const brandCopilot = source('GitHub Copilot brand lockup', 'https://brand.github.com/brand-identity/copilot');
+const brandLogo = source('GitHub logo usage', 'https://brand.github.com/foundations/logo');
+const cascadiaLicense = source('Cascadia Code OFL license', 'https://raw.githubusercontent.com/microsoft/cascadia-code/main/LICENSE');
 const squad011 = source('Squad v0.11.0', 'https://github.com/bradygaster/squad/releases/tag/v0.11.0');
 const squad012 = source('Squad v0.12.0', 'https://github.com/bradygaster/squad/releases/tag/v0.12.0');
 const squad013 = source('Squad v0.13.0', 'https://github.com/bradygaster/squad/releases/tag/v0.13.0');
@@ -38,6 +53,36 @@ const cliInstall = source('Install Copilot CLI', 'https://docs.github.com/en/cop
 const cleanMachine = source('Clean-machine runbook', '../docs/clean-machine-demo.md');
 const small = text => `<p class="supporting">${text}</p>`;
 const row = (label, text, detail = '') => `<div class="reference-row"><div><h3>${label}</h3>${detail ? small(detail) : ''}</div><p>${text}</p></div>`;
+export const featureLabels = {
+  'Copilot CLI': { status: 'GA', date: '2026-02-25', source: cliGA.url },
+  'Plan mode': { status: 'GA', date: '2026-02-25', source: cliGA.url },
+  'custom agents': { status: 'GA', date: '2026-02-25', source: cliGA.url },
+  MCP: { status: 'GA with CLI', date: '2026-02-25', source: cliGA.url },
+  Skills: { status: 'Available', date: '2025-12-18', source: skills.url },
+  '-p': { status: 'Docs', date: 'checked 2026-10-08', source: cliProgrammatic.url },
+  '/resume': { status: 'Docs', date: 'checked 2026-10-08', source: cliResume.url },
+  '/review': { status: 'Docs', date: 'checked 2026-10-08', source: cliReview.url },
+  '/diff': { status: 'GA with CLI', date: '2026-02-25', source: cliGA.url },
+  '/delegate': { status: 'Cloud handoff', date: 'checked 2026-10-08', source: cliDelegate.url },
+  'Rubber Duck': { status: 'GA', date: '2026-06-02', source: rubberDuckGA.url },
+  'AKS Automatic': { status: 'GA', date: '2025-09-16', source: aksAutomaticGA.url },
+  'App Routing': { status: 'status: see docs', date: '', source: appRoutingDocs.url },
+  'ABAC conditions for AKS custom resources': { status: 'Preview', date: '2026-08-18', source: aksAbacDocs.url },
+  'Bastion Entra RDP': { status: 'Preview', date: '2026-08-11', source: bastionEntraDocs.url },
+  'Terraform test': { status: 'Stable', date: '2023-10-04', source: terraform16.url },
+  Squad: { status: 'v1.0.1', date: '2026-10-04', source: squad101.url }
+};
+const badge = name => {
+  const item = featureLabels[name];
+  if (!item) throw new Error(`Missing feature label: ${name}`);
+  const label = `${item.status}${item.date ? ` · ${item.date}` : ''}`;
+  return `<a class="feature-badge" href="${escape(item.source)}" target="_blank" rel="noopener noreferrer" data-feature="${escape(name)}">${escape(label)}</a>`;
+};
+const lockup = () => '<div class="copilot-lockup" role="img" aria-label="Official GitHub Copilot product lockup from brand.github.com"></div>';
+const autonomySpectrum = () => `<div class="autonomy-spectrum" aria-label="Autonomy spectrum">
+  <span>Ask <b>C1</b></span><span>Edit <b>C5</b></span><span>Plan ${badge('Plan mode')} <b>C2</b></span><span>Agent ${badge('custom agents')} <b>C3</b></span><span>Tools + permissions ${badge('MCP')} <b>C4</b></span><span>Resume ${badge('/resume')} <b>C6</b></span><span>Gated review <b>C7</b></span>
+  <em>Setup/runway <b>C0</b> · Programmatic ${badge('-p')} sits in the appendix: automation, not a live chapter.</em>
+</div>`;
 
 const demoRuns = {
   C0: {
@@ -357,20 +402,20 @@ const presenterNotes = new Map([
   ['s01-outcome', notePlan('Martin opens; Haflidi adds the honesty rule.', 'Martin: welcome, name and title, opedal.tech, and the promise: live terminal and browser work on a reusable Terraform module with checks and decisions. Haflidi: name and title, then state the honesty rule: what is live vs pre-staged, inherited, or earlier-run evidence.', '00:00-01:00 Martin intro and audience takeaways; 01:00-02:15 walk the visual and what they will see; 02:15-03:00 Haflidi says live terminal and browser work is live; pre-staged checkpoints, inherited module code, and earlier-run evidence are disclosed fallback evidence.', 'Martin Opedal, Enterprise Cloud Solution Architect, Microsoft; opedal.tech. Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft. Takeaways and honesty rule.', 'Martin hands to baseline: First, here is the code and checkpoint we are not hiding.')],
   ['s03-baseline', notePlan('Martin', 'This starts from inherited public code. The source pin is evidence, not a quality claim.', 'Timing: speak 0:30 and bank 0:30. Read the pin, say the module now exists, passed local qualification before delivery, and starts live demos from a disclosed clean checkpoint; never claim first implementation.', 'e9a9a48 and the inherited findings only.', 'Martin hands to the news/product-map sequence.')],
   ['s04-news', notePlan('Martin with Haflidi status checks.', 'Copilot CLI is GA; Squad 1.0.1 is the demo install; computer use is preview and not used here.', 'Keep to 1:00. Read one headline plus Squad 1.0.1; leave product-tile detail to the appendix or hallway.', 'CLI GA and Squad 1.0.1; status labels only.', 'Martin moves to the layer map.')],
-  ['s04-layers', notePlan('Haflidi then Martin', 'Name the layer before troubleshooting: CLI runs work, Squad coordinates, Terraform and sources return evidence.', 'Trace arrows from CLI to Squad to external tools.', 'The three layers and artifact boundary.', 'Martin leads into agent setup.')],
+  ['s04-layers', notePlan('Haflidi then Martin', 'Name the layer before troubleshooting: CLI runs work, Squad coordinates, Terraform and sources return evidence.', 'Trace arrows from CLI to Squad to external tools, then read the autonomy spectrum inside the existing one-minute slot: Ask C1, edit C5, plan C2, agent C3, tools and permissions C4, resume C6, gated review C7; C0 is setup/runway and -p is appendix automation, not a live chapter.', 'The three layers, artifact boundary, and the C0-C7 placement on the autonomy spectrum.', 'Martin leads into agent setup.')],
   ['s07-agent-setup', notePlan('Martin', 'We will show the bootstrap path before the team does Terraform work.', 'Name the exact playbook sequence: prerequisites/install, `squad init`, `copilot --agent squad`, roster and charters after human confirmation, then `squad doctor`.', 'Install/prereq card, `squad init`, roster/charters, and `squad doctor` health check.', 'Hand to Haflidi for C0: Now do those steps from a clean machine.')],
   ['s05-parallel', notePlan('Martin', 'Parallel work needs three accountable lanes: terraform-coder writes, terraform-validator runs fixed offline checks, and terraform-reviewer reviews in a fresh context.', 'Read each lane and its handoff. Add that Squad/Scribe records decisions under `.squad\decisions\inbox\` for later merge.', 'terraform-coder, terraform-validator, terraform-reviewer, and the decision inbox row.', 'Hand to Haflidi for the module contract.')],
   ['s06-contract', notePlan('Haflidi', 'The module consumes approved existing network inputs; it does not create a landing zone.', 'Point from platform-owned network into the module.', 'Caller-owned provider/backend/state and private Automatic requirements.', 'Hand to Martin for native Plan mode.')],
   ['s08-plan-boundary', notePlan('Haflidi', 'Extract a module, not an environment. Existing estate migration is a separate review.', 'Reveal the warning and contrast module vs consumer root.', 'Typed inputs/outputs, provider requirements, and consumer-owned backend/auth.', 'Hand to Martin for Squad routing.')],
-  ['s10-tool-roles', notePlan('Haflidi', 'Instructions, skills, and MCP each have a different job.', 'Keep to 1:00. Name the three controls and say a connected MCP server is not itself source verification.', 'Instructions, skills, MCP columns.', 'Hand to Martin for source grounding.')],
+  ['s10-tool-roles', notePlan('Haflidi', 'Instructions, skills, and MCP each have a different job. Skills turn a repeated procedure into reusable, versioned guidance.', 'Keep to 1:00. Name the three controls, say a connected MCP server is not itself source verification, and use the Azure Functions skills source only for the weakened claim that Azure Functions-specific skills improve task guidance. Second opinion from a different model is review input, not approval; our reviewer lane stays the gate.', 'Instructions, skills, MCP columns and the GA Rubber Duck badge in the appendix.', 'Hand to Martin for source grounding.')],
   ['s12-source-check', notePlan('Haflidi', 'An assertion should inspect the generated resource body, not a reassuring variable name.', 'Reveal the source claim, decision, and illustrative assertion.', 'Automatic SKU/private contract and the code example label.', 'Hand to Haflidi for test coverage.')],
   ['s13-test-gap', notePlan('Haflidi', 'The repeatability lesson is B1 0/5, then B1v2 5/5 after the brief stated the oracle rule.', 'Use the full 3:00: 0:45 B1 was ambiguous and stayed 0/5; 0:45 oracle required separate assert blocks; 0:45 B1v2 stated four asserts with error_message and reached 5/5 in the eval; 0:45 no causal or deterministic claim, and the live run still has to pass. Drop-order cue: if behind, keep only B1 0/5 and B1v2 5/5.', 'B1 0/5, oracle rule, B1v2 5/5, and live still must pass.', 'Haflidi takes live-demo control for C5 after C4.')],
-  ['s15-proof', notePlan('Haflidi with Martin handoff.', 'Evidence has levels: local module tests, caller examples, private IaC validation, Online 29/29 runtime checks, and VM 14/14 answer different questions.', 'Use 3:00. Read status labels exactly, say runtime checks/evidence only, and explain which question each level answers. Drop-order cue: if behind, read the ladder only and move depth to appendix.', 'Inspected, 52 passed, 2 passed, Approved, Succeeded.', 'Martin takes continuity slide.')],
+  ['s15-proof', notePlan('Haflidi with Martin handoff.', 'Evidence has levels: local module tests, caller examples, private IaC validation, Online 29/29 runtime checks, and VM 14/14 answer different questions. Evidence feeds the gate; the gate doesn\'t care who typed the diff.', 'Use 3:00. Read status labels exactly, say runtime checks/evidence only, and explain which question each level answers. Drop-order cue: if behind, read the ladder only and move depth to appendix.', 'Inspected, 52 passed, 2 passed, Approved, Succeeded, and the bridge sentence under the ladder.', 'Martin takes continuity slide.')],
   ['s16-continuity', notePlan('Martin', 'Save the reason, not the whole chat. The next task must read the decision.', 'Trace decision into the next task.', 'Conversation, native memory, and repository knowledge distinction.', 'Hand to Haflidi for resume.')],
   ['s18-memory', notePlan('Martin', 'Conversation context, native memory, and Squad knowledge have different owners.', 'Use 2:00. Keep personal memory closed. Say agents write public decisions into `.squad\decisions\inbox\`; Scribe merges the reviewed record later. Drop-order cue: if behind, keep only three stores, three owners.', 'Conversation, Native memory, Repository knowledge rows and the decision-inbox path.', 'Hand to Haflidi for final review.')],
-  ['s20-consumer', notePlan('Martin', 'Reuse the module code, not the private environment.', 'Timing: 0:00-0:30 diagram at 53:00; 0:30-1:00 live reveal at 53:30-54:00: https://aks-online-demo.swedencentral.cloudapp.azure.com/; 1:00-2:10 PR to plan to human approval to apply plus 29/29 outside-in runtime checks; 2:10-3:00 boundary and appendix/hallway depth. The self-signed cert warning is expected and pre-accepted in the pre-staged browser tab. Drop-order cue: if behind, keep the 30s reveal and 29/29 line, drop pipeline explanation.', 'Consumer diagram, then branded page, pipeline flow, serving pod name, speakers section, and the 29/29 runtime evidence line.', 'Hand to Haflidi: same module, guarded consumer, now three rules for the next change.') + '<p><strong>Offline fallback:</strong> Use the prepared screenshot plus apply runs 37771532872/37772290635 and Test-OnlineSecurity 29/29 at 13:48 on Oct 8.</p>'],
+  ['s20-consumer', notePlan('Martin', 'Reuse the module code, not the private environment. Human or agent, every change goes through the same gates.', 'Timing: 0:00-0:30 diagram at 53:00; 0:30-1:00 live reveal at 53:30-54:00: https://aks-online-demo.swedencentral.cloudapp.azure.com/; 1:00-2:10 say the verified gate map: PR to checks/scans (fmt, validate, TFLint, Trivy, Checkov), required review plus protected main, Terraform plan, online environment approval, OIDC apply, runtime check; 2:10-3:00 boundary and appendix/hallway depth. The audit is the PR/review/check/environment/Actions trace. Documented gap: the security case says a single maintainer used an admin override and prevent_self_review is off; say that honestly if asked. The self-signed cert warning is expected and pre-accepted in the pre-staged browser tab. Drop-order cue: if behind, keep the 30s reveal and gate line, drop depth.', 'Consumer diagram, branded page, pipeline flow, serving pod name, speakers section, gate map, audit trace, and the documented maintainer-gap caveat.', 'Hand to Haflidi: same module, guarded consumer, now three rules for the next change.') + '<p><strong>Offline fallback:</strong> Use the prepared screenshot plus apply runs 37771532872/37772290635 and Test-OnlineSecurity 29/29 at 13:48 on Oct 8.</p>'],
   ['s21-limits', notePlan('Haflidi then Martin', 'Bound the work, inspect what changed, and leave a useful handoff.', 'Use 2:00 for three rules only; no new examples. Drop-order cue: if behind, compress to 0:30 and move the three rules into the close.', 'Three closing rules and final statement.', 'Martin starts the 58:00 close.')],
-  ['s22-questions', notePlan('Martin closes; Haflidi available for questions if time allows.', 'This is a two-minute close buffer, not scheduled Q&A. Restate artifact, public handoff, and evidence limits.', '58:00-59:15 Martin closes and points to repository/module; 59:15-59:45 Haflidi says appendix/hallway questions are available; 59:45-60:00 stop. If ahead, take one question; otherwise end cleanly.', 'Close message, questions-if-time-allows line, and appendix links.', 'Stop by 60:00; appendix remains available afterwards.')],
+  ['s22-questions', notePlan('Martin closes; Haflidi available for questions if time allows.', 'Humans set direction; agents close the loop through the same gates. Day 2: the same loop for operations: detect, propose, review, approve, apply, verify.', '58:00-59:15 Martin closes and points to repository/module; 59:15-59:45 Haflidi says appendix/hallway questions are available; 59:45-60:00 stop. If ahead, take one question; otherwise end cleanly.', 'Close message, static GitHub Copilot lockup, day-2 line, questions-if-time-allows line, and appendix links.', 'Stop by 60:00; appendix remains available afterwards.')],
   ['a-cli-controls', notePlan('Martin', 'Use this appendix for branching and recovery questions.', 'Explain /fork, /worktree, /rewind, and /resume without promising Azure rollback.', 'Command rows and worktree caveat.', 'Return to the close slide.')],
   ['a-automation', notePlan('Martin', 'Use this appendix for bounded automation and cost-control questions.', 'Explain /autopilot, -p, /fleet, /subagents, /limits, and soft accounting, including five default continuations when relevant.', 'Soft credit limits, parent/subagents share accounting, and compaction can consume credits.', 'Return to the close slide.')],
   ['a-handoffs', notePlan('Haflidi', 'Use this appendix for local versus cloud-agent work.', 'Contrast local work, /delegate draft-PR cloud work, and /remote steering of a still-running local session.', 'host must remain online, and draft-PR output still needs review.', 'Return to the close slide.')],
@@ -400,9 +445,20 @@ export const slides = [
     id: 'opening', title: 'NIC 2026', time: 'Pre-show',
     layer: 'NIC 2026', kind: 'opening', preshow: true,
     tip: 'Hold here before the clock starts. Advance to the first content slide at 00:00.',
+    sources: [brandCopilot, brandLogo],
+    content: lockup(),
+    notes: 'Pre-show holding slide. Keep this visible while the room settles and before the timed session starts. It carries the official NIC 2026 template mark and a static GitHub Copilot product lockup from brand.github.com, so it does not consume the 60-minute delivery clock.'
+  },
+  {
+    id: 'legal-notice', title: 'Legal and futures notice', time: 'Pre-show',
+    layer: 'Public-source notice', kind: 'legal', preshow: true,
+    tip: 'Show briefly before starting the clock; the clock still starts at s01 00:00.',
     sources: [],
-    content: '',
-    notes: 'Pre-show holding slide. Keep this visible while the room settles and before the timed session starts. It carries the official NIC 2026 template mark only, so it does not consume the 60-minute delivery clock.'
+    content: `<div class="legal-card"><p>Feature status reflects public sources as of 14 October 2026.</p>
+      <p>Preview features can change or be withdrawn.</p>
+      <p>Dates and availability are not commitments.</p>
+      <p>Demo code and evidence are provided as-is, without warranty.</p></div>`,
+    notes: 'Untimed legal and futures notice. It appears after the opening page and before s01; the session clock still starts at s01-outcome 00:00.'
   },
   {
     id: 's01-outcome', title: 'A module worth reusing.', time: '00:00-03:00',
@@ -434,19 +490,19 @@ export const slides = [
     tip: 'Use the new controls deliberately. Computer use is not part of this Terraform demo.',
     sources: [whatsNew, cliGA, agentHQ, agentHQAgents, billing, limits, skills, reviewSkills, computerUse, computerUseDocs, squad011, squad012, squad013, squad100, squad101],
     content: `<div class="news-grid">
-      <div><strong>2026-02-25</strong><span>Copilot CLI GA</span><em>Plan mode, agents, skills, plugins, MCP, and review controls ship for all subscribers.</em></div>
+      <div><strong>2026-02-25</strong><span>Copilot CLI ${badge('Copilot CLI')}</span><em>Plan mode ${badge('Plan mode')}, custom agents ${badge('custom agents')}, Skills ${badge('Skills')}, MCP ${badge('MCP')}, and review controls ship for all subscribers.</em></div>
       <div><strong>2025-10-28 / 2026-02-04</strong><span>Agent HQ</span><em>Launched at Universe. Claude and Codex are public preview in Agent HQ.</em></div>
       <div><strong>2026-06-01 / 2026-07-01</strong><span>AI Credits and limits</span><em>Usage-based billing is effective. <code>/limits</code> and <code>--max-ai-credits</code> matter.</em></div>
       <div><strong>2025-12-18 / 2026-07-29</strong><span>Skills and MCP mature</span><em>Agent Skills launch. Skills plus MCP reach GA for Copilot code review.</em></div>
       <div><strong>2026-10-01</strong><span>Computer use, public preview</span><em><code>/computer on|show|off</code>, per-app approval, admin disable. We do not use it here.</em></div>
-      <div><strong>2026-10-03 / 2026-10-04</strong><span>Squad 1.0 and 1.0.1</span><em>Release tags exist; the demo uses 1.0.1. Pinned docs at <code>93aec83</code> may still carry Experimental/alpha wording.</em></div>
+      <div><strong>2026-10-03 / 2026-10-04</strong><span>Squad ${badge('Squad')}</span><em>Release tags exist; the demo uses 1.0.1. Pinned docs at <code>93aec83</code> may still carry Experimental/alpha wording.</em></div>
     </div>`
   },
   {
     id: 's04-layers', title: 'One workflow. Three distinct layers.', time: '05:00-06:00',
-    layer: 'Native CLI / Squad / external tools', kind: 'diagram', sources: [cli, squad],
+    layer: 'Native CLI / Squad / external tools', kind: 'diagram',     sources: [cli, squad, cliProgrammatic, cliResume],
     tip: 'Name the layer before troubleshooting the behavior.',
-    content: fig(layers())
+    content: `${fig(layers())}${autonomySpectrum()}`
   },
   {
     id: 's07-agent-setup', title: 'Meet the agent setup.', time: '06:00-07:00',
@@ -476,9 +532,9 @@ export const slides = [
   },
   {
     id: 's06-contract', title: 'Fit the platform you already have.', time: '12:00-14:00',
-    layer: 'Terraform / Azure contract', kind: 'diagram', sources: [automatic],
+    layer: 'Terraform / Azure contract', kind: 'diagram', sources: [automatic, aksAutomaticGA],
     tip: 'Consume approved network inputs. Do not rebuild or import the landing zone.',
-    content: `${fig(corp())}<p class="status-line"><span class="status pending">Environment validated</span>Private IaC run supplied sanitized plan, apply, and ARM read-back evidence.</p>`
+    content: `${fig(corp())}<p class="status-line"><span class="status pending">Environment validated</span>AKS Automatic ${badge('AKS Automatic')} with sanitized plan, apply, and ARM read-back evidence.</p>`
   },
   chapter(1, 180, '14:00-17:00', 'Same task, different agent choices', 'Native Copilot CLI',
     ['Same brief and reviewed starting state', 'Selected model and effective context', 'One decision and its consequence'],
@@ -498,11 +554,11 @@ export const slides = [
     'Inspect the real Plan indicator and artifact before approving implementation.', [cli, guide]),
   {
     id: 's10-tool-roles', title: 'Give context the right job.', time: '23:00-24:00',
-    layer: 'Native Copilot CLI / external tools', kind: 'context', sources: [cli],
+    layer: 'Native Copilot CLI / external tools', kind: 'context', sources: [cli, skills, azureFunctionsSkills, rubberDuckGA],
     tip: 'A recipe, repository rule, and external fact are different inputs.',
     content: `<div class="context-column"><span class="large-index">01</span><h3>Instructions</h3><p>Persistent repository expectations.</p><code>@file /instructions</code></div>
-      <div class="context-column"><span class="large-index">02</span><h3>Skills</h3><p>A focused procedure, invoked when useful.</p><code>/skills</code></div>
-      <div class="context-column"><span class="large-index">03</span><h3>MCP</h3><p>Tools and information beyond the conversation.</p><code>/mcp</code></div>`
+      <div class="context-column"><span class="large-index">02</span><h3>Skills ${badge('Skills')}</h3><p>Skills turn a repeated procedure into reusable, versioned guidance.</p><code>/skills</code></div>
+      <div class="context-column"><span class="large-index">03</span><h3>MCP ${badge('MCP')}</h3><p>Tools and information beyond the conversation.</p><code>/mcp</code></div>`
   },
   chapter(3, 240, '24:00-28:00', 'Activate Squad and route independent work', 'Native custom agents / Squad',
     ['Selected agent, roster (team list), charters (role instructions), and routing', 'Actual task starts and owned file edits', 'A concrete result and a named handoff'],
@@ -559,11 +615,12 @@ export const slides = [
     'Approve a specific artifact and scope, not a hopeful summary.', [cli, tfplan]),
   {
     id: 's20-consumer', title: 'Reuse the code, not the environment.', time: '53:00-56:00',
-    layer: 'Public Terraform / private consumption', kind: 'diagram', sources: [tests, automatic, onlineDemo],
+    layer: 'Public Terraform / private consumption', kind: 'diagram', sources: [tests, automatic, onlineDemo, demoEnvRepo, securityCase],
     tip: 'Keep the live reveal to 53:30-54:00, then explain gate, evidence, and boundary.',
     content: `${fig(consumption())}<div class="consumer-reveal"><p class="online-url">https://aks-online-demo.swedencentral.cloudapp.azure.com/</p>
-      <p>Gated pipeline: PR → plan → human approval → apply; 29/29 outside-in runtime checks</p></div>
-      <p class="status-line"><span class="status pending">Consumer runtime evidence</span>Private inputs, state, identities, and run URLs stay out of public artifacts.</p>`
+      <p>Human or agent, every change goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail.</p>
+      <p class="gate-map">PR → checks/scans (fmt, validate, TFLint, Trivy, Checkov) → review + protected main → Terraform plan → online environment approval → OIDC apply → runtime check</p></div>
+      <p class="status-line"><span class="status pending">Consumer runtime evidence</span>Private inputs, state, identities, and run URLs stay out.</p>`
   },
   {
     id: 's21-limits', title: 'Make the next change easier to review.', time: '56:00-58:00',
@@ -575,10 +632,11 @@ export const slides = [
       <p class="closing-statement">More agents cannot vote a contract into correctness.</p>`
   },
   {
-    id: 's22-questions', title: 'Close: inspect the artifact, then ask.', time: '58:00-60:00',
-    layer: 'Close / questions if time allows', kind: 'questions', sources: [guide],
+    id: 's22-questions', title: 'Close.', time: '58:00-60:00',
+    layer: 'Close / questions if time allows', kind: 'questions', sources: [guide, brandCopilot],
     tip: 'Close by 60:00. Questions happen only if time allows.',
-    content: `<p class="questions-lede">Your repository. One bounded change. One inspected artifact.</p>
+    content: `${lockup()}<p class="questions-lede">Humans set direction; agents close the loop through the same gates.</p>
+      <p class="close-buffer-line">Day 2: the same loop for operations: detect, propose, review, approve, apply, verify.</p>
       <p class="close-buffer-line">We stop at 60:00. Questions if time allows; appendix links stay useful afterwards and in the hallway.</p>
       <div class="appendix-links">
       <a href="#/a-cli-controls"><span>01</span>Branch and recover</a>
@@ -594,35 +652,35 @@ export const slides = [
   },
   {
     id: 'a-cli-controls', title: 'Branch and recover deliberately.', time: 'Appendix',
-    layer: 'Native Copilot CLI', kind: 'reference', sources: [cli, guide],
+    layer: 'Native Copilot CLI', kind: 'reference', sources: [cli, cliResume, cliReview, guide],
     tip: 'A worktree separates files, not credentials. Rewind is not Azure rollback.',
     content: `${row('Explore an alternative', '<code>/fork</code> carries context.<br><code>/worktree</code> separates working files.')}
-      ${row('Recover CLI work', '<code>/rewind</code><br>Inspect the resulting diff.')}
-      ${row('Return to the task', '<code>/resume</code><br>Select the relevant session, not unrelated history.')}`
+      ${row('Recover CLI work', `<code>/rewind</code><br>Inspect with <code>/diff</code> ${badge('/diff')} and request <code>/review</code> ${badge('/review')}.`)}
+      ${row('Return to the task', `<code>/resume</code> ${badge('/resume')}<br>Select the relevant session, not unrelated history.`)}`
   },
   {
     id: 'a-automation', title: 'Automate bounded work.', time: 'Appendix',
-    layer: 'Native Copilot CLI', kind: 'reference', sources: [cli, guide],
+    layer: 'Native Copilot CLI', kind: 'reference', sources: [cli, cliProgrammatic, guide],
     tip: 'Keep the objective, permissions, and stopping point explicit.',
     content: `${row('Finish a finite task', '<code>/autopilot /limits</code><br>Soft credit limits, not financial or safety guarantees.')}
-      ${row('Script a prompt', '<code>-p / --prompt</code><br>Programmatic work, not the interactive Plan-mode demo.')}
+      ${row('Script a prompt', `<code>-p / --prompt</code> ${badge('-p')}<br>Programmatic work, not the interactive Plan-mode demo.`)}
       ${row('Split independent work', '<code>/fleet /subagents</code><br>Give each task an artifact and owner.')}`
   },
   {
     id: 'a-handoffs', title: 'Choose where the work happens.', time: 'Appendix',
-    layer: 'Native Copilot CLI', kind: 'reference', sources: [cli, guide],
+    layer: 'Native Copilot CLI', kind: 'reference', sources: [cli, cliDelegate, rubberDuckGA, rubberDuckBlog, guide],
     tip: 'Reference only. Cloud delegation and local-session steering are different operations.',
     content: `${row('Work locally', 'Use the local repository, review its diff, and retain ownership.')}
-      ${row('Hand off a PR task', '<code>/delegate</code><br>Cloud-agent draft PR; review the resulting diff.')}
-      ${row('Control a session remotely', '<code>/remote</code><br>Steer the running local session. Its host stays online.')}`
+      ${row('Hand off a PR task', `<code>/delegate</code> ${badge('/delegate')}<br>Cloud-agent draft PR; review the resulting diff.`)}
+      ${row('Ask for critique', `<code>/rubber-duck</code> ${badge('Rubber Duck')}<br>Second opinion from a different model is review input, not approval.`)}`
   },
   {
     id: 'a-integrations', title: 'Add the context you need.', time: 'Appendix',
-    layer: 'Native Copilot CLI / external integrations', kind: 'reference', sources: [cli, guide],
+    layer: 'Native Copilot CLI / external integrations', kind: 'reference', sources: [cli, skills, azureFunctionsSkills, guide],
     tip: 'Availability is not setup evidence. Review tools and sources before use.',
     content: `${row('Editor and code context', '<code>/ide /lsp</code><br>Useful with a configured editor or language service.')}
       ${row('Packaged capabilities', '<code>/plugin</code><br>Review trust, permissions, and dependencies.')}
-      ${row('Investigate or challenge a claim', '<code>/research /rubber-duck</code><br>Sourced investigation or focused design critique.')}`
+      ${row('Skills for repeatability', `Azure Functions-specific skills improve task guidance. ${badge('Skills')}<br>Do not claim model-independent consistency.`)}`
   },
   {
     id: 'a-squad-ops', title: 'Keep team state useful.', time: 'Appendix',
@@ -634,18 +692,18 @@ export const slides = [
   },
   {
     id: 'a-evidence', title: 'Know which gate you are reading.', time: 'Appendix',
-    layer: 'Terraform / Azure / evidence', kind: 'reference', sources: [tests, tfplan, automatic],
+    layer: 'Terraform / Azure / evidence', kind: 'reference', sources: [tests, tfplan, terraform16, automatic],
     tip: 'Raw plans, state, private inputs, and credentials are not public artifacts.',
     content: `${row('Reproduce the source', '<code>e9a9a48</code><br>Keep the full pin and reviewed module revision.')}
-      ${row('Check the code and example', 'Format, validate, lint, isolated tests, and a deliberate mutation.<br>Then verify the consumer interface.')}
+      ${row('Check the code and example', `Format, validate, lint, isolated Terraform test ${badge('Terraform test')}, and a deliberate mutation.<br>Then verify the consumer interface.`)}
       ${row('Read the real plan', '<code>0</code> unchanged / <code>2</code> changes / <code>1</code> error<br>October 5 private run supplied sanitized plan/apply/read-back; future targets need their own evidence.')}`
   },
   {
     id: 'a-online', title: 'Same module, Online landing zone.', time: 'Appendix',
-    layer: 'Terraform / Azure landing zone / GitHub Actions', kind: 'reference', sources: [demoEnvRepo, upstreamRepo],
+    layer: 'Terraform / Azure landing zone / GitHub Actions', kind: 'reference', sources: [demoEnvRepo, upstreamRepo, aksAutomaticGA, appRoutingDocs, aksAbacDocs, bastionEntraDocs],
     tip: 'Guardrails are design inputs. None were bypassed with exemptions.',
-    content: `${row('Thin root, same module', 'Consumer repo pins the module by tag <code>v0.6.0</code>.<br><code>cluster_sku = "Automatic"</code>, BYO VNet, NAT Gateway egress, managed NGINX.')}
-      ${row('Guardrails we hit', 'Private-only state storage. Subnets must have an NSG.<br>RBAC Writer cannot create namespaces: managed namespace via ARM.')}
+    content: `${row('Thin root, same module', `Consumer repo pins the module by tag <code>v0.6.0</code>.<br><code>cluster_sku = "Automatic"</code> ${badge('AKS Automatic')}, BYO VNet, NAT Gateway egress, managed NGINX ${badge('App Routing')}.`)}
+      ${row('Guardrails we hit', `Private-only state storage. Subnets must have an NSG.<br>ABAC conditions for AKS custom resources ${badge('ABAC conditions for AKS custom resources')}; Bastion Entra RDP ${badge('Bastion Entra RDP')}.`)}
       ${row('Branded app and runtime check', 'NIC 2026 page with speakers section at <code>aks-online-demo.swedencentral.cloudapp.azure.com</code>; default NGINX self-signed warning expected because no trusted certificate is configured.<br>Runs 37771532872 and 37772290635: No changes, HTTPS 200 by hostname, title verified; the check reads the App Routing controller Service, Azure&#39;s managed NGINX ingress add-on for AKS.')}`
   },
   {
@@ -685,7 +743,8 @@ export const slides = [
 export function evidenceContent(evidence) {
   return `<div role="table" aria-label="Current evidence and remaining gates"><div class="evidence-heading" role="row"><span role="columnheader">Evidence</span><span role="columnheader">Current status</span><span role="columnheader">What it establishes</span></div>
     ${evidence.checks.map((item, index) => `<div class="evidence-row" role="row"><strong role="rowheader"><span class="evidence-index" aria-hidden="true">${index + 1}</span>${escape(item.label)}</strong>
-      <span role="cell" class="status ${item.status === 'Pending' ? 'pending' : 'observed'}">${escape(item.status)}</span><p role="cell">${escape(item.detail)}</p></div>`).join('')}</div>`;
+      <span role="cell" class="status ${item.status === 'Pending' ? 'pending' : 'observed'}">${escape(item.status)}</span><p role="cell">${escape(item.detail)}</p></div>`).join('')}</div>
+    <p class="evidence-bridge">Evidence feeds the gate; the gate doesn't care who typed the diff.</p>`;
 }
 
 export function demoContent(slide) {
@@ -713,8 +772,8 @@ export function renderSection(slide, index, noteHTML, evidence, media) {
       : 'Use the static slide and its spoken explanation. Keep any unresolved evidence labeled unresolved.';
   const captureRule = '';
   if (slide.preshow) {
-    return `<section id="${slide.id}" class="${className}" role="region" aria-label="NIC 2026 opening page" data-stage-time="Pre-show" data-preshow="true">
-    <div class="slide-content" aria-hidden="true"></div>
+    return `<section id="${slide.id}" class="${className}" role="region" aria-label="${escape(slide.title)}" data-stage-time="Pre-show" data-preshow="true">
+    <div class="slide-content">${slide.content || ''}</div>
     <aside class="notes"><h2>Pre-show / NIC 2026 opening page</h2>${noteHTML}<p><strong>Working tip:</strong> ${escape(slide.tip)}</p><p><strong>Fallback:</strong> Advance to the first content slide before the session clock starts.</p></aside>
   </section>`;
   }
