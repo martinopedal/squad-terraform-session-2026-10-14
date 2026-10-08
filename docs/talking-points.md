@@ -16,13 +16,13 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 
 - Checkpoints: after C0 at 10:00; after C2 at 23:00; after C5 at 41:00; start `s20-consumer` at 53:00; start close at 58:00.
 - Live cut lines: C0 09:15, C1 16:15, C2 22:00, C3 27:00, C4 35:00, C5 39:45, C6 47:15, C7 52:15.
-- Drop order if behind: compress `s21-limits`; trim `s18-memory`; trim `s15-evidence`; trim `s13-test-gap`; trim `s05-parallel`; shorten `s20-consumer` while keeping the 53:30-54:00 reveal; use chapter fallback.
+- Drop order if behind: compress `s21-limits`; trim `s18-memory`; trim `s15-proof`; trim `s13-test-gap`; trim `s05-parallel`; shorten `s20-consumer` while keeping the 53:30-54:00 reveal; use chapter fallback.
 
 ## Slide and chapter cues
 
 ### 00:00-03:00, s01-outcome, Martin then Haflidi
-- Introduce Martin Opedal, Enterprise Cloud Solution Architect, Microsoft, `opedal.tech`.
-- Introduce Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft; live page uses initials plus GitHub only.
+- Introduce Martin Opedal, Enterprise Cloud Solution Architect, Microsoft (`opedal.tech`).
+- Introduce Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft.
 - Audience promise: reusable Terraform module for private AKS in an existing landing zone.
 - What they will see: Copilot CLI, Squad, three lanes, tests, mutation/repair, consumer reveal.
 - Honesty rule: live vs prepared, fallback evidence disclosed, runtime evidence scoped.
@@ -128,7 +128,7 @@ Takeaway: source provenance is part of the artifact.
 - Validator detects intended assertion; review; restore only that field; rerun repaired.
 Takeaway: preserve cause and effect; local runtime check is not Azure acceptance evidence.
 
-### 41:00-44:00, s15-evidence, Haflidi with Martin
+### 41:00-44:00, s15-proof, Haflidi with Martin
 - Separate source inspection, local mocks, consumer checks, plan/apply, and read-back.
 - A runtime check is evidence only for what it checks.
 - Sanitized Azure read-back applies only to pinned runtime module revision.
@@ -224,6 +224,6 @@ Takeaway: scanners plus scripted oracles close different gaps.
 
 ### a-prompts
 - Guardrails first, source facts through MCP, one lane per step.
-- B1 0/5 -> state oracle rule -> B1v2 5/5; measured checkpoint, not a guarantee.
+- B1 stayed 0/5; B1v2 was 5/5 under pinned conditions after the oracle rule was made explicit. Measured checkpoint, not a causal claim or guarantee; live still must pass.
 - Live run still has to pass.
 Takeaway: narrow choices and make claims checkable.

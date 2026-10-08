@@ -1,4 +1,4 @@
-# Martin Opedal and Haflidi Fridthjofsson: complete delivery script
+# Martin Opedal, Enterprise Cloud Solution Architect, Microsoft and Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft: complete delivery script
 
 This script mirrors `docs\run-plan.md`: 00:00-03:00 intro, 03:00-58:00 content and live chapters, and 58:00-60:00 close plus "questions if time allows". There is no planned question block.
 
@@ -8,7 +8,7 @@ This is a rehearsed 60-minute show, not exploratory pair programming. C0-C7 rema
 
 Cut at the chapter cut line. Do not start a second live attempt. Use reviewed fallback evidence, name what failed live, and move on. Checkpoints: after C0 at 10:00, after C2 at 23:00, after C5 at 41:00, start `s20-consumer` at 53:00, and start close at 58:00.
 
-Drop order if behind: compress `s21-limits`; trim `s18-memory`; trim `s15-evidence`; trim `s13-test-gap`; trim `s05-parallel`; shorten `s20-consumer` but keep the 53:30-54:00 reveal; then use the live chapter fallback.
+Drop order if behind: compress `s21-limits`; trim `s18-memory`; trim `s15-proof`; trim `s13-test-gap`; trim `s05-parallel`; shorten `s20-consumer` but keep the 53:30-54:00 reveal; then use the live chapter fallback.
 
 Use runtime check and runtime evidence language. Local mocks are not Azure acceptance evidence. Public repo rules apply: no subscription IDs, tenant IDs, private IPs, raw state, secrets, private run URLs, or personal memory on screen.
 
@@ -16,9 +16,9 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 > DRIVER Martin. Reuse the outcome/title slide as the intro. Haflidi adds the honesty rule. Handoff at 03:00.
 
-**Martin:** Good morning. I'm Martin Opedal, Enterprise Cloud Solution Architect at Microsoft. You can find my public material at `opedal.tech`. Today we want to leave behind something another engineer can inspect: a reusable Terraform module for private AKS in an existing Azure landing zone.
+**Martin:** Good morning. I'm Martin Opedal, Enterprise Cloud Solution Architect, Microsoft. You can find my public material at `opedal.tech`. Today we want to leave behind something another engineer can inspect: a reusable Terraform module for private AKS in an existing Azure landing zone.
 
-**Martin:** With me is Haflidi Fridthjofsson, Sr Cloud Solution Architect at Microsoft. On the live demo page he is shown with the same public treatment as the page itself: initials and GitHub only. The public handoff should contain useful engineering material, not private environment details.
+**Martin:** With me is Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft. The public handoff should contain useful engineering material, not private environment details.
 
 **Haflidi:** You will see Copilot CLI as the execution surface, Squad as the coordination layer, and Terraform checks as evidence. We bootstrap a Squad, route work through three lanes, add a contract regression, seed a controlled failure, repair it, and show a consumer page that reuses the module.
 
@@ -142,7 +142,7 @@ Select `/agent terraform-validator`; run the C5 PowerShell block with `$phase = 
 
 **Haflidi:** Preserve cause and effect. Say: deliberate lab mutation, not an AI-discovered defect. A runtime check is evidence for the assertion it runs. It is not Azure acceptance evidence.
 
-## s15-evidence | 41:00-44:00 | Evidence has levels
+## s15-proof | 41:00-44:00 | Evidence has levels
 
 **Haflidi:** Keep gates separate: source inspection, local contract tests, consumer checks, real plan/apply, and Azure read-back. A runtime check is evidence only for what it checks.
 
