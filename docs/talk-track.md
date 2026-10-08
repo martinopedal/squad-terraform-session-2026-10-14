@@ -4,7 +4,7 @@ This script mirrors `docs\run-plan.md`: 00:00-03:00 intro, 03:00-58:00 content a
 
 ## Delivery contract
 
-This is a rehearsed 60-minute show, not exploratory pair programming. C0-C7 remain 29 minutes total. The only protected buffer is the 58:00-60:00 close.
+This is a rehearsed 60-minute show, not exploratory pair programming. Before the timed show starts, show the untimed legal/futures notice: preview features may change; status is as of 14 Oct 2026; no warranties; dates are subject to change. C0-C7 remain 29 minutes total. The only protected buffer is the 58:00-60:00 close.
 
 Cut at the chapter cut line. Do not start a second live attempt. Use reviewed fallback evidence, name what failed live, and move on. Checkpoints: after C0 at 10:00, after C2 at 23:00, after C5 at 41:00, start `s20-consumer` at 53:00, and start close at 58:00.
 
@@ -43,6 +43,8 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 **Haflidi:** Copilot CLI runs the work. Squad coordinates responsibilities through a repository-backed roster, routing, handoffs, and decisions. Terraform, Git, Microsoft Learn, and MCP servers return evidence.
 
 **Martin:** MCP means Model Context Protocol: a way to connect the CLI to an external source or tool. A useful agent workflow returns files, decisions, and check output that a human can inspect.
+
+**Haflidi:** The autonomy spectrum is Ask → edit → plan → agent → programmatic `-p` → Squad multi-agent with gates. Our chapters sit on it: C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools + permissions, C5 edit/repair loop, C6 resume, C7 gated review. `-p` is appendix automation, not a live chapter.
 
 ## s07-agent-setup | 06:00-07:00 | Meet the agent setup
 
@@ -102,9 +104,11 @@ Use `/new`, `/rename guided-clean-run`, `/agent` Squad, `/instructions`, `/plan`
 
 ## s10-tool-roles | 23:00-24:00 | Give context the right job
 
-**Haflidi:** Instructions are persistent expectations. Skills are repeatable procedures. MCP is a source or tool connection.
+**Haflidi:** Instructions are persistent expectations. Skills turn a repeated procedure into reusable, versioned guidance. MCP is a source or tool connection.
 
-**Martin:** A recipe changes how we work; a source tells us what a service supports; a human still approves the code change.
+**Martin:** Second opinion from a different model (Rubber Duck, GA 2026-06-02, `/rubber-duck` in Copilot CLI) is review input, not approval; our reviewer lane stays the gate.
+
+**Haflidi:** A recipe changes how we work; a source tells us what a service supports; a human still approves the code change.
 
 ## demo-c3 | 24:00-28:00 | C3: Assign one writer
 
@@ -146,7 +150,7 @@ Select `/agent terraform-validator`; run the C5 PowerShell block with `$phase = 
 
 **Haflidi:** Keep gates separate: source inspection, local contract tests, consumer checks, real plan/apply, and Azure read-back. A runtime check is evidence only for what it checks.
 
-**Martin:** The private consumer supplied separate sanitized runtime evidence for one pinned module revision. We do not show private IDs, state, run URLs, or FQDNs.
+**Martin:** Evidence feeds the gate; the gate doesn't care who typed the diff. The private consumer supplied separate sanitized runtime evidence for one pinned module revision. We do not show private IDs, state, run URLs, or FQDNs.
 
 ## s16-continuity | 44:00-45:00 | Save the reason, not the whole chat
 
@@ -184,9 +188,9 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 **Martin:** 53:30-54:00: open `https://aks-online-demo.swedencentral.cloudapp.azure.com/`. Show the branded page, pipeline flow, serving pod name, and speakers section.
 
-**Haflidi:** 54:00-55:10: gated pipeline PR to plan to human approval to apply. The outside-in runtime checks are 29/29 for that Online path.
+**Haflidi:** 54:00-55:10: Human or agent, every change goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail. The map is PR → checks/scans → review + protected main → plan → environment approval → OIDC apply → runtime check.
 
-**Martin:** 55:10-56:00: boundary. This shows reuse of code, not reuse of the private environment. `a-online` and `a-security` are appendix and hallway depth.
+**Martin:** 55:10-56:00: boundary. The documented gaps stay visible: single-maintainer admin override, self-review setting, and the environment gate before the apply job's plan, mitigated by a reviewed plan-only run and in-job plan comparison. This shows reuse of code, not reuse of the private environment. `a-online` and `a-security` are appendix and hallway depth.
 
 ## s21-limits | 56:00-58:00 | Make the next change easier to review
 
@@ -200,9 +204,9 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 > DRIVER Martin. This is the close buffer, not scheduled questions. Finish at 60:00.
 
-**Martin:** The public handoff is the module material, talk docs, and evidence boundaries. Use the reusable parts: module interface, prompts, lane pattern, and check discipline.
+**Martin:** Humans set direction; agents close the loop through the same gates. The public handoff is the module material, talk docs, and evidence boundaries. Use the reusable parts: module interface, prompts, lane pattern, and check discipline.
 
-**Haflidi:** Keep limits visible. Local checks, consumer checks, and Azure runtime evidence answer different questions. The appendix is available for hallway questions.
+**Haflidi:** Day 2: the same loop for operations: detect, propose, review, approve, apply, verify. Keep limits visible. Local checks, consumer checks, and Azure runtime evidence answer different questions. The appendix is available for hallway questions.
 
 **Martin:** If we have time, we can take one short question now. Otherwise Haflidi and I will use the appendix afterwards. Thank you.
 

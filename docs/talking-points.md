@@ -9,6 +9,7 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - Copilot CLI is GA; the terminal is a normal engineering surface.
 - Squad 1.0.1 coordinates the demo team; npm/docs labels may lag.
 - Computer use is public preview and is not used in this Terraform demo.
+- Pre-show legal/futures notice is untimed: preview features may change; status is as of 14 Oct 2026; no warranties; dates are subject to change.
 - Honesty rule: live terminal/browser work is live; prepared checkpoints, inherited code, prompts, and fallback evidence are disclosed.
 - Use runtime check/evidence language. Never imply local mocks establish Azure acceptance.
 
@@ -42,6 +43,7 @@ Takeaway: use current controls, state current limits.
 ### 05:00-06:00, s04-layers, Haflidi then Martin
 - CLI runs work; Squad coordinates responsibilities; Terraform, Git, Learn, and MCP return evidence.
 - MCP = Model Context Protocol, an external source/tool connection.
+- Autonomy spectrum: Ask → edit → plan → agent → programmatic `-p` → Squad multi-agent with gates. C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools + permissions, C5 edit/repair loop, C6 resume, C7 gated review. `-p` is appendix automation, not a live chapter.
 Takeaway: files, decisions, and checks are the outputs.
 
 ### 06:00-07:00, s07-agent-setup, Martin
@@ -93,7 +95,8 @@ Takeaway: approval boundary before implementation.
 Takeaway: approval authorizes repo changes only.
 
 ### 23:00-24:00, s10-tool-roles, Haflidi
-- Instructions = expectations; skills = repeatable procedures; MCP = source/tool connection.
+- Instructions = expectations; skills turn a repeated procedure into reusable, versioned guidance; MCP = source/tool connection.
+- Second opinion from a different model (Rubber Duck, GA 2026-06-02, `/rubber-duck` in Copilot CLI) is review input, not approval; our reviewer lane stays the gate.
 Takeaway: each context type has a different job.
 
 ### 24:00-28:00, C3 Assign one writer, Martin
@@ -131,6 +134,7 @@ Takeaway: preserve cause and effect; local runtime check is not Azure acceptance
 ### 41:00-44:00, s15-proof, Haflidi with Martin
 - Separate source inspection, local mocks, consumer checks, plan/apply, and read-back.
 - A runtime check is evidence only for what it checks.
+- Evidence feeds the gate; the gate doesn't care who typed the diff.
 - Sanitized Azure read-back applies only to pinned runtime module revision.
 Takeaway: keep claims scoped.
 
@@ -160,8 +164,9 @@ Takeaway: approve a specific artifact and scope.
 ### 53:00-56:00, s20-consumer, Martin
 - 53:00-53:30: consumer-to-module diagram.
 - 53:30-54:00: live reveal `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; branded page, pipeline flow, serving pod, speakers.
-- 54:00-55:10: gated pipeline PR -> plan -> human approval -> apply; outside-in checks 29/29.
-- 55:10-56:00: boundary; appendix handles Online/security depth.
+- 54:00-55:10: Human or agent, every change goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail.
+- Map: PR -> checks/scans -> review + protected main -> plan -> environment approval -> OIDC apply -> runtime check.
+- 55:10-56:00: boundary; documented gaps stay visible: single-maintainer admin override, self-review setting, and environment gate before the apply job's plan; appendix handles Online/security depth.
 Takeaway: reuse code, not environment.
 
 ### 56:00-58:00, s21-limits, Haflidi then Martin
@@ -171,6 +176,8 @@ Takeaway: reuse code, not environment.
 Takeaway: artifact, reason, and check belong together.
 
 ### 58:00-60:00, s22-close, Martin
+- Humans set direction; agents close the loop through the same gates.
+- Day 2: the same loop for operations: detect, propose, review, approve, apply, verify.
 - Close with public handoff and scoped evidence.
 - Say appendix is available for hallway questions.
 - "Questions if time allows" only if ahead.
