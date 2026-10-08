@@ -8,7 +8,7 @@ The example is a reusable Terraform module for a fresh, private AKS Automatic cl
 
 Reviewed September 30, 2026. We read current GitHub documentation and pinned Squad's default `dev` branch at `93aec83accb44e08c39e4a799f13b55208215a13`. The stable `main` comparison is `5e086cece467686b2d3c6950241cf87bca5fffe8`. Squad v1.0.0 (October 3) and v1.0.1 (October 4) release tags exist, and the demo machine uses 1.0.1. The pinned reference docs at `93aec83` still carry an Experimental/alpha banner, so docs may lag releases. See [whats-new.md](whats-new.md).
 
-Current validation is **Copilot CLI 1.0.93, Squad 1.0.1 (validated October 8, 2026)**. Historical local probes used Copilot CLI **1.0.88** directly and Squad **0.13.0**, before the 1.0 releases; the unqualified `copilot` command then returned **1.0.89**, so a command name alone isn't a version pin. Earlier changes from 1.0.88 to 1.0.92 are listed in [whats-new.md](whats-new.md). Re-probe the live-demo build before delivery.
+Current validation is **Copilot CLI 1.0.93, Squad 1.0.1 (validated October 8, 2026)**. Historical local probes used Copilot CLI **1.0.88** directly and Squad **0.13.0**, before the 1.0 releases; the unqualified `copilot` command then returned **1.0.89**, so a command name alone isn't a version pin. Earlier changes from 1.0.88 to 1.0.92 are listed in [whats-new.md](whats-new.md). Re-probe the live-demo build before delivery. Deck 0.21.0 adds public status badges; use the badge table in `presentation\src\slides.mjs` as the stage label source, not memory.
 
 For the same workflows applied end to end through a real pipeline, see [online-demo.md](online-demo.md) (Online landing-zone variant) and the rerunnable [prompt-pack.md](prompt-pack.md).
 
@@ -41,7 +41,7 @@ For the same workflows applied end to end through a real pipeline, see [online-d
 
 | Mechanism | Useful combined workflow and prompt | Tip, limit, and evidence |
 | --- | --- | --- |
-| Skill | A reusable test recipe guides Squad's tester: "Use the contract-test skill to assert the requested payload, not mocked response values." | Keep task recipes out of always-on instructions. `/skills reload` and `/skills info` help confirm discovery. Scripts need permissions; loading a skill isn't running its checks. SHOW C4; H2, D; [G7]. |
+| Skill | A reusable test recipe guides Squad's tester: "Use the contract-test skill to assert the requested payload, not mocked response values." | Keep task recipes out of always-on instructions. `/skills reload` and `/skills info` help confirm discovery. Scripts need permissions; loading a skill isn't running its checks. The Azure Functions skills source supports only the weaker wording that product-specific skills improve task guidance; do not claim consistency regardless of model. SHOW C4; H2, D; [G7], [G20]. |
 | MCP | A configured documentation server supplies fresh source material: "Find the supported private/custom-network requirements and link each proposed property to a source." Squad records the resulting decision. | Show the actual call/result, not just `/mcp`. GitHub MCP is built in; Azure/Terraform documentation servers are additional configuration. `--disable-mcp-server` and `--disable-builtin-mcps` have different scopes. SHOW C4; H1/H2, D; [G8]. |
 | Plugin | Package a reviewed profile, testing skill, hooks, and server configuration for another module team: "List what this plugin contributes before enabling it." | The native packaging mechanism doesn't make contributed tools built-in. Pin/review package contents; avoid legacy cross-kind plugin commands. APPENDIX C4; H1/H2, D; [G6], [G18]. |
 | Hook | A configured lifecycle command can record a nonsensitive check summary: "Design a post-tool hook that records command, exit code, and artifact ID." | Hooks execute code; skills supply task guidance. Test hook input/output and restart behavior. Repository hooks aren't automatically protected organizational policy, and no hook is configured by this guide. MENTION C5; H2 `/env`, D; [G9]. |
@@ -50,7 +50,7 @@ For the same workflows applied end to end through a real pipeline, see [online-d
 
 ## C5: make feedback change the artifact
 
-**Diff, review, and critique.** `/diff` shows changes; `/review` requests focused code review. Ask: "Review the module extraction for altered defaults and missing positive assertions; cite files and consequences." Squad routes actionable findings to the responsible owner. Tip: use `/rubber-duck` for one unresolved design or test-coverage question rather than repeating full reviews. Its documented different-model critique depends on suitable model availability and adds usage. Neither critique nor a quiet review establishes correctness. Show the same failing check, repair, and rerun with unchanged criteria. SHOW C5/C7 for diff/review; APPENDIX C5 for critique; H2, D; [G10], [G11].
+**Diff, review, and critique.** `/diff` shows changes; `/review` requests focused code review. Ask: "Review the module extraction for altered defaults and missing positive assertions; cite files and consequences." Squad routes actionable findings to the responsible owner. Tip: use `/rubber-duck` for one unresolved design or test-coverage question rather than repeating full reviews. Public sources support Rubber Duck as a different-model critique path and the June 2, 2026 changelog says Rubber Duck is GA; treat it as review input, not approval. Neither critique nor a quiet review establishes correctness. Show the same failing check, repair, and rerun with unchanged criteria. SHOW C5/C7 for diff/review; APPENDIX C5 for critique; H2, D; [G10], [G11], [G21], [G22].
 
 **Squad rejection semantics.** A designated reviewer can formally reject an artifact and require a different revision author. Ask: "Reject only blocking defects; identify the artifact, original author, failure, and required correction." The coordinator's contract prevents the rejected author from producing or advising on that revision. Tip: distinguish normal test repair from formal rejection so C5 doesn't accidentally invoke lockout. This is an explicit coordination protocol, not a native filesystem or branch-protection guarantee. Reviewer approval doesn't automatically authorize merge or apply. MENTION C5; S0, D; [S1], [S6].
 
@@ -129,6 +129,9 @@ All sources below were reviewed September 30, 2026. GitHub Docs are moving docum
 [G17]: https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli
 [G18]: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-plugin-reference
 [G19]: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli
+[G20]: https://github.com/azure/azure-functions-skills
+[G21]: https://github.blog/ai-and-ml/github-copilot/github-copilot-cli-combines-model-families-for-a-second-opinion/
+[G22]: https://github.blog/changelog/2026-06-02-copilot-cli-improved-ui-rubber-duck-prompt-scheduling-and-voice-input/
 [S1]: https://github.com/bradygaster/squad/blob/93aec83accb44e08c39e4a799f13b55208215a13/.squad-templates/squad.agent.md
 [S2]: https://github.com/bradygaster/squad/blob/5e086cece467686b2d3c6950241cf87bca5fffe8/.squad-templates/squad.agent.md
 [S3]: https://github.com/bradygaster/squad/blob/93aec83accb44e08c39e4a799f13b55208215a13/docs/src/content/docs/features/routing.md
