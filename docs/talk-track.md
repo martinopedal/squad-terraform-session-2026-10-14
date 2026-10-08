@@ -44,7 +44,7 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Martin:** MCP means Model Context Protocol: a way to connect the CLI to an external source or tool. A useful agent workflow returns files, decisions, and check output that a human can inspect.
 
-**Haflidi:** The autonomy spectrum is Ask → edit → plan → agent → programmatic `-p` → Squad multi-agent with gates. Our chapters sit on it: C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools + permissions, C5 edit/repair loop, C6 resume, C7 gated review. `-p` is appendix automation, not a live chapter.
+**Haflidi:** The control spectrum is not a maturity ladder: Ask → edit → plan → agent → programmatic `-p` → Squad multi-agent with gates. Our chapters use different points on it: C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools + permissions, C5 edit/repair loop, C6 resume, C7 gated review. More automation is not better by default; human approvals remain at the gates. `-p` is appendix automation, not a live chapter.
 
 ## s07-agent-setup | 06:00-07:00 | Meet the agent setup
 
@@ -188,7 +188,7 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 **Martin:** 53:30-54:00: open `https://aks-online-demo.swedencentral.cloudapp.azure.com/`. Show the branded page, pipeline flow, serving pod name, and speakers section.
 
-**Haflidi:** 54:00-55:10: Human or agent, every change goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail. The map is PR → checks/scans → review + protected main → plan → environment approval → OIDC apply → runtime check.
+**Haflidi:** 54:00-55:10: Whether a change is human-authored or agent-assisted, it goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail. The map is PR → checks/scans → review + protected main → plan → environment approval → OIDC apply → runtime check.
 
 **Martin:** 55:10-56:00: boundary. The documented gaps stay visible: single-maintainer admin override, self-review setting, and the environment gate before the apply job's plan, mitigated by a reviewed plan-only run and in-job plan comparison. This shows reuse of code, not reuse of the private environment. `a-online` and `a-security` are appendix and hallway depth.
 
@@ -204,7 +204,7 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 > DRIVER Martin. This is the close buffer, not scheduled questions. Finish at 60:00.
 
-**Martin:** Humans set direction; agents close the loop through the same gates. The public handoff is the module material, talk docs, and evidence boundaries. Use the reusable parts: module interface, prompts, lane pattern, and check discipline.
+**Martin:** Humans set direction and approve; agents help move work through the same gated loop. The public handoff is the module material, talk docs, and evidence boundaries. Use the reusable parts: module interface, prompts, lane pattern, and check discipline.
 
 **Haflidi:** Day 2: the same loop for operations: detect, propose, review, approve, apply, verify. Keep limits visible. Local checks, consumer checks, and Azure runtime evidence answer different questions. The appendix is available for hallway questions.
 

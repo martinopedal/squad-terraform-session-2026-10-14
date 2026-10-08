@@ -19,9 +19,9 @@ Evidence date: 2026-10-08. Demo-env repository: [`martinopedal/aks-automatic-dem
 | No plan artifact in a public repo | Plan, apply, deploy, and runtime check run in one job; `tfplan` is never uploaded |
 | Runtime check or fail | The run fails unless the hostname returns HTTPS 200, HTTP redirects to HTTPS, and DNS resolves to the App Routing controller Service address. Apply runs 37771532872 and 37772290635 both succeeded with plan "No changes", DNS matching the ingress IP, HTTPS 200 by hostname, and page title "AKS Automatic \| NIC 2026 demo". `Test-OnlineSecurity.ps1` is 29/29 PASS at 13:48 on 2026-10-08. |
 
-### Same gates for every contributor
+### Same gate map for every change
 
-Human or agent, every change goes through the same gate map: PR under GitHub identity → checks/scans → review + protected `main` → plan → environment approval → OIDC apply → runtime check and Actions audit trail. These are the gates documented above, with the known limits still visible: the single maintainer can use an admin override, `prevent_self_review` is off, the environment gate sits before the apply job's plan, identifiers remain in history, and Checkov does not interpret azapi request bodies. The compensating evidence is a reviewed plan-only run, in-job plan comparison before apply, and runtime checks scoped to the Online path they exercise.
+Whether a change is human-authored or agent-assisted, the change goes through the same gate map: PR under GitHub identity → checks/scans → review + protected `main` → plan → environment approval → OIDC apply → runtime check and Actions audit trail. These are the gates documented above, with the known limits still visible: the single maintainer can use an admin override, `prevent_self_review` is off, the environment gate sits before the apply job's plan, identifiers remain in history, and Checkov does not interpret azapi request bodies. The compensating evidence is a reviewed plan-only run, in-job plan comparison before apply, and runtime checks scoped to the Online path they exercise.
 
 ## 2. Platform guardrails we designed for, not around
 

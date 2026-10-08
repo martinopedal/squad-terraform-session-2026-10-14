@@ -43,7 +43,7 @@ Takeaway: use current controls, state current limits.
 ### 05:00-06:00, s04-layers, Haflidi then Martin
 - CLI runs work; Squad coordinates responsibilities; Terraform, Git, Learn, and MCP return evidence.
 - MCP = Model Context Protocol, an external source/tool connection.
-- Autonomy spectrum: Ask → edit → plan → agent → programmatic `-p` → Squad multi-agent with gates. C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools + permissions, C5 edit/repair loop, C6 resume, C7 gated review. `-p` is appendix automation, not a live chapter.
+- The control spectrum is not a maturity ladder: Ask → edit → plan → agent → programmatic `-p` → Squad multi-agent with gates. Our chapters use different points on it: C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools + permissions, C5 edit/repair loop, C6 resume, C7 gated review. More automation is not better by default; human approvals remain at the gates. `-p` is appendix automation, not a live chapter.
 Takeaway: files, decisions, and checks are the outputs.
 
 ### 06:00-07:00, s07-agent-setup, Martin
@@ -164,7 +164,7 @@ Takeaway: approve a specific artifact and scope.
 ### 53:00-56:00, s20-consumer, Martin
 - 53:00-53:30: consumer-to-module diagram.
 - 53:30-54:00: live reveal `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; branded page, pipeline flow, serving pod, speakers.
-- 54:00-55:10: Human or agent, every change goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail.
+- 54:00-55:10: Whether a change is human-authored or agent-assisted, it goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail.
 - Map: PR -> checks/scans -> review + protected main -> plan -> environment approval -> OIDC apply -> runtime check.
 - 55:10-56:00: boundary; documented gaps stay visible: single-maintainer admin override, self-review setting, and environment gate before the apply job's plan; appendix handles Online/security depth.
 Takeaway: reuse code, not environment.
@@ -176,7 +176,7 @@ Takeaway: reuse code, not environment.
 Takeaway: artifact, reason, and check belong together.
 
 ### 58:00-60:00, s22-close, Martin
-- Humans set direction; agents close the loop through the same gates.
+- Humans set direction and approve; agents help move work through the same gated loop.
 - Day 2: the same loop for operations: detect, propose, review, approve, apply, verify.
 - Close with public handoff and scoped evidence.
 - Say appendix is available for hallway questions.
