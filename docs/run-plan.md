@@ -1,241 +1,163 @@
 # Run plan: NIC 2026, "From prompt to reusable Terraform"
 
-Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi Fridthjofsson. Deck 0.19.1. The delivery model is live-first: the terminal and browser are live, and recordings/screenshots are optional fallback only.
+Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi. Deck target for the next round: 60:00 total, live-first. Terminal and browser work is live; prepared checkpoints, inherited module code, and evidence from earlier runs are disclosed fallback, not hidden proof.
 
-Frank verdict: this is good enough for a proper 60-minute session only if it is run as a timed show, not as open-ended pair programming. Keep the C0-C7 chapter lengths unchanged at 29:00, protect at least 5:00 of slack, and switch at every 75% cut line. The at-risk areas are model latency in C3/C5/C7, multi-step agent handoffs, Terraform MCP/Docker startup in C4, and the clean VM/Bastion path in C0.
+Frank verdict: the 60-minute layout fits on paper, but not as casual live pair programming. C0-C7 stay at 29:00 total. There is no explicit slack inside 03:00-58:00; the only protected buffer is the 58:00-60:00 close. That means the drop order below is not optional. If C0, C3, C5, or C7 slips and the presenters do not cut at the line, the close disappears.
 
-Sources of truth: [talk-track.md](talk-track.md), [talking-points.md](talking-points.md), [demo-runbook.md](demo-runbook.md), [clean-machine-demo.md](clean-machine-demo.md), and [online-demo.md](online-demo.md). Timing evidence below is cited only as public numbers from the Oct 8 eval, Oct 5 dry run, and preflight.
+Decision: reuse `s01-outcome` as the 00:00-03:00 intro instead of adding a new `s00-intro`. Reason: it already carries the outcome and speaker visual, and a new slide would add navigation/test churn without improving the story. Devrel should rewrite the visual so Martin is introduced with role plus `opedal.tech`; Haflidi uses the exact live page speaker treatment (initials + GitHub handle/link only, no extra personal data). The live page speakers section may be reused as HTML or screenshot; devrel decides which renders cleaner.
+
+Sources of truth for this plan: current `presentation\src\slides.mjs`, prior docs from `origin/docs/oct8-eval-and-hostname`, `origin/docs/playbook:docs/playbook.md`, TEAM ROOT `demo\eval-20261008\results.md`, and the decision `lead-live-timing-slack` now merged into TEAM ROOT `.squad\decisions.md`.
 
 ## Evidence used for timing
 
 | Evidence | Public numbers to use |
 |---|---|
-| Oct 8 eval, B1v2 clarified coder runs | 5/5 green; total durations 108.0s, 97.1s, 87.8s, 61.0s, 113.7s; range 61-114s |
-| Oct 8 eval, original B1 runs | 0/5 green; total durations 60.6s, 117.3s, 61.9s, 58.1s, 55.6s |
-| Oct 8 eval, B2 runs | 5/5 green; total durations 70.3s, 153.3s, 120.1s, 82.9s, 98.1s |
-| Oct 8 eval, B3 runs | 4/5 green; total durations 86.2s, 117.8s, 127.1s, 138.3s, 103.9s |
-| Oct 8 eval smoke | 1m 17s (77s), exit 0; Terraform MCP available; Microsoft Learn MCP available after one transient retry |
-| Oct 5 dry run | C5 module test produced 52/52 pass before and after repair; seeded mutation produced 51/52 pass and one intended failure; C7 example test produced 2/2 pass |
-| Preflight | Presenter preflight is the gate; target is 16/16 before delivery |
-| Missing wall times | Marked below as "estimate, time in rehearsal 1" and must be replaced after Fri 9 Oct rehearsal 1 |
+| Oct 8 eval, original B1 | 0/5 green. Failure reason: oracle expected separate assertion blocks; do not rescore or hide this. |
+| Oct 8 eval, B1v2 clarified brief | 5/5 green; total durations 108.0s, 97.1s, 87.8s, 61.0s, 113.7s; range 61-114s. |
+| Oct 8 eval, B2 | 5/5 green; durations 70.3s, 153.3s, 120.1s, 82.9s, 98.1s. |
+| Oct 8 eval, B3 | 4/5 green after disclosed oracle rescore from saved diffs; one run changed README outside the allowed list. |
+| Oct 8 eval smoke | 1m 17s, exit 0; Terraform MCP available; Microsoft Learn MCP available after one transient retry. |
+| Oct 5 dry run | C5 module test 52/52 before and after repair; seeded mutation 51/52 with the intended private API failure; C7 example test 2/2. |
+| Preflight | Presenter preflight target remains 16/16 before delivery. |
+| Missing wall times | Still marked "estimate, time in rehearsal 1" in the detailed runbooks; replace after Fri 9 Oct rehearsal. |
+
+## What the extra minutes are for
+
+The old shape was 53:00 main flow plus 7:00 scheduled Q&A. The earlier Lead decision protected a 5:00 slack bank by trimming explanatory slides. This round changes that contract:
+
+- 00:00-03:00 is a real intro, not a rushed title slide.
+- 03:00-58:00 is content plus live chapters.
+- 58:00-60:00 is close plus "questions if time allows"; it is a buffer, not scheduled Q&A.
+- No explicit slack remains inside 03:00-58:00.
+
+Depth restored or added:
+
+| Slide / chapter | Minutes | Why it earns time |
+|---|---:|---|
+| `s01-outcome` | 3:00 | Proper speaker intro, audience promise, and honesty rule before demos. |
+| `s07-agent-setup` + `demo-c0` | 1:00 setup slide + 3:00 live | Show the Squad bootstrap path from the playbook: prerequisites, `squad init`, `copilot --agent squad`, roster/charters, `squad doctor`. |
+| `s05-parallel` | 2:00 | Restore depth for the three agent lanes: `terraform-coder` writes, `terraform-validator` runs fixed offline checks, `terraform-reviewer` reviews in fresh context. |
+| `s13-test-gap` | 3:00 | Restore the B1 to B1v2 repeatability lesson: ambiguous brief 0/5, state the oracle's rule, clarified brief 5/5. No causal claim; the live run still has to pass. |
+| `s15-proof` | 3:00 | Restore evidence-depth language so "runtime evidence" is scoped and honest. |
+| `s18-memory` | 2:00 | Restore continuity depth: saved decisions are not the same as personal memory or a whole chat transcript. |
+| `s20-consumer` | 3:00 | Keep the required 30s live reveal and add enough room to explain the consumer boundary and gated pipeline. |
+| `s21-limits` + close | 4:00 total | Turn the old Q&A handoff into takeaways plus a two-minute landing pad. |
+
+## 60-minute slide schedule
+
+| Slide ID | Start-end | Owner | Demo | Purpose / hard cue |
+|---|---|---|---|---|
+| `s01-outcome` | 00:00-03:00 | Martin opens; Haflidi adds honesty rule |  | Intro: who we are, roles, Martin `opedal.tech`, Haflidi live-page initials + GitHub only; what the audience will see and take away; disclose live vs prepared checkpoints/inherited code/fallback evidence. |
+| `s03-baseline` | 03:00-04:00 | Martin |  | Inherited public source and clean checkpoint; not first implementation. |
+| `s04-news` | 04:00-05:00 | Martin |  | CLI GA, Squad 1.0.1, and what is not used live. |
+| `s04-layers` | 05:00-06:00 | Haflidi then Martin |  | CLI runs work, Squad coordinates, tools return evidence. |
+| `s07-agent-setup` | 06:00-07:00 | Martin |  | Agent setup map; hand to C0 bootstrap. |
+| `demo-c0` | 07:00-10:00 | Haflidi | C0 | Bootstrap from zero; cut at 09:15. |
+| `s05-parallel` | 10:00-12:00 | Martin |  | Three lanes and handoffs: coder, validator, reviewer. |
+| `s06-contract` | 12:00-14:00 | Haflidi |  | Platform-owned network into reusable module; caller-owned provider/backend/state. |
+| `demo-c1` | 14:00-17:00 | Martin drives; Haflidi compares | C1 | Same task, fixed inputs, compare one consequence; cut at 16:15. |
+| `s08-plan-boundary` | 17:00-19:00 | Haflidi |  | Extract module, not environment; approval boundary before plan. |
+| `demo-c2` | 19:00-23:00 | Martin | C2 | Pin brief and approve repo-only plan; cut at 22:00. Checkpoint: must be out of C2 at 23:00. |
+| `s10-tool-roles` | 23:00-24:00 | Haflidi |  | Instructions, skills, and MCP are different controls. |
+| `demo-c3` | 24:00-28:00 | Martin | C3 | Route B1v2 to `terraform-coder`; cut at 27:00. |
+| `s12-source-check` | 28:00-29:00 | Haflidi |  | Source claim becomes assertion. |
+| `s13-test-gap` | 29:00-32:00 | Haflidi |  | B1 0/5 -> oracle rule -> B1v2 5/5; no causal claim; live still must pass. |
+| `demo-c4` | 32:00-36:00 | Martin | C4 | Skill + read-only source lookup + permissions; cut at 35:00. |
+| `demo-c5` | 36:00-41:00 | Haflidi | C5 | Validator before/seeded/repaired; cut at 39:45. Checkpoint: must be out of C5 at 41:00. |
+| `s15-proof` | 41:00-44:00 | Haflidi with Martin handoff |  | Evidence levels; say runtime check/evidence, not proof of everything. |
+| `s16-continuity` | 44:00-45:00 | Martin |  | Save the reason, not the whole chat. |
+| `demo-c6` | 45:00-48:00 | Haflidi | C6 | Resume with decision/context/usage; cut at 47:15. |
+| `s18-memory` | 48:00-50:00 | Martin |  | Conversation, native memory, repo knowledge: different owners. |
+| `demo-c7` | 50:00-53:00 | Haflidi leads review; Martin drives handoff | C7 | Offline exits, diff, reviewer scope; cut at 52:15. |
+| `s20-consumer` | 53:00-56:00 | Martin |  | 0:00-0:30 diagram; 0:30-1:00 live reveal; 1:00-2:10 gated pipeline and 29/29 runtime evidence; 2:10-3:00 boundary. Must start by 53:00; reveal is 53:30-54:00. |
+| `s21-limits` | 56:00-58:00 | Haflidi then Martin |  | Three rules for the next change; no new examples. |
+| `s22-questions` (retitle to close) | 58:00-60:00 | Martin closes; Haflidi available |  | Close, public handoff, appendix available afterwards/hallway. "Questions if time allows" only if ahead; not scheduled Q&A. |
+
+Appendix slides (`a-cli-controls`, `a-automation`, `a-handoffs`, `a-integrations`, `a-squad-ops`, `a-evidence`, `a-online`, `a-security`, `a-prompts`, `a-bootstrap`, `a-use-cases`) stay after the timed deck and are used only after the close or in hallway conversations.
+
+## Live chapter budgets and retimed cut lines
+
+| Chapter | Slot | Budget | Cut line | If not ready at cut line |
+|---|---|---:|---|---|
+| C0 | 07:00-10:00 | 3:00 | 09:15 | State install/login stall, show fallback evidence, move to `s05-parallel`. |
+| C1 | 14:00-17:00 | 3:00 | 16:15 | Stop comparison at one C1-A consequence and use saved C1-B excerpt. |
+| C2 | 19:00-23:00 | 4:00 | 22:00 | Use saved approved plan; approval covers repo changes only. |
+| C3 | 24:00-28:00 | 4:00 | 27:00 | Stop live coder turn, use B1v2 eval excerpt, no causal claim. |
+| C4 | 32:00-36:00 | 4:00 | 35:00 | Say lookup unavailable live, show fallback excerpt, do not pretend success. |
+| C5 | 36:00-41:00 | 5:00 | 39:45 | Stop mutation work, show saved before/seeded/repaired logs. |
+| C6 | 45:00-48:00 | 3:00 | 47:15 | Show decision file and state constraints directly. |
+| C7 | 50:00-53:00 | 3:00 | 52:15 | Show saved green exits and diff; do not run a second suite live. |
+
+## Risk and slack
+
+Frank verdict: 60 minutes of content with only the 2-minute end buffer is viable only as a rehearsed show. It is not safe if the presenters treat the live chapters as exploratory. The biggest risks remain C0 (VM/Bastion/package/login), C3 (61-114s measured coder run plus handoffs), C4 (MCP/Docker transient), C5 (multi-step mutation/repair), and C7 (full suite plus reviewer handoff).
+
+Clock checkpoints:
+
+| Checkpoint | Required clock | Meaning |
+|---|---|---|
+| After C0 | 10:00 | Bootstrap must be complete or fallback already shown. |
+| After C2 | 23:00 | Plan approval is done; if behind, take the first drop before C3/C4. |
+| After C5 | 41:00 | Repair story must be closed; if behind, drop `s18` depth before C6. |
+| At `s20-consumer` | 53:00 | Must start consumer slide; live reveal occurs 53:30-54:00. |
+| Start close | 58:00 | If not here, use `s22` as a hard stop, not a Q&A slide. |
+
+Pre-agreed drop order if behind. These drops are preferable to silently shortening C0-C7.
+
+| Order | Slide / segment | Save | Drop action |
+|---:|---|---:|---|
+| 1 | `s21-limits` | 1:30 | Compress to 0:30: one sentence, three rules move into close. |
+| 2 | `s18-memory` | 1:00 | Keep only "three stores, three owners"; move taxonomy to appendix. |
+| 3 | `s15-proof` | 1:00 | Read evidence ladder only; move validation depth to appendix. |
+| 4 | `s13-test-gap` | 1:00 | Say B1 0/5 and B1v2 5/5; move B2/B3 detail to appendix. |
+| 5 | `s05-parallel` | 1:00 | Keep lane names only; skip detailed handoff examples. |
+| 6 | `s20-consumer` | 1:00 | Keep the 30s live reveal and 29/29 line; drop pipeline explanation. |
+| 7 | Live chapter fallback | variable | Use the chapter cut line and saved evidence; never start a second live attempt. |
+
+The 58:00-60:00 close may absorb small drift, but do not plan to spend it. If it is consumed, say one closing sentence and stop.
 
 ## Pre-staged before the session
 
-These are required. If any item is missing, use fallback evidence rather than improvising.
+These are still required. If any item is missing, use fallback evidence rather than improvising.
 
 - Presentation laptop on power; notifications off; timer visible; terminal font 16+; browser zoom checked at venue resolution.
 - Deck open locally and in presenter view; appendix navigation tested; speaker notes visible.
-- Demo sessions already open, named, and at their clean checkpoint; native Copilot CLI starts with the intended agent selected.
+- Demo sessions already open, named, and at clean checkpoints; native Copilot CLI starts with intended agent selected.
 - `/mcp` connected for required public documentation/registry tools; Docker Desktop running before Terraform MCP is needed.
-- Worktrees at known checkpoints; evidence folders already exist but contain no private identifiers in public material.
+- Worktrees at known checkpoints; evidence folders already exist and contain no private identifiers in public material.
 - Clean demo VM running, reachable through Bastion, and left at the Windows Terminal PowerShell 7 profile.
 - Browser tab already open to `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; certificate warning accepted; app page loaded once.
 - Online app reveal verified: branded page, pipeline flow, serving pod name, and speakers section visible.
 - No subscription IDs, tenant IDs, private IPs, private paths, raw state, secrets, or private run URLs on screen.
 
-## Live timing budget by demo chapter
+## s20-consumer live reveal (53:00-56:00)
 
-### C0 — From zero to a squad (3:00)
+Keep the live reveal itself exactly 30 seconds.
 
-| Step | Who types / who talks | Expected wall time | Evidence basis | Cumulative |
-|---|---|---:|---|---:|
-| Show Git, Copilot CLI, and Squad absent | Haflidi types / Haflidi talks | 0:20 | estimate, time in rehearsal 1 | 0:20 |
-| Run the three WinGet installs and version checks | Haflidi types / Martin timeboxes | 0:55 | estimate, time in rehearsal 1; no reliable live install wall time yet | 1:15 |
-| Copilot `/login`, then exit | Haflidi types / Haflidi talks | 0:35 | estimate, time in rehearsal 1 | 1:50 |
-| Clone public module, run `squad init`, show short diff | Haflidi types / Martin talks | 0:35 | clean-machine runbook says `squad init` is about 2s; rest estimate | 2:25 |
-| `copilot --agent squad`, paste team prompt, confirm roster, `squad doctor` | Haflidi types / Haflidi talks | 0:35 | estimate, time in rehearsal 1 | 3:00 |
-
-Pre-staged before session: VM recreated or verified clean; Bastion already connected; PowerShell 7 tab open; package source agreements accepted by flags; terminal zoom set; no secrets in clipboard.
-
-Cut line at 75%: 2:15. If installs or login are not complete by 2:15, state the live stall, show the fallback evidence, and move to `s05-parallel`. Do not spend Q&A time on installing tools.
-
-### C1 — Same task, different choices (3:00)
-
-| Step | Who types / who talks | Expected wall time | Evidence basis | Cumulative |
-|---|---|---:|---|---:|
-| Start `/new`, select Squad, show `/model`, enter Plan mode | Martin types / Haflidi talks | 0:35 | estimate, time in rehearsal 1 | 0:35 |
-| Run C1-A plan-only prompt | Martin types / Haflidi narrates | 0:55 | estimate, time in rehearsal 1 | 1:30 |
-| Run C1-B with same model, permissions, and team state | Martin types / Haflidi narrates | 0:55 | estimate, time in rehearsal 1 | 2:25 |
-| Compare one real consequence, not a beauty contest | Martin types / Haflidi talks | 0:35 | estimate, time in rehearsal 1 | 3:00 |
-
-Pre-staged before session: both C1 prompt blocks ready; sessions named C1-A/C1-B; same model and permission profile visible; saved excerpts ready if output drifts.
-
-Cut line at 75%: 2:15. If C1-B is still generating, stop comparison at one clear C1-A consequence and use the saved C1-B excerpt.
-
-### C2 — Pin the brief, approve a plan (4:00)
-
-| Step | Who types / who talks | Expected wall time | Evidence basis | Cumulative |
-|---|---|---:|---|---:|
-| Open guided clean run; attach the three files | Martin types / Martin talks | 0:35 | estimate, time in rehearsal 1 | 0:35 |
-| Paste bounded plan prompt | Martin types / Haflidi challenges scope | 0:45 | estimate, time in rehearsal 1 | 1:20 |
-| Inspect `/session plan`; revise once | Martin types / Martin talks | 1:20 | estimate, time in rehearsal 1 | 2:40 |
-| State approval boundary: code/test/docs only, no Azure apply | Martin types / Haflidi confirms | 0:45 | estimate, time in rehearsal 1 | 3:25 |
-| Leave 0:35 for slow screen switching | Martin watches clock | 0:35 | slack inside chapter | 4:00 |
-
-Pre-staged before session: checkpoint shell open; file paths copied; approval language rehearsed; Plan-mode fallback screenshot ready.
-
-Cut line at 75%: 3:00. If the plan is not ready by 3:00, use the saved approved plan and state that approval covers only repository changes.
-
-### C3 — Activate Squad, route work (4:00)
-
-| Step | Who types / who talks | Expected wall time | Evidence basis | Cumulative |
-|---|---|---:|---|---:|
-| Show Squad selected, `/tasks`, `/agent list`, `/mcp` | Martin types / Haflidi talks | 0:40 | estimate, time in rehearsal 1 | 0:40 |
-| Paste the B1v2 routing brief with four separate asserts | Martin types / Martin talks | 0:35 | estimate, time in rehearsal 1 | 1:15 |
-| Switch to `terraform-coder` and run the focused file-edit brief | Martin types / Haflidi reads evidence | 1:30 | Oct 8 eval B1v2 coder runs were 61-114s | 2:45 |
-| Return to Squad; name owner, checks, and unresolved issues | Martin types / Haflidi talks | 0:45 | estimate, time in rehearsal 1 | 3:30 |
-| Chapter buffer | Martin watches clock | 0:30 | slack inside chapter | 4:00 |
-
-Pre-staged before session: B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal claim from B1v2 to live result.
-
-Cut line at 75%: 3:00. If the coder is still generating at 3:00, stop the live turn, use the saved B1v2 excerpt, and move to C4 with the same boundary.
-
-### C4 — Ground with tools (4:00)
-
-| Step | Who types / who talks | Expected wall time | Evidence basis | Cumulative |
-|---|---|---:|---|---:|
-| Show `test-discipline` skill and `/mcp` status | Martin types / Haflidi talks | 1:17 | Oct 8 eval smoke proved tool availability in 1m 17s (77s) | 1:17 |
-| Run read-only source-grounding prompt | Martin types / Martin talks | 1:05 | Oct 8 eval smoke had one transient MCP retry; estimate for live lookup | 2:22 |
-| Point at source URL/version and permission boundary | Martin types / Haflidi explains | 0:38 | estimate, time in rehearsal 1 | 3:00 |
-| Show `/permissions`; state no Azure account contact | Martin types / Haflidi talks | 0:35 | estimate, time in rehearsal 1 | 3:35 |
-| Chapter buffer | Martin watches clock | 0:25 | slack inside chapter | 4:00 |
-
-Pre-staged before session: Docker Desktop running; required MCP servers already connected; fallback `c4-source` excerpt sanitized; one retry allowed, not a retry loop.
-
-Cut line at 75%: 3:00. If MCP/Docker is not healthy or the source/version is not visible by 3:00, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.
-
-### C5 — Catch a mistake, repair (5:00)
-
-| Step | Who types / who talks | Expected wall time | Evidence basis | Cumulative |
-|---|---|---:|---|---:|
-| Select `terraform-validator`; run clean check | Haflidi types / Martin talks | 0:40 | Oct 5 dry run: module test reached 52/52 pass | 0:40 |
-| Ask coder to seed `enablePrivateCluster` false | Haflidi types / Martin narrates | 1:10 | estimate, time in rehearsal 1; model latency risk | 1:50 |
-| Rerun validator and show intended failure | Haflidi types / Haflidi talks | 0:40 | Oct 5 dry run: 51/52 pass, one intended failure | 2:30 |
-| Review, restore only that field, show `/diff` | Haflidi types / Martin explains repair | 1:15 | estimate, time in rehearsal 1 | 3:45 |
-| Rerun same validator block; state repaired result | Haflidi types / Haflidi talks | 0:45 | Oct 5 dry run: repaired module test reached 52/52 pass | 4:30 |
-| Chapter buffer | Martin watches clock | 0:30 | slack inside chapter | 5:00 |
-
-Pre-staged before session: validator shell ready; environment scrub command copied; three log names chosen; seeded mutation can be applied from fallback if the model turn runs long.
-
-Cut line at 75%: 3:45. If the repair is not ready by 3:45, stop live mutation work, show saved seeded-failure and repaired logs, then continue. Haflidi runs the validator.
-
-### C6 — Resume with decisions (3:00)
-
-| Step | Who types / who talks | Expected wall time | Evidence basis | Cumulative |
-|---|---|---:|---|---:|
-| Show the public-only decision record | Martin types / Haflidi leads | 0:35 | estimate, time in rehearsal 1 | 0:35 |
-| `/new`, `/resume guided-clean-run`, `/cwd` | Martin types / Haflidi talks | 0:45 | estimate, time in rehearsal 1 | 1:20 |
-| `/context` and `/usage` | Martin types / Martin verifies | 0:35 | estimate, time in rehearsal 1 | 1:55 |
-| Ask resumed task to cite the decision and constraints | Martin types / Haflidi talks | 0:50 | estimate, time in rehearsal 1 | 2:45 |
-| Chapter buffer | Martin watches clock | 0:15 | slack inside chapter | 3:00 |
-
-Pre-staged before session: decision excerpt sanitized and ready; unrelated personal memory or session list not shown; resume target known.
-
-Cut line at 75%: 2:15. If resume/search is slow by 2:15, show the decision file and state the constraints directly.
-
-### C7 — Reviewed diff (3:00)
-
-| Step | Who types / who talks | Expected wall time | Evidence basis | Cumulative |
-|---|---|---:|---|---:|
-| Select `terraform-validator`; run offline suite or show already-running exits | Haflidi types / Martin talks | 1:10 | Oct 5 dry run: module test 52/52 and example test 2/2; full live suite wall time still estimate | 1:10 |
-| Show `/diff` and sanitized evidence boundary | Martin types / Haflidi leads review | 0:45 | estimate, time in rehearsal 1 | 1:55 |
-| Start `terraform-reviewer`; name exact approval scope | Martin types / Haflidi talks | 0:50 | estimate, time in rehearsal 1 | 2:45 |
-| Chapter buffer | Martin watches clock | 0:15 | slack inside chapter | 3:00 |
-
-Pre-staged before session: offline suite can run from a prepared shell; logs have no private IDs; reviewer prompt copied; no private plans or raw state on screen.
-
-Cut line at 75%: 2:15. If the full suite is not done by 2:15, show the saved green exits and diff; do not run a second suite live.
-
-## Minute-by-minute run sheet
-
-The C-chapter lengths remain unchanged. The cuts below are pre-authorized and should be used before Q&A is consumed. Recovered time is held as a slack bank; if unused, it becomes extra Q&A after 53:00.
-
-| Time | Slide | Lead | Demo | Cue and fallback |
-|---|---|---|---|---|
-| 00:00-01:00 | s01-outcome | Martin | | Introduce both speakers; honesty rule before any demo |
-| 01:00-04:00 | demo-c1 | Haflidi | C1 | `/model`, selected agent, one consequence; cut at 2:15 inside chapter |
-| 04:00-05:00 | s03-baseline | Martin | | Shorten to 0:30; move source-detail narration to appendix; bank 0:30 |
-| 05:00-06:00 | s04-news | Martin | | Shorten to 0:30; one headline plus Squad version; bank 0:30 |
-| 06:00-07:00 | s04-layers | Haflidi then Martin | | Trace the arrows; no cut unless already behind |
-| 07:00-08:00 | s07-agent-setup | Martin | | Hand to Haflidi: "show them how you get here from nothing" |
-| 08:00-11:00 | demo-c0 | Haflidi | C0 | Live fallback: pre-connected VM; give up after 2:15 chapter cut line |
-| 11:00-12:00 | s05-parallel | Martin | | Checkpoint 1: 12:00; if behind, spend banked time, not Q&A |
-| 12:00-14:00 | s06-contract | Haflidi | | Platform-owned network into module |
-| 14:00-18:00 | demo-c2 | Martin | C2 | `/plan`, approved criteria; cut at 3:00 inside chapter |
-| 18:00-20:00 | s08-plan-boundary | Haflidi | | Boundary warning reveal |
-| 20:00-24:00 | demo-c3 | Martin | C3 | B1v2 brief, `/agent`, `/tasks`, handoff; cut at 3:00 inside chapter |
-| 24:00-25:00 | s10-tool-roles | Haflidi | | Shorten to 0:30; keep three columns only; bank 0:30 |
-| 25:00-29:00 | demo-c4 | Martin | C4 | Source grounding, `/skills`, MCP lookup, `/permissions`; cut at 3:00. Checkpoint 2: 29:00 |
-| 29:00-30:00 | s12-source-check | Haflidi | | Reveal the assertion |
-| 30:00-32:00 | s13-test-gap | Haflidi | | Shorten to 1:00; move B1/B2/B3 detail to appendix; bank 1:00 |
-| 32:00-37:00 | demo-c5 | Haflidi | C5 | Validator before/seeded/repaired; cut at 3:45 inside chapter |
-| 37:00-40:00 | s15-proof | Haflidi | | Use "runtime check/evidence"; avoid certainty language; shorten to 2:00; move depth to appendix; bank 1:00. Checkpoint 3: 40:00 |
-| 40:00-41:00 | s16-continuity | Martin | | Decision map |
-| 41:00-44:00 | demo-c6 | Haflidi | C6 | `/resume`, `/context`, `/usage`; cut at 2:15 inside chapter |
-| 44:00-46:00 | s18-memory | Martin | | Shorten to 1:00; move memory taxonomy depth to appendix; bank 1:00 |
-| 46:00-49:00 | demo-c7 | Haflidi | C7 | `/diff`, review handoff; cut at 2:15. Checkpoint 4: 49:00 |
-| 49:00-51:00 | s20-consumer | Martin | | 0:00-0:30 diagram; 0:30-1:00 live reveal of `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; 1:00-1:35 gated pipeline line; 1:35-2:00 runtime checks and boundary |
-| 51:00-53:00 | s21-limits | Haflidi then Martin | | Shorten to 1:30; three rules only; bank 0:30; Martin opens Q&A at 53:00 |
-| 53:00-60:00 | s22-questions | Martin hosts | | Q&A; appendix only on demand: a-online, a-security, a-prompts, a-bootstrap, a-use-cases |
-| Slack | time bank | Martin owns clock | | Target recovered slack: 5:00. Spend only on live stalls. Keep at least 5:00 audience Q&A unless a chapter visibly fails and must be explained honestly. |
-
-## s20-consumer live reveal (49:00-51:00)
-
-Keep this slot exactly 2:00.
-
-| Time inside slot | Action | Words |
-|---|---|---|
-| 0:00-0:30 | Point at consumer-to-module diagram | "Reuse the module code, not the private environment." |
-| 0:30-1:00 | Live reveal `https://aks-online-demo.swedencentral.cloudapp.azure.com/` | Show branded page, pipeline flow, serving pod name, and speakers section. |
-| 1:00-1:35 | State the delivery gate | "The consumer path is PR to plan to human approval to apply." |
-| 1:35-2:00 | State runtime evidence | "Outside-in runtime checks are 29/29: hostname HTTPS response, expected title, redirect and security posture checks. a-online and a-security are Q&A depth, not main-flow slides." |
+| Time inside slot | Wall clock | Action | Words |
+|---|---|---|---|
+| 0:00-0:30 | 53:00-53:30 | Point at consumer-to-module diagram | "Reuse the module code, not the private environment." |
+| 0:30-1:00 | 53:30-54:00 | Live reveal `https://aks-online-demo.swedencentral.cloudapp.azure.com/` | Show branded page, pipeline flow, serving pod name, and speakers section. |
+| 1:00-2:10 | 54:00-55:10 | State delivery gate and runtime evidence | PR to plan to human approval to apply; 29/29 outside-in runtime checks. |
+| 2:10-3:00 | 55:10-56:00 | State boundary | a-online and a-security are appendix/hallway depth, not main-flow slides. |
 
 Use "runtime check" or "runtime evidence". Do not use stronger certainty language.
-
-## Risk and slack
-
-Does the 53-minute main flow fit live? Yes, narrowly, if the team enforces the cut lines. Without cuts, it is not good enough: model latency and C0/C4 infrastructure startup can easily consume the seven-minute Q&A.
-
-At-risk chapters:
-
-- C0: VM/Bastion plus package install timing. Cut at 2:15 and move on.
-- C3: B1v2 coder run has measured 61-114s before surrounding handoffs. Cut at 3:00.
-- C4: MCP/Docker can be cold or transient. One retry only; then fallback.
-- C5: multi-step validate-mutate-review-repair loop. Cut at 3:45.
-- C7: full offline suite plus reviewer handoff can overrun. Cut at 2:15.
-
-Concrete cuts already applied to the run sheet without changing C0-C7 lengths:
-
-| Slide | Cut or move | Minutes recovered |
-|---|---|---:|
-| s03-baseline | Keep the source pin; move detailed provenance to appendix/Q&A | 0:30 |
-| s04-news | One headline plus Squad 1.0.1; move product-tile detail to Q&A | 0:30 |
-| s10-tool-roles | Keep only instructions/skills/MCP distinction | 0:30 |
-| s13-test-gap | Move B1/B2/B3 eval detail to a-prompts | 1:00 |
-| s15-proof | Read evidence levels only; move validation depth to a-online/a-security/a-evidence; use "runtime check/evidence" | 1:00 |
-| s18-memory | Move memory taxonomy and `/compact`/nap detail to a-squad-ops | 1:00 |
-| s21-limits | Three rules and close; no new examples | 0:30 |
-| **Total** |  | **5:00** |
-
-Resulting slack: 5:00 protected slack bank inside the 53-minute main flow, plus a 7:00 Q&A window starting at 53:00. The floor rule is that at least 5:00 remains for audience questions. If a chapter overruns, spend the slack bank first, then compress Q&A only down to 5:00.
-
-Decision for Martin: C-chapter lengths remain unchanged. If rehearsal 1 shows C0, C3, C5, or C7 cannot meet their 75% cut lines with fallback, then change chapter lengths explicitly; do not silently steal time from Q&A.
 
 ## Rehearsal schedule
 
 | Date | Owners | What | Done when |
 |---|---|---|---|
-| Fri 9 Oct | Martin drives; Haflidi checks and times | Rehearsal 1: slides plus all live chapters, timed. Replace every "estimate, time in rehearsal 1" entry above with actual wall time. | Chapter actuals recorded in this run plan; cut lines tested, not just discussed. |
-| Mon 12 Oct | Martin and Haflidi | Rehearsal 2: full 60-minute run with Haflidi, including handoffs and Q&A transition. | Main flow reaches Q&A by 53:00 with at least 5:00 slack preserved. |
+| Fri 9 Oct | Martin drives; Haflidi checks and times | Rehearsal 1: slides plus all live chapters, timed. Replace every "estimate, time in rehearsal 1" entry in talk docs/runbooks with actual wall time. | Chapter actuals recorded; cut lines tested, not just discussed. |
+| Mon 12 Oct | Martin and Haflidi | Rehearsal 2: full 60-minute run against this new layout, including the 00:00-03:00 intro and 58:00-60:00 close. | `s20-consumer` starts at 53:00, close starts at 58:00, and the session ends by 60:00 without scheduled Q&A. |
 | Tue 13 Oct | Martin and Haflidi | Dress rehearsal on presentation laptop; run preflight; recreate the clean C0 VM. | Presenter preflight green; clean VM verified; fallback evidence current. |
 | Wed 14 Oct T-2h | Martin owns environment; Haflidi owns demo surfaces | Open deck locally, test speaker notes, start/verify VM, verify Bastion, start Docker Desktop, connect `/mcp`, open named sessions, load app URL once, check terminal font and display. | No red preflight item; all fallback artifacts reachable without private paths on screen. |
-| Wed 14 Oct T-15m | Martin owns clock; Haflidi owns C0/C5 readiness | Re-run fast presenter checks, confirm app tab still loads, confirm VM/RDP still alive, verify clean terminal tabs, close notifications, start timer. | Ready to start; no package/login/setup work remains except the deliberate C0 demo actions. |
+| Wed 14 Oct T-15m | Martin owns clock; Haflidi owns C0/C5 readiness | Re-run fast presenter checks, confirm app tab still loads, confirm VM/RDP still alive, verify clean terminal tabs, close notifications, start timer. | Ready to start; no package/login/setup work remains except deliberate C0 demo actions. |
 | By 31 Oct | Martin | Destroy demo VM and Online demo; stop backup protection. | Resources removed and no ongoing demo cost. |
 
 ## T-2h preflight checklist
 
 - [ ] Presentation laptop on power; notifications off; display duplicated; terminal font 16+.
-- [ ] Local deck opens; speaker view works; appendix links return to Q&A.
+- [ ] Local deck opens; speaker view works; appendix links return to close/appendix path.
 - [ ] Presenter preflight target: 16/16.
 - [ ] Docker Desktop running before C4.
 - [ ] `/mcp` shows required public documentation/registry tools connected.
@@ -260,28 +182,31 @@ Decision for Martin: C-chapter lengths remain unchanged. If rehearsal 1 shows C0
 | Live CLI stalls | Use the slide's offline fallback line, name the missing live result, and move on at the slot end. |
 | Venue network down | Deck is local; skip live VM and Online app; appendix slides carry sanitized evidence. |
 | Demo VM unreachable | Use C0 fallback evidence; say the live VM path is unavailable and keep C0 to 3:00. |
-| Online app unreachable | Keep s20 diagram and state latest 29/29 runtime checks; use a-online only if asked. |
-| Running long | Apply 75% cut lines; spend slack bank; preserve at least 5:00 Q&A. |
+| Online app unreachable | Keep s20 diagram and state latest 29/29 runtime checks; use a-online only afterwards/hallway. |
+| Running long | Apply drop order first, then live chapter cut lines; preserve the 58:00 close if at all possible. |
 | One speaker unavailable | The other reads from talk-track; owners stay visible in the plan for rehearsal. |
 
 ## Exact change list for devrel and docs mirrors
 
 Devrel deck changes for the next round:
 
-- `s03-baseline`: shorten note to 30 seconds; move detailed provenance to appendix/Q&A wording.
-- `s04-news`: shorten note to 30 seconds; keep one headline plus Squad 1.0.1, not every product tile.
-- `s10-tool-roles`: shorten to 30 seconds; notes should say only instructions, skills, and MCP have different jobs.
-- `s13-test-gap`: shorten main-flow note to 1 minute; move B1/B2/B3 detailed eval numbers to `a-prompts`.
-- `s15-proof`: keep technical slide ID if needed, but spoken title/notes must use "Evidence has levels" and "runtime check/evidence"; avoid stronger certainty language.
-- `s18-memory`: shorten to 1 minute; move memory taxonomy and `/compact`/nap details to `a-squad-ops`.
-- `s20-consumer`: add 30-second live reveal instructions for the public app URL; show branded page, pipeline flow, serving pod name, and speakers section; include the gated pipeline line and 29/29 outside-in runtime checks.
-- `s21-limits`: shorten to 1:30; three rules only, then Q&A handoff.
-- Demo slide notes `demo-c0` through `demo-c7`: add the 75% cut line and fallback trigger from this plan.
+- `s01-outcome`: retime to 00:00-03:00 and make it the intro. Include both speakers properly, audience promise, takeaways, and honesty rule. Martin: role plus `opedal.tech`. Haflidi: exact live-page treatment, initials + GitHub only, no extra personal data. Consider reusing the live page speakers section as HTML/screenshot.
+- Reorder/retime main deck to the table above: C0 before C1; `s20-consumer` at 53:00-56:00; `s21-limits` at 56:00-58:00; `s22-questions` at 58:00-60:00 and retitled/rewritten as close plus "questions if time allows".
+- `s07-agent-setup` and `demo-c0`: add playbook bootstrap steps: prerequisites/install, `squad init`, `copilot --agent squad`, roster/charters, `squad doctor`.
+- `s05-parallel`: expand to explain the three agent lanes and why they are separate: writer, validator with fixed offline checks, reviewer in fresh context.
+- `s13-test-gap` / `a-prompts`: main-flow B1 -> B1v2 lesson must say ambiguous brief 0/5, oracle required separate asserts, clarified B1v2 5/5. No causal claim; live run still has to pass.
+- `s20-consumer`: keep a 30s live reveal in notes at 53:30-54:00; show branded page, pipeline flow, serving pod name, and speakers section. Keep "runtime check/evidence" language.
+- Demo notes `demo-c0` through `demo-c7`: update absolute cut-line clocks to 09:15, 16:15, 22:00, 27:00, 35:00, 39:45, 47:15, 52:15.
+- Presentation tests/build assertions currently encoding old shape:
+  - `presentation\scripts\build.mjs`: `protectedSlackSeconds = 300`; `s22-questions` counted as `qa`; hard error "29 demo / 19 explanation / 5 protected slack / 7 Q&A minutes, with Q&A at 53:00"; build manifest fields `explanationMinutes: 19`, `protectedSlackMinutes: 5`, `qaMinutes: 7`, `nonDemoSlideMinutes: 24`, `mainFlowMinutes: 53`, `qnaStart: '53:00'`; console log with the same text.
+  - `presentation\tests\check_deck.py`: timing assertion `[29, 19, 5, 7, 24, 53, 60, "53:00"]`; prepared Q&A word-count check `650 <= qaWords <= 800`; appendix return and navigation labels that assume Q&A.
+  - Replace with a 60-minute close-buffer contract. Proposed manifest: `demoMinutes=29`, `explanationMinutes=26`, `protectedSlackMinutes=0`, `closeBufferMinutes=2`, `qaMinutes=0`, `nonDemoSlideMinutes=31`, `contentEnd='58:00'`, `timedSlideMinutes=60`, `questions='if time allows'`. If the implementation keeps `qnaStart`, set it to `null` or remove it; do not leave `53:00` anywhere in tests.
+  - Update the old README/deck copy that says `29-24-7` or `53+7` to `3 intro / 55 content / 2 close buffer`, with C0-C7 still 29 minutes inside the 55.
 
 Docs mirror changes for the next round:
 
-- `talk-track.md`: mirror the shortened main-flow narration, especially s13, s15, s18, s20, and s21.
-- `talking-points.md`: add the 5:00 slack bank, 75% cut-line rule, and s20 live reveal bullets.
-- `demo-runbook.md`: mirror the C1-C7 cut lines, pre-staged requirements, and Haflidi-owned C5 validator step.
-- `clean-machine-demo.md`: mirror C0's 2:15 cut line and the rule that install stalls switch to fallback evidence.
-- All talk docs: use "runtime check/evidence" and avoid stronger certainty language; keep a-online and a-security as Q&A depth.
+- `talk-track.md`: mirror the full schedule and no scheduled Q&A. Intro must state speaker identities, takeaways, and honesty rule before C0.
+- `talking-points.md`: replace five-minute slack-bank language with the new drop order, retimed checkpoints, and "questions if time allows" close.
+- `demo-runbook.md`: reorder C0 before C1 if devrel reorders the deck; mirror retimed cut lines and C5 Haflidi-owned validator step.
+- `clean-machine-demo.md`: update C0 slot to 07:00-10:00 and cut line to 09:15; keep install stalls as fallback, not drama.
+- All talk docs: use "runtime check/evidence" and avoid stronger certainty language; keep a-online and a-security as appendix/hallway depth.
