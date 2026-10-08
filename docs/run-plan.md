@@ -14,7 +14,7 @@ Sources of truth: [talk-track.md](talk-track.md), [talking-points.md](talking-po
 | Oct 8 eval, original B1 runs | 0/5 green; total durations 60.6s, 117.3s, 61.9s, 58.1s, 55.6s |
 | Oct 8 eval, B2 runs | 5/5 green; total durations 70.3s, 153.3s, 120.1s, 82.9s, 98.1s |
 | Oct 8 eval, B3 runs | 4/5 green; total durations 86.2s, 117.8s, 127.1s, 138.3s, 103.9s |
-| Oct 8 eval smoke | 37.0s, exit 0; Terraform MCP available; Microsoft Learn MCP available after one transient retry |
+| Oct 8 eval smoke | 1m 17s (77s), exit 0; Terraform MCP available; Microsoft Learn MCP available after one transient retry |
 | Oct 5 dry run | C5 module test produced 52/52 pass before and after repair; seeded mutation produced 51/52 pass and one intended failure; C7 example test produced 2/2 pass |
 | Preflight | Presenter preflight is the gate; target is 16/16 before delivery |
 | Missing wall times | Marked below as "estimate, time in rehearsal 1" and must be replaced after Fri 9 Oct rehearsal 1 |
@@ -94,15 +94,15 @@ Cut line at 75%: 3:00. If the coder is still generating at 3:00, stop the live t
 
 | Step | Who types / who talks | Expected wall time | Evidence basis | Cumulative |
 |---|---|---:|---|---:|
-| Show `test-discipline` skill and `/mcp` status | Martin types / Haflidi talks | 0:35 | Oct 8 eval smoke proved tool availability in 37.0s | 0:35 |
-| Run read-only source-grounding prompt | Martin types / Martin talks | 1:05 | Oct 8 eval smoke had one transient MCP retry; estimate for live lookup | 1:40 |
-| Point at source URL/version and permission boundary | Martin types / Haflidi explains | 0:50 | estimate, time in rehearsal 1 | 2:30 |
-| Show `/permissions`; state no Azure account contact | Martin types / Haflidi talks | 0:40 | estimate, time in rehearsal 1 | 3:10 |
-| Chapter buffer | Martin watches clock | 0:50 | slack inside chapter | 4:00 |
+| Show `test-discipline` skill and `/mcp` status | Martin types / Haflidi talks | 1:17 | Oct 8 eval smoke proved tool availability in 1m 17s (77s) | 1:17 |
+| Run read-only source-grounding prompt | Martin types / Martin talks | 1:05 | Oct 8 eval smoke had one transient MCP retry; estimate for live lookup | 2:22 |
+| Point at source URL/version and permission boundary | Martin types / Haflidi explains | 0:38 | estimate, time in rehearsal 1 | 3:00 |
+| Show `/permissions`; state no Azure account contact | Martin types / Haflidi talks | 0:35 | estimate, time in rehearsal 1 | 3:35 |
+| Chapter buffer | Martin watches clock | 0:25 | slack inside chapter | 4:00 |
 
 Pre-staged before session: Docker Desktop running; required MCP servers already connected; fallback `c4-source` excerpt sanitized; one retry allowed, not a retry loop.
 
-Cut line at 75%: 3:00. If MCP/Docker is not healthy by 3:00, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.
+Cut line at 75%: 3:00. If MCP/Docker is not healthy or the source/version is not visible by 3:00, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.
 
 ### C5 — Catch a mistake, repair (5:00)
 

@@ -27,7 +27,7 @@ $env:AZURE_SUBSCRIPTION_ID_ONLINE = '<online subscription id>'   # never on scre
 .\scripts\Connect-DemoVm.ps1        # opens the Bastion RDP session
 ```
 
-If `Test-DemoVm.ps1` reports the VM is not clean (an earlier take installed tools), reset it first: run `deploy-demo-vm.yml` in the demo-env repo with action `recreate-vm`, approve the `online` gate, and wait for the verification job (about 15-20 minutes including policy-driven extensions).
+If `Test-DemoVm.ps1` reports the VM is not clean (an earlier take installed tools), reset it first: run `deploy-demo-vm.yml` in the demo-env repo with action `recreate-vm`, approve the `online` gate, and wait for the verification job (estimate; time it in rehearsal 1: about 15-20 minutes including policy-driven extensions).
 
 On the VM: close notifications, set display scaling to 125%, open **Windows Terminal**, and pick the **PowerShell** (7) profile from the dropdown, not Windows PowerShell. Font size 16 or larger. Hide the Bastion toolbar.
 

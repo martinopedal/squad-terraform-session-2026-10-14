@@ -207,10 +207,10 @@ and hosted-system subnets. Don't contact an Azure account or change providers.
     driver: 'Martin drives; Haflidi explains the source claim.',
     pointAt: 'Point at the skill invocation, the MCP server, the specific source result, and the scoped permission prompt.',
     fallback: 'Use c4-source.md with retrieval time, tool, server/version, and limitation; a failed live lookup stays failed. Permission checks: --available-tools controls visibility, --allow-tool approves, --deny-tool wins, and denying write doesn\'t block shell writes.',
-    timing: '0:35 skill and /mcp status; 1:05 read-only lookup; 0:50 source/version and boundary; 0:40 /permissions; 0:50 buffer.',
+    timing: '1:17 skill and /mcp status; 1:05 read-only lookup; 0:38 source/version and boundary; 0:35 /permissions; 0:25 buffer.',
     preStaged: 'Docker Desktop running; required MCP servers connected; fallback c4-source excerpt sanitized; one retry allowed, not a retry loop.',
     cutAt: '3:00',
-    cut: 'If MCP/Docker is not healthy, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.'
+    cut: 'If MCP/Docker is not healthy or the source/version is not visible by 3:00, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.'
   },
   C5: {
     goal: 'Run the offline oracle, seed one labeled mutation, repair narrowly, and rerun the same check.',
