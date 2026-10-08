@@ -11,13 +11,13 @@ Evidence date: 2026-10-08. Demo-env repository: [`martinopedal/aks-automatic-dem
 | All change through pull requests to protected `main` branches | Demo-env checks: Terraform Validate, Trivy IaC Scan, Checkov, TFLint. Module checks: Terraform Validate, Style Check, CodeQL, Checkov, TFLint, Trivy IaC Scan. Both are strict (up to date) with 1 approving review |
 | Human gate before any Azure write | `online` environment: required reviewer, protected branches only, admin bypass off |
 | No stored cloud secrets | GitHub OIDC federation to a user-assigned identity; the workflow holds no client secret |
-| Private state | Tenant policy forces `publicNetworkAccess=Disabled` on storage; state is reached only through a private endpoint. `Test-OnlineSecurity.ps1` proves anonymous internet access is refused |
+| Private state | Tenant policy forces `publicNetworkAccess=Disabled` on storage; state is reached only through a private endpoint. `Test-OnlineSecurity.ps1` confirms anonymous internet access is refused |
 | Ephemeral, identity-less runner | VNet-integrated Container Apps Job, one execution per run, no managed identity, outbound 443 only |
 | Locked API server | Authorized IP ranges contain only the runner's static NAT egress IP |
 | Public demo hostname | `https://aks-online-demo.swedencentral.cloudapp.azure.com/` is served through a dedicated App Routing `NginxIngressController` with an Azure default DNS label. The NGINX certificate is self-signed by design for the demo; accept the browser warning when opening it manually |
-| Scoped break-glass App Routing write | Custom role `AKS App Routing Controller Writer (online demo)` is limited by ABAC to `NginxIngressController` resources in group `approuting.kubernetes.azure.com`. The ABAC attribute is preview, the grant is documented in the demo-env runbook, and teardown removes it |
-| No plan artifact in a public repo | Plan, apply, deploy, and proof run in one job; `tfplan` is never uploaded |
-| Proof or fail | The run fails unless the hostname returns HTTPS 200 and HTTP redirects to HTTPS. `Test-OnlineSecurity.ps1` now has 29 checks, including hostname resolution to the ingress address. The latest full pass on record is 28/28 from the demo-env repository on 2026-10-08; the 29-check pass is still pending. |
+| Time-boxed break-glass App Routing write | Custom role `AKS App Routing Controller Writer (online demo)` scopes the demo pipeline to `NginxIngressController` resources in group `approuting.kubernetes.azure.com`. The ABAC attribute is preview, the condition does not constrain the resource name, and the grant is demo-only and time-boxed, documented in the demo-env runbook, and removed during teardown |
+| No plan artifact in a public repo | Plan, apply, deploy, and runtime check run in one job; `tfplan` is never uploaded |
+| Runtime check or fail | The run fails unless the hostname returns HTTPS 200 and HTTP redirects to HTTPS. `Test-OnlineSecurity.ps1` now has 29 checks, including hostname resolution to the ingress address. The latest full pass on record is 28/28 from the demo-env repository on 2026-10-08; the 29-check pass is still pending. |
 
 ## 2. Platform guardrails we designed for, not around
 
@@ -61,7 +61,7 @@ What made the AI output trustworthy enough to merge:
 
 - **MCP for sources:** Microsoft Learn for product rules (for example, that Base to Automatic migration is not supported, and that B2B guests cannot use Entra VM sign-in). Azure read-back for the deployed state. The agent cites the source, and the claim is re-checked by a test or a read-back.
 - **Skills and instructions:** repository Terraform instructions, a secret-handling skill (never read `.env` or write secrets into committed state), and a reviewer protocol that locks a rejected author out of the revision.
-- **Tests as oracles:** 22 module `terraform test` cases including contract and regression tests; 29 Online read-back checks including negative tests from the internet, with 28/28 the latest full pass on record; 14 demo VM checks.
+- **Tests as oracles:** 52 module contract cases plus 2 caller/example `terraform test` cases; 29 Online read-back checks including negative tests from the internet, with 28/28 the latest full pass on record; 14 demo VM checks.
 - **Humans approve:** every merge and every Azure write passed a human decision.
 
 ## 6. Honest gaps

@@ -26,7 +26,7 @@ Common oracle commands were `terraform fmt -check -recursive`, `terraform init -
 | --- | --- | ---: | --- | --- | --- |
 | B1 | `alternate_network_payload` | 0/5 | Failed | Every run passed 53/53 module contract tests and 2/2 example tests | All five runs asserted the pod CIDR, service CIDR, DNS service IP, and private API server value, but used two assert blocks. The pre-registered rule required at least three assert blocks, so the result is reported as fail and was not rescored. |
 | B2 | `seeded-mutation-repair` | 5/5 | Passed | Every run passed 52/52 module contract tests and 2/2 example tests | The seeded repair met the oracle in all five fresh runs. |
-| B3 | `forbidden-tag-characters` | 4/5 | Passed | Every rescored B3 run passed 53/53 module contract tests and 2/2 example tests | Run 2 edited `terraform/modules/aks-automatic-corp/README.md` outside the allowed file set and stayed red. The harness `-AllowedFiles` argument bug was fixed, then B3 was rescored from saved diffs without rerunning Copilot. |
+| B3 | `forbidden-tag-characters` | 4/5 | Passed | Every rescored B3 run passed 53/53 module contract tests and 2/2 example tests | Original automated B3 was 0/5 because the oracle failed before scoring after the bad `-AllowedFiles` invocation. After fixing the harness bug, saved `final.diff` artifacts were rescored without rerunning Copilot; final B3 was 4/5, and run 2 stayed red for the out-of-scope README edit. |
 
 ## What this shows
 

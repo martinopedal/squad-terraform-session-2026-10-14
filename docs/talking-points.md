@@ -42,7 +42,7 @@ Don't say: this was the first implementation.
 - Agent HQ: 2025-10-28. Claude and Codex public preview: 2026-02-04.
 - AI Credits effective: 2026-06-01. CLI limits preview: 2026-07-01.
 - Computer use preview: 2026-10-01, not used here.
-- Squad 1.0 / 1.0.1 (Oct 3-4): stabilizes 0.11-0.13 (presets, `squad_state`, `squad health`); WinGet and Homebrew. No breaking change from 0.13.1.
+- Squad 1.0 / 1.0.1 (Oct 3-4): stabilizes 0.11-0.13 (presets, `squad_state`, setup diagnostics); WinGet and Homebrew. No breaking change from 0.13.1.
 Takeaway: the platform moved from preview pieces to governable engineering controls.
 Demo cue: point to dates and status labels; end on the Squad tile.
 Don't say: computer use is GA, or part of this Terraform recording; npm latest is 1.0.1.
@@ -259,7 +259,7 @@ Don't say: prepared fallback questions came from the audience.
 2. **Install:** `winget install --id bradygaster.Squad --exact` (or Homebrew, GitHub Releases). npm `latest` was still 0.13.1 on Oct 5.
 3. **Scaffold:** `squad init` in the repo terminal. Shell command, not an agent request.
 4. **Hire:** `copilot --agent squad`, describe the project. Init Mode proposes the roster; **nothing is written until you confirm**. Commit `.squad\`.
-5. **Verify:** `squad doctor`, `squad health`. Before `squad upgrade`, back up: team, routing, decisions, histories, config are kept; coordinator and templates are replaced.
+5. **Verify:** `squad doctor`. Before `squad upgrade`, back up: team, routing, decisions, histories, config are kept; coordinator and templates are replaced.
 
 Best simple start: one repo, three to five specialists, built-ins (Scribe, Ralph, Rai, Fact Checker) come with it. Add narrow native profiles only where a lane needs limits.
 
@@ -292,7 +292,7 @@ Don't say: more agents means better results.
 - Guardrails decide the design: private state, NSG on every subnet, RBAC Writer cannot create namespaces.
 - Secure chain: PR, protected branch, human gate, OIDC, one job, no plan artifact.
 - Locked API server: only the runner's static egress IP.
-- Proof, not hope: HTTPS 200 and a forced redirect, or the pipeline fails.
+- Runtime evidence, not hope: HTTPS 200 and a forced redirect, or the pipeline fails.
 - AKS Automatic SKU: managed system node pools, rebuilt because Base cannot convert.
 Takeaway: a simpler topology still meets the same guardrails.
 Don't say: we exempted a policy, or the demo runs from a laptop.
@@ -301,7 +301,7 @@ Don't say: we exempted a policy, or the demo runs from a laptop.
 - GHAS baseline: CodeQL, secret scanning with push protection, Dependabot; zero open alerts. Module has six required checks; demo-env has four IaC checks.
 - The agent found what raises no alert: Checkov skipped `main.tf` since August; Security Scan disabled for inactivity; a falsely green monitor; an approval race; a VM check blind to per-user installs.
 - MCP (Microsoft Learn) supplied product rules; skills enforce secret handling and reviewer lockout.
-- Every claim re-checked: 22 module tests, 28 read-back checks, 14 VM checks. A human approved every merge and Azure write.
+- Every claim re-checked: 52 module contract cases plus 2 caller/example Terraform test cases; 29 Online read-back checks including negative tests from the internet, with 28/28 the latest full pass on record; 14 VM checks. A human approved every merge and Azure write.
 Takeaway: GHAS covers code, secrets, and advisories; the agent plus an oracle closes the silent gaps.
 Don't say: AI made it secure, or there are no gaps (single-maintainer admin merges, IDs in history, Checkov cannot read azapi bodies).
 
@@ -309,7 +309,7 @@ Don't say: AI made it secure, or there are no gaps (single-maintainer admin merg
 - Guardrails first, then sourced API facts through MCP.
 - One lane per step: lead plans, coder edits, validator runs the oracle, reviewer in `/new`.
 - Consume like a customer, deploy through the pipeline.
-- Repeatable is measured: five fresh runs, at least four green. October 8 eval: B1 0/5, B2 5/5, B3 4/5; two of three briefs met the pre-registered threshold, and the misses stayed visible.
+- In the October 8 eval, repeatability was measured as five fresh runs with a pre-registered `>= 4/5` green bar. Results: B1 0/5, B2 5/5, B3 4/5 after a disclosed harness-bug rescore from saved diffs, with no Copilot rerun and the out-of-scope README edit still red. Treat this as a measured checkpoint, not a guarantee.
 Takeaway: narrow the choices and make every claim checkable.
 Don't say: the prompts make the model deterministic.
 
