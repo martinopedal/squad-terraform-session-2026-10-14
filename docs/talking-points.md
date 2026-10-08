@@ -309,7 +309,7 @@ Don't say: AI made it secure, or there are no gaps (single-maintainer admin merg
 - Guardrails first, then sourced API facts through MCP.
 - One lane per step: lead plans, coder edits, validator runs the oracle, reviewer in `/new`.
 - Consume like a customer, deploy through the pipeline.
-- Repeatable is measured: five fresh runs, at least four green.
+- Repeatable is measured: five fresh runs, at least four green. October 8 eval: B1 0/5, B2 5/5, B3 4/5; two of three briefs met the pre-registered threshold, and the misses stayed visible.
 Takeaway: narrow the choices and make every claim checkable.
 Don't say: the prompts make the model deterministic.
 

@@ -392,7 +392,7 @@ Recording preflight: pin the actual CLI executable/package and show its version.
 
 ## a-prompts | Appendix | Prompts you can rerun
 
-> Reference only. Answer "how do I get similar results with my agents?" Keywords: guardrails first, one lane per step, an oracle decides, measure repeatability. Step 1 reads effective policy and RBAC at the target before design; step 2 grounds API facts through Microsoft Learn and Terraform Registry MCP with citations. Then `terraform-coder` edits, `terraform-validator` runs fixed offline commands, and `terraform-reviewer` reviews in a fresh `/new` context. Consume through a thin root and deploy through the pipeline. Repeatable is measured: five fresh runs from one checkpoint, at least four green, no reruns until green. Prompts: `docs/prompt-pack.md`. Do not claim the model is deterministic.
+> Reference only. Answer "how do I get similar results with my agents?" Keywords: guardrails first, one lane per step, an oracle decides, measure repeatability. Step 1 reads effective policy and RBAC at the target before design; step 2 grounds API facts through Microsoft Learn and Terraform Registry MCP with citations. Then `terraform-coder` edits, `terraform-validator` runs fixed offline commands, and `terraform-reviewer` reviews in a fresh `/new` context. Consume through a thin root and deploy through the pipeline. Repeatable is measured: five fresh runs from one checkpoint, at least four green, no reruns just to fish for green. October 8 results were B1 0/5, B2 5/5, and B3 4/5; two of three briefs met the pre-registered threshold, and the misses stayed visible. Prompts: `docs/prompt-pack.md`. Do not claim the model is deterministic.
 
 ## a-bootstrap | Appendix | Start a squad in five steps
 

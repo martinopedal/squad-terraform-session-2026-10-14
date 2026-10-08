@@ -129,7 +129,7 @@ no subscription, tenant, or principal IDs.
 
 ## Measure repeatability
 
-Use the approved determinism eval from the session: three briefs, five fresh runs each, from the same pinned base. Each run uses a new worktree, a new CLI process, identical flags and pins, and the validator re-runs the oracle on the final tree. A brief is repeatable when at least four of five runs are green. Infrastructure failures count as not green and are disclosed. Never rerun until green.
+Use the October 8 repeatability eval as the model: three briefs, five fresh runs each, from the same pinned base, model, tools, and allowed files. The oracle, not the model summary, decides green. Results were mixed: B1 `alternate_network_payload` was 0/5 because it used two assert blocks against a pre-registered `>= 3` rule despite passing all Terraform tests; B2 `seeded-mutation-repair` was 5/5; B3 `forbidden-tag-characters` was 4/5 with one out-of-scope README edit. A brief is repeatable when at least four of five runs are green. Report misses as-is and do not rerun just to fish for green. See [the repeatability eval](determinism-eval.md).
 
 ## Lessons from the Online deployment
 
