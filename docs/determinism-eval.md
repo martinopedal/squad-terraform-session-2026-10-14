@@ -37,9 +37,9 @@ The clarified B1v2 brief says: "Add one run block named alternate_network_payloa
 
 Method: B1v2 used five fresh runs from base `4689d3c`, model `claude-sonnet-5`, and the same harness, flags, allowed tools, and pins as the original eval. Its pre-registered oracle required `>= 4` separate assert blocks. It was a separate brief written after seeing B1, not a retroactive pass for B1.
 
-Result: 5/5 green, meeting the `>= 4/5` bar. The five runs lasted 108.031 s, 97.131 s, 87.806 s, 61.04 s, and 113.658 s (61-114 s rounded), and no failure modes were observed. The ambiguous B1 brief failed the stricter oracle 5/5 times in the same way: it produced two assert blocks. Stating the expected test shape in the brief produced 5/5 green under the same pinned conditions. That is consistent with brief precision being the difference, not more retries.
+Result: 5/5 green, meeting the `>= 4/5` bar. The five runs lasted 108.031 s, 97.131 s, 87.806 s, 61.04 s, and 113.658 s (61-114 s rounded), and no failure modes were observed in those five runs. The ambiguous B1 brief failed the oracle 5/5 times in the same way: it produced two assert blocks. B1v2 stated the expected test shape in the brief and was 5/5 green under the same pinned conditions; this five-run follow-up does not isolate causality.
 
-This is still a five-run checkpoint. It is repeatable in this eval under pinned conditions, not a guarantee and not evidence that the model is deterministic.
+This is still a five-run checkpoint. It is repeatable only in this eval under pinned conditions, not a guarantee of future runs or broader model behavior.
 
 ## What this shows
 
