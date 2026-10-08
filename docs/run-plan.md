@@ -23,7 +23,7 @@ Sources of truth for this plan: current `presentation\src\slides.mjs`, prior doc
 
 ## What the extra minutes are for
 
-The old shape was 53:00 main flow plus 7:00 scheduled Q&A. The earlier Lead decision protected a 5:00 slack bank by trimming explanatory slides. This round changes that contract:
+Prior timing assumptions with a separate Q&A block are retired. The earlier Lead decision protected a slack bank by trimming explanatory slides. This round changes that contract:
 
 - 00:00-03:00 is a real intro, not a rushed title slide.
 - 03:00-58:00 is content plus live chapters.
@@ -198,10 +198,9 @@ Devrel deck changes for the next round:
 - `s20-consumer`: keep a 30s live reveal in notes at 53:30-54:00; show branded page, pipeline flow, serving pod name, and speakers section. Keep "runtime check/evidence" language.
 - Demo notes `demo-c0` through `demo-c7`: update absolute cut-line clocks to 09:15, 16:15, 22:00, 27:00, 35:00, 39:45, 47:15, 52:15.
 - Presentation tests/build assertions currently encoding old shape:
-  - `presentation\scripts\build.mjs`: `protectedSlackSeconds = 300`; `s22-questions` counted as `qa`; hard error "29 demo / 19 explanation / 5 protected slack / 7 Q&A minutes, with Q&A at 53:00"; build manifest fields `explanationMinutes: 19`, `protectedSlackMinutes: 5`, `qaMinutes: 7`, `nonDemoSlideMinutes: 24`, `mainFlowMinutes: 53`, `qnaStart: '53:00'`; console log with the same text.
-  - `presentation\tests\check_deck.py`: timing assertion `[29, 19, 5, 7, 24, 53, 60, "53:00"]`; prepared Q&A word-count check `650 <= qaWords <= 800`; appendix return and navigation labels that assume Q&A.
-  - Replace with a 60-minute close-buffer contract. Proposed manifest: `demoMinutes=29`, `explanationMinutes=26`, `protectedSlackMinutes=0`, `closeBufferMinutes=2`, `qaMinutes=0`, `nonDemoSlideMinutes=31`, `contentEnd='58:00'`, `timedSlideMinutes=60`, `questions='if time allows'`. If the implementation keeps `qnaStart`, set it to `null` or remove it; do not leave `53:00` anywhere in tests.
-  - Update the old README/deck copy that says `29-24-7` or `53+7` to `3 intro / 55 content / 2 close buffer`, with C0-C7 still 29 minutes inside the 55.
+  - `presentation\scripts\build.mjs`: enforce the 60-minute close-buffer contract and emit manifest fields `demoMinutes=29`, `introMinutes=3`, `explanationMinutes=26`, `protectedSlackMinutes=0`, `closeBufferMinutes=2`, `qaMinutes=0`, `nonDemoSlideMinutes=31`, `contentEnd='58:00'`, `closeStart='58:00'`, `timedSlideMinutes=60`, `questions='if time allows'`.
+  - `presentation\tests\check_deck.py`: assert the same close-buffer manifest, zero scheduled question words, close-slide appendix return, and navigation labels that do not assume a scheduled question period.
+  - Update README/deck ratio copy to `3 intro / 55 content / 2 close buffer`, with C0-C7 still 29 minutes inside the 55.
 
 Docs mirror changes for the next round:
 

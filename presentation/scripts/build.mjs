@@ -105,7 +105,7 @@ const build = {
   protectedSlackMinutes: protectedSlackSeconds / 60, closeBufferMinutes: clock.close / 60,
   nonDemoSlideMinutes: (clock.intro + clock.explanation + clock.close) / 60,
   contentEnd: '58:00', mainFlowMinutes: (previousEnd - clock.close) / 60,
-  qaMinutes: clock.qa / 60, qnaStart: null, questions: 'if time allows',
+  qaMinutes: clock.qa / 60, closeStart: '58:00', questions: 'if time allows',
   timedSlideMinutes: previousEnd / 60,
   spokenWords, speakers, qaWords, descriptionWords, pitchWords,
   chapters, media, sourceRevision: evidence.sourceRevision, moduleRevision: evidence.moduleRevision,

@@ -104,8 +104,8 @@ def main():
             check("timing budget with close buffer",
                   [manifest[k] for k in ("demoMinutes", "introMinutes", "explanationMinutes", "protectedSlackMinutes",
                                          "closeBufferMinutes", "qaMinutes", "nonDemoSlideMinutes", "mainFlowMinutes",
-                                         "timedSlideMinutes", "contentEnd", "qnaStart", "questions")]
-                  == [29, 3, 26, 0, 2, 0, 31, 58, 60, "58:00", None, "if time allows"])
+                                         "timedSlideMinutes", "contentEnd", "closeStart", "questions")]
+                  == [29, 3, 26, 0, 2, 0, 31, 58, 60, "58:00", "58:00", "if time allows"])
             check("chapter lengths", [chapter["duration"] // 60 for chapter in manifest["chapters"]] == [3, 3, 4, 4, 4, 5, 3, 3]
                   and [chapter["id"] for chapter in manifest["chapters"]] == [f"C{i}" for i in range(8)], manifest["chapters"])
             check("intro and contiguous clocks", page.evaluate("""() => {
@@ -416,7 +416,7 @@ def main():
             notes.wait_for_timeout(1200)
             timer_after = notes.locator(".timer .seconds-value").inner_text()
             check("notes current and next", notes.locator("#current-slide iframe").count() == 1 and notes.locator("#upcoming-slide iframe").count() == 1)
-            check("notes full presenter plan", "live terminal/browser work" in notes.locator(".speaker-controls-notes .value").inner_text())
+            check("notes full presenter plan", "live terminal and browser work" in notes.locator(".speaker-controls-notes .value").inner_text())
             check("notes timer advances", timer_before != timer_after)
             page.evaluate("Reveal.slide(11,0,-1)")
             notes.wait_for_function("() => document.querySelector('.speaker-controls-notes .value').textContent.includes('/session plan')")
