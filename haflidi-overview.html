@@ -42,7 +42,7 @@
 
     body {
       margin: 0;
-      font: 16px/1.55 "Segoe UI", Roboto, Arial, sans-serif;
+      font: 16px/1.6 "Segoe UI", Roboto, Arial, sans-serif;
       color: var(--text);
       background:
         radial-gradient(circle at top right, rgba(11, 95, 255, 0.12), transparent 32%),
@@ -57,8 +57,13 @@
       text-decoration-thickness: 2px;
     }
 
+    code {
+      font-family: Consolas, "Cascadia Code", monospace;
+      font-size: 0.95em;
+    }
+
     .shell {
-      max-width: 1200px;
+      max-width: 1260px;
       margin: 0 auto;
       padding: 28px 24px 40px;
     }
@@ -98,11 +103,11 @@
 
     h2 {
       font-size: 1.45rem;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     h3 {
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       margin-bottom: 8px;
     }
 
@@ -131,20 +136,168 @@
       padding: 24px;
     }
 
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 10px 14px;
+      margin-bottom: 14px;
+    }
+
+    .section-head h2 {
+      margin-bottom: 0;
+    }
+
+    .section-link {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .lede {
+      color: var(--muted);
+    }
+
+    .repo-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      font-size: 0.98rem;
+    }
+
+    .repo-table th,
+    .repo-table td {
+      vertical-align: top;
+      text-align: left;
+      padding: 14px 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .repo-table th {
+      font-size: 0.92rem;
+      color: var(--muted);
+      font-weight: 600;
+      background: var(--panel-strong);
+    }
+
+    .repo-table tr:first-child th {
+      border-top: 0;
+    }
+
+    .repo-table td:first-child,
+    .repo-table th:first-child {
+      padding-left: 0;
+    }
+
+    .repo-table td:last-child,
+    .repo-table th:last-child {
+      padding-right: 0;
+    }
+
+    .repo-name {
+      display: grid;
+      gap: 10px;
+    }
+
+    .repo-name a {
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .repo-name span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
     .steps {
+      list-style: none;
       margin: 0;
-      padding-left: 1.35rem;
+      padding: 0;
       display: grid;
       gap: 18px;
     }
 
-    .steps li {
-      padding-left: 6px;
+    .step-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      background: var(--panel-strong);
     }
 
-    .steps p {
+    .step-number {
       color: var(--muted);
-      margin-top: 6px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .step-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .step-row {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .step-label {
+      color: var(--muted);
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding-top: 2px;
+    }
+
+    .step-value code,
+    .action-list code {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: rgba(11, 95, 255, 0.1);
+    }
+
+    .action-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 18px;
+    }
+
+    .action-list li {
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+
+    .action-list li:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .action-list h3 {
+      margin-bottom: 10px;
+    }
+
+    .command-list {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .command-list code {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--panel-strong);
+      border: 1px solid var(--border);
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     .diagram-wrap {
@@ -155,18 +308,27 @@
       margin-top: 14px;
     }
 
-    .diagram-status {
+    .flow-stack {
+      display: grid;
+      gap: 10px;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .flow-node {
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .flow-arrow {
+      text-align: center;
       color: var(--muted);
-      margin-bottom: 10px;
-    }
-
-    .mermaid {
-      overflow-x: auto;
-    }
-
-    .diagram-wrap svg {
-      max-width: 100%;
-      height: auto;
+      font-size: 1.45rem;
+      line-height: 1;
     }
 
     .fallback {
@@ -194,11 +356,6 @@
       gap: 12px;
     }
 
-    .agree li,
-    .links li {
-      color: var(--text);
-    }
-
     .aside {
       display: grid;
       gap: 18px;
@@ -210,6 +367,38 @@
       display: grid;
       gap: 12px;
       margin-top: 14px;
+    }
+
+    .profile {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .profile img {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+      flex: 0 0 auto;
+    }
+
+    .profile-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .profile-links a {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel-strong);
+      text-decoration: none;
+      color: inherit;
     }
 
     .link-tile {
@@ -241,9 +430,49 @@
       font-size: 0.92rem;
     }
 
-    code {
-      font-family: Consolas, "Cascadia Code", monospace;
-      font-size: 0.95em;
+    @media (max-width: 1100px) {
+      .repo-table,
+      .repo-table tbody,
+      .repo-table tr,
+      .repo-table th,
+      .repo-table td {
+        display: block;
+      }
+
+      .repo-table thead {
+        display: none;
+      }
+
+      .repo-table tr {
+        border-top: 1px solid var(--border);
+        padding-top: 14px;
+        margin-top: 14px;
+      }
+
+      .repo-table tr:first-child {
+        border-top: 0;
+        padding-top: 0;
+        margin-top: 0;
+      }
+
+      .repo-table td {
+        border-top: 0;
+        padding: 6px 0;
+      }
+
+      .repo-table td::before {
+        display: block;
+        color: var(--muted);
+        font-size: 0.88rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-bottom: 4px;
+      }
+
+      .repo-table td:nth-child(1)::before { content: 'Repo'; }
+      .repo-table td:nth-child(2)::before { content: 'What it is'; }
+      .repo-table td:nth-child(3)::before { content: 'What you do with it'; }
+      .repo-table td:nth-child(4)::before { content: 'Your access'; }
     }
 
     @media (max-width: 980px) {
@@ -255,107 +484,424 @@
         position: static;
       }
     }
-  </style>
-  <script>
-    function initMermaidOverview() {
-      const status = document.getElementById('diagram-status');
-      const fallback = document.getElementById('diagram-fallback');
-      if (!window.mermaid) {
-        if (status) {
-          status.textContent = 'Mermaid did not load. Use the text fallback below.';
-        }
-        return;
+
+    @media (max-width: 680px) {
+      .shell {
+        padding: 20px 16px 32px;
       }
 
-      const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      window.mermaid.initialize({
-        startOnLoad: true,
-        securityLevel: 'loose',
-        theme: dark ? 'dark' : 'default'
-      });
-      window.mermaid.run({ querySelector: '.mermaid' })
-        .then(() => {
-          if (status) {
-            status.hidden = true;
-          }
-          if (fallback) {
-            fallback.hidden = true;
-          }
-        })
-        .catch(() => {
-          if (status) {
-            status.textContent = 'Mermaid could not render. Use the text fallback below.';
-          }
-        });
+      .hero,
+      .card {
+        border-radius: 18px;
+      }
+
+      .step-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
     }
-  </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js" onload="initMermaidOverview()" onerror="initMermaidOverview()"></script>
+  </style>
 </head>
 <body>
   <div class="shell">
     <header class="hero">
       <p class="eyebrow">Haflidi collaboration page</p>
       <h1>Short session map for Haflidi</h1>
-      <p>This page tracks the current public docs. It keeps the flow short. It keeps the ownership clear.</p>
-      <p>It is built for screen use on GitHub Pages. The full timed script stays in the talk track.</p>
+      <p>This page is for screen use. It keeps the Squad, GitHub, Terraform, and repo flow clear.</p>
+      <p>It points back to the public docs. Use the talk track and the run plan for full detail.</p>
     </header>
 
     <div class="layout">
       <main class="main">
         <section class="card">
-          <h2>Flow in 5 steps</h2>
+          <div class="section-head">
+            <h2>A. What is this?</h2>
+          </div>
+          <p>We present a 60-minute session on Squad and GitHub Copilot CLI used to build, review, and ship Terraform.</p>
+          <p>The main story is the working method: agents, prompts, PRs, GHAS, review, gates, and checks.</p>
+          <p>The deployed AKS Automatic cluster is the outcome and an added benefit. It serves the page <code>AKS Automatic | NIC 2026 demo</code>.</p>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2>B. Which repo does what</h2>
+          </div>
+          <p class="lede">These descriptions were checked against the current READMEs and the repository metadata.</p>
+          <table class="repo-table">
+            <thead>
+              <tr>
+                <th>Repo</th>
+                <th>What it is</th>
+                <th>What you do with it</th>
+                <th>Your access</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="repo-name">
+                    <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14">martinopedal/squad-terraform-session-2026-10-14</a>
+                    <span>The session repo</span>
+                  </div>
+                </td>
+                <td>Public session source for the two-speaker Terraform on Azure talk. It holds the deck, talk track, run plan, playbook, and agent profiles.</td>
+                <td>We present from it. Read the deck. Comment or open pull requests when you want wording or flow changes.</td>
+                <td>Write</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="repo-name">
+                    <a href="https://github.com/martinopedal/terraform-azapi-aks-automatic">martinopedal/terraform-azapi-aks-automatic</a>
+                    <span>The reusable module</span>
+                  </div>
+                </td>
+                <td>Reusable Terraform module that shows the contract, tests, and reviewable change pattern. AKS Automatic is the example workload.</td>
+                <td>This is the Terraform part of the story. Read the code and the tests to see what Squad and GitHub are shaping.</td>
+                <td>Write</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="repo-name">
+                    <a href="https://github.com/martinopedal/aks-automatic-demo-env">martinopedal/aks-automatic-demo-env</a>
+                    <span>The consumer and demo environment</span>
+                  </div>
+                </td>
+                <td>Public consumer environment that shows GitHub PRs, GHAS, protected main, OIDC, gates, and pipeline delivery around the module. AKS is the example workload.</td>
+                <td>Use it to log into the VM and watch the gated pipeline path from reviewed change to runtime checks.</td>
+                <td>Write</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="repo-name">
+                    <a href="https://github.com/haflidif/squad-on-aca">haflidif/squad-on-aca</a>
+                    <span>Optional Squad-on-ACA segment. Live-capable in Corp.</span>
+                  </div>
+                </td>
+                <td>Serverless Squad on Azure Container App Jobs, plus the private target repository for the optional demo path. Sweden Central had no capacity, so the current Corp proof runs in Norway East.</td>
+                <td>Use it only if time allows. Proof chain: issue #2 in <code>martinopedal/squad-on-aca-demo-target</code> to enqueue workflow <code>37921482752</code> to bot PR #3.</td>
+                <td>Write on the session repo, module repo, demo-env, and both Squad-on-ACA repos</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2>C. How we present it</h2>
+            <p class="section-link"><a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/talk-track.md">Full talk track</a></p>
+          </div>
           <ol class="steps">
-            <li>
-              <h3>Clean start on the demo VM</h3>
-              <p>Haflidi runs C0 on the clean Windows 11 VM. He shows install, login, <code>copilot</code>, and <code>squad init</code>. Martin frames the boundary and moves the session from setup into the prepared presenter flow.</p>
+            <li class="step-card">
+              <p class="step-number">Step 1</p>
+              <h3>Clean VM bootstrap</h3>
+              <div class="step-grid">
+                <div class="step-row">
+                  <div class="step-label">Who</div>
+                  <div class="step-value">Haflidi leads. Martin frames the boundary.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">What</div>
+                  <div class="step-value">We show the clean start for Squad and Copilot CLI.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">How</div>
+                  <div class="step-value">Run <code>copilot --agent squad</code> on the clean VM after <code>squad init</code>.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">Minutes</div>
+                  <div class="step-value">05:30-08:30 from <code>demo-c0</code>.</div>
+                </div>
+              </div>
             </li>
-            <li>
-              <h3>CLI and Squad working model</h3>
-              <p>Martin walks the CLI surface and the three Terraform lanes. Haflidi explains Squad as the coordination layer with routing, handoffs, decisions, and one owner per shared surface.</p>
+            <li class="step-card">
+              <p class="step-number">Step 2</p>
+              <h3>Same task, then an approved plan</h3>
+              <div class="step-grid">
+                <div class="step-row">
+                  <div class="step-label">Who</div>
+                  <div class="step-value">Martin drives. Haflidi compares and confirms the boundary.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">What</div>
+                  <div class="step-value">We show that the brief matters, then we pin a repo-only plan for Terraform work.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">How</div>
+                  <div class="step-value">From <code>C:\git\squad-terraform-session-2026-10-14\public</code>, start <code>copilot --agent squad</code> and use <code>/plan</code>.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">Minutes</div>
+                  <div class="step-value">12:30-21:30 across <code>demo-c1</code> and <code>demo-c2</code>.</div>
+                </div>
+              </div>
             </li>
-            <li>
-              <h3>Qualified module and review gates</h3>
-              <p>Martin introduces the inherited public module revision and the consumer view. Haflidi explains the module boundary, caller-owned provider and state, and the gate flow around pull requests, review, environment approval, OIDC, and runtime checks. The logged eval result is B1v2 5/5, B2 5/5, and B3 4/5.</p>
+            <li class="step-card">
+              <p class="step-number">Step 3</p>
+              <h3>One writer, with source grounding</h3>
+              <div class="step-grid">
+                <div class="step-row">
+                  <div class="step-label">Who</div>
+                  <div class="step-value">Martin leads the writer lane.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">What</div>
+                  <div class="step-value">We show the bounded change, the skill, and the read-only source lookup that support the Terraform work.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">How</div>
+                  <div class="step-value">Use <code>/agent terraform-coder</code>, then <code>/skills info test-discipline</code>, then <code>/mcp</code>.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">Minutes</div>
+                  <div class="step-value">22:00-33:30 across <code>demo-c3</code> and <code>demo-c4</code>.</div>
+                </div>
+              </div>
             </li>
-            <li>
-              <h3>Guidance, source checks, and repair loop</h3>
-              <p>Martin shows agents, skills, MCP source lookups, and permissions. Haflidi explains the difference between instructions, skills, and MCP, plus the validator and reviewer boundaries through the mutation and repair loop.</p>
+            <li class="step-card">
+              <p class="step-number">Step 4</p>
+              <h3>Validate, repair, resume, and review</h3>
+              <div class="step-grid">
+                <div class="step-row">
+                  <div class="step-label">Who</div>
+                  <div class="step-value">Haflidi leads validation. Martin handles the handoff.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">What</div>
+                  <div class="step-value">We show the mutation, the repair, the saved decision, and the separate review lane with GitHub-style gates and evidence.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">How</div>
+                  <div class="step-value">Use <code>/agent terraform-validator</code>, <code>/review</code>, <code>/diff</code>, <code>/new</code>, and <code>/agent terraform-reviewer</code>.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">Minutes</div>
+                  <div class="step-value">33:30-50:00 across <code>demo-c5</code>, <code>demo-c6</code>, and <code>demo-c7</code>.</div>
+                </div>
+              </div>
             </li>
-            <li>
-              <h3>Online consumer view and close</h3>
-              <p>Martin shows the Online consumer page and the gated delivery path. Haflidi maps that result back to the same gate flow and closes the loop on what the audience should take away.</p>
+            <li class="step-card">
+              <p class="step-number">Step 5</p>
+              <h3>Show the shipped result</h3>
+              <div class="step-grid">
+                <div class="step-row">
+                  <div class="step-label">Who</div>
+                  <div class="step-value">Martin opens the page. Haflidi maps it back to the gate flow.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">What</div>
+                  <div class="step-value">We show the shipped outcome and close with the same-gates message.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">How</div>
+                  <div class="step-value">Open <code>https://aks-online-demo.swedencentral.cloudapp.azure.com/</code>.</div>
+                </div>
+                <div class="step-row">
+                  <div class="step-label">Minutes</div>
+                  <div class="step-value">50:00-55:00 across <code>s20-consumer</code> and <code>s21-limits</code>.</div>
+                </div>
+              </div>
             </li>
           </ol>
         </section>
 
         <section class="card">
-          <h2>High-level diagram</h2>
-          <p>The diagram matches the short flow above.</p>
+          <div class="section-head">
+            <h2>How we got to a secure, well-aligned cluster</h2>
+          </div>
+          <p class="lede">This is the short path. The table says where Squad and GitHub Copilot helped, and what a human still decided.</p>
+          <table class="repo-table">
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>What was built</th>
+                <th>Who/what helped</th>
+                <th>What the human decided</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. Private-by-default contract</td>
+                <td>A Terraform module boundary where the module owns resources, inputs, outputs, and provider requirements, while the caller owns provider, backend, auth, state, and environment values.</td>
+                <td>Squad coordinated responsibilities and one owner per shared surface. Copilot CLI Plan mode was used before edits. The <code>terraform-coder</code> lane was the writer lane for bounded Terraform changes.</td>
+                <td>The human approved the repo-only plan and kept the boundary clear before implementation.</td>
+              </tr>
+              <tr>
+                <td>2. Tests and repeatable checks</td>
+                <td>Contract tests, a deliberate mutation-and-repair loop, and a repeatable prompt path for the main demo.</td>
+                <td>The <code>terraform-validator</code> lane ran the fixed offline checks. The <code>terraform-reviewer</code> lane reviewed the exact diff in a fresh context. The current repeatability checkpoint is B1v2 5/5, B2 5/5, and B3 4/5.</td>
+                <td>The human decided which brief to trust for the live story, kept the oracle rules visible, and accepted only a specific reviewed artifact.</td>
+              </tr>
+              <tr>
+                <td>3. GitHub security and review controls</td>
+                <td>A pull-request path with scans and review on the module and consumer repos.</td>
+                <td>GitHub controls provide CodeQL, secret scanning with push protection, Dependabot security updates, protected <code>main</code>, and required review. The security appendix says AI also found silent gaps that scanners did not raise as alerts.</td>
+                <td>The human still reviewed the real change, kept the remaining gaps visible, and decided what was acceptable to merge.</td>
+              </tr>
+              <tr>
+                <td>4. Approved pipeline delivery</td>
+                <td>A gated deployment path from reviewed code to Azure through the consumer repo.</td>
+                <td>GitHub OIDC provided Azure access without a stored cloud secret. Squad records the reason for later handoff, and the talk track shows Scribe merging accepted public decisions into the shared decision ledger. Microsoft Learn through MCP supplied product rules such as Base-to-Automatic migration not being supported.</td>
+                <td>The human approved the environment gate, compared the plan, and decided when Azure writes were allowed.</td>
+              </tr>
+              <tr>
+                <td>5. Runtime proof</td>
+                <td>The cluster and the public page <code>AKS Automatic | NIC 2026 demo</code>.</td>
+                <td>The runtime check step fails unless the hostname returns HTTPS 200, HTTP redirects, and DNS resolves to the App Routing controller Service address. The current Online read-back result is 29/29 PASS.</td>
+                <td>The human decided that runtime evidence, not local success alone, was the acceptance point for the deployed outcome.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2>Deterministic prompts, and the alternative</h2>
+          </div>
+          <p>Deterministic prompts help us replay how we got there. The current eval in <code>docs/determinism-eval.md</code> is B1v2 5/5, B2 5/5, and B3 4/5.</p>
+          <p>That gives us a stable path for the main story. It lets Haflidi see what is supposed to happen and why.</p>
+          <p>If time is short, or if we want something fresh, we can run the existing <code>demo-c4</code> chapter live on a new small task instead.</p>
+          <p>That path already uses an agent, a skill, and <code>/mcp</code> for the Terraform and documentation grounding story. It stays small and easy to explain.</p>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2>Model choice and cost</h2>
+          </div>
+          <p>Auto model selection in Copilot CLI routes by task, lets us switch with <code>/model</code>, honors admin model policies, and gives paid plans a 10% AI-credit discount in Auto.</p>
+          <p>Project HydraFusion is a research preview with Single, Cascade, and Critique patterns; GitHub reports offline benchmark cost savings versus Opus 5.</p>
+          <p>For our repeatability eval, we pinned <code>claude-sonnet-5</code>.</p>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2>Why each piece exists</h2>
+          </div>
+          <table class="repo-table">
+            <thead>
+              <tr>
+                <th>Piece</th>
+                <th>Why it exists</th>
+                <th>How to look into it</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>The clean demo VM</td>
+                <td>Shows native bootstrapping from zero: install Git, Copilot CLI, and Squad, then login and run <code>squad init</code> on a machine that never had them.</td>
+                <td><a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/clean-machine-demo.md"><code>docs/clean-machine-demo.md</code></a><br><code>./scripts/Set-GuestLocalLogin.ps1 -UserName haflidi -FullName 'Haflidi (demo)'</code><br><code>./scripts/Connect-DemoVm.ps1 -LocalAccount</code></td>
+              </tr>
+              <tr>
+                <td>The three Copilot CLI agents</td>
+                <td><code>terraform-coder</code> makes the bounded Terraform change. <code>terraform-reviewer</code> does read-only independent review. <code>terraform-validator</code> runs the approved offline checks.</td>
+                <td>Start Copilot from the session repo folder, then use <code>/agent</code>.<br>Read <code>.github/agents/terraform-coder.agent.md</code>, <code>terraform-reviewer.agent.md</code>, and <code>terraform-validator.agent.md</code>.</td>
+              </tr>
+              <tr>
+                <td>Squad roles</td>
+                <td>The Squad coordinator routes work, enforces handoffs, and keeps reviewer gates. Lead scopes the change, reviewer checks the exact diff, security checks boundaries, Scribe records accepted decisions, and Fact Checker challenges claims.</td>
+                <td>Read <code>.squad/team.md</code> and <code>.squad/routing.md</code>.</td>
+              </tr>
+              <tr>
+                <td>MCP: Microsoft Learn</td>
+                <td>Fresh product documentation lookup for coder and reviewer. It supports current AKS and Azure rules in the live flow.</td>
+                <td>Use <code>/mcp</code> with coder or reviewer selected.<br>See <code>.github/agents/terraform-coder.agent.md</code> and <code>terraform-reviewer.agent.md</code>.</td>
+              </tr>
+              <tr>
+                <td>MCP: pinned Docker Terraform MCP</td>
+                <td>Public Terraform Registry facts for coder and reviewer. The repo docs say this demo uses the Docker-run Terraform MCP pinned by digest.</td>
+                <td>Use <code>/mcp</code> with coder or reviewer selected.<br>See <code>docs/demo-runbook.md</code>, <code>docs/playbook.md</code>, and the agent profiles.</td>
+              </tr>
+              <tr>
+                <td>MCP: optional hosted Terraform MCP</td>
+                <td>The playbook documents an optional user-level <code>terraform-hosted</code> HTTP server entry. The repo docs treat it as an optional hosted alternative to the Docker-run local Terraform MCP.</td>
+                <td>Check <code>/mcp</code> or <code>copilot mcp list --json</code> for <code>terraform</code> and <code>terraform-hosted</code>.<br>See <code>docs/playbook.md</code> for the exact add command.</td>
+              </tr>
+              <tr>
+                <td>MCP: Squad state bridge</td>
+                <td><code>squad init</code> writes <code>.mcp.json</code> for the <code>squad_state</code> MCP server so Squad can persist shared state and decisions.</td>
+                <td>Read <code>docs/clean-machine-demo.md</code> and <code>.github/agents/squad.agent.md</code>.<br>On a fresh init, inspect <code>.mcp.json</code>.</td>
+              </tr>
+              <tr>
+                <td>The pre-staged module</td>
+                <td>It keeps the live time on the agents, prompts, tests, and review path instead of first-time implementation. The repo presents a qualified module revision and a bounded live change.</td>
+                <td>Read the module at <a href="https://github.com/martinopedal/terraform-azapi-aks-automatic">martinopedal/terraform-azapi-aks-automatic</a>.<br><code>terraform test -filter=tests\contract.tftest.hcl -no-color</code><br><code>terraform test -filter=tests\example.tftest.hcl -var-file=terraform.tfvars.example -no-color</code></td>
+              </tr>
+              <tr>
+                <td>The pre-deployed Online environment</td>
+                <td>It gives the audience a finished, already validated result while the live session spends time on the agents and GitHub flow. The repo documents runtime proof at 29/29 PASS and a gated OIDC pipeline path.</td>
+                <td><a href="https://github.com/martinopedal/aks-automatic-demo-env">martinopedal/aks-automatic-demo-env</a><br><code>./scripts/Test-OnlineSecurity.ps1</code><br><a href="https://aks-online-demo.swedencentral.cloudapp.azure.com/">Live page</a> · GitHub Actions runs in the demo-env repo</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2>D. Your 4 actions this week</h2>
+          </div>
+          <ol class="action-list">
+            <li>
+              <h3>Read this page and the deck</h3>
+              <p>Start here. Then open the live deck and the talk track.</p>
+              <p class="meta"><a href="https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/">Open the deck</a> · <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/talk-track.md">Open the talk track</a></p>
+            </li>
+            <li>
+              <h3>Test VM login once</h3>
+              <p>Do this with Martin. Do not send a password in chat.</p>
+              <div class="command-list">
+                <code>az login</code>
+                <code>$env:AZURE_SUBSCRIPTION_ID_ONLINE = '&lt;set in your shell only&gt;'</code>
+                <code>./scripts/Set-GuestLocalLogin.ps1 -UserName haflidi -FullName 'Haflidi (demo)'</code>
+                <code>./scripts/Connect-DemoVm.ps1 -LocalAccount</code>
+              </div>
+              <p class="meta">Sign in as <code>.\haflidi</code> when Windows prompts. Martin hands over the generated password in person or by phone. Re-run the setup after <code>action=recreate-vm</code>.</p>
+            </li>
+            <li>
+              <h3>Propose one 30-minute run-through</h3>
+              <p>Pick a time next week. Keep it simple. We only need one half-hour pass on the shared flow and handoffs.</p>
+            </li>
+            <li>
+              <h3>Open pull requests for anything you want changed</h3>
+              <p>You can branch directly in the main repo or fork first. These four commands create a fork path and open a pull request.</p>
+              <div class="command-list">
+                <code>gh repo fork martinopedal/squad-terraform-session-2026-10-14 --remote --remote-name haflidi --clone=false</code>
+                <code>git switch -c haflidi-change</code>
+                <code>git push --set-upstream haflidi haflidi-change</code>
+                <code>gh pr create --repo martinopedal/squad-terraform-session-2026-10-14 --base main --head haflidif:haflidi-change --fill</code>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+        <section class="card">
+          <h2>Flow diagram</h2>
+          <p>The diagram stays simple. It matches the public overview.</p>
           <div class="diagram-wrap">
-            <p class="diagram-status" id="diagram-status">Loading Mermaid. If it does not load, use the text fallback below.</p>
-            <div class="mermaid">
-flowchart TB
-  A["Clean VM: Haflidi"] --> B["CLI and Squad: Martin + Haflidi"]
-  B --> C["Qualified module: Martin + Haflidi"]
-  C --> D["Checks and repair: Martin + Haflidi"]
-  D --> E["Online consumer: Martin + Haflidi"]
+            <div class="flow-stack" aria-label="Session flow">
+              <div class="flow-node">Bootstrap and setup</div>
+              <div class="flow-arrow" aria-hidden="true">↓</div>
+              <div class="flow-node">Squad coordinates parallel agents</div>
+              <div class="flow-arrow" aria-hidden="true">↓</div>
+              <div class="flow-node">Copilot CLI agents work on Terraform</div>
+              <div class="flow-arrow" aria-hidden="true">↓</div>
+              <div class="flow-node">Gates and security checks</div>
+              <div class="flow-arrow" aria-hidden="true">↓</div>
+              <div class="flow-node">Human reviews plan</div>
+              <div class="flow-arrow" aria-hidden="true">↓</div>
+              <div class="flow-node">Pipeline applies</div>
+              <div class="flow-arrow" aria-hidden="true">↓</div>
+              <div class="flow-node">Online demo page</div>
             </div>
-            <pre class="fallback" id="diagram-fallback">1. Clean VM setup -> Haflidi leads
-2. CLI and Squad map -> Martin leads, Haflidi explains coordination
-3. Qualified module and gates -> Martin introduces, Haflidi explains boundary
-4. Source checks and repair loop -> Martin drives, Haflidi validates
-5. Online consumer view -> Martin shows, Haflidi maps back to the gates</pre>
           </div>
         </section>
 
         <section class="card agree">
           <h2>To agree</h2>
           <ul>
-            <li>Squad on ACA stays an optional segment. The current repo is <code>haflidif/squad-on-aca</code>. Sweden Central hit capacity errors. Other regions are being tried. It is not in the current run plan.</li>
-            <li>Decide whether to show the hosted Terraform MCP on ACA beside the pinned Docker Terraform MCP used in the docs. Current note: <code>tfmcp-app</code> exists and works with a key header.</li>
-            <li>Confirm the 55:00-58:00 window rule. The talk track leaves room for recap or Q&amp;A warm-up if the session is ahead. The run plan says no new content in that window.</li>
-            <li>Confirm the VM account plan. The docs say Haflidi uses a local VM account. The current decision is that it stays administrator for the demo.</li>
-            <li>Pick a rehearsal time and hold it on both calendars.</li>
+            <li>Squad on ACA stays optional and live-capable. Proof chain: issue #2 in <code>martinopedal/squad-on-aca-demo-target</code> to enqueue workflow <code>37921482752</code> to ACA job execution <code>caj-squad-aca-agent-corp-ne-dtbhx</code> to bot PR #3.</li>
+            <li>Confirm whether we mention the hosted Terraform MCP beside the pinned Docker Terraform MCP.</li>
+            <li>Keep the 55:00-58:00 rule clear. Use that window for recovery only.</li>
+            <li>Keep the guest VM login flow simple. Local account. Private password handoff. One quick test before rehearsal week.</li>
+            <li>Pick the rehearsal slot and lock it in.</li>
           </ul>
         </section>
 
@@ -363,16 +909,32 @@ flowchart TB
           <h2>How to contribute</h2>
           <p>Use the public repo at <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14">martinopedal/squad-terraform-session-2026-10-14</a>.</p>
           <ul>
-            <li>Fork the repo, create a branch, make the change, and open a pull request.</li>
-            <li>Haflidi already has write access, so he can also branch directly in the main repo.</li>
-            <li>Start with <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/overview.md"><code>docs/overview.md</code></a>, <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/talk-track.md"><code>docs/talk-track.md</code></a>, <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/run-plan.md"><code>docs/run-plan.md</code></a>, and <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/playbook.md"><code>docs/playbook.md</code></a>.</li>
+            <li>Read <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/overview.md"><code>docs/overview.md</code></a>, <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/talk-track.md"><code>docs/talk-track.md</code></a>, <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/run-plan.md"><code>docs/run-plan.md</code></a>, and <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/playbook.md"><code>docs/playbook.md</code></a> first.</li>
+            <li>Open a branch or fork. Make the change. Open a pull request.</li>
             <li>Use the live deck for slide context: <a href="https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/">presentation deck</a>.</li>
+            <li>Keep changes short, public, and reviewable.</li>
           </ul>
-          <p class="meta">This page is a short guide. The full script and timing still live in the talk track and run plan.</p>
+          <p class="meta">This page is a short guide. The full timing still lives in the run plan and the talk track.</p>
         </section>
       </main>
 
       <aside class="aside">
+        <section class="card">
+          <h2>Haflidi links</h2>
+          <div class="profile">
+            <img src="./haflidi.jpg" alt="Haflidi Fridthjofsson">
+            <div>
+              <h3>Haflidi Fridthjofsson</h3>
+              <p>Sr Cloud Solution Architect, Microsoft</p>
+              <div class="profile-links">
+                <a href="https://azureviking.com">azureviking.com</a>
+                <a href="https://www.linkedin.com/in/haflidif">LinkedIn</a>
+                <a href="https://github.com/haflidif">GitHub</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section class="card">
           <h2>Quick links</h2>
           <div class="link-grid">
@@ -384,9 +946,9 @@ flowchart TB
               Run plan
               <span>Clock, cut lines, and preflight</span>
             </a>
-            <a class="link-tile" href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/overview.md">
-              Overview
-              <span>Short public summary of the flow</span>
+            <a class="link-tile" href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/playbook.md">
+              Playbook
+              <span>Exact commands used in rehearsal</span>
             </a>
             <a class="link-tile" href="https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/">
               Live deck
@@ -397,13 +959,13 @@ flowchart TB
 
         <section class="card">
           <h2>Why this page exists</h2>
-          <p>It gives Haflidi one short screen with the shared story, current ownership, open points, and edit path.</p>
+          <p>It gives Haflidi one short screen with the repo map, the simple flow, and the next actions.</p>
           <p class="meta">Page path: <code>/haflidi-overview.html</code></p>
         </section>
       </aside>
     </div>
 
-    <p class="footer">Source base: <code>docs/overview.md</code>, <code>docs/talk-track.md</code>, <code>docs/run-plan.md</code>, <code>docs/playbook.md</code>, and the public deck links in this repo.</p>
+    <p class="footer">Source base: <code>docs/overview.md</code>, <code>docs/talk-track.md</code>, <code>docs/run-plan.md</code>, <code>docs/playbook.md</code>, the current repository READMEs, and <code>aks-automatic-demo-env</code> VM scripts.</p>
   </div>
 </body>
 </html>
