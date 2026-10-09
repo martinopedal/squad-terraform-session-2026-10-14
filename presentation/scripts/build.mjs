@@ -56,9 +56,9 @@ for (const [id, block] of blocks) {
 const spokenWords = speakers.Martin + speakers.Haflidi;
 const descriptionWords = words(sessionize.split('## Description and outcomes\n')[1].split('\n## ')[0]);
 const pitchWords = words(sessionize.split('## Elevator pitch\n')[1].split('\n## ')[0]);
-if (slides.length !== 38 || slides.filter(slide => slide.preshow).length !== 2 ||
-    slides.filter(slide => !slide.id.startsWith('a-') && !slide.preshow).length !== 25) {
-  throw new Error('Expected two untimed pre-show slides, 25 timed main slides, and eleven appendix slides.');
+if (slides.length !== 39 || slides.filter(slide => slide.preshow).length !== 2 ||
+    slides.filter(slide => !slide.id.startsWith('a-') && !slide.preshow).length !== 26) {
+  throw new Error('Expected two untimed pre-show slides, 26 timed main slides, and eleven appendix slides.');
 }
 const [openingSlide, legalSlide, firstTimedSlide] = slides;
 if (openingSlide.id !== 'opening' || legalSlide.id !== 'legal-notice' || !legalSlide.preshow ||
@@ -69,30 +69,33 @@ if (spokenWords < 5300 || spokenWords > 5900 || qaWords !== 0) throw new Error(`
 if (Math.abs(speakers.Martin - speakers.Haflidi) / spokenWords > .1) throw new Error('Speaker contributions differ by more than 10%.');
 if (descriptionWords < 250 || descriptionWords > 350 || pitchWords < 45 || pitchWords > 65) throw new Error('Sessionize word count is out of range.');
 if (new Set(slides.map(slide => slide.id)).size !== slides.length) throw new Error('Duplicate slide ID.');
-for (const slide of slides) if (!slide.preshow && !blocks.has(slide.id)) throw new Error(`Missing complete notes for ${slide.id}.`);
+for (const slide of slides) if (!slide.preshow && !slide.notes && !blocks.has(slide.id)) throw new Error(`Missing complete notes for ${slide.id}.`);
 const chapters = slides.filter(slide => slide.chapter).map(slide => ({ id: slide.chapter, title: slide.title, duration: slide.duration, slide: slide.id }));
 const expectedChapterDurations = [180, 180, 240, 240, 240, 300, 180, 180];
 if (chapters.reduce((sum, chapter) => sum + chapter.duration, 0) !== 1740 ||
     chapters.some((chapter, index) => chapter.id !== `C${index}` || chapter.duration !== expectedChapterDurations[index])) {
   throw new Error('Live demo chapter budget must be C0-C7 = 3/3/4/4/4/5/3/3 minutes, totaling 29 minutes.');
 }
-const protectedSlackSeconds = 0;
+const protectedSlackSeconds = 180;
 const closeBufferSeconds = 120;
 const toSeconds = value => value.split(':').reduce((sum, component) => sum * 60 + Number(component), 0);
-const clock = { intro: 0, demo: 0, explanation: 0, close: 0, qa: 0 };
+const clock = { intro: 0, demo: 0, explanation: 0, slack: 0, close: 0, qa: 0 };
 let previousEnd = 0;
 for (const slide of slides.filter(item => !item.id.startsWith('a-') && !item.preshow)) {
   const [start, end] = slide.time.split('-').map(toSeconds);
   if (start !== previousEnd || end <= start) throw new Error(`Discontinuous slide clock at ${slide.id}.`);
   if (slide.chapter && end - start !== slide.duration) throw new Error(`Clip and stage duration disagree at ${slide.id}.`);
-  const bucket = slide.chapter ? 'demo' : slide.id === 's01-outcome' ? 'intro' : slide.id === 's22-questions' ? 'close' : 'explanation';
+  const bucket = slide.chapter ? 'demo'
+    : slide.id === 's01-outcome' ? 'intro'
+      : slide.id === 'buffer-recovery' ? 'slack'
+        : slide.id === 's22-questions' ? 'close' : 'explanation';
   clock[bucket] += end - start;
   previousEnd = end;
 }
-if (previousEnd !== 3600 || clock.intro !== 180 || clock.demo !== 1740 || clock.explanation !== 1560 ||
-    clock.close !== closeBufferSeconds || clock.qa !== 0 || protectedSlackSeconds !== 0 ||
-    previousEnd - clock.close !== 3480) {
-  throw new Error('The actual slide clock must retain 3 intro / 29 demo / 26 explanation / 0 slack / 0 scheduled Q&A / 2 close-buffer minutes, with content ending at 58:00.');
+if (previousEnd !== 3600 || clock.intro !== 180 || clock.demo !== 1740 || clock.explanation !== 1380 ||
+    clock.slack !== protectedSlackSeconds || clock.close !== closeBufferSeconds || clock.qa !== 0 ||
+    previousEnd - clock.close - clock.slack !== 3300) {
+  throw new Error('The actual slide clock must retain 3 intro / 29 demo / 23 explanation / 3 protected slack / 0 scheduled Q&A / 2 close-buffer minutes, with content ending at 55:00.');
 }
 for (const chapter of chapters) {
   const item = media[chapter.id];
@@ -106,11 +109,11 @@ for (const chapter of chapters) {
 }
 
 const build = {
-  version: version.version, openingSlides: 2, mainSlides: 25, appendixSlides: 11,
+  version: version.version, openingSlides: 2, mainSlides: 26, appendixSlides: 11,
   demoMinutes: clock.demo / 60, introMinutes: clock.intro / 60, explanationMinutes: clock.explanation / 60,
-  protectedSlackMinutes: protectedSlackSeconds / 60, closeBufferMinutes: clock.close / 60,
+  protectedSlackMinutes: clock.slack / 60, closeBufferMinutes: clock.close / 60,
   nonDemoSlideMinutes: (clock.intro + clock.explanation + clock.close) / 60,
-  contentEnd: '58:00', mainFlowMinutes: (previousEnd - clock.close) / 60,
+  contentEnd: '55:00', mainFlowMinutes: (previousEnd - clock.close - clock.slack) / 60,
   qaMinutes: clock.qa / 60, closeStart: '58:00', questions: 'if time allows',
   timedSlideMinutes: previousEnd / 60,
   spokenWords, speakers, qaWords, descriptionWords, pitchWords,
@@ -127,7 +130,8 @@ const navigation = `<dialog class="navigation-dialog" aria-labelledby="navigatio
   <div><h3>Optional references</h3>${slides.filter(slide => slide.id.startsWith('a-')).map(navLink).join('')}</div></div>
   <p class="navigation-help">Arrow keys: slides and fragments. S: speaker notes. Escape: overview or close this menu. N: this menu.</p></dialog>`;
 const sections = slides.map((slide, index) => {
-  const completeNotes = slide.preshow ? marked.parse(slide.notes || '') : marked.parse(blocks.get(slide.id));
+  const rawNotes = slide.preshow ? (slide.notes || '') : (slide.notes || blocks.get(slide.id) || '');
+  const completeNotes = marked.parse(rawNotes);
   const noteHTML = slide.id.startsWith('a-') ? completeNotes : completeNotes.replace(/<blockquote>([\s\S]*?)<\/blockquote>/g,
     '<details class="operator-cues"><summary>Operator cues and timing</summary><blockquote>$1</blockquote></details>');
   return renderSection(slide, index, applyNoteFactOverrides(slide.id, noteHTML), evidence, media);
@@ -167,6 +171,6 @@ await writeFile(join(root, 'index.html'), html, 'utf8');
 await writeFile(join(root, 'qa/build-manifest.json'), JSON.stringify({
   ...build, htmlBytes: Buffer.byteLength(html), htmlSHA256: createHash('sha256').update(html).digest('hex')
 }, null, 2) + '\n');
-console.log(`Built index.html: 2 pre-show + 25 timed main + 11 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} scheduled Q&A words.`);
-console.log('Timing 3 intro / 29 demo / 26 explanation / 0 slack / 2 close buffer; questions if time allows.');
+console.log(`Built index.html: 2 pre-show + 26 timed main + 11 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} scheduled Q&A words.`);
+console.log('Timing 3 intro / 29 demo / 23 explanation / 3 protected slack / 2 close buffer; questions if time allows.');
 console.log(`Sessionize: ${descriptionWords}-word description; ${pitchWords}-word pitch. HTML ${(Buffer.byteLength(html) / 1024).toFixed(0)} KiB.`);

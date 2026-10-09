@@ -1,6 +1,6 @@
 # C0: From zero to a squad (clean Windows 11 demo VM)
 
-C0 is a 3-minute live chapter (deck slide `demo-c0`, 07:00-10:00, Haflidi leads). It shows the from-zero install of Copilot CLI and Squad on a machine that has never had them, which a presenter laptop cannot show. Optional recordings/screenshots are fallback evidence only.
+C0 is a 3-minute live chapter (deck slide `demo-c0`, 05:30-08:30, Haflidi leads). It shows the from-zero install of Copilot CLI and Squad on a machine that has never had them, which a presenter laptop cannot show. Optional recordings/screenshots are fallback evidence only.
 
 Everything below was checked on 2026-10-07 against the deployed VM and a throwaway clone. Re-run the preflight before the live demo because package versions move.
 
@@ -41,10 +41,10 @@ Pre-staged before session: VM recreated or verified clean; Bastion already conne
 | 00:30 | Three installs | see block 1 (cut the waits, overlay "install time compressed") |
 | 01:15 | Sign in | `copilot`, then `/login`, device flow in Edge, then `/exit` |
 | 01:50 | Scaffold | block 2: clone the public module repo, `squad init` |
-| 02:15 / 09:15 cut | Hire | `copilot --agent squad`, describe the project, confirm the proposed roster |
+| 02:15 / 07:45 cut | Hire | `copilot --agent squad`, describe the project, confirm the proposed roster |
 | 02:45 | Verify | `squad doctor` (expect `10 passed, 0 failed`) |
 
-Cut at 09:15 (2:15 into the slot): if installs or login are not complete, state the live stall, show fallback evidence, and move to `s05-parallel`. Do not spend the close buffer on installing tools.
+Cut at 07:45 (2:15 into the slot): if installs or login are not complete, state the live stall, show fallback evidence, and move to `s05-parallel`. Do not spend the protected recovery window on installing tools.
 
 Block 1, installs:
 

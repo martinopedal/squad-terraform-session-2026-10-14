@@ -79,3 +79,21 @@ test('demo timings and chapter IDs follow the run plan', () => {
     ['C7', 180]
   ]);
 });
+
+test('protected recovery block exists outside scripted content minutes', () => {
+  const timedSlides = slides.filter(slide => !slide.preshow && !slide.id.startsWith('a-'));
+  const toSeconds = value => value.split(':').reduce((sum, part) => sum * 60 + Number(part), 0);
+  const bufferSlide = timedSlides.find(slide => slide.id === 'buffer-recovery');
+
+  assert.ok(bufferSlide, 'buffer-recovery slide should exist');
+  assert.equal(bufferSlide.time, '55:00-58:00');
+
+  const scriptedSeconds = timedSlides
+    .filter(slide => slide.id !== 'buffer-recovery' && slide.id !== 's22-questions')
+    .reduce((sum, slide) => {
+      const [start, end] = slide.time.split('-').map(toSeconds);
+      return sum + (end - start);
+    }, 0);
+
+  assert.equal(scriptedSeconds, 55 * 60);
+});

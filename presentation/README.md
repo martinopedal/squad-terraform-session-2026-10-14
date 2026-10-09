@@ -40,7 +40,7 @@ Press `S` or select **Speaker notes** to open current/next slides, the complete 
 
 In overview, click a thumbnail or use arrows to select a slide, then Escape to return to it. Thumbnail links and video controls remain inert. On exit, only the active slide becomes interactive; the approved presenter-shortcut behavior is unchanged.
 
-The first slide is a pre-show NIC 2026 opening page and does not consume session time. The 25 timed main slides allocate 3 minutes to the intro, 29 minutes to live demo chapters (C0-C7), 26 minutes to explanation, and a 2-minute close buffer. There is no scheduled Q&A; questions happen only if time allows, and the appendix stays after the close for hallway/reference use.
+The first two slides are untimed pre-show material (opening page and legal notice) and do not consume session time. The 26 timed main slides allocate 3 minutes to the intro, 52 minutes of planned content before recovery (including 29 live demo minutes across C0-C7 and 23 explanation minutes), a visible 3-minute protected recovery window, and a 2-minute close. There is no scheduled Q&A; questions happen only if time allows, and the appendix stays after the close for hallway/reference use.
 
 ## Build
 
@@ -67,11 +67,11 @@ Only genuine Copilot CLI with Squad selected, standalone or in a real integrated
 
 Source qualification may finish before delivery. The live chapter must execute from a disclosed clean checkpoint or explicitly use the Offline fallback line. Do not substitute prior qualification output for a live result. If optional fallback recordings are used later, record the qualification revision, take-start checkpoint, prepared code and Squad state, and the actual change executed in the take.
 
-Deck 0.20.0 follows the 60-minute run-plan contract and keeps on-screen media attachment controls removed. Keep fallback recordings/screenshots outside the public package unless presenters explicitly decide to publish them in a later build.
+Deck 0.21.1 follows the 60-minute run-plan contract with 55 minutes of scripted content, a visible 55:00-58:00 protected recovery window, and the same on-screen media attachment controls removed. Keep fallback recordings/screenshots outside the public package unless presenters explicitly decide to publish them in a later build.
 
 The legacy `src\media.json` file remains harmless metadata for optional fallback review, but the current live deck does not render media placeholders or local MP4 controls.
 
-Retain provenance and edit records outside the deck's public package. Durations are unchanged: C0 3 minutes, C1 3, C2 4, C3 4, C4 4, C5 5, C6 3, and C7 3; C0 now runs 07:00-10:00 before C1. The fallback owner must verify the actual UI, selected agent, content, and duration before citing a capture.
+Retain provenance and edit records outside the deck's public package. Durations are unchanged: C0 3 minutes, C1 3, C2 4, C3 4, C4 4, C5 5, C6 3, and C7 3; C0 now runs 05:30-08:30 before C1. The fallback owner must verify the actual UI, selected agent, content, and duration before citing a capture.
 
 Pin and display the actual live-demo executable versions. Current validation is Copilot CLI 1.0.93 and Squad 1.0.1 on October 8, 2026; earlier probes in the [verified feature guide](../docs/feature-guide.md) are explicitly historical. `--no-auto-update` is not a version selector. C2 must retain interactive Plan mode and human approval; never use the auto-approving `--plan --mode autopilot` combination. Rehearse current documented guards and instruction inheritance in the chosen build instead of treating help as UI evidence.
 

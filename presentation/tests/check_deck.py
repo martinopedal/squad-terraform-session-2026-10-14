@@ -100,7 +100,7 @@ def main():
             manifest = page.evaluate("window.presentationBuild")
             report["deckVersion"] = manifest["version"]
             report["htmlSHA256"] = hashlib.sha256((ROOT / "index.html").read_bytes()).hexdigest()
-            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 38 and manifest["openingSlides"] == 2 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 11)
+            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 39 and manifest["openingSlides"] == 2 and manifest["mainSlides"] == 26 and manifest["appendixSlides"] == 11)
             check("legal slide untimed before s01", page.evaluate("""() => {
                 const slides = [...document.querySelectorAll('.slides > section')];
                 return slides[0].id === 'opening' &&
@@ -114,7 +114,7 @@ def main():
                   [manifest[k] for k in ("demoMinutes", "introMinutes", "explanationMinutes", "protectedSlackMinutes",
                                          "closeBufferMinutes", "qaMinutes", "nonDemoSlideMinutes", "mainFlowMinutes",
                                          "timedSlideMinutes", "contentEnd", "closeStart", "questions")]
-                  == [29, 3, 26, 0, 2, 0, 31, 58, 60, "58:00", "58:00", "if time allows"])
+                  == [29, 3, 23, 3, 2, 0, 28, 55, 60, "55:00", "58:00", "if time allows"])
             check("chapter lengths", [chapter["duration"] // 60 for chapter in manifest["chapters"]] == [3, 3, 4, 4, 4, 5, 3, 3]
                   and [chapter["id"] for chapter in manifest["chapters"]] == [f"C{i}" for i in range(8)], manifest["chapters"])
             check("intro and contiguous clocks", page.evaluate("""() => {
@@ -128,6 +128,22 @@ def main():
                         end = stop;
                         return ok;
                     }) && end === 3600;
+            }"""))
+            check("protected recovery block is visible and excluded from scripted content", page.evaluate("""() => {
+                const toSeconds = value => value.split(':').reduce((sum, part) => sum * 60 + Number(part), 0);
+                const timedSlides = [...document.querySelectorAll('.slides > section:not([data-appendix]):not([data-preshow])')];
+                const buffer = timedSlides.find(slide => slide.id === 'buffer-recovery');
+                const scripted = timedSlides
+                    .filter(slide => !['buffer-recovery', 's22-questions'].includes(slide.id))
+                    .reduce((sum, slide) => {
+                        const [start, end] = slide.dataset.stageTime.split('-').map(toSeconds);
+                        return sum + (end - start);
+                    }, 0);
+                return !!buffer &&
+                    buffer.dataset.stageTime === '55:00-58:00' &&
+                    /Protected recovery time/.test(buffer.textContent) &&
+                    /No new story beats/.test(buffer.textContent) &&
+                    scripted === 55 * 60;
             }"""))
             check("main spoken words", 5300 <= manifest["spokenWords"] <= 5900, manifest["spokenWords"])
             check("no scheduled Q&A words", manifest["qaWords"] == 0, manifest["qaWords"])

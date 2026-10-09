@@ -211,6 +211,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .closing-line p { font-size: 25px; color: inherit; }
 .closing-line strong { font-size: 32px; color: inherit; font-weight: 500; }
 .closing-statement { color: inherit; font-size: 25px; padding-top: 4px; }
+.buffer-card { border: 3px solid currentColor; padding: 34px 40px; display: grid; gap: 18px; text-align: center; align-self: center; max-width: 930px; }
+.buffer-card h3 { font-size: 42px; }
+.buffer-card p { font-size: 28px; line-height: 1.24; }
+.buffer-card .buffer-rule { font-size: 22px; }
 .questions-lede { font-size: 36px; color: inherit; margin-bottom: 14px !important; font-weight: 400; }
 .appendix-links { display: grid; grid-template-columns: 1fr 1fr; gap: 0 56px; }
 .appendix-links a { display: flex; align-items: center; gap: 18px; font-size: 25px; padding: 17px 0; border-top: 1px solid currentColor; text-decoration: none; color: inherit; }
