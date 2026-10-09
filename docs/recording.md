@@ -1,10 +1,12 @@
 # Record the real Copilot CLI and Squad session
 
+> Decision 2026-10-08: recordings are optional fallback evidence for the live demo. Run C0-C7 live first; use this guide only when an approved fallback capture is needed.
+
 Record the current real Copilot CLI shell with Squad selected. Keep using this
 shell; don't open a replacement terminal or custom UI. Follow
 [demo-runbook.md](demo-runbook.md) for the C1-C7 operator sequence.
 
-The user selected `build_then_record_clean_run`: qualify the code first, then
+The user selected `qualify_then_run_clean_checkpoint`: qualify the code first, then
 film genuine new execution from a disclosed clean checkpoint. Qualification
 work is not already-filmed evidence or the first recorded implementation.
 
@@ -46,8 +48,8 @@ method and review of actual frames.
 ## Known GPU-terminal limitation and normal capture
 
 The observed `gdigrab` attempt against the GPU-rendered terminal produced black
-frames. Successful encoding, progress counters, and a decodable file are not
-proof that the real UI was captured. Do not substitute old custom-viewer pilots
+frames. Successful encoding, progress counters, and a decodable file do not provide
+evidence that the real UI was captured. Do not substitute old custom-viewer pilots
 or move the demonstration to another app to conceal this limitation.
 
 Use normal OBS Window Capture, preferably its Windows Graphics Capture method,
@@ -84,7 +86,7 @@ $windowPid = $target[0].Id
 
 Use the window host's PID, not the Copilot subprocess PID. Preflight resolves its
 HWND, requires one exact-title match, checks storage/tools, and rejects minimized
-or ambiguous windows. It does not capture pixels or prove that Squad is selected.
+or ambiguous windows. It does not capture pixels or show that Squad is selected.
 `ReviewedCli` records explicit approval of this chosen window only.
 
 ## Optional FFmpeg-managed takes
@@ -205,4 +207,4 @@ python -B -m unittest discover -s .\scripts\recording -p 'test_*.py' -v
 Tests use fixture processes and explicitly synthetic media only. They cover
 retired-option refusals, exact-window dispatch, ownership, cancellation,
 finalization, decoding, and export provenance. They do not open a terminal,
-create a viewer, capture desktop pixels, or prove native CLI recording readiness.
+create a viewer, capture desktop pixels, or establish native CLI recording readiness.

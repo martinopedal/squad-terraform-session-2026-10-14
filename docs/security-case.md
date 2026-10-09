@@ -2,7 +2,7 @@
 
 This is an evidence-based account of the controls around the Online AKS demo and the demo VM. Each claim names how to check it. Identifiers stay private. Gaps are listed at the end, not hidden.
 
-Evidence date: 2026-10-07. Demo-env repository: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env). Module repository: [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic), which now holds only the reusable module and no deployment environment or Azure federated credential (removed 2026-10-08 after re-validation from the demo-env repository).
+Evidence date: 2026-10-08. Demo-env repository: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env). Module repository: [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic), which now holds only the reusable module and no deployment environment or Azure federated credential (removed 2026-10-08 after re-validation from the demo-env repository).
 
 ## 1. The delivery chain
 
@@ -11,11 +11,17 @@ Evidence date: 2026-10-07. Demo-env repository: [`martinopedal/aks-automatic-dem
 | All change through pull requests to protected `main` branches | Demo-env checks: Terraform Validate, Trivy IaC Scan, Checkov, TFLint. Module checks: Terraform Validate, Style Check, CodeQL, Checkov, TFLint, Trivy IaC Scan. Both are strict (up to date) with 1 approving review |
 | Human gate before any Azure write | `online` environment: required reviewer, protected branches only, admin bypass off |
 | No stored cloud secrets | GitHub OIDC federation to a user-assigned identity; the workflow holds no client secret |
-| Private state | Tenant policy forces `publicNetworkAccess=Disabled` on storage; state is reached only through a private endpoint. `Test-OnlineSecurity.ps1` proves anonymous internet access is refused |
+| Private state | Tenant policy forces `publicNetworkAccess=Disabled` on storage; state is reached only through a private endpoint. `Test-OnlineSecurity.ps1` confirms anonymous internet access is refused |
 | Ephemeral, identity-less runner | VNet-integrated Container Apps Job, one execution per run, no managed identity, outbound 443 only |
 | Locked API server | Authorized IP ranges contain only the runner's static NAT egress IP |
-| No plan artifact in a public repo | Plan, apply, deploy, and proof run in one job; `tfplan` is never uploaded |
-| Proof or fail | The run fails unless HTTPS returns 200 and the Ingress forces HTTPS; read-back is repeated independently by `Test-OnlineSecurity.ps1` (28/28 on 2026-10-07, and again on 2026-10-08 from the demo-env repository) |
+| Public demo hostname | `https://aks-online-demo.swedencentral.cloudapp.azure.com/` is served through a dedicated App Routing `NginxIngressController` with an Azure default DNS label. The demo presents the default NGINX self-signed certificate because no trusted certificate is configured; accept the browser warning when opening it manually |
+| Time-boxed break-glass App Routing write | Custom role `AKS App Routing Controller Writer (online demo)` scopes the demo pipeline to `NginxIngressController` resources in group `approuting.kubernetes.azure.com`. The ABAC attribute is preview, the condition does not constrain the resource name, and the grant is demo-only and time-boxed, documented in the demo-env runbook, and removed during teardown |
+| No plan artifact in a public repo | Plan, apply, deploy, and runtime check run in one job; `tfplan` is never uploaded |
+| Runtime check or fail | The run fails unless the hostname returns HTTPS 200, HTTP redirects to HTTPS, and DNS resolves to the App Routing controller Service address. Apply runs 37771532872 and 37772290635 both succeeded with plan "No changes", DNS matching the ingress IP, HTTPS 200 by hostname, and page title "AKS Automatic \| NIC 2026 demo". `Test-OnlineSecurity.ps1` is 29/29 PASS at 13:48 on 2026-10-08. |
+
+### Same gate map for every change
+
+Whether a change is human-authored or agent-assisted, the change goes through the same gate map: PR under GitHub identity → checks/scans → review + protected `main` → plan → environment approval → OIDC apply → runtime check and Actions audit trail. These are the gates documented above, with the known limits still visible: the single maintainer can use an admin override, `prevent_self_review` is off, the environment gate sits before the apply job's plan, identifiers remain in history, and Checkov does not interpret azapi request bodies. The compensating evidence is a reviewed plan-only run, in-job plan comparison before apply, and runtime checks scoped to the Online path they exercise.
 
 ## 2. Platform guardrails we designed for, not around
 
@@ -29,8 +35,8 @@ The Azure Landing Zone policies were treated as requirements. No exemption was r
 
 - **Cluster:** AKS Automatic (managed system node pools), Entra ID only with local accounts disabled, Kubernetes RBAC through Azure, user-assigned identity, NAT Gateway egress.
 - **App namespace:** AKS managed namespace with Pod Security `restricted`, default-deny ingress and egress, resource quota. The pipeline identity cannot list nodes, by design.
-- **App:** distroless, non-root (UID 10001), pinned by digest, read-only root filesystem, NetworkPolicy admitting only the ingress controller, HTTPS-only Ingress.
-- **Demo VM:** no public IP; Azure Bastion Standard only; Entra sign-in with MFA; an ABAC condition limits the pipeline's role-assignment right to two roles granted to users; the local admin password is generated per run, marked ephemeral and sensitive, and never stored; PowerShell is installed from a hash- and signature-verified MSI; auto-shutdown nightly.
+- **App:** branded NIC 2026 page served by `nginx-unprivileged` pinned by digest, same pod hardening, CSP headers, NetworkPolicy admitting only the ingress controller, HTTPS-only Ingress through the dedicated App Routing controller.
+- **Demo VM:** no public IP; Azure Bastion Standard only. Martin uses Entra sign-in with MFA. Haflidi uses a local account through Bastion because B2B guests cannot use Entra VM sign-in; the credential is handed over out of band and not stored. An ABAC condition limits the pipeline's role-assignment right to two roles granted to users; PowerShell is installed from a hash- and signature-verified MSI; auto-shutdown nightly.
 
 ## 4. GitHub Advanced Security baseline
 
@@ -59,7 +65,7 @@ What made the AI output trustworthy enough to merge:
 
 - **MCP for sources:** Microsoft Learn for product rules (for example, that Base to Automatic migration is not supported, and that B2B guests cannot use Entra VM sign-in). Azure read-back for the deployed state. The agent cites the source, and the claim is re-checked by a test or a read-back.
 - **Skills and instructions:** repository Terraform instructions, a secret-handling skill (never read `.env` or write secrets into committed state), and a reviewer protocol that locks a rejected author out of the revision.
-- **Tests as oracles:** 22 module `terraform test` cases including contract and regression tests; 28 read-back checks including negative tests from the internet; 14 demo VM checks.
+- **Tests as oracles:** 52 module contract cases plus 2 caller/example `terraform test` cases; 29/29 Online read-back checks including negative tests from the internet and hostname resolution to the ingress address; 14 demo VM checks.
 - **Humans approve:** every merge and every Azure write passed a human decision.
 
 ## 6. Honest gaps
@@ -68,7 +74,7 @@ What made the AI output trustworthy enough to merge:
 - The environment gate sits before the job's plan. Mitigation: a plan-only run is reviewed first, and the apply run's plan is compared before it proceeds.
 - Real identifiers remain in git history.
 - Checkov does not interpret azapi request bodies. Cluster security properties are covered by contract tests, Azure Policy, and read-back instead.
-- The ingress uses the NGINX default certificate. Production should use a Key Vault certificate.
+- The public demo hostname presents the default NGINX self-signed certificate because no trusted certificate is configured. Accept the browser warning for the demo; production should use a Key Vault-backed certificate.
 - The Corp example manifests are not runtime-validated; their registry does not exist.
 
 ## Reproduce
@@ -76,7 +82,7 @@ What made the AI output trustworthy enough to merge:
 From the demo-env repository, with `$env:AZURE_SUBSCRIPTION_ID_ONLINE` set:
 
 ```powershell
-./scripts/Test-OnlineSecurity.ps1     # 28 checks, exit 1 on failure
+./scripts/Test-OnlineSecurity.ps1     # 29 checks, exit 1 on failure
 ./scripts/Test-DemoVm.ps1             # 14 checks, exit 1 on failure
 ```
 

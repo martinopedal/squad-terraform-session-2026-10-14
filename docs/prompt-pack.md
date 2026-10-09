@@ -1,8 +1,8 @@
 # Prompt pack: build a module like this, repeatably
 
-Run these prompts in order to build or extend an AKS Automatic Terraform module with GitHub Copilot CLI, Squad, the three native agent profiles, and read-only MCP documentation lookups. They match the lanes in [AGENTS.md](../AGENTS.md) and [CONTRIBUTING.md](../CONTRIBUTING.md) and the evidence rules in [QUALITY.md](../QUALITY.md).
+Run these prompts in order to build or extend an AKS Automatic Terraform module with GitHub Copilot CLI, Squad, the three native agent profiles, and read-only MCP documentation lookups. They match the lanes in [AGENTS.md](../AGENTS.md) and [CONTRIBUTING.md](../CONTRIBUTING.md) and the evidence rules in [QUALITY.md](../QUALITY.md). Step-by-step: [playbook](playbook.md).
 
-Repeatable does not mean deterministic. A model can choose differently on two runs. These prompts narrow the choices, make every claim checkable, and make a wrong turn visible early. Measure it: run a brief five times from the same checkpoint and count green runs (see [Measure repeatability](#measure-repeatability)).
+Repeatable does not mean identical output. A model can choose differently on two runs. These prompts narrow the choices, make every claim checkable, and make a wrong turn visible early. Measure it: run a brief five times from the same checkpoint and count green runs (see [Measure repeatability](#measure-repeatability)).
 
 ## What makes results repeatable
 
@@ -24,6 +24,8 @@ copilot --agent squad --plan
 ```
 
 Run `/model` and note the model for each lane. In `/mcp`, confirm `microsoft-learn` and `terraform` are connected. Keep native permission prompts on; do not use `--allow-all` or autopilot for these prompts.
+
+Headless MCP check fallback: `copilot mcp list --json` confirms configured server names without adding or removing servers.
 
 ## 0. Frame the contract (Squad lead, Plan mode)
 
@@ -73,7 +75,7 @@ each fact. Mark anything you could not source as unverified.
 Implement only the approved plan in these files: <list>. Keep providers and
 backend in the root, the module provider-free, typed inputs with
 validation, and lifecycle guards unchanged. Add or update the positive and
-negative tests that prove the contract change. Hand off: changed files,
+negative tests that verify the contract change. Hand off: changed files,
 contract delta, the assertion that should fail without your change, and
 sources. Do not run commands.
 ```
@@ -117,7 +119,7 @@ step 1 require. Pass IDs the module uses in count as values known at plan
 time. Do not put environment values in the module.
 ```
 
-Then deploy through the pipeline, never from a laptop: plan, read the plan, approve the environment gate, apply, and prove the result (HTTPS 200 and HTTP to HTTPS redirect for the demo app). The Online example is in the demo-env repository under `deployments/online/` and `.github/workflows/deploy-online.yml`.
+Then deploy through the pipeline, never from a laptop: plan, read the plan, approve the environment gate, apply, and capture runtime evidence (HTTPS 200 by hostname, HTTP to HTTPS redirect, and DNS matching the App Routing controller Service address for the demo app). The Online example is in the demo-env repository under `deployments/online/` and `.github/workflows/deploy-online.yml`.
 
 ## 7. Record the reason (Squad, Scribe)
 
@@ -129,7 +131,7 @@ no subscription, tenant, or principal IDs.
 
 ## Measure repeatability
 
-Use the approved determinism eval from the session: three briefs, five fresh runs each, from the same pinned base. Each run uses a new worktree, a new CLI process, identical flags and pins, and the validator re-runs the oracle on the final tree. A brief is repeatable when at least four of five runs are green. Infrastructure failures count as not green and are disclosed. Never rerun until green.
+Use the October 8 repeatability eval as a template: three briefs, five fresh runs each, from the same pinned base, model, tools, and allowed files. The harness oracle, not the model summary, marks a run green. Results were mixed: B1 `alternate_network_payload` was 0/5 because it used two assert blocks against a pre-registered `>= 3` rule despite passing all Terraform tests; B2 `seeded-mutation-repair` was 5/5; B3 `forbidden-tag-characters` was 4/5 after a disclosed post-hoc rescore from 0/5 (saved diffs, no rerun) following a harness `-AllowedFiles` bug fix; run 2 stayed red for an out-of-scope README edit. B1v2 re-measured a clarified B1 brief that states the four-assert acceptance shape explicitly and was 5/5 green under the same pinned conditions. The lesson is to state the oracle's rules in the brief, including the expected test shape. For this eval only, a brief met the pre-registered repeatability bar when at least four of five runs were green. Report misses as-is and do not rerun just to fish for green. See [the repeatability eval](determinism-eval.md).
 
 ## Lessons from the Online deployment
 
@@ -137,8 +139,8 @@ These came from the real pipeline runs and are now part of the prompts above:
 
 - **Read guardrails first.** Private-only storage, NSG-required subnets, and RBAC limits shaped the design more than any code choice.
 - **Root, not module, owns the environment.** Adding providers to the module would have broken another consumer; a thin root fixed it.
-- **Known at plan time.** A module that checks `var.subnet_id != null` in `count` fails when the caller creates the subnet in the same root. Pass deterministic IDs, or give the module a boolean input.
+- **Known at plan time.** A module that checks `var.subnet_id != null` in `count` fails when the caller creates the subnet in the same root. Pass plan-time-known IDs, or give the module a boolean input.
 - **No module-level `depends_on`.** It defers the module's data sources whenever a dependency has a pending change, which can force a resource replacement. Order with resource references instead.
 - **Read back the real resource.** The module promised AKS Automatic but sent the Standard SKU; only an Azure read-back caught it.
 - **Public repo, no plan artifact.** Plan and apply in one gated job, so a plan file is never downloadable.
-- **Prove it.** The pipeline fails unless the app answers over HTTPS and redirects HTTP.
+- **Runtime evidence.** The pipeline fails unless the app answers over HTTPS by hostname, redirects HTTP, and the hostname resolves to the App Routing controller Service address.
