@@ -192,6 +192,20 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 **Martin:** 52:10-53:00: boundary. The documented gaps stay visible: single-maintainer admin override, self-review setting, and the environment gate before the apply job's plan, mitigated by a reviewed plan-only run and in-job plan comparison. This shows reuse of code, not reuse of the private environment. `a-online` and `a-security` are appendix and hallway depth.
 
+## optional-squad-on-aca | 53:00-54:30 if ahead | Optional unattended-agent side track
+
+> Use only if the show is ahead. Keep it inside content time, compress `s21-limits` to 0:30 if needed, and skip it if the clock would enter 55:00-58:00.
+
+**Martin:** One optional side track is Haflidi's `haflidif/squad-on-aca`: Squad agents run as Azure Container Apps jobs in a corp landing zone. A GitHub issue labeled for an agent lands in a queue, an ACA job runs the agent, and a bot opens the pull request.
+
+**Haflidi:** Why it matters: the agent runs unattended in our own Azure tenant, with no laptop in the loop. Secrets stay in Key Vault, the network path can stay private, the run uses managed identity, every change still arrives as a PR through the same gates, and cost tracks each execution.
+
+**Martin:** How to use it: create an issue in `martinopedal/squad-on-aca-demo-target`, add the label for the chosen Squad agent, watch the enqueue workflow, watch the ACA job execution, then review the bot PR.
+
+**Haflidi:** Public-safe proof from 9 Oct: issue `#2` in `martinopedal/squad-on-aca-demo-target`, an enqueue workflow run started, the ACA job finished in about one minute, and the bot opened PR `#3`. The environment runs in Norway East because Sweden Central hit ACA capacity errors.
+
+**Martin:** Live script, 60 to 90 seconds: open the prepared issue, add the agent label, refresh the enqueue workflow, switch to the ACA job execution, then open the bot PR when it appears. If live capacity or venue network fails, say it failed, show the finished issue to workflow to job to PR proof, and move on.
+
 ## s21-limits | 53:00-55:00 | Make the next change easier to review
 
 **Haflidi:** Rule one: use Plan mode when the change has decisions worth resolving before edits.

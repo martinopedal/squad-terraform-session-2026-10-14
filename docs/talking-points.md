@@ -169,6 +169,14 @@ Takeaway: approve a specific artifact and scope.
 - 52:10-53:00: boundary; documented gaps stay visible: single-maintainer admin override, self-review setting, and environment gate before the apply job's plan; appendix handles Online/security depth.
 Takeaway: reuse code, not environment.
 
+### Optional 53:00-54:30, Squad on ACA, use only if ahead
+- Keep it inside content time, compress `s21-limits` to 0:30 if needed, and skip it if it would touch 55:00-58:00.
+- What it is: Haflidi's `haflidif/squad-on-aca` runs Squad agents as Azure Container Apps jobs in a corp landing zone. A GitHub issue labeled for an agent lands in a queue, an ACA job runs the agent, and a bot opens the PR.
+- Benefit: unattended execution in our own Azure tenant, no presenter laptop, secrets in Key Vault, private networking available, managed identity for the run, same PR gates, pay per execution.
+- How to use it: create an issue in `martinopedal/squad-on-aca-demo-target`, add the chosen Squad agent label, watch the enqueue workflow, watch the ACA job execution, review the bot PR.
+- Public-safe proof from 9 Oct: issue `#2`, enqueue workflow run, ACA job finished in about one minute, bot PR `#3`. The environment runs in Norway East because Sweden Central hit ACA capacity errors.
+- Live script: prepared issue -> add label -> refresh enqueue workflow -> open ACA job execution -> open bot PR. Fallback: show the finished proof chain and move on.
+
 ### 53:00-55:00, s21-limits, Haflidi then Martin
 - Plan mode for decisions before edits.
 - Squad for ownership and handoffs.
