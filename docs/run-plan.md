@@ -6,11 +6,11 @@ The plan ends scripted content at 55:00, protects 55:00-58:00 for recovery, and 
 
 Decision: use one visible recovery window at 55:00-58:00, not many tiny buffers between chapters. Reason: a single hard buffer is easier to use live, easier to defend when a demo slips, and clearer for both presenters than sprinkling 15-30 second pockets that will be spent without noticing.
 
-Keep all verified enrichment added in the 0.21.0 deck round and carried into the current 0.22.1 deck. The control spectrum in `s04-layers`, same-gates framing, Rubber Duck appendix note, legal notice, and feature badges stay. We shortened bridge narration to make room.
+Keep all verified enrichment added in the 0.21.0 deck round and carried into deck 0.22.2. The control spectrum in `s04-layers`, same-gates framing, Rubber Duck appendix note, legal notice, and feature badges stay. We shortened bridge narration to make room.
 
 Decision: reuse `s01-outcome` as the 00:00-03:00 intro instead of adding a new `s00-intro`. Reason: it already carries the outcome and speaker visual, and a new slide would add navigation/test churn without improving the story.
 
-Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.22.1, with current news, bootstrap, writing, and sourced documentation-date corrections), prior docs from `origin/docs/oct8-eval-and-hostname`, `origin/docs/playbook:docs/playbook.md`, TEAM ROOT `demo\eval-20261008\results.md`, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout.
+Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.22.2, preserving approved news, bootstrap, writing, and sourced documentation-date corrections while adding conditional C4 notes), prior docs from `origin/docs/oct8-eval-and-hostname`, `origin/docs/playbook:docs/playbook.md`, the reviewed Oct 8 eval, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout. The five-slide companion and full 39-slide deck retain their slide counts and clocks.
 
 ## Evidence used for timing
 
@@ -71,7 +71,20 @@ Nothing was cut from the already-placed enrichment:
 - The legal notice remains the untimed pre-show slide.
 - The Rubber Duck appendix note stays in the appendix.
 - Feature badges remain in the deck.
-- ACA Sandboxes live moment fits best at 31:30-33:00 as a short insert inside `demo-c4`; make room by trimming `s05-parallel`, `s18-memory`, and `s21-limits` by 0:30 each, and never spend the 55:00-58:00 protected slack on this clip.
+- ACA Sandboxes is a conditional C4 variant, not an inserted chapter. Only approved Corp IaC, effective-policy read-back, and validated presenter preflight permit it. It replaces part of the deeper MCP lookup within the existing 29:30-33:30 C4 slot and keeps the 32:30 cut. No extra bridge trims are assumed; `s05-parallel`, `s18-memory`, and `s21-limits` keep their table budgets.
+
+### Conditional C4 variant, same clock
+
+Default to the original skill, read-only MCP lookup, and permissions flow. The current sandbox evidence is Management-side, not Corp qualification. If Corp is not ready, retain base C4 or show a reviewed excerpt explicitly labeled "Management-side execution evidence, not Corp validation".
+
+| Wall clock | Duration | Conditional variant |
+| --- | ---:| --- |
+| 29:30-30:00 | 0:30 | Name the qualified Corp scope, show the skill and a prepared cited source, and disclose preflight preparation. |
+| 30:00-32:00 | 2:00 | One bounded ACA skill prompt on the approved prepared sandbox; inspect permissions; no live provisioning, upload, install, or retry. |
+| 32:00-32:30 | 0:30 | Inspect actual numeric exits, root negative-validation checks, and HTTP observations, or state the missing live result. |
+| 32:30-33:30 | 1:00 | Cut, show scoped fallback if needed, state limits, and return to the Terraform checkpoint for C5. |
+
+The [C4 procedure](demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes) and [ACA preflight/prompt](aca-sandboxes.md) define manual preparation and evidence. Prior fresh Copilot runs took about 2:58 and 1:47 in Management; they do not guarantee 90 seconds or qualify the Corp variant. This substitution keeps C0-C7 at 29:00, planned content at 55:00, protected slack at 3:00, and the close at 2:00. No new story belongs in 55:00-58:00.
 
 ## 60-minute schedule with explicit recovery window
 
@@ -79,7 +92,7 @@ Nothing was cut from the already-placed enrichment:
 |---|---|---:|---:|---|---|---|
 | `s01-outcome` | 00:00-03:00 | 3:00 | 03:00 | No | Martin opens; Haflidi identifies prepared evidence | Intro: who we are, what the audience will see, what they will leave with, and which evidence is live or prepared. |
 | `s03-baseline` | 03:00-03:30 | 0:30 | 03:30 | No | Martin | Inherited public source, disclosed clean checkpoint, not first implementation. |
-| `s04-news` | 03:30-04:00 | 0:30 | 04:00 | No | Martin | CLI GA, Squad 1.0.1, Terraform MCP, Azure MCP, Agent HQ, and one AKS defaulting note. |
+| `s04-news` | 03:30-04:00 | 0:30 | 04:00 | No | Martin | Auto and HydraFusion lead with status/cost qualifications; pin the stage model for eval parity. ACA remains gated context, not an unconditional live promise. |
 | `s04-layers` | 04:00-05:00 | 1:00 | 05:00 | No | Haflidi then Martin | CLI runs work, Squad coordinates, tools return evidence; control spectrum as modes, not a maturity ladder. |
 | `s07-agent-setup` | 05:00-05:30 | 0:30 | 05:30 | No | Martin | Setup map only; hand straight to C0. |
 | `demo-c0` | 05:30-08:30 | 3:00 | 08:30 | No | Haflidi | Bootstrap from zero; cut at 07:45. |
@@ -92,7 +105,7 @@ Nothing was cut from the already-placed enrichment:
 | `demo-c3` | 22:00-26:00 | 4:00 | 26:00 | No | Martin | Route B1v2 to `terraform-coder`; cut at 25:00. |
 | `s12-source-check` | 26:00-26:30 | 0:30 | 26:30 | No | Haflidi | Source claim becomes assertion. |
 | `s13-test-gap` | 26:30-29:30 | 3:00 | 29:30 | No | Haflidi | B1 0/5 -> oracle rule -> B1v2 5/5; no causal or repeatability guarantee; live still must pass. |
-| `demo-c4` | 29:30-33:30 | 4:00 | 33:30 | No | Martin | Skill + read-only source lookup + permissions; cut at 32:30. |
+| `demo-c4` | 29:30-33:30 | 4:00 | 33:30 | No | Martin | Base skill + read-only source lookup + permissions, or the qualified Corp ACA substitution above; cut at 32:30 either way. |
 | `demo-c5` | 33:30-38:30 | 5:00 | 38:30 | No | Haflidi | Validator before/seeded/repaired; cut at 37:15. Checkpoint: must be out of C5 at 38:30. |
 | `s15-proof` | 38:30-41:30 | 3:00 | 41:30 | No | Haflidi with Martin handoff | Evidence levels; say runtime check/evidence, not evidence for everything. |
 | `s16-continuity` | 41:30-42:00 | 0:30 | 42:00 | No | Martin | Record the decision and why we made it. |
@@ -116,7 +129,7 @@ The 75% rule still stands. The absolute cut-line clocks move earlier because the
 | C1 | 12:30-15:30 | 3:00 | 14:45 | Stop comparison at one C1-A consequence and use saved C1-B excerpt. |
 | C2 | 17:30-21:30 | 4:00 | 20:30 | Use saved approved plan; approval covers repo changes only. |
 | C3 | 22:00-26:00 | 4:00 | 25:00 | Stop live coder turn, use B1v2 eval excerpt, no causal or repeatability guarantee. |
-| C4 | 29:30-33:30 | 4:00 | 32:30 | Say lookup unavailable live, show fallback excerpt, do not pretend success. |
+| C4 | 29:30-33:30 | 4:00 | 32:30 | Cut the selected flow, state the missing result, and show scoped fallback. Management evidence is not Corp qualification. No second attempt. |
 | C5 | 33:30-38:30 | 5:00 | 37:15 | Stop mutation work, show saved before/seeded/repaired logs. |
 | C6 | 42:00-45:00 | 3:00 | 44:15 | Show decision file and state constraints directly. |
 | C7 | 47:00-50:00 | 3:00 | 49:15 | Show saved green exits and diff; do not run a second suite live. |
@@ -158,7 +171,7 @@ Residual risk is still medium:
 
 - **C0** can burn time on VM/Bastion/login friction.
 - **C3** still depends on a live authoring turn whose measured eval range was 61-114 seconds before operator narration and handoff.
-- **C4** still depends on MCP/Docker health.
+- **C4** depends on MCP/Docker health in the base flow; the optional ACA variant adds a separate Corp qualification gate and variable model/network latency.
 - **C5** is still the most intricate live validator chapter.
 - **C7** is still the easiest place to accidentally keep talking.
 
@@ -212,10 +225,11 @@ Use only if the show is already ahead. Safe placement is **53:00-54:30**, with `
 - [ ] All presenter preflight checks pass.
 - [ ] Docker Desktop running before C4.
 - [ ] `/mcp` shows required public documentation/registry tools connected.
+- [ ] C4 mode agreed. Default is base MCP flow. Corp ACA requires approved IaC/read-back, effective policy qualification, prepared sandbox/archive, inspected permissions, exact rehearsal, sanitized fallback, budget, expiry, and cleanup owner; otherwise leave it gated.
 - [ ] Start Copilot CLI from the session repo folder, not the coordinator root:
 
 ```powershell
-cd C:\git\session-repo   # your public repo clone or checkpoint worktree
+Set-Location <reviewed-public-checkout>   # or the reviewed checkpoint worktree
 copilot --agent squad
 ```
 
