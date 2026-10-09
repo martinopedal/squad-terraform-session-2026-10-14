@@ -12,6 +12,7 @@ Reviewed October 5, 2026, for the October 14 session; updated October 9 for deck
 | 4 | 2025-12-18 / 2026-07-29 | [Agent Skills](https://github.blog/changelog/2025-12-18-github-copilot-now-supports-agent-skills/), then [skills and MCP in Copilot code review](https://github.blog/changelog/2026-07-29-copilot-code-review-agent-skills-and-mcp-now-generally-available/) | Code-review support GA | Write a Terraform procedure once in `SKILL.md`, then reuse it when authoring and when reviewing |
 | 5 | 2026-10-01 | [Computer use in Copilot CLI and the Copilot app](https://github.blog/changelog/2026-10-01-github-copilot-can-now-interact-with-desktop-apps/) | Public preview, macOS and Windows | Agents can operate GUI-only tools that have no API, CLI, or MCP integration. You approve each app, and admins can disable the feature |
 | 6 | 2026-10-03 / 2026-10-04 | [Squad 1.0.0](https://github.com/bradygaster/squad/releases/tag/v1.0.0) and [1.0.1](https://github.com/bradygaster/squad/releases/tag/v1.0.1) | Release tags exist; docs may lag | The demo uses 1.0.1, while pinned docs at `93aec83` still carry Experimental/alpha wording |
+| 7 | 2026-09 | [Azure Container Apps Sandboxes overview](https://learn.microsoft.com/azure/container-apps/sandboxes-overview) and Azure Updates GA timing | GA | Gives Copilot CLI an official path to run AI-written or untrusted Terraform checks inside a cloud microVM with deny-by-default egress |
 
 ### Precision notes for speakers
 
@@ -70,4 +71,5 @@ Reviewed October 5, 2026, for the October 14 session; updated October 9 for deck
 | `/review`, `/rubber-duck`, `/diff` | C5 and C7 |
 | AI Credits, `/usage`, `/limits` | C6 and the appendix |
 | Squad 1.0, setup diagnostics, decisions, Scribe | C3 and C6 |
+| ACA Sandboxes GA | `s04-news`, plus the short ACA validation clip described in `docs/aca-sandboxes.md` |
 | Computer use, Agent HQ, Copilot app, Squad Agentic Workflows | Mentioned only. None of these is part of the planned live Terraform workflow |

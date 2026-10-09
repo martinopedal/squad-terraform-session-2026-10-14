@@ -71,6 +71,7 @@ Nothing was cut from the already-placed enrichment:
 - The legal notice remains the untimed pre-show slide.
 - The Rubber Duck appendix note stays in the appendix.
 - Feature badges remain in the deck.
+- ACA Sandboxes live moment fits best at 31:30-33:00 as a short insert inside `demo-c4`; make room by trimming `s05-parallel`, `s18-memory`, and `s21-limits` by 0:30 each, and never spend the 55:00-58:00 protected slack on this clip.
 
 ## 60-minute schedule with explicit recovery window
 
