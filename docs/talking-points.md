@@ -77,8 +77,8 @@ Takeaway: build a module for the platform you already have.
 - Cut 14:45.
 - `/new`, `/agent` Squad, `/model`, `/plan`, `/rename C1-A`; repeat as C1-B.
 - Same prompt and model; compare one consequence, not verbosity.
-- B1 0/5 because ambiguous brief produced two assert blocks; oracle expected four.
-- B1v2 stated the rule and was 5/5. No causal claim. Live still has to pass.
+- B1 failed because every run wrote two asserts against a pre-registered minimum of three.
+- B1v2 was a separate, clarified brief that asks for four separate asserts. It was 5/5. No causal claim. Live still has to pass.
 Takeaway: controlled inputs make comparisons useful.
 
 ### 15:30-17:30, s08-plan-boundary, Haflidi
@@ -112,8 +112,8 @@ Takeaway: assignment is not completion.
 Takeaway: assert the resource, not reassurance.
 
 ### 26:30-29:30, s13-test-gap, Haflidi
-- Ambiguous brief: B1 0/5; oracle required separate asserts.
-- Clarified brief: B1v2 5/5 under pinned conditions; no guarantee; live still must pass.
+- B1 failed because every run wrote two asserts against a pre-registered minimum of three.
+- B1v2 was a separate, clarified brief that asks for four separate asserts; 5/5 under pinned conditions; no guarantee; live still must pass.
 - Test the test with deliberate mutation.
 Takeaway: state the checker rule before the run.
 
@@ -234,6 +234,6 @@ Takeaway: scanners plus scripted oracles close different gaps.
 
 ### a-prompts
 - Guardrails first, source facts through MCP, one lane per step.
-- B1 stayed 0/5; B1v2 was 5/5 under pinned conditions after the oracle rule was made explicit. Measured checkpoint, not a causal claim or guarantee; live still must pass.
+- B1 failed because every run wrote two asserts against a pre-registered minimum of three. B1v2 was a separate, clarified brief that asks for four separate asserts and was 5/5 under pinned conditions. Measured checkpoint, not a causal claim or guarantee; live still must pass.
 - Live run still has to pass.
 Takeaway: narrow choices and make claims checkable.

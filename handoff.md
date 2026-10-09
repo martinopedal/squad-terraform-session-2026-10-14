@@ -1,17 +1,16 @@
 # Public project handoff
 
-Updated October 7, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
+Updated October 9, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
 
 ## Current result
 
-- Reveal.js presentation version **0.17.1**, with one opening slide, 25 main slides, and eleven appendix slides (0.15 added the Online landing-zone variant and the rerunnable prompt pack; 0.16 Squad bootstrapping and use cases; 0.17 adds the C0 from-zero chapter and the security case; 0.17.1 updates references for the separate demo-env repository).
-- Martin/Haflidi talk track: **5,504 main spoken words**, balanced 2,739 / 2,765, plus a separate 652-word prepared Q&A fallback.
-- Exact session budget: **26 minutes of recorded chapters, 27 minutes of other live explanation, and seven minutes of Q&A**. Both speakers narrate the silent clips; that narration is already inside the 53 content minutes.
-- Sessionize copy: 294-word description/outcomes, 52-word pitch, and both speaker names.
-- Copilot CLI/Squad feature research with 34 first-party references and a C0-C7 operator runbook (C0 on the clean demo VM).
-- Public reusable Terraform module and synthetic caller, locally qualified and privately Azure-validated through IaC.
+- Reveal.js presentation version **0.21.1**. Presentation metadata reports **39 slides total**, including the untimed legal/pre-show slide, the timed main flow, and the appendix.
+- Current delivery contract: **3:00 intro; planned content to about 55:00; 55:00-58:00 protected recovery block; 58:00-60:00 close**. The planned content includes **29:00 of live C0-C7 demo chapters** and the rest as live explanation. Questions are only if time allows. There is no scheduled Q&A block. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
+- Live-demo rule: **C0-C7 are live**, with optional reviewed fallback evidence if a chapter fails live. Recordings are not a dependency.
+- Sessionize copy, feature guide, prompt pack, repeatability eval, and the C0-C7 operator runbook are present in the public repository.
+- Public reusable Terraform module and synthetic caller remain locally qualified and privately Azure-validated through IaC.
 
-The package is not stage-ready: **zero of seven native recordings are attached**. Azure deployment/read-back is complete only for the sanitized October 5 private IaC validation; native profile selection and full human rehearsal are still incomplete.
+Native profile selection and full human rehearsal remain separate verification gates. Optional fallback evidence may still be added later, but the live-first contract does not depend on recordings.
 
 ## Public locations
 
@@ -36,7 +35,7 @@ The module is pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. Its 35-file 
 | --- | --- |
 | Terraform local qualification | Terraform 1.16.4 / Windows AMD64, AzAPI 2.12.0, TFLint 0.64.0. Both roots passed formatting, validation, and lint. |
 | Contract tests | 52 module cases and two caller cases passed, all plan-mode mocks. |
-| Mutation proof | Wrong SKU and public-API mutations each failed the intended assertion; the unchanged 52-case suite passed after each exact restoration. |
+| Mutation evidence | Wrong SKU and public-API mutations each failed the intended assertion; the unchanged 52-case suite passed after each exact restoration. |
 | Module review | Independent static and publication-safety reviews passed for the qualified source. |
 | Presentation checks | Ten media-policy tests, 99 browser/content checks, and slide/fragment captures across two resolutions. The updated evidence slide was visually inspected. |
 | Hosted module CI | Terraform matrix run 36990206303 passed at b7133679a89b1e2b36677400d659a03907c0f3f6; native agent setup passed run 37286068987 at 00787f59ac19e3db0c3869a96ff45805c6cb523d; final module run 37286237657 passed at 02e10e56bc15cc30c3193dce3ddc8e608cb87daf; Azure-validation docs release run 37305768318 passed at b01256eb9b1ea6046b9bb8a403662f724a7b6fa7. |
