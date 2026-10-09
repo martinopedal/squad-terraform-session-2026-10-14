@@ -181,10 +181,17 @@ Use "runtime check" or "runtime evidence". Do not use stronger certainty languag
 Use only if the show is already ahead. Safe placement is **53:00-54:30**, with `s21-limits` compressed to **54:30-55:00** if needed. Skip it if the clock would enter the protected **55:00-58:00** window.
 
 - What it is: Haflidi's `haflidif/squad-on-aca` runs Squad agents as Azure Container Apps jobs in a corp landing zone. A GitHub issue labeled for an agent lands in a queue, an ACA job runs the agent, and a bot opens the PR.
-- Why include it: it shows unattended agent execution in our own Azure tenant, with no laptop in the loop. Secrets stay in Key Vault, private networking is available, the run uses managed identity, every change still arrives as a PR through the usual gates, and cost tracks each execution.
-- How to use it: create an issue in `martinopedal/squad-on-aca-demo-target`, add the chosen Squad agent label, watch the enqueue workflow, watch the ACA job execution, then review the bot PR.
-- Public-safe proof from 2026-10-09: issue `#2` in `martinopedal/squad-on-aca-demo-target`, enqueue workflow run started, ACA job execution succeeded in about one minute, and the bot opened PR `#3`. The environment runs in Norway East because Sweden Central hit ACA capacity errors.
-- Live script, 60-90 seconds: open a prepared issue, add the agent label, refresh the enqueue workflow, switch to the ACA job execution, then open the bot PR. If live capacity or venue network fails, say it failed, show the finished issue to workflow to job to PR proof, and return to the main flow.
+- Why include it: it shows unattended agent execution in our own Azure tenant, with no laptop in the loop. Secrets stay in Key Vault, private networking is available, the run uses managed identity, every change still arrives as a PR through the usual gates, the variable cost per run is well under USD 0.01, and the environment also has fixed holding costs.
+- Public-safe proof from 2026-10-09: a second fresh end-to-end run passed. The presenter flow created and labeled a new issue, the enqueue workflow succeeded, the ACA agent job execution finished in 56 seconds, and the `squad-on-aca` bot app opened the PR. After validation, the test issues and PRs were closed and the repo was clean.
+- Failure-path and safety checks: an unlabeled issue triggered nothing; Terraform plan for the stack was unchanged; private networking and NSGs were checked; and no secrets were found in the run logs.
+- Region note: the environment is in Norway East because Sweden Central hit ACA capacity errors.
+- Presenter procedure, validated 2026-10-09:
+  1. `gh issue create --repo martinopedal/squad-on-aca-demo-target --title "Demo task" --body "Ask ripley to make a tiny README/doc change."`
+  2. `gh issue edit <n> --repo martinopedal/squad-on-aca-demo-target --add-label squad:ripley`
+  3. `gh run list --repo martinopedal/squad-on-aca-demo-target --workflow squad-queue.yml --limit 3`
+  4. Watch the ACA job execution in the Azure portal under Container Apps job Execution history, or run `az containerapp job execution list`.
+  5. `gh pr list --repo martinopedal/squad-on-aca-demo-target --author app/squad-on-aca-nic2026-demo --state open`
+- Fallback: if live capacity or venue network fails, say it failed, show the finished issue to workflow to job to PR proof, and return to the main flow.
 
 ## Rehearsal schedule
 
