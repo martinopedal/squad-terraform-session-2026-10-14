@@ -66,17 +66,17 @@ The design is fixed: 1280 x 720, official NIC 2026 cyan and ink surfaces, embedd
 
 Before each content revision, preserve the previous generated HTML outside the release package. Increment `src\version.json` in the same revision. Keep `0.x` until the presenters approve the final content.
 
-## Live demos and optional fallback evidence
+## Live demos and fallback notes
 
-C0-C7 are live demo slides. Each chapter card shows the goal, the command or prompt to type, and the expected result. Speaker notes contain the driver, what to point at, the hand-off line, and an **Offline fallback** line. Recordings are optional fallback evidence, not a deck dependency.
+C0-C7 are live demo slides. Each chapter card shows the goal, the command or prompt to type, and the expected result. Speaker notes contain the driver, what to point at, the hand-off line, and an **Offline fallback** line.
 
-Only genuine Copilot CLI with Squad selected, standalone or in a real integrated terminal, qualifies as fallback product evidence. Capture controllers stay off-screen as external tooling. Do not use custom-viewer recordings, artifact-pilot frames, or fabricated terminal output.
+Only genuine Copilot CLI with Squad selected, standalone or in a real integrated terminal, qualifies as fallback product evidence. Capture controllers stay off-screen as external tooling. Do not use custom-viewer captures, artifact-pilot frames, or fabricated terminal output.
 
-Source qualification may finish before delivery. The live chapter must execute from a disclosed clean checkpoint or explicitly use the Offline fallback line. Do not substitute prior qualification output for a live result. If optional fallback recordings are used later, record the qualification revision, take-start checkpoint, prepared code and Squad state, and the actual change executed in the take.
+Source qualification may finish before delivery. The live chapter must execute from a disclosed clean checkpoint or explicitly use the Offline fallback line. Do not substitute prior qualification output for a live result.
 
-Deck 0.21.1 follows the 60-minute run-plan contract with 55 minutes of scripted content, a visible 55:00-58:00 protected recovery window, and the same on-screen media attachment controls removed. Keep fallback recordings/screenshots outside the public package unless presenters explicitly decide to publish them in a later build.
+Deck 0.21.1 follows the 60-minute run-plan contract with 55 minutes of scripted content, a visible 55:00-58:00 protected recovery window, and the same on-screen media attachment controls removed.
 
-The legacy `src\media.json` file remains harmless metadata for optional fallback review, but the current live deck does not render media placeholders or local MP4 controls.
+The legacy `src\media.json` file remains harmless metadata for media review, but the current live deck does not render media placeholders or local MP4 controls.
 
 Retain provenance and edit records outside the deck's public package. Durations are unchanged: C0 3 minutes, C1 3, C2 4, C3 4, C4 4, C5 5, C6 3, and C7 3; C0 now runs 05:30-08:30 before C1. The fallback owner must verify the actual UI, selected agent, content, and duration before citing a capture.
 

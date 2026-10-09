@@ -97,7 +97,7 @@ const autonomySpectrum = () => `<div class="control-spectrum" aria-label="Contro
 // verbatim source: demo/eval-20261008/artifacts/b1v2-1/prompt.txt
 const c3B1v2Brief = String.raw`Work only in terraform\modules\aks-automatic-corp.
 
-Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16 and DNS service IP 10.241.0.10. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file.`;
+Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use the prepared pod CIDR, service CIDR, and DNS service IP from the brief. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file.`;
 
 const demoRuns = {
   C0: {
@@ -160,7 +160,7 @@ Repeat as C1-B with the same model, permissions, and team state.`,
 /plan
 /rename C1-A
 Plan only: add alternate_network_payload to the existing module contract tests.
-Use pod 172.21.0.0/16, service 10.241.0.0/16, and DNS 10.241.0.10.
+Use the prepared pod CIDR, service CIDR, and DNS service IP from the brief.
 Assert propagation into the requested body while preserving the private API.
 Don't edit files or deploy. Identify affected files, one writer, and checks.
 # Repeat as /rename C1-B with the same model, tools, permissions, and public team state.`,
@@ -227,8 +227,8 @@ Paste the B1v2 brief: add alternate_network_payload with four separate asserts, 
 Squad: lead owns scope and prepares the bounded native terraform-coder brief for
 main.tf and tests/contract.tftest.hcl. No general-purpose task edits those files.
 The brief adds alternate_network_payload with the existing AzAPI mock and plan
-mode. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16, and DNS
-service IP 10.241.0.10. Write four separate assert blocks, one each: the pod
+mode. Use the prepared pod CIDR, service CIDR, and DNS service IP from the
+brief. Write four separate assert blocks, one each: the pod
 CIDR, the service CIDR, the DNS service IP, and the API server stays private.
 Each assert gets its own error_message. Reviewer prepares read-only acceptance
 criteria. Devrel owns only the README's test explanation after agreement. Return
@@ -493,8 +493,8 @@ export const slides = [
       <p class="honesty-rule"><strong>Honesty rule:</strong> live terminal and browser work first; prepared checkpoints, inherited module code, and earlier-run evidence are disclosed fallbacks.</p>
       <p class="session-meta">October 14, 2026 / 10:00-11:00 / Room 6</p></div>
       <div class="live-speakers" aria-label="Speakers, recreated from the live demo page without external requests">
-        <div class="live-speaker-card martin"><span class="speaker-initials">MO</span><div><h3>Martin Opedal</h3><p>Enterprise Cloud Solution Architect, Microsoft</p><a href="https://www.opedal.tech">opedal.tech</a></div></div>
-        <div class="live-speaker-card"><span class="speaker-initials">HF</span><div><h3>Haflidi Fridthjofsson</h3><p>Sr Cloud Solution Architect, Microsoft</p><a href="https://github.com/haflidif">@haflidif</a></div></div>
+        <div class="live-speaker-card martin"><span class="speaker-initials">MO</span><div><h3>Martin Opedal</h3><p>Enterprise Cloud Solution Architect, Microsoft</p><div class="speaker-links"><a href="https://www.opedal.tech">opedal.tech</a></div></div></div>
+        <div class="live-speaker-card"><img class="speaker-photo" src="../haflidi.jpg" alt="Haflidi Fridthjofsson"><div><h3>Haflidi Fridthjofsson</h3><p>Sr Cloud Solution Architect, Microsoft</p><div class="speaker-links"><a href="https://azureviking.com">azureviking.com</a><a href="https://www.linkedin.com/in/haflidif">LinkedIn</a><a href="https://github.com/haflidif">@haflidif</a></div></div></div>
       </div></div>`
   },
   {
@@ -518,7 +518,7 @@ export const slides = [
       <div><strong>2026-02-25 · GA</strong><span>Copilot CLI ${badge('Copilot CLI')}</span><em>Plan mode, custom agents, skills, MCP, diff, review, and resume are in the supported path.</em></div>
       <div><strong>2026-10-04 · GA</strong><span>Squad ${badge('Squad')}</span><em>1.0.1 is the installed release for this session, with public tags and installers.</em></div>
       <div><strong>2026-06-09 · GA</strong><span>Terraform MCP Server</span><em>v1.0.0 is a stable public release for registry, provider, module, and policy lookups.</em></div>
-      <div><strong>2026-06-02 · Announced</strong><span>Azure MCP Server</span><em>Microsoft Learn now carries the first-party overview, RBAC guidance, and Copilot CLI quickstart.</em></div>
+      <div><strong>2026-08-11 / 2026-09-14 · Learn docs</strong><span>Azure MCP Server</span><em>Microsoft Learn documents the GitHub Copilot cloud-agent path and the documentation landing page for the first-party Azure MCP experience.</em></div>
       <div><strong>2025-10-28 / 2026-02-04 · Public Preview</strong><span>GitHub agent news</span><em>Agent HQ launched, then Claude and Codex entered public preview inside GitHub.</em></div>
       <div><strong>2026-09-08 · Announced</strong><span>AKS Automatic ingress default</span><em>New AKS 1.36 Automatic clusters move the default ingress story toward Gateway API. This demo stays on managed NGINX.</em></div>
     </div>`
