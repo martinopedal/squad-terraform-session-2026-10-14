@@ -369,6 +369,38 @@
       margin-top: 14px;
     }
 
+    .profile {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .profile img {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+      flex: 0 0 auto;
+    }
+
+    .profile-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .profile-links a {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel-strong);
+      text-decoration: none;
+      color: inherit;
+    }
+
     .link-tile {
       display: block;
       padding: 14px 15px;
@@ -547,8 +579,8 @@
                   </div>
                 </td>
                 <td>Serverless Squad on Azure Container App Jobs, plus the private target repository for the optional demo path.</td>
-                <td>Use these only if time allows and we decide to include the optional segment.</td>
-                <td>Write on both</td>
+                <td>Use <code>haflidif/squad-on-aca</code> only if time allows. The private demo-target repo does not need to be opened before the session.</td>
+                <td>Write on the session repo, module repo, demo-env; invitation pending for the private demo-target repo, accept it on GitHub</td>
               </tr>
             </tbody>
           </table>
@@ -857,7 +889,7 @@
         <section class="card agree">
           <h2>To agree</h2>
           <ul>
-            <li>Squad on ACA stays optional. The current repos are <code>haflidif/squad-on-aca</code> and <code>martinopedal/squad-on-aca-demo-target</code>. Use them only if time allows.</li>
+            <li>Squad on ACA stays optional. Work from <code>haflidif/squad-on-aca</code> only if time allows. The private demo-target invite is still pending and does not block the main session.</li>
             <li>Confirm whether we mention the hosted Terraform MCP beside the pinned Docker Terraform MCP.</li>
             <li>Keep the 55:00-58:00 rule clear. Use that window for recovery only.</li>
             <li>Keep the guest VM login flow simple. Local account. Private password handoff. One quick test before rehearsal week.</li>
@@ -879,6 +911,22 @@
       </main>
 
       <aside class="aside">
+        <section class="card">
+          <h2>Haflidi links</h2>
+          <div class="profile">
+            <img src="./haflidi.jpg" alt="Haflidi Fridthjofsson">
+            <div>
+              <h3>Haflidi Fridthjofsson</h3>
+              <p>Sr Cloud Solution Architect, Microsoft</p>
+              <div class="profile-links">
+                <a href="https://azureviking.com">azureviking.com</a>
+                <a href="https://www.linkedin.com/in/haflidif">LinkedIn</a>
+                <a href="https://github.com/haflidif">GitHub</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section class="card">
           <h2>Quick links</h2>
           <div class="link-grid">
