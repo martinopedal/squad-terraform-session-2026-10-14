@@ -1,5 +1,5 @@
 {
-  "version": "0.21.2",
+  "version": "0.21.4",
   "status": "draft; live demo chapters; Azure validation sanitized",
   "changes": [
     "0.1 - 2026-09-30: build the offline presentation and two-speaker delivery.",
@@ -31,6 +31,8 @@
     "0.20.0 - 2026-10-08: retime the deck to the 60-minute run-plan contract with 3-minute intro, C0 before C1, 29 demo minutes, 26 explanation minutes, no scheduled Q&A, and a 2-minute close buffer.",
     "0.21.0 - 2026-10-08: add untimed legal notice, public status badges, text-only GitHub Copilot product name, Cascadia Code command font, Rubber Duck appendix note, control spectrum, and same-gates close framing.",
     "0.21.1 - 2026-10-09: retime scripted content to 55:00, add a visible 55:00-58:00 protected recovery block, update absolute cut clocks, and keep the close at 58:00-60:00.",
-    "0.21.2 - 2026-10-09: remove recording-fallback wording from the public runbook and deck notes, and add Haflidi's collaboration overview page."
+    "0.21.2 - 2026-10-09: remove recording-fallback wording from the public runbook and deck notes, and add Haflidi's collaboration overview page.",
+    "0.21.3 - 2026-10-09: rebuild s04-news around verified Copilot CLI, Squad, Terraform MCP, Azure MCP, and Agent HQ items, and tighten the AKS Automatic Gateway API default wording.",
+    "0.21.4 - 2026-10-09: add verified HydraFusion and Auto model selection lead items to s04-news, and pin the presenter note to claude-sonnet-5 for stage parity."
   ]
 }

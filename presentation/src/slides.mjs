@@ -24,6 +24,9 @@ const cliProgrammatic = source('Copilot CLI programmatic reference', 'https://do
 const cliResume = source('Copilot CLI resume', 'https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/chronicle');
 const cliReview = source('Copilot CLI review', 'https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/agentic-code-review');
 const cliDelegate = source('Copilot CLI delegate', 'https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/delegate-tasks-to-cca');
+const cliFleet = source('Fleet in Copilot CLI', 'https://github.blog/ai-and-ml/github-copilot/run-multiple-agents-at-once-with-fleet-in-copilot-cli/');
+const hydraFusion = source('Project HydraFusion', 'https://github.blog/ai-and-ml/github-copilot/project-hydrafusion-frontier-quality-via-multi-model-orchestration/');
+const autoModelSelection = source('Auto model selection', 'https://github.blog/changelog/2026-07-01-copilot-cli-auto-model-selection-routes-based-on-task/');
 const agentHQ = source('Agent HQ', 'https://github.blog/news-insights/company-news/welcome-home-agents/');
 const agentHQAgents = source('Claude and Codex in Agent HQ', 'https://github.blog/news-insights/company-news/pick-your-agent-use-claude-and-codex-on-agent-hq/');
 const billing = source('AI Credits billing', 'https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/');
@@ -35,7 +38,10 @@ const rubberDuckGA = source('Rubber Duck GA', 'https://github.blog/changelog/202
 const rubberDuckBlog = source('Rubber Duck second-opinion origin', 'https://github.blog/ai-and-ml/github-copilot/github-copilot-cli-combines-model-families-for-a-second-opinion/');
 const computerUse = source('Computer use preview', 'https://github.blog/changelog/2026-10-01-github-copilot-can-now-interact-with-desktop-apps/');
 const computerUseDocs = source('Computer use docs', 'https://docs.github.com/en/copilot/concepts/agents/computer-use');
+const azureMcp = source('Azure MCP Server overview', 'https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/overview');
+const terraformMcp = source('Terraform MCP Server v1.0.0', 'https://github.com/hashicorp/terraform-mcp-server/releases/tag/v1.0.0');
 const aksAutomaticGA = source('AKS Automatic GA', 'https://azure.microsoft.com/en-us/blog/azure-kubernetes-service-automatic-fast-and-frictionless-kubernetes-for-all/');
+const aksAutomaticManagedSystemPools = source('AKS Automatic managed system node pools', 'https://learn.microsoft.com/en-us/azure/aks/automatic/aks-automatic-managed-system-node-pools-about');
 const appRoutingDocs = source('AKS App Routing docs', 'https://learn.microsoft.com/en-us/azure/aks/app-routing-nginx-configuration');
 const aksAbacDocs = source('AKS ABAC custom resources preview', 'https://learn.microsoft.com/en-us/azure/aks/entra-id-authorization');
 const bastionEntraDocs = source('Bastion Entra authentication', 'https://learn.microsoft.com/en-us/azure/bastion/bastion-entra-id-authentication');
@@ -66,7 +72,7 @@ export const featureLabels = {
   '/delegate': { status: 'Cloud handoff', date: 'checked 2026-10-08', source: cliDelegate.url },
   'Rubber Duck': { status: 'GA', date: '2026-06-02', source: rubberDuckGA.url },
   'AKS Automatic': { status: 'GA', date: '2025-09-16', source: aksAutomaticGA.url },
-  'App Routing': { status: 'status: see docs', date: '', source: appRoutingDocs.url },
+  'App Routing': { status: 'Gateway API default', date: '2026-09-08', source: aksAutomaticManagedSystemPools.url },
   'ABAC conditions for AKS custom resources': { status: 'Preview', date: '2026-08-18', source: aksAbacDocs.url },
   'Bastion Entra RDP': { status: 'Preview', date: '2026-08-11', source: bastionEntraDocs.url },
   'Terraform test': { status: 'Stable', date: '2023-10-04', source: terraform16.url },
@@ -91,7 +97,7 @@ const autonomySpectrum = () => `<div class="control-spectrum" aria-label="Contro
 // verbatim source: demo/eval-20261008/artifacts/b1v2-1/prompt.txt
 const c3B1v2Brief = String.raw`Work only in terraform\modules\aks-automatic-corp.
 
-Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16 and DNS service IP 10.241.0.10. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file.`;
+Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use the prepared pod CIDR, service CIDR, and DNS service IP from the brief. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file.`;
 
 const demoRuns = {
   C0: {
@@ -154,7 +160,7 @@ Repeat as C1-B with the same model, permissions, and team state.`,
 /plan
 /rename C1-A
 Plan only: add alternate_network_payload to the existing module contract tests.
-Use pod 172.21.0.0/16, service 10.241.0.0/16, and DNS 10.241.0.10.
+Use the prepared pod CIDR, service CIDR, and DNS service IP from the brief.
 Assert propagation into the requested body while preserving the private API.
 Don't edit files or deploy. Identify affected files, one writer, and checks.
 # Repeat as /rename C1-B with the same model, tools, permissions, and public team state.`,
@@ -221,8 +227,8 @@ Paste the B1v2 brief: add alternate_network_payload with four separate asserts, 
 Squad: lead owns scope and prepares the bounded native terraform-coder brief for
 main.tf and tests/contract.tftest.hcl. No general-purpose task edits those files.
 The brief adds alternate_network_payload with the existing AzAPI mock and plan
-mode. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16, and DNS
-service IP 10.241.0.10. Write four separate assert blocks, one each: the pod
+mode. Use the prepared pod CIDR, service CIDR, and DNS service IP from the
+brief. Write four separate assert blocks, one each: the pod
 CIDR, the service CIDR, the DNS service IP, and the API server stays private.
 Each assert gets its own error_message. Reviewer prepares read-only acceptance
 criteria. Devrel owns only the README's test explanation after agreement. Return
@@ -417,7 +423,7 @@ const presenterNotes = new Map([
   ['opening', notePlan('Operator', 'Hold the NIC 2026 opening page while the room settles.', 'Confirm timer, speaker notes, and local deck server are ready.', 'NIC mark and blank stage clock.', 'Advance to s01-outcome at 00:00.')],
   ['s01-outcome', notePlan('Martin opens; Haflidi adds the honesty rule.', 'Martin: welcome, name and title, opedal.tech, and the promise: live terminal and browser work on a reusable Terraform module with checks and decisions. Haflidi: name and title, then state the honesty rule: what is live vs pre-staged, inherited, or earlier-run evidence.', '00:00-01:00 Martin intro and audience takeaways; 01:00-02:15 walk the visual and what they will see; 02:15-03:00 Haflidi says live terminal and browser work is live; pre-staged checkpoints, inherited module code, and earlier-run evidence are disclosed fallback evidence.', 'Martin Opedal, Enterprise Cloud Solution Architect, Microsoft; opedal.tech. Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft. Takeaways and honesty rule.', 'Martin hands to baseline: First, here is the code and checkpoint we are not hiding.')],
   ['s03-baseline', notePlan('Martin', 'This starts from inherited public code. The source pin is evidence, not a quality claim.', 'Timing: keep this to 0:30. Read the pin, say the module now exists, passed local qualification before delivery, and starts live demos from a disclosed clean checkpoint; never claim first implementation.', 'e9a9a48 and the inherited findings only.', 'Martin hands straight to the 0:30 news beat.')],
-  ['s04-news', notePlan('Martin with Haflidi status checks.', 'Copilot CLI is GA; Squad 1.0.1 is the demo install; computer use is preview and not used here.', 'Keep to 0:30. Read one headline plus Squad 1.0.1; leave product-tile detail to the appendix or hallway.', 'CLI GA and Squad 1.0.1; status labels only.', 'Martin moves to the layer map at 04:00.')],
+  ['s04-news', notePlan('Martin with Haflidi status checks.', 'Lead with the two newer Copilot CLI items: Auto model selection and HydraFusion. Then anchor them with CLI GA, Squad, Terraform MCP, Azure MCP, GitHub agent news, and the one AKS line.', 'Keep to 0:30. Pin `/model` to `claude-sonnet-5` on stage for eval parity. Present Auto and HydraFusion as the cost lever, not as a live variable in the room. Read the left column once, then the right column once.', 'Research Preview, GA, Public Preview, and Announced labels; HydraFusion benchmark wording says offline benchmark, estimated cost; the Auto item mentions `/model`, admin model policies, and the 10% AI-credit discount.', 'Martin moves to the layer map at 04:00.')],
   ['s04-layers', notePlan('Haflidi then Martin', 'Name the layer before troubleshooting: CLI runs work, Squad coordinates, Terraform and sources return evidence.', 'Trace arrows from CLI to Squad to external tools, then read the control spectrum as modes, not a maturity ladder inside the existing one-minute slot: Ask C1, edit C5, plan C2, agent C3, tools and permissions C4, resume C6, gated review C7; C0 is setup/runway and -p is appendix automation, not a live chapter.', 'The three layers, artifact boundary, and the C0-C7 placement on the control spectrum.', 'Martin leads into agent setup.')],
   ['s07-agent-setup', notePlan('Martin', 'We will show the bootstrap path before the team does Terraform work.', 'Keep to 0:30. Name the exact playbook sequence: prerequisites/install, `squad init`, `cd` to the session repo or checkpoint worktree, `copilot --agent squad`, confirm `/agent` shows `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, and `terraform-validator` as project agents, then roster/charters after human confirmation and `squad doctor`.', 'Install/prereq card, `squad init`, the repo-folder start, `/agent` confirmation, roster/charters, and `squad doctor` health check.', 'Hand to Haflidi for C0 at 05:30: now do those steps from a clean machine.') + squadStartReminder('Literal repo-start command for the notes:')],
   ['s05-parallel', notePlan('Martin', 'Parallel work needs three accountable lanes: terraform-coder writes, terraform-validator runs fixed offline checks, and terraform-reviewer reviews in a fresh context.', 'Read each lane and its handoff. Add that Squad/Scribe records decisions under `.squad\decisions\inbox\` for later merge.', 'terraform-coder, terraform-validator, terraform-reviewer, and the decision inbox row.', 'Hand to Haflidi for the module contract.')],
@@ -487,8 +493,8 @@ export const slides = [
       <p class="honesty-rule"><strong>Honesty rule:</strong> live terminal and browser work first; prepared checkpoints, inherited module code, and earlier-run evidence are disclosed fallbacks.</p>
       <p class="session-meta">October 14, 2026 / 10:00-11:00 / Room 6</p></div>
       <div class="live-speakers" aria-label="Speakers, recreated from the live demo page without external requests">
-        <div class="live-speaker-card martin"><span class="speaker-initials">MO</span><div><h3>Martin Opedal</h3><p>Enterprise Cloud Solution Architect, Microsoft</p><a href="https://www.opedal.tech">opedal.tech</a></div></div>
-        <div class="live-speaker-card"><span class="speaker-initials">HF</span><div><h3>Haflidi Fridthjofsson</h3><p>Sr Cloud Solution Architect, Microsoft</p><a href="https://github.com/haflidif">@haflidif</a></div></div>
+        <div class="live-speaker-card martin"><span class="speaker-initials">MO</span><div><h3>Martin Opedal</h3><p>Enterprise Cloud Solution Architect, Microsoft</p><div class="speaker-links"><a href="https://www.opedal.tech">opedal.tech</a></div></div></div>
+        <div class="live-speaker-card"><img class="speaker-photo" src="../haflidi.jpg" alt="Haflidi Fridthjofsson"><div><h3>Haflidi Fridthjofsson</h3><p>Sr Cloud Solution Architect, Microsoft</p><div class="speaker-links"><a href="https://azureviking.com">azureviking.com</a><a href="https://www.linkedin.com/in/haflidif">LinkedIn</a><a href="https://github.com/haflidif">@haflidif</a></div></div></div>
       </div></div>`
   },
   {
@@ -504,15 +510,17 @@ export const slides = [
   {
     id: 's04-news', title: 'Big news this year.', time: '03:30-04:00',
     layer: 'GitHub Copilot / Squad timeline', kind: 'news',
-    tip: 'Use the new controls deliberately. Computer use is not part of this Terraform demo.',
-    sources: [whatsNew, cliGA, agentHQ, agentHQAgents, billing, limits, skills, reviewSkills, computerUse, computerUseDocs, squad011, squad012, squad013, squad100, squad101],
+    tip: 'Lead with HydraFusion and Auto. Keep the AKS note to one line.',
+    sources: [whatsNew, hydraFusion, autoModelSelection, cliGA, cliFleet, agentHQ, agentHQAgents, terraformMcp, azureMcp, squad100, squad101, aksAutomaticManagedSystemPools],
     content: `<div class="news-grid">
-      <div><strong>2026-02-25</strong><span>Copilot CLI ${badge('Copilot CLI')}</span><em>Plan mode ${badge('Plan mode')}, custom agents ${badge('custom agents')}, Skills ${badge('Skills')}, MCP ${badge('MCP')}, and review controls ship for all subscribers.</em></div>
-      <div><strong>2025-10-28 / 2026-02-04</strong><span>Agent HQ</span><em>Launched at Universe. Claude and Codex are public preview in Agent HQ.</em></div>
-      <div><strong>2026-06-01 / 2026-07-01</strong><span>AI Credits and limits</span><em>Usage-based billing is effective. <code>/limits</code> and <code>--max-ai-credits</code> matter.</em></div>
-      <div><strong>2025-12-18 / 2026-07-29</strong><span>Skills and MCP mature</span><em>Agent Skills launch. Skills plus MCP reach GA for Copilot code review.</em></div>
-      <div><strong>2026-10-01</strong><span>Computer use, public preview</span><em><code>/computer on|show|off</code>, per-app approval, admin disable. We do not use it here.</em></div>
-      <div><strong>2026-10-03 / 2026-10-04</strong><span>Squad ${badge('Squad')}</span><em>Release tags exist; the demo uses 1.0.1. Pinned docs at <code>93aec83</code> may still carry Experimental/alpha wording.</em></div>
+      <div><strong>2026-09-04 · Research Preview</strong><span>Project HydraFusion</span><em>Pick it like any model. Single, Cascade, or Critique. Offline benchmark, estimated cost vs Opus 5: TerminalBench 2.1 +4.9 at 67% lower, DeepSWE -1.5 at 36% lower, CheckpointBench -0.1 at 65% lower.</em></div>
+      <div><strong>2026-07-01 · Announced</strong><span>Auto model selection</span><em>Routes per task using health and utilisation signals. Switch any time with <code>/model</code>, honors admin model policies, and gives paid subscribers a 10% AI-credit discount.</em></div>
+      <div><strong>2026-02-25 · GA</strong><span>Copilot CLI ${badge('Copilot CLI')}</span><em>Plan mode, custom agents, skills, MCP, diff, review, and resume are in the supported path.</em></div>
+      <div><strong>2026-10-04 · GA</strong><span>Squad ${badge('Squad')}</span><em>1.0.1 is the installed release for this session, with public tags and installers.</em></div>
+      <div><strong>2026-06-09 · GA</strong><span>Terraform MCP Server</span><em>v1.0.0 is a stable public release for registry, provider, module, and policy lookups.</em></div>
+      <div><strong>2026-08-11 / 2026-09-14 · Learn docs</strong><span>Azure MCP Server</span><em>Microsoft Learn documents the GitHub Copilot cloud-agent path and the documentation landing page for the first-party Azure MCP experience.</em></div>
+      <div><strong>2025-10-28 / 2026-02-04 · Public Preview</strong><span>GitHub agent news</span><em>Agent HQ launched, then Claude and Codex entered public preview inside GitHub.</em></div>
+      <div><strong>2026-09-08 · Announced</strong><span>AKS Automatic ingress default</span><em>New AKS 1.36 Automatic clusters move the default ingress story toward Gateway API. This demo stays on managed NGINX.</em></div>
     </div>`
   },
   {
@@ -726,11 +734,11 @@ export const slides = [
   },
   {
     id: 'a-online', title: 'Same module, Online landing zone.', time: 'Appendix',
-    layer: 'Terraform / Azure landing zone / GitHub Actions', kind: 'reference', sources: [demoEnvRepo, upstreamRepo, aksAutomaticGA, appRoutingDocs, aksAbacDocs, bastionEntraDocs],
+    layer: 'Terraform / Azure landing zone / GitHub Actions', kind: 'reference', sources: [demoEnvRepo, upstreamRepo, aksAutomaticGA, aksAutomaticManagedSystemPools, appRoutingDocs, aksAbacDocs, bastionEntraDocs],
     tip: 'Guardrails are design inputs. None were bypassed with exemptions.',
-    content: `${row('Thin root, same module', `Consumer repo pins the module by tag <code>v0.6.0</code>.<br><code>cluster_sku = "Automatic"</code> ${badge('AKS Automatic')}, BYO VNet, NAT Gateway egress, managed NGINX ${badge('App Routing')}.`)}
+    content: `${row('Thin root, same module', `Consumer repo pins the module by tag <code>v0.6.0</code>.<br><code>cluster_sku = "Automatic"</code> ${badge('AKS Automatic')}, BYO VNet, NAT Gateway egress, managed NGINX ${badge('App Routing')}. New AKS 1.36 Automatic clusters default toward Gateway API.`)}
       ${row('Guardrails we hit', `Private-only state storage. Subnets must have an NSG.<br>ABAC conditions for AKS custom resources ${badge('ABAC conditions for AKS custom resources')}; Bastion Entra RDP ${badge('Bastion Entra RDP')}.`)}
-      ${row('Branded app and runtime check', 'NIC 2026 page with speakers section at <code>aks-online-demo.swedencentral.cloudapp.azure.com</code>; default NGINX self-signed warning expected because no trusted certificate is configured.<br>Runs 37771532872 and 37772290635: No changes, HTTPS 200 by hostname, title verified; the check reads the App Routing controller Service, Azure&#39;s managed NGINX ingress add-on for AKS.')}`
+      ${row('Branded app and runtime check', 'NIC 2026 page at <code>aks-online-demo.swedencentral.cloudapp.azure.com</code>; default NGINX self-signed warning expected because no trusted certificate is configured.<br>Runs 37771532872 and 37772290635: No changes, HTTPS 200 by hostname, title verified; the check reads the App Routing controller Service.')}`
   },
   {
     id: 'a-security', title: 'What AI found that the scanners did not.', time: 'Appendix',

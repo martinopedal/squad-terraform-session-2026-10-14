@@ -35,9 +35,9 @@ Takeaway: inspectable artifact over agent theater.
 Takeaway: disclose preparation before running.
 
 ### 03:30-04:00, s04-news, Martin
-- Copilot CLI GA; terminal controls are normal engineering surface.
-- Squad 1.0.1; Agent HQ/AI Credits/computer use status labels stay honest.
-- Computer use is not part of this Terraform demo.
+- Lead with Auto model selection and Project HydraFusion.
+- Pin `/model` to `claude-sonnet-5` on stage for eval parity, then describe Auto or HydraFusion as the cost lever.
+- Keep the rest to anchors: CLI GA, Squad 1.0.1, Terraform MCP, Azure MCP, GitHub agent news, and one AKS line.
 Takeaway: use current controls, state current limits.
 
 ### 04:00-05:00, s04-layers, Haflidi then Martin
