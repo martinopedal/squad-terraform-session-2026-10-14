@@ -42,6 +42,8 @@ Expected result: the pinned digest is present locally. **Verified 2026-10-08.**
 
 3. macOS/Linux were not rehearsed for this playbook. The Squad README (pinned reference 93aec83) lists `brew install --cask bradygaster/squad/squad` on macOS (the tap-qualified name is required), but this session script is Windows-first. **Not verified 2026-10-08.**
 
+For a repeatable clean-VM setup pass, use [bootstrap.md](bootstrap.md) and [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1). The script supports `-WhatIf`, runs `copilot login`, clones a target repository, and runs `squad init` only when needed.
+
 ## 2. Bootstrap Squad from zero in a new repo
 
 1. Start in a fresh Git repo.
@@ -70,6 +72,8 @@ squad init
 ```
 
 Expected result: existing files are skipped; the command remains safe to re-run. **Verified 2026-10-08.**
+
+If you want the repo-plus-login path in one command on a clean VM, use [bootstrap.md](bootstrap.md).
 
 3. Confirm the files that appear.
 

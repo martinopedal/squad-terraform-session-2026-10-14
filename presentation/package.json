@@ -1,6 +1,6 @@
 {
   "name": "copilot-squad-terraform-presentation",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "description": "Offline Reveal.js conference presentation for Martin Opedal and Haflidi Fridthjofsson.",
@@ -8,7 +8,7 @@
     "build": "node scripts/build.mjs",
     "serve": "python -m http.server 4173 --bind 127.0.0.1 --directory ..",
     "preview": "python scripts/preview.py",
-    "test": "node --test --test-reporter=spec tests\\media-policy.test.mjs && .venv\\Scripts\\python.exe tests\\check_deck.py"
+    "test": "node --test --test-reporter=spec tests\\media-policy.test.mjs tests\\short-deck.test.mjs && .venv\\Scripts\\python.exe tests\\check_deck.py"
   },
   "dependencies": {
     "marked": "15.0.12",

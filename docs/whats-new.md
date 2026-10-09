@@ -1,6 +1,6 @@
 # What's new: GitHub Copilot and Squad, October 2025 to October 2026
 
-Reviewed October 5, 2026, for the October 14 session; updated October 8 for deck 0.21.1 status badges and the untimed legal/futures notice. C0-C7 remain live demo chapters with optional fallback evidence. Every row links to a primary source. Statuses change quickly, so recheck them before you quote one on stage. This page explains context only. It doesn't claim that any feature was completed live. The Azure claim is limited to the separate sanitized IaC validation of the Terraform module.
+Reviewed October 5, 2026, for the October 14 session; updated October 9 for deck 0.21.3 status badges, the untimed legal/futures notice, and the sandboxing appendix note. C0-C7 remain live demo chapters with optional fallback evidence. Every row links to a primary source. Statuses change quickly, so recheck them before you quote one on stage. This page explains context only. It doesn't claim that any feature was completed live. The Azure claim is limited to the separate sanitized IaC validation of the Terraform module.
 
 ## The short version
 

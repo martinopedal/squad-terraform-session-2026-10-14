@@ -34,9 +34,11 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 ## s04-news | 03:30-04:00 | Big news this year
 
-**Martin:** Copilot CLI is GA, so the terminal is a normal engineering surface for Plan mode, file context, agents, skills, MCP, diff, review, permissions, and session controls.
+**Martin:** The two newer Copilot CLI headlines are Auto model selection and Project HydraFusion. Auto routes per task using health and utilisation signals, respects admin model policies, and gives paid subscribers a 10% AI-credit discount. HydraFusion is a research preview that you pick like any model, then it chooses Single, Cascade, or Critique.
 
-**Haflidi:** Squad 1.0.1 is the demo version. Agent HQ, AI Credits, and computer use have moved this year, but this Terraform demo stays in CLI, files, docs, and offline checks. Some pinned docs and npm labels lag release tags.
+**Haflidi:** On stage, pin `/model` to `claude-sonnet-5` for eval parity and present Auto or HydraFusion as the cost lever. Keep live variability out of the room. The rest of the slide anchors the platform story: Copilot CLI GA, Squad 1.0.1, Terraform MCP, Azure MCP, GitHub agent news, and one AKS line about new 1.36 Automatic clusters moving the default ingress story toward Gateway API while this demo stays on the managed NGINX path.
+
+**Martin:** Sandboxing is an extra note. Keep it out of the critical path. Local sandboxing reached GA on October 7, 2026, powered by MXC. On this Windows build the first default `--sandbox` run failed until local-network access was allowed for the credential proxy. After that, writes outside the working directory were blocked, `gh` and `terraform init` worked, Docker-backed Terraform MCP failed on the Docker pipe, and Azure CLI failed on its bundled Python path. Use it as a 60-second appendix note or skip it. Detail: `docs/sandboxing.md`.
 
 ## s04-layers | 04:00-05:00 | One workflow, three distinct layers
 

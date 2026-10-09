@@ -15,6 +15,7 @@ The presentation shell and speaker material are built and reviewed. The public T
 | [`docs\run-plan.md`](docs/run-plan.md) | Countdown, minute-by-minute run sheet, preflight, and fallbacks |
 | [`docs\overview.md`](docs/overview.md) | One-page high-level overview of the session flow and why the gates matter |
 | [`docs\clean-machine-demo.md`](docs/clean-machine-demo.md) | C0: from-zero Copilot CLI and Squad install on the clean demo VM |
+| [`docs\bootstrap.md`](docs/bootstrap.md) | Idempotent demo-VM bootstrap script, login path, and GitHub App checklist |
 | [`docs\sessionize.md`](docs/sessionize.md) | Updated title, abstract, outcomes, pitch, and speaker metadata |
 | [`docs\feature-guide.md`](docs/feature-guide.md) | Source-verified Copilot CLI and Squad features and practical use cases |
 | [`docs\prompt-pack.md`](docs/prompt-pack.md) | Rerunnable prompts for building a module like this with Squad, the native lanes, and MCP |
@@ -73,6 +74,8 @@ full module-copy comparison.
 [![All 39 slides of the deck: select to open the live presentation](presentation/preview/overview.jpg)](https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/)
 
 The built [Reveal presentation](presentation/index.html) ([slide-by-slide preview](presentation/README.md#preview)) reports 39 slides total. Its 60-minute live-first contract uses a 3-minute intro, 52 minutes of planned content before recovery, a visible 3-minute protected recovery window, and a 2-minute close. The 29 live demo minutes for C0-C7 sit inside that planned content. Questions happen only if time allows. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
+
+A five-slide companion cut is built at [presentation/short/index.html](presentation/short/index.html).
 
 For speaker notes, serve the clone locally:
 

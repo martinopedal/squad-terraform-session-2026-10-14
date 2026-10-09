@@ -4,6 +4,8 @@ C0 is a 3-minute live chapter (deck slide `demo-c0`, 05:30-08:30, Haflidi leads)
 
 Everything below was checked on 2026-10-07 against the deployed VM and a throwaway clone. Re-run the preflight before the live demo because package versions move.
 
+For the fuller operator setup with `-WhatIf`, repo clone, `copilot login`, `squad init`, and a GitHub App checklist, see [bootstrap.md](bootstrap.md) and [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1). Keep the live chapter on the shorter flow below.
+
 ## What the machine is
 
 | Item | Value |

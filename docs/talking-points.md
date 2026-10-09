@@ -6,9 +6,10 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 
 - 60:00 total: 00:00-03:00 intro, 03:00-55:00 planned content and live chapters, 55:00-58:00 protected slack, 58:00-60:00 close plus "questions if time allows".
 - No planned question block. Appendix is for hallway questions or early finish.
-- Copilot CLI is GA; the terminal is a normal engineering surface.
+- Lead with Auto model selection and HydraFusion, then anchor back to Copilot CLI GA.
 - Squad 1.0.1 coordinates the demo team; npm/docs labels may lag.
 - Computer use is public preview and is not used in this Terraform demo.
+- Local sandboxing is GA, but on this Windows host it stays in appendix territory unless the policy is rehearsed again.
 - Pre-show legal/futures notice is untimed: preview features may change; status is as of 14 Oct 2026; no warranties; dates are subject to change.
 - Honesty rule: live terminal/browser work is live; prepared checkpoints, inherited code, prompts, and fallback evidence are disclosed.
 - Use runtime check/evidence language. Never imply local mocks establish Azure acceptance.
@@ -35,10 +36,18 @@ Takeaway: inspectable artifact over agent theater.
 Takeaway: disclose preparation before running.
 
 ### 03:30-04:00, s04-news, Martin
-- Copilot CLI GA; terminal controls are normal engineering surface.
-- Squad 1.0.1; Agent HQ/AI Credits/computer use status labels stay honest.
-- Computer use is not part of this Terraform demo.
+- Lead with Auto model selection and HydraFusion.
+- Pin `/model` to `claude-sonnet-5` on stage for parity. Treat Auto and HydraFusion as the cost lever. Keep live variability out of the room.
+- Anchor the rest with Copilot CLI GA, Squad 1.0.1, Terraform MCP, Azure MCP, GitHub agent news, and the one AKS ingress note.
+- Sandboxing side note: GA on Oct 7, 2026, but this host needed policy tuning before `--sandbox` worked cleanly. Docker MCP and Azure CLI stayed fragile.
 Takeaway: use current controls, state current limits.
+
+## Sandboxing
+
+- Core facts: `/sandbox`, `/sandbox status`, `/sandbox policy`, `/sandbox config`, and `--sandbox`; powered by MXC; outbound internet on by default; local network off by default.
+- This Windows build needed local-network access enabled before the first sandboxed shell could start.
+- After that tuning, writes outside the working directory were blocked, `gh` worked, `git push --dry-run` worked, `terraform init -backend=false` worked, Docker pipe access failed, and Azure CLI failed.
+- Recommended live use: 60-second appendix note plus one blocked write outside the working directory, or skip it.
 
 ### 04:00-05:00, s04-layers, Haflidi then Martin
 - CLI runs work; Squad coordinates responsibilities; Terraform, Git, Learn, and MCP return evidence.
