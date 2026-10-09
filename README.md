@@ -13,6 +13,7 @@ The presentation shell and speaker material are built and reviewed. The public T
 | [`presentation`](presentation/README.md) | Offline-capable Reveal.js presentation with speaker notes |
 | [`docs\talk-track.md`](docs/talk-track.md) | Timed Martin/Haflidi script, handoffs, and prepared Q&A |
 | [`docs\run-plan.md`](docs/run-plan.md) | Countdown, recording plan, minute-by-minute run sheet, preflight, fallbacks |
+| [`docs\overview.md`](docs/overview.md) | One-page high-level overview of the session flow and why the gates matter |
 | [`docs\clean-machine-demo.md`](docs/clean-machine-demo.md) | C0: from-zero Copilot CLI and Squad install on the clean demo VM |
 | [`docs\sessionize.md`](docs/sessionize.md) | Updated title, abstract, outcomes, pitch, and speaker metadata |
 | [`docs\feature-guide.md`](docs/feature-guide.md) | Source-verified Copilot CLI and Squad features and practical use cases |
