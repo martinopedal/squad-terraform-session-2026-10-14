@@ -233,7 +233,7 @@ ${c3B1v2Brief}
     pointAt: 'Point at Squad selection, roster/routing (team list and routing rules), terraform-coder selection, the four-assert test edit, and c3-handoffs.md.',
     fallback: 'Use B1v2 eval evidence: 5/5 under pinned conditions after the clarified four-assert brief; no causal or repeatability guarantee, and the live run still has to pass. Custom subagents don\'t inherit repository instructions by default; include-custom-instructions: true opts in. Confirm the behavior in this build.',
     timing: 'Slot 22:00-26:00. 0:40 show Squad, /tasks, /agent list, /mcp; 0:35 B1v2 brief; 1:30 coder run; 0:45 return and handoff; 0:30 buffer.',
-    preStaged: 'B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal or repeatability guarantee from eval to live result.',
+    preStaged: 'B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal or repeatability guarantee from eval to live result; Copilot started from the public repo folder or the selected checkpoint worktree so `/agent` lists `terraform-coder`, `terraform-validator`, and `terraform-reviewer`.',
     cutAt: '25:00',
     cut: 'If the coder is still generating, stop the live turn, use the saved B1v2 excerpt, and move to C4 with the same boundary.'
   },
@@ -386,7 +386,7 @@ Check diff git @('--no-pager','diff','--',$m)
     pointAt: 'Point at offline check exits, c7-final.diff, file hashes, reviewer findings, and the code-only human acceptance.',
     fallback: 'Use c7-final.diff, saved exit logs, Online apply runs 37771532872/37772290635, Test-OnlineSecurity 29/29, and Test-DemoVm 14/14; no private IDs.',
     timing: 'Slot 47:00-50:00. 1:10 offline suite or already-running exits; 0:45 /diff and sanitized boundary; 0:50 reviewer scope; 0:15 buffer. Checkpoint: s20-consumer must start at 50:00.',
-    preStaged: 'Offline suite can run from a prepared shell; logs have no private IDs; reviewer prompt copied; no private plans or raw state on screen.',
+    preStaged: 'Offline suite can run from a prepared shell; logs have no private IDs; reviewer prompt copied; no private plans or raw state on screen; `tflint --version` already confirmed as 0.64.0; Copilot started from the public repo folder or the selected checkpoint worktree; if TFLint is missing, not 0.64.0, or Check lint fails for tool/setup reasons, switch to the reviewed offline evidence.',
     cutAt: '49:15',
     cut: 'If the full suite is not done, show the saved green exits and diff; do not run a second suite live.'
   }
