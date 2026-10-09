@@ -6,7 +6,7 @@ A two-speaker session by **Martin Opedal, Enterprise Cloud Solution Architect, M
 
 ## What this repository contains
 
-The presentation shell and speaker material are built and reviewed. The public Terraform module passed local qualification: 52 module cases, two caller cases, two fail-restore-pass mutation proofs, hosted Terraform matrix CI, native agent-setup CI, and an IaC-based Azure validation in a private Corp landing-zone consumer. Genuine demo recordings, native profile-selection footage, and full human rehearsal remain pending.
+The presentation shell and speaker material are built and reviewed. The public Terraform module passed local qualification: 52 module cases, two caller cases, two fail-restore-pass mutation evidence checks, hosted Terraform matrix CI, native agent-setup CI, and an IaC-based Azure validation in a private Corp landing-zone consumer. Genuine demo recordings, native profile-selection footage, and full human rehearsal remain pending.
 
 | Path | Content |
 | --- | --- |
@@ -17,10 +17,11 @@ The presentation shell and speaker material are built and reviewed. The public T
 | [`docs\sessionize.md`](docs/sessionize.md) | Updated title, abstract, outcomes, pitch, and speaker metadata |
 | [`docs\feature-guide.md`](docs/feature-guide.md) | Source-verified Copilot CLI and Squad features and practical use cases |
 | [`docs\prompt-pack.md`](docs/prompt-pack.md) | Rerunnable prompts for building a module like this with Squad, the native lanes, and MCP |
-| [`docs\playbook.md`](docs/playbook.md) | Verified step-by-step playbook for bootstrapping Squad, using the native Terraform agents, repeatability prompts, and the demo-env handoff |
-| [`docs\online-demo.md`](docs/online-demo.md) | Appendix: the reusable module consumed by the demo-env repo in an ALZ Online subscription through a gated pipeline, with evidence and findings |
+| [`docs\determinism-eval.md`](docs/determinism-eval.md) | Repeatability eval for three bounded Terraform briefs, including misses and oracle rules |
+| [`docs\online-demo.md`](docs/online-demo.md) | Appendix: the reusable module consumed by the demo-env repo in an ALZ Online subscription through a gated pipeline, with branded hostname-page evidence and a 29/29 Online security-check pass |
 | `scripts\recording\` | Controlled-window capture and verification tools |
 | `terraform\modules\aks-automatic-corp\` | Public source copy of the independently versioned demo module |
+| [`docs\playbook.md`](docs/playbook.md) | Verified step-by-step playbook for bootstrapping Squad, using the native Terraform agents, repeatability prompts, and the demo-env handoff |
 
 The module's separate repository is [terraform-azapi-aks-automatic-corp](https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp), pinned here to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. The [source manifest](terraform/module-source.json) binds the matching presentation copy. See the module's [qualification summary](terraform/modules/aks-automatic-corp/VALIDATION.md) for the exact boundary.
 
@@ -47,9 +48,9 @@ handoff; the human maintainer owns acceptance. Native permission prompts and
 separate publication/private-consumer apply gates remain in place.
 
 Coder and reviewer ground claims through Microsoft Learn and Terraform Registry
-MCP servers. MCP policy is hosted first: Microsoft Learn is cloud-hosted, while
-HashiCorp has no documented hosted Terraform MCP, so Terraform MCP uses Docker
-with the pinned image. Docker Desktop and network access are required for
+MCP servers. MCP policy is hosted first: Microsoft Learn is cloud-hosted. The demo uses a
+Docker-run Terraform MCP server pinned for this session; HashiCorp documents
+local deployment (including Docker) and self-hosted transports. Docker Desktop and network access are required for
 Learn/registry docs. Copilot CLI and Copilot cloud agent honor `mcp-servers`; VS
 Code ignores that frontmatter. MCP results are documentation lookups, not
 validation or Azure acceptance. The native Terraform MCP binary is not used for
@@ -63,7 +64,7 @@ node .github\skills\qualify-agent-setup\check.mjs
 node --test .github\skills\qualify-agent-setup\check.test.mjs
 ```
 
-These checks prove setup integrity, not a genuine native agent run, MCP server
+These checks provide evidence for setup integrity, not a genuine native agent run, MCP server
 startup, independent review, or Azure acceptance. See the contributing guide for
 full module-copy comparison.
 

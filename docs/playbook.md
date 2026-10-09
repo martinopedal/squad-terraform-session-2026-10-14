@@ -37,7 +37,7 @@ docker image inspect hashicorp/terraform-mcp-server:1.3.0@sha256:423a6b8e2ee06af
 
 Expected result: the pinned digest is present locally. **Verified 2026-10-08.**
 
-3. macOS/Linux were not rehearsed for this playbook. Official Squad docs list `brew install --cask squad` on macOS and the verified install script for macOS/Linux, but this session script is Windows-first. **Not verified 2026-10-08.**
+3. macOS/Linux were not rehearsed for this playbook. Official Squad docs list `brew install --cask bradygaster/squad/squad` on macOS and the verified install script for macOS/Linux, but this session script is Windows-first. **Not verified 2026-10-08.**
 
 ## 2. Bootstrap Squad from zero in a new repo
 
@@ -101,13 +101,7 @@ Expected result: Squad proposes a team and asks for confirmation. Nothing about 
 squad doctor
 ```
 
-Expected result: required files and Copilot CLI checks pass. Validation observed `10 passed, 0 failed`. **Verified 2026-10-08.**
-
-```powershell
-squad health --json
-```
-
-Expected result after a real accepted team: JSON status `pass`. **Verified 2026-10-08** in the prepared session repo. In a zero sandbox before accepting a generated team, validation correctly returned `fail` for empty registry/routing; do not present that as a broken install.
+Expected result: required files and Copilot CLI checks pass. Validation observed `10 passed, 0 failed`. **Verified 2026-10-08 on Squad 1.0.1.**
 
 6. Preview a safe upgrade before applying it.
 
@@ -115,14 +109,14 @@ Expected result after a real accepted team: JSON status `pass`. **Verified 2026-
 squad upgrade --dry-run
 ```
 
-Expected result: a list of Squad-owned files that would be created or overwritten. **Verified 2026-10-08.**
+Expected result: a list of Squad-owned files that would be created or overwritten. **Verified 2026-10-08 on Squad 1.0.1; not confirmed in pinned reference 93aec83.**
 
 ```powershell
 squad upgrade
 squad doctor
 ```
 
-Expected result: Squad-owned files refresh, customized `squad.agent.md` is backed up if needed, and doctor still passes. **Not run 2026-10-08:** intentionally avoided overwriting prepared demo files; dry-run was verified.
+Expected result: Squad-owned files refresh, customized `squad.agent.md` is backed up if needed, and doctor still passes. **Not run 2026-10-08:** intentionally avoided overwriting prepared demo files; `squad upgrade --dry-run` was verified on Squad 1.0.1 (not confirmed in pinned reference 93aec83), and `squad doctor` was verified on Squad 1.0.1.**
 
 ## 3. Add and use our native Terraform agent profiles
 
@@ -389,7 +383,6 @@ Expected result: 14 demo VM checks pass and Bastion RDP opens. **Not run 2026-10
 | --- | --- | --- |
 | MCP startup race or noisy user servers | Add `--disable-builtin-mcps` and `--disable-mcp-server <name>` for unrelated user servers; wait for `/mcp` to show the needed servers. | B2 command shape verified 2026-10-08. `/mcp` dashboard needs interactive confirmation. |
 | Terraform MCP does not start | Start Docker Desktop; inspect the pinned image digest; rerun the agent. | Docker image inspect verified 2026-10-08. |
-| `squad health --json` fails right after `squad init` | Accept the Init Mode roster first, or treat the zero-repo health result as pre-team state. | Zero sandbox fail and prepared repo pass both verified 2026-10-08. |
 | Git commit fails due signing setup | Use `git -c commit.gpgsign=false commit ...` for throwaway demo commits. | Verified 2026-10-08. |
 | OIDC assertion expires during long Azure apply | The demo-env workflow re-runs `azure/login` before cluster calls. | Source-verified in demo-env runbook; not executed here. |
 | Guest VM sign-in | Use demo-env's `Set-GuestLocalLogin.ps1` and `Connect-DemoVm.ps1 -LocalAccount`; transfer any generated credential out-of-band only. | Source-verified; not executed here. |
