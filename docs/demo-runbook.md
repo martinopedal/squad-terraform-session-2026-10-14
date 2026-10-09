@@ -4,7 +4,7 @@ C0 (from zero to a squad) runs live on the clean Windows 11 demo VM, not in this
 
 **C0 Pre-staged:** VM recreated or verified clean; Bastion already connected; PowerShell 7 tab open; package source agreements accepted by flags; terminal zoom set; no secrets in clipboard.
 
-**C0 slot 07:00-10:00. Cut at 09:15 (2:15 into C0):** If installs or login are not complete, state the live stall, show fallback evidence, and move to `s05-parallel`. Do not spend later content time on installing tools.
+**C0 slot 05:30-08:30. Cut at 07:45 (2:15 into C0):** If installs or login are not complete, state the live stall, show fallback evidence, and move to `s05-parallel`. Do not spend later content time on installing tools.
 
 Use `qualify_then_run_clean_checkpoint` as the provenance rule: qualify the module first, then run genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Optional recordings are fallback evidence only. Don't open another terminal or substitute a viewer. This live run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
 
@@ -12,7 +12,7 @@ Local module qualification passed: 52 module cases, two caller cases, and both m
 
 ## Prepare the checkpoint and optional fallback capture
 
-Martin operates; Haflidi checks evidence. In [feature-guide.md](feature-guide.md), H1-H4/S0 mean help probes; D means documented, not exercised. Follow [talk-track.md](talk-track.md) for the live 60-minute delivery: 00:00-03:00 intro, 03:00-58:00 content and live chapters, 58:00-60:00 close plus questions if time allows.
+Martin operates; Haflidi checks evidence. In [feature-guide.md](feature-guide.md), H1-H4/S0 mean help probes; D means documented, not exercised. Follow [talk-track.md](talk-track.md) for the live 60-minute delivery: 00:00-03:00 intro, 03:00-55:00 planned content and live chapters, 55:00-58:00 protected slack, 58:00-60:00 close plus questions if time allows.
 
 In the current CLI, use `/cwd` to confirm the public repository. Execute PowerShell blocks through the `!` shell escape in this same window. Each block is one shell invocation; shell variables don't carry into later CLI turns.
 
@@ -97,11 +97,11 @@ Pre-stage a filesystem-only provider mirror and `offline\terraform.tfrc` beside 
 
 **Live slate R1:** state checkpoint, model, prepared code, and "clean demonstration after qualification." If an optional fallback recording is made, keep `A.mkv`, `B.mkv`, and an uninterrupted `guided.mkv`, and have Haflidi record UTC/media offsets in `evidence\chapters.csv`. Use unique, take-prefixed session names; names below are suffixes.
 
-## C1: Compare two plans | 14:00-17:00 | 3 minutes
+## C1: Compare two plans | 12:30-15:30 | 3 minutes
 
 **Pre-staged:** both C1 prompt blocks ready; sessions named C1-A/C1-B; same model and permission profile visible; saved excerpts ready if output drifts.
 
-**Cut at 16:15 (2:15 into C1):** If C1-B is still generating, stop comparison at one clear C1-A consequence and use the saved C1-B excerpt.
+**Cut at 14:45 (2:15 into C1):** If C1-B is still generating, stop comparison at one clear C1-A consequence and use the saved C1-B excerpt.
 
 Haflidi leads and narrates; Martin operates the two clean worktrees. In A, use `/new`, `/agent` and select **Squad**, `/model`, `/plan`, and `/rename C1-A`. Repeat in B as `C1-B`, with identical model, instructions, permissions, and public starting team state:
 
@@ -114,11 +114,11 @@ Don't edit files or deploy. Identify affected files, one writer, and checks.
 
 Save approved prompt/result excerpts as `c1-a.txt` and `c1-b.txt` under evidence. Compare one consequence, not verbosity. Identical outcomes are valid. Don't use `/fork` as a fresh comparison or retry until results differ. Start the guided pass separately.
 
-## C2: Revise and approve | 19:00-23:00 | 4 minutes
+## C2: Revise and approve | 17:30-21:30 | 4 minutes
 
 **Pre-staged:** checkpoint shell open; file paths copied; approval language rehearsed; Plan-mode fallback screenshot ready.
 
-**Cut at 22:00 (3:00 into C2):** If the plan is not ready, use the saved approved plan and state that approval covers only repository changes.
+**Cut at 20:30 (3:00 into C2):** If the plan is not ready, use the saved approved plan and state that approval covers only repository changes.
 
 Martin drives; Haflidi challenges scope. In guided, use `/new`, `/rename guided-clean-run`, `/agent` and select Squad, `/instructions`, then `/plan`. Show the mode indicator.
 
@@ -136,25 +136,18 @@ No implementation, Azure lookup, apply, dependency upgrade, or state operation.
 
 Inspect `/session plan`. Revise genuinely: "Put unchanged payload assertions and offline checks before documentation; exclude infrastructure redesign." Save accepted criteria in `c2-approved-plan.md`. Explicitly approve only that scope, leave Plan mode through the actual UI, and show the new mode. Approval does not authorize deployment.
 
-## C3: Assign one writer | 24:00-28:00 | 4 minutes
+## C3: Assign one writer | 22:00-26:00 | 4 minutes
 
 **Pre-staged:** B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal claim from B1v2 to live result.
 
-**Cut at 27:00 (3:00 into C3):** If the coder is still generating, stop the live turn, use the saved B1v2 excerpt, and move to C4 with the same boundary.
+**Cut at 25:00 (3:00 into C3):** If the coder is still generating, stop the live turn, use the saved B1v2 excerpt, and move to C4 with the same boundary.
 
 Martin operates; Haflidi reads returned evidence.
 
 ```text
-Squad: lead owns scope and prepares the bounded native terraform-coder brief for
-main.tf and tests/contract.tftest.hcl. No general-purpose task edits those files.
-The brief adds alternate_network_payload with the existing AzAPI mock and plan
-mode. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16, and DNS
-service IP 10.241.0.10. Write four separate assert blocks, one each: the pod
-CIDR, the service CIDR, the DNS service IP, and the API server stays private.
-Each assert gets its own error_message. Reviewer prepares read-only acceptance
-criteria. Devrel owns only the README's test explanation after agreement. Return
-actual task IDs where used, file owners, checks, and unresolved issues. No
-deployment or other edits.
+Work only in terraform\modules\aks-automatic-corp.
+
+Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16 and DNS service IP 10.241.0.10. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file.
 ```
 
 This matches the B1v2 brief used for the live C3-C5 loop (5/5 green in the October 8 re-measurement); that is prior evidence only, and the live run still has to pass.
@@ -171,11 +164,11 @@ including actual profile selection; do not invent a task ID for manual selection
 or treat assignment as completion. No nested fleet or concurrent writers on the
 test file.
 
-## C4: Invoke guidance and a source | 32:00-36:00 | 4 minutes
+## C4: Invoke guidance and a source | 29:30-33:30 | 4 minutes
 
 **Pre-staged:** Docker Desktop running; required MCP servers already connected; fallback `c4-source` excerpt sanitized; one retry allowed, not a retry loop.
 
-**Cut at 35:00 (3:00 into C4):** If MCP or Docker is not healthy, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.
+**Cut at 32:30 (3:00 into C4):** If MCP or Docker is not healthy, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.
 
 Martin drives; Haflidi explains the claim. Use `/skills info test-discipline`, then:
 
@@ -194,11 +187,11 @@ Save `c4-source.md` with URL, retrieval time, tool, server/version, and
 limitation. Missing skill/server or a failed lookup stays failed/pending, not
 invented output.
 
-## C5: Seed, fail, repair | 36:00-41:00 | 5 minutes
+## C5: Seed, fail, repair | 33:30-38:30 | 5 minutes
 
 **Pre-staged:** validator shell ready; environment scrub command copied; three log names chosen; seeded mutation can be applied from fallback if the model turn runs long.
 
-**Cut at 39:45 (3:45 into C5):** If the repair is not ready, stop live mutation work, show saved seeded-failure and repaired logs, then continue. Haflidi runs the validator.
+**Cut at 37:15 (3:45 into C5):** If the repair is not ready, stop live mutation work, show saved seeded-failure and repaired logs, then continue. Haflidi runs the validator.
 
 Haflidi takes control; Martin explains the repair. Select
 `/agent terraform-validator`, confirm its `read`, `search`, and `execute` tools,
@@ -246,28 +239,53 @@ that field, inspect `/diff`, and have the operator rerun as `repaired`.
 Require exit zero and the original `main.tf` hash. Ordinary repair is not formal
 Squad rejection. Return to `/agent squad` for C6. Hand controls back to Martin.
 
-## C6: Save and resume | 45:00-48:00 | 3 minutes
+## C6: Resume with decisions intact | 42:00-45:00 | 3 minutes
 
-**Pre-staged:** decision excerpt sanitized and ready; unrelated personal memory or session list not shown; resume target known.
+**Driver:** Haflidi leads; Martin verifies the recovered reason.
 
-**Cut at 47:15 (2:15 into C6):** If resume or search is slow, show the decision file and state the constraints directly.
+**Live surface:** Genuine Copilot CLI with Squad selected in a real integrated terminal; capture controllers stay external, off-screen tooling; Qualify code first; execute from a disclosed clean checkpoint.
 
-Martin operates; Haflidi verifies the recovered reason:
+**Timing:** Slot 42:00-45:00. 0:35 decision record; 0:45 /new, /resume, /cwd; 0:35 /context and /usage; 0:50 cite constraints; 0:15 buffer.
+
+**Pre-staged:** Decision excerpt sanitized and ready; unrelated personal memory or session list not shown; resume target known.
+
+**Say:** Save the public reason, resume the right session, and verify the next task reads it. Keep this as a live demo; optional recordings are fallback evidence, not a dependency.
+
+**Type:**
 
 ```text
-Scribe records decisions in `.squad\decisions\inbox\`; use `/new`, `/rename`, and `/tasks` to keep sessions organized.
-Record the public-only decision: private API invariant, caller-owned provider/backend, added network-payload regression,
+C6 live command / prompt
+Scribe: record the public-only decision under .squad\decisions\inbox\ for later merge into .squad\decisions.md.
+Decision: private API invariant, caller-owned provider/backend, added network-payload regression,
 labeled mutation/restoration, exact checks, and the sanitized Azure-validation boundary without exposing private target details.
 Do not copy histories, credentials, or full conversations.
+/new
+/resume guided-clean-run
+/cwd
+/context
+/usage
+Read the saved decision; cite its file and the constraints for the next change.
 ```
 
-Show the actual record. Use `/new`, then `/resume guided-clean-run`, `/cwd`, `/context`, and `/usage`. Ask: "Read the saved decision; cite its file and the constraints for the next change." Save `c6-decision.md`, not unrelated session listings or personal memory.
+**Point at:** Point at the decision record, the resumed session name, the cited file, /context, and /usage.
 
-## C7: Validate the consumer and review | 50:00-53:00 | 3 minutes
+**Expected:** The resumed task cites the decision file and constraints; context and usage are inspected before more work.
+
+**Cut at 44:15 (75%):** If resume/search is slow, show the decision file and state the constraints directly.
+
+**Hand-off:** Use the next slide transition line in the run plan.
+
+**Offline fallback:** Use c6-decision.md and session screenshots; do not display personal memory or unrelated sessions.
+
+**Working tip:** Verify that the reason reached the resumed task.
+
+**Fallback:** If the live CLI stalls, use the Offline fallback line in these notes and keep the same chapter timing. Source links are optional reading, not online demo dependencies.
+
+## C7: Validate the consumer and review | 47:00-50:00 | 3 minutes
 
 **Pre-staged:** offline suite can run from a prepared shell; logs have no private IDs; reviewer prompt copied; no private plans or raw state on screen.
 
-**Cut at 52:15 (2:15 into C7):** If the full suite is not done, show the saved green exits and diff; do not run a second suite live.
+**Cut at 49:15 (2:15 into C7):** If the full suite is not done, show the saved green exits and diff; do not run a second suite live.
 
 Haflidi leads validation and review; Martin supports and names the acceptance
 boundary. Select `/agent terraform-validator` in the same approved isolated
@@ -313,14 +331,18 @@ context as independent. Return findings to Squad and the human maintainer. This
 additional handoff must be rehearsed within the chapter budget; no completed take
 or timing qualification is implied by adding the instructions.
 
-**Optional fallback capture R2:** finalize and visually review the master if recording fallback is used. Preserve prompts, task IDs, hashes, exits, cuts, and source time ranges in `take.json`. Separate the upstream pins in `NOTICE.md`, qualification revision, and live checkpoint. Earlier logs never become later live execution evidence. Keep off-screen results labeled, raw evidence private, and unreviewed media unattached. Keep C0-C7 at 3/3/4/4/4/5/3/3 minutes: 29 minutes of live demo inside the 60-minute layout. The timed deck now has a 2-minute close buffer, not a planned question block. Optional exports use those same cuts. No real apply is permitted.
+**Optional fallback capture R2:** finalize and visually review the master if recording fallback is used. Preserve prompts, task IDs, hashes, exits, cuts, and source time ranges in `take.json`. Separate the upstream pins in `NOTICE.md`, qualification revision, and live checkpoint. Earlier logs never become later live execution evidence. Keep off-screen results labeled, raw evidence private, and unreviewed media unattached. Keep C0-C7 at 3/3/4/4/4/5/3/3 minutes: 29 minutes of live demo inside the 60-minute layout. The timed deck now plans content to 55:00, protects 55:00-58:00 as slack, and keeps 58:00-60:00 for the close. Optional exports use those same cuts. No real apply is permitted.
 
-## s20-consumer: Reuse the code, not the environment | 53:00-56:00
+## s20-consumer: Reuse the code, not the environment | 50:00-53:00
 
 This three-minute section follows C7. Keep it short and preserve the boundary
 between reviewed module code and private environment inputs.
 
-- **0:00-0:30 (53:00-53:30):** show the consumer-to-module diagram.
-- **0:30-1:00 (53:30-54:00):** open `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; the certificate warning is expected. Point at the pipeline flow, serving pod name, and speakers section.
-- **1:00-2:10 (54:00-55:10):** say "gated pipeline PR → plan → human approval → apply" and state the 29/29 outside-in runtime checks.
-- **2:10-3:00 (55:10-56:00):** restate the boundary. If the app is unreachable, use the offline screenshot plus apply runs 37771532872 and 37772290635 as fallback evidence.
+- **0:00-0:30 (50:00-50:30):** show the consumer-to-module diagram.
+- **0:30-1:00 (50:30-51:00):** open `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; the certificate warning is expected. Point at the pipeline flow, serving pod name, and speakers section.
+- **1:00-2:10 (51:00-52:10):** say "gated pipeline PR → plan → human approval → apply" and state the 29/29 outside-in runtime checks.
+- **2:10-3:00 (52:10-53:00):** restate the boundary. If the app is unreachable, use the offline screenshot plus apply runs 37771532872 and 37772290635 as fallback evidence.
+
+## Protected slack | 55:00-58:00
+
+Protected slack: 55:00-58:00 — if on schedule, use this for a brief recap or extra Q&A warm-up; if behind, this is where you catch up before the close.

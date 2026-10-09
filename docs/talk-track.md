@@ -1,14 +1,14 @@
 # Martin Opedal, Enterprise Cloud Solution Architect, Microsoft and Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft: complete delivery script
 
-This script mirrors `docs\run-plan.md`: 00:00-03:00 intro, 03:00-58:00 content and live chapters, and 58:00-60:00 close plus "questions if time allows". There is no planned question block.
+This script mirrors `docs\run-plan.md`: 00:00-03:00 intro, 03:00-55:00 planned content and live chapters, 55:00-58:00 protected slack, and 58:00-60:00 close plus "questions if time allows". There is no planned question block.
 
 ## Delivery contract
 
-This is a rehearsed 60-minute show, not exploratory pair programming. Before the timed show starts, show the untimed legal/futures notice: preview features may change; status is as of 14 Oct 2026; no warranties; dates are subject to change. C0-C7 remain 29 minutes total. The only protected buffer is the 58:00-60:00 close.
+This is a rehearsed 60-minute show, not exploratory pair programming. Before the timed show starts, show the untimed legal/futures notice: preview features may change; status is as of 14 Oct 2026; no warranties; dates are subject to change. C0-C7 remain 29 minutes total. Planned content ends at 55:00, then the protected slack holds 55:00-58:00 before the close.
 
-Cut at the chapter cut line. Do not start a second live attempt. Use reviewed fallback evidence, name what failed live, and move on. Checkpoints: after C0 at 10:00, after C2 at 23:00, after C5 at 41:00, start `s20-consumer` at 53:00, and start close at 58:00.
+Cut at the chapter cut line. Do not start a second live attempt. Use reviewed fallback evidence, name what failed live, and move on. Checkpoints: after C0 at 08:30, after C2 at 21:30, after C5 at 38:30, start `s20-consumer` at 50:00, finish planned content at 55:00, and start close at 58:00.
 
-Drop order if behind: compress `s21-limits`; trim `s18-memory`; trim `s15-proof`; trim `s13-test-gap`; trim `s05-parallel`; shorten `s20-consumer` but keep the 53:30-54:00 reveal; then use the live chapter fallback.
+Drop order if behind: compress `s21-limits`; trim `s18-memory`; trim `s15-evidence`; trim `s13-test-gap`; trim `s05-parallel`; shorten `s20-consumer` but keep the 50:30-51:00 reveal; then use the live chapter fallback.
 
 Use runtime check and runtime evidence language. Local mocks are not Azure acceptance evidence. Public repo rules apply: no subscription IDs, tenant IDs, private IPs, raw state, secrets, private run URLs, or personal memory on screen.
 
@@ -26,19 +26,19 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Haflidi:** Takeaways: define the artifact, assign one owner per shared surface, keep provider and state ownership with the caller, record decisions where the next owner can review them, and keep checks tied to their claim.
 
-## s03-baseline | 03:00-04:00 | Start with the code you have
+## s03-baseline | 03:00-03:30 | Start with the code you have
 
 **Martin:** The starting point is a public AKS module revision, qualified before this live run. It had useful inputs, outputs, and tests, plus inherited issues we disclose instead of rewriting history.
 
 **Haflidi:** Keep upstream source, qualified module revision, and clean live checkpoint separate. The live run demonstrates one bounded change. It is not an Azure apply.
 
-## s04-news | 04:00-05:00 | Big news this year
+## s04-news | 03:30-04:00 | Big news this year
 
 **Martin:** Copilot CLI is GA, so the terminal is a normal engineering surface for Plan mode, file context, agents, skills, MCP, diff, review, permissions, and session controls.
 
 **Haflidi:** Squad 1.0.1 is the demo version. Agent HQ, AI Credits, and computer use have moved this year, but this Terraform demo stays in CLI, files, docs, and offline checks. Some pinned docs and npm labels lag release tags.
 
-## s04-layers | 05:00-06:00 | One workflow, three distinct layers
+## s04-layers | 04:00-05:00 | One workflow, three distinct layers
 
 **Haflidi:** Copilot CLI runs the work. Squad coordinates responsibilities through a repository-backed roster, routing, handoffs, and decisions. Terraform, Git, Microsoft Learn, and MCP servers return evidence.
 
@@ -46,7 +46,7 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Haflidi:** The control spectrum is not a maturity ladder: Ask → edit → plan → agent → programmatic `-p` → Squad multi-agent with gates. Our chapters use different points on it: C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools + permissions, C5 edit/repair loop, C6 resume, C7 gated review. More automation is not better by default; human approvals remain at the gates. `-p` is appendix automation, not a live chapter.
 
-## s07-agent-setup | 06:00-07:00 | Meet the agent setup
+## s07-agent-setup | 05:00-05:30 | Meet the agent setup
 
 **Martin:** `AGENTS.md` and `.github\copilot-instructions.md` are always-on repository guidance. The HCL instruction file applies when Terraform files change.
 
@@ -54,11 +54,11 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Martin:** The three native lanes are explicit selections: `terraform-coder` writes agreed changes; `terraform-validator` runs fixed offline checks; `terraform-reviewer` reviews a supplied diff in a fresh context. Tool filters reduce available tools. They are not a sandbox.
 
-## demo-c0 | 07:00-10:00 | C0: From zero to a squad
+## demo-c0 | 05:30-08:30 | C0: From zero to a squad
 
-> DRIVER Haflidi. Cut at 09:15. Handoff at 10:00.
+> DRIVER Haflidi. Cut at 07:45. Handoff at 08:30.
 
-**Cut at 09:15:** If installs or login are not complete, state the live stall, show fallback evidence, and move to `s05-parallel`.
+**Cut at 07:45:** If installs or login are not complete, state the live stall, show fallback evidence, and move to `s05-parallel`.
 
 Use the C0 block from [demo-runbook.md](demo-runbook.md): show Git/Copilot/Squad absent, install Git, Copilot CLI, and Squad with WinGet, refresh `PATH`, show versions, run `copilot`, `/login`, `/exit`, clone the public module, run `squad init`, show `git status --short`, start `copilot --agent squad`, request a small team, confirm the roster, `/exit`, and run `squad doctor`.
 
@@ -66,13 +66,13 @@ Use the C0 block from [demo-runbook.md](demo-runbook.md): show Git/Copilot/Squad
 
 **Martin:** The team is reviewable in Git from minute one. Setup is useful, but it is not Terraform correctness.
 
-## s05-parallel | 10:00-12:00 | Give parallel work separate owners
+## s05-parallel | 08:30-10:30 | Give parallel work separate owners
 
 **Martin:** The lanes are deliberately narrow. The coder owns the changed Terraform test file. The validator owns fixed offline commands and exact exit codes. The reviewer owns an independent read-only review of the final diff.
 
 **Haflidi:** Handoffs name file, check, and next owner. One writer owns a shared Terraform surface. Separate conversations are not filesystem isolation, and worktrees do not isolate credentials.
 
-## s06-contract | 12:00-14:00 | Fit the platform you already have
+## s06-contract | 10:30-12:30 | Fit the platform you already have
 
 **Haflidi:** The module owns resources, typed inputs, outputs, and provider requirements. The consumer root owns providers, backend, authentication, state, and environment values.
 
@@ -80,29 +80,29 @@ Use the C0 block from [demo-runbook.md](demo-runbook.md): show Git/Copilot/Squad
 
 **Haflidi:** AKS Automatic private and custom-network requirements include API-server, user-node, and managed-system-pool network contract. A variable name does not establish that contract.
 
-## demo-c1 | 14:00-17:00 | C1: Same task, fixed inputs
+## demo-c1 | 12:30-15:30 | C1: Same task, fixed inputs
 
-> DRIVER Martin operates; Haflidi compares. Cut at 16:15.
+> DRIVER Martin operates; Haflidi compares. Cut at 14:45.
 
 Use `/new`, `/agent` Squad, `/model`, `/plan`, `/rename C1-A`; repeat as `C1-B`. Prompt: plan only, add `alternate_network_payload`, pod `172.21.0.0/16`, service `10.241.0.0/16`, DNS `10.241.0.10`, preserve private API, no edits or deploy.
 
 **Haflidi:** Compare one consequence, not verbosity. B1 was 0/5 because the ambiguous brief produced two assert blocks while the oracle expected four. B1v2 stated the oracle's rule and was 5/5 in re-measurement. That is a measured checkpoint, not a causal claim about every future run. The live run still has to pass.
 
-## s08-plan-boundary | 17:00-19:00 | Extract a module, not an environment
+## s08-plan-boundary | 15:30-17:30 | Extract a module, not an environment
 
 **Haflidi:** The approved change should produce a generic module plus a small consumer example. The consumer configures providers and backend, passes approved existing-network inputs, and calls the module.
 
 **Martin:** Existing deployments need migration review. This session does not authorize state moves, imports, or environment redesign. The public module must explain its interface without private values.
 
-## demo-c2 | 19:00-23:00 | C2: Pin the brief and approve a plan
+## demo-c2 | 17:30-21:30 | C2: Pin the brief and approve a plan
 
-> DRIVER Martin. Cut at 22:00. Must be out by 23:00.
+> DRIVER Martin. Cut at 20:30. Must be out by 21:30.
 
 Use `/new`, `/rename guided-clean-run`, `/agent` Squad, `/instructions`, `/plan`. Reference `main.tf`, `variables.tf`, and `tests\contract.tftest.hcl`; plan the regression and README explanation; keep eight inputs, six outputs, and AzAPI intact; plan a labeled mutation and repair; no implementation, Azure lookup, apply, dependency upgrade, or state operation. Revise: `Put unchanged payload assertions and offline checks before documentation; exclude infrastructure redesign.` Inspect `/session plan`.
 
 **Martin:** Native Plan mode is the control. Approval authorizes this code change only, not an Azure apply.
 
-## s10-tool-roles | 23:00-24:00 | Give context the right job
+## s10-tool-roles | 21:30-22:00 | Give context the right job
 
 **Haflidi:** Instructions are persistent expectations. Skills turn a repeated procedure into reusable, versioned guidance. MCP is a source or tool connection.
 
@@ -110,19 +110,19 @@ Use `/new`, `/rename guided-clean-run`, `/agent` Squad, `/instructions`, `/plan`
 
 **Haflidi:** A recipe changes how we work; a source tells us what a service supports; a human still approves the code change.
 
-## demo-c3 | 24:00-28:00 | C3: Assign one writer
+## demo-c3 | 22:00-26:00 | C3: Assign one writer
 
-> DRIVER Martin. Cut at 27:00.
+> DRIVER Martin. Cut at 25:00.
 
 Use `/agent` Squad, `/tasks`, `/agent list`, `/mcp`, `/agent terraform-coder`. Paste the B1v2 brief exactly: work only in `terraform\modules\aks-automatic-corp`; add `alternate_network_payload` in `tests\contract.tftest.hcl`; reuse AzAPI mock and `command = plan`; pod `172.21.0.0/16`, service `10.241.0.0/16`, DNS `10.241.0.10`; four separate asserts; each has `error_message`; change only the test; no deploy, provider, or lock-file change.
 
 **Martin:** The clarified brief states the oracle's rule. Assignment is not completion. The live change still needs checks.
 
-## s12-source-check | 28:00-29:00 | Turn the source into an assertion
+## s12-source-check | 26:00-26:30 | Turn the source into an assertion
 
 **Haflidi:** Follow the claim into the resource body. A reassuring variable name does not establish the generated contract. A source citation plus an assertion gives the reviewer a condition to inspect.
 
-## s13-test-gap | 29:00-32:00 | State the oracle before the run
+## s13-test-gap | 26:30-29:30 | State the oracle before the run
 
 **Haflidi:** B1 was ambiguous. All five runs chose two assert blocks. The oracle expected four separate assert blocks: pod CIDR, service CIDR, DNS service IP, and private API.
 
@@ -130,69 +130,69 @@ Use `/agent` Squad, `/tasks`, `/agent list`, `/mcp`, `/agent terraform-coder`. P
 
 **Haflidi:** The practical lesson is to state the checker rule before the agent writes code. Then test the test with a deliberate mutation, restore, and rerun.
 
-## demo-c4 | 32:00-36:00 | C4: Ground the work with guidance and source
+## demo-c4 | 29:30-33:30 | C4: Ground the work with guidance and source
 
-> DRIVER Martin. Cut at 35:00.
+> DRIVER Martin. Cut at 32:30.
 
 Use `/skills info test-discipline`, `/mcp`, then ask for test-discipline, unchanged assertions, and a read-only Microsoft Learn source for AKS Automatic private/custom network. Cite source/version. Avoid Azure account, provider, or write access. Inspect `/permissions`.
 
 **Martin:** The skill changes the procedure. The MCP lookup supplies a source. The human decides how it applies.
 
-## demo-c5 | 36:00-41:00 | C5: Catch a mistake and repair it
+## demo-c5 | 33:30-38:30 | C5: Catch a mistake and repair it
 
-> DRIVER Haflidi. Cut at 39:45. Must be out by 41:00.
+> DRIVER Haflidi. Cut at 37:15. Must be out by 38:30.
 
 Select `/agent terraform-validator`; run the C5 PowerShell block with `$phase = 'before'`. Select `/agent terraform-coder`; seed `enablePrivateCluster` from `true` to `false` in the disposable worktree only. Rerun with `$phase = 'seeded-failure'`. Use `/review`; restore only that field; inspect `/diff`; rerun with `$phase = 'repaired'`.
 
 **Haflidi:** Preserve cause and effect. Say: deliberate lab mutation, not an AI-discovered defect. A runtime check is evidence for the assertion it runs. It is not Azure acceptance evidence.
 
-## s15-proof | 41:00-44:00 | Evidence has levels
+## s15-evidence | 38:30-41:30 | Evidence has levels
 
 **Haflidi:** Keep gates separate: source inspection, local contract tests, consumer checks, real plan/apply, and Azure read-back. A runtime check is evidence only for what it checks.
 
 **Martin:** Evidence feeds the gate; the gate doesn't care who typed the diff. The private consumer supplied separate sanitized runtime evidence for one pinned module revision. We do not show private IDs, state, run URLs, or FQDNs.
 
-## s16-continuity | 44:00-45:00 | Save the reason, not the whole chat
+## s16-continuity | 41:30-42:00 | Save the reason, not the whole chat
 
 **Martin:** A later task needs the reason, not a transcript. Private API, caller-owned provider/backend, and the new network-payload regression should survive the session.
 
 **Haflidi:** Native resume returns to a conversation. Repository decisions are different artifacts. The next task must read and cite the decision file.
 
-## demo-c6 | 45:00-48:00 | C6: Resume with decisions intact
+## demo-c6 | 42:00-45:00 | C6: Resume with decisions intact
 
-> DRIVER Haflidi. Cut at 47:15.
+> DRIVER Haflidi. Cut at 44:15.
 
 Ask Scribe to record a public-only decision in `.squad\decisions\inbox\`: private API invariant, caller-owned provider/backend, added network-payload regression, labeled mutation/restoration, exact checks, and sanitized Azure-validation boundary. Then use `/new`, `/resume guided-clean-run`, `/cwd`, `/context`, `/usage`, and ask the session to read the saved decision and cite its file and constraints.
 
 **Haflidi:** The record starts in `.squad\decisions\inbox\`. Scribe merges accepted entries into the shared decision ledger. That is reviewable repository knowledge, not personal memory.
 
-## s18-memory | 48:00-50:00 | Three places to keep context
+## s18-memory | 45:00-47:00 | Three places to keep context
 
 **Martin:** Conversation context, native memory, and Squad repository knowledge have different owners. We do not display personal memory contents.
 
 **Haflidi:** Save accepted boundaries where the next owner can review them. Keep private environment mapping, state, credentials, and personal memory out of public team history.
 
-## demo-c7 | 50:00-53:00 | C7: Reviewed diff to approved Terraform change
+## demo-c7 | 47:00-50:00 | C7: Reviewed diff to approved Terraform change
 
-> DRIVER Haflidi leads validation and review; Martin names the boundary. Cut at 52:15.
+> DRIVER Haflidi leads validation and review; Martin names the boundary. Cut at 49:15.
 
 Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runbook.md](demo-runbook.md); inspect `/diff`; start `/new`; select `/agent terraform-reviewer`; supply exact diff, files, revision, MCP citations, and sanitized validator results.
 
 **Haflidi:** Show offline checks, diff, reviewer findings, and human code-only acceptance. Remaining gates belong to the environment owner.
 
-## s20-consumer | 53:00-56:00 | Reuse the code, not the environment
+## s20-consumer | 50:00-53:00 | Reuse the code, not the environment
 
-> DRIVER Martin. Must start by 53:00. Live reveal is 53:30-54:00.
+> DRIVER Martin. Must start by 50:00. Live reveal is 50:30-51:00.
 
-**Martin:** 53:00-53:30: show the consumer-to-module diagram. Consumers pin the module code. They do not copy private inputs, backend, state, identities, or secrets.
+**Martin:** 50:00-50:30: show the consumer-to-module diagram. Consumers pin the module code. They do not copy private inputs, backend, state, identities, or secrets.
 
-**Martin:** 53:30-54:00: open `https://aks-online-demo.swedencentral.cloudapp.azure.com/`. Show the branded page, pipeline flow, serving pod name, and speakers section.
+**Martin:** 50:30-51:00: open `https://aks-online-demo.swedencentral.cloudapp.azure.com/`. Show the branded page, pipeline flow, serving pod name, and speakers section.
 
-**Haflidi:** 54:00-55:10: Whether a change is human-authored or agent-assisted, it goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail. The map is PR → checks/scans → review + protected main → plan → environment approval → OIDC apply → runtime check.
+**Haflidi:** 51:00-52:10: Whether a change is human-authored or agent-assisted, it goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail. The map is PR → checks/scans → review + protected main → plan → environment approval → OIDC apply → runtime check.
 
-**Martin:** 55:10-56:00: boundary. The documented gaps stay visible: single-maintainer admin override, self-review setting, and the environment gate before the apply job's plan, mitigated by a reviewed plan-only run and in-job plan comparison. This shows reuse of code, not reuse of the private environment. `a-online` and `a-security` are appendix and hallway depth.
+**Martin:** 52:10-53:00: boundary. The documented gaps stay visible: single-maintainer admin override, self-review setting, and the environment gate before the apply job's plan, mitigated by a reviewed plan-only run and in-job plan comparison. This shows reuse of code, not reuse of the private environment. `a-online` and `a-security` are appendix and hallway depth.
 
-## s21-limits | 56:00-58:00 | Make the next change easier to review
+## s21-limits | 53:00-55:00 | Make the next change easier to review
 
 **Haflidi:** Rule one: use Plan mode when the change has decisions worth resolving before edits.
 
@@ -200,9 +200,13 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 **Haflidi:** Rule three: use skills for repeatable procedures and MCP for specific sources or tools. Keep the artifact, reason, and check together.
 
+## protected-slack | 55:00-58:00 | Protected slack
+
+**Martin:** Protected slack: 55:00-58:00 — if on schedule, use this for a brief recap or extra Q&A warm-up; if behind, this is where you catch up before the close.
+
 ## s22-close | 58:00-60:00 | Close, public handoff, questions if time allows
 
-> DRIVER Martin. This is the close buffer, not scheduled questions. Finish at 60:00.
+> DRIVER Martin. Start the close at 58:00 and finish at 60:00. Questions only if time remains.
 
 **Martin:** Humans set direction and approve; agents help move work through the same gated loop. The public handoff is the module material, talk docs, and evidence boundaries. Use the reusable parts: module interface, prompts, lane pattern, and check discipline.
 
