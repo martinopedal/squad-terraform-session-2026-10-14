@@ -25,9 +25,11 @@ Martin drives plan, coding, source lookup, the consumer reveal, and the close. H
 
 ```mermaid
 flowchart LR
-  A[Idea and brief] --> B[terraform-coder writes]
-  B --> C[fmt, validate, tflint, terraform test]
-  C --> D[terraform-reviewer reviews diff]
-  D --> E[Human reviews plan]
-  E --> F[Pipeline approval and apply]
+  A[Idea and brief] --> B[Squad coordinates parallel agents]
+  B --> C[Copilot CLI coder agent writes Terraform]
+  B --> D[Validator and reviewer agents run in parallel]
+  C --> E[Gates: fmt, validate, tflint, terraform test]
+  D --> E
+  E --> F[Human reviews plan]
+  F --> G[Pipeline applies]
 ```
