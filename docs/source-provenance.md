@@ -22,7 +22,7 @@ The independent module repository has a credential-free workflow. Terraform matr
 
 The existing landing-zone implementation is a dependency of the private deployment environment, not source to copy into this repository. Public examples use placeholders and explicit platform-owned inputs. No real environment identifiers, state, secrets, or private policy evidence are included here.
 
-Documentation and generated source are different from executed evidence. The private Azure deployment/read-back pinned runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; the public module revision `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7` records that sanitized result. Deck 0.21.0 presents live C0-C7 chapters with an untimed legal notice, public feature badges, and a text-only GitHub Copilot product name; optional fallback recordings/screenshots are not source evidence unless separately reviewed and labeled.
+Documentation and generated source are different from executed evidence. The private Azure deployment/read-back pinned runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; the public module revision `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7` records that sanitized result. Deck 0.21.1 presents live C0-C7 chapters with an untimed legal notice, public feature badges, and a text-only GitHub Copilot product name; optional fallback recordings/screenshots are not source evidence unless separately reviewed and labeled.
 
 ## Playbook reference sources
 
