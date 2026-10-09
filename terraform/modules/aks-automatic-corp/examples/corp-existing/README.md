@@ -48,7 +48,7 @@ terraform version
 terraform fmt -check -recursive
 terraform init -backend=false -input=false -lockfile=readonly
 terraform validate -no-color
-terraform test -no-color -var-file=terraform.tfvars.example
+terraform test -var-file terraform.tfvars.example -no-color
 ```
 
 `tests\example.tftest.hcl` mocks AzAPI and uses plan-mode runs. It checks the local child call, output forwarding, and caller overrides. Its computed response includes `MockOnly` and `.invalid` hostnames: these are fixtures, not provisioning, DNS, or connectivity evidence. The child suite separately checks its request body.

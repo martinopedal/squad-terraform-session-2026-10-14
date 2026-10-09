@@ -20,7 +20,7 @@ Both roots were checked in clean qualification directories using verified local 
 | Explicit `terraform.tfvars.example` formatting through stdin | Exit 0 |
 | `terraform validate -no-color` | Exit 0 in both roots |
 | Module `tests/contract.tftest.hcl` | 52 passed, exit 0: four positive and 48 targeted negative cases |
-| Caller `tests/example.tftest.hcl` with `-var-file=terraform.tfvars.example` | Two passed, exit 0 |
+| Caller `tests/example.tftest.hcl` with `-var-file terraform.tfvars.example` | Two passed, exit 0 |
 | Configured TFLint | Exit 0 in both roots |
 
 The mocks replace computed IDs and responses only. The assertions inspect the configured request body; `MockOnly` and `.invalid` fixture outputs are not Azure provisioning or connectivity evidence.

@@ -30,7 +30,7 @@ first failure instead of repairing files or relaxing checks:
 - `tflint --init` only when the operator explicitly approves the plugin download
 - `tflint --config=.tflint.hcl --no-color` in the module root; in `examples\corp-existing`, use the reviewed module config path `tflint --config=..\..\.tflint.hcl --no-color`
 - `terraform test -filter=tests\contract.tftest.hcl -no-color` in the module root
-- `terraform test -filter=tests\example.tftest.hcl -var-file=terraform.tfvars.example -no-color` in `examples\corp-existing`
+- `terraform test -var-file terraform.tfvars.example -no-color` in `examples\corp-existing`
 - `node .github\skills\qualify-agent-setup\check.mjs`
 - `node --test .github\skills\qualify-agent-setup\check.test.mjs`
 
@@ -52,4 +52,3 @@ state, saved plans, local MCP/profile configuration, or private histories.
 Report **pass**, **fail**, **blocked**, or **not applicable** with exact commands,
 versions, exit codes, and outputs. Missing tools or dependencies are blocked, not
 passed. Static qualification and mocked tests are not Azure acceptance.
-

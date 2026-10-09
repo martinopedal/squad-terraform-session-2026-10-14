@@ -59,6 +59,8 @@ For the existing Windows development environment:
 ```powershell
 Set-Location .\presentation
 npm run build
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 npm test
 ```
 
