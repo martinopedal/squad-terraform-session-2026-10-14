@@ -1,35 +1,35 @@
-# Overview: how the 60-minute session flows
+# Overview: the session in five steps
 
-This session shows a safe way to use GitHub Copilot CLI and Squad for Terraform work. The demo target is a private AKS module and a consumer page. The session is about controlling AI work from idea to reviewed change.
+For the minute-by-minute script, see [`docs\talk-track.md`](talk-track.md) and [`docs\run-plan.md`](run-plan.md). This page is the short topic map for colleagues who already know the products.
 
-AI can write Terraform fast, but the output can vary between runs. That makes infrastructure work risky if a team accepts the first answer without checks. Our idea is simple: give the work small roles, ground claims in current sources, and keep the same gates a human change would face.
+The session is about using GitHub Copilot CLI and Squad to make Terraform work easier to review. The risk is that AI can produce different answers from the same starting point. The answer is not blind trust. The answer is a clear flow, small roles, grounded source lookups, and the same gates a human change would face.
 
-Copilot CLI is the workbench. We use three small profiles. `terraform-coder` writes the agreed change. `terraform-validator` runs fixed offline checks such as `terraform fmt -check -recursive`, `terraform validate -no-color`, `tflint`, and `terraform test`. `terraform-reviewer` reviews the final diff in a fresh context. Microsoft Learn MCP and the pinned Terraform MCP supply source lookups. Agent-written code and human-written code still go through plan review, required review, and environment approval before apply.
+1. Bootstrap on a clean VM, then move to the presenter setup.
 
-Squad is the coordinator. It gives the repo a roster, routing, handoffs, and decision files. That lets several agents work in parallel, keeps one owner per shared surface, and saves the reasons so the next session can resume with the same constraints.
+   Haflidi drives C0 on the clean Windows 11 demo VM. He shows install, login, `copilot`, `squad init`, and the basic getting-started path. Martin adds the boundary that setup is useful, but it is not Terraform correctness. After C0, the session continues in the prepared presenter flow.
 
-## Live demo chapters
+2. Show the working model in Copilot CLI and Squad.
 
-- C0, 05:30-08:30, From zero to a squad. Haflidi installs and boots the tools on a clean VM.
-- C1, 12:30-15:30, Same task, fixed inputs. Martin runs the same brief twice to show why wording matters.
-- C2, 17:30-21:30, Pin the brief and approve a plan. Martin gets a human-approved plan before edits.
-- C3, 22:00-26:00, Assign one writer. Martin routes the clarified brief to `terraform-coder`.
-- C4, 29:30-33:30, Ground the work with guidance and source. Martin adds skill guidance and MCP source lookup.
-- C5, 33:30-38:30, Catch a mistake and repair it. Haflidi uses `terraform-validator`, seeds a failure, then repairs it.
-- C6, 42:00-45:00, Resume with decisions intact. Haflidi shows how Squad decisions survive a resumed session.
-- C7, 47:00-50:00, Reviewed diff to approved Terraform change. Haflidi leads validation and review, while Martin states the boundary to the environment owner.
+   Martin covers the CLI surface, the three Terraform lanes, and the handoff into the repo guidance. Haflidi explains Squad as the coordination layer with routing, handoffs, decisions, and one owner per shared surface. This is where the audience sees how the team is organized before any deeper Terraform point.
 
-In the Oct 8 repeatability eval, B1v2 was 5/5 green, B2 was 5/5 green, and B3 was 4/5 green after a disclosed harness-bug rescore from saved diffs, with one run still red for an out-of-scope README edit.
+3. Start from a finished, qualified module and explain why the gates matter.
 
-Martin drives plan, coding, source lookup, the consumer reveal, and the close. Haflidi drives bootstrap, contract framing, validation, repair, resume, review, and the limits slide.
+   Martin introduces the inherited public module revision and the consumer view. Haflidi explains the module boundary, caller-owned provider and state, and the fact that local checks and Azure runtime evidence answer different questions. The security story sits here: pull requests, protected `main`, required review, environment approval, OIDC, runtime checks, and GHAS controls such as CodeQL, secret scanning, and Dependabot. The determinism point also sits here. C1 and the eval show why the brief must be precise. The recorded result is B1v2 5/5, B2 5/5, and B3 4/5. Recordings are fallback evidence, not the main proof.
+
+4. Show the framework pieces that make the flow work.
+
+   Martin shows agents, skills, MCP source lookups, and permissions. Haflidi explains the difference between instructions, skills, and MCP, plus the reviewer and validator boundaries. The current docs ground this with Microsoft Learn MCP and the pinned Terraform MCP setup used in the demo.
+
+5. End with the Azure output and the optional extra.
+
+   Martin shows the Online consumer page, `AKS Automatic | NIC 2026 demo`. Haflidi maps that result back to the same gate flow. Any extra segment about Squad on ACA is to agree. It is not part of the current run plan or talk track.
 
 ```mermaid
 flowchart LR
-  A[Idea and brief] --> B[Squad coordinates parallel agents]
-  B --> C[Copilot CLI coder agent writes Terraform]
-  B --> D[Validator and reviewer agents run in parallel]
-  C --> E[Gates: fmt, validate, tflint, terraform test]
-  D --> E
-  E --> F[Human reviews plan]
-  F --> G[Pipeline applies]
+  A[Bootstrap and setup] --> B[Squad coordinates parallel agents]
+  B --> C[Copilot CLI agents work on Terraform]
+  C --> D[Gates and security checks]
+  D --> E[Human reviews plan]
+  E --> F[Pipeline applies]
+  F --> G[Online demo page]
 ```
