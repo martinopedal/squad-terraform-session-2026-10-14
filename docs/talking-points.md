@@ -1,4 +1,4 @@
-# Presenter talking points — 60-minute layout
+# Presenter talking points: 60-minute layout
 
 Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track.md). Live demo runbook: [demo-runbook.md](demo-runbook.md). Product update detail: [whats-new.md](whats-new.md). Deck URL: <https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/>.
 
@@ -10,7 +10,7 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - Squad 1.0.1 coordinates the demo team; npm/docs labels may lag.
 - Computer use is public preview and is not used in this Terraform demo.
 - Pre-show legal/futures notice is untimed: preview features may change; status is as of 14 Oct 2026; no warranties; dates are subject to change.
-- Honesty rule: live terminal/browser work is live; prepared checkpoints, inherited code, prompts, and fallback evidence are disclosed.
+- The terminal and browser work is live. We disclose prepared checkpoints, inherited code, prompts, and fallback evidence.
 - Use runtime check/evidence language. Never imply local mocks establish Azure acceptance.
 
 ## Clock checkpoints, cuts, and drop order
@@ -26,32 +26,32 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - Introduce Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft.
 - Audience promise: reusable Terraform module for private AKS in an existing landing zone.
 - What they will see: Copilot CLI, Squad, three lanes, tests, mutation/repair, consumer reveal.
-- Honesty rule: live vs prepared, fallback evidence disclosed, runtime evidence scoped.
-Takeaway: inspectable artifact over agent theater.
+- Identify the live and prepared parts, disclose fallback evidence, and scope runtime claims to the checks.
+- Leave code and check output that the audience can inspect.
 
 ### 03:00-03:30, s03-baseline, Martin
 - Public source, qualification revision, and clean live checkpoint are separate.
 - Not first implementation; live run demonstrates one bounded change.
-Takeaway: disclose preparation before running.
+- Say what was prepared before the live run starts.
 
 ### 03:30-04:00, s04-news, Martin
 - Lead with Auto model selection and Project HydraFusion.
 - Pin `/model` to `claude-sonnet-5` on stage for eval parity, then describe Auto or HydraFusion as the cost lever.
 - Keep the rest to anchors: CLI GA, Squad 1.0.1, Terraform MCP, Azure MCP, GitHub agent news, and one AKS line.
-Takeaway: use current controls, state current limits.
+- Name the current controls and their limits.
 
 ### 04:00-05:00, s04-layers, Haflidi then Martin
 - CLI runs work; Squad coordinates responsibilities; Terraform, Git, Learn, and MCP return evidence.
 - MCP = Model Context Protocol, an external source/tool connection.
 - The control spectrum is not a maturity ladder: Ask → edit → plan → agent → programmatic `-p` → Squad multi-agent with gates. Our chapters use different points on it: C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools + permissions, C5 edit/repair loop, C6 resume, C7 gated review. More automation is not better by default; human approvals remain at the gates. `-p` is appendix automation, not a live chapter.
-Takeaway: files, decisions, and checks are the outputs.
+- Show the files, decision record, and check output.
 
 ### 05:00-05:30, s07-agent-setup, Martin
 - `AGENTS.md` and Copilot instructions are always-on guidance.
 - `.squad\` owns roster, routing, decisions, charters, and handoffs.
 - Three native lanes: `terraform-coder`, `terraform-validator`, `terraform-reviewer`.
 - Tool filters are not a sandbox.
-Takeaway: narrow lanes, explicit selection.
+- Select each native profile explicitly and keep its scope narrow.
 
 ### 05:30-08:30, C0 From zero to a squad, Haflidi
 - Cut 07:45.
@@ -59,107 +59,107 @@ Takeaway: narrow lanes, explicit selection.
 - `copilot`; `/login`; `/exit`; clone public module.
 - `squad init`; `git status --short`; `copilot --agent squad`; propose/confirm roster; `/exit`; `squad doctor`.
 - Playbook depth: prerequisites/install, init, hire, verify, upgrade safely later.
-Takeaway: the team is reviewable in Git from minute one.
+- Show the team files in Git after the human confirms the roster.
 
 ### 08:30-10:30, s05-parallel, Martin
 - Three lanes: coder writes, validator runs fixed offline checks, reviewer reviews in fresh context.
 - Handoff names file, check, next owner.
 - One writer owns a shared Terraform surface.
-Takeaway: ownership beats more agents.
+- One writer owns each shared Terraform file.
 
 ### 10:30-12:30, s06-contract, Haflidi
 - Module owns resources, inputs, outputs, and provider requirements.
 - Caller owns provider, backend, auth, state, and environment values.
 - Private Automatic consumes approved existing network inputs.
-Takeaway: build a module for the platform you already have.
+- Show which approved platform inputs the module consumes.
 
 ### 12:30-15:30, C1 Compare two plans, Martin drives; Haflidi compares
 - Cut 14:45.
 - `/new`, `/agent` Squad, `/model`, `/plan`, `/rename C1-A`; repeat as C1-B.
-- Same prompt and model; compare one consequence, not verbosity.
+- Use the same prompt and model. Compare one consequence rather than answer length.
 - B1 failed because every run wrote two asserts against a pre-registered minimum of three.
 - B1v2 was a separate, clarified brief that asks for four separate asserts. It was 5/5. No causal claim. Live still has to pass.
-Takeaway: controlled inputs make comparisons useful.
+- Keep the inputs fixed so the comparison is worth reading.
 
 ### 15:30-17:30, s08-plan-boundary, Haflidi
-- Extract a module, not an environment.
+- Extract the reusable module. Keep environment-specific setup in the consumer.
 - Fresh consumer and existing deployment need different migration review.
 - Public example must explain interface without private values.
-Takeaway: approval boundary before implementation.
+- Agree the approval boundary before implementation.
 
 ### 17:30-21:30, C2 Plan mode, Martin
 - Cut 20:30; must be out by 21:30.
 - `/new`, `/rename guided-clean-run`, `/agent` Squad, `/instructions`, `/plan`.
 - Reference main, variables, and contract test; plan regression, README explanation, labeled mutation/repair.
 - Revise to put unchanged assertions and offline checks before docs; inspect `/session plan`.
-Takeaway: approval authorizes repo changes only.
+- Plan approval authorizes only the named repository changes.
 
 ### 21:30-22:00, s10-tool-roles, Haflidi
 - Instructions = expectations; skills turn a repeated procedure into reusable, versioned guidance; MCP = source/tool connection.
 - Second opinion from a different model (Rubber Duck, GA 2026-06-02, `/rubber-duck` in Copilot CLI) is review input, not approval; our reviewer lane stays the gate.
-Takeaway: each context type has a different job.
+- Explain what instructions, skills, and MCP each contribute.
 
 ### 22:00-26:00, C3 Assign one writer, Martin
 - Cut 25:00.
 - `/agent` Squad, `/tasks`, `/agent list`, `/mcp`, `/agent terraform-coder`.
 - Use B1v2 brief: work only in module; add `alternate_network_payload`; four separate asserts; error messages; test file only.
-Takeaway: assignment is not completion.
+- Inspect the actual diff before calling an assigned task complete.
 
 ### 26:00-26:30, s12-source-check, Haflidi
 - Follow source claim into resource body.
 - Variable names do not establish contracts.
 - Keep source versions with assertions.
-Takeaway: assert the resource, not reassurance.
+- Assert the generated resource body.
 
 ### 26:30-29:30, s13-test-gap, Haflidi
 - B1 failed because every run wrote two asserts against a pre-registered minimum of three.
 - B1v2 was a separate, clarified brief that asks for four separate asserts; 5/5 under pinned conditions; no guarantee; live still must pass.
 - Test the test with deliberate mutation.
-Takeaway: state the checker rule before the run.
+- State the checker rule before running the task.
 
 ### 29:30-33:30, C4 Guidance and source, Martin
 - Cut 32:30.
 - `/skills info test-discipline`, `/mcp`, invoke test-discipline.
 - Read-only Microsoft Learn source for AKS Automatic private/custom network.
 - Show citation/version and one narrow permission decision.
-Takeaway: source provenance is part of the artifact.
+- Include the source and version with the change.
 
 ### 33:30-38:30, C5 Seed, fail, repair, Haflidi
 - Cut 37:15; must be out by 38:30.
 - Validator runs before check.
 - Coder makes deliberate lab mutation: `enablePrivateCluster` true to false.
 - Validator detects intended assertion; review; restore only that field; rerun repaired.
-Takeaway: preserve cause and effect; local runtime check is not Azure acceptance evidence.
+- Preserve the failing assertion and repair evidence. Local checks do not establish Azure acceptance.
 
 ### 38:30-41:30, s15-proof, Haflidi with Martin
 - Separate source inspection, local mocks, consumer checks, plan/apply, and read-back.
 - A runtime check is evidence only for what it checks.
-- Evidence feeds the gate; the gate doesn't care who typed the diff.
+- Human-authored and agent-assisted changes need the same evidence and approval.
 - Sanitized Azure read-back applies only to pinned runtime module revision.
-Takeaway: keep claims scoped.
+- State exactly what each check established.
 
 ### 41:30-42:00, s16-continuity, Martin
-- Save the reason, not a transcript.
+- Record the decision and why we made it.
 - Repository decision and CLI resume are different artifacts.
-Takeaway: continuity must be verified.
+- Check that the resumed task read the decision.
 
 ### 42:00-45:00, C6 Save and resume, Haflidi
 - Cut 44:15.
 - Agent writes public-only decision to `.squad\decisions\inbox\`.
 - Scribe merges accepted entries into the shared decision ledger.
 - `/new`, `/resume guided-clean-run`, `/cwd`, `/context`, `/usage`; cite decision file and constraints.
-Takeaway: the next task must read the reason.
+- The next task must read the recorded reason.
 
 ### 45:00-47:00, s18-memory, Martin
 - Conversation context, native memory, and Squad knowledge have different owners.
 - Keep private environment mapping out of public team history.
-Takeaway: put requirements where the next owner can review them.
+- Keep requirements where the next owner can review them.
 
 ### 47:00-50:00, C7 Validate and review, Haflidi
 - Cut 49:15.
 - Validator runs C7 block; inspect `/diff`; `/new`; `/agent terraform-reviewer`.
 - Supply exact diff, files, revision, MCP citations, and sanitized validator results.
-Takeaway: approve a specific artifact and scope.
+- Approve the exact artifact and scope.
 
 ### 50:00-53:00, s20-consumer, Martin
 - 50:00-50:30: consumer-to-module diagram.
@@ -167,11 +167,11 @@ Takeaway: approve a specific artifact and scope.
 - 51:00-52:10: Whether a change is human-authored or agent-assisted, it goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail.
 - Map: PR -> checks/scans -> review + protected main -> plan -> environment approval -> OIDC apply -> runtime check.
 - 52:10-53:00: boundary; documented gaps stay visible: single-maintainer admin override, self-review setting, and environment gate before the apply job's plan; appendix handles Online/security depth.
-Takeaway: reuse code, not environment.
+- Reuse the module without copying the private setup.
 
 ### Optional 53:00-54:30, Squad on ACA, use only if ahead
 - Keep it inside content time, compress `s21-limits` to 0:30 if needed, and skip it if it would touch 55:00-58:00.
-- What it is: Haflidi's `haflidif/squad-on-aca` runs Squad agents as Azure Container Apps jobs in a corp landing zone. A GitHub issue labeled for an agent lands in a queue, an ACA job runs the agent, and a bot opens the PR.
+- Haflidi's `haflidif/squad-on-aca` runs Squad agents as Azure Container Apps jobs. Current run evidence is under Management; Corp validation remains a separate gate. A GitHub issue labeled for an agent lands in a queue, an ACA job runs the agent, and a bot opens the PR.
 - Benefit: unattended execution in our own Azure tenant, no presenter laptop, secrets in Key Vault, private networking available, managed identity for the run, same PR gates, variable cost per run well under USD 0.01, and separate fixed holding costs.
 - Public-safe proof from 9 Oct: a second fresh end-to-end run passed. The presenter flow created and labeled a new issue, the enqueue workflow succeeded, the ACA agent job finished in 56 seconds, and the bot app opened the PR. Test issues and PRs were then closed, and the repo was clean.
 - Safety and ops checks: an unlabeled issue triggered nothing; Terraform plan for the stack was unchanged; private networking and NSGs were checked; no secrets were found in the run logs.
@@ -183,10 +183,10 @@ Takeaway: reuse code, not environment.
 - Plan mode for decisions before edits.
 - Squad for ownership and handoffs.
 - Skills and MCP with source provenance.
-Takeaway: artifact, reason, and check belong together.
+- Include the diff, reason, and check output in the handoff.
 
 ### 55:00-58:00, protected slack, Martin owns the clock
-- Protected slack: 55:00-58:00 — if on schedule, use this for a brief recap or extra Q&A warm-up; if behind, this is where you catch up before the close.
+- Keep 55:00-58:00 for recovery only. Do not add a recap, new explanation, or extra Q&A. Start the close at 58:00.
 
 ### 58:00-60:00, s22-close, Martin
 - Humans set direction and approve; agents help move work through the same gated loop.
@@ -194,9 +194,9 @@ Takeaway: artifact, reason, and check belong together.
 - Close with public handoff and scoped evidence.
 - Say appendix is available for hallway questions.
 - "Questions if time allows" only if ahead.
-Takeaway: visible limits make the handoff useful.
+- Keep unresolved limits visible in the public handoff.
 
-## Top 5 takeaways
+## Five working rules
 
 1. Copilot CLI runs the work; Squad coordinates ownership and memory.
 2. Use narrow native profiles, but do not treat tool filters as a sandbox.
@@ -222,28 +222,28 @@ Takeaway: visible limits make the handoff useful.
 - Prereqs, install, `squad init`, `copilot --agent squad`, confirm roster, `squad doctor`.
 - Init Mode asks first; confirm before team files are written.
 - Commit `.squad\`; back up before upgrade.
-Takeaway: five steps, reviewable in Git.
+- Review the resulting team files in Git.
 
 ### a-use-cases
 - CLI runs the work; Squad routing assigns owner and records why.
 - Useful for cross-owner work, long-running work, backlog, and review.
 - Skip for small single-lane edits.
-Takeaway: use Squad where ownership and memory matter.
+- Use Squad for work that needs shared ownership and a decision record.
 
 ### a-online
 - Same module, consumed by tag from a separate repo.
 - Guardrails shape the design: private state, NSG on every subnet, limited API access.
 - Runtime evidence: 29/29 outside-in checks for the Online path.
-Takeaway: simpler topology, same boundary discipline.
+- Keep the same approval and evidence boundaries in the Online consumer.
 
 ### a-security
 - GHAS baseline: CodeQL, secret scanning with push protection, Dependabot; zero open alerts at check time.
 - Agent found silent gaps: disabled scans, parser misses, falsely green monitor, approval race, VM check blind spot.
 - Claims re-checked with module cases, Online read-back checks, and VM checks.
-Takeaway: scanners plus scripted oracles close different gaps.
+- Explain which gaps scanners and scripted checks each cover.
 
 ### a-prompts
 - Guardrails first, source facts through MCP, one lane per step.
 - B1 failed because every run wrote two asserts against a pre-registered minimum of three. B1v2 was a separate, clarified brief that asks for four separate asserts and was 5/5 under pinned conditions. Measured checkpoint, not a causal claim or guarantee; live still must pass.
 - Live run still has to pass.
-Takeaway: narrow choices and make claims checkable.
+- Keep the prompt bounded and its claims testable.

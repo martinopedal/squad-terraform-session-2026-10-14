@@ -361,7 +361,7 @@ context as independent. Return findings to Squad and the human maintainer. This
 additional handoff must be rehearsed within the chapter budget; no completed take
 or timing qualification is implied by adding the instructions.
 
-## s20-consumer: Reuse the code, not the environment | 50:00-53:00
+## s20-consumer: An Online consumer | 50:00-53:00
 
 This three-minute section follows C7. Keep it short and preserve the boundary
 between reviewed module code and private environment inputs.
@@ -373,4 +373,4 @@ between reviewed module code and private environment inputs.
 
 ## Protected slack | 55:00-58:00
 
-Protected slack: 55:00-58:00 — if on schedule, use this for a brief recap or extra Q&A warm-up; if behind, this is where you catch up before the close.
+Keep 55:00-58:00 for recovery only. Do not add a recap, new explanation, or extra Q&A. Start the close at 58:00.

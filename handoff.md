@@ -4,14 +4,14 @@ Updated October 9, 2026. This file describes the public deliverables and the rem
 
 ## Current result
 
-- Reveal.js presentation version **0.21.5**. Presentation metadata reports **39 slides total**, including the untimed legal/pre-show slide, the timed main flow, and the appendix.
+- Reveal.js presentation version **0.22.0**. Presentation metadata reports **39 slides total**, including the untimed legal/pre-show slide, the timed main flow, and the appendix.
 - A five-slide companion deck is built at `presentation\short\index.html`.
 - Current delivery contract: **3:00 intro; planned content to about 55:00; 55:00-58:00 protected recovery block; 58:00-60:00 close**. The planned content includes **29:00 of live C0-C7 demo chapters** and the rest as live explanation. Questions are only if time allows. There is no scheduled Q&A block. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
 - Live-demo rule: **C0-C7 are live**, with optional reviewed fallback evidence if a chapter fails live.
 - Sessionize copy, feature guide, prompt pack, repeatability eval, and the C0-C7 operator runbook are present in the public repository.
 - Public reusable Terraform module and synthetic caller remain locally qualified and privately Azure-validated through IaC.
 
-Native profile selection and full human rehearsal remain separate verification gates. Optional fallback evidence may still be refreshed later, but the live-first contract stays unchanged.
+Native profile selection and full human rehearsal remain separate verification gates. The presenter manually runs the four-product bootstrap file for the GitHub Copilot desktop app, Squad, VS Code, and GitHub Copilot CLI. Its controlled execution tests do not establish clean-VM installation or manual device-code login; that operator rehearsal remains required. Optional fallback evidence may still be refreshed later, but the live-first contract stays unchanged.
 
 ## Public locations
 
@@ -39,7 +39,8 @@ The module is pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. Its 35-file 
 | Contract tests | 52 module cases and two caller cases passed, all plan-mode mocks. |
 | Mutation evidence | Wrong SKU and public-API mutations each failed the intended assertion; the unchanged 52-case suite passed after each exact restoration. |
 | Module review | Independent static and publication-safety reviews passed for the qualified source. |
-| Presentation checks | Ten media-policy tests, 99 browser/content checks, and slide/fragment captures across two resolutions. The updated evidence slide was visually inspected. |
+| Earlier presentation checks | Ten media-policy tests, 99 browser/content checks, and slide/fragment captures across two resolutions. The updated evidence slide was visually inspected. These counts describe earlier evidence, not the current revision's test run. |
+| Deck 0.22.0 checks, October 9 | 39 Node tests passed, including the actual bootstrap script with controlled native-executable mocks. The short deck passed 43 browser checks across 10 captures; the full deck passed 102 interaction/content checks across 88 captured states at two resolutions. The static setup checker and its 45 tests passed. These are local checks, not clean-VM/manual-login rehearsal or new Azure validation. |
 | Hosted module CI | Terraform matrix run 36990206303 passed at b7133679a89b1e2b36677400d659a03907c0f3f6; native agent setup passed run 37286068987 at 00787f59ac19e3db0c3869a96ff45805c6cb523d; final module run 37286237657 passed at 02e10e56bc15cc30c3193dce3ddc8e608cb87daf; Azure-validation docs release run 37305768318 passed at b01256eb9b1ea6046b9bb8a403662f724a7b6fa7. |
 | Azure | **Privately validated.** Private IaC PR workflow planned, environment-approved, applied, and read back runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized public facts only. |
 | Short deck | Five slides build from the same pinned runtime, theme, and public source links. |

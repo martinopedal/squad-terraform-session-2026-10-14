@@ -515,7 +515,7 @@
       <main class="main">
         <section class="card">
           <div class="section-head">
-            <h2>A. What is this?</h2>
+            <h2>A. The session</h2>
           </div>
           <p>We present a 60-minute session on Squad and GitHub Copilot CLI used to build, review, and ship Terraform.</p>
           <p>The main story is the working method: agents, prompts, PRs, GHAS, review, gates, and checks.</p>
@@ -574,10 +574,10 @@
                 <td>
                   <div class="repo-name">
                     <a href="https://github.com/haflidif/squad-on-aca">haflidif/squad-on-aca</a>
-                    <span>Optional Squad-on-ACA segment. Live-capable in Corp.</span>
+                    <span>Optional Squad-on-ACA segment. Current evidence is from Management; the Corp gate remains open.</span>
                   </div>
                 </td>
-                <td>Serverless Squad on Azure Container App Jobs, plus the private target repository for the optional demo path. Sweden Central had no capacity, so the current Corp proof runs in Norway East.</td>
+                <td>Squad runs as Azure Container Apps jobs against a private target repository. Sweden Central had no capacity, so the documented run used Norway East under Management. This does not establish Corp validation.</td>
                 <td>Use it only if time allows. Proof chain: issue #2 in <code>martinopedal/squad-on-aca-demo-target</code> to enqueue workflow <code>37921482752</code> to bot PR #3.</td>
                 <td>Write on the session repo, module repo, demo-env, and both Squad-on-ACA repos</td>
               </tr>
@@ -827,7 +827,7 @@
               </tr>
               <tr>
                 <td>The pre-deployed Online environment</td>
-                <td>It gives the audience a finished, already validated result while the live session spends time on the agents and GitHub flow. The repo documents runtime proof at 29/29 PASS and a gated OIDC pipeline path.</td>
+                <td>It gives the audience an already deployed result while the live session spends time on the agents and GitHub flow. The repo documents runtime checks at 29/29 PASS and a gated OIDC pipeline path.</td>
                 <td><a href="https://github.com/martinopedal/aks-automatic-demo-env">martinopedal/aks-automatic-demo-env</a><br><code>./scripts/Test-OnlineSecurity.ps1</code><br><a href="https://aks-online-demo.swedencentral.cloudapp.azure.com/">Live page</a> · GitHub Actions runs in the demo-env repo</td>
               </tr>
             </tbody>
@@ -897,7 +897,7 @@
         <section class="card agree">
           <h2>To agree</h2>
           <ul>
-            <li>Squad on ACA stays optional and live-capable. Proof chain: issue #2 in <code>martinopedal/squad-on-aca-demo-target</code> to enqueue workflow <code>37921482752</code> to ACA job execution <code>caj-squad-aca-agent-corp-ne-dtbhx</code> to bot PR #3.</li>
+            <li>Squad on ACA stays optional. Management evidence: issue #2 in <code>martinopedal/squad-on-aca-demo-target</code> to enqueue workflow <code>37921482752</code> to ACA job execution <code>caj-squad-aca-agent-corp-ne-dtbhx</code> to bot PR #3. The job name does not establish its management-group scope. Corp validation remains a separate gate.</li>
             <li>Confirm whether we mention the hosted Terraform MCP beside the pinned Docker Terraform MCP.</li>
             <li>Keep the 55:00-58:00 rule clear. Use that window for recovery only.</li>
             <li>Keep the guest VM login flow simple. Local account. Private password handoff. One quick test before rehearsal week.</li>

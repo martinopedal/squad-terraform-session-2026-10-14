@@ -412,7 +412,7 @@ def main():
                 page.keyboard.press("ArrowRight")
                 page.wait_for_function("() => Reveal.isOverview() && Reveal.getCurrentSlide().id === 's06-contract'")
                 check(f"overview keyboard changes selection {label}",
-                      "Fit the platform" in page.locator("#navigation-status").text_content())
+                      "The existing platform and module contract" in page.locator("#navigation-status").text_content())
                 page.keyboard.press("Escape")
                 page.wait_for_function("() => !Reveal.isOverview()")
                 check(f"overview keyboard commits selected slide {label}",

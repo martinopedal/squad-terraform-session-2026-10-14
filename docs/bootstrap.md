@@ -1,6 +1,6 @@
 # Bootstrap a clean demo VM
 
-Run [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1) **manually** during session preparation. It is a command file, not a startup hook or unattended rehearsal. The live C0 chapter still uses the shorter path in [clean-machine-demo.md](clean-machine-demo.md).
+Run [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1) manually during session preparation. You choose when to run this command file and handle its prompts. It does not run at startup or conduct a rehearsal for you. The live C0 chapter still uses the shorter path in [clean-machine-demo.md](clean-machine-demo.md).
 
 Target: a Windows 11 x64 demo VM with PowerShell 7 and WinGet available. Use a GitHub account with a Copilot plan and permission to use both the Copilot app and CLI. Organization policy for the desktop app is separate from CLI policy. Review installer/UAC prompts; keep native Copilot trust, tool, and plan approvals.
 
@@ -63,7 +63,7 @@ $null = [System.Management.Automation.Language.Parser]::ParseFile(
 if ($errors.Count) { throw ($errors | Out-String) }
 ```
 
-Catalog resolution and mocked command execution do **not** prove installer success or interactive login on a clean VM. A genuine operator-run clean-VM rehearsal remains required before stage; none is claimed here.
+Catalog resolution and mocked command execution do not prove installer success or interactive login on a clean VM. The presenter still needs to run the file on a clean VM and complete app onboarding and manual device-code login before stage. That rehearsal remains a separate evidence gate; no successful rehearsal is claimed here.
 
 ## Windows steps
 

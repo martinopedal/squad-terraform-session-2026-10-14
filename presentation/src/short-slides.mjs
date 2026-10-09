@@ -41,7 +41,7 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
         ${speakerCard(martin, martinPhoto)}
         ${speakerCard(haflidi, haflidiPhoto)}
       </div>
-      <p class="short-summary">We show a practical Copilot CLI and Squad loop for Terraform work that stays reviewable, source-backed, and gated.</p>`
+      <p class="short-summary">We use Copilot CLI and Squad to change a Terraform module, check the sources and diff, and hand it to a reviewer. Humans approve the change.</p>`
     },
     {
       id: 'short-what-we-show',
@@ -54,10 +54,10 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
         { label: 'Talk track', url: '../../docs/talk-track.md' },
         { label: 'Run plan', url: '../../docs/run-plan.md' }
       ],
-      notes: '<p><strong>Driver:</strong> Haflidi walks the five-step story.</p><p>This is the compressed version of the C0-C7 path.</p>',
+      notes: '<p><strong>Driver:</strong> Haflidi walks the five-step story.</p><p>This compresses the C0-C7 path. Before stage, the presenter manually runs scripts\\bootstrap-demo-vm.ps1 for the GitHub Copilot desktop app, Squad, VS Code, and GitHub Copilot CLI. The desktop app is separate from GitHub Desktop, Microsoft 365 Copilot, and VS Code extensions. Controlled script-execution tests use mocks; they do not establish clean-VM installation or manual device-code login. That operator rehearsal remains required. Init Mode proposes the roster; the human confirms before team files are written.</p>',
       content: `<ol class="short-flow-list">
-        <li><strong>Bootstrap</strong><span>Install tools, sign in, and run <code>squad init</code>.</span></li>
-        <li><strong>Plan</strong><span>Pin the change boundary before edits start.</span></li>
+        <li><strong>Bootstrap</strong><span>Manually set up the Copilot desktop app, Squad, VS Code, and Copilot CLI. Sign in and confirm the team.</span></li>
+        <li><strong>Plan</strong><span>Approve the scope before edits start.</span></li>
         <li><strong>Route</strong><span>Give one writer the diff and keep validator and reviewer independent.</span></li>
         <li><strong>Check</strong><span>Ground the change with source, tests, and a controlled repair loop.</span></li>
         <li><strong>Consume</strong><span>Show the gated path from pull request to runtime evidence.</span></li>
@@ -87,16 +87,16 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
       time: 'Short deck / slide 4',
       layer: 'Takeaways',
       kind: 'short',
-      tip: 'Keep the three rules visible.',
+      tip: 'Explain what the next engineer needs to inspect.',
       sources: [
         { label: 'Feature guide', url: '../../docs/feature-guide.md' },
         { label: 'Sandboxing note', url: '../../docs/sandboxing.md' }
       ],
-      notes: '<p><strong>Driver:</strong> Haflidi closes the short story.</p><p>These are the carry-home rules.</p>',
+      notes: '<p><strong>Driver:</strong> Haflidi closes the short story.</p><p>Explain how the next engineer checks the scope, evidence, and decision record.</p>',
       content: `<div class="short-takeaways-grid">
         <div><h3>Bound the work</h3><p>Plan the change, name the owner, and keep the stop condition explicit.</p></div>
         <div><h3>Keep gates visible</h3><p>Source checks, local tests, review, and runtime evidence answer different questions.</p></div>
-        <div><h3>Leave a resume trail</h3><p>Decisions, prompts, and docs belong with the repo so the next engineer can inspect them.</p></div>
+        <div><h3>Record the decision</h3><p>Keep decisions, prompts, and docs with the repo so the next engineer can inspect them.</p></div>
       </div>`
     },
     {
@@ -105,7 +105,7 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
       time: 'Short deck / slide 5',
       layer: 'Public handoff',
       kind: 'short',
-      tip: 'End on the public assets and the repeatable bootstrap path.',
+      tip: 'Point to the public assets and the manually run bootstrap file.',
       sources: [
         { label: 'Session repo', url: 'https://github.com/martinopedal/squad-terraform-session-2026-10-14' },
         { label: 'Module repo', url: 'https://github.com/martinopedal/terraform-azapi-aks-automatic' }
@@ -113,7 +113,7 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
       notes: '<p><strong>Driver:</strong> Martin lands on the public follow-up links.</p><p>Invite the audience to start with the bootstrap and short deck.</p>',
       content: `<div class="short-links-grid">
         <a href="../index.html"><strong>Full deck</strong><span>Reveal.js session deck with notes</span></a>
-        <a href="../../docs/bootstrap.md"><strong>Bootstrap guide</strong><span>Demo VM setup, login, init, and app checklist</span></a>
+        <a href="../../docs/bootstrap.md"><strong>Bootstrap guide</strong><span>Manual setup file, login, init, and rehearsal checklist</span></a>
         <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14"><strong>Session repo</strong><span>Public repo with deck, docs, and generated assets</span></a>
         <a href="../../docs/sandboxing.md"><strong>Copilot local sandboxing</strong><span>Short note, separate from ACA Sandboxes</span></a>
       </div>`

@@ -14,7 +14,7 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 ## s01-outcome | 00:00-03:00 | A module worth reusing
 
-> DRIVER Martin. Reuse the outcome/title slide as the intro. Haflidi adds the honesty rule. Handoff at 03:00.
+> DRIVER Martin. Reuse the outcome/title slide as the intro. Haflidi identifies live and prepared evidence. Handoff at 03:00.
 
 **Martin:** Good morning. I'm Martin Opedal, Enterprise Cloud Solution Architect, Microsoft. You can find my public material at `opedal.tech`. Today we want to leave behind something another engineer can inspect: a reusable Terraform module for private AKS in an existing Azure landing zone.
 
@@ -22,9 +22,9 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Haflidi:** You will see Copilot CLI as the execution surface, Squad as the coordination layer, and Terraform checks as evidence. We bootstrap a Squad, route work through three lanes, add a contract regression, seed a controlled failure, repair it, and show a consumer page that reuses the module.
 
-**Martin:** Honesty rule: terminal and browser work is live. Starting code, clean checkpoints, prompts, and fallback evidence are prepared and disclosed. If a live lookup, install, or check fails, we say it failed and use fallback evidence. Runtime evidence belongs to the exact thing it checks.
+**Martin:** The terminal and browser work is live. Starting code, clean checkpoints, prompts, and fallback evidence are prepared and disclosed. If a live lookup, install, or check fails, we say it failed and use fallback evidence. Runtime evidence belongs to the exact thing it checks.
 
-**Haflidi:** Takeaways: define the artifact, assign one owner per shared surface, keep provider and state ownership with the caller, record decisions where the next owner can review them, and keep checks tied to their claim.
+**Haflidi:** Define the artifact first, then assign one owner per shared surface. Keep provider and state ownership with the caller. Record decisions where the next owner can review them, and tie each check to the claim it supports.
 
 ## s03-baseline | 03:00-03:30 | Start with the code you have
 
@@ -44,7 +44,7 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Martin:** MCP means Model Context Protocol: a way to connect the CLI to an external source or tool. A useful agent workflow returns files, decisions, and check output that a human can inspect.
 
-**Haflidi:** The control spectrum is not a maturity ladder: Ask → edit → plan → agent → programmatic `-p` → Squad multi-agent with gates. Our chapters use different points on it: C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools + permissions, C5 edit/repair loop, C6 resume, C7 gated review. More automation is not better by default; human approvals remain at the gates. `-p` is appendix automation, not a live chapter.
+**Haflidi:** These are different ways to control the work, not a maturity ranking. C0 is setup. C1 asks for plans and compares them. C2 uses Plan mode. C3 routes agent work; C4 uses tools and permissions; C5 edits and repairs; C6 resumes; C7 handles gated review. Programmatic `-p` and Squad multi-agent work add automation. More automation does not remove human approval. We keep `-p` in the appendix.
 
 ## s07-agent-setup | 05:00-05:30 | Meet the agent setup
 
@@ -72,7 +72,7 @@ Use the C0 block from [demo-runbook.md](demo-runbook.md): show Git/Copilot/Squad
 
 **Haflidi:** Handoffs name file, check, and next owner. One writer owns a shared Terraform surface. Separate conversations are not filesystem isolation, and worktrees do not isolate credentials.
 
-## s06-contract | 10:30-12:30 | Fit the platform you already have
+## s06-contract | 10:30-12:30 | The existing platform and module contract
 
 **Haflidi:** The module owns resources, typed inputs, outputs, and provider requirements. The consumer root owns providers, backend, authentication, state, and environment values.
 
@@ -88,7 +88,7 @@ Use `/new`, `/agent` Squad, `/model`, `/plan`, `/rename C1-A`; repeat as `C1-B`.
 
 **Haflidi:** Compare one consequence, not verbosity. B1 failed because every run wrote two asserts against a pre-registered minimum of three. B1v2 was a separate, clarified brief that asks for four separate asserts. It was 5/5 in re-measurement. That is a measured checkpoint, not a causal claim about every future run. The live run still has to pass.
 
-## s08-plan-boundary | 15:30-17:30 | Extract a module, not an environment
+## s08-plan-boundary | 15:30-17:30 | Module and consumer ownership
 
 **Haflidi:** The approved change should produce a generic module plus a small consumer example. The consumer configures providers and backend, passes approved existing-network inputs, and calls the module.
 
@@ -102,7 +102,7 @@ Use `/new`, `/rename guided-clean-run`, `/agent` Squad, `/instructions`, `/plan`
 
 **Martin:** Native Plan mode is the control. Approval authorizes this code change only, not an Azure apply.
 
-## s10-tool-roles | 21:30-22:00 | Give context the right job
+## s10-tool-roles | 21:30-22:00 | Instructions, skills, and MCP
 
 **Haflidi:** Instructions are persistent expectations. Skills turn a repeated procedure into reusable, versioned guidance. MCP is a source or tool connection.
 
@@ -118,7 +118,7 @@ Use `/agent` Squad, `/tasks`, `/agent list`, `/mcp`, `/agent terraform-coder`. P
 
 **Martin:** The clarified brief states the oracle's rule. Assignment is not completion. The live change still needs checks.
 
-## s12-source-check | 26:00-26:30 | Turn the source into an assertion
+## s12-source-check | 26:00-26:30 | Test the documented resource body
 
 **Haflidi:** Follow the claim into the resource body. A reassuring variable name does not establish the generated contract. A source citation plus an assertion gives the reviewer a condition to inspect.
 
@@ -146,13 +146,13 @@ Select `/agent terraform-validator`; run the C5 PowerShell block with `$phase = 
 
 **Haflidi:** Preserve cause and effect. Say: deliberate lab mutation, not an AI-discovered defect. A runtime check is evidence for the assertion it runs. It is not Azure acceptance evidence.
 
-## s15-proof | 38:30-41:30 | Evidence has levels
+## s15-proof | 38:30-41:30 | What each check covers
 
 **Haflidi:** Keep gates separate: source inspection, local contract tests, consumer checks, real plan/apply, and Azure read-back. A runtime check is evidence only for what it checks.
 
 **Martin:** Evidence feeds the gate; the gate doesn't care who typed the diff. The private consumer supplied separate sanitized runtime evidence for one pinned module revision. We do not show private IDs, state, run URLs, or FQDNs.
 
-## s16-continuity | 41:30-42:00 | Save the reason, not the whole chat
+## s16-continuity | 41:30-42:00 | Repository decisions and session memory
 
 **Martin:** A later task needs the reason, not a transcript. Private API, caller-owned provider/backend, and the new network-payload regression should survive the session.
 
@@ -180,7 +180,7 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 **Haflidi:** Show offline checks, diff, reviewer findings, and human code-only acceptance. Remaining gates belong to the environment owner.
 
-## s20-consumer | 50:00-53:00 | Reuse the code, not the environment
+## s20-consumer | 50:00-53:00 | An Online consumer
 
 > DRIVER Martin. Must start by 50:00. Live reveal is 50:30-51:00.
 
@@ -196,7 +196,7 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 > Use only if the show is ahead. Keep it inside content time, compress `s21-limits` to 0:30 if needed, and skip it if the clock would enter 55:00-58:00.
 
-**Martin:** One optional side track is Haflidi's `haflidif/squad-on-aca`: Squad agents run as Azure Container Apps jobs in a corp landing zone. A GitHub issue labeled for an agent lands in a queue, an ACA job runs the agent, and a bot opens the pull request.
+**Martin:** One optional side track is Haflidi's `haflidif/squad-on-aca`: Squad agents run as Azure Container Apps jobs. The current run evidence is under Management. Corp validation remains a separate gate. A GitHub issue labeled for an agent lands in a queue, an ACA job runs the agent, and a bot opens the pull request.
 
 **Haflidi:** Why it matters: the agent runs unattended in our own Azure tenant, with no laptop in the loop. Secrets stay in Key Vault, the network path can stay private, the run uses managed identity, every change still arrives as a PR through the same gates, and the variable cost per run is well under USD 0.01, with separate fixed holding costs for the environment.
 
@@ -216,7 +216,7 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 ## protected-slack | 55:00-58:00 | Protected slack
 
-**Martin:** Protected slack: 55:00-58:00 — if on schedule, use this for a brief recap or extra Q&A warm-up; if behind, this is where you catch up before the close.
+**Martin:** Keep 55:00-58:00 for recovery only. We don't add a recap, new explanation, or extra Q&A. Start the close at 58:00.
 
 ## s22-close | 58:00-60:00 | Close, public handoff, questions if time allows
 

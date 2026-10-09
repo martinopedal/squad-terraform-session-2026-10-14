@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { applyNoteFactOverrides, demoContent, slides } from '../src/slides.mjs';
+import { createShortSlides } from '../src/short-slides.mjs';
 
 const demoSlides = slides.filter(slide => slide.kind === 'demo');
 const bannedOnScreen = /recording slot|not attached|pending/i;
@@ -27,6 +29,15 @@ const slideSurfaces = slide => [
   ['raw-notes', slide.notes ?? ''],
   ['presenter-notes', applyNoteFactOverrides(slide.id, '')]
 ];
+const shortSlides = createShortSlides({ martinPhoto: 'martin', haflidiPhoto: 'haflidi' });
+const documentPaths = [
+  'README.md', 'handoff.md', 'haflidi-overview.html', 'presentation/README.md',
+  ...['bootstrap', 'demo-runbook', 'feature-guide', 'online-demo', 'playbook',
+    'prompt-pack', 'run-plan', 'sandboxing', 'security-case', 'sessionize',
+    'source-provenance', 'talk-track', 'talking-points', 'whats-new']
+    .map(name => `docs/${name}.md`)
+];
+const documentText = path => readFileSync(new URL(`../../${path}`, import.meta.url), 'utf8');
 
 test('each live demo slide renders a command block and expected result', () => {
   assert.equal(demoSlides.length, 8);
@@ -113,7 +124,7 @@ test('protected recovery block exists outside scripted content minutes', () => {
 });
 
 test('slide titles, on-screen copy, and speaker notes avoid banned writing patterns', () => {
-  for (const slide of slides) {
+  for (const slide of [...slides, ...shortSlides]) {
     for (const [surfaceName, text] of slideSurfaces(slide)) {
       for (const [pattern, label] of bannedStylePatterns) {
         assert.doesNotMatch(
@@ -123,5 +134,39 @@ test('slide titles, on-screen copy, and speaker notes avoid banned writing patte
         );
       }
     }
+  }
+});
+
+test('public writing surfaces avoid banned patterns outside literal command examples', () => {
+  for (const path of documentPaths) {
+    const prose = documentText(path).replace(/^```[^\n]*\n[\s\S]*?^```[ \t]*$/gm, '');
+    for (const [pattern, label] of bannedStylePatterns) {
+      assert.equal(pattern.test(prose), false, `${path} contains ${label}`);
+    }
+  }
+});
+
+test('writing preserves manual bootstrap, human confirmation, and the ACA evidence boundary', () => {
+  const bootstrap = documentText('docs/bootstrap.md');
+  for (const id of ['GitHub.CopilotApp', 'bradygaster.Squad', 'Microsoft.VisualStudioCode', 'GitHub.Copilot']) {
+    assert.ok(bootstrap.includes(id), `bootstrap retains ${id}`);
+  }
+  assert.match(bootstrap, /manually/);
+  assert.match(bootstrap, /mocked command execution do not prove installer success/);
+  assert.match(bootstrap, /manual device-code login/);
+  assert.match(bootstrap, /separate evidence gate/);
+  const shortFlow = shortSlides.find(slide => slide.id === 'short-what-we-show');
+  for (const product of ['Copilot desktop app', 'Squad', 'VS Code', 'Copilot CLI']) {
+    assert.ok(shortFlow.content.includes(product), `short deck retains ${product}`);
+  }
+  assert.match(shortFlow.notes, /human confirms before team files are written/);
+  assert.match(slides.find(slide => slide.id === 's07-agent-setup').content,
+    /human confirms before team files are written/);
+  for (const path of ['docs/run-plan.md', 'docs/talk-track.md', 'docs/talking-points.md', 'haflidi-overview.html']) {
+    const text = documentText(path);
+    assert.match(text, /Management/, `${path} must scope the ACA evidence`);
+    assert.match(text, /Corp validation remains a separate gate|Corp gate remains open/,
+      `${path} must keep the Corp gate`);
+    assert.doesNotMatch(text, /Live-capable in Corp|current Corp proof|jobs in a corp landing zone/i);
   }
 });
