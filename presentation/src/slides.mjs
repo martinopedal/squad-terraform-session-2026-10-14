@@ -622,7 +622,7 @@ export const slides = [
   {
     id: 's20-consumer', title: 'Reuse the code, not the environment.', time: '50:00-53:00',
     layer: 'Public Terraform / private consumption', kind: 'diagram', sources: [tests, automatic, onlineDemo, demoEnvRepo, securityCase],
-    tip: 'Keep the live reveal to 53:30-54:00, then explain gate, evidence, and boundary.',
+    tip: 'Keep the live reveal to 50:30-51:00, then explain gate, evidence, and boundary.',
     content: `${fig(consumption())}<div class="consumer-reveal"><p class="online-url">https://aks-online-demo.swedencentral.cloudapp.azure.com/</p>
       <p>Whether a change is human-authored or agent-assisted, it goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail.</p>
       <p class="gate-map">PR → checks/scans (fmt, validate, TFLint, Trivy, Checkov) → review + protected main → Terraform plan → online environment approval → OIDC apply → runtime check</p></div>
