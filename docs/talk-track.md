@@ -192,6 +192,20 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 **Martin:** 52:10-53:00: boundary. The documented gaps stay visible: single-maintainer admin override, self-review setting, and the environment gate before the apply job's plan, mitigated by a reviewed plan-only run and in-job plan comparison. This shows reuse of code, not reuse of the private environment. `a-online` and `a-security` are appendix and hallway depth.
 
+## optional-squad-on-aca | 53:00-54:30 if ahead | Optional unattended-agent side track
+
+> Use only if the show is ahead. Keep it inside content time, compress `s21-limits` to 0:30 if needed, and skip it if the clock would enter 55:00-58:00.
+
+**Martin:** One optional side track is Haflidi's `haflidif/squad-on-aca`: Squad agents run as Azure Container Apps jobs in a corp landing zone. A GitHub issue labeled for an agent lands in a queue, an ACA job runs the agent, and a bot opens the pull request.
+
+**Haflidi:** Why it matters: the agent runs unattended in our own Azure tenant, with no laptop in the loop. Secrets stay in Key Vault, the network path can stay private, the run uses managed identity, every change still arrives as a PR through the same gates, and the variable cost per run is well under USD 0.01, with separate fixed holding costs for the environment.
+
+**Martin:** Public-safe proof from 9 Oct: a second fresh end-to-end run passed. The presenter flow created and labeled a new issue, the enqueue workflow succeeded, the ACA agent job finished in 56 seconds, and the bot app opened the PR. After the check, the test issues and PRs were closed and the repo was clean. An unlabeled issue triggered nothing, Terraform plan for the stack was unchanged, private networking and NSGs were checked, and no secrets were found in the run logs. The environment is in Norway East because Sweden Central hit ACA capacity errors.
+
+**Haflidi:** Presenter procedure, validated 9 Oct: first, create the issue in `martinopedal/squad-on-aca-demo-target`. Second, add the `squad:ripley` label. Third, show the recent `squad-queue.yml` workflow runs. Fourth, watch the Container Apps job execution in the Azure portal or with `az containerapp job execution list`. Fifth, show the open PR from the `squad-on-aca` bot app.
+
+**Martin:** Live script, 60 to 90 seconds: `gh issue create --repo martinopedal/squad-on-aca-demo-target --title "Demo task" --body "Ask ripley to make a tiny README/doc change."`, then `gh issue edit <n> --repo martinopedal/squad-on-aca-demo-target --add-label squad:ripley`, then `gh run list --repo martinopedal/squad-on-aca-demo-target --workflow squad-queue.yml --limit 3`, then watch the ACA job execution, then `gh pr list --repo martinopedal/squad-on-aca-demo-target --author app/squad-on-aca-nic2026-demo --state open`. If live capacity or venue network fails, say it failed, show the finished issue to workflow to job to PR proof, and move on.
+
 ## s21-limits | 53:00-55:00 | Make the next change easier to review
 
 **Haflidi:** Rule one: use Plan mode when the change has decisions worth resolving before edits.
