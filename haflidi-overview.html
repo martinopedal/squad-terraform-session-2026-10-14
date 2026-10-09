@@ -81,6 +81,38 @@
       margin-bottom: 24px;
     }
 
+    .hero-intro {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 10px;
+    }
+
+    .hero-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+      flex: 0 0 auto;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0 0 90px;
+    }
+
+    .hero-links a {
+      display: inline-block;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--panel-strong);
+      text-decoration: none;
+    }
+
     .eyebrow {
       margin: 0 0 10px;
       color: var(--muted);
@@ -506,7 +538,15 @@
   <div class="shell">
     <header class="hero">
       <p class="eyebrow">Haflidi collaboration page</p>
-      <h1>Short session map for Haflidi</h1>
+      <div class="hero-intro">
+        <img class="hero-avatar" src="haflidi.jpg" alt="Haflidi Fridthjofsson">
+        <h1>Hi Haflidi</h1>
+      </div>
+      <div class="hero-links">
+        <a href="https://azureviking.com">azureviking.com</a>
+        <a href="https://www.linkedin.com/in/haflidif">LinkedIn</a>
+        <a href="https://github.com/haflidif">GitHub</a>
+      </div>
       <p>This page is for screen use. It keeps the Squad, GitHub, Terraform, and repo flow clear.</p>
       <p>It points back to the public docs. Use the talk track and the run plan for full detail.</p>
     </header>
@@ -579,7 +619,7 @@
                 </td>
                 <td>Serverless Squad on Azure Container App Jobs, plus the private target repository for the optional demo path. Sweden Central had no capacity, so the current Corp proof runs in Norway East.</td>
                 <td>Use it only if time allows. Proof chain: issue #2 in <code>martinopedal/squad-on-aca-demo-target</code> to enqueue workflow <code>37921482752</code> to bot PR #3.</td>
-                <td>Write on the session repo, module repo, demo-env, and both Squad-on-ACA repos</td>
+                <td>Write on the session repo, module repo, demo-env; invitation pending for the private demo-target repo, accept it on GitHub</td>
               </tr>
             </tbody>
           </table>
@@ -897,7 +937,7 @@
         <section class="card agree">
           <h2>To agree</h2>
           <ul>
-            <li>Squad on ACA stays optional and live-capable. Proof chain: issue #2 in <code>martinopedal/squad-on-aca-demo-target</code> to enqueue workflow <code>37921482752</code> to ACA job execution <code>caj-squad-aca-agent-corp-ne-dtbhx</code> to bot PR #3.</li>
+            <li>Squad on ACA stays optional and live-capable. Work from <code>haflidif/squad-on-aca</code> only if time allows. The private demo-target repo does not need to be opened before the session.</li>
             <li>Confirm whether we mention the hosted Terraform MCP beside the pinned Docker Terraform MCP.</li>
             <li>Keep the 55:00-58:00 rule clear. Use that window for recovery only.</li>
             <li>Keep the guest VM login flow simple. Local account. Private password handoff. One quick test before rehearsal week.</li>
