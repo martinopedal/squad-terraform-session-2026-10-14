@@ -120,7 +120,7 @@ Pre-stage a filesystem-only provider mirror and `offline\terraform.tfrc` beside 
 
 | Symptom | Recovery | Verification |
 | --- | --- | --- |
-| `/agent` is missing `terraform-coder`, `terraform-validator`, or `terraform-reviewer`, and only shows user-level agents plus Squad | Exit Copilot. Change to the public session repo folder or the selected checkpoint worktree. Restart Copilot there. Do not start from the coordinator/private folder. | From the repo folder, run `copilot --agent terraform-reviewer -p "Reply with exactly: READY"` and expect the literal reply `READY`. Interactively, confirm `/agent` lists all three `terraform-*` profiles. |
+| Symptom: only user/plugin agents plus Squad are listed (no terraform-* project agents). | Recovery: Copilot was started in the wrong folder (e.g. the coordinator root, which only has squad.agent.md) -- cd to the session repo folder and restart. | Verification: `/agent` shows `terraform-coder`, `terraform-reviewer`, `terraform-validator` as project agents. |
 
 ## C1: Compare two plans | 12:30-15:30 | 3 minutes
 
@@ -163,7 +163,14 @@ Inspect `/session plan`. Revise genuinely: "Put unchanged payload assertions and
 
 ## C3: Assign one writer | 22:00-26:00 | 4 minutes
 
-**Pre-staged:** B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal claim from B1v2 to live result; Copilot started from the public repo folder or the selected checkpoint worktree, so `/agent` lists `terraform-coder`, `terraform-validator`, and `terraform-reviewer`.
+**Pre-staged:** B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal claim from B1v2 to live result; from the session repo folder, start Copilot with the exact command below before C3.
+
+```powershell
+cd C:\git\squad-terraform-session-2026-10-14\public   # or the checkpoint worktree for this session
+copilot --agent squad
+```
+
+Expected in `/agent`: `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, `terraform-validator` marked "project".
 
 **Cut at 25:00 (3:00 into C3):** If the coder is still generating, stop the live turn, use the saved B1v2 excerpt, and move to C4 with the same boundary.
 
