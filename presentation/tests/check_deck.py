@@ -329,6 +329,13 @@ def main():
                                     (el.scrollWidth > el.clientWidth + 2 || el.scrollHeight > el.clientHeight + 2))
                                     issues.push({element: el.tagName, class: el.className, kind: 'content overflow'});
                             }
+                            if (Reveal.getCurrentSlide().id === 's04-news') {
+                                const footerTop = content.querySelector('.slide-footer').getBoundingClientRect().top;
+                                for (const card of content.querySelectorAll('.news-grid > div')) {
+                                    if (card.getBoundingClientRect().bottom > footerTop + 2)
+                                        issues.push({element: 'news card', kind: 'overlap with citation footer'});
+                                }
+                            }
                             return issues;
                         }""")
                         toolbar_overlap = page.evaluate("""() => {
@@ -412,7 +419,7 @@ def main():
                 page.keyboard.press("ArrowRight")
                 page.wait_for_function("() => Reveal.isOverview() && Reveal.getCurrentSlide().id === 's06-contract'")
                 check(f"overview keyboard changes selection {label}",
-                      "Fit the platform" in page.locator("#navigation-status").text_content())
+                      "The existing platform and module contract" in page.locator("#navigation-status").text_content())
                 page.keyboard.press("Escape")
                 page.wait_for_function("() => !Reveal.isOverview()")
                 check(f"overview keyboard commits selected slide {label}",

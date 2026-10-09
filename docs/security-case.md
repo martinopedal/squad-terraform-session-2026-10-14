@@ -27,16 +27,16 @@ Whether a change is human-authored or agent-assisted, the change goes through th
 
 The Azure Landing Zone policies were treated as requirements. No exemption was requested.
 
-- **Enforced and met:** `Deny-Subnet-Without-Nsg` (every subnet has an NSG in the same apply), `Enforce-AKS-HTTPS`, minimum TLS, Azure Compute Security Baseline, `Deny-MgmtPorts-From-Internet` (the demo VM has no public IP and an explicit deny-all inbound rule).
-- **Audit-only (`DoNotEnforce`) and reported:** the `Enforce-GR-*` assignments. Findings are listed, not suppressed. A transient "subnet without NSG" Defender finding on new subnets is assessment lag; older subnets show Healthy.
-- **DeployIfNotExists side effects handled:** policy adds monitoring, ChangeTracking, GuestAttestation, and Azure Policy extensions plus a backup vault. The pipeline retries and waits rather than fighting them.
+- `Deny-Subnet-Without-Nsg` (every subnet has an NSG in the same apply), `Enforce-AKS-HTTPS`, minimum TLS, Azure Compute Security Baseline, and `Deny-MgmtPorts-From-Internet` are enforced and met. The demo VM has no public IP and an explicit deny-all inbound rule.
+- The `Enforce-GR-*` assignments are audit-only (`DoNotEnforce`) and reported. Findings are listed, not suppressed. A transient "subnet without NSG" Defender finding on new subnets is assessment lag. Older subnets show Healthy.
+- DeployIfNotExists side effects are handled. Policy adds monitoring, ChangeTracking, GuestAttestation, and Azure Policy extensions plus a backup vault. The pipeline retries and waits rather than fighting them.
 
 ## 3. Workload and VM hardening
 
-- **Cluster:** AKS Automatic (managed system node pools), Entra ID only with local accounts disabled, Kubernetes RBAC through Azure, user-assigned identity, NAT Gateway egress.
-- **App namespace:** AKS managed namespace with Pod Security `restricted`, default-deny ingress and egress, resource quota. The pipeline identity cannot list nodes, by design.
-- **App:** branded NIC 2026 page served by `nginx-unprivileged` pinned by digest, same pod hardening, CSP headers, NetworkPolicy admitting only the ingress controller, HTTPS-only Ingress through the dedicated App Routing controller.
-- **Demo VM:** no public IP; Azure Bastion Standard only. Martin uses Entra sign-in with MFA. Haflidi uses a local account through Bastion because B2B guests cannot use Entra VM sign-in; the credential is handed over out of band and not stored. An ABAC condition limits the pipeline's role-assignment right to two roles granted to users; PowerShell is installed from a hash- and signature-verified MSI; auto-shutdown nightly.
+- The cluster uses AKS Automatic (managed system node pools), Entra ID only with local accounts disabled, Kubernetes RBAC through Azure, a user-assigned identity, and NAT Gateway egress.
+- The app namespace uses an AKS managed namespace with Pod Security `restricted`, default-deny ingress and egress, and a resource quota. The pipeline identity cannot list nodes, by design.
+- The app is the branded NIC 2026 page served by `nginx-unprivileged` pinned by digest, with the same pod hardening, CSP headers, a NetworkPolicy that admits only the ingress controller, and HTTPS-only Ingress through the dedicated App Routing controller.
+- The demo VM has no public IP and uses Azure Bastion Standard only. Martin uses Entra sign-in with MFA. Haflidi uses a local account through Bastion because B2B guests cannot use Entra VM sign-in. The credential is handed over out of band and not stored. An ABAC condition limits the pipeline's role-assignment right to two roles granted to users. PowerShell is installed from a hash- and signature-verified MSI. Auto-shutdown runs nightly.
 
 ## 4. GitHub Advanced Security baseline
 
@@ -63,10 +63,10 @@ Copilot CLI with Squad did the investigation and the fixes. MCP servers, skills,
 
 What made the AI output trustworthy enough to merge:
 
-- **MCP for sources:** Microsoft Learn for product rules (for example, that Base to Automatic migration is not supported, and that B2B guests cannot use Entra VM sign-in). Azure read-back for the deployed state. The agent cites the source, and the claim is re-checked by a test or a read-back.
-- **Skills and instructions:** repository Terraform instructions, a secret-handling skill (never read `.env` or write secrets into committed state), and a reviewer protocol that locks a rejected author out of the revision.
-- **Tests as oracles:** 52 module contract cases plus 2 caller/example `terraform test` cases; 29/29 Online read-back checks including negative tests from the internet and hostname resolution to the ingress address; 14 demo VM checks.
-- **Humans approve:** every merge and every Azure write passed a human decision.
+- Microsoft Learn via MCP grounded product rules such as Base to Automatic migration not being supported and B2B guests not being able to use Entra VM sign-in. Azure read-back grounded the deployed state. The agent cites the source, and the claim is re-checked by a test or a read-back.
+- Repository Terraform instructions, a secret-handling skill (never read `.env` or write secrets into committed state), and a reviewer protocol lock a rejected author out of the revision.
+- Tests act as oracles: 52 module contract cases plus 2 caller/example `terraform test` cases, 29/29 Online read-back checks including negative tests from the internet and hostname resolution to the ingress address, and 14 demo VM checks.
+- Every merge and every Azure write passed a human decision.
 
 ## 6. Honest gaps
 

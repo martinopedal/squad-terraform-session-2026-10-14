@@ -314,3 +314,5 @@ button, a { -webkit-tap-highlight-color: transparent; }
 #s05-parallel .lane-header { font-size: 14px; }
 #s05-parallel .ownership-note { font-size: 18px; padding-top: 12px; }
 #s05-parallel .slide-body { justify-content: center; }
+
+#s04-news .slide-body { justify-content: flex-start; }
