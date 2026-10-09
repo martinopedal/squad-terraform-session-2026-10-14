@@ -56,7 +56,7 @@ The 3:00 recovery window is created by trimming six bridge slides from 1:00 to 0
 | Slide | Old | New | Save | What changes |
 |---|---:|---:|---:|---|
 | `s03-baseline` | 1:00 | 0:30 | 0:30 | One clean statement: inherited public code, disclosed checkpoint, not first implementation. |
-| `s04-news` | 1:00 | 0:30 | 0:30 | Keep only GA/status headline and what is not used live. |
+| `s04-news` | 1:00 | 0:30 | 0:30 | Keep only the verified CLI, Squad, MCP, and one-line AKS status headlines. |
 | `s07-agent-setup` | 1:00 | 0:30 | 0:30 | Treat as a handoff map into C0, not a second explanation. |
 | `s10-tool-roles` | 1:00 | 0:30 | 0:30 | One sentence: instructions, skills, MCP are different controls. |
 | `s12-source-check` | 1:00 | 0:30 | 0:30 | One sentence: a source claim becomes a testable assertion. |
@@ -78,7 +78,7 @@ Nothing was cut from the already-placed enrichment:
 |---|---|---:|---:|---|---|---|
 | `s01-outcome` | 00:00-03:00 | 3:00 | 03:00 | No | Martin opens; Haflidi adds honesty rule | Intro: who we are, what the audience will see, what they will leave with, and the honesty rule about live vs prepared evidence. |
 | `s03-baseline` | 03:00-03:30 | 0:30 | 03:30 | No | Martin | Inherited public source, disclosed clean checkpoint, not first implementation. |
-| `s04-news` | 03:30-04:00 | 0:30 | 04:00 | No | Martin | CLI GA, Squad 1.0.1, and what is not used live. |
+| `s04-news` | 03:30-04:00 | 0:30 | 04:00 | No | Martin | CLI GA, Squad 1.0.1, Terraform MCP, Azure MCP, Agent HQ, and one AKS defaulting note. |
 | `s04-layers` | 04:00-05:00 | 1:00 | 05:00 | No | Haflidi then Martin | CLI runs work, Squad coordinates, tools return evidence; control spectrum as modes, not a maturity ladder. |
 | `s07-agent-setup` | 05:00-05:30 | 0:30 | 05:30 | No | Martin | Setup map only; hand straight to C0. |
 | `demo-c0` | 05:30-08:30 | 3:00 | 08:30 | No | Haflidi | Bootstrap from zero; cut at 07:45. |

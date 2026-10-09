@@ -205,6 +205,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .reference-row .supporting { color: inherit; font-size: 18px; padding-top: 8px; }
 .reference-row > p code { color: inherit; font-size: 21px; }
 .slide-reference .slide-body { gap: 0; }
+#a-online .reference-row { min-height: 84px; padding: 14px 0; }
+#a-online .reference-row h3 { font-size: 25px; }
+#a-online .reference-row p { font-size: 21px; }
+#a-online .reference-row > p code { font-size: 19px; }
 
 .closing-line { display: flex; gap: 28px; align-items: center; }
 .closing-line > span { font-size: 35px; color: inherit; font-weight: 400; }

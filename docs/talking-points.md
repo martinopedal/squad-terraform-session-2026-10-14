@@ -36,8 +36,8 @@ Takeaway: disclose preparation before running.
 
 ### 03:30-04:00, s04-news, Martin
 - Copilot CLI GA; terminal controls are normal engineering surface.
-- Squad 1.0.1; Agent HQ/AI Credits/computer use status labels stay honest.
-- Computer use is not part of this Terraform demo.
+- Squad 1.0.1, Terraform MCP GA, Azure MCP on Learn, and Agent HQ public preview are the verified headlines.
+- One AKS line only: new 1.36 Automatic clusters default toward Gateway API; this demo stays on managed NGINX.
 Takeaway: use current controls, state current limits.
 
 ### 04:00-05:00, s04-layers, Haflidi then Martin
