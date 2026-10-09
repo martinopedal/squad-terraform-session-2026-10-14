@@ -141,7 +141,14 @@ Get-ChildItem .github\agents\*.agent.md | Select-Object -ExpandProperty Name | S
 
 Expected result: `squad.agent.md`, `terraform-coder.agent.md`, `terraform-validator.agent.md`, and `terraform-reviewer.agent.md`. **Verified 2026-10-08.**
 
-Start Copilot CLI from the **session repo folder** or its checkpoint worktree. Do **not** start it from the coordinator/private folder. From the wrong folder, `/agent` only shows user-level agents plus Squad. It does not show `terraform-coder`, `terraform-validator`, or `terraform-reviewer`.
+Start Copilot CLI from the **session repo folder** or its checkpoint worktree. Do **not** start it from the coordinator/private folder.
+
+```powershell
+cd C:\git\squad-terraform-session-2026-10-14\public   # or the checkpoint worktree for this session
+copilot --agent squad
+```
+
+Expected in `/agent`: `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, `terraform-validator` marked `project`. **Verified 2026-10-09.**
 
 ```powershell
 copilot --agent terraform-reviewer -p "Reply with exactly: READY"
@@ -200,11 +207,11 @@ Use the lanes like this:
 
 ```text
 /agent
-# confirm terraform-coder, terraform-validator, and terraform-reviewer are listed
+# confirm Squad (user) plus terraform-coder, terraform-reviewer, and terraform-validator marked project
 /agent terraform-coder
 ```
 
-Expected result: `/agent` lists `terraform-coder`, `terraform-validator`, and `terraform-reviewer`, then the interactive session switches to the writer lane. **Needs interactive confirmation.**
+Expected result: `/agent` lists `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, and `terraform-validator` marked `project`, then the interactive session switches to the writer lane. **Needs interactive confirmation.**
 
 ```powershell
 copilot -C <repo> --add-dir <repo> --agent terraform-validator --disable-builtin-mcps --no-ask-user --no-color --allow-tool read --allow-tool search -p "Read README.md and report one sentence. Do not edit files, run shell commands, or use MCP."
@@ -403,7 +410,7 @@ Expected result: 14 demo VM checks pass and Bastion RDP opens. **Not run 2026-10
 | --- | --- | --- |
 | MCP startup race or noisy user servers | Add `--disable-builtin-mcps` and `--disable-mcp-server <name>` for unrelated user servers; wait for `/mcp` to show the needed servers. | B2 command shape verified 2026-10-08. `/mcp` dashboard needs interactive confirmation. |
 | Terraform MCP does not start | Start Docker Desktop; inspect the pinned image digest; rerun the agent. | Docker image inspect verified 2026-10-08. |
-| `/agent` is missing `terraform-coder`, `terraform-validator`, or `terraform-reviewer` | Close the session. Start Copilot CLI again from the public session repo folder or its checkpoint worktree. Do not start it from the coordinator/private folder. | `copilot --agent terraform-reviewer -p "Reply with exactly: READY"` returns the literal `READY`, and interactive `/agent` lists all three terraform-* profiles. **Verified 2026-10-09.** |
+| Only user/plugin agents plus Squad are listed (no terraform-* project agents). | Copilot was started in the wrong folder (for example the coordinator root, which only has `squad.agent.md`) — `cd` to the session repo folder and restart. | `/agent` shows `terraform-coder`, `terraform-reviewer`, and `terraform-validator` as project agents. **Verified 2026-10-09.** |
 | `squad health --json` fails right after `squad init` | Accept the Init Mode roster first, or treat the zero-repo health result as pre-team state. | Zero sandbox fail and prepared repo pass both verified 2026-10-08. |
 | Git commit fails due signing setup | Use `git -c commit.gpgsign=false commit ...` for throwaway demo commits. | Verified 2026-10-08. |
 | OIDC assertion expires during long Azure apply | The demo-env workflow re-runs `azure/login` before cluster calls. | Source-verified in demo-env runbook; not executed here. |

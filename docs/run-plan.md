@@ -194,6 +194,14 @@ Use "runtime check" or "runtime evidence". Do not use stronger certainty languag
 - [ ] Presenter preflight target: 16/16.
 - [ ] Docker Desktop running before C4.
 - [ ] `/mcp` shows required public documentation/registry tools connected.
+- [ ] Start Copilot CLI from the session repo folder, not the coordinator root:
+
+```powershell
+cd C:\git\squad-terraform-session-2026-10-14\public   # or the checkpoint worktree for this session
+copilot --agent squad
+```
+
+Expected in `/agent`: `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, `terraform-validator` marked "project".
 - [ ] TFLint `0.64.0` is installed in the session repo worktree; `tflint --version` prints `TFLint version 0.64.0` and `ruleset.terraform (0.15.0-bundled)`.
 - [ ] C1-C7 sessions open and named at checkpoints.
 - [ ] Clean VM running; Bastion RDP connected but minimized; PowerShell 7 tab ready.
