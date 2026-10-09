@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Haflidi session overview</title>
+  <meta name="color-scheme" content="light dark">
+  <style>
+    :root {
+      --bg: #f5f8fc;
+      --panel: #ffffff;
+      --panel-strong: #eef4ff;
+      --text: #162033;
+      --muted: #53607a;
+      --border: #d7e1f0;
+      --accent: #0b5fff;
+      --accent-soft: #e8f0ff;
+      --warn: #fff5d6;
+      --warn-border: #d7a100;
+      --shadow: 0 18px 40px rgba(19, 33, 61, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1726;
+        --panel: #162033;
+        --panel-strong: #1d2940;
+        --text: #ecf2ff;
+        --muted: #b7c3da;
+        --border: #31415f;
+        --accent: #7db2ff;
+        --accent-soft: #1d365f;
+        --warn: #3c3211;
+        --warn-border: #f0c14b;
+        --shadow: 0 20px 44px rgba(0, 0, 0, 0.28);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font: 16px/1.55 "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(11, 95, 255, 0.12), transparent 32%),
+        var(--bg);
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    a:hover {
+      text-decoration-thickness: 2px;
+    }
+
+    .shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 24px 40px;
+    }
+
+    .hero,
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3vw, 3rem);
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .hero p + p,
+    .card p + p {
+      margin-top: 10px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .main {
+      display: grid;
+      gap: 24px;
+    }
+
+    .card {
+      padding: 24px;
+    }
+
+    .steps {
+      margin: 0;
+      padding-left: 1.35rem;
+      display: grid;
+      gap: 18px;
+    }
+
+    .steps li {
+      padding-left: 6px;
+    }
+
+    .steps p {
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .diagram-wrap {
+      background: var(--panel-strong);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      margin-top: 14px;
+    }
+
+    .diagram-status {
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .mermaid {
+      overflow-x: auto;
+    }
+
+    .diagram-wrap svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .fallback {
+      margin: 14px 0 0;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px dashed var(--border);
+      color: var(--muted);
+      white-space: pre-wrap;
+      font: 0.95rem/1.45 Consolas, "Cascadia Code", monospace;
+    }
+
+    .agree {
+      border-color: var(--warn-border);
+      background: var(--warn);
+      box-shadow: none;
+    }
+
+    .agree ul,
+    .links ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      display: grid;
+      gap: 12px;
+    }
+
+    .agree li,
+    .links li {
+      color: var(--text);
+    }
+
+    .aside {
+      display: grid;
+      gap: 18px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .link-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .link-tile {
+      display: block;
+      padding: 14px 15px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--panel-strong);
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .link-tile span {
+      display: block;
+      color: var(--muted);
+      margin-top: 4px;
+      font-size: 0.94rem;
+    }
+
+    .meta {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    code {
+      font-family: Consolas, "Cascadia Code", monospace;
+      font-size: 0.95em;
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .aside {
+        position: static;
+      }
+    }
+  </style>
+  <script>
+    function initMermaidOverview() {
+      const status = document.getElementById('diagram-status');
+      const fallback = document.getElementById('diagram-fallback');
+      if (!window.mermaid) {
+        if (status) {
+          status.textContent = 'Mermaid did not load. Use the text fallback below.';
+        }
+        return;
+      }
+
+      const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      window.mermaid.initialize({
+        startOnLoad: true,
+        securityLevel: 'loose',
+        theme: dark ? 'dark' : 'default'
+      });
+      window.mermaid.run({ querySelector: '.mermaid' })
+        .then(() => {
+          if (status) {
+            status.hidden = true;
+          }
+          if (fallback) {
+            fallback.hidden = true;
+          }
+        })
+        .catch(() => {
+          if (status) {
+            status.textContent = 'Mermaid could not render. Use the text fallback below.';
+          }
+        });
+    }
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js" onload="initMermaidOverview()" onerror="initMermaidOverview()"></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <p class="eyebrow">Haflidi collaboration page</p>
+      <h1>Short session map for Haflidi</h1>
+      <p>This page tracks the current public docs. It keeps the flow short. It keeps the ownership clear.</p>
+      <p>It is built for screen use on GitHub Pages. The full timed script stays in the talk track.</p>
+    </header>
+
+    <div class="layout">
+      <main class="main">
+        <section class="card">
+          <h2>Flow in 5 steps</h2>
+          <ol class="steps">
+            <li>
+              <h3>Clean start on the demo VM</h3>
+              <p>Haflidi runs C0 on the clean Windows 11 VM. He shows install, login, <code>copilot</code>, and <code>squad init</code>. Martin frames the boundary and moves the session from setup into the prepared presenter flow.</p>
+            </li>
+            <li>
+              <h3>CLI and Squad working model</h3>
+              <p>Martin walks the CLI surface and the three Terraform lanes. Haflidi explains Squad as the coordination layer with routing, handoffs, decisions, and one owner per shared surface.</p>
+            </li>
+            <li>
+              <h3>Qualified module and review gates</h3>
+              <p>Martin introduces the inherited public module revision and the consumer view. Haflidi explains the module boundary, caller-owned provider and state, and the gate flow around pull requests, review, environment approval, OIDC, and runtime checks. The logged eval result is B1v2 5/5, B2 5/5, and B3 4/5.</p>
+            </li>
+            <li>
+              <h3>Guidance, source checks, and repair loop</h3>
+              <p>Martin shows agents, skills, MCP source lookups, and permissions. Haflidi explains the difference between instructions, skills, and MCP, plus the validator and reviewer boundaries through the mutation and repair loop.</p>
+            </li>
+            <li>
+              <h3>Online consumer view and close</h3>
+              <p>Martin shows the Online consumer page and the gated delivery path. Haflidi maps that result back to the same gate flow and closes the loop on what the audience should take away.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="card">
+          <h2>High-level diagram</h2>
+          <p>The diagram matches the short flow above.</p>
+          <div class="diagram-wrap">
+            <p class="diagram-status" id="diagram-status">Loading Mermaid. If it does not load, use the text fallback below.</p>
+            <div class="mermaid">
+flowchart TB
+  A["Clean VM: Haflidi"] --> B["CLI and Squad: Martin + Haflidi"]
+  B --> C["Qualified module: Martin + Haflidi"]
+  C --> D["Checks and repair: Martin + Haflidi"]
+  D --> E["Online consumer: Martin + Haflidi"]
+            </div>
+            <pre class="fallback" id="diagram-fallback">1. Clean VM setup -> Haflidi leads
+2. CLI and Squad map -> Martin leads, Haflidi explains coordination
+3. Qualified module and gates -> Martin introduces, Haflidi explains boundary
+4. Source checks and repair loop -> Martin drives, Haflidi validates
+5. Online consumer view -> Martin shows, Haflidi maps back to the gates</pre>
+          </div>
+        </section>
+
+        <section class="card agree">
+          <h2>To agree</h2>
+          <ul>
+            <li>Squad on ACA stays an optional segment. The current repo is <code>haflidif/squad-on-aca</code>. Sweden Central hit capacity errors. Other regions are being tried. It is not in the current run plan.</li>
+            <li>Decide whether to show the hosted Terraform MCP on ACA beside the pinned Docker Terraform MCP used in the docs. Current note: <code>tfmcp-app</code> exists and works with a key header.</li>
+            <li>Confirm the 55:00-58:00 window rule. The talk track leaves room for recap or Q&amp;A warm-up if the session is ahead. The run plan says no new content in that window.</li>
+            <li>Confirm the VM account plan. The docs say Haflidi uses a local VM account. The current decision is that it stays administrator for the demo.</li>
+            <li>Pick a rehearsal time and hold it on both calendars.</li>
+          </ul>
+        </section>
+
+        <section class="card links">
+          <h2>How to contribute</h2>
+          <p>Use the public repo at <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14">martinopedal/squad-terraform-session-2026-10-14</a>.</p>
+          <ul>
+            <li>Fork the repo, create a branch, make the change, and open a pull request.</li>
+            <li>Haflidi already has write access, so he can also branch directly in the main repo.</li>
+            <li>Start with <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/overview.md"><code>docs/overview.md</code></a>, <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/talk-track.md"><code>docs/talk-track.md</code></a>, <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/run-plan.md"><code>docs/run-plan.md</code></a>, and <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/playbook.md"><code>docs/playbook.md</code></a>.</li>
+            <li>Use the live deck for slide context: <a href="https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/">presentation deck</a>.</li>
+          </ul>
+          <p class="meta">This page is a short guide. The full script and timing still live in the talk track and run plan.</p>
+        </section>
+      </main>
+
+      <aside class="aside">
+        <section class="card">
+          <h2>Quick links</h2>
+          <div class="link-grid">
+            <a class="link-tile" href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/talk-track.md">
+              Full talk track
+              <span>Minute-by-minute script and handoffs</span>
+            </a>
+            <a class="link-tile" href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/run-plan.md">
+              Run plan
+              <span>Clock, cut lines, and preflight</span>
+            </a>
+            <a class="link-tile" href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/overview.md">
+              Overview
+              <span>Short public summary of the flow</span>
+            </a>
+            <a class="link-tile" href="https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/">
+              Live deck
+              <span>Reveal.js presentation on GitHub Pages</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Why this page exists</h2>
+          <p>It gives Haflidi one short screen with the shared story, current ownership, open points, and edit path.</p>
+          <p class="meta">Page path: <code>/haflidi-overview.html</code></p>
+        </section>
+      </aside>
+    </div>
+
+    <p class="footer">Source base: <code>docs/overview.md</code>, <code>docs/talk-track.md</code>, <code>docs/run-plan.md</code>, <code>docs/playbook.md</code>, and the public deck links in this repo.</p>
+  </div>
+</body>
+</html>

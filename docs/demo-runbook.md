@@ -6,11 +6,11 @@ C0 (from zero to a squad) runs live on the clean Windows 11 demo VM, not in this
 
 **C0 slot 05:30-08:30. Cut at 07:45 (2:15 into C0):** If installs or login are not complete, state the live stall, show fallback evidence, and move to `s05-parallel`. Do not spend later content time on installing tools.
 
-Use `qualify_then_run_clean_checkpoint` as the provenance rule: qualify the module first, then run genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Optional recordings are fallback evidence only. Don't open another terminal or substitute a viewer. This live run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
+Use `qualify_then_run_clean_checkpoint` as the provenance rule: qualify the module first, then run genuine new execution from a disclosed checkpoint in the **current Copilot CLI shell**. Don't open another terminal or substitute a viewer. This live run adds a payload regression test and demonstrates a labeled mutation/repair, not the module's first-ever implementation.
 
-Local module qualification passed: 52 module cases, two caller cases, and both mutation evidence checks. Hosted Terraform matrix CI run 36990206303 passed, native agent-setup CI passed in run 37286068987, final module verification passed in run 37286237657, and docs-only Azure-validation release CI passed in run 37305768318. A private IaC consumer deployed and read back the module on October 5, 2026, pinned to runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized facts are public, private inputs are not. These are instructions for the live run, not an executed transcript. Native profile selection, optional fallback recordings, and full rehearsal remain separate gates.
+Local module qualification passed: 52 module cases, two caller cases, and both mutation evidence checks. Hosted Terraform matrix CI run 36990206303 passed, native agent-setup CI passed in run 37286068987, final module verification passed in run 37286237657, and docs-only Azure-validation release CI passed in run 37305768318. A private IaC consumer deployed and read back the module on October 5, 2026, pinned to runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized facts are public, private inputs are not. These are instructions for the live run, not an executed transcript. Native profile selection and full rehearsal remain separate gates.
 
-## Prepare the checkpoint and optional fallback capture
+## Prepare the checkpoint
 
 Martin operates; Haflidi checks evidence. In [feature-guide.md](feature-guide.md), H1-H4/S0 mean help probes; D means documented, not exercised. Follow [talk-track.md](talk-track.md) for the live 60-minute delivery: 00:00-03:00 intro, 03:00-55:00 planned content and live chapters, 55:00-58:00 protected slack, 58:00-60:00 close plus questions if time allows.
 
@@ -111,10 +111,6 @@ $take
 Review the checkpoint's public decision ledger before copying it; never substitute the coordinator's private `.squad`. Git sparse patterns use Git's slash syntax. Keep the printed take location private. Enter `/cwd` with the actual A, B, or guided path when instructed below.
 
 Pre-stage a filesystem-only provider mirror and `offline\terraform.tfrc` beside the worktrees, following the module README. One online staging step populates the mirror: from the module directory, `terraform providers mirror -platform=windows_amd64 C:\terraform-offline\providers`. Then copy the README's `terraform.tfrc` to `$take\offline\`. Terraform subprocesses must be uncredentialed and network-restricted, separately from CLI/model access. Stop if isolation is unavailable. Never use cached Azure login, direct download fallback, or ordinary `terraform plan`.
-
-**Optional fallback capture R0:** approve the chosen existing terminal's content before any recording fallback. Normal OBS/Windows window capture is acceptable after a short, authorized first-frame/motion check. `gdigrab` produced black frames on the GPU-rendered terminal; encoded frames alone establish nothing. Keep external recorder controls off-screen, microphone off, and no desktop fallback.
-
-**Live slate R1:** state checkpoint, model, prepared code, and "clean demonstration after qualification." If an optional fallback recording is made, keep `A.mkv`, `B.mkv`, and an uninterrupted `guided.mkv`, and have Haflidi record UTC/media offsets in `evidence\chapters.csv`. Use unique, take-prefixed session names; names below are suffixes.
 
 ## Quick troubleshooting
 
@@ -281,7 +277,7 @@ Squad rejection. Return to `/agent squad` for C6. Hand controls back to Martin.
 
 **Pre-staged:** Decision excerpt sanitized and ready; unrelated personal memory or session list not shown; resume target known.
 
-**Say:** Save the public reason, resume the right session, and verify the next task reads it. Keep this as a live demo; optional recordings are fallback evidence, not a dependency.
+**Say:** Save the public reason, resume the right session, and verify the next task reads it. Keep this as a live demo and use the offline fallback only if the live step stalls.
 
 **Type:**
 
@@ -364,8 +360,6 @@ Capture the actual review rather than treating a profile switch in the author's
 context as independent. Return findings to Squad and the human maintainer. This
 additional handoff must be rehearsed within the chapter budget; no completed take
 or timing qualification is implied by adding the instructions.
-
-**Optional fallback capture R2:** finalize and visually review the master if recording fallback is used. Preserve prompts, task IDs, hashes, exits, cuts, and source time ranges in `take.json`. Separate the upstream pins in `NOTICE.md`, qualification revision, and live checkpoint. Earlier logs never become later live execution evidence. Keep off-screen results labeled, raw evidence private, and unreviewed media unattached. Keep C0-C7 at 3/3/4/4/4/5/3/3 minutes: 29 minutes of live demo inside the 60-minute layout. The timed deck now plans content to 55:00, protects 55:00-58:00 as slack, and keeps 58:00-60:00 for the close. Optional exports use those same cuts. No real apply is permitted.
 
 ## s20-consumer: Reuse the code, not the environment | 50:00-53:00
 
