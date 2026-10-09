@@ -52,7 +52,7 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Haflidi:** Squad owns `.squad\`: team roster, routing, decisions, charters, and handoffs. Built-ins matter too: Scribe records accepted decisions, Ralph helps backlog flow, Rai supports reliability, and Fact Checker challenges claims.
 
-**Martin:** The three native lanes are explicit selections: `terraform-coder` writes agreed changes; `terraform-validator` runs fixed offline checks; `terraform-reviewer` reviews a supplied diff in a fresh context. Tool filters reduce available tools. They are not a sandbox.
+**Martin:** The three native lanes are explicit selections: `terraform-coder` writes agreed changes; `terraform-validator` runs fixed offline checks; `terraform-reviewer` reviews a supplied diff in a fresh context. Tool filters reduce available tools. They are not a sandbox. Copilot CLI's `/sandbox` adds local filesystem and network controls when enabled, distinct from the later ACA Sandboxes Azure microVM demo.
 
 ## demo-c0 | 05:30-08:30 | C0: From zero to a squad
 

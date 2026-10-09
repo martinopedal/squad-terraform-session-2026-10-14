@@ -41,9 +41,11 @@ The final what-if showed one create for the sandbox group. The group deployment 
 
 | Surface | Where it runs | Isolation and control | Best fit in this session |
 | --- | --- | --- | --- |
-| Copilot local sandboxing | On the presenter machine | Local process isolation with host policy controls | Mention as context only |
+| Copilot CLI local `/sandbox` | On the presenter machine | Local process isolation with filesystem and network policy | Mention as context only |
 | ACA Sandboxes | In Azure, per-sandbox microVM | Cloud isolation, deny-by-default egress, suspend and resume, explicit lifecycle | Short live proof for untrusted code execution |
 | Squad on ACA | Azure Container Apps jobs and supporting Azure services | Long-running agent workflow hosting and side-track automation | Separate side track, not the fast validation clip |
+
+`/sandbox` manages local filesystem and network policy; sandboxing is off by default and enabled with `/sandbox enable`. Its MXC process isolation runs on the host, not in a separate VM or container, and does not sandbox remote MCP servers. This brief mention complements, rather than replaces, the ACA Sandboxes live microVM moment ([GitHub documentation](https://docs.github.com/en/copilot/concepts/about-cloud-and-local-sandboxes)).
 
 ## Preflight
 
