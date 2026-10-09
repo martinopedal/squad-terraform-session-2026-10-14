@@ -34,7 +34,7 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
       tip: 'Open with the two speakers, public links, and the session promise.',
       sources: [
         { label: 'Full deck', url: '../index.html' },
-        { label: 'Overview', url: '../docs/overview.md' }
+        { label: 'Overview', url: '../../docs/overview.md' }
       ],
       notes: '<p><strong>Driver:</strong> Martin opens, Haflidi confirms the shared promise.</p><p>Use this as the fast introduction when the room needs the short path.</p>',
       content: `<div class="short-speakers">
@@ -51,8 +51,8 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
       kind: 'short',
       tip: 'Walk the five steps once and keep the chapter names short.',
       sources: [
-        { label: 'Talk track', url: '../docs/talk-track.md' },
-        { label: 'Run plan', url: '../docs/run-plan.md' }
+        { label: 'Talk track', url: '../../docs/talk-track.md' },
+        { label: 'Run plan', url: '../../docs/run-plan.md' }
       ],
       notes: '<p><strong>Driver:</strong> Haflidi walks the five-step story.</p><p>This is the compressed version of the C0-C7 path.</p>',
       content: `<ol class="short-flow-list">
@@ -71,8 +71,8 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
       kind: 'short',
       tip: 'Pick one snippet per minute and move on.',
       sources: [
-        { label: 'Playbook', url: '../docs/playbook.md' },
-        { label: 'Prompt pack', url: '../docs/prompt-pack.md' }
+        { label: 'Playbook', url: '../../docs/playbook.md' },
+        { label: 'Prompt pack', url: '../../docs/prompt-pack.md' }
       ],
       notes: '<p><strong>Driver:</strong> Martin shows the lane, gate, and prompt examples.</p><p>Keep this at excerpt level.</p>',
       content: `<div class="short-snippets-grid">
@@ -89,8 +89,8 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
       kind: 'short',
       tip: 'Keep the three rules visible.',
       sources: [
-        { label: 'Feature guide', url: '../docs/feature-guide.md' },
-        { label: 'Sandboxing note', url: '../docs/sandboxing.md' }
+        { label: 'Feature guide', url: '../../docs/feature-guide.md' },
+        { label: 'Sandboxing note', url: '../../docs/sandboxing.md' }
       ],
       notes: '<p><strong>Driver:</strong> Haflidi closes the short story.</p><p>These are the carry-home rules.</p>',
       content: `<div class="short-takeaways-grid">
@@ -113,9 +113,9 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
       notes: '<p><strong>Driver:</strong> Martin lands on the public follow-up links.</p><p>Invite the audience to start with the bootstrap and short deck.</p>',
       content: `<div class="short-links-grid">
         <a href="../index.html"><strong>Full deck</strong><span>Reveal.js session deck with notes</span></a>
-        <a href="../docs/bootstrap.md"><strong>Bootstrap guide</strong><span>Demo VM setup, login, init, and app checklist</span></a>
+        <a href="../../docs/bootstrap.md"><strong>Bootstrap guide</strong><span>Demo VM setup, login, init, and app checklist</span></a>
         <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14"><strong>Session repo</strong><span>Public repo with deck, docs, and generated assets</span></a>
-        <a href="../docs/sandboxing.md"><strong>Copilot local sandboxing</strong><span>Short note, separate from ACA Sandboxes</span></a>
+        <a href="../../docs/sandboxing.md"><strong>Copilot local sandboxing</strong><span>Short note, separate from ACA Sandboxes</span></a>
       </div>`
     }
   ];

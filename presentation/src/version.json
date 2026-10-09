@@ -1,5 +1,5 @@
 {
-  "version": "0.21.5",
+  "version": "0.21.6",
   "status": "draft; live demo chapters; Azure validation sanitized",
   "changes": [
     "0.1 - 2026-09-30: build the offline presentation and two-speaker delivery.",
@@ -34,6 +34,7 @@
     "0.21.2 - 2026-10-09: remove recording-fallback wording from the public runbook and deck notes, and add Haflidi's collaboration overview page.",
     "0.21.3 - 2026-10-09: rebuild s04-news around verified Copilot CLI, Squad, Terraform MCP, Azure MCP, and Agent HQ items, and tighten the AKS Automatic Gateway API default wording.",
     "0.21.4 - 2026-10-09: add verified HydraFusion and Auto model selection lead items to s04-news, and pin the presenter note to claude-sonnet-5 for stage parity.",
-    "0.21.5 - 2026-10-09: add the short companion deck, demo VM bootstrap guide/script, Martin speaker photo, and a docs-only note on Copilot local sandboxing."
+    "0.21.5 - 2026-10-09: add the short companion deck, demo VM bootstrap guide/script, Martin speaker photo, and a docs-only note on Copilot local sandboxing.",
+    "0.21.6 - 2026-10-09: stop manual bootstrap on native failures, include the Copilot desktop app, VS Code, CLI, and pinned Squad 1.0.1, fix nested short-deck links, and fit complete readable snippets without changing the full deck or session clock."
   ]
 }

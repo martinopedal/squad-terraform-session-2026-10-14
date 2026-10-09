@@ -76,7 +76,7 @@ Only genuine Copilot CLI with Squad selected, standalone or in a real integrated
 
 Source qualification may finish before delivery. The live chapter must execute from a disclosed clean checkpoint or explicitly use the Offline fallback line. Do not substitute prior qualification output for a live result.
 
-Deck 0.21.5 follows the 60-minute run-plan contract with 55 minutes of scripted content, a visible 55:00-58:00 protected recovery window, and the five-slide companion deck.
+Deck 0.21.6 follows the 60-minute run-plan contract with 55 minutes of scripted content, a visible 55:00-58:00 protected recovery window, and the five-slide companion deck.
 
 The legacy `src\media.json` file remains harmless metadata for evidence review, but the current live deck does not render chapter-media placeholders or autoplay controls.
 
@@ -98,8 +98,8 @@ python -m venv .venv
 npm test
 ```
 
-The check first exercises the live-demo slide contract, then starts its own loopback server. It blocks external browser requests, captures every slide/fragment at 1280 x 720 and 1920 x 1080, and checks structure, overflow, contrast/accessibility, keyboard navigation, notes, and offline packaging. The check shuts down its server and browser when finished.
+The check first exercises the live-demo slide contract, all short-deck document paths, and the actual bootstrap script with safe native executable mocks (PowerShell 7 is required). It then starts loopback browser checks for both decks. The short-deck check measures actual card and text bounds against the body, footer, canvas, and controls and verifies all nine documentation links by HTTP. Both decks are captured at 1280 x 720 and 1920 x 1080 with external browser requests blocked; the full deck includes every fragment. Structure, overflow, contrast/accessibility, keyboard navigation, notes, and offline packaging are checked. Servers and browsers shut down when finished.
 
-Results and screenshots go to `qa\`. Automated checks do not replace looking at the screenshots or running a full two-speaker rehearsal. The final QA report distinguishes tested presentation behavior from live CLI execution, native profile-selection evidence, and sanitized Azure validation limits.
+Results and screenshots go to `qa\` (short-deck captures under `qa\short\`). Automated checks do not replace looking at the screenshots, the [manual clean-VM bootstrap qualification](../docs/bootstrap.md), or running a full two-speaker rehearsal. The final QA report distinguishes tested presentation behavior from live CLI execution, native profile-selection evidence, and sanitized Azure validation limits.
 
 Local verification and visual-review reports remain under ignored `qa\` and reviewer artifact directories. They contain build/browser results, per-slide observations, and the remaining stage-release gates. They are not part of the public package; public release summaries must be sanitized separately.

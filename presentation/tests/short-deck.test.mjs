@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { createShortSlides, shortTitle } from '../src/short-slides.mjs';
 
 const shortSlides = createShortSlides({
@@ -55,4 +56,25 @@ test('short deck build carries the gate map and B1v2 prompt excerpt', () => {
   assert.match(html, /PR → checks\/scans/);
   assert.match(html, /alternate_network_payload/);
   assert.match(html, /DNS service IP 10\.241\.0\.10/);
+});
+
+test('every emitted short-deck local link resolves from its actual nested URL', () => {
+  const html = readFileSync(htmlPath, 'utf8');
+  const renderedSlides = html.slice(html.indexOf('<main class="reveal"'), html.indexOf('</main>'));
+  const localLinks = [...renderedSlides.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)]
+    .map(match => match[1]).filter(href => !/^(?:https?:|#)/.test(href));
+  const docLinks = localLinks.filter(href => href.includes('/docs/'));
+  assert.equal(docLinks.length, 9, 'protect every short-deck documentation link');
+  for (const href of localLinks) {
+    assert.ok(existsSync(new URL(href, htmlPath)), `${href} must resolve from presentation/short/index.html`);
+  }
+});
+
+test('short-deck manifest matches the generated HTML and source version', () => {
+  const bytes = readFileSync(htmlPath);
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+  const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8'));
+  assert.equal(manifest.version, version.version);
+  assert.equal(manifest.htmlBytes, bytes.length);
+  assert.equal(manifest.htmlSHA256, createHash('sha256').update(bytes).digest('hex'));
 });
