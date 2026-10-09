@@ -14,7 +14,7 @@ The session is about using GitHub Copilot CLI and Squad to make Terraform work e
 
 3. Start from a finished, qualified module and explain why the gates matter.
 
-   Martin introduces the inherited public module revision and the consumer view. Haflidi explains the module boundary, caller-owned provider and state, and the fact that local checks and Azure runtime evidence answer different questions. The security story sits here: pull requests, protected `main`, required review, environment approval, OIDC, runtime checks, and GHAS controls such as CodeQL, secret scanning, and Dependabot. The determinism point also sits here. C1 and the eval show why the brief must be precise. The recorded result is B1v2 5/5, B2 5/5, and B3 4/5. Recordings are fallback evidence, not the main proof.
+   Martin introduces the inherited public module revision and the consumer view. Haflidi explains the module boundary, caller-owned provider and state, and the fact that local checks and Azure runtime evidence answer different questions. The security story sits here: pull requests, protected `main`, required review, environment approval, OIDC, runtime checks, and GHAS controls such as CodeQL, secret scanning, and Dependabot. The determinism point also sits here. C1 and the eval show why the brief must be precise. The logged eval result is B1v2 5/5, B2 5/5, and B3 4/5.
 
 4. Show the framework pieces that make the flow work.
 

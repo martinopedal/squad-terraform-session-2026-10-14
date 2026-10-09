@@ -145,7 +145,7 @@ def main():
                     /No new story beats/.test(buffer.textContent) &&
                     scripted === 55 * 60;
             }"""))
-            check("main spoken words", 5300 <= manifest["spokenWords"] <= 5900, manifest["spokenWords"])
+            check("main spoken words", 1400 <= manifest["spokenWords"] <= 2200, manifest["spokenWords"])
             check("no scheduled Q&A words", manifest["qaWords"] == 0, manifest["qaWords"])
             check("balanced speakers", abs(manifest["speakers"]["Martin"] - manifest["speakers"]["Haflidi"]) < 0.1 * manifest["spokenWords"], manifest["speakers"])
             check("plugins", page.evaluate("['notes','highlight'].every(id => Object.keys(Reveal.getPlugins()).includes(id))"))

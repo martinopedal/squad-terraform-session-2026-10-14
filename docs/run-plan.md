@@ -180,7 +180,7 @@ Use "runtime check" or "runtime evidence". Do not use stronger certainty languag
 
 | Date | Owners | What | Done when |
 |---|---|---|---|
-| Fri 9 Oct | Martin drives; Haflidi checks and times | Rehearsal 1: slides plus all live chapters, timed. Replace every "estimate, time in rehearsal 1" entry in talk docs/runbooks with actual wall time. | Chapter actuals recorded; cut lines tested, not just discussed. |
+| Fri 9 Oct | Martin drives; Haflidi checks and times | Rehearsal 1: slides plus all live chapters, timed. Replace every "estimate, time in rehearsal 1" entry in talk docs/runbooks with actual wall time. | Chapter actuals logged; cut lines tested, not just discussed. |
 | Mon 12 Oct | Martin and Haflidi | Rehearsal 2: full 60-minute run against this layout. | `s20-consumer` starts at 50:00, planned content ends by 55:00, close starts at 58:00, and the session ends by 60:00 without scheduled Q&A. |
 | Tue 13 Oct | Martin and Haflidi | Dress rehearsal on presentation laptop; run preflight; recreate the clean C0 VM. | Presenter preflight green; clean VM verified; fallback evidence current. |
 | Wed 14 Oct T-2h | Martin owns environment; Haflidi owns demo surfaces | Open deck locally, test speaker notes, start/verify VM, verify Bastion, start Docker Desktop, connect `/mcp`, open named sessions, load app URL once, check terminal font and display. | No red preflight item; all fallback artifacts reachable without private paths on screen. |
