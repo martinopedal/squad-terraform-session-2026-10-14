@@ -8,7 +8,7 @@ From prompt to reusable Terraform: Copilot CLI and Squad
 
 ## Description and outcomes
 
-A useful agent session should leave more than a convincing answer. It should leave code another engineer can understand, test, and consume.
+We want this session to end with code another engineer can read, test, and use.
 
 In the past year, Copilot CLI became generally available, skills and MCP spread across Copilot surfaces, and Squad reached 1.0. Martin and Haflidi show how native GitHub Copilot CLI features and Squad work together on an existing AKS Terraform codebase. The outcome is a reusable infrastructure module, documented and tested around a clear contract, with a consumption example for an existing Azure landing zone. The primary path uses private Corp networking and pre-provisioned platform services, not a new public standalone environment.
 

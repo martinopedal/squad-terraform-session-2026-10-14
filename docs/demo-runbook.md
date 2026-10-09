@@ -333,7 +333,7 @@ or timing qualification is implied by adding the instructions.
 
 **Optional fallback capture R2:** finalize and visually review the master if recording fallback is used. Preserve prompts, task IDs, hashes, exits, cuts, and source time ranges in `take.json`. Separate the upstream pins in `NOTICE.md`, qualification revision, and live checkpoint. Earlier logs never become later live execution evidence. Keep off-screen results labeled, raw evidence private, and unreviewed media unattached. Keep C0-C7 at 3/3/4/4/4/5/3/3 minutes: 29 minutes of live demo inside the 60-minute layout. The timed deck now plans content to 55:00, protects 55:00-58:00 as slack, and keeps 58:00-60:00 for the close. Optional exports use those same cuts. No real apply is permitted.
 
-## s20-consumer: Reuse the code, not the environment | 50:00-53:00
+## s20-consumer: Reuse the module in another environment | 50:00-53:00
 
 This three-minute section follows C7. Keep it short and preserve the boundary
 between reviewed module code and private environment inputs.
@@ -345,4 +345,4 @@ between reviewed module code and private environment inputs.
 
 ## Protected slack | 55:00-58:00
 
-Protected slack: 55:00-58:00 — if on schedule, use this for a brief recap or extra Q&A warm-up; if behind, this is where you catch up before the close.
+If we are on time, use 55:00 to 58:00 for a short recap or a quick question. If we are behind, use that time to catch up before the close.

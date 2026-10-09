@@ -1,16 +1,16 @@
 # Online landing zone variant: same module, real guardrails
 
-A question-driven appendix to the session. The main talk targets a private Corp cluster; this variant answers "what does it take to ship the same module somewhere simpler?" The honest answer: simpler topology, same guardrails, everything through a pipeline, and a module that got better because a real consumer used it.
+This appendix shows what changes when we run the same module in an Online subscription. The main talk targets a private Corp cluster. Here the topology is simpler, the guardrails stay in place, and we still use a gated pipeline. That work also pushed fixes back into the module.
 
 Source: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env): `deployments/online/`, `manifests/online/`, `.github/workflows/deploy-online.yml`, `scripts/start-online-runner.ps1`. The root pins the reusable module [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic) by tag `v0.6.0`.
 
 ## Talk it in keywords
 
-- **Same module.** Thin root `deployments/online/` in the demo-env repo with `source = "git::https://github.com/martinopedal/terraform-azapi-aks-automatic.git?ref=v0.6.0"`. The module stays provider-free.
-- **Guardrails decide the design.** Three landing-zone controls shaped the topology more than any code choice.
-- **Secure by default.** OIDC, environment gate, private state, no plan artifact, least privilege.
-- **Runtime evidence, not hope.** The pipeline fails unless the app answers by hostname over HTTPS.
-- **Prompts that rerun.** The lessons became step 1 of the [prompt pack](prompt-pack.md).
+- The demo-env repo uses the same module through a thin root in `deployments/online/` with `source = "git::https://github.com/martinopedal/terraform-azapi-aks-automatic.git?ref=v0.6.0"`. The module stays provider-free.
+- Three landing-zone controls shaped the topology more than any code choice.
+- OIDC, the environment gate, private state, no plan artifact, and least privilege stay in place.
+- The pipeline checks the app by hostname over HTTPS, and the run fails if that check fails.
+- The lessons became step 1 of the [prompt pack](prompt-pack.md).
 
 ## What gets deployed
 

@@ -22,9 +22,9 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Haflidi:** You will see Copilot CLI as the execution surface, Squad as the coordination layer, and Terraform checks as evidence. We bootstrap a Squad, route work through three lanes, add a contract regression, seed a controlled failure, repair it, and show a consumer page that reuses the module.
 
-**Martin:** Honesty rule: terminal and browser work is live. Starting code, clean checkpoints, prompts, and fallback evidence are prepared and disclosed. If a live lookup, install, or check fails, we say it failed and use fallback evidence. Runtime evidence belongs to the exact thing it checks.
+**Martin:** Terminal and browser work is live. Starting code, clean checkpoints, prompts, and fallback evidence are prepared and disclosed. If a live lookup, install, or check fails, we say it failed and use fallback evidence. Runtime evidence belongs to the exact thing it checks.
 
-**Haflidi:** Takeaways: define the artifact, assign one owner per shared surface, keep provider and state ownership with the caller, record decisions where the next owner can review them, and keep checks tied to their claim.
+**Haflidi:** Define the artifact first. Assign one owner per shared surface. Keep provider and state ownership with the caller. Record decisions where the next owner can review them. Keep checks tied to their claim.
 
 ## s03-baseline | 03:00-03:30 | Start with the code you have
 
@@ -44,7 +44,7 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Martin:** MCP means Model Context Protocol: a way to connect the CLI to an external source or tool. A useful agent workflow returns files, decisions, and check output that a human can inspect.
 
-**Haflidi:** The control spectrum is not a maturity ladder: Ask → edit → plan → agent → programmatic `-p` → Squad multi-agent with gates. Our chapters use different points on it: C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools + permissions, C5 edit/repair loop, C6 resume, C7 gated review. More automation is not better by default; human approvals remain at the gates. `-p` is appendix automation, not a live chapter.
+**Haflidi:** This session uses a few points on the control spectrum. C0 is setup and runway. C1 is ask and compare. C2 is plan mode. C3 routes to an agent. C4 uses tools and permissions. C5 is the edit and repair loop. C6 is resume. C7 is gated review. More automation is not better by default. Human approvals stay at the gates. We keep `-p` in the appendix because it is batch automation and not part of the live run.
 
 ## s07-agent-setup | 05:00-05:30 | Meet the agent setup
 
@@ -86,9 +86,9 @@ Use the C0 block from [demo-runbook.md](demo-runbook.md): show Git/Copilot/Squad
 
 Use `/new`, `/agent` Squad, `/model`, `/plan`, `/rename C1-A`; repeat as `C1-B`. Prompt: plan only, add `alternate_network_payload`, pod `172.21.0.0/16`, service `10.241.0.0/16`, DNS `10.241.0.10`, preserve private API, no edits or deploy.
 
-**Haflidi:** Compare one consequence, not verbosity. B1 was 0/5 because the ambiguous brief produced two assert blocks while the oracle expected four. B1v2 stated the oracle's rule and was 5/5 in re-measurement. That is a measured checkpoint, not a causal claim about every future run. The live run still has to pass.
+**Haflidi:** Compare one consequence. Do not compare verbosity. B1 was 0/5 because the ambiguous brief produced two assert blocks while the oracle expected four. B1v2 stated the oracle's rule and was 5/5 in re-measurement. That is a measured checkpoint. It is not a causal claim about every future run. The live run still has to pass.
 
-## s08-plan-boundary | 15:30-17:30 | Extract a module, not an environment
+## s08-plan-boundary | 15:30-17:30 | Separate the module from the environment
 
 **Haflidi:** The approved change should produce a generic module plus a small consumer example. The consumer configures providers and backend, passes approved existing-network inputs, and calls the module.
 
@@ -106,7 +106,7 @@ Use `/new`, `/rename guided-clean-run`, `/agent` Squad, `/instructions`, `/plan`
 
 **Haflidi:** Instructions are persistent expectations. Skills turn a repeated procedure into reusable, versioned guidance. MCP is a source or tool connection.
 
-**Martin:** Second opinion from a different model (Rubber Duck, GA 2026-06-02, `/rubber-duck` in Copilot CLI) is review input, not approval; our reviewer lane stays the gate.
+**Martin:** Second opinion from a different model (Rubber Duck, GA 2026-06-02, `/rubber-duck` in Copilot CLI) is review input. Our reviewer lane stays the gate.
 
 **Haflidi:** A recipe changes how we work; a source tells us what a service supports; a human still approves the code change.
 
@@ -146,15 +146,15 @@ Select `/agent terraform-validator`; run the C5 PowerShell block with `$phase = 
 
 **Haflidi:** Preserve cause and effect. Say: deliberate lab mutation, not an AI-discovered defect. A runtime check is evidence for the assertion it runs. It is not Azure acceptance evidence.
 
-## s15-proof | 38:30-41:30 | Evidence has levels
+## s15-proof | 38:30-41:30 | Different checks answer different questions
 
 **Haflidi:** Keep gates separate: source inspection, local contract tests, consumer checks, real plan/apply, and Azure read-back. A runtime check is evidence only for what it checks.
 
 **Martin:** Evidence feeds the gate; the gate doesn't care who typed the diff. The private consumer supplied separate sanitized runtime evidence for one pinned module revision. We do not show private IDs, state, run URLs, or FQDNs.
 
-## s16-continuity | 41:30-42:00 | Save the reason, not the whole chat
+## s16-continuity | 41:30-42:00 | Record the reason for the next task
 
-**Martin:** A later task needs the reason, not a transcript. Private API, caller-owned provider/backend, and the new network-payload regression should survive the session.
+**Martin:** A later task needs the reason. The transcript is not the artifact. Private API, caller-owned provider/backend, and the new network-payload regression should survive the session.
 
 **Haflidi:** Native resume returns to a conversation. Repository decisions are different artifacts. The next task must read and cite the decision file.
 
@@ -180,7 +180,7 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 **Haflidi:** Show offline checks, diff, reviewer findings, and human code-only acceptance. Remaining gates belong to the environment owner.
 
-## s20-consumer | 50:00-53:00 | Reuse the code, not the environment
+## s20-consumer | 50:00-53:00 | Reuse the same module in another environment
 
 > DRIVER Martin. Must start by 50:00. Live reveal is 50:30-51:00.
 
@@ -190,7 +190,7 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 **Haflidi:** 51:00-52:10: Whether a change is human-authored or agent-assisted, it goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail. The map is PR → checks/scans → review + protected main → plan → environment approval → OIDC apply → runtime check.
 
-**Martin:** 52:10-53:00: boundary. The documented gaps stay visible: single-maintainer admin override, self-review setting, and the environment gate before the apply job's plan, mitigated by a reviewed plan-only run and in-job plan comparison. This shows reuse of code, not reuse of the private environment. `a-online` and `a-security` are appendix and hallway depth.
+**Martin:** 52:10-53:00: boundary. The documented gaps stay visible: single-maintainer admin override, self-review setting, and the environment gate before the apply job's plan, mitigated by a reviewed plan-only run and in-job plan comparison. This shows that the same code can be reused without copying the private environment. `a-online` and `a-security` are appendix and hallway depth.
 
 ## s21-limits | 53:00-55:00 | Make the next change easier to review
 
@@ -202,7 +202,7 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 ## protected-slack | 55:00-58:00 | Protected slack
 
-**Martin:** Protected slack: 55:00-58:00 — if on schedule, use this for a brief recap or extra Q&A warm-up; if behind, this is where you catch up before the close.
+**Martin:** If we are on time, use 55:00 to 58:00 for a short recap or a quick question. If we are behind, use that time to catch up before the close.
 
 ## s22-close | 58:00-60:00 | Close, public handoff, questions if time allows
 
@@ -242,7 +242,7 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 ## a-online | Appendix | Same module, Online landing zone
 
-> Reference only. Answer "can this run somewhere simpler?" Keywords: same module, thin root, guardrails constrain, runtime evidence not hope. The demo-env repo root `deployments/online` consumes the module by tag `v0.6.0` and owns providers, backend, network, and the namespace. Three landing-zone controls shaped it: storage forced private (state through a private endpoint, so an ephemeral VNet-integrated runner), `Deny-Subnet-Without-Nsg` (the AKS-managed VNet was rejected, so BYO subnets with NSGs and an explicit NAT Gateway), and AKS RBAC Writer cannot create namespaces (managed namespace through ARM). Nothing was exempted. The chain: PR, protected branch, human environment gate, OIDC, plan and apply in one job with no plan artifact, a public API server that accepts only the runner's static egress IP, Entra-only kubeconfig, and a runtime check step that fails unless the hostname returns HTTPS 200, HTTP redirects, and DNS resolves to the App Routing controller Service address. App Routing is Azure's managed NGINX ingress add-on for AKS. The current page at `https://aks-online-demo.swedencentral.cloudapp.azure.com/` is the branded NIC 2026 demo, served by pinned `nginx-unprivileged`, showing the serving pod, render time, flow, and speakers; apply runs 37771532872 and 37772290635 both ended with plan "No changes", DNS matching the ingress IP, HTTPS 200 by hostname, and title "AKS Automatic | NIC 2026 demo". `Test-OnlineSecurity.ps1` is 29/29 PASS. The real runs found seven issues: five module fixes written test-first (user-assigned identity for BYO subnets, `userAssignedNATGateway` egress, two perpetual drifts, and the SKU: the module sent `Base`, now `cluster_sku = "Automatic"` with managed system node pools), one root fix (no module-level `depends_on`), and one fixed later in the module (`count` on a plan-time-unknown subnet ID, now the explicit `use_external_subnets` flag with a regression test). The cluster was rebuilt as the Automatic SKU because Base to Automatic migration is not supported. Detail and evidence: `docs/online-demo.md`. Do not show subscription, tenant, or principal IDs.
+> Reference only. Answer "can this run somewhere simpler?" Keywords: same module, thin root, guardrails constrain, runtime evidence through the pipeline. The demo-env repo root `deployments/online` consumes the module by tag `v0.6.0` and owns providers, backend, network, and the namespace. Three landing-zone controls shaped it: storage forced private (state through a private endpoint, so an ephemeral VNet-integrated runner), `Deny-Subnet-Without-Nsg` (the AKS-managed VNet was rejected, so BYO subnets with NSGs and an explicit NAT Gateway), and AKS RBAC Writer cannot create namespaces (managed namespace through ARM). Nothing was exempted. The chain: PR, protected branch, human environment gate, OIDC, plan and apply in one job with no plan artifact, a public API server that accepts only the runner's static egress IP, Entra-only kubeconfig, and a runtime check step that fails unless the hostname returns HTTPS 200, HTTP redirects, and DNS resolves to the App Routing controller Service address. App Routing is Azure's managed NGINX ingress add-on for AKS. The current page at `https://aks-online-demo.swedencentral.cloudapp.azure.com/` is the branded NIC 2026 demo, served by pinned `nginx-unprivileged`, showing the serving pod, render time, flow, and speakers; apply runs 37771532872 and 37772290635 both ended with plan "No changes", DNS matching the ingress IP, HTTPS 200 by hostname, and title "AKS Automatic | NIC 2026 demo". `Test-OnlineSecurity.ps1` is 29/29 PASS. The real runs found seven issues: five module fixes written test-first (user-assigned identity for BYO subnets, `userAssignedNATGateway` egress, two perpetual drifts, and the SKU: the module sent `Base`, now `cluster_sku = "Automatic"` with managed system node pools), one root fix (no module-level `depends_on`), and one fixed later in the module (`count` on a plan-time-unknown subnet ID, now the explicit `use_external_subnets` flag with a regression test). The cluster was rebuilt as the Automatic SKU because Base to Automatic migration is not supported. Detail and evidence: `docs/online-demo.md`. Do not show subscription, tenant, or principal IDs.
 
 ## a-security | Appendix | What AI found that the scanners did not
 
