@@ -114,6 +114,92 @@ squad doctor
 
 Record actual versions, exits, and whether this operator rehearsal passed. The catalog's CLI version above does not replace the full deck's explicitly dated Copilot CLI 1.0.93 qualification.
 
+## Manual live-session laptop preflight
+
+After setup, run the tracked [`scripts\Test-PresenterLaptop.ps1`](..\scripts\Test-PresenterLaptop.ps1)
+from the repository root. This is a separate, read-only operator check, not an installer,
+automatic startup task, login, or completed rehearsal. OBS and recordings are not prerequisites.
+
+```powershell
+.\scripts\Test-PresenterLaptop.ps1
+$preflightExit = $LASTEXITCODE
+if ($preflightExit -ne 0) { throw "Presenter preflight failed: $preflightExit check(s)." }
+```
+
+The normal inventory is **18 checks**:
+
+1. Copilot CLI in the existing `1.0.x` session line; no new patch minimum is imposed.
+2. Squad exactly `1.0.1`.
+3. VS Code CLI available.
+4. Installed GitHub Copilot desktop app, queried with the exact `GitHub.CopilotApp` identity. A catalog listing is not installation evidence.
+5. Parsed stable Terraform version `>= 1.14.8` and `< 2.0`.
+6. TFLint `0.64.0`.
+7. Docker daemon responding.
+8. Expected Terraform MCP image digest present locally.
+9. AzAPI `2.12.0` Windows AMD64 provider archive in the offline mirror.
+10. Offline `terraform.tfrc` present without a `direct` installation block.
+11. No inherited `ARM_`, non-`AZURE_CORE_` `AZURE_`, `TF_VAR_`, or `TF_CLI_ARGS` credentials/configuration; only matching variable names are printed.
+12. GitHub CLI authenticated.
+13. Microsoft Learn MCP initialization responds.
+14. Configured hosted Terraform MCP rejects a request without its key.
+15. The same hosted MCP accepts the operator's configured key.
+16. Published full presentation reachable.
+17. Published companion reachable with exactly five expected slide-section IDs, not counts of repeated data attributes.
+18. At least 10 GiB free on drive C.
+
+The mirror defaults to `C:\terraform-offline`. To use another already-prepared location:
+
+```powershell
+.\scripts\Test-PresenterLaptop.ps1 -OfflineMirrorRoot "$HOME\terraform-offline"
+```
+
+Keep the provider archive under `providers\registry.terraform.io\azure\azapi\` and the
+configuration at the mirror root. This command does not download or copy providers.
+
+Only a deliberate operator run reads `$HOME\.copilot\mcp-config.json` for the
+`terraform-hosted` server and sends its configured headers to that endpoint.
+Configure it privately, verify the endpoint yourself, and never publish the file, keys,
+raw authentication output, or private provider caches. Unreadable, invalid, or absent
+hosted configuration produces an explicit configuration failure instead of the two
+network checks: **17 emitted checks, not a readiness pass**. Exceptions do not print
+configuration content or header values.
+
+The summary exit code is the number of failed checks. Continue only after **all checks
+PASS** and exit `0`; fix any failure without weakening the gates. Installed products,
+mock results, and successful network checks still do not establish app onboarding,
+native agent selection, Azure authorization, or a completed dress rehearsal.
+The October 5, 2026 **16/16** preflight result is historical only; it does not attest
+to this revised inventory. The October 13 dress rehearsal/reset remains a separate
+future operator/date gate.
+
+### Safe preflight regression tests
+
+From the repository root, run the standard-library test file:
+
+```powershell
+pwsh -NoLogo -NoProfile -File .\scripts\Test-PresenterLaptop.Tests.ps1
+```
+
+Windows PowerShell 5.1 is also supported:
+
+```powershell
+powershell -NoLogo -NoProfile -File .\scripts\Test-PresenterLaptop.Tests.ps1
+```
+
+These tests execute the actual tracked preflight in isolated child processes.
+Product commands, filesystem inventory, and all HTTP responses are mocked; configuration
+reads are restricted to a generated fixture with an obviously dummy header and an
+`.invalid` endpoint. The fixture lives under `scripts\` and is removed afterward.
+Three separate harmless `cmd.exe` checks exercise the production version helper's
+actual native success, nonzero-exit, and missing-command behavior. They are not product
+installation or authentication evidence.
+
+The tests cover missing products, installed-app versus catalog detection, Terraform
+`1.14.7` failure/`1.14.8` and `1.16.4` success/`2.0` failure, incorrect or missing short
+decks, alternate and missing mirror paths, OBS absence, safe configuration failures,
+and aggregate nonzero exits. No real install, login, credential read, MCP authentication,
+or rehearsal is performed.
+
 ## macOS note
 
 macOS was not re-run in this repo on 2026-10-09, but the pinned docs path remains:

@@ -44,6 +44,16 @@ Expected result: the pinned digest is present locally. **Verified 2026-10-08.**
 
 For a repeatable clean-VM setup pass, use [bootstrap.md](bootstrap.md) and [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1). The script supports `-WhatIf`, runs `copilot login`, clones a target repository, and runs `squad init` only when needed.
 
+Before stage, run the separate manual [`scripts\Test-PresenterLaptop.ps1`](..\scripts\Test-PresenterLaptop.ps1)
+from this repository root. Expect **all checks PASS** and exit `0`; the
+[current 18-check inventory and controlled tests](bootstrap.md#manual-live-session-laptop-preflight)
+include VS Code, the installed GitHub Copilot desktop app, Terraform `>=1.14.8 <2`,
+and the actual five-slide companion. OBS is not required. The October 5, 2026
+16/16 result is historical, not current laptop-readiness evidence. The command
+neither installs nor signs in; its operator-run hosted MCP checks use private
+configuration without printing keys. Tests use dummy fixtures and do not attest
+to real authentication or the still-future October 13 dress rehearsal/reset.
+
 ## 2. Bootstrap Squad from zero in a new repo
 
 1. Start in a fresh Git repo.
