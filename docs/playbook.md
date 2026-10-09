@@ -37,7 +37,7 @@ docker image inspect hashicorp/terraform-mcp-server:1.3.0@sha256:423a6b8e2ee06af
 
 Expected result: the pinned digest is present locally. **Verified 2026-10-08.**
 
-3. macOS/Linux were not rehearsed for this playbook. Official Squad docs list `brew install --cask squad` on macOS and the verified install script for macOS/Linux, but this session script is Windows-first. **Not verified 2026-10-08.**
+3. macOS/Linux were not rehearsed for this playbook. The Squad README (pinned reference 93aec83) lists `brew install --cask bradygaster/squad/squad` on macOS (the tap-qualified name is required), but this session script is Windows-first. **Not verified 2026-10-08.**
 
 ## 2. Bootstrap Squad from zero in a new repo
 
@@ -107,7 +107,7 @@ Expected result: required files and Copilot CLI checks pass. Validation observed
 squad health --json
 ```
 
-Expected result after a real accepted team: JSON status `pass`. **Verified 2026-10-08** in the prepared session repo. In a zero sandbox before accepting a generated team, validation correctly returned `fail` for empty registry/routing; do not present that as a broken install.
+Expected result after a real accepted team: JSON status `pass` (schema `squad-health/v1`). **Verified 2026-10-08 on Squad 1.0.1** in the prepared session repo. `squad health` is listed in `squad help`; the `--json` output is not described on the pinned reference page, so treat it as installed-CLI behavior and re-check it after any Squad upgrade. In a zero sandbox before accepting a generated team, validation correctly returned `fail` for empty registry/routing; do not present that as a broken install.
 
 6. Preview a safe upgrade before applying it.
 
@@ -115,7 +115,7 @@ Expected result after a real accepted team: JSON status `pass`. **Verified 2026-
 squad upgrade --dry-run
 ```
 
-Expected result: a list of Squad-owned files that would be created or overwritten. **Verified 2026-10-08.**
+Expected result: a list of Squad-owned files that would be created or overwritten. **Verified 2026-10-08 on Squad 1.0.1** (`squad upgrade --help` lists `--dry-run`: "Preview changes without writing"; the flag is not on the pinned reference page).
 
 ```powershell
 squad upgrade
