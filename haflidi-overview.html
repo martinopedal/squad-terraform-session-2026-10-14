@@ -475,7 +475,7 @@
     <header class="hero">
       <p class="eyebrow">Haflidi collaboration page</p>
       <h1>Short session map for Haflidi</h1>
-      <p>This page is for screen use. It keeps the repos, the flow, and the next actions clear.</p>
+      <p>This page is for screen use. It keeps the Squad, GitHub, Terraform, and repo flow clear.</p>
       <p>It points back to the public docs. Use the talk track and the run plan for full detail.</p>
     </header>
 
@@ -485,9 +485,9 @@
           <div class="section-head">
             <h2>A. What is this?</h2>
           </div>
-          <p>We present a 60-minute session on GitHub Copilot CLI and Squad used to build and ship a Terraform module.</p>
-          <p>The module work is the main story.</p>
-          <p>The deployed AKS Automatic cluster is only the demo target. It serves the page <code>AKS Automatic | NIC 2026 demo</code>.</p>
+          <p>We present a 60-minute session on Squad and GitHub Copilot CLI used to build, review, and ship Terraform.</p>
+          <p>The main story is the working method: agents, prompts, PRs, GHAS, review, gates, and checks.</p>
+          <p>The deployed AKS Automatic cluster is the outcome and an added benefit. It serves the page <code>AKS Automatic | NIC 2026 demo</code>.</p>
         </section>
 
         <section class="card">
@@ -523,8 +523,8 @@
                     <span>The reusable module</span>
                   </div>
                 </td>
-                <td>Reusable Terraform module for AKS Automatic on azapi with ALZ Corp integration and full documentation.</td>
-                <td>This is what the finished-module demo walks through. Read the code and the tests. No change is required for your prep this week.</td>
+                <td>Reusable Terraform module that shows the contract, tests, and reviewable change pattern. AKS Automatic is the example workload.</td>
+                <td>This is the Terraform part of the story. Read the code and the tests to see what Squad and GitHub are shaping.</td>
                 <td>Write</td>
               </tr>
               <tr>
@@ -534,8 +534,8 @@
                     <span>The consumer and demo environment</span>
                   </div>
                 </td>
-                <td>Public consumer environment for the NIC 2026 demo. It deploys the module through gated pipelines and holds the Online app and the clean Windows 11 demo VM.</td>
-                <td>Use it only to log into the VM and watch pipelines.</td>
+                <td>Public consumer environment that shows GitHub PRs, GHAS, protected main, OIDC, gates, and pipeline delivery around the module. AKS is the example workload.</td>
+                <td>Use it to log into the VM and watch the gated pipeline path from reviewed change to runtime checks.</td>
                 <td>Write</td>
               </tr>
               <tr>
@@ -570,7 +570,7 @@
                 </div>
                 <div class="step-row">
                   <div class="step-label">What</div>
-                  <div class="step-value">We show the from-zero start on the clean demo VM.</div>
+                  <div class="step-value">We show the clean start for Squad and Copilot CLI.</div>
                 </div>
                 <div class="step-row">
                   <div class="step-label">How</div>
@@ -592,7 +592,7 @@
                 </div>
                 <div class="step-row">
                   <div class="step-label">What</div>
-                  <div class="step-value">We show that the brief matters, then we pin a repo-only plan.</div>
+                  <div class="step-value">We show that the brief matters, then we pin a repo-only plan for Terraform work.</div>
                 </div>
                 <div class="step-row">
                   <div class="step-label">How</div>
@@ -614,7 +614,7 @@
                 </div>
                 <div class="step-row">
                   <div class="step-label">What</div>
-                  <div class="step-value">We show the bounded code change, the skill, and the read-only source lookup.</div>
+                  <div class="step-value">We show the bounded change, the skill, and the read-only source lookup that support the Terraform work.</div>
                 </div>
                 <div class="step-row">
                   <div class="step-label">How</div>
@@ -636,7 +636,7 @@
                 </div>
                 <div class="step-row">
                   <div class="step-label">What</div>
-                  <div class="step-value">We show the mutation, the repair, the saved decision, and the separate review lane.</div>
+                  <div class="step-value">We show the mutation, the repair, the saved decision, and the separate review lane with GitHub-style gates and evidence.</div>
                 </div>
                 <div class="step-row">
                   <div class="step-label">How</div>
@@ -658,7 +658,7 @@
                 </div>
                 <div class="step-row">
                   <div class="step-label">What</div>
-                  <div class="step-value">We show the Online consumer result and close with the same-gates message.</div>
+                  <div class="step-value">We show the shipped outcome and close with the same-gates message.</div>
                 </div>
                 <div class="step-row">
                   <div class="step-label">How</div>
@@ -671,6 +671,44 @@
               </div>
             </li>
           </ol>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2>How we got to a secure, well-aligned cluster</h2>
+          </div>
+          <ol class="steps">
+            <li class="step-card">
+              <h3>1. Start with a private-by-default Terraform contract</h3>
+              <p>We keep the module boundary clear. The caller owns providers, backend, and environment values.</p>
+            </li>
+            <li class="step-card">
+              <h3>2. Add tests and keep the same gates</h3>
+              <p>We make the change reviewable. We prove the contract with tests before anything moves forward.</p>
+            </li>
+            <li class="step-card">
+              <h3>3. Use GitHub controls</h3>
+              <p>We use pull requests, GHAS, required review, and protected <code>main</code>.</p>
+            </li>
+            <li class="step-card">
+              <h3>4. Deploy through OIDC and an approved pipeline</h3>
+              <p>The consumer repo shows the gated path. The deployment comes from reviewed GitHub workflow runs, not from a laptop.</p>
+            </li>
+            <li class="step-card">
+              <h3>5. Finish with runtime checks</h3>
+              <p>The result is the cluster and page. The final runtime evidence is 29/29 checks.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2>Deterministic prompts, and the alternative</h2>
+          </div>
+          <p>Deterministic prompts help us replay how we got there. The current eval in <code>docs/determinism-eval.md</code> is B1v2 5/5, B2 5/5, and B3 4/5.</p>
+          <p>That gives us a stable path for the main story. It lets Haflidi see what is supposed to happen and why.</p>
+          <p>If time is short, or if we want something fresh, we can run the existing <code>demo-c4</code> chapter live on a new small task instead.</p>
+          <p>That path already uses an agent, a skill, and <code>/mcp</code> for the Terraform and documentation grounding story. It stays small and easy to explain.</p>
         </section>
 
         <section class="card">
