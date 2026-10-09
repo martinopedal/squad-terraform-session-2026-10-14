@@ -329,6 +329,13 @@ def main():
                                     (el.scrollWidth > el.clientWidth + 2 || el.scrollHeight > el.clientHeight + 2))
                                     issues.push({element: el.tagName, class: el.className, kind: 'content overflow'});
                             }
+                            if (Reveal.getCurrentSlide().id === 's04-news') {
+                                const footerTop = content.querySelector('.slide-footer').getBoundingClientRect().top;
+                                for (const card of content.querySelectorAll('.news-grid > div')) {
+                                    if (card.getBoundingClientRect().bottom > footerTop + 2)
+                                        issues.push({element: 'news card', kind: 'overlap with citation footer'});
+                                }
+                            }
                             return issues;
                         }""")
                         toolbar_overlap = page.evaluate("""() => {

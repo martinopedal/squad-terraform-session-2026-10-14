@@ -34,7 +34,7 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 ## s04-news | 03:30-04:00 | Big news this year
 
-**Martin:** The two newer Copilot CLI headlines are Auto model selection and Project HydraFusion. Auto routes per task using health and utilisation signals, respects admin model policies, and gives paid subscribers a 10% AI-credit discount. HydraFusion is a research preview that you pick like any model, then it chooses Single, Cascade, or Critique.
+**Martin:** The two newer Copilot CLI headlines are Auto model selection and Project HydraFusion. Auto routes per task using health and utilisation signals, respects admin model policies, and gives paid subscribers a 10% discount. Legacy annual Pro/Pro+ plans use premium-request multipliers until expiry. HydraFusion is a research preview that you pick like any model, then it chooses Single, Cascade, or Critique.
 
 **Haflidi:** On stage, pin `/model` to `claude-sonnet-5` for eval parity and present Auto or HydraFusion as the cost lever, not as a live variable in the room. The rest of the slide anchors the platform story: Copilot CLI GA, Squad 1.0.1, Terraform MCP, Azure MCP, GitHub agent news, and one AKS line about new 1.36 Automatic clusters defaulting toward Gateway API while this demo stays on the managed NGINX path.
 

@@ -1,5 +1,5 @@
 {
-  "version": "0.22.0",
+  "version": "0.22.1",
   "status": "draft; live demo chapters; Azure validation sanitized",
   "changes": [
     "0.1 - 2026-09-30: build the offline presentation and two-speaker delivery.",
@@ -36,6 +36,7 @@
     "0.21.4 - 2026-10-09: add verified HydraFusion and Auto model selection lead items to s04-news, and pin the presenter note to claude-sonnet-5 for stage parity.",
     "0.21.5 - 2026-10-09: add the short companion deck, demo VM bootstrap guide/script, Martin speaker photo, and a docs-only note on Copilot local sandboxing.",
     "0.21.6 - 2026-10-09: stop manual bootstrap on native failures, include the Copilot desktop app, VS Code, CLI, and pinned Squad 1.0.1, fix nested short-deck links, and fit complete readable snippets without changing the full deck or session clock.",
-    "0.22.0 - 2026-10-09: refresh the writing pass against the manual four-product bootstrap, five-slide companion deck, news, Haflidi overview, and ACA job notes; preserve the full 39-slide deck, source facts, human approvals, and 55:00/3:00/2:00 delivery contract."
+    "0.22.0 - 2026-10-09: refresh the writing pass against the manual four-product bootstrap, five-slide companion deck, news, Haflidi overview, and ACA job notes; preserve the full 39-slide deck, source facts, human approvals, and 55:00/3:00/2:00 delivery contract.",
+    "0.22.1 - 2026-10-09: correct Azure MCP documentation dates and source links, fit the news citation footer, clarify Auto legacy annual billing, replace coordinator checkout examples with a generic public repo path, and distinguish installed Squad validation from historical reference commands."
   ]
 }

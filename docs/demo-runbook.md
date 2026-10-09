@@ -162,7 +162,7 @@ Inspect `/session plan`. Revise genuinely: "Put unchanged payload assertions and
 **Pre-staged:** B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal claim from B1v2 to live result; from the session repo folder, start Copilot with the exact command below before C3.
 
 ```powershell
-cd C:\git\squad-terraform-session-2026-10-14\public   # or the checkpoint worktree for this session
+cd C:\git\session-repo   # your public repo clone or checkpoint worktree
 copilot --agent squad
 ```
 

@@ -170,3 +170,33 @@ test('writing preserves manual bootstrap, human confirmation, and the ACA eviden
     assert.doesNotMatch(text, /Live-capable in Corp|current Corp proof|jobs in a corp landing zone/i);
   }
 });
+
+test('news dates, billing caveats, public checkout examples, and current versions stay qualified', () => {
+  const news = slides.find(slide => slide.id === 's04-news');
+  assert.match(news.content, /2026-06-02 \/ 2026-09-14 · Documentation/);
+  assert.match(applyNoteFactOverrides(news.id, ''), /guide updated 2026-07-17/);
+  assert.doesNotMatch(news.content, /2026-08-11/);
+  for (const url of [
+    'https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/overview',
+    'https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/how-to/github-copilot-cloud-agent',
+    'https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/'
+  ]) assert.ok(news.sources.some(source => source.url === url), `news retains ${url}`);
+  assert.match(news.content, /2026-09-04 · Research Preview/);
+  assert.match(news.content, /Offline benchmark, estimated cost vs Opus 5/);
+  assert.match(news.content, /2026-07-01 · Announced/);
+  assert.match(news.content, /honors admin model policies/);
+  assert.match(news.content, /Paid plans get a 10% discount/);
+  assert.match(applyNoteFactOverrides(news.id, ''), /premium-request billing until expiry/);
+  assert.match(documentText('docs/whats-new.md'), /2026-04-01 \| `\/fleet`/);
+  const genericStart = String.raw`cd C:\git\session-repo`;
+  for (const path of ['docs/demo-runbook.md', 'docs/playbook.md', 'docs/run-plan.md']) {
+    assert.ok(documentText(path).includes(genericStart), `${path} uses a public checkout example`);
+  }
+  assert.ok(applyNoteFactOverrides('demo-c3', '').includes(genericStart));
+  const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8')).version;
+  for (const path of ['docs/run-plan.md', 'docs/feature-guide.md', 'docs/source-provenance.md',
+    'docs/whats-new.md', 'presentation/README.md']) {
+    assert.ok(documentText(path).toLowerCase().includes(`deck ${version}`), `${path} matches the current deck`);
+  }
+  assert.ok(documentText('handoff.md').includes(`presentation version **${version}**`));
+});

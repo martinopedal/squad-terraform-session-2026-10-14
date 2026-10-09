@@ -148,7 +148,7 @@ Expected result: `squad.agent.md`, `terraform-coder.agent.md`, `terraform-valida
 Start Copilot CLI from the **session repo folder**. For a live checkpoint chapter, open Copilot from that checkpoint worktree's repo folder.
 
 ```powershell
-cd C:\git\squad-terraform-session-2026-10-14\public   # or the checkpoint worktree for this session
+cd C:\git\session-repo   # your public repo clone or checkpoint worktree
 copilot --agent squad
 ```
 

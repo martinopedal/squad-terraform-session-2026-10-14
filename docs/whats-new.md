@@ -1,6 +1,6 @@
 # What's new: GitHub Copilot and Squad, October 2025 to October 2026
 
-Reviewed October 5, 2026, for the October 14 session; updated October 9 for deck 0.22.0, the short companion deck, and the bootstrap guide. C0-C7 remain live demo chapters with optional fallback evidence. Every row links to a primary source. Statuses change quickly, so recheck them before you quote one on stage. This page explains context only. It doesn't claim that any feature was completed live. The Azure claim is limited to the separate sanitized IaC validation of the Terraform module.
+Reviewed October 5, 2026, for the October 14 session; updated October 9 for deck 0.22.1, the short companion deck, and the bootstrap guide. C0-C7 remain live demo chapters with optional fallback evidence. Every row links to a primary source. Statuses change quickly, so recheck them before you quote one on stage. This page explains context only. It doesn't claim that any feature was completed live. The Azure claim is limited to the separate sanitized IaC validation of the Terraform module.
 
 ## Key updates
 
@@ -21,6 +21,8 @@ Reviewed October 5, 2026, for the October 14 session; updated October 9 for deck
 - The Azure Functions skills repository supports product-specific guidance improving task help. Do not say it makes guidance consistent regardless of model.
 - Squad v1.0.0 and v1.0.1 release tags exist and ship through GitHub Releases, winget (`bradygaster.Squad`), and Homebrew. The pinned reference docs at `93aec83` still carry an Experimental/alpha banner, so docs may lag releases. On October 5, npm's `latest` tag for `@bradygaster/squad-cli` was still **0.13.1**, so `npm install -g` doesn't give you 1.0 yet.
 - The September 25 Microsoft post ["Introducing the new Copilot"](https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot/) covers Microsoft 365 Copilot. It is separate from GitHub Copilot. At most, mention it as ecosystem context.
+- The Azure MCP dates label documentation. The [overview](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/overview) and [cloud-agent guide](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/how-to/github-copilot-cloud-agent) have `ms.date` 2026-06-02; the guide's update metadata is 2026-07-17. The [documentation landing page](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/) has `ms.date` 2026-09-14. These dates do not establish a product launch.
+- [Auto model selection](https://github.blog/changelog/2026-07-01-copilot-cli-auto-model-selection-routes-based-on-task/) was announced July 1. It honors admin model policies and gives paid subscribers a 10% discount. Legacy annual Copilot Pro/Pro+ plans keep premium-request billing until expiry; the discount applies to the model multiplier.
 
 ## Copilot CLI over the year
 
@@ -30,7 +32,7 @@ Reviewed October 5, 2026, for the October 14 session; updated October 9 for deck
 | 2025-10-28 | Custom agents and `/delegate` to the cloud coding agent, which opens a draft PR | Shipped | [Changelog](https://github.blog/changelog/2025-10-28-github-copilot-cli-use-custom-agents-and-delegate-to-copilot-coding-agent/) |
 | 2026-01-21 | Plan mode, `/review`, `/context`, background delegation | Shipped | [Changelog](https://github.blog/changelog/2026-01-21-github-copilot-cli-plan-before-you-build-steer-as-you-go/) |
 | 2026-02-25 | General availability | GA | [Changelog](https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available/) |
-| 2026-04 | `/fleet` for parallel sub-agent work | Shipped | [Blog](https://github.blog/ai-and-ml/github-copilot/run-multiple-agents-at-once-with-fleet-in-copilot-cli/) |
+| 2026-04-01 | `/fleet` for parallel sub-agent work | Shipped | [Blog](https://github.blog/ai-and-ml/github-copilot/run-multiple-agents-at-once-with-fleet-in-copilot-cli/) |
 | 2026-05-06 | Enterprise-managed plugins | Public preview | [Changelog](https://github.blog/changelog/2026-05-06-enterprise-managed-plugins-in-github-copilot-cli-are-now-in-public-preview/) |
 | 2026-06-02 | `/rubber-duck` critic and voice input (GA); prompt scheduling (experimental) | Mixed | [Changelog](https://github.blog/changelog/2026-06-02-copilot-cli-improved-ui-rubber-duck-prompt-scheduling-and-voice-input/) |
 | 2026-07-01 | `/limits` and `--max-ai-credits` session caps, which are soft caps | Public preview | [Changelog](https://github.blog/changelog/2026-07-01-set-ai-credit-session-limits-in-copilot-cli-and-sdk/) |
