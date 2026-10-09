@@ -42,12 +42,12 @@ None of these were bypassed with exemptions. Each one became an input to the des
 | --- | --- | --- |
 | AKS rejects a system-assigned identity with BYO subnets (`OnlySupportedOnUserAssignedMSICluster`); the module used a user-assigned identity only for custom private DNS | Failed apply, then a contract test written first | Fixed: `user_assigned_identity_id` is honored whenever set |
 | `outboundType = none` now means a network-isolated cluster (`bootstrapProfile.artifactSource = Cache`) | Failed apply; Microsoft Learn lists `userAssignedNATGateway` for custom VNets | Fixed: `egress_type` accepts `userAssignedNATGateway` |
-| `count` keyed on `external_node_subnet_id != null` is unknown when the caller creates the subnet | `Invalid count argument` at plan | Documented; root passes plan-time-known IDs; boolean input planned |
+| `count` keyed on `external_node_subnet_id != null` is unknown when the caller creates the subnet | `Invalid count argument` at plan | Later public-module fix: `martinopedal/terraform-azapi-aks-automatic` v0.6.0 adds `use_external_subnets`, the Online root in `martinopedal/aks-automatic-demo-env` sets `use_external_subnets = true`, and `tests/external_subnets.tftest.hcl` covers it. This repository's local Corp module copy (`terraform/modules/aks-automatic-corp`, pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`) does not have that flag. |
 | Perpetual drift: `metricsProfile` and `serviceMeshProfile` sent as null, AKS echoes values back | Every plan showed one in-place change (about 6 minutes per apply) | Fixed: send the API's own shape |
 | The module sent `sku.name = "Base"` (AKS Standard SKU) despite its Automatic name | Azure read-back; an in-place switch was rejected, and Microsoft Learn states Base to Automatic migration is not supported | Fixed: opt-in `cluster_sku = "Automatic"` (managed system node pools, API `2026-04-01`, the Corp module's validated shape); the Online cluster was rebuilt |
 | Module-level `depends_on` in the root forced a cluster replacement whenever a dependency had a pending change | Convergence plan wanted to replace the cluster; `prevent_destroy` blocked it | Fixed in the root: implicit ordering through resource references and a `terraform_data` anchor |
 
-This is the point of consuming your own module like a customer: the Corp path had never exercised these combinations. Seven findings: six fixed (five in the module with tests written first, one in the root) and one documented (`count` keyed on a plan-time-unknown ID).
+This is the point of consuming your own module like a customer: the Corp path had never exercised these combinations. Seven findings: six were fixed in the first pass (five in the module with tests written first, one in the root), and the seventh was later fixed in the public module and Online root path with `use_external_subnets` plus `tests/external_subnets.tftest.hcl`. This repository's local Corp module copy does not have that flag.
 
 ## The secure deployment chain
 
@@ -102,5 +102,5 @@ Current demo-environment code lives in [`martinopedal/aks-automatic-demo-env`](h
 - The public demo URL presents the default NGINX self-signed certificate because no trusted certificate is configured. Accept the browser warning for the demo. Let's Encrypt is intentionally out of scope; production should use a Key Vault-backed certificate.
 - A time-boxed, break-glass RBAC grant (`AKS App Routing Controller Writer (online demo)`) lets the pipeline update the demo `NginxIngressController` resource. The ABAC condition (group `approuting.kubernetes.azure.com`, kind `nginxingresscontrollers`) uses a preview attribute; treat it as demo-only and remove it during teardown per the demo-env runbook.
 - The runner is started manually per run; it is a demo control, not a scaled runner pool.
-- One module finding remains open (`count` on a plan-time-unknown ID); see the findings table.
+- This repository's local Corp module copy (`terraform/modules/aks-automatic-corp`, pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`) does not include `use_external_subnets`; the public module repo (`martinopedal/terraform-azapi-aks-automatic` v0.6.0) does, and the Online root in `martinopedal/aks-automatic-demo-env` uses it.
 - The demo resources expire on 2026-10-31 and are cleaned up with the rest of the session resources.

@@ -16,6 +16,16 @@ Martin operates; Haflidi checks evidence. In [feature-guide.md](feature-guide.md
 
 In the current CLI, use `/cwd` to confirm the public repository. Execute PowerShell blocks through the `!` shell escape in this same window. Each block is one shell invocation; shell variables don't carry into later CLI turns.
 
+Start Copilot CLI from the public session repository folder or from one of its clean checkpoint worktrees. Do not start it from the coordinator/private folder. From the wrong folder, `/agent` only lists user-level agents plus Squad, without `terraform-coder`, `terraform-validator`, or `terraform-reviewer`.
+
+**20-second repo-folder preflight (hard stop):** from the public repo folder, run the headless check below and expect the literal reply `READY`. Then, interactively, open `/agent` and confirm that `terraform-coder`, `terraform-validator`, and `terraform-reviewer` all appear before you continue. If `/agent` only shows user-level agents plus Squad, exit, change to the public session repo folder or the selected checkpoint worktree, and restart Copilot there.
+
+```powershell
+copilot --agent terraform-reviewer -p "Reply with exactly: READY"
+```
+
+This was rechecked from the session repo checkout before this docs update. The literal reply was `READY`.
+
 Programmatic `-p` is batch output, not interactive Plan-mode operation; don't use it for these live chapters.
 
 The file-backed native coder, [validator](../.github/agents/terraform-validator.agent.md), reviewer, MCP (Model Context Protocol) grounding, and
@@ -59,6 +69,15 @@ profile tool filters.
 
 Save `copilot --version`, `squad --version`, `terraform version`, and `tflint --version` in `evidence\versions.txt`; pin resolved executables/packages and hashes. Prior CLI probes differed between 1.0.88 and 1.0.89; `--no-auto-update` isn't version selection. The module requires Terraform `>=1.14.8,<2.0`, locked AzAPI 2.12.0, and configured TFLint 0.64.0.
 
+Treat pinned TFLint as a hard preflight item. If it is missing or on the wrong version, install the approved build before the demo, then verify it:
+
+```powershell
+winget install --id TerraformLinters.tflint --version 0.64.0 --exact --source winget --accept-package-agreements --accept-source-agreements --silent
+tflint --version
+```
+
+Stop here if `tflint --version` does not report 0.64.0. Do not spend C7 time installing or troubleshooting TFLint.
+
 Wait for an approved qualification commit containing the module. From that checkpoint, create new sparse worktrees without resetting existing work. Copy public definitions, not histories, logs, or personal memory:
 
 ```powershell
@@ -97,13 +116,19 @@ Pre-stage a filesystem-only provider mirror and `offline\terraform.tfrc` beside 
 
 **Live slate R1:** state checkpoint, model, prepared code, and "clean demonstration after qualification." If an optional fallback recording is made, keep `A.mkv`, `B.mkv`, and an uninterrupted `guided.mkv`, and have Haflidi record UTC/media offsets in `evidence\chapters.csv`. Use unique, take-prefixed session names; names below are suffixes.
 
+## Quick troubleshooting
+
+| Symptom | Recovery | Verification |
+| --- | --- | --- |
+| Symptom: only user/plugin agents plus Squad are listed (no terraform-* project agents). | Recovery: Copilot was started in the wrong folder (e.g. the coordinator root, which only has squad.agent.md) -- cd to the session repo folder and restart. | Verification: `/agent` shows `terraform-coder`, `terraform-reviewer`, `terraform-validator` as project agents. |
+
 ## C1: Compare two plans | 12:30-15:30 | 3 minutes
 
-**Pre-staged:** both C1 prompt blocks ready; sessions named C1-A/C1-B; same model and permission profile visible; saved excerpts ready if output drifts.
+**Pre-staged:** both C1 prompt blocks ready; sessions named C1-A/C1-B; same model and permission profile visible; saved excerpts ready if output drifts; Copilot started from the public repo folder or the selected checkpoint worktree, not the coordinator/private folder.
 
 **Cut at 14:45 (2:15 into C1):** If C1-B is still generating, stop comparison at one clear C1-A consequence and use the saved C1-B excerpt.
 
-Haflidi leads and narrates; Martin operates the two clean worktrees. In A, use `/new`, `/agent` and select **Squad**, `/model`, `/plan`, and `/rename C1-A`. Repeat in B as `C1-B`, with identical model, instructions, permissions, and public starting team state:
+Haflidi leads and narrates; Martin operates the two clean worktrees. In A, from the repo-root/worktree CLI window, use `/new`, `/agent` and select **Squad**, `/model`, `/plan`, and `/rename C1-A`. Repeat in B as `C1-B`, with identical model, instructions, permissions, and public starting team state:
 
 ```text
 Plan only: add alternate_network_payload to the existing module contract tests.
@@ -116,11 +141,11 @@ Save approved prompt/result excerpts as `c1-a.txt` and `c1-b.txt` under evidence
 
 ## C2: Revise and approve | 17:30-21:30 | 4 minutes
 
-**Pre-staged:** checkpoint shell open; file paths copied; approval language rehearsed; Plan-mode fallback screenshot ready.
+**Pre-staged:** checkpoint shell open; file paths copied; approval language rehearsed; Plan-mode fallback screenshot ready; Copilot started from the public repo folder or the selected checkpoint worktree.
 
 **Cut at 20:30 (3:00 into C2):** If the plan is not ready, use the saved approved plan and state that approval covers only repository changes.
 
-Martin drives; Haflidi challenges scope. In guided, use `/new`, `/rename guided-clean-run`, `/agent` and select Squad, `/instructions`, then `/plan`. Show the mode indicator.
+Martin drives; Haflidi challenges scope. In guided, from the repo-root/worktree CLI window, use `/new`, `/rename guided-clean-run`, `/agent` and select Squad, `/instructions`, then `/plan`. Show the mode indicator.
 
 Show only reviewed project instructions; keep global paths and unrelated session pickers off-screen.
 
@@ -138,7 +163,14 @@ Inspect `/session plan`. Revise genuinely: "Put unchanged payload assertions and
 
 ## C3: Assign one writer | 22:00-26:00 | 4 minutes
 
-**Pre-staged:** B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal claim from B1v2 to live result.
+**Pre-staged:** B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal claim from B1v2 to live result; from the session repo folder, start Copilot with the exact command below before C3.
+
+```powershell
+cd C:\git\squad-terraform-session-2026-10-14\public   # or the checkpoint worktree for this session
+copilot --agent squad
+```
+
+Expected in `/agent`: `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, `terraform-validator` marked "project".
 
 **Cut at 25:00 (3:00 into C3):** If the coder is still generating, stop the live turn, use the saved B1v2 excerpt, and move to C4 with the same boundary.
 
@@ -156,7 +188,7 @@ Show reviewed roster/charters, `/tasks`, `/agent list`, actual starts, and
 handoffs. The list must include `terraform-coder`, `terraform-validator`, and
 `terraform-reviewer`. Inspect `/mcp` while coder/reviewer are selected to show the
 `microsoft-learn` and `terraform` servers, and note that validator has no MCP
-servers. Then use `/agent terraform-coder` in this same window, supply the
+servers. Then use `/agent terraform-coder` in this same repo-root/worktree window, supply the
 accepted brief, and observe the actual edit tool and changed files. The validator,
 not this profile, runs commands in C5/C7 after human approval of each command.
 Return to `/agent squad` for C4 and coordination. Record `c3-handoffs.md`,
@@ -194,7 +226,7 @@ invented output.
 **Cut at 37:15 (3:45 into C5):** If the repair is not ready, stop live mutation work, show saved seeded-failure and repaired logs, then continue. Haflidi runs the validator.
 
 Haflidi takes control; Martin explains the repair. Select
-`/agent terraform-validator`, confirm its `read`, `search`, and `execute` tools,
+`/agent terraform-validator` in the same repo-root/worktree window, confirm its `read`, `search`, and `execute` tools,
 and approve each command separately under native prompts. The validator has no
 `edit` tool, but its shell can still write files; the command list is enforced
 only by its instructions and native approval prompts. It must stop on failure.
@@ -231,7 +263,7 @@ Change nothing else. Keep the tests, mocks, provider, and permissions unchanged.
 
 Rerun the identical block with phase `seeded-failure`. Require a nonzero exit and the `private_automatic_contract` assertion: "The API must remain private with public FQDN disabled and VNet integration enabled." Syntax/authentication failures do not satisfy this checkpoint.
 
-Select `/agent terraform-coder` before the mutation/repair requests. Use `/review`:
+Select `/agent terraform-coder` in the same repo-root/worktree window before the mutation/repair requests. Use `/review`:
 "Read-only review of this labeled mutation; identify the violated assertion."
 The built-in review command is distinct from the configured native reviewer;
 do not claim it inherits that profile's tools. Ask the coder to restore only
@@ -283,12 +315,14 @@ Read the saved decision; cite its file and the constraints for the next change.
 
 ## C7: Validate the consumer and review | 47:00-50:00 | 3 minutes
 
-**Pre-staged:** offline suite can run from a prepared shell; logs have no private IDs; reviewer prompt copied; no private plans or raw state on screen.
+**Pre-staged:** offline suite can run from a prepared shell; logs have no private IDs; reviewer prompt copied; no private plans or raw state on screen; `tflint --version` already confirmed as 0.64.0; Copilot started from the public repo folder or the selected checkpoint worktree.
 
 **Cut at 49:15 (2:15 into C7):** If the full suite is not done, show the saved green exits and diff; do not run a second suite live.
 
+**Go/no-go for C7:** if TFLint is missing, `tflint --version` does not report 0.64.0, or the live `Check lint` step fails for tool/setup reasons, stop the live suite and switch to the reviewed offline evidence for C7. Do not spend chapter time installing or debugging TFLint.
+
 Haflidi leads validation and review; Martin supports and names the acceptance
-boundary. Select `/agent terraform-validator` in the same approved isolated
+boundary. Select `/agent terraform-validator` in the same repo-root/worktree window and approved isolated
 context, approve each command separately, record commands, and stop at the first
 failure:
 
@@ -324,7 +358,7 @@ Check diff git @('--no-pager','diff','--',$m)
 Inspect `/diff` and `/review`. Preserve `c7-final.diff`, file hashes, and the human code-only acceptance. Both suites mock AzAPI and use plan-mode runs; `MockOnly` and `.invalid` outputs are not Azure results. Stop on unexpected providers, live authentication, dependency drift, unrelated edits, or any failed clean check.
 
 For the independent native-profile acceptance, preserve the public handoff and
-use `/new` followed by `/agent terraform-reviewer` in this same window. Supply
+use `/new` followed by `/agent terraform-reviewer` in this same repo-root/worktree window. Supply
 the exact diff, files, revision, MCP citations, and sanitized validator results.
 Capture the actual review rather than treating a profile switch in the author's
 context as independent. Return findings to Squad and the human maintainer. This

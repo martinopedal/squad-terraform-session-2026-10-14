@@ -1,16 +1,16 @@
 # Run plan: NIC 2026, "From prompt to reusable Terraform"
 
-Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi. Deck target for the next round: 60:00 total, live-first. Terminal and browser work is live; prepared checkpoints, inherited module code, and evidence from earlier runs are disclosed fallback, not hidden proof.
+Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi. Deck target for the next round: 60:00 total, live-first. Terminal and browser work is live; prepared checkpoints, inherited module code, and evidence from earlier runs are disclosed fallback, not hidden evidence.
 
 Frank verdict: this redesign finally creates real on-the-clock slack before the close. The talk now plans to finish scripted content at 55:00, holds 55:00-58:00 as protected recovery time, and still keeps the 58:00-60:00 close. That is materially safer than the prior 58:00 content edge. It is still not casual live pair programming: if C0, C3, C5, or C7 overrun and the presenters ignore the cut lines, the 3:00 window can disappear fast. The fit is now workable, but only with disciplined clock calls.
 
 Decision: use one visible recovery window at 55:00-58:00, not many tiny buffers between chapters. Reason: a single hard buffer is easier to use live, easier to defend when a demo slips, and clearer for both presenters than sprinkling 15-30 second pockets that will be spent without noticing.
 
-Decision: keep all verified enrichment added in the 0.21.0 deck round. The control spectrum in `s04-layers`, same-gates framing, Rubber Duck appendix note, legal notice, and feature badges stay. The time comes from trimming bridge narration, not from removing enriched content.
+Decision: keep all verified enrichment added in the 0.21.0 deck round and carried into the current 0.21.1 deck. The control spectrum in `s04-layers`, same-gates framing, Rubber Duck appendix note, legal notice, and feature badges stay. The time comes from trimming bridge narration, not from removing enriched content.
 
 Decision: reuse `s01-outcome` as the 00:00-03:00 intro instead of adding a new `s00-intro`. Reason: it already carries the outcome and speaker visual, and a new slide would add navigation/test churn without improving the story.
 
-Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.21.0, brand/wording fixes already in), prior docs from `origin/docs/oct8-eval-and-hostname`, `origin/docs/playbook:docs/playbook.md`, TEAM ROOT `demo\eval-20261008\results.md`, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout.
+Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.21.1, brand/wording fixes already in), prior docs from `origin/docs/oct8-eval-and-hostname`, `origin/docs/playbook:docs/playbook.md`, TEAM ROOT `demo\eval-20261008\results.md`, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout.
 
 ## Evidence used for timing
 
@@ -93,7 +93,7 @@ Nothing was cut from the already-placed enrichment:
 | `s13-test-gap` | 26:30-29:30 | 3:00 | 29:30 | No | Haflidi | B1 0/5 -> oracle rule -> B1v2 5/5; no causal or repeatability guarantee; live still must pass. |
 | `demo-c4` | 29:30-33:30 | 4:00 | 33:30 | No | Martin | Skill + read-only source lookup + permissions; cut at 32:30. |
 | `demo-c5` | 33:30-38:30 | 5:00 | 38:30 | No | Haflidi | Validator before/seeded/repaired; cut at 37:15. Checkpoint: must be out of C5 at 38:30. |
-| `s15-proof` | 38:30-41:30 | 3:00 | 41:30 | No | Haflidi with Martin handoff | Evidence levels; say runtime check/evidence, not proof of everything. |
+| `s15-proof` | 38:30-41:30 | 3:00 | 41:30 | No | Haflidi with Martin handoff | Evidence levels; say runtime check/evidence, not evidence for everything. |
 | `s16-continuity` | 41:30-42:00 | 0:30 | 42:00 | No | Martin | Save the reason, not the whole chat. |
 | `demo-c6` | 42:00-45:00 | 3:00 | 45:00 | No | Haflidi | Resume with decision/context/usage; cut at 44:15. |
 | `s18-memory` | 45:00-47:00 | 2:00 | 47:00 | No | Martin | Conversation, native memory, repo knowledge: different owners. |
@@ -119,6 +119,8 @@ The 75% rule still stands. The absolute cut-line clocks move earlier because the
 | C5 | 33:30-38:30 | 5:00 | 37:15 | Stop mutation work, show saved before/seeded/repaired logs. |
 | C6 | 42:00-45:00 | 3:00 | 44:15 | Show decision file and state constraints directly. |
 | C7 | 47:00-50:00 | 3:00 | 49:15 | Show saved green exits and diff; do not run a second suite live. |
+
+C7 go/no-go: before the chapter, run `tflint --version` in the session repo worktree. Expect `TFLint version 0.64.0` and `ruleset.terraform (0.15.0-bundled)`. If TFLint is missing, or if the TFLint step fails, switch straight to the saved offline evidence and diff.
 
 ## Clock checkpoints
 
@@ -192,6 +194,15 @@ Use "runtime check" or "runtime evidence". Do not use stronger certainty languag
 - [ ] Presenter preflight target: 16/16.
 - [ ] Docker Desktop running before C4.
 - [ ] `/mcp` shows required public documentation/registry tools connected.
+- [ ] Start Copilot CLI from the session repo folder, not the coordinator root:
+
+```powershell
+cd C:\git\squad-terraform-session-2026-10-14\public   # or the checkpoint worktree for this session
+copilot --agent squad
+```
+
+Expected in `/agent`: `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, `terraform-validator` marked "project".
+- [ ] TFLint `0.64.0` is installed in the session repo worktree; `tflint --version` prints `TFLint version 0.64.0` and `ruleset.terraform (0.15.0-bundled)`.
 - [ ] C1-C7 sessions open and named at checkpoints.
 - [ ] Clean VM running; Bastion RDP connected but minimized; PowerShell 7 tab ready.
 - [ ] Online app URL loaded once; expected certificate warning accepted; branded page visible.

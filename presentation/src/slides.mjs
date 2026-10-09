@@ -79,6 +79,10 @@ const badge = name => {
   return `<a class="feature-badge" href="${escape(item.source)}" target="_blank" rel="noopener noreferrer" data-feature="${escape(name)}">${escape(label)}</a>`;
 };
 const productName = () => '<p class="product-name">GitHub Copilot</p>';
+const squadStartCommand = String.raw`cd C:\git\squad-terraform-session-2026-10-14\public   # or the checkpoint worktree for this session
+copilot --agent squad`;
+const squadAgentExpectation = 'Expected in `/agent`: `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, `terraform-validator` marked "project".';
+const squadStartReminder = intro => `${intro ? `<p>${escape(intro)}</p>` : ''}${code(squadStartCommand, 'Literal Squad start command', 'powershell')}<p>${squadAgentExpectation}</p>`;
 const autonomySpectrum = () => `<div class="control-spectrum" aria-label="Control spectrum, not a maturity ladder">
   <span>Ask <b>C1</b></span><span>Edit <b>C5</b></span><span>Plan ${badge('Plan mode')} <b>C2</b></span><span>Agent ${badge('custom agents')} <b>C3</b></span><span>Tools + permissions ${badge('MCP')} <b>C4</b></span><span>Resume ${badge('/resume')} <b>C6</b></span><span>Gated review <b>C7</b></span>
   <em>Setup/runway <b>C0</b> · Programmatic ${badge('-p')} sits in the appendix: automation, not a live chapter. More automation is not better by default; human approvals remain at the gates.</em>
@@ -233,7 +237,7 @@ ${c3B1v2Brief}
     pointAt: 'Point at Squad selection, roster/routing (team list and routing rules), terraform-coder selection, the four-assert test edit, and c3-handoffs.md.',
     fallback: 'Use B1v2 eval evidence: 5/5 under pinned conditions after the clarified four-assert brief; no causal or repeatability guarantee, and the live run still has to pass. Custom subagents don\'t inherit repository instructions by default; include-custom-instructions: true opts in. Confirm the behavior in this build.',
     timing: 'Slot 22:00-26:00. 0:40 show Squad, /tasks, /agent list, /mcp; 0:35 B1v2 brief; 1:30 coder run; 0:45 return and handoff; 0:30 buffer.',
-    preStaged: 'B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal or repeatability guarantee from eval to live result.',
+    preStaged: 'B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal or repeatability guarantee from eval to live result; start in the session repo/checkpoint worktree with `copilot --agent squad`, then confirm `/agent` shows `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, and `terraform-validator` as project agents.',
     cutAt: '25:00',
     cut: 'If the coder is still generating, stop the live turn, use the saved B1v2 excerpt, and move to C4 with the same boundary.'
   },
@@ -386,7 +390,7 @@ Check diff git @('--no-pager','diff','--',$m)
     pointAt: 'Point at offline check exits, c7-final.diff, file hashes, reviewer findings, and the code-only human acceptance.',
     fallback: 'Use c7-final.diff, saved exit logs, Online apply runs 37771532872/37772290635, Test-OnlineSecurity 29/29, and Test-DemoVm 14/14; no private IDs.',
     timing: 'Slot 47:00-50:00. 1:10 offline suite or already-running exits; 0:45 /diff and sanitized boundary; 0:50 reviewer scope; 0:15 buffer. Checkpoint: s20-consumer must start at 50:00.',
-    preStaged: 'Offline suite can run from a prepared shell; logs have no private IDs; reviewer prompt copied; no private plans or raw state on screen.',
+    preStaged: 'Offline suite can run from a prepared shell; logs have no private IDs; reviewer prompt copied; no private plans or raw state on screen; `tflint --version` already confirmed as 0.64.0; same repo/checkpoint-start rule as C3: `copilot --agent squad`, then `/agent` shows `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, and `terraform-validator` as project agents; if TFLint is missing, not 0.64.0, or Check lint fails for tool/setup reasons, switch to the reviewed offline evidence.',
     cutAt: '49:15',
     cut: 'If the full suite is not done, show the saved green exits and diff; do not run a second suite live.'
   }
@@ -399,7 +403,14 @@ const demoBoundary = chapter => chapter === 'C0'
 const demoNotes = chapter => {
   const run = demoRuns[chapter];
   const verbatimBrief = run.verbatimBrief ? code(run.verbatimBrief, `${chapter} verbatim B1v2 brief`, 'text') : '';
-  return `<p><strong>Driver:</strong> ${escape(run.driver)}</p><p><strong>Live surface:</strong> ${escape(demoBoundary(chapter))}</p><p><strong>Timing:</strong> ${escape(run.timing)}</p><p><strong>Pre-staged:</strong> ${escape(run.preStaged)}</p><ol class="presenter-plan"><li><strong>Say:</strong> ${escape(run.goal)} Keep this as a live demo; optional recordings are fallback evidence, not a dependency.</li><li><strong>Type:</strong></li></ol>${code(run.command, `${chapter} live command / prompt`, 'powershell')}${verbatimBrief}<ol class="presenter-plan" start="3"><li><strong>Point at:</strong> ${escape(run.pointAt)}</li><li><strong>Expected:</strong> ${escape(run.expected)}</li><li><strong>Cut at ${escape(run.cutAt)} (75%):</strong> ${escape(run.cut)}</li><li><strong>Hand-off:</strong> ${escape(chapter === 'C5' ? 'Haflidi hands controls back to Martin for evidence levels.' : chapter === 'C7' ? 'Martin takes back the deck for the consumer slide.' : 'Use the next slide transition line in the run plan.')}</li></ol><p><strong>Offline fallback:</strong> ${escape(run.fallback)}</p>`;
+  const squadStartNote = chapter === 'C3'
+    ? squadStartReminder('Literal repo-start command for this lane:')
+    : chapter === 'C5'
+      ? squadStartReminder('Recap/reaffirmation: C5 continues the same Copilot session started in C3, so the window should already be in the correct folder. If you need to restart, use the same folder and command:')
+      : chapter === 'C7'
+        ? squadStartReminder('Same repo-start rule as C3 before the validator/reviewer handoff:')
+        : '';
+  return `<p><strong>Driver:</strong> ${escape(run.driver)}</p><p><strong>Live surface:</strong> ${escape(demoBoundary(chapter))}</p><p><strong>Timing:</strong> ${escape(run.timing)}</p><p><strong>Pre-staged:</strong> ${escape(run.preStaged)}</p>${squadStartNote}<ol class="presenter-plan"><li><strong>Say:</strong> ${escape(run.goal)} Keep this as a live demo; optional recordings are fallback evidence, not a dependency.</li><li><strong>Type:</strong></li></ol>${code(run.command, `${chapter} live command / prompt`, 'powershell')}${verbatimBrief}<ol class="presenter-plan" start="3"><li><strong>Point at:</strong> ${escape(run.pointAt)}</li><li><strong>Expected:</strong> ${escape(run.expected)}</li><li><strong>Cut at ${escape(run.cutAt)} (75%):</strong> ${escape(run.cut)}</li><li><strong>Hand-off:</strong> ${escape(chapter === 'C5' ? 'Haflidi hands controls back to Martin for evidence levels.' : chapter === 'C7' ? 'Martin takes back the deck for the consumer slide.' : 'Use the next slide transition line in the run plan.')}</li></ol><p><strong>Offline fallback:</strong> ${escape(run.fallback)}</p>`;
 };
 
 const presenterNotes = new Map([
@@ -408,7 +419,7 @@ const presenterNotes = new Map([
   ['s03-baseline', notePlan('Martin', 'This starts from inherited public code. The source pin is evidence, not a quality claim.', 'Timing: keep this to 0:30. Read the pin, say the module now exists, passed local qualification before delivery, and starts live demos from a disclosed clean checkpoint; never claim first implementation.', 'e9a9a48 and the inherited findings only.', 'Martin hands straight to the 0:30 news beat.')],
   ['s04-news', notePlan('Martin with Haflidi status checks.', 'Copilot CLI is GA; Squad 1.0.1 is the demo install; computer use is preview and not used here.', 'Keep to 0:30. Read one headline plus Squad 1.0.1; leave product-tile detail to the appendix or hallway.', 'CLI GA and Squad 1.0.1; status labels only.', 'Martin moves to the layer map at 04:00.')],
   ['s04-layers', notePlan('Haflidi then Martin', 'Name the layer before troubleshooting: CLI runs work, Squad coordinates, Terraform and sources return evidence.', 'Trace arrows from CLI to Squad to external tools, then read the control spectrum as modes, not a maturity ladder inside the existing one-minute slot: Ask C1, edit C5, plan C2, agent C3, tools and permissions C4, resume C6, gated review C7; C0 is setup/runway and -p is appendix automation, not a live chapter.', 'The three layers, artifact boundary, and the C0-C7 placement on the control spectrum.', 'Martin leads into agent setup.')],
-  ['s07-agent-setup', notePlan('Martin', 'We will show the bootstrap path before the team does Terraform work.', 'Keep to 0:30. Name the exact playbook sequence: prerequisites/install, `squad init`, `copilot --agent squad`, roster and charters after human confirmation, then `squad doctor`.', 'Install/prereq card, `squad init`, roster/charters, and `squad doctor` health check.', 'Hand to Haflidi for C0 at 05:30: now do those steps from a clean machine.')],
+  ['s07-agent-setup', notePlan('Martin', 'We will show the bootstrap path before the team does Terraform work.', 'Keep to 0:30. Name the exact playbook sequence: prerequisites/install, `squad init`, `cd` to the session repo or checkpoint worktree, `copilot --agent squad`, confirm `/agent` shows `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, and `terraform-validator` as project agents, then roster/charters after human confirmation and `squad doctor`.', 'Install/prereq card, `squad init`, the repo-folder start, `/agent` confirmation, roster/charters, and `squad doctor` health check.', 'Hand to Haflidi for C0 at 05:30: now do those steps from a clean machine.') + squadStartReminder('Literal repo-start command for the notes:')],
   ['s05-parallel', notePlan('Martin', 'Parallel work needs three accountable lanes: terraform-coder writes, terraform-validator runs fixed offline checks, and terraform-reviewer reviews in a fresh context.', 'Read each lane and its handoff. Add that Squad/Scribe records decisions under `.squad\decisions\inbox\` for later merge.', 'terraform-coder, terraform-validator, terraform-reviewer, and the decision inbox row.', 'Hand to Haflidi for the module contract.')],
   ['s06-contract', notePlan('Haflidi', 'The module consumes approved existing network inputs; it does not create a landing zone.', 'Point from platform-owned network into the module.', 'Caller-owned provider/backend/state and private Automatic requirements.', 'Hand to Martin for native Plan mode.')],
   ['s08-plan-boundary', notePlan('Haflidi', 'Extract a module, not an environment. Existing estate migration is a separate review.', 'Reveal the warning and contrast module vs consumer root.', 'Typed inputs/outputs, provider requirements, and consumer-owned backend/auth.', 'Hand to Martin for Squad routing.')],
@@ -518,7 +529,7 @@ export const slides = [
     content: `${fig(agentSetup())}<div class="agent-notes-grid">
       <div><strong>Prereqs and install</strong><span>Git, Copilot CLI, Squad 1.0.1, login, and a clean repository clone.</span></div>
       <div><strong><code>squad init</code></strong><span>Scaffolds coordinator files, built-ins, workflows, skills, and <code>.squad\\</code> state.</span></div>
-      <div><strong><code>copilot --agent squad</code></strong><span>Init Mode proposes roster and charters; the human confirms before team files are written.</span></div>
+      <div><strong><code>copilot --agent squad</code></strong><span>Start in the session repo/checkpoint worktree; <code>/agent</code> must show Squad plus the three <code>terraform-*</code> project agents.</span></div>
       <div><strong><code>squad doctor</code></strong><span>Verifies setup health. It is not Terraform correctness or deployment evidence.</span></div>
     </div>`
   },

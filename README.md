@@ -6,7 +6,7 @@ A two-speaker session by **Martin Opedal, Enterprise Cloud Solution Architect, M
 
 ## What this repository contains
 
-The presentation shell and speaker material are built and reviewed. The public Terraform module passed local qualification: 52 module cases, two caller cases, two fail-restore-pass mutation evidence checks, hosted Terraform matrix CI, native agent-setup CI, and an IaC-based Azure validation in a private Corp landing-zone consumer. Genuine demo recordings, native profile-selection footage, and full human rehearsal remain pending.
+The presentation shell and speaker material are built and reviewed. The public Terraform module passed local qualification: 52 module cases, two caller cases, two fail-restore-pass mutation evidence checks, hosted Terraform matrix CI, native agent-setup CI, and an IaC-based Azure validation in a private Corp landing-zone consumer. Optional fallback recordings, native profile-selection footage, and full human rehearsal remain separate verification tasks.
 
 | Path | Content |
 | --- | --- |
@@ -71,9 +71,9 @@ full module-copy comparison.
 
 ## Open the presentation
 
-[![All 37 slides of the deck: select to open the live presentation](presentation/preview/overview.jpg)](https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/)
+[![All 39 slides of the deck: select to open the live presentation](presentation/preview/overview.jpg)](https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/)
 
-The built [Reveal presentation](presentation/index.html) ([slide-by-slide preview](presentation/README.md#preview)) has 25 main slides and eleven appendix slides. Its 60-minute structure includes 29 minutes of silent recorded chapters (C0-C7) with live narration, 24 minutes of other live explanation, and seven minutes of Q&A. The complete speaker script covers the content and includes a prepared Q&A fallback.
+The built [Reveal presentation](presentation/index.html) ([slide-by-slide preview](presentation/README.md#preview)) reports 39 slides total. Its 60-minute live-first contract is 3:00 intro; planned content to about 55:00, including 29:00 of live C0-C7 demo chapters and the rest as live explanation; 55:00-58:00 protected recovery block; and 58:00-60:00 close, with questions only if time allows. There is no scheduled Q&A block. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
 
 For speaker notes, serve the clone locally:
 
@@ -81,7 +81,7 @@ For speaker notes, serve the clone locally:
 python -m http.server 4173 --bind 127.0.0.1
 ```
 
-Open `http://127.0.0.1:4173/presentation/` and press `S` for speaker view or `N` for named chapter navigation. Media slots are clearly pending until genuine reviewed recordings are attached. No custom file-viewer footage is presented as Copilot CLI or Squad.
+Open `http://127.0.0.1:4173/presentation/` and press `S` for speaker view or `N` for named chapter navigation. Optional fallback evidence can be added later if it is separately reviewed, but the live chapters do not depend on recordings. No custom file-viewer footage is presented as Copilot CLI or Squad.
 
 ## Public code, separate deployment configuration
 
