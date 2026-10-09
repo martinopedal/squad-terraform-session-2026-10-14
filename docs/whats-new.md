@@ -1,8 +1,8 @@
 # What's new: GitHub Copilot and Squad, October 2025 to October 2026
 
-Reviewed October 5, 2026, for the October 14 session; updated October 8 for deck 0.21.0 status badges and the untimed legal/futures notice. C0-C7 remain live demo chapters with optional fallback evidence. Every row links to a primary source. Statuses change quickly, so recheck them before you quote one on stage. This page explains context only. It doesn't claim that any feature was completed live. The Azure claim is limited to the separate sanitized IaC validation of the Terraform module.
+Reviewed October 5, 2026, for the October 14 session; updated October 8 for deck 0.21.0 status badges and the untimed legal/futures notice. Deck 0.22.0 applies the writing-style pass, removes slogan slide titles and verdict signposts, and adds a banned-phrase regression test. C0-C7 remain live demo chapters with optional fallback evidence. Every row links to a primary source. Statuses change quickly, so recheck them before you quote one on stage. This page explains context only. It doesn't claim that any feature was completed live. The Azure claim is limited to the separate sanitized IaC validation of the Terraform module.
 
-## The short version
+## Key updates
 
 | # | Date | News | Status | Why a Terraform or platform engineer cares |
 | --- | --- | --- | --- | --- |
@@ -15,12 +15,12 @@ Reviewed October 5, 2026, for the October 14 session; updated October 8 for deck
 
 ### Precision notes for speakers
 
-- **Computer use is a public preview.** It isn't part of this Terraform demo. Toggle it with `/computer on`, `/computer show`, and `/computer off`. Each desktop app needs its own approval, and enterprise policy can turn the feature off. [Docs](https://docs.github.com/en/copilot/concepts/agents/computer-use).
-- **Custom agents (`.agent.md`) status is per surface; recheck before stage.** CLI custom agents are included in [Copilot CLI GA](https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available/). JetBrains status has conflicting GitHub sources: the [custom-agents reference](https://docs.github.com/en/copilot/reference/custom-agents-configuration) lists JetBrains IDEs in public preview, while the [2026-03-11 JetBrains changelog](https://github.blog/changelog/2026-03-11-major-agentic-capabilities-improvements-in-github-copilot-for-jetbrains-ides/) says major agentic capabilities are generally available. For VS Code, the reference says `mcp-servers` frontmatter is ignored there. Don't say "GA everywhere".
-- **Rubber Duck is a second-opinion input, not an approval gate.** The June 2, 2026 Copilot CLI changelog says Rubber Duck is GA, and the command is available in the locally validated CLI 1.0.93 as `/rubber-duck`. The deck labels it `GA · 2026-06-02`, but the reviewer lane and environment approvals remain the gates.
-- **Skills wording is deliberately weak.** The Azure Functions skills repository supports product-specific guidance improving task help. Do not say it makes guidance consistent regardless of model.
-- **Squad 1.0 distribution/docs:** v1.0.0 and v1.0.1 release tags exist and ship through GitHub Releases, winget (`bradygaster.Squad`), and Homebrew. The pinned reference docs at `93aec83` still carry an Experimental/alpha banner, so docs may lag releases. On October 5, npm's `latest` tag for `@bradygaster/squad-cli` was still **0.13.1**, so `npm install -g` doesn't give you 1.0 yet.
-- **The September 25 Microsoft post** ["Introducing the new Copilot"](https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot/) is about Microsoft 365 Copilot, not GitHub Copilot. At most, mention it as ecosystem context.
+- Computer use is a public preview. It isn't part of this Terraform demo. Toggle it with `/computer on`, `/computer show`, and `/computer off`. Each desktop app needs its own approval, and enterprise policy can turn the feature off. [Docs](https://docs.github.com/en/copilot/concepts/agents/computer-use).
+- Custom agents (`.agent.md`) status is per surface, so recheck it before stage. CLI custom agents are included in [Copilot CLI GA](https://github.blog/changelog/2026-02-25-github-copilot-cli-is-now-generally-available/). JetBrains status has conflicting GitHub sources: the [custom-agents reference](https://docs.github.com/en/copilot/reference/custom-agents-configuration) lists JetBrains IDEs in public preview, while the [2026-03-11 JetBrains changelog](https://github.blog/changelog/2026-03-11-major-agentic-capabilities-improvements-in-github-copilot-for-jetbrains-ides/) says major agentic capabilities are generally available. For VS Code, the reference says `mcp-servers` frontmatter is ignored there. Don't say "GA everywhere".
+- Rubber Duck is a second-opinion input. It does not replace the approval gate. The June 2, 2026 Copilot CLI changelog says Rubber Duck is GA, and the command is available in the locally validated CLI 1.0.93 as `/rubber-duck`. The deck labels it `GA · 2026-06-02`, but the reviewer lane and environment approvals remain the gates.
+- Skills wording stays deliberately weak. The Azure Functions skills repository supports product-specific guidance improving task help. Do not say it makes guidance consistent regardless of model.
+- Squad 1.0 distribution/docs: v1.0.0 and v1.0.1 release tags exist and ship through GitHub Releases, winget (`bradygaster.Squad`), and Homebrew. The pinned reference docs at `93aec83` still carry an Experimental/alpha banner, so docs may lag releases. On October 5, npm's `latest` tag for `@bradygaster/squad-cli` was still **0.13.1**, so `npm install -g` doesn't give you 1.0 yet.
+- The September 25 Microsoft post ["Introducing the new Copilot"](https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot/) is about Microsoft 365 Copilot, not GitHub Copilot. At most, mention it as ecosystem context.
 
 ## Copilot CLI over the year
 
@@ -34,7 +34,7 @@ Reviewed October 5, 2026, for the October 14 session; updated October 8 for deck
 | 2026-05-06 | Enterprise-managed plugins | Public preview | [Changelog](https://github.blog/changelog/2026-05-06-enterprise-managed-plugins-in-github-copilot-cli-are-now-in-public-preview/) |
 | 2026-06-02 | `/rubber-duck` critic and voice input (GA); prompt scheduling (experimental) | Mixed | [Changelog](https://github.blog/changelog/2026-06-02-copilot-cli-improved-ui-rubber-duck-prompt-scheduling-and-voice-input/) |
 | 2026-07-01 | `/limits` and `--max-ai-credits` session caps, which are soft caps | Public preview | [Changelog](https://github.blog/changelog/2026-07-01-set-ai-credit-session-limits-in-copilot-cli-and-sdk/) |
-| 2026-09-22 → 10-04 | 1.0.88–1.0.92: `/fork`, per-agent reasoning effort, `--mcp-github-auth`, `copilot sandbox ca`, `copilot config`, steering a running background agent | Releases and prereleases | [Releases](https://github.com/github/copilot-cli/releases) |
+| 2026-09-22 to 10-04 | 1.0.88-1.0.92: `/fork`, per-agent reasoning effort, `--mcp-github-auth`, `copilot sandbox ca`, `copilot config`, steering a running background agent | Releases and prereleases | [Releases](https://github.com/github/copilot-cli/releases) |
 
 ## Agents, skills, and MCP
 

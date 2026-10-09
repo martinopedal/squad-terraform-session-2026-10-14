@@ -4,7 +4,7 @@ import { applyNoteFactOverrides, demoContent, slides } from '../src/slides.mjs';
 
 const demoSlides = slides.filter(slide => slide.kind === 'demo');
 const bannedOnScreen = /recording slot|not attached|pending/i;
-const abridgedLabel = '(abridged — full prompt in notes)';
+const abridgedLabel = '(abridged; full prompt in notes)';
 const decodeHTML = value => value
   .replaceAll('&lt;', '<')
   .replaceAll('&gt;', '>')
@@ -13,6 +13,20 @@ const decodeHTML = value => value
   .replaceAll('&amp;', '&');
 const codeBlocks = html => [...html.matchAll(/<pre><code\b[^>]*>([\s\S]*?)<\/code><\/pre>/g)]
   .map(match => decodeHTML(match[1]).trim());
+const bannedStylePatterns = [
+  [/^Takeaway:\s/m, 'Takeaway label'],
+  [/\b(?:Frank verdict|Honesty rule)\b/i, 'verdict or honesty label'],
+  [/\b(?:reuse the code, not the environment|ownership beats more agents|artifact, reason, and check belong together|more agents cannot vote a contract into correctness)\b/i, 'banned slogan phrase'],
+  [/\b(?:runtime evidence, not hope|the honest answer:)\b/i, 'banned verdict phrase'],
+  [/[—–]/, 'dash punctuation'],
+  [/^-\s+\*\*[^*]+\.\*\*/m, 'bold-lead bullet']
+];
+const slideSurfaces = slide => [
+  ['title', slide.title],
+  ['content', slide.content ?? ''],
+  ['raw-notes', slide.notes ?? ''],
+  ['presenter-notes', applyNoteFactOverrides(slide.id, '')]
+];
 
 test('each live demo slide renders a command block and expected result', () => {
   assert.equal(demoSlides.length, 8);
@@ -96,4 +110,18 @@ test('protected recovery block exists outside scripted content minutes', () => {
     }, 0);
 
   assert.equal(scriptedSeconds, 55 * 60);
+});
+
+test('slide titles, on-screen copy, and speaker notes avoid banned writing patterns', () => {
+  for (const slide of slides) {
+    for (const [surfaceName, text] of slideSurfaces(slide)) {
+      for (const [pattern, label] of bannedStylePatterns) {
+        assert.doesNotMatch(
+          text,
+          pattern,
+          `${slide.id} ${surfaceName} contains ${label}`
+        );
+      }
+    }
+  }
 });

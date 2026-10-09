@@ -1,5 +1,5 @@
 {
-  "version": "0.21.1",
+  "version": "0.22.0",
   "status": "draft; live demo chapters with optional fallback evidence; Azure validation sanitized",
   "changes": [
     "0.1 - 2026-09-30: build the offline presentation and two-speaker delivery.",
@@ -30,6 +30,7 @@
     "0.19.3 - 2026-10-08: add s20 live app reveal, per-demo timing/pre-staged/cut lines, and the 5-minute protected slack budget.",
     "0.20.0 - 2026-10-08: retime the deck to the 60-minute run-plan contract with 3-minute intro, C0 before C1, 29 demo minutes, 26 explanation minutes, no scheduled Q&A, and a 2-minute close buffer.",
     "0.21.0 - 2026-10-08: add untimed legal notice, public status badges, text-only GitHub Copilot product name, Cascadia Code command font, Rubber Duck appendix note, control spectrum, and same-gates close framing.",
-    "0.21.1 - 2026-10-09: retime scripted content to 55:00, add a visible 55:00-58:00 protected recovery block, update absolute cut clocks, and keep the close at 58:00-60:00."
+    "0.21.1 - 2026-10-09: retime scripted content to 55:00, add a visible 55:00-58:00 protected recovery block, update absolute cut clocks, and keep the close at 58:00-60:00.",
+    "0.22.0 - 2026-10-09: writing-style pass: removed slogan slide titles, Takeaway labels, bold-lead bullets, verdict signposts, and em dashes; added a banned-phrase regression test."
   ]
 }

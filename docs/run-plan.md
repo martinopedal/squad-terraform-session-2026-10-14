@@ -2,7 +2,7 @@
 
 Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi. Deck target for the next round: 60:00 total, live-first. Terminal and browser work is live; prepared checkpoints, inherited module code, and evidence from earlier runs are disclosed fallback, not hidden proof.
 
-Frank verdict: this redesign finally creates real on-the-clock slack before the close. The talk now plans to finish scripted content at 55:00, holds 55:00-58:00 as protected recovery time, and still keeps the 58:00-60:00 close. That is materially safer than the prior 58:00 content edge. It is still not casual live pair programming: if C0, C3, C5, or C7 overrun and the presenters ignore the cut lines, the 3:00 window can disappear fast. The fit is now workable, but only with disciplined clock calls.
+This redesign finally creates real on-the-clock slack before the close. The talk now plans to finish scripted content at 55:00. It holds 55:00-58:00 as protected recovery time. It keeps the 58:00-60:00 close. That is materially safer than the prior 58:00 content edge. This is still not casual live pair programming. If C0, C3, C5, or C7 overrun and the presenters ignore the cut lines, the 3:00 window can disappear fast. The fit is workable only with disciplined clock calls.
 
 Decision: use one visible recovery window at 55:00-58:00, not many tiny buffers between chapters. Reason: a single hard buffer is easier to use live, easier to defend when a demo slips, and clearer for both presenters than sprinkling 15-30 second pockets that will be spent without noticing.
 
@@ -10,7 +10,7 @@ Decision: keep all verified enrichment added in the 0.21.0 deck round. The contr
 
 Decision: reuse `s01-outcome` as the 00:00-03:00 intro instead of adding a new `s00-intro`. Reason: it already carries the outcome and speaker visual, and a new slide would add navigation/test churn without improving the story.
 
-Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.21.0, brand/wording fixes already in), prior docs from `origin/docs/oct8-eval-and-hostname`, `origin/docs/playbook:docs/playbook.md`, TEAM ROOT `demo\eval-20261008\results.md`, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout.
+Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.22.0, brand/wording fixes already in), prior docs from `origin/docs/oct8-eval-and-hostname`, `origin/docs/playbook:docs/playbook.md`, TEAM ROOT `demo\eval-20261008\results.md`, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout.
 
 ## Evidence used for timing
 
@@ -60,7 +60,7 @@ The 3:00 recovery window is created by trimming six bridge slides from 1:00 to 0
 | `s07-agent-setup` | 1:00 | 0:30 | 0:30 | Treat as a handoff map into C0, not a second explanation. |
 | `s10-tool-roles` | 1:00 | 0:30 | 0:30 | One sentence: instructions, skills, MCP are different controls. |
 | `s12-source-check` | 1:00 | 0:30 | 0:30 | One sentence: a source claim becomes a testable assertion. |
-| `s16-continuity` | 1:00 | 0:30 | 0:30 | One sentence: save the reason, not the whole chat. |
+| `s16-continuity` | 1:00 | 0:30 | 0:30 | One sentence: record the decision so the next person can see why we made it. |
 
 Total reclaimed time: 3:00.
 
@@ -85,7 +85,7 @@ Nothing was cut from the already-placed enrichment:
 | `s05-parallel` | 08:30-10:30 | 2:00 | 10:30 | No | Martin | Three lanes and handoffs: coder, validator, reviewer. |
 | `s06-contract` | 10:30-12:30 | 2:00 | 12:30 | No | Haflidi | Platform-owned network into reusable module; caller-owned provider/backend/state. |
 | `demo-c1` | 12:30-15:30 | 3:00 | 15:30 | No | Martin drives; Haflidi compares | Same task, fixed inputs, compare one consequence; cut at 14:45. |
-| `s08-plan-boundary` | 15:30-17:30 | 2:00 | 17:30 | No | Haflidi | Extract module, not environment; approval boundary before plan. |
+| `s08-plan-boundary` | 15:30-17:30 | 2:00 | 17:30 | No | Haflidi | Pull the reusable module out first. Keep the environment-specific setup in the consumer root. Approval boundary before plan. |
 | `demo-c2` | 17:30-21:30 | 4:00 | 21:30 | No | Martin | Pin brief and approve repo-only plan; cut at 20:30. Checkpoint: must be out of C2 at 21:30. |
 | `s10-tool-roles` | 21:30-22:00 | 0:30 | 22:00 | No | Haflidi | Instructions, skills, and MCP are different controls. |
 | `demo-c3` | 22:00-26:00 | 4:00 | 26:00 | No | Martin | Route B1v2 to `terraform-coder`; cut at 25:00. |
@@ -93,8 +93,8 @@ Nothing was cut from the already-placed enrichment:
 | `s13-test-gap` | 26:30-29:30 | 3:00 | 29:30 | No | Haflidi | B1 0/5 -> oracle rule -> B1v2 5/5; no causal or repeatability guarantee; live still must pass. |
 | `demo-c4` | 29:30-33:30 | 4:00 | 33:30 | No | Martin | Skill + read-only source lookup + permissions; cut at 32:30. |
 | `demo-c5` | 33:30-38:30 | 5:00 | 38:30 | No | Haflidi | Validator before/seeded/repaired; cut at 37:15. Checkpoint: must be out of C5 at 38:30. |
-| `s15-proof` | 38:30-41:30 | 3:00 | 41:30 | No | Haflidi with Martin handoff | Evidence levels; say runtime check/evidence, not proof of everything. |
-| `s16-continuity` | 41:30-42:00 | 0:30 | 42:00 | No | Martin | Save the reason, not the whole chat. |
+| `s15-proof` | 38:30-41:30 | 3:00 | 41:30 | No | Haflidi with Martin handoff | These checks answer different questions. Say runtime check/evidence, not proof of everything. |
+| `s16-continuity` | 41:30-42:00 | 0:30 | 42:00 | No | Martin | Record the decision so the next person can see why we made it. |
 | `demo-c6` | 42:00-45:00 | 3:00 | 45:00 | No | Haflidi | Resume with decision/context/usage; cut at 44:15. |
 | `s18-memory` | 45:00-47:00 | 2:00 | 47:00 | No | Martin | Conversation, native memory, repo knowledge: different owners. |
 | `demo-c7` | 47:00-50:00 | 3:00 | 50:00 | No | Haflidi leads review; Martin drives handoff | Offline exits, diff, reviewer scope; cut at 49:15. |
@@ -149,7 +149,7 @@ Rule: spend reserve cuts before you spend the 58:00 close. The close is still a 
 
 ## Risk
 
-Frank verdict: yes, there is now genuine on-the-clock slack before the close. It is 3:00, exactly at 55:00-58:00, and it exists whether or not any reserve cuts are taken. That is the improvement Martin asked for.
+There is now genuine on-the-clock slack before the close. It is 3:00, exactly at 55:00-58:00, and it exists whether or not any reserve cuts are taken. That is the improvement Martin asked for.
 
 Residual risk is still medium:
 
@@ -167,7 +167,7 @@ Keep the live reveal itself exactly 30 seconds.
 
 | Time inside slot | Wall clock | Action | Words |
 |---|---|---|---|
-| 0:00-0:30 | 50:00-50:30 | Point at consumer-to-module diagram | "Reuse the module code, not the private environment." |
+| 0:00-0:30 | 50:00-50:30 | Point at consumer-to-module diagram | "Use the module in another environment without copying the private setup." |
 | 0:30-1:00 | 50:30-51:00 | Live reveal `https://aks-online-demo.swedencentral.cloudapp.azure.com/` | Show branded page, pipeline flow, serving pod name, and speakers section. |
 | 1:00-2:10 | 51:00-52:10 | State delivery gate and runtime evidence | PR to plan to human approval to apply; 29/29 outside-in runtime checks. |
 | 2:10-3:00 | 52:10-53:00 | State boundary | `a-online` and `a-security` are appendix/hallway depth, not main-flow slides. |
