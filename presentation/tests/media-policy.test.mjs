@@ -32,7 +32,7 @@ const slideSurfaces = slide => [
 const shortSlides = createShortSlides({ martinPhoto: 'martin', haflidiPhoto: 'haflidi' });
 const documentPaths = [
   'README.md', 'handoff.md', 'haflidi-overview.html', 'presentation/README.md',
-  ...['bootstrap', 'demo-runbook', 'feature-guide', 'online-demo', 'playbook',
+  ...['aca-sandboxes', 'bootstrap', 'demo-runbook', 'feature-guide', 'online-demo', 'playbook',
     'prompt-pack', 'run-plan', 'sandboxing', 'security-case', 'sessionize',
     'source-provenance', 'talk-track', 'talking-points', 'whats-new']
     .map(name => `docs/${name}.md`)
@@ -62,6 +62,32 @@ test('each live demo slide has presenter notes with an offline fallback', () => 
     assert.match(notes, /Point at:/);
     assert.match(notes, /Expected:/);
   }
+});
+
+test('C4 source and generated notes retain the conditional Corp gate and unchanged cut', () => {
+  const notes = applyNoteFactOverrides('demo-c4', '');
+  const generated = documentText('presentation/index.html')
+    .match(/<section\b[^>]*id="demo-c4"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+  assert.ok(generated, 'generated deck must contain the actual C4 section');
+  for (const [name, artifact] of [['source notes', notes], ['generated C4', generated]]) {
+    for (const pattern of [
+      /approved Corp IaC/, /effective-policy read-back/, /all checks PASS/,
+      /actual authentication verified manually/, /prepared sandbox/,
+      /Preliminary planning approval is not deployment or qualification/,
+      /29:30-30:00/, /30:00-32:00/, /32:00-32:30/, /32:30-33:30/,
+      /Cut at 32:30 \(75%\)/, /no second live attempt/,
+      /Do not retry or spend 55:00-58:00 protected slack/,
+      /Management-side execution evidence, not Corp validation/,
+      /10 root negative-validation checks, not 52 child-module plus two caller cases/,
+      /A 403 alone does not establish egress or Azure Policy enforcement/,
+      /href="\.\.\/docs\/aca-sandboxes\.md#recommended-live-use"/,
+      /href="\.\.\/docs\/demo-runbook\.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes"/
+    ]) assert.match(artifact, pattern, `${name} retains ${pattern}`);
+  }
+  const c4 = demoSlides.find(slide => slide.chapter === 'C4');
+  assert.equal(c4.time, '29:30-33:30');
+  assert.equal(c4.duration, 240);
+  assert.match(codeBlocks(demoContent(c4))[0], /\/skills info test-discipline/);
 });
 
 test('demo on-screen prompts are exact excerpts or visibly abridged', () => {

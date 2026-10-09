@@ -7,6 +7,7 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - 60:00 total: 00:00-03:00 intro, 03:00-55:00 planned content and live chapters, 55:00-58:00 protected slack, 58:00-60:00 close plus "questions if time allows".
 - No planned question block. Appendix is for hallway questions or early finish.
 - Copilot CLI is GA; the terminal is a normal engineering surface.
+- Auto model selection and Project HydraFusion lead the approved news; retain status/cost qualifications and pin the stage model for eval parity.
 - Squad 1.0.1 coordinates the demo team; npm/docs labels may lag.
 - Computer use is public preview and is not used in this Terraform demo.
 - Pre-show legal/futures notice is untimed: preview features may change; status is as of 14 Oct 2026; no warranties; dates are subject to change.
@@ -36,8 +37,9 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 
 ### 03:30-04:00, s04-news, Martin
 - Lead with Auto model selection and Project HydraFusion.
-- Pin `/model` to `claude-sonnet-5` on stage for eval parity, then describe Auto or HydraFusion as the cost lever.
+- Pin `/model` to `claude-sonnet-5` on stage for eval parity, then describe Auto or HydraFusion as the cost lever. Auto honors admin model policies and gives paid subscribers a 10% discount; legacy annual Pro/Pro+ plans use premium-request multipliers until expiry. HydraFusion is research preview, with offline benchmarks and estimated costs, not savings measured here.
 - Keep the rest to anchors: CLI GA, Squad 1.0.1, Terraform MCP, Azure MCP, GitHub agent news, and one AKS line.
+- ACA Sandboxes GA in September after June preview is additional context. C4 is conditional on approved Corp IaC, effective-policy read-back, and validated preflight, not a promised live clip.
 - Name the current controls and their limits.
 
 ### 04:00-05:00, s04-layers, Haflidi then Martin
@@ -52,6 +54,7 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - Three native lanes: `terraform-coder`, `terraform-validator`, `terraform-reviewer`.
 - Tool filters are not a sandbox.
 - Select each native profile explicitly and keep its scope narrow.
+- Local `/sandbox` is off by default. On Windows, it needs a supported recent Windows 11 build and [update prerequisites](https://aka.ms/ghcp-sandbox-os-support). Proxy/host rules depend on supported features and apps honoring the proxy, not airtight protection for all processes; in-process file tools are best-effort and remote MCP is not sandboxed. [Details](aca-sandboxes.md#how-this-differs-from-the-other-sandbox-stories).
 
 ### 05:30-08:30, C0 From zero to a squad, Haflidi
 - Cut 07:45.
@@ -123,6 +126,10 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - Read-only Microsoft Learn source for AKS Automatic private/custom network.
 - Show citation/version and one narrow permission decision.
 - Include the source and version with the change.
+- Base flow stays the default. Only approved Corp IaC, effective-policy read-back, and validated prepared-sandbox rehearsal permit the ACA substitution, replacing deeper MCP lookup.
+- Variant clock: 29:30-30:00 guidance/prepared source; 30:00-32:00 one bounded ACA skill prompt; 32:00-32:30 inspect actual exits/HTTP observations; 32:30-33:30 cut and hand back to C5. No create/upload/install/retry on stage. [Procedure](demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes).
+- Evidence is 10 root negative-validation checks, not 52 child-module plus two caller cases or an AKS deployment. A 403 alone proves neither egress nor Azure Policy enforcement.
+- If not ready, use base C4 or explicitly labeled Management-side evidence, not Corp validation. Earlier runs took about 2:58 and 1:47; no 90-second guarantee and no use of 55:00-58:00 slack.
 
 ### 33:30-38:30, C5 Seed, fail, repair, Haflidi
 - Cut 37:15; must be out by 38:30.

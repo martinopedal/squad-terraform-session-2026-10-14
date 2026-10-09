@@ -194,9 +194,9 @@ test file.
 
 ## C4: Invoke guidance and a source | 29:30-33:30 | 4 minutes
 
-**Pre-staged:** Docker Desktop running; required MCP servers already connected; fallback `c4-source` excerpt sanitized; one retry allowed, not a retry loop.
+**Pre-staged:** Docker Desktop running; required MCP servers already connected; fallback `c4-source` excerpt sanitized. Choose base C4 unless the separate Corp gate below is complete. No second live attempt.
 
-**Cut at 32:30 (3:00 into C4):** If MCP or Docker is not healthy, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.
+**Cut at 32:30 (3:00 into C4):** Cut whichever flow was selected. State any missing live result, show reviewed fallback with its actual scope, and hand off by 33:30. Do not retry or spend 55:00-58:00 protected slack.
 
 Martin drives; Haflidi explains the claim. Use `/skills info test-discipline`, then:
 
@@ -214,6 +214,21 @@ Approve only the inspected read-only request, never blanket interpreter access.
 Save `c4-source.md` with URL, retrieval time, tool, server/version, and
 limitation. Missing skill/server or a failed lookup stays failed/pending, not
 invented output.
+
+### Conditional ACA variant, replacing deeper lookup
+
+This is not a second chapter. The observed ACA group and prior runs are Management-side, not Corp. Select the variant only after a reviewed private IaC deployment, human environment approval, Corp placement/effective-policy read-back, and exact presenter preflight qualify it. `aca doctor` alone does not close the gate. Follow [aca-sandboxes.md](aca-sandboxes.md#preflight) for the plugin, approved scope, budget, expiry, cleanup ownership, public archive revision/hash, prepared sandbox, and actual numeric-exit rehearsal.
+
+Martin manually selects the rehearsed, separately scoped ACA session. Keep the Terraform validator profile unchanged; this variant does not grant it ACA tools or wider shell authority. All setup, archive upload, dependency installation, and lifecycle preparation happen before the timed slot under the approved scope, not on stage.
+
+1. **29:30-30:00:** Name the qualified Corp scope and pre-staged resources. Show the skill and one prepared source citation. Say this source was fetched in preflight, not by a live MCP call.
+2. **30:00-32:00:** Submit the single [prepared-sandbox prompt](aca-sandboxes.md#recommended-live-use). Privately substitute reviewed group/resource-group/sandbox identifiers. Approve only inspected requests in the native permission flow. Run validation and the root negative-validation suite once; no create, upload, install, rule change, or retry.
+3. **32:00-32:30:** Inspect completed output, actual numeric exits captured inside the sandbox, and HTTP observations. Confirm the archive revision/hash against preflight. Expect the root suite's 10 checks, not 52 child-module plus two caller cases. An agent summary, Boolean exit field, or 403 alone is not policy-enforcement evidence.
+4. **32:30-33:30:** Cut the live attempt even if the model is still running. State unfinished checks. Show only reviewed fallback: qualified Corp evidence if available, otherwise an excerpt labeled "Management-side execution evidence, not Corp validation" with its recorded limitations. Return to the unchanged Terraform checkpoint before C5; the operator handles approved lifecycle stop/cleanup off-stage.
+
+The earlier fresh Copilot runs took about 2:58 and 1:47 in Management. They don't qualify Corp or guarantee a 90-second turn. If the gate is unmet, keep the base skill/MCP flow above; capacity, plugin, or venue-network trouble does not authorize another target or infrastructure change.
+
+Keep records private with generic pointers such as `evidence\aca-corp-preflight.json`, `evidence\aca-corp-checks.txt`, and `evidence\aca-management-session.txt`. These suggested names do not claim those files or Corp results already exist. Record target qualification, actual output/exits, source/hash, timing, failures, and evidence scope; publish only reviewed sanitized excerpts.
 
 ## C5: Seed, fail, repair | 33:30-38:30 | 5 minutes
 

@@ -38,6 +38,8 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Haflidi:** On stage, pin `/model` to `claude-sonnet-5` for eval parity and present Auto or HydraFusion as the cost lever, not as a live variable in the room. The rest of the slide anchors the platform story: Copilot CLI GA, Squad 1.0.1, Terraform MCP, Azure MCP, GitHub agent news, and one AKS line about new 1.36 Automatic clusters defaulting toward Gateway API while this demo stays on the managed NGINX path.
 
+> ACA context, not another timed headline: Azure Container Apps Sandboxes reached GA in September after June preview. Its official plugin supports the conditional C4 variant only after approved Corp IaC, policy read-back, and validated presenter preflight. Otherwise keep the original MCP demo or explicitly labeled Management-side execution evidence. HydraFusion figures, if quoted, remain offline benchmarks with estimated cost, not measured savings from this run. See [whats-new.md](whats-new.md).
+
 ## s04-layers | 04:00-05:00 | One workflow, three distinct layers
 
 **Haflidi:** Copilot CLI runs the work. Squad coordinates responsibilities through a repository-backed roster, routing, handoffs, and decisions. Terraform, Git, Microsoft Learn, and MCP servers return evidence.
@@ -52,7 +54,9 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Haflidi:** Squad owns `.squad\`: team roster, routing, decisions, charters, and handoffs. Built-ins matter too: Scribe records accepted decisions, Ralph helps backlog flow, Rai supports reliability, and Fact Checker challenges claims.
 
-**Martin:** The three native lanes are explicit selections: `terraform-coder` writes agreed changes; `terraform-validator` runs fixed offline checks; `terraform-reviewer` reviews a supplied diff in a fresh context. Tool filters reduce available tools. They are not a sandbox.
+**Martin:** The three native lanes are explicit selections: `terraform-coder` writes agreed changes; `terraform-validator` runs fixed offline checks; `terraform-reviewer` reviews a supplied diff in a fresh context. Tool filters reduce available tools. They are not a sandbox. Local `/sandbox` is off by default and host-based, not an ACA microVM.
+
+> Local sandbox context, not a live setup step: Windows requires a supported recent Windows 11 build and its [update prerequisites](https://aka.ms/ghcp-sandbox-os-support). Windows proxy/host rules depend on supported features, Allow local network, and apps honoring the proxy; they do not block every direct connection. In-process file tools honor policy best-effort, and remote MCP servers are not sandboxed. See [GitHub's sandbox documentation](https://docs.github.com/en/copilot/concepts/about-cloud-and-local-sandboxes) and [aca-sandboxes.md](aca-sandboxes.md).
 
 ## demo-c0 | 05:30-08:30 | C0: From zero to a squad
 
@@ -137,6 +141,12 @@ Use `/agent` Squad, `/tasks`, `/agent list`, `/mcp`, `/agent terraform-coder`. P
 Use `/skills info test-discipline`, `/mcp`, then ask for test-discipline, unchanged assertions, and a read-only Microsoft Learn source for AKS Automatic private/custom network. Cite source/version. Avoid Azure account, provider, or write access. Inspect `/permissions`.
 
 **Martin:** The skill changes the procedure. The MCP lookup supplies a source. The human decides how it applies.
+
+**Conditional variant, not an extra chapter:** Keep the base flow above unless approved Corp IaC, effective-policy read-back, and the exact prepared-sandbox preflight are complete. Follow [the C4 operator procedure](demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes): 29:30-30:00 guidance and prepared source; 30:00-32:00 one bounded ACA skill prompt on the prepared sandbox; 32:00-32:30 inspect numeric exits and HTTP observations; 32:30-33:30 cut and hand back to C5. This replaces deeper MCP lookup, not another slot.
+
+**Martin, only for the qualified variant:** This sandbox and its public archive were prepared under the approved Corp scope. We run validation and the root negative-validation checks here, not an AKS deployment. Inspect the output, not just the agent's summary.
+
+**Haflidi:** A 403 alone does not establish egress or Azure Policy enforcement. If the live result is missing at the cut, say so. Our earlier saved runs are Management-side execution evidence, not Corp validation; they printed Boolean fields rather than numeric exits. Fresh runs took about 2:58 and 1:47, so we don't promise a 90-second agent turn or take time from protected slack.
 
 ## demo-c5 | 33:30-38:30 | C5: Catch a mistake and repair it
 
