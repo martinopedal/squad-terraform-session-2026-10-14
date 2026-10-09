@@ -84,6 +84,11 @@ const autonomySpectrum = () => `<div class="control-spectrum" aria-label="Contro
   <em>Setup/runway <b>C0</b> · Programmatic ${badge('-p')} sits in the appendix: automation, not a live chapter. More automation is not better by default; human approvals remain at the gates.</em>
 </div>`;
 
+// verbatim source: demo/eval-20261008/artifacts/b1v2-1/prompt.txt
+const c3B1v2Brief = String.raw`Work only in terraform\modules\aks-automatic-corp.
+
+Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16 and DNS service IP 10.241.0.10. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file.`;
+
 const demoRuns = {
   C0: {
     goal: 'Install, initialize, hire, and verify Squad on a clean Windows 11 VM.',
@@ -220,10 +225,9 @@ criteria. Devrel owns only the README's test explanation after agreement. Return
 actual task IDs where used, file owners, checks, and unresolved issues. No
 deployment or other edits.
 /agent terraform-coder
-Work only in terraform\modules\aks-automatic-corp.
-
-Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16 and DNS service IP 10.241.0.10. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file.
+${c3B1v2Brief}
 /agent squad`,
+    verbatimBrief: c3B1v2Brief,
     expected: 'The writer lane starts, changed files are visible, and the handoff names owners, checks, and unresolved issues.',
     driver: 'Martin operates; Haflidi reads returned evidence.',
     pointAt: 'Point at Squad selection, roster/routing (team list and routing rules), terraform-coder selection, the four-assert test edit, and c3-handoffs.md.',
@@ -394,7 +398,8 @@ const demoBoundary = chapter => chapter === 'C0'
   : 'Genuine Copilot CLI with Squad selected in a real integrated terminal; capture controllers stay external, off-screen tooling; Qualify code first; execute from a disclosed clean checkpoint.';
 const demoNotes = chapter => {
   const run = demoRuns[chapter];
-  return `<p><strong>Driver:</strong> ${escape(run.driver)}</p><p><strong>Live surface:</strong> ${escape(demoBoundary(chapter))}</p><p><strong>Timing:</strong> ${escape(run.timing)}</p><p><strong>Pre-staged:</strong> ${escape(run.preStaged)}</p><ol class="presenter-plan"><li><strong>Say:</strong> ${escape(run.goal)} Keep this as a live demo; optional recordings are fallback evidence, not a dependency.</li><li><strong>Type:</strong></li></ol>${code(run.command, `${chapter} live command / prompt`, 'powershell')}<ol class="presenter-plan" start="3"><li><strong>Point at:</strong> ${escape(run.pointAt)}</li><li><strong>Expected:</strong> ${escape(run.expected)}</li><li><strong>Cut at ${escape(run.cutAt)} (75%):</strong> ${escape(run.cut)}</li><li><strong>Hand-off:</strong> ${escape(chapter === 'C5' ? 'Haflidi hands controls back to Martin for evidence levels.' : chapter === 'C7' ? 'Martin takes back the deck for the consumer slide.' : 'Use the next slide transition line in the run plan.')}</li></ol><p><strong>Offline fallback:</strong> ${escape(run.fallback)}</p>`;
+  const verbatimBrief = run.verbatimBrief ? code(run.verbatimBrief, `${chapter} verbatim B1v2 brief`, 'text') : '';
+  return `<p><strong>Driver:</strong> ${escape(run.driver)}</p><p><strong>Live surface:</strong> ${escape(demoBoundary(chapter))}</p><p><strong>Timing:</strong> ${escape(run.timing)}</p><p><strong>Pre-staged:</strong> ${escape(run.preStaged)}</p><ol class="presenter-plan"><li><strong>Say:</strong> ${escape(run.goal)} Keep this as a live demo; optional recordings are fallback evidence, not a dependency.</li><li><strong>Type:</strong></li></ol>${code(run.command, `${chapter} live command / prompt`, 'powershell')}${verbatimBrief}<ol class="presenter-plan" start="3"><li><strong>Point at:</strong> ${escape(run.pointAt)}</li><li><strong>Expected:</strong> ${escape(run.expected)}</li><li><strong>Cut at ${escape(run.cutAt)} (75%):</strong> ${escape(run.cut)}</li><li><strong>Hand-off:</strong> ${escape(chapter === 'C5' ? 'Haflidi hands controls back to Martin for evidence levels.' : chapter === 'C7' ? 'Martin takes back the deck for the consumer slide.' : 'Use the next slide transition line in the run plan.')}</li></ol><p><strong>Offline fallback:</strong> ${escape(run.fallback)}</p>`;
 };
 
 const presenterNotes = new Map([
