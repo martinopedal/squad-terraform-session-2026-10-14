@@ -229,7 +229,7 @@ Use only if the show is already ahead. Safe placement is **53:00-54:30**, with `
 - [ ] Start Copilot CLI from the session repo folder, not the coordinator root:
 
 ```powershell
-Set-Location <reviewed-public-checkout>   # or the reviewed checkpoint worktree
+cd C:\git\session-repo   # your public repo clone or checkpoint worktree
 copilot --agent squad
 ```
 

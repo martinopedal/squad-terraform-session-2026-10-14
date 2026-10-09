@@ -295,9 +295,9 @@ and hosted-system subnets. Don't contact an Azure account or change providers.
     pointAt: 'Point at the skill invocation, the MCP server, the specific source result, and the scoped permission prompt.',
     fallback: 'Use c4-source.md with retrieval time, tool, server/version, and limitation; a failed live lookup stays failed. Permission checks: --available-tools controls visibility, --allow-tool approves, --deny-tool wins, and denying write doesn\'t block shell writes.',
     timing: 'Slot 29:30-33:30. 1:17 skill and /mcp status; 1:05 read-only lookup; 0:38 source/version and boundary; 0:35 /permissions; 0:25 buffer.',
-    preStaged: 'Docker Desktop running; required MCP servers connected; fallback c4-source excerpt sanitized; one retry allowed, not a retry loop.',
+    preStaged: 'Docker Desktop running; required MCP servers connected; fallback c4-source excerpt sanitized; base MCP flow unless the separate Corp qualification gate is complete; no second live attempt.',
     cutAt: '32:30',
-    cut: 'If MCP/Docker is not healthy or the source/version is not visible by 3:00, say the lookup is unavailable live, show the fallback excerpt, and do not pretend it succeeded.'
+    cut: 'At 32:30, stop the selected flow, state any missing live result, show scoped fallback, and hand off by 33:30. Do not retry or spend 55:00-58:00 protected slack.'
   },
   C5: {
     goal: 'Run the offline oracle, seed one labeled mutation, repair narrowly, and rerun the same check.',
@@ -481,6 +481,7 @@ const presenterNotes = new Map([
 ]);
 
 export function applyNoteFactOverrides(slideId, noteHTML) {
+  if (slideId === 'demo-c4') return demoNotes('C4') + '<p>Conditional ACA variant: replace part of the deeper MCP lookup only after approved Corp IaC, effective-policy read-back, and validated presenter preflight. Require all checks PASS, with actual authentication verified manually, a prepared sandbox and public archive revision/hash, approved scope, budget, expiry, and cleanup owner. Preliminary planning approval is not deployment or qualification.</p><p>Keep the same clock: 29:30-30:00 guidance and prepared source; 30:00-32:00 one bounded ACA skill prompt; 32:00-32:30 inspect numeric exits and HTTP observations; 32:30-33:30 cut and return to C5. No live create, upload, install, rule change, or second attempt. The earlier 2:58 and 1:47 Management-side runs do not guarantee 90 seconds.</p><p>Use the <a href="../docs/aca-sandboxes.md#recommended-live-use">prepared-sandbox prompt and prerequisites</a> and <a href="../docs/demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes">C4 operator procedure</a>. If the gate is unmet, keep base C4 or explicitly label saved output as Management-side execution evidence, not Corp validation. These are 10 root negative-validation checks, not 52 child-module plus two caller cases or an AKS deployment. A 403 alone does not establish egress or Azure Policy enforcement. Keep identifiers and raw records private; handle approved lifecycle stop/cleanup off-stage.</p>';
   if (/^demo-c[0-7]$/.test(slideId)) return demoNotes(`C${slideId.at(-1)}`);
   return presenterNotes.get(slideId) || noteHTML;
 }
