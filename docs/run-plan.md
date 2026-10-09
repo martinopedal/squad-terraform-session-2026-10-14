@@ -2,11 +2,15 @@
 
 Wednesday 2026-10-14, 10:00-11:00, Room 6. Martin Opedal and Haflidi. Deck target for the next round: 60:00 total, live-first. Terminal and browser work is live; prepared checkpoints, inherited module code, and evidence from earlier runs are disclosed fallback, not hidden proof.
 
-Frank verdict: the 60-minute layout fits on paper, but not as casual live pair programming. C0-C7 stay at 29:00 total. There is no explicit slack inside 03:00-58:00; the only protected buffer is the 58:00-60:00 close. That means the drop order below is not optional. If C0, C3, C5, or C7 slips and the presenters do not cut at the line, the close disappears.
+Frank verdict: this redesign finally creates real on-the-clock slack before the close. The talk now plans to finish scripted content at 55:00, holds 55:00-58:00 as protected recovery time, and still keeps the 58:00-60:00 close. That is materially safer than the prior 58:00 content edge. It is still not casual live pair programming: if C0, C3, C5, or C7 overrun and the presenters ignore the cut lines, the 3:00 window can disappear fast. The fit is now workable, but only with disciplined clock calls.
 
-Decision: reuse `s01-outcome` as the 00:00-03:00 intro instead of adding a new `s00-intro`. Reason: it already carries the outcome and speaker visual, and a new slide would add navigation/test churn without improving the story. Devrel should rewrite the visual so Martin is introduced with role plus `opedal.tech`; Haflidi uses the exact live page speaker treatment (initials + GitHub handle/link only, no extra personal data). The live page speakers section may be reused as HTML or screenshot; devrel decides which renders cleaner.
+Decision: use one visible recovery window at 55:00-58:00, not many tiny buffers between chapters. Reason: a single hard buffer is easier to use live, easier to defend when a demo slips, and clearer for both presenters than sprinkling 15-30 second pockets that will be spent without noticing.
 
-Sources of truth for this plan: current `presentation\src\slides.mjs`, prior docs from `origin/docs/oct8-eval-and-hostname`, `origin/docs/playbook:docs/playbook.md`, TEAM ROOT `demo\eval-20261008\results.md`, and the decision `lead-live-timing-slack` now merged into TEAM ROOT `.squad\decisions.md`.
+Decision: keep all verified enrichment added in the 0.21.0 deck round. The control spectrum in `s04-layers`, same-gates framing, Rubber Duck appendix note, legal notice, and feature badges stay. The time comes from trimming bridge narration, not from removing enriched content.
+
+Decision: reuse `s01-outcome` as the 00:00-03:00 intro instead of adding a new `s00-intro`. Reason: it already carries the outcome and speaker visual, and a new slide would add navigation/test churn without improving the story.
+
+Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.21.0, brand/wording fixes already in), prior docs from `origin/docs/oct8-eval-and-hostname`, `origin/docs/playbook:docs/playbook.md`, TEAM ROOT `demo\eval-20261008\results.md`, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout.
 
 ## Evidence used for timing
 
@@ -21,126 +25,152 @@ Sources of truth for this plan: current `presentation\src\slides.mjs`, prior doc
 | Preflight | Presenter preflight target remains 16/16 before delivery. |
 | Missing wall times | Still marked "estimate, time in rehearsal 1" in the detailed runbooks; replace after Fri 9 Oct rehearsal. |
 
-## What the extra minutes are for
+## Timing contract
 
-Prior timing assumptions with a separate Q&A block are retired. The earlier Lead decision protected a slack bank by trimming explanatory slides. This round changes that contract:
+This is the new arithmetic and it must be explicit in the deck, notes, and mirror docs:
 
-- 00:00-03:00 is a real intro, not a rushed title slide.
-- The new legal/futures notice is a second pre-show slide after the NIC opening page. It is untimed, appears before `s01-outcome`, and does not move the 00:00 clock start.
-- 03:00-58:00 is content plus live chapters.
-- 58:00-60:00 is close plus "questions if time allows"; it is a buffer, not scheduled Q&A.
-- No explicit slack remains inside 03:00-58:00.
+- 00:00-03:00 intro (`s01-outcome`).
+- 03:00-55:00 planned/scripted content.
+- 55:00-58:00 protected recovery window. No new story beats go here.
+- 58:00-60:00 close (`s22`), with "questions if time allows" only if the buffer survived.
 
-Depth restored or added:
+Inside 03:00-55:00, the plan is:
 
-| Slide / chapter | Minutes | Why it earns time |
-|---|---:|---|
-| `s01-outcome` | 3:00 | Proper speaker intro, audience promise, and honesty rule before demos. |
-| `s07-agent-setup` + `demo-c0` | 1:00 setup slide + 3:00 live | Show the Squad bootstrap path from the playbook: prerequisites, `squad init`, `copilot --agent squad`, roster/charters, `squad doctor`. |
-| `s05-parallel` | 2:00 | Restore depth for the three agent lanes: `terraform-coder` writes, `terraform-validator` runs fixed offline checks, `terraform-reviewer` reviews in fresh context. |
-| `s13-test-gap` | 3:00 | Restore the B1 to B1v2 repeatability lesson: ambiguous brief 0/5, state the oracle's rule, clarified brief 5/5. No causal or repeatability guarantee; the live run still has to pass. |
-| `s15-proof` | 3:00 | Restore evidence-depth language so "runtime evidence" is scoped and honest. |
-| `s18-memory` | 2:00 | Restore continuity depth: saved decisions are not the same as personal memory or a whole chat transcript. |
-| `s20-consumer` | 3:00 | Keep the required 30s live reveal and add enough room to explain the consumer boundary and gated pipeline. |
-| `s21-limits` + close | 4:00 total | Turn the old Q&A handoff into takeaways plus a two-minute landing pad. |
+- 29:00 live chapters (`C0-C7`) unchanged.
+- 23:00 explanation and framing slides.
+- Total planned content before the recovery window: 52:00.
 
-## 60-minute slide schedule
+Inside 55:00-58:00, the presenters may only:
 
-| Slide ID | Start-end | Owner | Demo | Purpose / hard cue |
-|---|---|---|---|---|
-| `s01-outcome` | 00:00-03:00 | Martin opens; Haflidi adds honesty rule |  | Intro: who we are, roles, Martin `opedal.tech`, Haflidi live-page initials + GitHub only; what the audience will see and take away; disclose live vs prepared checkpoints/inherited code/fallback evidence. |
-| `s03-baseline` | 03:00-04:00 | Martin |  | Inherited public source and clean checkpoint; not first implementation. |
-| `s04-news` | 04:00-05:00 | Martin |  | CLI GA, Squad 1.0.1, and what is not used live. |
-| `s04-layers` | 05:00-06:00 | Haflidi then Martin |  | CLI runs work, Squad coordinates, tools return evidence; same slot now also reads the control spectrum as modes, not a maturity ladder: ask, edit, plan, agent, tools/permissions, resume, gated review. `-p` stays appendix automation, not a live chapter. More automation is not better by default; human approvals remain at the gates. |
-| `s07-agent-setup` | 06:00-07:00 | Martin |  | Agent setup map; hand to C0 bootstrap. |
-| `demo-c0` | 07:00-10:00 | Haflidi | C0 | Bootstrap from zero; cut at 09:15. |
-| `s05-parallel` | 10:00-12:00 | Martin |  | Three lanes and handoffs: coder, validator, reviewer. |
-| `s06-contract` | 12:00-14:00 | Haflidi |  | Platform-owned network into reusable module; caller-owned provider/backend/state. |
-| `demo-c1` | 14:00-17:00 | Martin drives; Haflidi compares | C1 | Same task, fixed inputs, compare one consequence; cut at 16:15. |
-| `s08-plan-boundary` | 17:00-19:00 | Haflidi |  | Extract module, not environment; approval boundary before plan. |
-| `demo-c2` | 19:00-23:00 | Martin | C2 | Pin brief and approve repo-only plan; cut at 22:00. Checkpoint: must be out of C2 at 23:00. |
-| `s10-tool-roles` | 23:00-24:00 | Haflidi |  | Instructions, skills, and MCP are different controls. |
-| `demo-c3` | 24:00-28:00 | Martin | C3 | Route B1v2 to `terraform-coder`; cut at 27:00. |
-| `s12-source-check` | 28:00-29:00 | Haflidi |  | Source claim becomes assertion. |
-| `s13-test-gap` | 29:00-32:00 | Haflidi |  | B1 0/5 -> oracle rule -> B1v2 5/5; no causal or repeatability guarantee; live still must pass. |
-| `demo-c4` | 32:00-36:00 | Martin | C4 | Skill + read-only source lookup + permissions; cut at 35:00. |
-| `demo-c5` | 36:00-41:00 | Haflidi | C5 | Validator before/seeded/repaired; cut at 39:45. Checkpoint: must be out of C5 at 41:00. |
-| `s15-proof` | 41:00-44:00 | Haflidi with Martin handoff |  | Evidence levels; say runtime check/evidence, not proof of everything. |
-| `s16-continuity` | 44:00-45:00 | Martin |  | Save the reason, not the whole chat. |
-| `demo-c6` | 45:00-48:00 | Haflidi | C6 | Resume with decision/context/usage; cut at 47:15. |
-| `s18-memory` | 48:00-50:00 | Martin |  | Conversation, native memory, repo knowledge: different owners. |
-| `demo-c7` | 50:00-53:00 | Haflidi leads review; Martin drives handoff | C7 | Offline exits, diff, reviewer scope; cut at 52:15. |
-| `s20-consumer` | 53:00-56:00 | Martin |  | 0:00-0:30 diagram; 0:30-1:00 live reveal; 1:00-2:10 same-gates mapping: PR → checks/scans (fmt, validate, TFLint, Trivy, Checkov) → review + protected main → Terraform plan → online environment approval → OIDC apply → runtime check; 2:10-3:00 boundary and honest audit caveat. Must start by 53:00; reveal is 53:30-54:00. |
-| `s21-limits` | 56:00-58:00 | Haflidi then Martin |  | Three rules for the next change; no new examples. |
-| `s22-questions` (retitled close) | 58:00-60:00 | Martin closes; Haflidi available |  | Close with "Humans set direction and approve; agents help move work through the same gated loop." and the generic day-2 loop: detect, propose, review, approve, apply, verify. Appendix remains available afterwards/hallway. "Questions if time allows" only if ahead; not scheduled Q&A. |
+- absorb a chapter overrun,
+- slow down for clarity,
+- take a breath and reset ownership/handoff,
+- or end early and hold cleanly.
+
+They do **not** spend that window on extra explanation, appendix content, or ad-lib Q&A.
+
+## What changed to make the 55:00 target fit
+
+The 3:00 recovery window is created by trimming six bridge slides from 1:00 to 0:30 each. These are presentation beats, not evidence beats:
+
+| Slide | Old | New | Save | What changes |
+|---|---:|---:|---:|---|
+| `s03-baseline` | 1:00 | 0:30 | 0:30 | One clean statement: inherited public code, disclosed checkpoint, not first implementation. |
+| `s04-news` | 1:00 | 0:30 | 0:30 | Keep only GA/status headline and what is not used live. |
+| `s07-agent-setup` | 1:00 | 0:30 | 0:30 | Treat as a handoff map into C0, not a second explanation. |
+| `s10-tool-roles` | 1:00 | 0:30 | 0:30 | One sentence: instructions, skills, MCP are different controls. |
+| `s12-source-check` | 1:00 | 0:30 | 0:30 | One sentence: a source claim becomes a testable assertion. |
+| `s16-continuity` | 1:00 | 0:30 | 0:30 | One sentence: save the reason, not the whole chat. |
+
+Total reclaimed time: 3:00.
+
+Nothing was cut from the already-placed enrichment:
+
+- `s04-layers` keeps the control spectrum and the "not a maturity ladder" framing.
+- `s20-consumer` keeps the same-gates wording and the live reveal.
+- The legal notice remains the untimed pre-show slide.
+- The Rubber Duck appendix note stays in the appendix.
+- Feature badges remain in the deck.
+
+## 60-minute schedule with explicit recovery window
+
+| Slide ID | Start-end | Duration | Cumulative | Buffer zone? | Owner | Purpose / hard cue |
+|---|---|---:|---:|---|---|---|
+| `s01-outcome` | 00:00-03:00 | 3:00 | 03:00 | No | Martin opens; Haflidi adds honesty rule | Intro: who we are, what the audience will see, what they will leave with, and the honesty rule about live vs prepared evidence. |
+| `s03-baseline` | 03:00-03:30 | 0:30 | 03:30 | No | Martin | Inherited public source, disclosed clean checkpoint, not first implementation. |
+| `s04-news` | 03:30-04:00 | 0:30 | 04:00 | No | Martin | CLI GA, Squad 1.0.1, and what is not used live. |
+| `s04-layers` | 04:00-05:00 | 1:00 | 05:00 | No | Haflidi then Martin | CLI runs work, Squad coordinates, tools return evidence; control spectrum as modes, not a maturity ladder. |
+| `s07-agent-setup` | 05:00-05:30 | 0:30 | 05:30 | No | Martin | Setup map only; hand straight to C0. |
+| `demo-c0` | 05:30-08:30 | 3:00 | 08:30 | No | Haflidi | Bootstrap from zero; cut at 07:45. |
+| `s05-parallel` | 08:30-10:30 | 2:00 | 10:30 | No | Martin | Three lanes and handoffs: coder, validator, reviewer. |
+| `s06-contract` | 10:30-12:30 | 2:00 | 12:30 | No | Haflidi | Platform-owned network into reusable module; caller-owned provider/backend/state. |
+| `demo-c1` | 12:30-15:30 | 3:00 | 15:30 | No | Martin drives; Haflidi compares | Same task, fixed inputs, compare one consequence; cut at 14:45. |
+| `s08-plan-boundary` | 15:30-17:30 | 2:00 | 17:30 | No | Haflidi | Extract module, not environment; approval boundary before plan. |
+| `demo-c2` | 17:30-21:30 | 4:00 | 21:30 | No | Martin | Pin brief and approve repo-only plan; cut at 20:30. Checkpoint: must be out of C2 at 21:30. |
+| `s10-tool-roles` | 21:30-22:00 | 0:30 | 22:00 | No | Haflidi | Instructions, skills, and MCP are different controls. |
+| `demo-c3` | 22:00-26:00 | 4:00 | 26:00 | No | Martin | Route B1v2 to `terraform-coder`; cut at 25:00. |
+| `s12-source-check` | 26:00-26:30 | 0:30 | 26:30 | No | Haflidi | Source claim becomes assertion. |
+| `s13-test-gap` | 26:30-29:30 | 3:00 | 29:30 | No | Haflidi | B1 0/5 -> oracle rule -> B1v2 5/5; no causal or repeatability guarantee; live still must pass. |
+| `demo-c4` | 29:30-33:30 | 4:00 | 33:30 | No | Martin | Skill + read-only source lookup + permissions; cut at 32:30. |
+| `demo-c5` | 33:30-38:30 | 5:00 | 38:30 | No | Haflidi | Validator before/seeded/repaired; cut at 37:15. Checkpoint: must be out of C5 at 38:30. |
+| `s15-proof` | 38:30-41:30 | 3:00 | 41:30 | No | Haflidi with Martin handoff | Evidence levels; say runtime check/evidence, not proof of everything. |
+| `s16-continuity` | 41:30-42:00 | 0:30 | 42:00 | No | Martin | Save the reason, not the whole chat. |
+| `demo-c6` | 42:00-45:00 | 3:00 | 45:00 | No | Haflidi | Resume with decision/context/usage; cut at 44:15. |
+| `s18-memory` | 45:00-47:00 | 2:00 | 47:00 | No | Martin | Conversation, native memory, repo knowledge: different owners. |
+| `demo-c7` | 47:00-50:00 | 3:00 | 50:00 | No | Haflidi leads review; Martin drives handoff | Offline exits, diff, reviewer scope; cut at 49:15. |
+| `s20-consumer` | 50:00-53:00 | 3:00 | 53:00 | No | Martin | 0:00-0:30 diagram; 0:30-1:00 live reveal; 1:00-2:10 same-gates mapping; 2:10-3:00 boundary and honest audit caveat. |
+| `s21-limits` | 53:00-55:00 | 2:00 | 55:00 | No | Haflidi then Martin | Three rules for the next change; no new examples. Content is done at 55:00. |
+| `BUFFER` | 55:00-58:00 | 3:00 | 58:00 | **Yes** | Martin owns clock | Protected recovery window. No new content. Use only to absorb drift, slow down, or arrive calm at the close. |
+| `s22-questions` (close) | 58:00-60:00 | 2:00 | 60:00 | No | Martin closes; Haflidi available | Close with the same-gates handoff and day-2 loop. "Questions if time allows" only if still ahead. |
 
 Appendix slides (`a-cli-controls`, `a-automation`, `a-handoffs`, `a-integrations`, `a-squad-ops`, `a-evidence`, `a-online`, `a-security`, `a-prompts`, `a-bootstrap`, `a-use-cases`) stay after the timed deck and are used only after the close or in hallway conversations.
 
 ## Live chapter budgets and retimed cut lines
 
-| Chapter | Slot | Budget | Cut line | If not ready at cut line |
+The 75% rule still stands. The absolute cut-line clocks move earlier because the bridge slides are shorter.
+
+| Chapter | Slot | Budget | 75% cut line | If not ready at cut line |
 |---|---|---:|---|---|
-| C0 | 07:00-10:00 | 3:00 | 09:15 | State install/login stall, show fallback evidence, move to `s05-parallel`. |
-| C1 | 14:00-17:00 | 3:00 | 16:15 | Stop comparison at one C1-A consequence and use saved C1-B excerpt. |
-| C2 | 19:00-23:00 | 4:00 | 22:00 | Use saved approved plan; approval covers repo changes only. |
-| C3 | 24:00-28:00 | 4:00 | 27:00 | Stop live coder turn, use B1v2 eval excerpt, no causal or repeatability guarantee. |
-| C4 | 32:00-36:00 | 4:00 | 35:00 | Say lookup unavailable live, show fallback excerpt, do not pretend success. |
-| C5 | 36:00-41:00 | 5:00 | 39:45 | Stop mutation work, show saved before/seeded/repaired logs. |
-| C6 | 45:00-48:00 | 3:00 | 47:15 | Show decision file and state constraints directly. |
-| C7 | 50:00-53:00 | 3:00 | 52:15 | Show saved green exits and diff; do not run a second suite live. |
+| C0 | 05:30-08:30 | 3:00 | 07:45 | State install/login stall, show fallback evidence, move to `s05-parallel`. |
+| C1 | 12:30-15:30 | 3:00 | 14:45 | Stop comparison at one C1-A consequence and use saved C1-B excerpt. |
+| C2 | 17:30-21:30 | 4:00 | 20:30 | Use saved approved plan; approval covers repo changes only. |
+| C3 | 22:00-26:00 | 4:00 | 25:00 | Stop live coder turn, use B1v2 eval excerpt, no causal or repeatability guarantee. |
+| C4 | 29:30-33:30 | 4:00 | 32:30 | Say lookup unavailable live, show fallback excerpt, do not pretend success. |
+| C5 | 33:30-38:30 | 5:00 | 37:15 | Stop mutation work, show saved before/seeded/repaired logs. |
+| C6 | 42:00-45:00 | 3:00 | 44:15 | Show decision file and state constraints directly. |
+| C7 | 47:00-50:00 | 3:00 | 49:15 | Show saved green exits and diff; do not run a second suite live. |
 
-## Risk and slack
-
-Frank verdict: 60 minutes of content with only the 2-minute end buffer is viable only as a rehearsed show. It is not safe if the presenters treat the live chapters as exploratory. The biggest risks remain C0 (VM/Bastion/package/login), C3 (61-114s measured coder run plus handoffs), C4 (MCP/Docker transient), C5 (multi-step mutation/repair), and C7 (full suite plus reviewer handoff).
-
-Clock checkpoints:
+## Clock checkpoints
 
 | Checkpoint | Required clock | Meaning |
 |---|---|---|
-| After C0 | 10:00 | Bootstrap must be complete or fallback already shown. |
-| After C2 | 23:00 | Plan approval is done; if behind, take the first drop before C3/C4. |
-| After C5 | 41:00 | Repair story must be closed; if behind, drop `s18` depth before C6. |
-| At `s20-consumer` | 53:00 | Must start consumer slide; live reveal occurs 53:30-54:00. |
+| After C0 | 08:30 | Bootstrap must be complete or fallback already shown. |
+| After C2 | 21:30 | Plan approval is done; if behind, take reserve cut #1 immediately. |
+| After C5 | 38:30 | Repair story must be closed; if behind, take reserve cuts before C6. |
+| Start `s20-consumer` | 50:00 | Consumer slide must start here; live reveal is 50:30-51:00. |
+| Content complete | 55:00 | If content is still running, the recovery window is already being consumed. |
 | Start close | 58:00 | If not here, use `s22` as a hard stop, not a Q&A slide. |
 
-Pre-agreed drop order if behind. These drops are preferable to silently shortening C0-C7.
+## Recovery reserve after the 55:00 retime
 
-| Order | Slide / segment | Save | Drop action |
-|---:|---|---:|---|
-| 1 | `s21-limits` | 1:30 | Compress to 0:30: one sentence, three rules move into close. |
-| 2 | `s18-memory` | 1:00 | Keep only "three stores, three owners"; move taxonomy to appendix. |
-| 3 | `s15-proof` | 1:00 | Read evidence ladder only; move validation depth to appendix. |
-| 4 | `s13-test-gap` | 1:00 | Say B1 0/5 and B1v2 5/5; move B2/B3 detail to appendix. |
-| 5 | `s05-parallel` | 1:00 | Keep lane names only; skip detailed handoff examples. |
-| 6 | `s20-consumer` | 1:00 | Keep the 30s live reveal and 29/29 line; drop pipeline explanation. |
-| 7 | Live chapter fallback | variable | Use the chapter cut line and saved evidence; never start a second live attempt. |
+The real slack is the 55:00-58:00 window. The reserve is separate: it is the extra explanation depth that gets cut first if any chapter overruns. Keep the same first-cut logic as before, but apply it earlier against the 55:00 target.
 
-The 58:00-60:00 close may absorb small drift, but do not plan to spend it. If it is consumed, say one closing sentence and stop.
+| Order | Slide / segment | Save | New floor | What remains |
+|---:|---|---:|---:|---|
+| 1 | `s21-limits` | 1:30 | 0:30 | One sentence: three rules move into the close. |
+| 2 | `s18-memory` | 1:00 | 1:00 | Keep only "three stores, three owners." |
+| 3 | `s15-proof` | 1:00 | 2:00 | Keep the evidence ladder; move depth to appendix. |
+| 4 | `s13-test-gap` | 1:00 | 2:00 | Say B1 0/5 and B1v2 5/5; move B2/B3 detail to appendix. |
+| 5 | `s05-parallel` | 1:00 | 1:00 | Keep lane names only; skip detailed handoff examples. |
 
-## Pre-staged before the session
+That preserves the earlier 5:00 principle as a **minimum** reserve and, in practice, gives 5:30 if all five compressions are taken. I am not using that extra 0:30 to make the fit work; it is emergency-only.
 
-These are still required. If any item is missing, use fallback evidence rather than improvising.
+Rule: spend reserve cuts before you spend the 58:00 close. The close is still a real stop, not a dumping ground for overrun.
 
-- Presentation laptop on power; notifications off; timer visible; terminal font 16+; browser zoom checked at venue resolution.
-- Deck open locally and in presenter view; appendix navigation tested; speaker notes visible.
-- Demo sessions already open, named, and at clean checkpoints; native Copilot CLI starts with intended agent selected.
-- `/mcp` connected for required public documentation/registry tools; Docker Desktop running before Terraform MCP is needed.
-- Worktrees at known checkpoints; evidence folders already exist and contain no private identifiers in public material.
-- Clean demo VM running, reachable through Bastion, and left at the Windows Terminal PowerShell 7 profile.
-- Browser tab already open to `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; certificate warning accepted; app page loaded once.
-- Online app reveal verified: branded page, pipeline flow, serving pod name, and speakers section visible.
-- No subscription IDs, tenant IDs, private IPs, private paths, raw state, secrets, or private run URLs on screen.
+## Risk
 
-## s20-consumer live reveal (53:00-56:00)
+Frank verdict: yes, there is now genuine on-the-clock slack before the close. It is 3:00, exactly at 55:00-58:00, and it exists whether or not any reserve cuts are taken. That is the improvement Martin asked for.
+
+Residual risk is still medium:
+
+- **C0** can burn time on VM/Bastion/login friction.
+- **C3** still depends on a live authoring turn whose measured eval range was 61-114 seconds before operator narration and handoff.
+- **C4** still depends on MCP/Docker health.
+- **C5** is still the most intricate live validator chapter.
+- **C7** is still the easiest place to accidentally keep talking.
+
+If the presenters obey the cut lines, this should land safely. If they narrate past the cut lines, the new 3:00 window will help, but it will not save a drifting show forever.
+
+## s20-consumer live reveal (50:00-53:00)
 
 Keep the live reveal itself exactly 30 seconds.
 
 | Time inside slot | Wall clock | Action | Words |
 |---|---|---|---|
-| 0:00-0:30 | 53:00-53:30 | Point at consumer-to-module diagram | "Reuse the module code, not the private environment." |
-| 0:30-1:00 | 53:30-54:00 | Live reveal `https://aks-online-demo.swedencentral.cloudapp.azure.com/` | Show branded page, pipeline flow, serving pod name, and speakers section. |
-| 1:00-2:10 | 54:00-55:10 | State delivery gate and runtime evidence | PR to plan to human approval to apply; 29/29 outside-in runtime checks. |
-| 2:10-3:00 | 55:10-56:00 | State boundary | a-online and a-security are appendix/hallway depth, not main-flow slides. |
+| 0:00-0:30 | 50:00-50:30 | Point at consumer-to-module diagram | "Reuse the module code, not the private environment." |
+| 0:30-1:00 | 50:30-51:00 | Live reveal `https://aks-online-demo.swedencentral.cloudapp.azure.com/` | Show branded page, pipeline flow, serving pod name, and speakers section. |
+| 1:00-2:10 | 51:00-52:10 | State delivery gate and runtime evidence | PR to plan to human approval to apply; 29/29 outside-in runtime checks. |
+| 2:10-3:00 | 52:10-53:00 | State boundary | `a-online` and `a-security` are appendix/hallway depth, not main-flow slides. |
 
 Use "runtime check" or "runtime evidence". Do not use stronger certainty language.
 
@@ -149,7 +179,7 @@ Use "runtime check" or "runtime evidence". Do not use stronger certainty languag
 | Date | Owners | What | Done when |
 |---|---|---|---|
 | Fri 9 Oct | Martin drives; Haflidi checks and times | Rehearsal 1: slides plus all live chapters, timed. Replace every "estimate, time in rehearsal 1" entry in talk docs/runbooks with actual wall time. | Chapter actuals recorded; cut lines tested, not just discussed. |
-| Mon 12 Oct | Martin and Haflidi | Rehearsal 2: full 60-minute run against this new layout, including the 00:00-03:00 intro and 58:00-60:00 close. | `s20-consumer` starts at 53:00, close starts at 58:00, and the session ends by 60:00 without scheduled Q&A. |
+| Mon 12 Oct | Martin and Haflidi | Rehearsal 2: full 60-minute run against this layout. | `s20-consumer` starts at 50:00, planned content ends by 55:00, close starts at 58:00, and the session ends by 60:00 without scheduled Q&A. |
 | Tue 13 Oct | Martin and Haflidi | Dress rehearsal on presentation laptop; run preflight; recreate the clean C0 VM. | Presenter preflight green; clean VM verified; fallback evidence current. |
 | Wed 14 Oct T-2h | Martin owns environment; Haflidi owns demo surfaces | Open deck locally, test speaker notes, start/verify VM, verify Bastion, start Docker Desktop, connect `/mcp`, open named sessions, load app URL once, check terminal font and display. | No red preflight item; all fallback artifacts reachable without private paths on screen. |
 | Wed 14 Oct T-15m | Martin owns clock; Haflidi owns C0/C5 readiness | Re-run fast presenter checks, confirm app tab still loads, confirm VM/RDP still alive, verify clean terminal tabs, close notifications, start timer. | Ready to start; no package/login/setup work remains except deliberate C0 demo actions. |
@@ -183,34 +213,56 @@ Use "runtime check" or "runtime evidence". Do not use stronger certainty languag
 | Live CLI stalls | Use the slide's offline fallback line, name the missing live result, and move on at the slot end. |
 | Venue network down | Deck is local; skip live VM and Online app; appendix slides carry sanitized evidence. |
 | Demo VM unreachable | Use C0 fallback evidence; say the live VM path is unavailable and keep C0 to 3:00. |
-| Online app unreachable | Keep s20 diagram and state latest 29/29 runtime checks; use a-online only afterwards/hallway. |
-| Running long | Apply drop order first, then live chapter cut lines; preserve the 58:00 close if at all possible. |
+| Online app unreachable | Keep s20 diagram and state latest 29/29 runtime checks; use `a-online` only afterwards/hallway. |
+| Running long | Take reserve cuts first, then use chapter cut lines, then spend the 55:00-58:00 recovery window. Protect the 58:00 close if at all possible. |
 | One speaker unavailable | The other reads from talk-track; owners stay visible in the plan for rehearsal. |
 
 ## Exact change list for devrel and docs mirrors
 
-Devrel deck changes for the next round:
+### Devrel deck changes for the next round
 
-- Add an untimed legal/futures notice immediately after the opening/title page and before `s01-outcome`. It does not affect the timed contract.
-- Enrich `s04-layers` with the control spectrum as modes, not a maturity ladder in the same 05:00-06:00 slot: C0 setup/runway, C1 ask/compare, C2 plan, C3 route to agent, C4 tools and permissions, C5 edit/repair loop, C6 resume, C7 gated review; `-p` remains appendix automation. More automation is not better by default; human approvals remain at the gates.
-- Update `s20-consumer` to the same-gates wording and verified gate map only: PR → checks/scans (fmt, validate, TFLint, Trivy, Checkov) → review + protected main → Terraform plan → online environment approval → OIDC apply → runtime check. State that the audit is the PR/review/check/environment/Actions trace and note the documented single-maintainer/admin-override gap from the security case.
-- Update `s22-questions` close with the same-gates handoff and day-2 operations loop line; keep times unchanged.
-- `s01-outcome`: retime to 00:00-03:00 and make it the intro. Include both speakers properly, audience promise, takeaways, and honesty rule. Martin: role plus `opedal.tech`. Haflidi: exact live-page treatment, initials + GitHub only, no extra personal data. Consider reusing the live page speakers section as HTML/screenshot.
-- Reorder/retime main deck to the table above: C0 before C1; `s20-consumer` at 53:00-56:00; `s21-limits` at 56:00-58:00; `s22-questions` at 58:00-60:00 and retitled/rewritten as close plus "questions if time allows".
-- `s07-agent-setup` and `demo-c0`: add playbook bootstrap steps: prerequisites/install, `squad init`, `copilot --agent squad`, roster/charters, `squad doctor`.
-- `s05-parallel`: expand to explain the three agent lanes and why they are separate: writer, validator with fixed offline checks, reviewer in fresh context.
-- `s13-test-gap` / `a-prompts`: main-flow B1 -> B1v2 lesson must say ambiguous brief 0/5, oracle required separate asserts, clarified B1v2 5/5. No causal or repeatability guarantee; live run still has to pass.
-- `s20-consumer`: keep a 30s live reveal in notes at 53:30-54:00; show branded page, pipeline flow, serving pod name, and speakers section. Keep "runtime check/evidence" language.
-- Demo notes `demo-c0` through `demo-c7`: update absolute cut-line clocks to 09:15, 16:15, 22:00, 27:00, 35:00, 39:45, 47:15, 52:15.
-- Presentation tests/build assertions currently encoding old shape:
-  - `presentation\scripts\build.mjs`: enforce the 60-minute close-buffer contract and emit manifest fields `demoMinutes=29`, `introMinutes=3`, `explanationMinutes=26`, `protectedSlackMinutes=0`, `closeBufferMinutes=2`, `qaMinutes=0`, `nonDemoSlideMinutes=31`, `contentEnd='58:00'`, `closeStart='58:00'`, `timedSlideMinutes=60`, `questions='if time allows'`.
-  - `presentation\tests\check_deck.py`: assert the same close-buffer manifest, zero scheduled question words, close-slide appendix return, and navigation labels that do not assume a scheduled question period.
-  - Update README/deck ratio copy to `3 intro / 55 content / 2 close buffer`, with C0-C7 still 29 minutes inside the 55.
+- Keep the untimed legal/futures notice immediately after the opening/title page and before `s01-outcome`. It remains untimed.
+- Keep the current enrichment content:
+  - `s04-layers`: control spectrum as modes, not a maturity ladder.
+  - `s20-consumer`: same-gates wording and verified gate map only.
+  - `s22`: same-gates close and day-2 loop line.
+  - Rubber Duck appendix note, legal notice, and badges unchanged.
+- Retime the main deck to this contract:
+  - 00:00-03:00 intro.
+  - 03:00-55:00 planned content.
+  - 55:00-58:00 protected slack, no new story beats.
+  - 58:00-60:00 close.
+- Shorten the bridge slides to match the doc schedule:
+  - `s03-baseline` -> 03:00-03:30
+  - `s04-news` -> 03:30-04:00
+  - `s07-agent-setup` -> 05:00-05:30
+  - `s10-tool-roles` -> 21:30-22:00
+  - `s12-source-check` -> 26:00-26:30
+  - `s16-continuity` -> 41:30-42:00
+- Keep the live chapter lengths unchanged: C0-C7 = 3/3/4/4/4/5/3/3 minutes.
+- Update `s20-consumer` notes so the live reveal is 50:30-51:00 and the slot is 50:00-53:00.
+- Retain `s21-limits` as the final content slide, but script it to end at 55:00. The deck may visually hold the slide through 58:00 if needed, but those three minutes are protected slack, not additional narration.
+- Update demo notes `demo-c0` through `demo-c7` to absolute cut-line clocks: 07:45, 14:45, 20:30, 25:00, 32:30, 37:15, 44:15, 49:15.
+- Presentation build/test assertions must stop encoding the old zero-slack shape. Update them to the new contract and manifest language:
+  - `demoMinutes = 29`
+  - `introMinutes = 3`
+  - `explanationMinutes = 23`
+  - `protectedSlackMinutes = 3`
+  - `closeBufferMinutes = 2`
+  - `qaMinutes = 0`
+  - `nonDemoSlideMinutes = 28`
+  - `contentEnd = '55:00'`
+  - `closeStart = '58:00'`
+  - `mainFlowMinutes = 55`
+  - `timedSlideMinutes = 60`
+  - `questions = 'if time allows'`
+- Update README/deck ratio copy to `3 intro / 52 planned content before recovery / 3 protected slack / 2 close`, while still stating that the 29 demo minutes sit inside that planned content.
 
-Docs mirror changes for the next round:
+### Docs mirror changes for the next round
 
-- `talk-track.md`: mirror the full schedule and no scheduled Q&A. Intro must state speaker identities, takeaways, and honesty rule before C0.
-- `talking-points.md`: replace five-minute slack-bank language with the new drop order, retimed checkpoints, and "questions if time allows" close.
-- `demo-runbook.md`: reorder C0 before C1 if devrel reorders the deck; mirror retimed cut lines and C5 Haflidi-owned validator step.
-- `clean-machine-demo.md`: update C0 slot to 07:00-10:00 and cut line to 09:15; keep install stalls as fallback, not drama.
-- All talk docs: use "runtime check/evidence" and avoid stronger certainty language; keep a-online and a-security as appendix/hallway depth.
+- `talk-track.md`: mirror the new absolute clocks and the 55:00 content-stop. The bridge slides above become one-sentence beats, not full explanatory paragraphs.
+- `talking-points.md`: replace any "fit to 58:00 then cut if needed" language with the new rule: plan to 55:00, reserve 55:00-58:00 as true slack, then close.
+- `talking-points.md`: keep the reserve cuts in the same order (`s21`, `s18`, `s15`, `s13`, `s05`) and mark them as the first cuts if a chapter overruns.
+- `demo-runbook.md`: retime all chapter starts/cut lines to the earlier absolute clocks and keep the same fallback language.
+- `clean-machine-demo.md`: update C0 to 05:30-08:30, cut line 07:45.
+- All talk docs: keep "runtime check/evidence" wording, not stronger certainty language.
