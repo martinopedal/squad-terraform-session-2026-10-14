@@ -70,14 +70,14 @@ Catalog resolution and mocked command execution do not prove installer success o
 Open **PowerShell 7** in the VM and start with a dry run:
 
 ```powershell
-Set-Location C:\git\squad-terraform-session-2026-10-14
+Set-Location C:\src\squad-terraform-session-2026-10-14
 .\scripts\bootstrap-demo-vm.ps1 -WhatIf -SkipLogin -RepoPath "$HOME\demo\aks-module"
 ```
 
 Run the real bootstrap:
 
 ```powershell
-Set-Location C:\git\squad-terraform-session-2026-10-14
+Set-Location C:\src\squad-terraform-session-2026-10-14
 .\scripts\bootstrap-demo-vm.ps1 -RepoPath "$HOME\demo\aks-module"
 ```
 
