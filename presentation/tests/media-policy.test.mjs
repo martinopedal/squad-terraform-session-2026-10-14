@@ -19,7 +19,7 @@ const bannedStylePatterns = [
   [/\b(?:reuse the code, not the environment|ownership beats more agents|artifact, reason, and check belong together|more agents cannot vote a contract into correctness)\b/i, 'banned slogan phrase'],
   [/\b(?:runtime evidence, not hope|the honest answer:)\b/i, 'banned verdict phrase'],
   [/[—–]/, 'dash punctuation'],
-  [/^-\s+\*\*[^*]+\.\*\*/m, 'bold-lead bullet']
+  [/(?:^-\s+\*\*[^*]+\.\*\*|<li>\s*<strong>[^<]+\.\s*<\/strong>)/mi, 'bold-lead bullet']
 ];
 const slideSurfaces = slide => [
   ['title', slide.title],
