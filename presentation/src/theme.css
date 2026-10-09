@@ -248,6 +248,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .news-grid em { font-style: normal; color: inherit; font-size: 17px; line-height: 1.22; }
 .news-grid code { font-size: .86em; color: inherit; }
 .slide-news .source-links { gap: 12px; font-size: 12px; }
+#s04-news .news-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+#s04-news .news-grid > div { min-height: 88px; padding: 10px 12px; gap: 5px; }
+#s04-news .news-grid strong { font-size: 12px; }
+#s04-news .news-grid span { font-size: 18px; line-height: 1.08; }
+#s04-news .news-grid em { font-size: 13.5px; line-height: 1.12; }
+#s04-news .news-grid code { font-size: .82em; }
 
 .squad-timeline { display: grid; grid-template-columns: 1fr; gap: 12px; }
 .squad-timeline > div { display: grid; grid-template-columns: 130px 1fr; gap: 24px; align-items: center; min-height: 72px; border-left: 5px solid currentColor; border-top: 1px solid currentColor; padding: 14px 20px; }
