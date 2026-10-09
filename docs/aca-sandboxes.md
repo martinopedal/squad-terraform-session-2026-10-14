@@ -1,6 +1,6 @@
 # Azure Container Apps Sandboxes for this session
 
-Short verdict: feasible in the Corp landing zone, with one new Norway East resource group and a creates-only sandbox group deployment. The short live moment works. The official Copilot CLI plugin needs one extra preflight check because the plugin installed in a disabled state on this machine.
+Short verdict: sandbox execution checks succeeded in a Management-side group, not a validated Corp deployment. The intended Corp live moment remains gated until an approved IaC deployment and read-back in Corp confirm placement and effective policy compliance. The official Copilot CLI plugin needs one extra preflight check because the plugin installed in a disabled state on this machine.
 
 ## What it is
 
@@ -17,7 +17,7 @@ This talk already shows Copilot CLI and Squad helping with Terraform. ACA Sandbo
 ## Verified facts
 
 - Status: generally available in September 2026, after a June 2026 preview period
-- Regions verified from the Microsoft.App provider metadata in the Corp subscription include Norway East and Sweden Central
+- Observed sandbox group region: Norway East; availability and prerequisites for the intended Corp target still require verification
 - Required role: Container Apps SandboxGroup Data Owner for sandbox data-plane operations
 - Authentication: Microsoft Entra ID only
 - Networking: sandbox groups can attach to a delegated subnet with `Microsoft.App/sandboxGroups/vnetConnections`; no managed environment is required
@@ -28,14 +28,11 @@ This talk already shows Copilot CLI and Squad helping with Terraform. ACA Sandbo
 - Quota note from Learn: Sandboxes and Express are limited to 2,000 cores
 - Cost note from Learn: stopped sandboxes do not accrue CPU or memory charges; this runbook did not derive a bill-backed per-run amount from the public retail pricing APIs
 
-## What we deployed in Corp
+## Observed deployment and intended Corp gate
 
-- New resource group in Norway East for this demo only
-- One sandbox group deployed with ARM after a group-scope what-if showed a single create
-- No changes or destroys to any pre-existing resource
-- Data-plane role assigned only on the sandbox group scope
+Read-back on 9 October 2026 found a sandbox group in Norway East with provisioning state `Succeeded`. Its subscription is under Management > Platform, not Corp. `aca doctor` passed 9/9 checks, and the sandbox list was empty at that time. These observations establish the Management-side group's current status, not a Corp deployment or policy-compliance result.
 
-The final what-if showed one create for the sandbox group. The group deployment then succeeded in the same Norway East region used by the Squad on ACA side track.
+The Corp-only deployment requirement is unchanged. The intended live moment stays gated until an approved IaC deployment and read-back in Corp confirm the reviewed scope and effective policy compliance. The successful prior sandbox executions below do not close that gate.
 
 ## How this differs from the other sandbox stories
 
@@ -57,18 +54,20 @@ Run these before the room:
 2. Run `copilot plugin list`.
 3. If the plugin shows `[disabled]`, run `copilot plugin enable sandboxes@Azure-Container-Apps`.
 4. Install the `aca` CLI from Learn and verify `aca --help`.
-5. Confirm the sandbox group exists and `aca doctor` passes.
+5. Confirm the Corp deployment/read-back and policy gate above is met; confirm the sandbox group exists and `aca doctor` passes.
 6. Keep a pre-zipped copy of the module ready for upload.
 
-## Exact live prompts and the sanitized outcomes
+## Planned live prompt and scoped observed outcomes
 
-Prompt that matched the successful skill-based run from `C:\git\squad-terraform-session-2026-10-14\public`:
+Generic form of the prompt used for the successful skill-based Management-side run:
+
+Before reuse, the operator supplies the reviewed sandbox group, resource group, and module archive path for the approved scope, replacing `<reviewed-sandbox-group>`, `<reviewed-resource-group>`, and `<reviewed-module-archive.zip>`. The observed Management-side group does not satisfy the Corp-only requirement.
 
 ```text
-Use the aca-sandboxes skill. Add $env:USERPROFILE\.aca\bin to PATH when you invoke shell commands. In sandbox group sbg-squad-nic2026-corp-ne-002 and resource group rg-aca-sandboxes-corp-ne-002, create a fresh sandbox labeled name=livecopilot3 on the copilot disk with egress Deny and these allow rules only: *.hashicorp.com, registry.terraform.io, github.com, objects.githubusercontent.com, release-assets.githubusercontent.com, *.githubusercontent.com. Install Terraform 1.16.5 under /workspaces/bin. Upload C:\git\squad-terraform-session-2026-10-14\aca-sandboxes\module-upload.zip, unzip to /workspaces/module, run /workspaces/bin/terraform init -backend=false -input=false, /workspaces/bin/terraform validate -no-color, and /workspaces/bin/terraform test -test-directory=tests -no-color. Then print HTTP status for https://example.com and https://registry.terraform.io, report the sandbox id, and stop without deleting it.
+Use the aca-sandboxes skill. Add $env:USERPROFILE\.aca\bin to PATH when you invoke shell commands. In sandbox group <reviewed-sandbox-group> and resource group <reviewed-resource-group>, create a fresh sandbox labeled name=livecopilot3 on the copilot disk with egress Deny and these allow rules only: *.hashicorp.com, registry.terraform.io, github.com, objects.githubusercontent.com, release-assets.githubusercontent.com, *.githubusercontent.com. Install Terraform 1.16.5 under /workspaces/bin. Upload <reviewed-module-archive.zip>, unzip to /workspaces/module, run /workspaces/bin/terraform init -backend=false -input=false, /workspaces/bin/terraform validate -no-color, and /workspaces/bin/terraform test -test-directory=tests -no-color. Then print HTTP status for https://example.com and https://registry.terraform.io, report the sandbox id, and stop without deleting it.
 ```
 
-Sanitized outcome:
+Sanitized outcome from the recovered skill-driven Management-side session (execution success, not Corp acceptance):
 
 - `skill(aca-sandboxes)` was invoked
 - sandbox created on the `copilot` disk with default egress `Deny`
@@ -80,7 +79,9 @@ Sanitized outcome:
 - `https://example.com` returned HTTP 403
 - `https://registry.terraform.io` returned HTTP 200
 
-The same workflow also ran successfully from a fresh Copilot CLI session before the plugin was enabled. In that run, the agent fell back to the `aca` CLI directly after reporting that the skill was unavailable. That fallback is useful to keep in reserve.
+The same workflow also ran successfully in Management from a fresh Copilot CLI session before the plugin was enabled. In that run, the agent fell back to the `aca` CLI directly after reporting that the skill was unavailable. Both recovered sessions show successful initialization and validation, 10 passed and 0 failed tests, and the HTTP 200/403 observations. That fallback is useful to keep in reserve.
+
+These notes do not establish exact numeric process exit codes: the skill-driven session printed fields such as `INIT=True` because of local shell-variable expansion, not actual numeric exits. The fallback session explicitly did not identify the origin of HTTP 403. An observed 403 alone does not prove sandbox egress-policy enforcement or Azure Policy enforcement. Neither session validates Corp placement or effective policy compliance.
 
 ## Correct Terraform command for this module checkout
 
@@ -94,16 +95,16 @@ This repository's `-filter` form did not select the file correctly in our run. T
 
 ## Timing
 
-Two fresh Copilot CLI runs completed end to end:
+Two fresh Copilot CLI runs completed end to end in Management:
 
-- First fresh session: successful validation and egress proof, about 2:58 total
-- Second fresh session after enabling the plugin and tightening the prompt: successful validation and egress proof, about 1:47 total
+- First fresh session: successful validation and observed HTTP responses, about 2:58 total
+- Second fresh session after enabling the plugin and tightening the prompt: successful validation and observed HTTP responses, about 1:47 total
 
 The shell-only path was much faster after preflight. Create, upload, install Terraform, and run the checks fit comfortably inside a minute when driven directly with prepared `aca` commands. The Copilot-driven path was slower because the agent spent time discovering the newly installed tool and shaping shell commands.
 
 ## Recommended live use
 
-Use ACA Sandboxes as a short proof point, not as a new main chapter. Keep the live clip to:
+Once the Corp gate above is met, use ACA Sandboxes as a short execution proof point, not as a new main chapter. Keep the live clip to:
 
 1. one prompt
 2. one create
@@ -115,5 +116,5 @@ Use ACA Sandboxes as a short proof point, not as a new main chapter. Keep the li
 - If the plugin is disabled, enable it and retry once
 - If skill loading still fails, use the same flow through direct `aca` commands
 - If provider downloads fail, show the deny-by-default policy and explain the missing allow-list dependency
-- If the venue network is noisy, use the already-deployed sandbox group and a saved transcript excerpt with the sanitized outputs above
-- If Norway East is unavailable on the day, do not touch Pool A1 or the existing demo. Fall back to the talk-track block and the saved evidence
+- If the venue network is noisy, use only the approved Corp sandbox group after the gate above is met; otherwise show the saved Management-side transcript as labeled execution evidence, not a Corp deployment
+- If Norway East is unavailable on the day, do not touch existing infrastructure or the existing demo. Fall back to the talk-track block and the saved evidence, with its Management-side scope stated
