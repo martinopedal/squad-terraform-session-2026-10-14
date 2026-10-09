@@ -61,7 +61,7 @@ jobs:
           tflint --config=../../.tflint.hcl --no-color
       - name: Test the synthetic caller without Azure
         working-directory: examples/corp-existing
-        run: terraform test -filter=tests/example.tftest.hcl -var-file=terraform.tfvars.example -no-color
+        run: terraform test -var-file terraform.tfvars.example -no-color
 
   agent-setup:
     runs-on: ubuntu-latest

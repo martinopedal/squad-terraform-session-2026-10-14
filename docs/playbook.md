@@ -141,12 +141,14 @@ Get-ChildItem .github\agents\*.agent.md | Select-Object -ExpandProperty Name | S
 
 Expected result: `squad.agent.md`, `terraform-coder.agent.md`, `terraform-validator.agent.md`, and `terraform-reviewer.agent.md`. **Verified 2026-10-08.**
 
-Start Copilot CLI from the **session repo folder** or its checkpoint worktree. Do **not** start it from the coordinator/private folder.
+Start Copilot CLI from the **session repo folder**. For a live checkpoint chapter, open Copilot from that checkpoint worktree's repo folder.
 
 ```powershell
 cd C:\git\squad-terraform-session-2026-10-14\public   # or the checkpoint worktree for this session
 copilot --agent squad
 ```
+
+One-line check: `/agent` lists `terraform-coder`, `terraform-reviewer`, and `terraform-validator`. **Verified 2026-10-09.**
 
 Expected in `/agent`: `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, `terraform-validator` marked `project`. **Verified 2026-10-09.**
 

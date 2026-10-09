@@ -49,8 +49,15 @@ The exact package versions and lock file make the deck build reproducible. The l
 ```powershell
 npm ci --no-audit --no-fund
 npm run build
-npm test
 npm run preview   # refresh the GitHub preview images and gallery from the QA captures
+```
+
+Before `npm test`, create the local Python environment and install the QA requirements:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+npm test
 ```
 
 Edit `src\slides.mjs` for composition, `src\theme.css` for the fixed NIC 2026 template treatment, and `src\runtime.js` for presenter/media behavior. The build reads complete notes from `..\docs\talk-track.md`. Keep its stable slide headings. Diagrams are authored as static SVG in `src\diagrams.mjs` and inlined at build time, with no browser diagram renderer.
@@ -81,7 +88,7 @@ Long MP4 files are the documented exception to single-file delivery. Keep `index
 
 ## Check the build
 
-Use an isolated Python environment and the installed Edge browser:
+Use an isolated Python environment and the installed Edge browser. `npm test` expects `.\.venv\Scripts\python.exe` to exist in this directory:
 
 ```powershell
 python -m venv .venv

@@ -380,7 +380,7 @@ Check lint tflint @("--chdir=$m",'--config=.tflint.hcl','--no-color')
 Check module terraform @("-chdir=$m",'test','-no-color')
 Check example-init terraform @("-chdir=$e",'init','-backend=false','-input=false','-lockfile=readonly')
 Check example-validate terraform @("-chdir=$e",'validate','-no-color')
-Check example terraform @("-chdir=$e",'test','-no-color','-var-file=terraform.tfvars.example')
+Check example terraform @("-chdir=$e",'test','-var-file','terraform.tfvars.example','-no-color')
 Check diff git @('--no-pager','diff','--',$m)
 /diff
 /new
