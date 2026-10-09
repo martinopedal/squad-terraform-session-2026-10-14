@@ -734,6 +734,68 @@
 
         <section class="card">
           <div class="section-head">
+            <h2>Why each piece exists</h2>
+          </div>
+          <table class="repo-table">
+            <thead>
+              <tr>
+                <th>Piece</th>
+                <th>Why it exists</th>
+                <th>How to look into it</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>The clean demo VM</td>
+                <td>Shows native bootstrapping from zero: install Git, Copilot CLI, and Squad, then login and run <code>squad init</code> on a machine that never had them.</td>
+                <td><a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14/blob/main/docs/clean-machine-demo.md"><code>docs/clean-machine-demo.md</code></a><br><code>./scripts/Set-GuestLocalLogin.ps1 -UserName haflidi -FullName 'Haflidi (demo)'</code><br><code>./scripts/Connect-DemoVm.ps1 -LocalAccount</code></td>
+              </tr>
+              <tr>
+                <td>The three Copilot CLI agents</td>
+                <td><code>terraform-coder</code> makes the bounded Terraform change. <code>terraform-reviewer</code> does read-only independent review. <code>terraform-validator</code> runs the approved offline checks.</td>
+                <td>Start Copilot from the session repo folder, then use <code>/agent</code>.<br>Read <code>.github/agents/terraform-coder.agent.md</code>, <code>terraform-reviewer.agent.md</code>, and <code>terraform-validator.agent.md</code>.</td>
+              </tr>
+              <tr>
+                <td>Squad roles</td>
+                <td>The Squad coordinator routes work, enforces handoffs, and keeps reviewer gates. Lead scopes the change, reviewer checks the exact diff, security checks boundaries, Scribe records accepted decisions, and Fact Checker challenges claims.</td>
+                <td>Read <code>.squad/team.md</code> and <code>.squad/routing.md</code>.</td>
+              </tr>
+              <tr>
+                <td>MCP: Microsoft Learn</td>
+                <td>Fresh product documentation lookup for coder and reviewer. It supports current AKS and Azure rules in the live flow.</td>
+                <td>Use <code>/mcp</code> with coder or reviewer selected.<br>See <code>.github/agents/terraform-coder.agent.md</code> and <code>terraform-reviewer.agent.md</code>.</td>
+              </tr>
+              <tr>
+                <td>MCP: pinned Docker Terraform MCP</td>
+                <td>Public Terraform Registry facts for coder and reviewer. The repo docs say this demo uses the Docker-run Terraform MCP pinned by digest.</td>
+                <td>Use <code>/mcp</code> with coder or reviewer selected.<br>See <code>docs/demo-runbook.md</code>, <code>docs/playbook.md</code>, and the agent profiles.</td>
+              </tr>
+              <tr>
+                <td>MCP: optional hosted Terraform MCP</td>
+                <td>The playbook documents an optional user-level <code>terraform-hosted</code> HTTP server entry. The repo docs treat it as an optional hosted alternative to the Docker-run local Terraform MCP.</td>
+                <td>Check <code>/mcp</code> or <code>copilot mcp list --json</code> for <code>terraform</code> and <code>terraform-hosted</code>.<br>See <code>docs/playbook.md</code> for the exact add command.</td>
+              </tr>
+              <tr>
+                <td>MCP: Squad state bridge</td>
+                <td><code>squad init</code> writes <code>.mcp.json</code> for the <code>squad_state</code> MCP server so Squad can persist shared state and decisions.</td>
+                <td>Read <code>docs/clean-machine-demo.md</code> and <code>.github/agents/squad.agent.md</code>.<br>On a fresh init, inspect <code>.mcp.json</code>.</td>
+              </tr>
+              <tr>
+                <td>The pre-staged module</td>
+                <td>It keeps the live time on the agents, prompts, tests, and review path instead of first-time implementation. The repo presents a qualified module revision and a bounded live change.</td>
+                <td>Read the module at <a href="https://github.com/martinopedal/terraform-azapi-aks-automatic">martinopedal/terraform-azapi-aks-automatic</a>.<br><code>terraform test -filter=tests\contract.tftest.hcl -no-color</code><br><code>terraform test -filter=tests\example.tftest.hcl -var-file=terraform.tfvars.example -no-color</code></td>
+              </tr>
+              <tr>
+                <td>The pre-deployed Online environment</td>
+                <td>It gives the audience a finished, already validated result while the live session spends time on the agents and GitHub flow. The repo documents runtime proof at 29/29 PASS and a gated OIDC pipeline path.</td>
+                <td><a href="https://github.com/martinopedal/aks-automatic-demo-env">martinopedal/aks-automatic-demo-env</a><br><code>./scripts/Test-OnlineSecurity.ps1</code><br><a href="https://aks-online-demo.swedencentral.cloudapp.azure.com/">Live page</a> · GitHub Actions runs in the demo-env repo</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
             <h2>D. Your 4 actions this week</h2>
           </div>
           <ol class="action-list">
