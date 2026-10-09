@@ -677,28 +677,49 @@
           <div class="section-head">
             <h2>How we got to a secure, well-aligned cluster</h2>
           </div>
-          <ol class="steps">
-            <li class="step-card">
-              <h3>1. Start with a private-by-default Terraform contract</h3>
-              <p>We keep the module boundary clear. The caller owns providers, backend, and environment values.</p>
-            </li>
-            <li class="step-card">
-              <h3>2. Add tests and keep the same gates</h3>
-              <p>We make the change reviewable. We prove the contract with tests before anything moves forward.</p>
-            </li>
-            <li class="step-card">
-              <h3>3. Use GitHub controls</h3>
-              <p>We use pull requests, GHAS, required review, and protected <code>main</code>.</p>
-            </li>
-            <li class="step-card">
-              <h3>4. Deploy through OIDC and an approved pipeline</h3>
-              <p>The consumer repo shows the gated path. The deployment comes from reviewed GitHub workflow runs, not from a laptop.</p>
-            </li>
-            <li class="step-card">
-              <h3>5. Finish with runtime checks</h3>
-              <p>The result is the cluster and page. The final runtime evidence is 29/29 checks.</p>
-            </li>
-          </ol>
+          <p class="lede">This is the short path. The table says where Squad and GitHub Copilot helped, and what a human still decided.</p>
+          <table class="repo-table">
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>What was built</th>
+                <th>Who/what helped</th>
+                <th>What the human decided</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. Private-by-default contract</td>
+                <td>A Terraform module boundary where the module owns resources, inputs, outputs, and provider requirements, while the caller owns provider, backend, auth, state, and environment values.</td>
+                <td>Squad coordinated responsibilities and one owner per shared surface. Copilot CLI Plan mode was used before edits. The <code>terraform-coder</code> lane was the writer lane for bounded Terraform changes.</td>
+                <td>The human approved the repo-only plan and kept the boundary clear before implementation.</td>
+              </tr>
+              <tr>
+                <td>2. Tests and repeatable checks</td>
+                <td>Contract tests, a deliberate mutation-and-repair loop, and a repeatable prompt path for the main demo.</td>
+                <td>The <code>terraform-validator</code> lane ran the fixed offline checks. The <code>terraform-reviewer</code> lane reviewed the exact diff in a fresh context. The current repeatability checkpoint is B1v2 5/5, B2 5/5, and B3 4/5.</td>
+                <td>The human decided which brief to trust for the live story, kept the oracle rules visible, and accepted only a specific reviewed artifact.</td>
+              </tr>
+              <tr>
+                <td>3. GitHub security and review controls</td>
+                <td>A pull-request path with scans and review on the module and consumer repos.</td>
+                <td>GitHub controls provide CodeQL, secret scanning with push protection, Dependabot security updates, protected <code>main</code>, and required review. The security appendix says AI also found silent gaps that scanners did not raise as alerts.</td>
+                <td>The human still reviewed the real change, kept the remaining gaps visible, and decided what was acceptable to merge.</td>
+              </tr>
+              <tr>
+                <td>4. Approved pipeline delivery</td>
+                <td>A gated deployment path from reviewed code to Azure through the consumer repo.</td>
+                <td>GitHub OIDC provided Azure access without a stored cloud secret. Squad records the reason for later handoff, and the talk track shows Scribe merging accepted public decisions into the shared decision ledger. Microsoft Learn through MCP supplied product rules such as Base-to-Automatic migration not being supported.</td>
+                <td>The human approved the environment gate, compared the plan, and decided when Azure writes were allowed.</td>
+              </tr>
+              <tr>
+                <td>5. Runtime proof</td>
+                <td>The cluster and the public page <code>AKS Automatic | NIC 2026 demo</code>.</td>
+                <td>The runtime check step fails unless the hostname returns HTTPS 200, HTTP redirects, and DNS resolves to the App Routing controller Service address. The current Online read-back result is 29/29 PASS.</td>
+                <td>The human decided that runtime evidence, not local success alone, was the acceptance point for the deployed outcome.</td>
+              </tr>
+            </tbody>
+          </table>
         </section>
 
         <section class="card">
