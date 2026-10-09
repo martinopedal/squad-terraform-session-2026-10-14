@@ -5,6 +5,7 @@ import { dirname, join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { marked } from 'marked';
 import { title, slides, escape, renderSection, applyNoteFactOverrides } from '../src/slides.mjs';
+import { shortTitle, createShortSlides } from '../src/short-slides.mjs';
 import { resolveMediaEntry } from './media-policy.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -12,8 +13,22 @@ const read = async path => (await readFile(join(root, path), 'utf8')).replaceAll
 const assetData = async (path, type) => `data:${type};base64,${(await readFile(join(root, path))).toString('base64')}`;
 const fontFace = async (weight, file) =>
   `@font-face{font-family:'Roboto';font-style:normal;font-weight:${weight};font-display:block;src:url("${await assetData(file, 'font/woff2')}") format('woff2');}`;
-const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, core, coreCSS, highlight, highlightCSS, notes, licenses,
-  nicLogoInk, nicLogoCyan, nicLogoLargeInk, roboto400, roboto500, roboto700, cascadiaCode] = await Promise.all([
+const safeSlideNumberClass = `class w{constructor(e){this.Reveal=e}render(){this.element=document.createElement("div"),this.element.className="slide-number",this.Reveal.getRevealElement().appendChild(this.element)}configure(e,t){let i="none";e.slideNumber&&!this.Reveal.isPrintView()&&("all"===e.showSlideNumber||"speaker"===e.showSlideNumber&&this.Reveal.isSpeakerNotes())&&(i="block"),this.element.style.display=i}update(){if(this.Reveal.getConfig().slideNumber&&this.element){const e=this.getSlideNumberNode();this.element.replaceChildren(e)}}getSlideNumberParts(e=this.Reveal.getCurrentSlide()){let t,i=this.Reveal.getConfig(),s="h.v";if("function"==typeof i.slideNumber)t=i.slideNumber(e);else{"string"==typeof i.slideNumber&&(s=i.slideNumber),/c/.test(s)||1!==this.Reveal.getHorizontalSlides().length||(s="c");let a=e&&"uncounted"===e.dataset.visibility?0:1;switch(t=[],s){case"c":t.push(this.Reveal.getSlidePastCount(e)+a);break;case"c/t":t.push(this.Reveal.getSlidePastCount(e)+a,"/",this.Reveal.getTotalSlides());break;default:{let i=this.Reveal.getIndices(e);t.push(i.h+a);let n="h/v"===s?"/":".";this.Reveal.isVerticalSlide(e)&&t.push(n,i.v+1)}}}return{first:t[0],delimiter:t[1],second:t[2],href:"#"+this.Reveal.location.getHash(e)}}getSlideNumber(e=this.Reveal.getCurrentSlide()){const{first:t,delimiter:i,second:s,href:a}=this.getSlideNumberParts(e);return this.formatNumber(t,i,s,a)}getSlideNumberNode(e=this.Reveal.getCurrentSlide()){const{first:t,delimiter:i,second:s,href:a}=this.getSlideNumberParts(e),n=document.createElement("a");n.setAttribute("href",a);const r=document.createElement("span");if(r.className="slide-number-a",r.textContent=String(t),n.appendChild(r),"number"==typeof s&&!isNaN(s)){const e=document.createElement("span");e.className="slide-number-delimiter",e.textContent=String(i),n.appendChild(e);const t=document.createElement("span");t.className="slide-number-b",t.textContent=String(s),n.appendChild(t)}return n}formatNumber(e,t,i,s="#"+this.Reveal.location.getHash()){return"number"!=typeof i||isNaN(i)?\`<a href="\${s}">\n\t\t\t\t\t<span class="slide-number-a">\${e}</span>\n\t\t\t\t\t</a>\`:\`<a href="\${s}">\n\t\t\t\t\t<span class="slide-number-a">\${e}</span>\n\t\t\t\t\t<span class="slide-number-delimiter">\${t}</span>\n\t\t\t\t\t<span class="slide-number-b">\${i}</span>\n\t\t\t\t\t</a>\`}destroy(){this.element.remove()}}`;
+const sanitizeRevealCore = value => {
+  const slideNumberPattern = /class w\{constructor\(e\)\{this\.Reveal=e\}[\s\S]*?destroy\(\)\{this\.element\.remove\(\)\}\}/;
+  if (!slideNumberPattern.test(value)) throw new Error('Reveal slide-number implementation changed; review the safe replacement.');
+  return value
+    .replace(slideNumberPattern, safeSlideNumberClass)
+    .replaceAll('e.setAttribute("src",e.getAttribute("data-src"))', 'e.setAttribute("src","")')
+    .replaceAll('i.setAttribute("src",t)', 'i.setAttribute("src","")');
+};
+const sanitizeHighlightBundle = value => {
+  const sanitized = value.replaceAll('A-z', 'A-Za-z');
+  if (sanitized.includes('A-z')) throw new Error('Highlight bundle still contains an A-z-style range.');
+  return sanitized;
+};
+const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, coreRaw, coreCSS, highlightRaw, highlightCSS, notes, licenses,
+  nicLogoInk, nicLogoCyan, nicLogoLargeInk, martinPhoto, haflidiPhoto, roboto400, roboto500, roboto700, cascadiaCode] = await Promise.all([
   read('../docs/talk-track.md'), read('../docs/sessionize.md'), read('src/theme.css'), read('src/runtime.js'),
   read('src/version.json'), read('src/media.json'), read('src/evidence.json'),
   read('node_modules/reveal.js/dist/reveal.js'), read('node_modules/reveal.js/dist/reveal.css'),
@@ -22,6 +37,8 @@ const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, c
   assetData('src/assets/nic26-logo-ink.png', 'image/png'),
   assetData('src/assets/nic26-logo-cyan.png', 'image/png'),
   assetData('src/assets/nic26-logo-large-ink.png', 'image/png'),
+  assetData('src/assets/speakers/martin.jpg', 'image/jpeg'),
+  assetData('src/assets/speakers/haflidi.jpg', 'image/jpeg'),
   fontFace(400, 'node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2'),
   fontFace(500, 'node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2'),
   fontFace(700, 'node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2'),
@@ -29,6 +46,8 @@ const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, c
 ]);
 const fontCSS = roboto400 + roboto500 + roboto700 + cascadiaCode.replaceAll("font-family:'Roboto'", "font-family:'Cascadia Code'");
 const assetCSS = `:root{--nic-logo-ink:url("${nicLogoInk}");--nic-logo-cyan:url("${nicLogoCyan}");--nic-logo-large-ink:url("${nicLogoLargeInk}");}`;
+const core = sanitizeRevealCore(coreRaw);
+const highlight = sanitizeHighlightBundle(highlightRaw);
 const version = JSON.parse(versionText);
 const media = JSON.parse(mediaText);
 const evidence = JSON.parse(evidenceText);
@@ -126,6 +145,15 @@ const build = {
   runtime: 'reveal.js 5.2.1', highlight: `highlight.js ${highlightVersion} (BSD-3-Clause)`,
   generatedAt: new Date().toISOString()
 };
+const shortSlides = createShortSlides({ martinPhoto, haflidiPhoto });
+const shortBuild = {
+  version: version.version,
+  variant: 'short',
+  slideCount: shortSlides.length,
+  runtime: 'reveal.js 5.2.1',
+  highlight: `highlight.js ${highlightVersion} (BSD-3-Clause)`,
+  generatedAt: build.generatedAt
+};
 const scriptTag = (label, value) => `<script data-bundle="${label}">${value.replace(/\/\/# sourceMappingURL=.*$/gm, '').replace(/<\/script/gi, '<\\/script')}</script>`;
 const navLink = slide => `<a href="#/${slide.id}" data-nav="${slide.id}">${escape(slide.chapter ? slide.chapter + ': ' + slide.title : slide.title)}</a>`;
 const overviewIDs = ['s01-outcome', 's04-news', 's04-layers', 's07-agent-setup', 's06-contract', 's15-proof', 's20-consumer', 's22-questions'];
@@ -134,13 +162,21 @@ const navigation = `<dialog class="navigation-dialog" aria-labelledby="navigatio
   <div><h3>Live demo chapters</h3>${slides.filter(slide => slide.chapter).map(navLink).join('')}</div>
   <div><h3>Optional references</h3>${slides.filter(slide => slide.id.startsWith('a-')).map(navLink).join('')}</div></div>
   <p class="navigation-help">Arrow keys: slides and fragments. S: speaker notes. Escape: overview or close this menu. N: this menu.</p></dialog>`;
+const renderNotes = (slide, rawNotes) => {
+  const completeNotes = marked.parse(rawNotes);
+  return slide.id.startsWith('a-') ? completeNotes : completeNotes.replace(/<blockquote>([\s\S]*?)<\/blockquote>/g,
+    '<details class="operator-cues"><summary>Operator cues and timing</summary><blockquote>$1</blockquote></details>');
+};
 const sections = slides.map((slide, index) => {
   const rawNotes = slide.preshow ? (slide.notes || '') : (slide.notes || blocks.get(slide.id) || '');
-  const completeNotes = marked.parse(rawNotes);
-  const noteHTML = slide.id.startsWith('a-') ? completeNotes : completeNotes.replace(/<blockquote>([\s\S]*?)<\/blockquote>/g,
-    '<details class="operator-cues"><summary>Operator cues and timing</summary><blockquote>$1</blockquote></details>');
+  const noteHTML = renderNotes(slide, rawNotes);
   return renderSection(slide, index, applyNoteFactOverrides(slide.id, noteHTML), evidence, media);
 }).join('\n');
+const shortNavigation = `<dialog class="navigation-dialog" aria-labelledby="navigation-title"><header><h2 id="navigation-title">Go to a short-deck slide</h2><button type="button">Close</button></header>
+  <div class="navigation-columns"><div><h3>Short deck</h3>${shortSlides.map(navLink).join('')}</div></div>
+  <p class="navigation-help">Arrow keys: slides. S: speaker notes. Escape: overview or close this menu. N: this menu.</p></dialog>`;
+const shortSections = shortSlides.map((slide, index) =>
+  renderSection(slide, index, renderNotes(slide, slide.notes || ''), evidence, media)).join('\n');
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escape(title)}</title>
@@ -170,12 +206,45 @@ ${scriptTag('notes', notes)}
 ${scriptTag('metadata', `window.presentationBuild = ${JSON.stringify(build).replaceAll('<', '\\u003c')};`)}
 ${scriptTag('presenter', runtime)}
 </body></html>`;
+const shortHtml = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${escape(shortTitle)}</title>
+<!-- Document version: ${version.version} (${version.status})
+Short deck build generated beside the full presentation.
+Built with reveal.js 5.2.1 (MIT), highlight.js ${highlightVersion} (BSD-3-Clause), RevealHighlight and RevealNotes bundled with Reveal 5.2.1.
+-->
+<!--
+${licenses}
+-->
+<meta name="author" content="Martin Opedal; Haflidi Fridthjofsson">
+<meta name="description" content="Short conference deck for the Copilot CLI and Squad Terraform session.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2398F8FE'/%3E%3Ctext x='8' y='42' font-family='Arial,sans-serif' font-size='24' fill='%231A1B1B'%3ENIC%3C/text%3E%3C/svg%3E">
+<style data-bundle="reveal-css">${coreCSS.replace(/\/\*# sourceMappingURL=.*?\*\//g, '')}</style>
+<style data-bundle="highlight-css">${highlightCSS}</style><style data-bundle="roboto-fonts">${fontCSS}</style><style data-bundle="nic-assets">${assetCSS}</style><style data-bundle="nic-theme">${theme}</style>
+</head><body>
+<nav class="presentation-tools" aria-label="Presenter controls"><button id="open-notes" type="button" aria-keyshortcuts="S">Speaker notes</button><button id="open-navigation" type="button" aria-haspopup="dialog" aria-keyshortcuts="N">Slides</button></nav>
+<main class="reveal" aria-label="Short conference presentation"><div class="slides">${shortSections}</div></main>
+${shortNavigation}
+<p id="navigation-status" class="visually-hidden" aria-live="polite" aria-atomic="true"></p>
+<p id="runtime-error" class="runtime-error" role="alert" hidden></p>
+${scriptTag('reveal', core)}
+${scriptTag('highlight', highlight)}
+${scriptTag('notes', notes)}
+${scriptTag('metadata', `window.presentationBuild = ${JSON.stringify(shortBuild).replaceAll('<', '\\u003c')};`)}
+${scriptTag('presenter', runtime)}
+</body></html>`;
 await mkdir(join(root, 'qa'), { recursive: true });
 await mkdir(join(root, 'media'), { recursive: true });
+await mkdir(join(root, 'short'), { recursive: true });
 await writeFile(join(root, 'index.html'), html, 'utf8');
+await writeFile(join(root, 'short/index.html'), shortHtml, 'utf8');
 await writeFile(join(root, 'qa/build-manifest.json'), JSON.stringify({
   ...build, htmlBytes: Buffer.byteLength(html), htmlSHA256: createHash('sha256').update(html).digest('hex')
+}, null, 2) + '\n');
+await writeFile(join(root, 'short/build-manifest.json'), JSON.stringify({
+  ...shortBuild, htmlBytes: Buffer.byteLength(shortHtml), htmlSHA256: createHash('sha256').update(shortHtml).digest('hex')
 }, null, 2) + '\n');
 console.log(`Built index.html: 2 pre-show + 26 timed main + 11 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} scheduled Q&A words.`);
 console.log('Timing 3 intro / 29 demo / 23 explanation / 3 protected slack / 2 close buffer; questions if time allows.');
 console.log(`Sessionize: ${descriptionWords}-word description; ${pitchWords}-word pitch. HTML ${(Buffer.byteLength(html) / 1024).toFixed(0)} KiB.`);
+console.log(`Built short/index.html: ${shortSlides.length} slides. HTML ${(Buffer.byteLength(shortHtml) / 1024).toFixed(0)} KiB.`);

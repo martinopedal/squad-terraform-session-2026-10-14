@@ -46,4 +46,4 @@ Keep backend settings and OIDC configuration in the private root/workflow. Separ
 
 Local mocks and static checks do not establish Azure compliance. Before deployment, verify target parentage, inherited policy assignments and parameters, exclusions/exemptions, and the actual plan. After separately authorized apply, read back the cluster, connectivity, diagnostics, and policy results.
 
-Keep real inputs, state, plans, credentials, internal evidence, and raw recordings out of public repositories and clips. Use local sanitized takes without redeploying the platform. Agree the budget, expiry, and cleanup procedure before any cloud deployment.
+Keep real inputs, state, plans, credentials, internal evidence, and raw media captures out of public repositories and clips. Use sanitized public evidence without redeploying the platform. Agree the budget, expiry, and cleanup procedure before any cloud deployment.

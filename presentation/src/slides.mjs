@@ -57,6 +57,32 @@ const squad101 = source('Squad v1.0.1', 'https://github.com/bradygaster/squad/re
 const squadHelp = source('Squad setup skill', '../.github/skills/squad-help/SKILL.md');
 const cliInstall = source('Install Copilot CLI', 'https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-cli');
 const cleanMachine = source('Clean-machine runbook', '../docs/clean-machine-demo.md');
+export const speakerProfiles = [
+  {
+    key: 'martin',
+    initials: 'MO',
+    name: 'Martin Opedal',
+    title: 'Enterprise Cloud Solution Architect, Microsoft',
+    links: [
+      { label: 'opedal.tech', url: 'https://www.opedal.tech' },
+      { label: 'LinkedIn', url: 'https://www.linkedin.com/in/martin-opedal' },
+      { label: 'GitHub', url: 'https://github.com/martinopedal' }
+    ]
+  },
+  {
+    key: 'haflidi',
+    initials: 'HF',
+    name: 'Haflidi Fridthjofsson',
+    title: 'Sr Cloud Solution Architect, Microsoft',
+    links: [
+      { label: 'azureviking.com', url: 'https://azureviking.com' },
+      { label: 'LinkedIn', url: 'https://www.linkedin.com/in/haflidif' },
+      { label: 'GitHub', url: 'https://github.com/haflidif' }
+    ]
+  }
+];
+const [martinProfile, haflidiProfile] = speakerProfiles;
+export const gateMapText = 'PR → checks/scans (fmt, validate, TFLint, Trivy, Checkov) → review + protected main → Terraform plan → online environment approval → OIDC apply → runtime check';
 const small = text => `<p class="supporting">${text}</p>`;
 const row = (label, text, detail = '') => `<div class="reference-row"><div><h3>${label}</h3>${detail ? small(detail) : ''}</div><p>${text}</p></div>`;
 export const featureLabels = {
@@ -493,8 +519,8 @@ export const slides = [
       <p class="honesty-rule"><strong>Honesty rule:</strong> live terminal and browser work first; prepared checkpoints, inherited module code, and earlier-run evidence are disclosed fallbacks.</p>
       <p class="session-meta">October 14, 2026 / 10:00-11:00 / Room 6</p></div>
       <div class="live-speakers" aria-label="Speakers, recreated from the live demo page without external requests">
-        <div class="live-speaker-card martin"><span class="speaker-initials">MO</span><div><h3>Martin Opedal</h3><p>Enterprise Cloud Solution Architect, Microsoft</p><div class="speaker-links"><a href="https://www.opedal.tech">opedal.tech</a></div></div></div>
-        <div class="live-speaker-card"><img class="speaker-photo" src="../haflidi.jpg" alt="Haflidi Fridthjofsson"><div><h3>Haflidi Fridthjofsson</h3><p>Sr Cloud Solution Architect, Microsoft</p><div class="speaker-links"><a href="https://azureviking.com">azureviking.com</a><a href="https://www.linkedin.com/in/haflidif">LinkedIn</a><a href="https://github.com/haflidif">@haflidif</a></div></div></div>
+        <div class="live-speaker-card martin"><span class="speaker-initials">${martinProfile.initials}</span><div><h3>${martinProfile.name}</h3><p>${martinProfile.title}</p><div class="speaker-links"><a href="${martinProfile.links[0].url}">${martinProfile.links[0].label}</a></div></div></div>
+        <div class="live-speaker-card"><img class="speaker-photo" src="../haflidi.jpg" alt="${haflidiProfile.name}"><div><h3>${haflidiProfile.name}</h3><p>${haflidiProfile.title}</p><div class="speaker-links"><a href="${haflidiProfile.links[0].url}">${haflidiProfile.links[0].label}</a><a href="${haflidiProfile.links[1].url}">${haflidiProfile.links[1].label}</a><a href="${haflidiProfile.links[2].url}">@haflidif</a></div></div></div>
       </div></div>`
   },
   {
@@ -644,7 +670,7 @@ export const slides = [
     tip: 'Keep the live reveal to 50:30-51:00, then explain gate, evidence, and boundary.',
     content: `${fig(consumption())}<div class="consumer-reveal"><p class="online-url">https://aks-online-demo.swedencentral.cloudapp.azure.com/</p>
       <p>Whether a change is human-authored or agent-assisted, it goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail.</p>
-      <p class="gate-map">PR → checks/scans (fmt, validate, TFLint, Trivy, Checkov) → review + protected main → Terraform plan → online environment approval → OIDC apply → runtime check</p></div>
+      <p class="gate-map">${gateMapText}</p></div>
       <p class="status-line"><span class="status pending">Consumer runtime evidence</span>Private inputs, state, identities, and run URLs stay out.</p>`
   },
   {

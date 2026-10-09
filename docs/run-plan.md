@@ -6,11 +6,11 @@ Frank verdict: this redesign finally creates real on-the-clock slack before the 
 
 Decision: use one visible recovery window at 55:00-58:00, not many tiny buffers between chapters. Reason: a single hard buffer is easier to use live, easier to defend when a demo slips, and clearer for both presenters than sprinkling 15-30 second pockets that will be spent without noticing.
 
-Decision: keep all verified enrichment added in the 0.21.0 deck round and carried into the current 0.21.1 deck. The control spectrum in `s04-layers`, same-gates framing, Rubber Duck appendix note, legal notice, and feature badges stay. The time comes from trimming bridge narration, not from removing enriched content.
+Decision: keep all verified enrichment added in the 0.21.0 deck round and carried into the current 0.21.5 deck. The control spectrum in `s04-layers`, same-gates framing, Rubber Duck appendix note, legal notice, and feature badges stay. The time comes from trimming bridge narration, not from removing enriched content.
 
 Decision: reuse `s01-outcome` as the 00:00-03:00 intro instead of adding a new `s00-intro`. Reason: it already carries the outcome and speaker visual, and a new slide would add navigation/test churn without improving the story.
 
-Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.21.1, brand/wording fixes already in), prior docs from `origin/docs/oct8-eval-and-hostname`, `origin/docs/playbook:docs/playbook.md`, TEAM ROOT `demo\eval-20261008\results.md`, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout.
+Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.21.5, brand/wording fixes already in), prior docs from `origin/docs/oct8-eval-and-hostname`, `origin/docs/playbook:docs/playbook.md`, TEAM ROOT `demo\eval-20261008\results.md`, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout.
 
 ## Evidence used for timing
 

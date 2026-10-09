@@ -1,0 +1,10 @@
+{
+  "version": "0.21.6",
+  "variant": "short",
+  "slideCount": 5,
+  "runtime": "reveal.js 5.2.1",
+  "highlight": "highlight.js 11.9.0 (BSD-3-Clause)",
+  "generatedAt": "2026-10-09T14:47:29.625Z",
+  "htmlBytes": 1811217,
+  "htmlSHA256": "143fda68f13f814b4d11b38006fab52f30a62a867eb480c474b81023b200052c"
+}

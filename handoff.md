@@ -4,13 +4,14 @@ Updated October 9, 2026. This file describes the public deliverables and the rem
 
 ## Current result
 
-- Reveal.js presentation version **0.21.1**. Presentation metadata reports **39 slides total**, including the untimed legal/pre-show slide, the timed main flow, and the appendix.
+- Reveal.js presentation version **0.21.5**. Presentation metadata reports **39 slides total**, including the untimed legal/pre-show slide, the timed main flow, and the appendix.
+- A five-slide companion deck is built at `presentation\short\index.html`.
 - Current delivery contract: **3:00 intro; planned content to about 55:00; 55:00-58:00 protected recovery block; 58:00-60:00 close**. The planned content includes **29:00 of live C0-C7 demo chapters** and the rest as live explanation. Questions are only if time allows. There is no scheduled Q&A block. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
-- Live-demo rule: **C0-C7 are live**, with optional reviewed fallback evidence if a chapter fails live. Recordings are not a dependency.
+- Live-demo rule: **C0-C7 are live**, with optional reviewed fallback evidence if a chapter fails live.
 - Sessionize copy, feature guide, prompt pack, repeatability eval, and the C0-C7 operator runbook are present in the public repository.
 - Public reusable Terraform module and synthetic caller remain locally qualified and privately Azure-validated through IaC.
 
-Native profile selection and full human rehearsal remain separate verification gates. Optional fallback evidence may still be added later, but the live-first contract does not depend on recordings.
+Native profile selection and full human rehearsal remain separate verification gates. Optional fallback evidence may still be refreshed later, but the live-first contract stays unchanged.
 
 ## Public locations
 
@@ -26,6 +27,7 @@ Native profile selection and full human rehearsal remain separate verification g
 - [C0-C7 demo runbook](docs/demo-runbook.md)
 - [Run plan: countdown, run sheet, preflight](docs/run-plan.md)
 - [C0 clean-machine demo](docs/clean-machine-demo.md)
+- [Bootstrap guide](docs/bootstrap.md)
 
 The module is pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. Its 35-file Git tree is `068e88ecc484ba4b4c4353653c1be7a99e8b5ab8`. The copy under `terraform/modules/aks-automatic-corp` must retain that same tree.
 
@@ -40,7 +42,7 @@ The module is pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. Its 35-file 
 | Presentation checks | Ten media-policy tests, 99 browser/content checks, and slide/fragment captures across two resolutions. The updated evidence slide was visually inspected. |
 | Hosted module CI | Terraform matrix run 36990206303 passed at b7133679a89b1e2b36677400d659a03907c0f3f6; native agent setup passed run 37286068987 at 00787f59ac19e3db0c3869a96ff45805c6cb523d; final module run 37286237657 passed at 02e10e56bc15cc30c3193dce3ddc8e608cb87daf; Azure-validation docs release run 37305768318 passed at b01256eb9b1ea6046b9bb8a403662f724a7b6fa7. |
 | Azure | **Privately validated.** Private IaC PR workflow planned, environment-approved, applied, and read back runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized public facts only. |
-| Recordings | Genuine clean runs are still required; no custom viewer footage is accepted. |
+| Short deck | Five slides build from the same pinned runtime, theme, and public source links. |
 
 See [the module evidence summary](terraform/modules/aks-automatic-corp/VALIDATION.md). Local mocks do not establish private DNS, firewall routing, RBAC, policy compliance, or Azure service acceptance.
 
@@ -83,19 +85,11 @@ Run each command separately, inspect the exit code, and stop on failure. Initial
 
 Terraform 1.14.8 is a declared minimum and is covered by hosted Linux Terraform matrix run 36990206303 at b7133679a89b1e2b36677400d659a03907c0f3f6, alongside Terraform 1.16.4. The native agent-setup release published the module first, verified the agent-setup job in run 37286068987, and re-verified the final module documentation commit in run 37286237657. This Azure-validation release published the module first again and verified run 37305768318 before mirroring the module into this session repository. Do not claim Azure acceptance from credential-free checks alone; cite the separate private IaC validation.
 
-## Recording decision
-
-The user approved **build first, then record a genuine clean run**. Stay in the normal Copilot CLI shell with Squad selected. Disclose the prepared checkpoint and record actual new execution, not a reconstruction presented as the first implementation.
-
-Direct FFmpeg `gdigrab` capture of the GPU terminal produced black frames. Use an accepted normal window recorder after a real frame/motion check. Do not reopen the retired custom artifact viewer, capture unrelated desktop content, or auto-approve CLI permissions.
-
-Follow `docs/demo-runbook.md`. Add only genuinely reviewed footage through `presentation/src/media.json`; preserve its native-surface, selected-agent, take-ID, and content-review requirements.
-
 ## Azure and private integration
 
 Reuse the existing approved Corp platform. The public child receives resource IDs; a private consumer owns actual providers, credentials, state, and deployment wiring. Do not rebuild the ALZ, import platform state, move a subscription to avoid policy, or add an exemption for the demo.
 
-The sanitized private validation used `swedencentral` and Kubernetes 1.35.8. Subscription, tenant, IPs, resource IDs, identity names, private run URLs, and FQDNs remain private. Changing code, planning another Azure environment, applying a saved plan, and publishing recordings are different approvals.
+The sanitized private validation used `swedencentral` and Kubernetes 1.35.8. Subscription, tenant, IPs, resource IDs, identity names, private run URLs, and FQDNs remain private. Changing code, planning another Azure environment, and applying a saved plan are different approvals.
 
 ## Working rules
 
