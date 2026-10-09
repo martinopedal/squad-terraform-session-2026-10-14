@@ -6,7 +6,6 @@
   const notesButton = document.querySelector('#open-notes');
   const liveMessage = document.querySelector('#navigation-status');
   const slideElements = [...document.querySelectorAll('.slides > section')];
-  const objectURLs = new Map();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const isReceiver = new URLSearchParams(window.location.search).has('receiver');
 
@@ -94,62 +93,6 @@
       event.preventDefault();
       openMenu();
     }
-  });
-
-  document.querySelectorAll('.attach-video').forEach(button => {
-    const slide = button.closest('section');
-    const input = slide.querySelector('.video-file');
-    const video = slide.querySelector('video');
-    const pending = slide.querySelector('.media-pending');
-    const status = slide.querySelector('.media-status');
-    const chapter = button.dataset.chapter;
-    const expectedSeconds = window.presentationBuild.chapters.find(item => item.id === chapter).duration;
-    let preview = false;
-
-    button.addEventListener('click', () => input.click());
-    input.addEventListener('change', () => {
-      const file = input.files?.[0];
-      if (!file) return;
-      if (!file.name.toLowerCase().endsWith('.mp4')) {
-        status.textContent = 'Select an MP4 file. No file was loaded.';
-        input.value = '';
-        return;
-      }
-      video.pause();
-      if (objectURLs.has(chapter)) URL.revokeObjectURL(objectURLs.get(chapter));
-      const url = URL.createObjectURL(file);
-      objectURLs.set(chapter, url);
-      preview = true;
-      video.src = url;
-      video.hidden = false;
-      pending.hidden = true;
-      status.textContent = 'Local preview: review pending. Select Play when ready.';
-      video.load();
-      video.focus();
-    });
-    video.addEventListener('loadedmetadata', () => {
-      if (!Number.isFinite(video.duration)) {
-        status.textContent = 'Duration unavailable. Review this recording before delivery.';
-        return;
-      }
-      const actual = Math.round(video.duration);
-      const prefix = preview ? 'Local preview: review pending.' : 'Local recording loaded.';
-      if (Math.abs(video.duration - expectedSeconds) > 1) {
-        status.textContent = `${prefix} Duration ${actual}s; chapter target ${expectedSeconds}s.`;
-      } else if (preview) {
-        status.textContent = `${prefix} Duration matches; content still needs review.`;
-      }
-    });
-    video.addEventListener('error', () => {
-      video.pause();
-      video.hidden = true;
-      pending.hidden = false;
-      status.textContent = 'Recording could not be loaded. Use the viewing guide or select another local MP4.';
-    });
-  });
-
-  window.addEventListener('beforeunload', () => {
-    for (const url of objectURLs.values()) URL.revokeObjectURL(url);
   });
 
   if (isReceiver) document.querySelector('.presentation-tools').hidden = true;

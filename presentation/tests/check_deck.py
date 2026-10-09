@@ -57,8 +57,8 @@ def main():
         "checks": {},
         "failures": [],
         "limits": [
-            "Actual C0-C7 footage is not attached; content, duration, and recording provenance remain pending.",
-            "Media controls use a synthetic playback fixture, not CLI footage.",
+            "C0-C7 are live-demo chapters; optional fallback recordings are not required for delivery.",
+            "Browser checks verify command blocks, notes, timing, accessibility, and offline packaging, not real CLI execution.",
             "No Azure deployment or policy evaluation is performed by this test; it checks only the sanitized published evidence text."
         ]
     }
@@ -100,10 +100,53 @@ def main():
             manifest = page.evaluate("window.presentationBuild")
             report["deckVersion"] = manifest["version"]
             report["htmlSHA256"] = hashlib.sha256((ROOT / "index.html").read_bytes()).hexdigest()
-            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 37 and manifest["openingSlides"] == 1 and manifest["mainSlides"] == 25 and manifest["appendixSlides"] == 11)
-            check("29/24/7 clock", [manifest[k] for k in ("recordedMinutes", "liveMinutes", "qaMinutes")] == [29, 24, 7])
+            check("slide counts", page.evaluate("Reveal.getTotalSlides()") == 39 and manifest["openingSlides"] == 2 and manifest["mainSlides"] == 26 and manifest["appendixSlides"] == 11)
+            check("legal slide untimed before s01", page.evaluate("""() => {
+                const slides = [...document.querySelectorAll('.slides > section')];
+                return slides[0].id === 'opening' &&
+                    slides[1].id === 'legal-notice' &&
+                    slides[1].dataset.preshow === 'true' &&
+                    slides[1].dataset.stageTime === 'Pre-show' &&
+                    slides[2].id === 's01-outcome' &&
+                    slides[2].dataset.stageTime === '00:00-03:00';
+            }"""))
+            check("timing budget with close buffer",
+                  [manifest[k] for k in ("demoMinutes", "introMinutes", "explanationMinutes", "protectedSlackMinutes",
+                                         "closeBufferMinutes", "qaMinutes", "nonDemoSlideMinutes", "mainFlowMinutes",
+                                         "timedSlideMinutes", "contentEnd", "closeStart", "questions")]
+                  == [29, 3, 23, 3, 2, 0, 28, 55, 60, "55:00", "58:00", "if time allows"])
+            check("chapter lengths", [chapter["duration"] // 60 for chapter in manifest["chapters"]] == [3, 3, 4, 4, 4, 5, 3, 3]
+                  and [chapter["id"] for chapter in manifest["chapters"]] == [f"C{i}" for i in range(8)], manifest["chapters"])
+            check("intro and contiguous clocks", page.evaluate("""() => {
+                const toSeconds = value => value.split(':').reduce((sum, part) => sum * 60 + Number(part), 0);
+                let end = 0;
+                const slides = [...document.querySelectorAll('.slides > section:not([data-appendix]):not([data-preshow])')];
+                return slides[0].id === 's01-outcome' && slides[0].dataset.stageTime === '00:00-03:00' &&
+                    slides.every(slide => {
+                        const [start, stop] = slide.dataset.stageTime.split('-').map(toSeconds);
+                        const ok = start === end && stop > start;
+                        end = stop;
+                        return ok;
+                    }) && end === 3600;
+            }"""))
+            check("protected recovery block is visible and excluded from scripted content", page.evaluate("""() => {
+                const toSeconds = value => value.split(':').reduce((sum, part) => sum * 60 + Number(part), 0);
+                const timedSlides = [...document.querySelectorAll('.slides > section:not([data-appendix]):not([data-preshow])')];
+                const buffer = timedSlides.find(slide => slide.id === 'buffer-recovery');
+                const scripted = timedSlides
+                    .filter(slide => !['buffer-recovery', 's22-questions'].includes(slide.id))
+                    .reduce((sum, slide) => {
+                        const [start, end] = slide.dataset.stageTime.split('-').map(toSeconds);
+                        return sum + (end - start);
+                    }, 0);
+                return !!buffer &&
+                    buffer.dataset.stageTime === '55:00-58:00' &&
+                    /Protected recovery time/.test(buffer.textContent) &&
+                    /No new story beats/.test(buffer.textContent) &&
+                    scripted === 55 * 60;
+            }"""))
             check("main spoken words", 5300 <= manifest["spokenWords"] <= 5900, manifest["spokenWords"])
-            check("prepared Q&A words", 650 <= manifest["qaWords"] <= 800, manifest["qaWords"])
+            check("no scheduled Q&A words", manifest["qaWords"] == 0, manifest["qaWords"])
             check("balanced speakers", abs(manifest["speakers"]["Martin"] - manifest["speakers"]["Haflidi"]) < 0.1 * manifest["spokenWords"], manifest["speakers"])
             check("plugins", page.evaluate("['notes','highlight'].every(id => Object.keys(Reveal.getPlugins()).includes(id))"))
             check("no autoplay", page.evaluate("Reveal.getConfig().autoPlayMedia === false && Reveal.getConfig().autoSlide === 0 && !document.querySelector('video[autoplay]')"))
@@ -139,27 +182,117 @@ def main():
                 check(name, all(phrase in rendered_notes for phrase in phrases))
             check("inlined resources", page.locator("script[src], link[rel=stylesheet]").count() == 0)
             check("public document link", context.request.get(f"http://127.0.0.1:{server.server_port}/docs/feature-guide.md").ok)
-            check("no placeholder terminal", page.locator(".media-pending").count() == 8 and page.locator("video[src]").count() == 0)
+            check("live demo command blocks", page.locator(".slide-demo .slide-content pre code").count() == 8 and page.locator(".slide-demo video, .media-pending").count() == 0)
+            check("no recording-slot copy on screen", page.evaluate("""() =>
+                [...document.querySelectorAll('.slide-content')].every(s =>
+                    !/recording slot|not attached|pending/i.test(s.textContent))
+            """))
+            check("live demo notes have offline fallback", page.evaluate("""() =>
+                [...document.querySelectorAll('.slide-demo aside.notes')].every(n =>
+                    n.textContent.includes('Offline fallback:') &&
+                    n.textContent.includes('Timing:') &&
+                    n.textContent.includes('Pre-staged:') &&
+                    n.textContent.includes('Cut at') &&
+                    n.textContent.includes('Expected:') &&
+                    n.querySelector('pre code'))
+            """))
+            s20_text = page.locator("#s20-consumer .slide-content").text_content()
+            check("s20 live reveal on-screen", all(phrase in s20_text for phrase in
+                  ["https://aks-online-demo.swedencentral.cloudapp.azure.com/",
+                   "Whether a change is human-authored or agent-assisted, it goes through the same gates",
+                   "PR → checks/scans (fmt, validate, TFLint, Trivy, Checkov) → review + protected main → Terraform plan → online environment approval → OIDC apply → runtime check"]))
+            s20_notes = page.locator("#s20-consumer aside.notes").text_content()
+            check("s20 live reveal notes", all(phrase in s20_notes for phrase in
+                  ["0:30-1:00 live reveal", "self-signed cert warning is expected", "pre-accepted",
+                   "gate map", "PR/review/check/environment/Actions trace", "single maintainer used an admin override",
+                   "pipeline flow", "serving pod name", "speakers section", "1:00-2:10", "Offline fallback:",
+                   "37771532872/37772290635", "Test-OnlineSecurity 29/29 at 13:48 on Oct 8",
+                   "appendix/hallway depth"]))
+            check("live demo notes state provenance boundary", page.evaluate("""() => {
+                const demos = [...document.querySelectorAll('.slide-demo aside.notes')];
+                return demos.length === 8 && demos.every(n => {
+                    const text = n.textContent;
+                    return text.includes('Live surface:') &&
+                        text.includes('Genuine Copilot CLI with Squad selected') &&
+                        text.includes('real integrated terminal') &&
+                        text.includes('Qualify code first') &&
+                        text.includes('disclosed clean checkpoint') &&
+                        text.includes('Offline fallback:');
+                });
+            }"""))
+            check("C0 explicitly states pre-Squad boundary",
+                  "C0 starts before Squad exists" in page.locator("#demo-c0 aside.notes").text_content())
             check("native-only chapter policy", page.evaluate("""() =>
                 [...document.querySelectorAll('.slide-demo aside.notes')].every(n =>
-                    n.textContent.includes('Genuine Copilot CLI with Squad selected') &&
                     n.textContent.includes('external, off-screen tooling')) &&
-                Object.values(presentationBuild.media).every(m =>
+                Object.values(window.presentationBuild.media).every(m =>
                     !m.available || (m.reviewed === true && m.selectedAgent === 'squad' &&
                     ['native-copilot-cli','integrated-terminal'].includes(m.sourceSurface)))
             """))
             baseline_notes = page.locator("#s03-baseline aside.notes").text_content()
             check("disclosed clean-run narration", all(phrase in baseline_notes for phrase in
-                  ["module now exists", "passed local qualification before filming", "disclosed clean checkpoint", "first implementation"]))
-            check("all chapter notes distinguish preparation from footage", page.evaluate("""() =>
-                [...document.querySelectorAll('.slide-demo aside.notes')].every(n =>
-                    n.textContent.includes('Qualify code before filming') &&
-                    n.textContent.includes('genuine new execution from a disclosed clean checkpoint'))
-            """))
+                  ["module now exists", "passed local qualification before delivery", "disclosed clean checkpoint", "first implementation"]))
             check("local qualification is separate from Azure validation evidence",
                   page.locator("#s15-proof .status").all_text_contents() == ["Inspected", "52 passed", "2 passed", "Approved", "Succeeded"])
             check("published module revision is bound to the evidence",
                   page.evaluate("window.presentationBuild.moduleRevision") == "b01256eb9b1ea6046b9bb8a403662f724a7b6fa7")
+            badge_summary = page.locator(".feature-badge").evaluate_all("""nodes => nodes.map(n => ({
+                feature: n.dataset.feature,
+                text: n.textContent.trim(),
+                href: n.href
+            }))""")
+            required_badges = {
+                "Copilot CLI", "Plan mode", "custom agents", "MCP", "Skills", "-p", "/resume",
+                "/review", "/diff", "/delegate", "Rubber Duck", "AKS Automatic", "App Routing",
+                "ABAC conditions for AKS custom resources", "Bastion Entra RDP", "Terraform test", "Squad"
+            }
+            seen_badges = {item["feature"] for item in badge_summary}
+            check("feature badge coverage", required_badges.issubset(seen_badges), {
+                "missing": sorted(required_badges - seen_badges),
+                "badges": badge_summary
+            })
+            product_name_locations = page.locator(".slides > section:has(.product-name)").evaluate_all("nodes => nodes.map(n => n.id)")
+            product_names = page.locator(".product-name").evaluate_all("nodes => nodes.map(n => n.textContent.trim())")
+            check("text-only product name placement", product_name_locations == ["opening", "s22-questions"] and product_names == ["GitHub Copilot", "GitHub Copilot"], {"locations": product_name_locations, "names": product_names})
+            html_text = (ROOT / "index.html").read_text(encoding="utf-8")
+            check("no third-party logo images embedded", page.locator(".copilot-lockup, img[src*=\"github\" i], img[alt*=\"github\" i]").count() == 0
+                  and "brand.github.com/_next/static/media" not in html_text
+                  and "github-copilot-lockup-examples.png" not in html_text
+                  and "--github-copilot-lockup" not in html_text
+                  and "copilot-lockup" not in html_text)
+            check("Cascadia Code local font and license", (ROOT / "media" / "fonts" / "CascadiaCode.woff2").is_file()
+                  and (ROOT / "media" / "fonts" / "CascadiaCode-LICENSE.txt").is_file()
+                  and "font-family:'Cascadia Code'" in html_text
+                  and "SIL OPEN FONT LICENSE Version 1.1" in (ROOT / "media" / "fonts" / "CascadiaCode-LICENSE.txt").read_text(encoding="utf-8"))
+            contrast = page.evaluate("""() => {
+                const parse = value => {
+                    value = value.trim();
+                    if (value.startsWith('#')) {
+                        const hex = value.slice(1);
+                        const full = hex.length === 3 ? [...hex].map(c => c + c).join('') : hex;
+                        return [0, 2, 4].map(i => parseInt(full.slice(i, i + 2), 16));
+                    }
+                    return value.match(/\\d+(\\.\\d+)?/g).slice(0, 3).map(Number);
+                };
+                const rel = ([r,g,b]) => [r,g,b].map(v => {
+                    v /= 255;
+                    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+                }).reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+                const ratio = (a, b) => {
+                    const [l1, l2] = [rel(a), rel(b)].sort((x, y) => y - x);
+                    return (l1 + 0.05) / (l2 + 0.05);
+                };
+                const root = getComputedStyle(document.documentElement);
+                const light = ratio(parse(root.getPropertyValue('--nic-ink')), parse(root.getPropertyValue('--nic-cyan')));
+                const dark = ratio(parse(root.getPropertyValue('--nic-cyan')), parse(root.getPropertyValue('--nic-ink')));
+                const headline = Math.min(...[...document.querySelectorAll('.slide-content h1, .slide-content h2, .slide-content h3')]
+                    .map(el => {
+                        const s = getComputedStyle(el);
+                        return {size: parseFloat(s.fontSize), ratio: ratio(parse(s.color), parse(getComputedStyle(el.closest('.slide-content')).backgroundColor))};
+                    }).filter(item => item.size >= 24).map(item => item.ratio));
+                return {bodyLight: light, bodyDark: dark, headline};
+            }""")
+            check("computed CSS contrast", contrast["bodyLight"] >= 4.5 and contrast["bodyDark"] >= 4.5 and contrast["headline"] >= 3, contrast)
             license_text = (ROOT / "src" / "third-party-licenses.txt").read_text(encoding="utf-8").strip()
             check("complete bundled licenses preserved", license_text in (ROOT / "index.html").read_text(encoding="utf-8"))
             page.add_script_tag(path=str(ROOT / "node_modules" / "axe-core" / "axe.min.js"))
@@ -261,8 +394,8 @@ def main():
                 check(f"overview surface clickable and controls inert {label}", all(
                     not item["sectionInert"] and item["contentInert"] and item["pointerTarget"] == item["id"]
                     for item in thumbnails))
-                check(f"overview keeps unattached media hidden {label}",
-                      page.locator("video:not([hidden])").count() == 0)
+                check(f"overview has no demo video controls {label}",
+                      page.locator(".slide-demo video, .slide-demo .attach-video").count() == 0)
                 page.locator("#s05-parallel").click(timeout=1500)
                 page.wait_for_function("() => !Reveal.isOverview() && Reveal.getCurrentSlide().id === 's05-parallel'")
                 check(f"pointer selects inactive overview slide {label}",
@@ -289,19 +422,19 @@ def main():
             page.set_viewport_size({"width": 1280, "height": 720})
             page.evaluate("Reveal.slide(0,0,-1); document.activeElement.blur()")
             page.keyboard.press("ArrowRight")
-            check("arrow navigation from opening", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            check("arrow navigation from opening", page.evaluate("Reveal.getCurrentSlide().id") == "legal-notice")
             page.keyboard.press("PageDown")
-            check("Page Down to first chapter", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
+            check("Page Down to first timed content", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
             page.keyboard.press("PageUp")
-            check("Page Up", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            check("Page Up", page.evaluate("Reveal.getCurrentSlide().id") == "legal-notice")
             page.keyboard.press("End")
             check("End", page.evaluate("Reveal.getCurrentSlide().id") == "a-use-cases")
             page.keyboard.press("Home")
             check("Home", page.evaluate("Reveal.getCurrentSlide().id") == "opening")
             page.keyboard.press("PageDown")
-            check("Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
+            check("Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "legal-notice")
             page.keyboard.press("PageDown")
-            check("Second Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
+            check("Second Page Down", page.evaluate("Reveal.getCurrentSlide().id") == "s01-outcome")
             page.keyboard.press("Escape")
             check("overview", page.evaluate("Reveal.isOverview()"))
             page.keyboard.press("Escape")
@@ -330,7 +463,7 @@ def main():
             page.wait_for_function("() => !document.querySelector('.navigation-dialog').open && document.activeElement.id === 'open-navigation'")
             check("keyboard-only chapter selection", page.evaluate("Reveal.getCurrentSlide().id") == "s06-contract")
             page.keyboard.press("ArrowRight")
-            check("arrow after keyboard-only chapter selection", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c2")
+            check("arrow after keyboard-only chapter selection", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
             page.keyboard.press("End")
             check("End after keyboard-only chapter selection", page.evaluate("Reveal.getCurrentSlide().id") == "a-use-cases")
             page.locator("#open-navigation").click()
@@ -351,7 +484,7 @@ def main():
             check("focused chapter button retains native activation", page.locator(".navigation-dialog").is_visible()
                   and page.evaluate("Reveal.getCurrentSlide().id") == "opening")
             page.keyboard.press("Escape")
-            page.evaluate("Reveal.slide(1,0,-1); document.activeElement.blur()")
+            page.evaluate("Reveal.slide(2,0,-1); document.activeElement.blur()")
             page.keyboard.press("Tab")
             check("visible focus", page.evaluate("""() => {
                 const s = getComputedStyle(document.activeElement);
@@ -367,83 +500,30 @@ def main():
             notes.wait_for_timeout(1200)
             timer_after = notes.locator(".timer .seconds-value").inner_text()
             check("notes current and next", notes.locator("#current-slide iframe").count() == 1 and notes.locator("#upcoming-slide iframe").count() == 1)
-            check("notes full spoken script", "A useful agent session" in notes.locator(".speaker-controls-notes .value").inner_text())
+            check("notes full presenter plan", "live terminal and browser work" in notes.locator(".speaker-controls-notes .value").inner_text())
             check("notes timer advances", timer_before != timer_after)
-            page.evaluate("Reveal.slide(10,0,-1)")
-            notes.wait_for_function("() => document.querySelector('.speaker-controls-notes .value').textContent.includes('direct project-write guards')")
-            cues = notes.locator(".operator-cues summary")
-            cues.click()
-            check("notes follow slide", "03:15-04:00" in notes.locator(".speaker-controls-notes .value").inner_text())
-            cues.click()
-            check("spoken notes visible before operator details", not notes.locator(".operator-cues").evaluate("e => e.open")
-                  and "Activate native Plan mode" in notes.locator(".speaker-controls-notes .value").inner_text())
+            page.evaluate("Reveal.slide(12,0,-1)")
+            notes.wait_for_function("() => document.querySelector('.speaker-controls-notes .value').textContent.includes('/session plan')")
+            check("notes follow slide", "Offline fallback:" in notes.locator(".speaker-controls-notes .value").inner_text())
+            check("notes show live command block", "/session plan" in notes.locator(".speaker-controls-notes .value").inner_text())
             notes.screenshot(path=str(QA / "speaker-view.png"))
-            page.evaluate("Reveal.slide(9,0,-1)")
+            page.evaluate("Reveal.slide(10,0,-1)")
             notes.close()
             page.bring_to_front()
             check("notes return preserves control focus", page.evaluate("document.activeElement.id") == "open-notes")
             page.keyboard.press("ArrowRight")
-            check("arrow after notes-button round trip", page.evaluate("Reveal.getCurrentSlide().id") == "demo-c2")
+            check("arrow after notes-button round trip", page.evaluate("Reveal.getCurrentSlide().id") == "s08-plan-boundary")
             page.keyboard.press("Home")
             check("Home after notes-button round trip", page.evaluate("Reveal.getCurrentSlide().id") == "opening")
             page.keyboard.press("Escape")
             check("overview after notes-button round trip", page.evaluate("Reveal.isOverview()"))
             page.keyboard.press("Escape")
 
-            with tempfile.TemporaryDirectory(prefix="playback-", dir=artifacts) as temporary:
-                fixture = Path(temporary) / "playback-test-not-demo.mp4"
-                subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-n", "-f", "lavfi",
-                                "-i", "testsrc2=size=640x360:rate=30", "-t", "4", "-c:v", "libx264",
-                                "-pix_fmt", "yuv420p", "-an", "-metadata", "title=Playback fixture, not demo footage",
-                                str(fixture)], check=True, capture_output=True)
-                page.evaluate("Reveal.slide(2,0,-1)")
-                invalid = Path(temporary) / "invalid-selection.txt"
-                invalid.write_text("File-selection test, not video footage.", encoding="utf-8")
-                page.locator('#demo-c1 input[type="file"]').set_input_files(str(invalid))
-                check("invalid file selection", "Select an MP4" in page.locator("#demo-c1 .media-status").inner_text()
-                      and not page.locator("#demo-c1 video").is_visible())
-                page.locator('#demo-c1 input[type="file"]').set_input_files(str(fixture))
-                video = page.locator("#demo-c1 video")
-                video.wait_for(state="visible")
-                page.wait_for_function("() => document.querySelector('#demo-c1 video').readyState >= 2")
-                fixture_urls.add(video.evaluate("v => v.src"))
-                check("native local media controls", video.evaluate("v => v.controls && v.paused && !v.autoplay"))
-                check("honest preview label", "review pending" in page.locator("#demo-c1 .media-status").inner_text())
-                video.focus()
-                page.keyboard.press("Space")
-                page.wait_for_timeout(350)
-                check("keyboard play without slide advance", video.evaluate("v => !v.paused && v.currentTime > 0")
-                      and page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1")
-                page.keyboard.press("Space")
-                check("native keyboard pause", video.evaluate("v => v.paused"))
-                before_seek = video.evaluate("v => v.currentTime")
-                page.keyboard.press("ArrowRight")
-                page.wait_for_timeout(100)
-                after_seek = video.evaluate("v => v.currentTime")
-                check("native keyboard seek forward", after_seek > before_seek + .001
-                      and page.evaluate("Reveal.getCurrentSlide().id") == "demo-c1",
-                      {"before": before_seek, "after": after_seek})
-                page.keyboard.press("ArrowLeft")
-                page.wait_for_timeout(100)
-                after_back = video.evaluate("v => v.currentTime")
-                check("native keyboard seek back", after_back < after_seek - .001,
-                      {"before": after_seek, "after": after_back})
-                video.evaluate("v => { v.pause(); v.currentTime = 2; }")
-                check("pause and seek", video.evaluate("v => v.paused && Math.abs(v.currentTime - 2) < .2"))
-                video.evaluate("v => { v.currentTime = 0; return v.play(); }")
-                page.wait_for_timeout(200)
-                check("replay", video.evaluate("v => !v.paused && v.currentTime < 1"))
-                page.evaluate("Reveal.slide(3,0,-1)")
-                check("pause on slide exit", video.evaluate("v => v.paused"))
-                page.evaluate("Reveal.slide(2,0,-1)")
-                check("no autoplay on re-entry", video.evaluate("v => v.paused"))
-                check("no media decode or source error", video.evaluate("v => v.error === null"))
-                page.screenshot(path=str(artifacts / "media-playback-fixture.png"))
-                video.evaluate("v => { v.removeAttribute('src'); v.load(); }")
+            check("no local media controls in live-demo deck", page.locator(".attach-video, .video-file, .slide-demo video").count() == 0)
 
             page.reload(wait_until="networkidle")
             page.wait_for_function("() => Reveal.isReady()")
-            check("reload clears local preview", page.locator("video[src]").count() == 0)
+            check("reload preserves live demo command blocks", page.locator(".slide-demo .slide-content pre code").count() == 8)
             remaining_failures = []
             for request in report["failedRequests"]:
                 if request["url"] in fixture_urls and request["failure"] == "net::ERR_ABORTED":

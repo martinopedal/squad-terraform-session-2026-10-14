@@ -31,4 +31,4 @@ No generic command catalog, repeated decorative card grid, remote fonts, gradien
 
 ## Accessibility and delivery
 
-Normal text needs 4.5:1 contrast and large text 3:1. Preserve keyboard access, visible focus, reduced motion, descriptive graphics, native media controls, and complete spoken notes. Test every slide and fragment at 1280 x 720 and 1920 x 1080, then inspect the captures. Keep one pre-show opening page, 25 timed main slides, eleven optional references, and the 29/24/7-minute delivery contract.
+Normal text needs 4.5:1 contrast and large text 3:1. Preserve keyboard access, visible focus, reduced motion, descriptive graphics, native media controls, and complete spoken notes. Test every slide and fragment at 1280 x 720 and 1920 x 1080, then inspect the captures. Keep two untimed pre-show slides, 26 timed main slides, eleven optional references, and the 3 intro / 29 demo / 23 explanation / 3 protected-slack / 0 scheduled Q&A / 2 close-buffer delivery contract.

@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { marked } from 'marked';
-import { title, slides, escape, renderSection } from '../src/slides.mjs';
+import { title, slides, escape, renderSection, applyNoteFactOverrides } from '../src/slides.mjs';
 import { resolveMediaEntry } from './media-policy.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -13,7 +13,7 @@ const assetData = async (path, type) => `data:${type};base64,${(await readFile(j
 const fontFace = async (weight, file) =>
   `@font-face{font-family:'Roboto';font-style:normal;font-weight:${weight};font-display:block;src:url("${await assetData(file, 'font/woff2')}") format('woff2');}`;
 const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, core, coreCSS, highlight, highlightCSS, notes, licenses,
-  nicLogoInk, nicLogoCyan, nicLogoLargeInk, roboto400, roboto500, roboto700] = await Promise.all([
+  nicLogoInk, nicLogoCyan, nicLogoLargeInk, roboto400, roboto500, roboto700, cascadiaCode] = await Promise.all([
   read('../docs/talk-track.md'), read('../docs/sessionize.md'), read('src/theme.css'), read('src/runtime.js'),
   read('src/version.json'), read('src/media.json'), read('src/evidence.json'),
   read('node_modules/reveal.js/dist/reveal.js'), read('node_modules/reveal.js/dist/reveal.css'),
@@ -24,9 +24,10 @@ const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, c
   assetData('src/assets/nic26-logo-large-ink.png', 'image/png'),
   fontFace(400, 'node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2'),
   fontFace(500, 'node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2'),
-  fontFace(700, 'node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2')
+  fontFace(700, 'node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2'),
+  fontFace(400, 'media/fonts/CascadiaCode.woff2')
 ]);
-const fontCSS = roboto400 + roboto500 + roboto700;
+const fontCSS = roboto400 + roboto500 + roboto700 + cascadiaCode.replaceAll("font-family:'Roboto'", "font-family:'Cascadia Code'");
 const assetCSS = `:root{--nic-logo-ink:url("${nicLogoInk}");--nic-logo-cyan:url("${nicLogoCyan}");--nic-logo-large-ink:url("${nicLogoLargeInk}");}`;
 const version = JSON.parse(versionText);
 const media = JSON.parse(mediaText);
@@ -45,39 +46,57 @@ const blocks = new Map(talk.split(/^## /m).filter(part => /^(s\d\d-|demo-c|a-)/.
   .map(part => [part.split(' | ')[0], part.slice(part.indexOf('\n') + 1).trim()]));
 const words = value => (value.match(/\b\w+(?:['-]\w+)*\b/g) || []).length;
 const speakers = { Martin: 0, Haflidi: 0 };
-let qaWords = 0;
+const qaWords = 0;
 for (const [id, block] of blocks) {
   for (const name of Object.keys(speakers)) {
     const count = [...block.matchAll(new RegExp(`\\*\\*${name}:\\*\\* (.+)`, 'g'))].reduce((sum, match) => sum + words(match[1]), 0);
-    if (id === 's22-questions') qaWords += count;
-    else if (!id.startsWith('a-')) speakers[name] += count;
+    if (!id.startsWith('a-') && id !== 's22-questions') speakers[name] += count;
   }
 }
 const spokenWords = speakers.Martin + speakers.Haflidi;
 const descriptionWords = words(sessionize.split('## Description and outcomes\n')[1].split('\n## ')[0]);
 const pitchWords = words(sessionize.split('## Elevator pitch\n')[1].split('\n## ')[0]);
-if (slides.length !== 37 || slides.filter(slide => slide.preshow).length !== 1 ||
-    slides.filter(slide => !slide.id.startsWith('a-') && !slide.preshow).length !== 25) {
-  throw new Error('Expected one opening slide, 25 timed main slides, and eleven appendix slides.');
+if (slides.length !== 39 || slides.filter(slide => slide.preshow).length !== 2 ||
+    slides.filter(slide => !slide.id.startsWith('a-') && !slide.preshow).length !== 26) {
+  throw new Error('Expected two untimed pre-show slides, 26 timed main slides, and eleven appendix slides.');
 }
-if (spokenWords < 5300 || spokenWords > 5900 || qaWords < 650 || qaWords > 800) throw new Error(`Spoken script length is out of range: ${spokenWords} main, ${qaWords} Q&A.`);
+const [openingSlide, legalSlide, firstTimedSlide] = slides;
+if (openingSlide.id !== 'opening' || legalSlide.id !== 'legal-notice' || !legalSlide.preshow ||
+    firstTimedSlide.id !== 's01-outcome' || firstTimedSlide.time !== '00:00-03:00') {
+  throw new Error('Legal notice must be untimed, immediately after opening, and before s01 at 00:00.');
+}
+if (spokenWords < 5300 || spokenWords > 5900 || qaWords !== 0) throw new Error(`Spoken script length is out of range: ${spokenWords} main, ${qaWords} scheduled Q&A.`);
 if (Math.abs(speakers.Martin - speakers.Haflidi) / spokenWords > .1) throw new Error('Speaker contributions differ by more than 10%.');
 if (descriptionWords < 250 || descriptionWords > 350 || pitchWords < 45 || pitchWords > 65) throw new Error('Sessionize word count is out of range.');
 if (new Set(slides.map(slide => slide.id)).size !== slides.length) throw new Error('Duplicate slide ID.');
-for (const slide of slides) if (!slide.preshow && !blocks.has(slide.id)) throw new Error(`Missing complete notes for ${slide.id}.`);
+for (const slide of slides) if (!slide.preshow && !slide.notes && !blocks.has(slide.id)) throw new Error(`Missing complete notes for ${slide.id}.`);
 const chapters = slides.filter(slide => slide.chapter).map(slide => ({ id: slide.chapter, title: slide.title, duration: slide.duration, slide: slide.id }));
-if (chapters.reduce((sum, chapter) => sum + chapter.duration, 0) !== 1740) throw new Error('Recorded chapter budget must be 29 minutes.');
+const expectedChapterDurations = [180, 180, 240, 240, 240, 300, 180, 180];
+if (chapters.reduce((sum, chapter) => sum + chapter.duration, 0) !== 1740 ||
+    chapters.some((chapter, index) => chapter.id !== `C${index}` || chapter.duration !== expectedChapterDurations[index])) {
+  throw new Error('Live demo chapter budget must be C0-C7 = 3/3/4/4/4/5/3/3 minutes, totaling 29 minutes.');
+}
+const protectedSlackSeconds = 180;
+const closeBufferSeconds = 120;
 const toSeconds = value => value.split(':').reduce((sum, component) => sum * 60 + Number(component), 0);
-const clock = { recorded: 0, live: 0, qa: 0 };
+const clock = { intro: 0, demo: 0, explanation: 0, slack: 0, close: 0, qa: 0 };
 let previousEnd = 0;
 for (const slide of slides.filter(item => !item.id.startsWith('a-') && !item.preshow)) {
   const [start, end] = slide.time.split('-').map(toSeconds);
   if (start !== previousEnd || end <= start) throw new Error(`Discontinuous slide clock at ${slide.id}.`);
   if (slide.chapter && end - start !== slide.duration) throw new Error(`Clip and stage duration disagree at ${slide.id}.`);
-  clock[slide.chapter ? 'recorded' : slide.id === 's22-questions' ? 'qa' : 'live'] += end - start;
+  const bucket = slide.chapter ? 'demo'
+    : slide.id === 's01-outcome' ? 'intro'
+      : slide.id === 'buffer-recovery' ? 'slack'
+        : slide.id === 's22-questions' ? 'close' : 'explanation';
+  clock[bucket] += end - start;
   previousEnd = end;
 }
-if (previousEnd !== 3600 || clock.recorded !== 1740 || clock.live !== 1440 || clock.qa !== 420) throw new Error('The actual slide clock must retain 29/24/7 minutes.');
+if (previousEnd !== 3600 || clock.intro !== 180 || clock.demo !== 1740 || clock.explanation !== 1380 ||
+    clock.slack !== protectedSlackSeconds || clock.close !== closeBufferSeconds || clock.qa !== 0 ||
+    previousEnd - clock.close - clock.slack !== 3300) {
+  throw new Error('The actual slide clock must retain 3 intro / 29 demo / 23 explanation / 3 protected slack / 0 scheduled Q&A / 2 close-buffer minutes, with content ending at 55:00.');
+}
 for (const chapter of chapters) {
   const item = media[chapter.id];
   let present = false;
@@ -86,14 +105,17 @@ for (const chapter of chapters) {
     if (error.code !== 'ENOENT') throw error;
   }
   media[chapter.id] = resolveMediaEntry(chapter.id, item, present);
-  if (present && !media[chapter.id].available) {
-    console.warn(`${chapter.id}: local file excluded because it is unreviewed. The recording slot remains pending.`);
-  }
+  if (present && !media[chapter.id].available) console.warn(`${chapter.id}: local fallback video excluded because it is unreviewed.`);
 }
 
 const build = {
-  version: version.version, openingSlides: 1, mainSlides: 25, appendixSlides: 11,
-  recordedMinutes: clock.recorded / 60, liveMinutes: clock.live / 60, qaMinutes: clock.qa / 60,
+  version: version.version, openingSlides: 2, mainSlides: 26, appendixSlides: 11,
+  demoMinutes: clock.demo / 60, introMinutes: clock.intro / 60, explanationMinutes: clock.explanation / 60,
+  protectedSlackMinutes: clock.slack / 60, closeBufferMinutes: clock.close / 60,
+  nonDemoSlideMinutes: (clock.intro + clock.explanation + clock.close) / 60,
+  contentEnd: '55:00', mainFlowMinutes: (previousEnd - clock.close - clock.slack) / 60,
+  qaMinutes: clock.qa / 60, closeStart: '58:00', questions: 'if time allows',
+  timedSlideMinutes: previousEnd / 60,
   spokenWords, speakers, qaWords, descriptionWords, pitchWords,
   chapters, media, sourceRevision: evidence.sourceRevision, moduleRevision: evidence.moduleRevision,
   runtime: 'reveal.js 5.2.1', highlight: `highlight.js ${highlightVersion} (BSD-3-Clause)`,
@@ -104,14 +126,15 @@ const navLink = slide => `<a href="#/${slide.id}" data-nav="${slide.id}">${escap
 const overviewIDs = ['s01-outcome', 's04-news', 's04-layers', 's07-agent-setup', 's06-contract', 's15-proof', 's20-consumer', 's22-questions'];
 const navigation = `<dialog class="navigation-dialog" aria-labelledby="navigation-title"><header><h2 id="navigation-title">Go to a chapter or reference</h2><button type="button">Close</button></header>
   <div class="navigation-columns"><div><h3>Story</h3>${slides.filter(slide => overviewIDs.includes(slide.id)).map(navLink).join('')}</div>
-  <div><h3>Recorded chapter slots</h3>${slides.filter(slide => slide.chapter).map(navLink).join('')}</div>
+  <div><h3>Live demo chapters</h3>${slides.filter(slide => slide.chapter).map(navLink).join('')}</div>
   <div><h3>Optional references</h3>${slides.filter(slide => slide.id.startsWith('a-')).map(navLink).join('')}</div></div>
   <p class="navigation-help">Arrow keys: slides and fragments. S: speaker notes. Escape: overview or close this menu. N: this menu.</p></dialog>`;
 const sections = slides.map((slide, index) => {
-  const completeNotes = slide.preshow ? marked.parse(slide.notes || '') : marked.parse(blocks.get(slide.id));
+  const rawNotes = slide.preshow ? (slide.notes || '') : (slide.notes || blocks.get(slide.id) || '');
+  const completeNotes = marked.parse(rawNotes);
   const noteHTML = slide.id.startsWith('a-') ? completeNotes : completeNotes.replace(/<blockquote>([\s\S]*?)<\/blockquote>/g,
     '<details class="operator-cues"><summary>Operator cues and timing</summary><blockquote>$1</blockquote></details>');
-  return renderSection(slide, index, noteHTML, evidence, media);
+  return renderSection(slide, index, applyNoteFactOverrides(slide.id, noteHTML), evidence, media);
 }).join('\n');
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -148,6 +171,6 @@ await writeFile(join(root, 'index.html'), html, 'utf8');
 await writeFile(join(root, 'qa/build-manifest.json'), JSON.stringify({
   ...build, htmlBytes: Buffer.byteLength(html), htmlSHA256: createHash('sha256').update(html).digest('hex')
 }, null, 2) + '\n');
-console.log(`Built index.html: 1 opening + 25 timed main + 11 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} Q&A words.`);
-console.log(`Timing 29 recorded / 24 live / 7 Q&A. Attached chapters: ${Object.values(media).filter(item => item.available).length}/8.`);
+console.log(`Built index.html: 2 pre-show + 26 timed main + 11 appendix; ${spokenWords} main words (${speakers.Martin}/${speakers.Haflidi}); ${qaWords} scheduled Q&A words.`);
+console.log('Timing 3 intro / 29 demo / 23 explanation / 3 protected slack / 2 close buffer; questions if time allows.');
 console.log(`Sessionize: ${descriptionWords}-word description; ${pitchWords}-word pitch. HTML ${(Buffer.byteLength(html) / 1024).toFixed(0)} KiB.`);
