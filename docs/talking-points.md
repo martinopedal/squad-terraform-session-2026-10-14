@@ -17,7 +17,7 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 
 - Checkpoints: after C0 at 08:30; after C2 at 21:30; after C5 at 38:30; start `s20-consumer` at 50:00; finish planned content at 55:00; start close at 58:00.
 - Live cut lines: C0 07:45, C1 14:45, C2 20:30, C3 25:00, C4 32:30, C5 37:15, C6 44:15, C7 49:15.
-- Drop order if behind: compress `s21-limits`; trim `s18-memory`; trim `s15-evidence`; trim `s13-test-gap`; trim `s05-parallel`; shorten `s20-consumer` while keeping the 50:30-51:00 reveal; use chapter fallback.
+- Drop order if behind: compress `s21-limits`; trim `s18-memory`; trim `s15-proof`; trim `s13-test-gap`; trim `s05-parallel`; shorten `s20-consumer` while keeping the 50:30-51:00 reveal; use chapter fallback.
 
 ## Slide and chapter cues
 
@@ -131,7 +131,7 @@ Takeaway: source provenance is part of the artifact.
 - Validator detects intended assertion; review; restore only that field; rerun repaired.
 Takeaway: preserve cause and effect; local runtime check is not Azure acceptance evidence.
 
-### 38:30-41:30, s15-evidence, Haflidi with Martin
+### 38:30-41:30, s15-proof, Haflidi with Martin
 - Separate source inspection, local mocks, consumer checks, plan/apply, and read-back.
 - A runtime check is evidence only for what it checks.
 - Evidence feeds the gate; the gate doesn't care who typed the diff.

@@ -8,7 +8,7 @@ This is a rehearsed 60-minute show, not exploratory pair programming. Before the
 
 Cut at the chapter cut line. Do not start a second live attempt. Use reviewed fallback evidence, name what failed live, and move on. Checkpoints: after C0 at 08:30, after C2 at 21:30, after C5 at 38:30, start `s20-consumer` at 50:00, finish planned content at 55:00, and start close at 58:00.
 
-Drop order if behind: compress `s21-limits`; trim `s18-memory`; trim `s15-evidence`; trim `s13-test-gap`; trim `s05-parallel`; shorten `s20-consumer` but keep the 50:30-51:00 reveal; then use the live chapter fallback.
+Drop order if behind: compress `s21-limits`; trim `s18-memory`; trim `s15-proof`; trim `s13-test-gap`; trim `s05-parallel`; shorten `s20-consumer` but keep the 50:30-51:00 reveal; then use the live chapter fallback.
 
 Use runtime check and runtime evidence language. Local mocks are not Azure acceptance evidence. Public repo rules apply: no subscription IDs, tenant IDs, private IPs, raw state, secrets, private run URLs, or personal memory on screen.
 
@@ -146,7 +146,7 @@ Select `/agent terraform-validator`; run the C5 PowerShell block with `$phase = 
 
 **Haflidi:** Preserve cause and effect. Say: deliberate lab mutation, not an AI-discovered defect. A runtime check is evidence for the assertion it runs. It is not Azure acceptance evidence.
 
-## s15-evidence | 38:30-41:30 | Evidence has levels
+## s15-proof | 38:30-41:30 | Evidence has levels
 
 **Haflidi:** Keep gates separate: source inspection, local contract tests, consumer checks, real plan/apply, and Azure read-back. A runtime check is evidence only for what it checks.
 
