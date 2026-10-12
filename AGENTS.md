@@ -2,6 +2,25 @@
 
 This repository contains a public Reveal presentation, two-speaker material, recording tools, and generic Terraform source. Keep it reusable and free of environment-specific data.
 
+## Repository and operator boundary
+
+Read [the repository map](docs/repositories.md) before choosing a working root.
+This session repository owns deck/notes, setup, the generic Corp module copy and
+native teaching profiles, not live deployment. The live Online AKS consumer is
+`martinopedal/aks-automatic-demo-env`; its upstream module is
+`martinopedal/terraform-azapi-aks-automatic`. The independent Corp module
+`alz-avm-tf-demo/terraform-azapi-aks-automatic-corp` is also public. Haflidi's
+`haflidif/squad-on-aca` is the hosted implementation; the private issue/queue/PR
+target is not its source repository.
+
+Online is primary placement for eligible demo components; native deployment
+there remains proposed/unqualified, not a fallback. Corp-required private
+workloads stay in Corp. Public GitHub visibility does not define network
+placement or anonymous ingress.
+Leave Corp resources untouched. No failed plan authorizes relocation, anonymous
+MicroVM ingress, credentials exposure or a weaker scope check. Real environment,
+state, secrets and exact deployment approvals stay at the private boundary.
+
 ## Working rules
 
 - Read `QUALITY.md` and `PUBLICATION.md` before changing code or public evidence.

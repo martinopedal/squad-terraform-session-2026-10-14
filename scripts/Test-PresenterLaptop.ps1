@@ -13,7 +13,7 @@ $v = {
     $output[0].ToString().Trim()
   } catch { '(unavailable or command failed)' }
 }
-$cp = & $v @('copilot','--version'); Out-Check 'copilot cli 1.0.x' ($cp -match '(?:^|\s)1\.0\.\d+(?:\s|$)') $cp
+$cp = & $v @('copilot','--version'); Out-Check 'copilot cli 1.0.x' ($cp -match '^(?:GitHub Copilot CLI )?1\.0\.\d+\.?(?:\s|$)') $cp
 $sq = & $v @('squad','--version');   Out-Check 'squad 1.0.1' ($sq -match '^1\.0\.1(?:\s|$)') $sq
 $code = & $v @('code','--version'); Out-Check 'VS Code CLI available' ($code -match '^\d+\.\d+\.\d+(?:\s|$)') $code
 try {

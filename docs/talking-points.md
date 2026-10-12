@@ -2,6 +2,11 @@
 
 Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track.md). Live demo runbook: [demo-runbook.md](demo-runbook.md). Product update detail: [whats-new.md](whats-new.md). Deck URL: <https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/>.
 
+Operator references: [repo map](repositories.md), [progress matrix](sandboxing.md#october-12-progress-and-next-actions),
+[full pre-stage coverage](aca-sandboxes.md#full-test-coverage-checklist) and
+[two product operator cards](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
+Draft deck 0.22.4 source branch/PR is not merged or released; prior accepted draft 0.22.3 preserved.
+
 ## Opening hooks / big news
 
 - 60:00 total: 00:00-03:00 intro, 03:00-55:00 planned content and live chapters, 55:00-58:00 protected slack, 58:00-60:00 close plus "questions if time allows".
@@ -32,6 +37,7 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 
 ### 03:00-03:30, s03-baseline, Martin
 - Public source, qualification revision, and clean live checkpoint are separate.
+- Live demo consumer: `martinopedal/aks-automatic-demo-env`, pinning `martinopedal/terraform-azapi-aks-automatic` at `v0.6.0`. The copied Corp teaching module retains its separate `alz-avm-tf-demo/terraform-azapi-aks-automatic-corp` pin/manifest.
 - Not first implementation; live run demonstrates one bounded change.
 - Say what was prepared before the live run starts.
 
@@ -39,7 +45,7 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - Lead with Auto model selection and Project HydraFusion.
 - Pin `/model` to `claude-sonnet-5` on stage for eval parity, then describe Auto or HydraFusion as the cost lever. Auto honors admin model policies and gives paid subscribers a 10% discount; legacy annual Pro/Pro+ plans use premium-request multipliers until expiry. HydraFusion is research preview, with offline benchmarks and estimated costs, not savings measured here.
 - Keep the rest to anchors: CLI GA, Squad 1.0.1, Terraform MCP, Azure MCP, GitHub agent news, and one AKS line.
-- ACA Sandboxes GA in September after June preview is additional context. C4 is conditional on approved Corp IaC, effective-policy read-back, and validated preflight, not a promised live clip.
+- ACA Sandboxes GA in September after June preview is additional context. C4 needs independently approved selected-target IaC, access/effective-policy read-back, full required coverage and presenter rehearsal. Online is proposed, not a promised live clip.
 - Name the current controls and their limits.
 
 ### 04:00-05:00, s04-layers, Haflidi then Martin
@@ -53,8 +59,13 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - `.squad\` owns roster, routing, decisions, charters, and handoffs.
 - Three native lanes: `terraform-coder`, `terraform-validator`, `terraform-reviewer`.
 - Tool filters are not a sandbox.
+- Squad is coordination/configuration over Copilot, not a sandbox product; installed 1.0.1 help has no sandbox verb. A worktree/tool filter does not isolate credentials.
+- Four hosts: local OS/MXC `/sandbox`; GitHub-managed Copilot cloud sandboxes built on ACA in preview; customer-managed ACA MicroVMs via `aca`; Squad hosted ACA Apps/Jobs, not MicroVMs. GitHub documents interactive-only `copilot --cloud --experimental`, never with `-p`/`-i`, but local 1.0.94 help does not expose `--cloud`; documented preview/account-build gate, not rehearsed availability.
+- Host installs do not prove full CLI+Squad execution inside a MicroVM. Require actual process/agent/prompt evidence and separate sign-in/storage/egress consent; never copy host authentication.
+- October 12 one-laptop read-only preflight 18/18 PASS: Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-preview.4, enabled plugin 0.0.5-beta. Both-host interactive checks, clean VM/manual sign-in, full rehearsal, invitation and exact NIC listing remain open. [Readiness](run-plan.md#october-12-readiness-evidence).
 - Select each native profile explicitly and keep its scope narrow.
 - Local `/sandbox` is off by default. On Windows, it needs a supported recent Windows 11 build and [update prerequisites](https://aka.ms/ghcp-sandbox-os-support). Proxy/host rules depend on supported features and apps honoring the proxy, not airtight protection for all processes; in-process file tools are best-effort and remote MCP is not sandboxed. [Details](aca-sandboxes.md#how-this-differs-from-the-other-sandbox-stories).
+- Installed `copilot help sandbox` documents one-session `--sandbox`; actual Windows MXC startup failed before command, exit 1, on proxy/masking/auth loopback/private-network needs. Policy blocked, no bypass/global change; needs authorized policy review and backend/session preflight rerun. Build 26300 is OS metadata, not successful backend operation. Explicit cloud help parse exit 0 is not account/billing/runtime proof.
 
 ### 05:30-08:30, C0 From zero to a squad, Haflidi
 - Cut 07:45.
@@ -126,10 +137,15 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - Read-only Microsoft Learn source for AKS Automatic private/custom network.
 - Show citation/version and one narrow permission decision.
 - Include the source and version with the change.
-- Base flow stays the default. Only approved Corp IaC, effective-policy read-back, and validated prepared-sandbox rehearsal permit the ACA substitution, replacing deeper MCP lookup.
+- Base flow stays default. Selected-target IaC, effective access/policy read-back, full required coverage and prepared-sandbox rehearsal permit substitution; Online is not qualified and Corp stays untouched.
 - Variant clock: 29:30-30:00 guidance/prepared source; 30:00-32:00 one bounded ACA skill prompt; 32:00-32:30 inspect actual exits/HTTP observations; 32:30-33:30 cut and hand back to C5. No create/upload/install/retry on stage. [Procedure](demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes).
 - Evidence is 10 root negative-validation checks, not 52 child-module plus two caller cases or an AKS deployment. A 403 alone proves neither egress nor Azure Policy enforcement.
 - If not ready, use base C4 or explicitly labeled Management-side evidence, not Corp validation. Earlier runs took about 2:58 and 1:47; no 90-second guarantee and no use of 55:00-58:00 slack.
+- Corp source merged, new qualification blocked on an unexpected change-type check; no apply performed. Last baseline 8 present / 3 absent, connection/two Data Owner grants missing; no new sealed manifest/raw exact deltas. Explicit Corp get Succeeded/no VNet connections, scoped list 403/exit 1. No successful Corp sandbox creation/runtime test or full CLI+Squad execution inside a MicroVM is established. Earlier 34/85/31 source/tooling checks are not runtime acceptance.
+- Card B: VM `C:\demo\session-repo` is control console; `aca` targets a proposed separate Online group/RG, not AKS or hosted Jobs/runner. Standard managed network if policy allows, no Corp BYO VNet/UAMI/FIC transplant. Candidate RG absent; not created/deployed/tested/independently plan-approved. Official [quickstart](https://sandboxes.azure.com/docs/sandboxes/quickstart/setup-cli) and full QA are pre-stage, no four-minute promise.
+- Token auth exit 0 only. Doctor 9/9 exit 0 resolved to cached Management despite explicit flags: WRONG TARGET. Compare printed subscription/RG/group/region with approved target plus independent exact-ID read-back. No config change, Management runtime fallback or creation permission.
+- Exact preflight/login/trigger/proof/owned cleanup are in [Card B](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad); optional in-VM Copilot/Squad has separate consent and actual process/agent/prompt proof.
+- Primary native flow is host Copilot CLI/Squad -> ACA skill -> inspected tool calls -> isolated public filesystem/offline Terraform/numeric exits -> validator/reviewer handoff. Standalone hello/lifecycle checks are prerequisites, not integration. No current integration readiness. Inside-MicroVM install/OAuth is advanced optional, not mandatory for basic host orchestration.
 
 ### 33:30-38:30, C5 Seed, fail, repair, Haflidi
 - Cut 37:15; must be out by 38:30.
@@ -169,6 +185,8 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - Approve the exact artifact and scope.
 
 ### 50:00-53:00, s20-consumer, Martin
+- October 12 both existing Online and Corp AKS clusters independently read through Azure MCP: Automatic SKU/Standard tier, Succeeded/Running; no redeploy indicated by metadata. Online app GET HTTP 200 with branded NIC/AKS text used explicit known-demo certificate bypass, not TLS certificate validation or a fresh 29-check suite. Nodepool/full-runtime gates stay separate.
+- Fresh full Online cluster validation, corrected scoring: app/assets/two replicas PASS with TLS bypass; canonical 26 PASS/2 BLOCKED/1 report-only, not 29/29; supplemental 10 PASS/1 FAIL (TLS)/1 NOT_APPLICABLE (external `/healthz`; source requires direct-pod 200 `ok`). Native Kubernetes/ResourceHealth unavailable, full health unproved. Eleven noncompliant resources in demo RG incl AKS/network/state, not 11 cluster failures/subscription-wide. No renewed 29/29/full TLS.
 - 50:00-50:30: consumer-to-module diagram.
 - 50:30-51:00: live reveal `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; branded page, pipeline flow, serving pod, speakers.
 - 51:00-52:10: Whether a change is human-authored or agent-assisted, it goes through the same gates: GitHub identity, OIDC for Azure, scans, required review, branch protection, environment approval, and an Actions audit trail.
@@ -177,14 +195,22 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 - Reuse the module without copying the private setup.
 
 ### Optional 53:00-54:30, Squad on ACA, use only if ahead
+- Original Haflidi hosted implementation completed/previously demonstrated; leave source/deployment alone. New personal queue target registration/access/rehearsal pending is separate, not evidence original broken/missing and not native Sandbox prerequisite. Native integration remains build work.
 - Keep it inside content time, compress `s21-limits` to 0:30 if needed, and skip it if it would touch 55:00-58:00.
-- Haflidi's `haflidif/squad-on-aca` runs Squad agents as Azure Container Apps jobs. Current run evidence is under Management; Corp validation remains a separate gate. A GitHub issue labeled for an agent lands in a queue, an ACA job runs the agent, and a bot opens the PR.
-- Benefit: unattended execution in our own Azure tenant, no presenter laptop, secrets in Key Vault, private networking available, managed identity for the run, same PR gates, variable cost per run well under USD 0.01, and separate fixed holding costs.
-- Public-safe proof from 9 Oct: a second fresh end-to-end run passed. The presenter flow created and labeled a new issue, the enqueue workflow succeeded, the ACA agent job finished in 56 seconds, and the bot app opened the PR. Test issues and PRs were then closed, and the repo was clean.
-- Safety and ops checks: an unlabeled issue triggered nothing; Terraform plan for the stack was unchanged; private networking and NSGs were checked; no secrets were found in the run logs.
+- Haflidi's `haflidif/squad-on-aca` uses hosted ACA Apps/Jobs, not MicroVMs. Native October 12 inventory verified Corp, Norway East placement; two succeeded historical Oct 9 agent-job executions lasted 56 seconds. Placement only is updated, not a fresh queue-driven run. Corp validation remains a separate gate for MicroVMs.
+- Benefit: workload identity, Key Vault and KEDA queue hosting, same PR gates. Historical variable-cost estimate under USD 0.01 per run plus holding costs is not a current measured bill or hard cap.
+- Fresh queue-driven readiness is not established: Manual target runner job with 7200-second timeout, no registered target runners today, private target invitation pending. Today's scoped README-only smoke failed: existing Manual runner execution ended terminal Failed; associated issue queue workflow remains queued. No successful fresh issue-to-PR chain or effective-policy/routing proof. Historical Management-side MicroVM evidence stays separate.
+- Two historical Oct 9 target-queue successes are shared-demonstration smoke evidence, not current full bot-PR readiness. Fresh issue open/queue queued, no open PR at 10:28 UTC. Actual image pull succeeded, then short-lived runner registration failed.
 - The environment is in Norway East because Sweden Central hit ACA capacity errors.
-- Presenter procedure, validated 9 Oct: 1) `gh issue create --repo martinopedal/squad-on-aca-demo-target --title "Demo task" --body "Ask ripley to make a tiny README/doc change."` 2) `gh issue edit <n> --repo martinopedal/squad-on-aca-demo-target --add-label squad:ripley` 3) `gh run list --repo martinopedal/squad-on-aca-demo-target --workflow squad-queue.yml --limit 3` 4) watch the ACA job execution in the Azure portal or with `az containerapp job execution list` 5) `gh pr list --repo martinopedal/squad-on-aca-demo-target --author app/squad-on-aca-nic2026-demo --state open`
+- Card A: Haflidi's implementation is `haflidif/squad-on-aca`, not the private target. VM `C:\demo\hosted-target` is control console only; manually verify GitHub sign-in/accepted target access, then approved issue/label -> queue -> actual hosted Job -> bot PR. Use `<approved-private-target>` and `<approved-bot-app>` bindings from [Card A](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr), not public clone access as permission.
+- Hard cut 54:30, no retry/registration repair on stage; owned issue/PR/execution cleanup is off-stage. Current NO-GO. Haflidi's authored role is documented, but no current Haflidi-authored technical confirmation in supplied evidence. Ask for implementation revision and fresh sanitized chain result.
 - Fallback: show the finished proof chain and move on.
+
+### Operator obligations, not new stage beats
+- Online is primary placement for eligible demo components, not fallback/policy escape. Corp-required private workloads stay Corp; repo visibility and authenticated network/control-plane exposure are separate.
+- Four demo lanes remain independent: existing Online AKS, native MicroVM group/RG, hosted Jobs issue-to-PR, local Copilot sandbox. GitHub-managed cloud remains an optional separate lane.
+- USD 20 through Oct 31 is an alert, not a hard cap; retained Corp costs remain.
+- C1 Oct 13 fresh OnlineSecurity 29/DemoVM; C2 MCP minreplicas 1/revert Oct 14; teardown Oct 17/credential expiry Oct 31 are scheduled, not complete.
 
 ### 53:00-55:00, s21-limits, Haflidi then Martin
 - Plan mode for decisions before edits.

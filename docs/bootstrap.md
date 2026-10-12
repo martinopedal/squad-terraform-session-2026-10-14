@@ -4,6 +4,21 @@ Run [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1) manually
 
 Target: a Windows 11 x64 demo VM with PowerShell 7 and WinGet available. Use a GitHub account with a Copilot plan and permission to use both the Copilot app and CLI. Organization policy for the desktop app is separate from CLI policy. Review installer/UAC prompts; keep native Copilot trust, tool, and plan approvals.
 
+Audience: presenters preparing the host, not approving deployment. [The repo
+map](repositories.md) separates session setup/teaching profiles, canonical
+public modules, the live AKS consumer and Haflidi's hosted implementation/target.
+Host setup is not either [product demo flow](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes)
+running. Hosted issue-to-PR and host Copilot/Squad driving native MicroVM work
+have independent preflight/trigger/handoff/evidence. Optional in-MicroVM
+Copilot/Squad requires separate runtime/auth consent.
+
+October 12: one laptop 18/18 and helper 46 scenarios + 3 native checks per
+PowerShell engine, not second-host interactive checks, clean VM/manual login or
+rehearsal. Actual local MXC startup failed before command, exit 1; policy blocked,
+no bypass/global change. ACA host token auth passed, but wrong-target doctor
+cannot qualify Corp/Online. Separate native Online group/RG is proposed/unqualified,
+not AKS or hosted Jobs. See [the progress matrix](sandboxing.md#october-12-progress-and-next-actions).
+
 ## What this bootstrap does
 
 - Installs Git with WinGet if it is missing.

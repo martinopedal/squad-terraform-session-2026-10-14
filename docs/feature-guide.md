@@ -1,5 +1,10 @@
 # Copilot CLI and Squad: practical engineering workflows
 
+Original Haflidi hosted `haflidif/squad-on-aca` implementation is completed and
+previously demonstrated; leave source/deployment alone. Fresh personal target
+registration/access/rehearsal is separate, not missing/broken original work or
+a native Sandbox prerequisite. Native ACA integration is remaining build.
+
 Use Copilot CLI to turn an AKS requirement into inspected code, and Squad to keep ownership and decisions intact across tasks.
 
 The example is a reusable Terraform module for a fresh, private AKS Automatic cluster using supplied network inputs. Provider/backend configuration belongs to the caller. The inherited starting point is a root module, not a finished library. Prompts below are examples, not executed transcripts or Azure compatibility evidence.
@@ -8,11 +13,52 @@ The example is a reusable Terraform module for a fresh, private AKS Automatic cl
 
 Reviewed September 30, 2026. We read current GitHub documentation and pinned Squad's default `dev` branch at `93aec83accb44e08c39e4a799f13b55208215a13`. The stable `main` comparison is `5e086cece467686b2d3c6950241cf87bca5fffe8`. Squad v1.0.0 (October 3) and v1.0.1 (October 4) release tags exist, and the demo machine uses 1.0.1. The pinned reference docs at `93aec83` still carry an Experimental/alpha banner, so docs may lag releases. See [whats-new.md](whats-new.md).
 
-Current validation is **Copilot CLI 1.0.93, Squad 1.0.1 (validated October 8, 2026)**. Historical local probes used Copilot CLI **1.0.88** directly and Squad **0.13.0**, before the 1.0 releases; the unqualified `copilot` command then returned **1.0.89**, so a command name alone isn't a version pin. Earlier changes from 1.0.88 to 1.0.92 are listed in [whats-new.md](whats-new.md). Re-probe the live-demo build before delivery. Deck 0.21.0 introduced the public status badges. Deck 0.22.2 keeps them, the approved writing and source-date labels, and conditional C4 notes. Read stage labels from the badge table in `presentation\src\slides.mjs`.
+Current native host checks are **Copilot CLI 1.0.94, Squad 1.0.1 (October 12, 2026)**, with ACA CLI 1.0.0-preview.4 and enabled official sandbox plugin 0.0.5-beta. One laptop's corrected read-only preflight passed 18/18; this is not both presenters, clean VM/manual sign-in, full rehearsal or MicroVM acceptance. October 8 validation used Copilot CLI 1.0.93. Historical local probes used Copilot CLI **1.0.88** directly and Squad **0.13.0**, before the 1.0 releases; the unqualified `copilot` command then returned **1.0.89**, so a command name alone isn't a version pin. Earlier changes from 1.0.88 to 1.0.92 are listed in [whats-new.md](whats-new.md). Re-probe the live-demo build before delivery. Deck 0.21.0 introduced the public status badges. Deck 0.22.4 preserves accepted 0.22.3 and completes repo-map/progress/operator notes without on-screen or clock changes; live Pages remains 0.22.2 pending review/release. Read stage labels from the badge table in `presentation\src\slides.mjs`.
 
 Squad 1.0.1 is the session's installed version. The WinGet catalog confirms package availability; see [bootstrap.md](bootstrap.md). A zero exit from generic help does not verify standalone model, models, list, remote-state, or heartbeat behavior. Use the native Copilot CLI `/model` and `/subagents` controls for this session. Historical release notes about `squad models refresh` describe v0.12, not an installed 1.0.1 qualification.
 
 For the same workflows applied end to end through a real pipeline, see [online-demo.md](online-demo.md) (Online landing-zone variant) and the rerunnable [prompt-pack.md](prompt-pack.md).
+
+The live demo consumer is `martinopedal/aks-automatic-demo-env`, pinning `martinopedal/terraform-azapi-aks-automatic` at `v0.6.0`; this session's copied Corp teaching module has its own unchanged source pin/manifest.
+
+### Execution host availability, not a Squad sandbox product
+
+Squad is coordination/configuration over its Copilot host; installed 1.0.1 help has no sandbox verb. [Four hosts](sandboxing.md) distinguishes local OS/MXC `/sandbox`, GitHub-managed Copilot cloud sandboxes built on ACA in preview, customer-managed ACA MicroVMs via `aca`, and hosted Squad Apps/Jobs, not MicroVMs. A worktree/tool filter does not isolate credentials.
+
+GitHub documents interactive-only `copilot --cloud --experimental`, never with `-p`/`-i`. Neither local 1.0.94 normal nor experimental help exposes `--cloud` here: documented preview/account-build gate, not rehearsed availability. Native `/sandbox status` belongs to the interactive UI; standalone sandbox help offers `ca`, not `status`. Windows proxy rules require Allow local network and applications honoring the proxy; file tools are best-effort and remote MCP is not sandboxed.
+
+Installed `copilot help sandbox` documents one-session `--sandbox` despite top-level-help omission. Actual Windows MXC startup failed before command, exit 1, on proxy/masking/auth loopback/private-network requirements; policy blocked, no bypass/global change. Needs authorized policy review and actual backend/session preflight rerun. Windows build 26300 is OS metadata, not successful backend operation. Explicit `--cloud --experimental --help` parse exit 0 is not account/entitlement/billing/runtime proof.
+
+Corp MicroVM recovery failed; no successful Corp sandbox creation/runtime test or full CLI+Squad execution inside a MicroVM is established. Host installs do not prove in-MicroVM process/agent/prompt execution; sign-in/storage/egress need separate consent, never copied host authentication. Hosted Jobs placement was verified in Corp, Norway East, but fresh queue-driven readiness is not established. See [current readiness](run-plan.md#october-12-readiness-evidence).
+
+Current qualification: Corp source merged, new qualification blocked on an
+unexpected change-type check; no apply performed. Confirmed native direction is
+a separate Online SandboxGroup/RG, not inside AKS or hosted Jobs; standard managed
+network if policy allows is proposed, not Corp BYO VNet/UAMI/FIC transplantation.
+Candidate RG absent; not created/deployed/tested/independently plan-approved.
+Leave Corp untouched. Host token auth passed; doctor 9/9 resolved to cached
+Management despite explicit flags, so compare printed target and independent
+exact-ID read-back, not its exit alone. Actual Corp scoped list remains forbidden.
+
+For clone/change/deployment ownership use [the repo map](repositories.md).
+Haflidi's `haflidif/squad-on-aca` is hosted implementation, not the private queue
+target. Historical hosted smoke is not current confirmation; fresh issue open/
+queue queued/runner registration blocked, no fresh PR. See [progress/next
+actions](sandboxing.md#october-12-progress-and-next-actions), [official quickstart
+coverage](aca-sandboxes.md#full-test-coverage-checklist) and [separate VM demo
+product flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
+Fresh full Online AKS validation at 10:47 UTC: app/source-matching assets and two
+replicas PASS under TLS bypass, canonical 26 PASS/2 BLOCKED/1 report-only,
+corrected supplemental 10 PASS/1 FAIL (TLS)/1 NOT_APPLICABLE (external `/healthz`;
+source requires direct-pod 200 `ok`). Native Kubernetes/ResourceHealth unavailable,
+full health unproved. Eleven noncompliant resources within demo RG across
+AKS/network/state, not 11 cluster failures/subscription-wide.
+No renewed 29/29/full TLS result; C1 Oct 13 remains scheduled.
+
+Online is primary for eligible demos, not fallback/policy escape; Corp-required
+private workloads stay Corp. Repo visibility and authenticated network/control
+plane are separate. Preserve working AKS/Corp/Jobs, no checklist redeploy or
+automatic repair of the working app/cluster.
 
 | Evidence code | What was verified |
 | --- | --- |

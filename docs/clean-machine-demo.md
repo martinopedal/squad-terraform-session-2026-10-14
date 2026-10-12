@@ -4,6 +4,14 @@ C0 is a 3-minute live chapter (deck slide `demo-c0`, 05:30-08:30, Haflidi leads)
 
 Everything below was checked on 2026-10-07 against the deployed VM and a throwaway clone. Re-run the preflight before the live demo because package versions move.
 
+That is historical setup evidence, not a completed current clean-VM/manual-login
+rehearsal. October 12 one laptop 18/18 does not close those gates. See [current
+readiness](run-plan.md#october-12-readiness-evidence) and [the repo map](repositories.md).
+VM deployment/access belongs to the live `martinopedal/aks-automatic-demo-env`
+consumer, not this session clone. Hosted Squad issue-to-PR and Copilot/Squad
+driving native ACA MicroVMs are separate [product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes);
+the VM is only a presenter host. Native separate Online group/RG remains
+proposed/unqualified, not AKS/hosted Jobs. No current integration readiness.
 For the fuller operator setup with `-WhatIf`, repo clone, `copilot login`, `squad init`, and a GitHub App checklist, see [bootstrap.md](bootstrap.md) and [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1). Keep the live chapter on the shorter flow below.
 
 ## What the machine is
@@ -29,7 +37,11 @@ $env:AZURE_SUBSCRIPTION_ID_ONLINE = '<online subscription id>'   # never on scre
 .\scripts\Connect-DemoVm.ps1        # opens the Bastion RDP session
 ```
 
-If `Test-DemoVm.ps1` reports the VM is not clean (an earlier take installed tools), reset it first: run `deploy-demo-vm.yml` in the demo-env repo with action `recreate-vm`, approve the `online` gate, and wait for the verification job (estimate; time it in rehearsal 1: about 15-20 minutes including policy-driven extensions).
+If the VM is not clean, stop and obtain the separately reviewed destructive
+reset approval before `deploy-demo-vm.yml` action `recreate-vm`. A documentation
+task, healthy AKS metadata or proposed MicroVM placement does not grant it.
+Verify backups/scope and the `online` gate, then inspect the actual verification
+job. The historical 15-20 minute reset estimate needs timing in rehearsal.
 
 On the VM: close notifications, set display scaling to 125%, open **Windows Terminal**, and pick the **PowerShell** (7) profile from the dropdown, not Windows PowerShell. Font size 16 or larger. Hide the Bastion toolbar.
 
