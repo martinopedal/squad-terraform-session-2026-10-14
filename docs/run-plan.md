@@ -12,7 +12,7 @@ Keep all verified enrichment added in the 0.21.0 deck round and carried into dec
 
 Decision: reuse `s01-outcome` as the 00:00-03:00 intro instead of adding a new `s00-intro`. Reason: it already carries the outcome and speaker visual, and a new slide would add navigation/test churn without improving the story.
 
-Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.22.4, full repo-map/progress/operator notes pass without changing on-screen markup), the reviewed Oct 8 eval, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout. The five-slide companion and full 39-slide deck retain their slide counts and clocks. Live Pages remains 0.22.2 pending reviewed release.
+Clock/source baseline: released deck 0.22.4 in `presentation\src\slides.mjs`, the reviewed Oct 8 eval and the 2026-10-09 timing directive. Full 39-slide and short five-slide HTML are released on main/Pages. These later operator-doc corrections update readiness, not slide design/clocks; they await their own reviewed release. Local deck 0.22.5 now propagates the accepted native/blocked hosted facts into exported notes. It remains a candidate pending review/publication; use the matrix/cards for operational scope.
 
 ## Evidence used for timing
 
@@ -34,7 +34,7 @@ The live demo consumer is `martinopedal/aks-automatic-demo-env`, which pins `mar
 Use [the complete repo map](repositories.md), [owner/date/proof/blocker/next-action
 matrix](sandboxing.md#october-12-progress-and-next-actions) and [official quickstart
 coverage checklist](aca-sandboxes.md#full-test-coverage-checklist). Four independent
-demo lanes: existing Online AKS; native ACA SandboxGroup MicroVMs in a proposed
+demo lanes: existing Online AKS; native ACA SandboxGroup MicroVMs in a verified
 separate Online group/RG; hosted Squad ACA Jobs issue-to-PR; local Copilot sandbox.
 GitHub-managed cloud is an additional optional account/runtime lane.
 
@@ -51,7 +51,7 @@ GitHub-managed cloud is an additional optional account/runtime lane.
 | B5 current NIC listing | Unknown; current website fetch does not prove exact session title/time | Manually confirm exact listing against planned session metadata |
 | Corp customer-managed MicroVM | Current: source merged, new qualification blocked on an unexpected change-type check; no apply performed. Last baseline 8 present / 3 absent: group exists, connection and two Data Owner grants absent; full convergence/access/runtime unproved | No new sealed manifest/raw exact deltas. Devrel repairs private diagnostic retention separately; no deployment/scope weakening. Keep base C4; leave Corp untouched |
 | Earlier Corp failure / source-only correction | Historical recovery failed on connection HTTP 400 missing `location`, scoped list 403/exit 1. Earlier contracts 34/34, artifact suite 85/85, runtime suite 31/31, workflow 17/17, checkout 10/10, toolchain 12/12 and GitHub-script 10/10 PASS as source/tooling checks; two Linux smokes skipped on Windows | These were not a new Azure plan or deployment result; source checks precede the subsequent blocked qualification, no new apply established |
-| Separate primary Online native MicroVM | Five-object setup/credential-free Ubuntu 1 CPU/2 GiB ten-minute probe/new-test-ID-only deletion scope approved; native owner preparing demo-env `deployments\aca-sandboxes-online` Bicep/separate protected lane. No deployment/runtime PASS | Actor authority/policy/budget/source/new plan/exact manifest remain gates; scope consent not future manifest approval or inside-VM OAuth. Preserve working AKS/Corp/Jobs; no anonymous ingress/secrets/private-state exposure |
+| Separate primary Online native MicroVM | Five-object deployment Succeeded/all exact bindings/current operator group access/base 375-second credential-free exec/fs/stop-resume/delete independently verified; final list empty | Public source PR human review/second-presenter qualification remain separate. Corrected ACA SANDBOXES run26.768s passed three guest checks/JSON+SHA/exit23/causal denial/cleanup; independent acceptance complete, runtime-ready after acceptance, human stage GO pending; no automatic retry |
 | ACA host auth / wrong-target doctor | Auth status exit 0: ARM/data-plane tokens authenticated only. Doctor 9/9 exit 0 printed cached Management/Norway East, not the requested target despite explicit flags | Compare printed subscription/RG/group/region with approved target plus independent exact-ID read-back; resolve targeting read-only. No Corp/Online doctor PASS, config change or Management fallback |
 | Original Squad hosted Apps/Jobs | Haflidi implementation completed/previously demonstrated; Corp, Norway East placement and historical Oct 9 executions/56 seconds | Leave source/deployment alone. New personal target/rehearsal registration/access is separate, not missing original implementation or native Sandbox prerequisite |
 | Target runner | Existing job is Manual with 7200-second timeout; no registered target runners in current read-back | Resolve runner/queue path through separate approval and native runtime checks |
@@ -60,7 +60,7 @@ GitHub-managed cloud is an additional optional account/runtime lane.
 | Current Online and Corp AKS metadata | Both existing clusters independently read back through Azure MCP: Automatic SKU/Standard tier, provisioning Succeeded, power Running | No AKS redeploy indicated by this metadata; nodepool/full-runtime qualification is separate |
 | Current Online app GET | HTTP 200 with branded NIC/AKS text, using explicit known-demo certificate bypass | Not TLS certificate validation or a fresh 29-check security suite; retain separate runtime/security gates |
 | Fresh full Online cluster validation | App/source-matching assets/two replicas PASS under TLS bypass; canonical 26 PASS/2 BLOCKED/1 report-only, not 29/29. Corrected supplemental 10 PASS/1 FAIL (TLS)/1 NOT_APPLICABLE (external `/healthz`; source requires direct-pod 200 `ok`) | Native Kubernetes/ResourceHealth unavailable, full health unproved. Eleven noncompliant resources scoped to demo RG incl AKS/network/state, not 11 cluster failures/subscription-wide. No renewed 29/29/full TLS; C1 Oct 13 remains |
-| Deck / publication | Prior accepted draft 0.22.3 preserved; draft deck 0.22.4 full pass requires independent review; supplied live Pages remains 0.22.2 | Publish source branch/PR under authorization, normal merge only after review/checks; no Pages release inferred from push |
+| Deck / publication | Released 0.22.4 on main/Pages; fresh full/short HTTP matched local release, 39/5 slides | Later docs/bootstrap corrections need their own review/release; no repeat build/version bump to re-prove the released baseline |
 | Oct 13 warmup/reset | Scheduled, not completed | Verify current hosts, clean C0 reset, scoped fallback and app |
 | C1 / C2 Oct 13 | Fresh OnlineSecurity 29 + DemoVM checks; MCP minreplicas 1 warmup scheduled, revert Oct 14 | Exact reviewed changes/checks remain separate; not inferred from today's HTTP 200 |
 | Oct 17 teardown / Oct 31 expiry | Dated obligations, not completed | Human verifies teardown and cost stop; expiry is a latest bound, not proof of deletion |
@@ -68,7 +68,8 @@ GitHub-managed cloud is an additional optional account/runtime lane.
 
 Squad is coordination/configuration over Copilot, not a sandbox product. [Four execution hosts](sandboxing.md) separates local OS/MXC, GitHub-managed cloud preview, customer-managed ACA MicroVMs, and hosted Squad Apps/Jobs. No successful Corp sandbox creation/runtime test or full CLI+Squad execution inside a MicroVM is established. A worktree/tool filter does not isolate credentials. Host installs do not prove full CLI+Squad execution inside a MicroVM; supported sign-in, storage and egress need separate consent without copying host authentication.
 
-USD 20 total through October 31 is an alert, not a hard cap. Retained Corp
+Earlier USD 20 is historical planning/alert context, not current execution authority;
+scoped cost consent remains private. Retained Corp
 resources consume budget; primary Online placement is not promised free.
 Online is primary for eligible demo components, not a fallback/policy escape;
 Corp-required private workloads stay Corp. Repo visibility does not define
@@ -82,7 +83,7 @@ cleanup instructions are in [Card A and Card B](demo-runbook.md#two-product-demo
 | Card | Repo / folder / owner | Trigger and required proof | Clock / cut / fallback / cleanup |
 | --- | --- | --- | --- |
 | A, hosted Squad ACA Jobs | Haflidi authored `haflidif/squad-on-aca`; approved private issue target at VM `C:\demo\hosted-target`. Haflidi explains, Martin/operator triggers. Manual GitHub login and accepted target rights required | Approved tiny issue + `squad:ripley` label -> queue -> actual hosted Job -> bot PR/diff. Current runner registration blocked, issue open/queue queued/no fresh PR; historical Oct 9 smoke is not GO | Optional 53:00-54:30 if ahead/newly qualified; cut 54:30, no use of recovery. Dated reviewed historical excerpt or skip. Approved owned issue/PR/execution cleanup off-stage |
-| B, native ACA isolation for host Copilot CLI/Squad | Public session notes/archive at presenter host; separate Online group/RG proposed, not AKS/hosted Jobs. Martin drives, native operator prepares. Manual Entra/ACA token auth and target/access read-back required | Host prompt -> Squad/ACA skill -> inspected tools with explicit target -> MicroVM public filesystem/offline Terraform/numeric exits -> validator/reviewer handoff. Full lifecycle/fs/egress/suspend/resume QA is pre-stage. Actual doctor wrong-target; candidate RG absent; no integration GO | C4 substitution 29:30-33:30 only after full gate, cut 32:30. Base skill/MCP today; reviewed historical excerpt is not target qualification. Approved owned lifecycle/cleanup off-stage; no Corp changes |
+| B, native ACA isolation for host Copilot CLI/Squad | Public session prompt/fixture on host; verified separate Online group/RG, not AKS/hosted Jobs. Martin coordinates, native operator/worker runs, independent validator/reviewer checks | Actual host prompt/Squad/ACA tools -> three guest checks/JSON+SHA -> exit23/causal denial -> cleanup/handoff. Corrected receipt PASS; independent acceptance complete, runtime-ready after acceptance, human stage GO separate | C4 29:30-33:30/cut 32:30 only after successful-work/rehearsal GO. Base C4 or labeled failure/cleanup today; no retry or slack spend. Exact owned cleanup off-stage |
 
 No full runtime QA is promised in four minutes. Host Copilot/Squad orchestrating
 isolated work is the primary native flow, with actual prompt/tool/validation/
@@ -136,14 +137,15 @@ Nothing was cut from the already-placed enrichment:
 - The legal notice remains the untimed pre-show slide.
 - The Rubber Duck appendix note stays in the appendix.
 - Feature badges remain in the deck.
-- ACA Sandboxes is a conditional C4 variant, not an inserted chapter. Only independently approved selected-target IaC, effective access/policy read-back, full required runtime coverage and validated presenter preflight permit it. Online remains proposed/unqualified and Corp untouched. It replaces part of the deeper MCP lookup within the existing 29:30-33:30 C4 slot and keeps the 32:30 cut. No extra bridge trims are assumed; `s05-parallel`, `s18-memory`, and `s21-limits` keep their table budgets.
+- ACA Sandboxes is a conditional C4 variant, not an inserted chapter. Only independently approved selected-target IaC, effective access/policy read-back, full required runtime coverage and validated presenter preflight permit it. Online base is verified; successful-work integration/rehearsal remains pending and Corp untouched. It replaces part of the deeper MCP lookup within the existing 29:30-33:30 C4 slot and keeps the 32:30 cut. No extra bridge trims are assumed; `s05-parallel`, `s18-memory`, and `s21-limits` keep their table budgets.
 
 ### Conditional C4 variant, same clock
 
 Default to the original skill, read-only MCP lookup, and permissions flow.
-Corp gate remains open: source merged, new qualification blocked on an unexpected
-change-type check; no apply performed. Separate Online group/RG is proposed and
-unqualified. Historical Management-side MicroVM evidence or hosted Jobs placement
+Held Corp gate remains open: source merged, qualification blocked on an unexpected
+change-type check; no apply performed in that lane. Separate Online deployment/
+access/base probe is verified; successful-work integration/rehearsal remains
+subject to independent acceptance and human preflight/rehearsal; earlier CRLF is learning history. Historical Management-side MicroVM evidence or hosted Jobs placement
 does not close the selected-target gate. Retain base C4; an approved historical
 excerpt must say "Management-side execution evidence, not Corp validation".
 

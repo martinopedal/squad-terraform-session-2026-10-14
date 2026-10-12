@@ -13,7 +13,9 @@ different upstream Automatic module at `v0.6.0`. See [the repo map](repositories
 This Corp AKS contract is not the native ACA SandboxGroup plan. Current native
 direction is a separate Online group/RG with standard managed networking if
 policy allows, not this Corp BYO VNet/UAMI/FIC wiring or a MicroVM inside AKS.
-It remains proposed/unqualified. New Corp sandbox qualification blocked on an
+Online provisioning/access/base is independently verified. Corrected ACA
+SANDBOXES host runtime passes; independent acceptance complete, then runtime-
+ready. Human stage GO and hosted Apps/Jobs qualification remain separate. Held Corp sandbox qualification blocked on an
 unexpected change-type check; no apply performed. Leave Corp untouched; do not
 infer a policy restriction or approval to relocate resources.
 

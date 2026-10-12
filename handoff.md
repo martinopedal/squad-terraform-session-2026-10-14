@@ -3,13 +3,16 @@
 Haflidi original `haflidif/squad-on-aca` is implemented/previously demonstrated;
 leave source/deployment alone. Current fresh personal target registration/access/
 rehearsal is separate, not proof original is broken/missing and not native
-Sandbox prerequisite. Native integration is remaining build, source preparing.
+Sandbox prerequisite. Native Online provisioning/access/base is verified;
+corrected ACA SANDBOXES host runtime passes, independent acceptance complete,
+then runtime-ready. Human stage GO and fresh SQUAD ON ACA APPS/JOBS E2E remain
+separate; earlier CRLF is learning history.
 
 Updated October 12, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
 
 ## Current result
 
-- Local Reveal.js presentation version **0.22.4**, full docs/notes pass pending independent review/release; prior accepted uncommitted 0.22.3 preserved, live Pages remains 0.22.2. Presentation metadata reports **39 slides total**, including the untimed legal/pre-show slide, the timed main flow, and the appendix.
+- Released Reveal.js baseline **0.22.4** on main/Pages, **39 full / 5 short slides**. Local presentation version **0.22.5** is the authorized factual notes/status export candidate, not a new published release. Existing design/commands/media/IDs/clocks are unchanged; source/export review gates publication.
 - A five-slide companion deck is built at `presentation\short\index.html`.
 - Current delivery contract: **3:00 intro; planned content to about 55:00; 55:00-58:00 protected recovery block; 58:00-60:00 close**. The planned content includes **29:00 of live C0-C7 demo chapters** and the rest as live explanation. Questions are only if time allows. There is no scheduled Q&A block. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
 - Live-demo rule: **C0-C7 are live**, with optional reviewed fallback evidence if a chapter fails live.
@@ -56,7 +59,9 @@ The live demo consumer is `martinopedal/aks-automatic-demo-env`, pinning `martin
 | October 12 native tools / one laptop | Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-preview.4, enabled official plugin 0.0.5-beta; corrected read-only laptop preflight 18/18 PASS. Banner terminal-period helper fix passed 46/46 controlled regressions and three harmless native helper checks on each PowerShell 7 and 5.1. Not both hosts, clean VM/manual sign-in or rehearsal. |
 | Installed local sandbox help | `copilot help sandbox` explicitly documents one-session `--sandbox` despite top-level-help omission. Needs actual backend/session preflight; Windows build 26300 is OS metadata, not successful backend operation. Native interactive `/sandbox enable` and `/sandbox status` remain documented controls. |
 | October 12 current Corp qualification | Source correction merged; new qualification blocked on an unexpected change-type check; no apply performed. Last baseline 8 present / 3 absent: group exists, default VNet connection and two presenter Data Owner grants missing. No new sealed manifest/raw exact deltas; full convergence/access and in-MicroVM CLI/Squad unproved. Private diagnostic retention repair is separate, not deployment or scope weakening. |
-| Proposed native Online MicroVM target | Confirmed separate group/RG, not AKS/hosted Jobs. Lead proposes demo-env `deployments\aca-sandboxes-online` and sandbox-only workflow/protected `online` environment, not existing/deployed. Managed network if policy allows, no Corp BYO VNet/UAMI/FIC transplant. Actor authority/new exact scope/source/plan qualification pending; no apply/runtime acceptance. Corp untouched, not a proven placement fix. |
+| Independently verified native Online base | Separate five-object target from demo-env `deployments\aca-sandboxes-online`, not AKS/hosted Jobs or Corp BYO VNet/UAMI/FIC transplant. Approved one-time Owner bootstrap Succeeded; all exact bindings/current operator access/base credential-free exec/fs/stop-resume/delete verified; list empty. Public source PR human review and second-presenter remain separate. Corp untouched |
+| Earlier host attempt, learning history | Approximately 77-second local CRLF failure/cleanup; downstream checks blocked. Corrected source/parser work supersedes this as the current runtime verdict |
+| Corrected ACA SANDBOXES host runtime | One26.768-second host/worker/MicroVM trace: LF/source hash round trip, three guest checks/JSON+SHA, actual exit23, HTTPS403/new exact-sandbox causal denied audit, exact deletion/empty list/NotFound/watchdog stopped. Independent acceptance complete; runtime-ready after acceptance, not human stage GO or hosted Apps/Jobs proof |
 | Earlier October 12 source/tooling checks | Contracts 34/34, artifact suite 85/85, runtime suite 31/31, workflow 17/17, checkout 10/10, toolchain 12/12 and GitHub-script 10/10 passed, two Linux smokes skipped on Windows. These precede the blocked qualification; no runtime/apply claim. |
 | October 12 host auth / wrong-target doctor | ACA 1.0.0-preview.4 auth status exit 0: ARM/data-plane tokens authenticated. Doctor returned 9/9 exit 0 but printed cached Management/Norway East rather than requested Corp. Not selected-target acceptance; compare printed target and independent exact-ID read-back. No config change, Management fallback or create authorized. |
 | October 12 local / optional GitHub cloud | Actual local Windows MXC startup exit 1 before command on proxy/masking/auth loopback/private-network requirement; policy blocked, no bypass/global change. Explicit cloud help parse exit 0 is not account/billing/runtime or full-Squad proof. |
@@ -70,13 +75,14 @@ Squad is coordination/configuration over the hosting Copilot session, not a sand
 
 The [official quickstart and full test checklist](docs/aca-sandboxes.md#full-test-coverage-checklist)
 cover target/access/doctor, lifecycle/exec/fs/egress/suspend/resume, offline
-Terraform and actual in-VM Copilot/Squad. Auth status, green wrong-target doctor,
+Terraform and actual host prompt/skill/tool/guest result/validation/handoff.
+Inside-MicroVM Copilot/Squad is advanced optional and separately consented. Auth status, green wrong-target doctor,
 18/18 laptop checks, hosted Jobs or AKS metadata cannot close those runtime gates.
-USD 20 total through October 31 is an alert, not a hard cap; retained Corp consumes
+Earlier USD 20 is historical planning/alert context, not execution authority; retained Corp consumes
 budget. Oct 13 C1 OnlineSecurity 29/DemoVM and C2 MCP minreplicas 1/revert Oct 14
 remain scheduled. Teardown Oct 17/credential expiry Oct 31 require separate proof.
 
-Two product demo flows are planned, not executed: [hosted Squad agent work to
+Two product demo flows have separate evidence and readiness: [hosted Squad agent work to
 bot PR and host Copilot CLI/Squad-driven native isolation](docs/demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
 The host/VM is only presenter detail. Native acceptance needs actual host
 prompt/selected Squad/ACA skill/tool/output/validation/reviewer handoff, not
@@ -97,10 +103,14 @@ stay Corp. Repo visibility is separate from network/authenticated control-plane
 scope. Preserve working AKS/Corp/hosted Jobs; no checklist redeploy or automatic
 cluster repair. Five-object separate Online native setup and one credential-free
 Ubuntu 1 CPU/2 GiB ten-minute probe/new-test-ID-only deletion have scope approval;
-source implementation preparing, actor/policy/budget/new plan/exact manifest
-still qualify. No native deployment/runtime/integration or inside-VM OAuth PASS.
+deployment/access/base probe independently verified. The corrected ACA SANDBOXES trace returns positive work/JSON/SHA/exit23/causal
+denial/cleanup proof; independent acceptance complete, then runtime-ready.
+Fresh hosted Apps/Jobs E2E and human stage GO remain separate.
+Inside-VM OAuth/agents remain unproved and not authorized by these probes.
 
-The [readiness table](docs/run-plan.md#october-12-readiness-evidence) retains B1 clean VM, B2 both-host interactive checks, B3 full 60-minute rehearsal, B4 pending invitation, B5 exact NIC listing unknown, Oct 13 warmup/reset, Oct 17 teardown and Oct 31 expiry. Pool A1/Dependabot are held for their own review, not auto-merged. No recording, full rehearsal, new Pages publication or complete current deployment is claimed.
+The [readiness table](docs/run-plan.md#october-12-readiness-evidence) retains B1 clean VM, B2 both-host interactive checks, B3 full 60-minute rehearsal, B4 pending invitation, B5 exact NIC listing unknown, Oct 13 warmup/reset, Oct 17 teardown and Oct 31 expiry. Pool A1/Dependabot are held for their own review, not auto-merged. No recording, full rehearsal, new corrected-doc Pages publication or full
+successful-work integration is claimed. The released deck and independently
+verified bounded Online deployment are completed milestones, not new tasks.
 
 ## Resume presentation work
 

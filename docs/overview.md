@@ -44,8 +44,8 @@ Corp-required private workloads stay Corp; repo visibility does not define
 network exposure. Preserve existing working AKS/Corp/hosted Jobs; report
 limitations, no checklist redeploy/automatic cluster repair.
 
-- **Hosted Squad on ACA:** Haflidi's original implementation is completed/previously demonstrated; leave it alone. Its product flow is issue -> Squad agent work in ACA Job -> bot PR. Our new personal target/access/registration/rehearsal remains pending (fresh issue open/queue queued/no PR at 10:28 UTC), not evidence original implementation is broken and not a native Sandbox prerequisite. Ask for a fresh new-target rehearsal result only if selected; no new personal technical confirmation is inferred.
-- **Native ACA Sandboxes with host Copilot CLI/Squad:** coordinate a bounded public prompt, invoke the ACA skill, inspect actual `aca` calls, validate public filesystem/offline Terraform inside the MicroVM, and return numeric exits/source evidence in a validator/reviewer handoff. Confirmed separate Online group/RG direction, proposed standard managed network if policy allows; not AKS/hosted Jobs or Corp BYO VNet/UAMI/FIC transplant. Candidate absent, no creation/deployment/test/independent plan approval. Corp source merged but new qualification blocked; no apply performed, leave Corp untouched. Token auth passed, wrong-target doctor did not; real Corp scoped list remains forbidden. No current remote-orchestration integration proof. Advanced optional Copilot/Squad inside the MicroVM has separate install/auth/runtime proof, not a basic orchestration prerequisite.
+- **Hosted Squad on ACA:** Haflidi's original implementation is completed/previously demonstrated; leave it alone. Its **SQUAD ON ACA APPS/JOBS** flow is issue -> Job/agent -> bot PR; fresh current E2E qualification is pending independently of ACA SANDBOXES. Our new personal target/access/registration/rehearsal remains pending (fresh issue open/queue queued/no PR at 10:28 UTC), not evidence original implementation is broken and not a native Sandbox prerequisite. Ask for a fresh new-target rehearsal result only if selected; no new personal technical confirmation is inferred.
+- **Native ACA Sandboxes with host Copilot CLI/Squad:** coordinate public isolated work, invoke the ACA skill, inspect actual tools and return guest output/numeric exits/hash in a validator/reviewer handoff. Separate Online five-object provisioning/current operator access/base exec/fs/stop-resume/delete independently verified; cleanup empty. Corrected ACA SANDBOXES 26.768s receipt passes LF/hash/three guest checks/JSON+SHA/exit23/causal denial/exact cleanup; independent acceptance complete, runtime-ready after acceptance, human stage GO separate. Earlier CRLF is learning history; use [the bounded prompt](prompt-pack.md#native-host-squad-isolated-work) only after preparation/approval. Corp held/no-apply history stays separate; no AKS/hosted Jobs dependency. Inside-MicroVM agents/OAuth remain optional and unproved.
 
 See [the two product operator cards](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes)
 for folder, owner, login, preflight, trigger, expected evidence, timing/cut,
@@ -53,7 +53,8 @@ fallback and owned cleanup. [Full native coverage](aca-sandboxes.md#full-test-co
 is pre-stage, not squeezed into C4. Existing Online AKS, native MicroVMs, hosted
 Jobs and local Copilot sandbox are four independent demo lanes. Local MXC
 startup failed before command, exit 1; cloud help parse exit 0 is not optional
-cloud account/runtime proof. USD 20 through Oct 31 is an alert, not a cap.
+cloud account/runtime proof. Earlier USD 20 is historical planning/alert context,
+not current execution authority; scoped cost consent remains private.
 
 ```mermaid
 flowchart LR

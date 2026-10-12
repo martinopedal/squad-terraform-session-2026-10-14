@@ -7,13 +7,17 @@ presenter/teaching clone, the independent public Corp module, upstream Automatic
 module, live demo-env deployment entry and Haflidi hosted implementation versus
 private issue target. Keep the historical command-verification tags below.
 One laptop 18/18 is not full rehearsal/runtime. Current local MXC is policy
-blocked; separate native Online group/RG is proposed/unqualified, not AKS or
-hosted Jobs. Token auth/green wrong-target doctor is not target access.
+blocked; separate native Online deployment/current operator access/base probe
+was independently verified, not AKS or hosted Jobs. Token auth/green wrong-target
+doctor alone is not target access.
 Use [current progress](sandboxing.md#october-12-progress-and-next-actions) and
 [two product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
 Host Copilot/Squad orchestrating MicroVM checks is distinct from advanced
-optional in-MicroVM CLI/Squad installation/auth/runtime proof. No new deployment,
-fresh bot PR, renewed 29/29/full TLS or integration readiness is inferred.
+optional in-MicroVM CLI/Squad installation/auth/runtime proof. Corrected ACA SANDBOXES host runtime passes positive/JSON/SHA/exit23/causal
+denial/cleanup contracts; independent acceptance complete, then runtime-ready.
+Human stage GO and fresh hosted Apps/Jobs E2E remain separate. No
+fresh new-target bot PR or renewed 29/29/full TLS is inferred. Use the
+[two product prompt recipes](prompt-pack.md#two-product-demo-prompt-recipes).
 
 Use this as a copy-paste rehearsal script. Results are **repeatable enough for rehearsal**. The prompts and oracles are designed to make fresh runs converge often enough to demonstrate the workflow. They do not promise identical model text or diffs.
 
@@ -31,7 +35,7 @@ Verification tags in this file:
 $wg = '--exact', '--source', 'winget', '--accept-package-agreements', '--accept-source-agreements', '--silent'
 winget install --id Git.Git @wg
 winget install --id GitHub.Copilot @wg
-winget install --id bradygaster.Squad @wg
+winget install --id bradygaster.Squad --version 1.0.1 @wg
 winget install --id TerraformLinters.tflint --version 0.64.0 @wg
 ```
 
@@ -55,7 +59,7 @@ Expected result: the pinned digest is present locally. **Verified 2026-10-08.**
 
 3. macOS/Linux were not rehearsed for this playbook. The Squad README (pinned reference 93aec83) lists `brew install --cask bradygaster/squad/squad` on macOS (the tap-qualified name is required), but this session script is Windows-first. **Not verified 2026-10-08.**
 
-For a repeatable clean-VM setup pass, use [bootstrap.md](bootstrap.md) and [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1). The script supports `-WhatIf`, runs `copilot login`, clones a target repository, and runs `squad init` only when needed.
+For repeatable Windows dependency setup, use [bootstrap.md](bootstrap.md) and [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1). It installs/checks the core toolchain, supports clean-machine `-WhatIf` and zero-auth `-SkipLogin`, uses supported status-aware login paths, and preserves existing repository/Squad state. Docker/WSL and actual native UI/target readiness remain explicit separate gates; no VM/disk reset is performed.
 
 Before stage, run the separate manual [`scripts\Test-PresenterLaptop.ps1`](..\scripts\Test-PresenterLaptop.ps1)
 from this repository root. Expect **all checks PASS** and exit `0`; the

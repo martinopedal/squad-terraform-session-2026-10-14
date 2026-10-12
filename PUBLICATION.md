@@ -8,11 +8,22 @@ map](docs/repositories.md): the independent Corp module is public, while real
 deployment values/state and the hosted issue/queue/bot-PR target remain private.
 The session clone is not a deployment entry or evidence of target access.
 
-Keep proposed Online placement separate from achieved deployment. Do not publish
-private run/PR identifiers, raw errors/logs, credential material, or personal
-communications to explain a blocker. Current public wording is: new qualification
-blocked on an unexpected change-type check; no apply performed. A local draft
-and generated HTML are not a published revision.
+Keep achieved deployment, bounded runtime checks and full demo readiness separate.
+The released full/short deck is 0.22.4 on main/Pages. A later local docs or bootstrap
+change is not published merely because that baseline is live. Local deck 0.22.5
+is the directly coupled notes/status export candidate; independent source/export
+review and normal publication still gate it.
+The separate primary Online five-object native target and one credential-free
+base probe were independently verified October 12; current exact-group access
+passed and the list was empty after cleanup. Host Copilot/Squad integration and
+stage GO remain separate. The corrected real host receipt passes LF/source
+transport, three guest checks/JSON+SHA, exit23, causal HTTPS-denial and exact
+cleanup. Independent acceptance is complete; card runtime-ready after acceptance,
+not completed human preflight/rehearsal. Earlier CRLF failure remains labeled
+learning history, not the current failed lane or a broken deployed service.
+The held Corp qualification's no-apply result is dated history, not the current
+Online state. Do not publish private target names, run/PR identifiers, raw errors/
+logs, credential material or personal communications to explain these limits.
 
 The following must stay out of this repository:
 

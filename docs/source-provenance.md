@@ -7,8 +7,8 @@ Use [the repository map](repositories.md) for clone/read/change instructions.
 ## Source and deployment table
 
 Folders below belong to the named public clone or generic private operator
-aliases. Lead's proposed native source folder/workflow is explicitly not
-existing/deployed; authority and new exact-plan qualification are pending.
+aliases. Native source, its still-pending public PR human review, the approved
+one-time bootstrap and independently verified deployment are distinct milestones.
 The [README entry table](../README.md#source-and-deployment-table)
 mirrors this map.
 
@@ -20,19 +20,20 @@ control-plane access anonymous; its authenticated scope may remain private.
 Existing working AKS/Corp/hosted Jobs remain unchanged. Do not redeploy for a
 checklist or infer repair authorization from TLS/native-API limits. The new
 native five-object Online setup/credential-free Ubuntu 1 CPU/2 GiB ten-minute
-probe and owned test-ID deletion have scope consent. Source is being prepared;
-actor authority/policy/budget/new plan/exact manifest approval remain pending.
-No deployment/runtime/integration or inside-MicroVM OAuth approval is inferred.
+probe and owned test-ID deletion were independently verified October 12.
+All five exact bindings and current operator group data-plane access passed;
+the final list was empty. This is bounded base evidence, not complete runtime
+coverage, host Copilot/Squad integration, rehearsal GO or inside-MicroVM OAuth.
 
 | Component | Canonical repo / reference | Local folder | Where to edit | Where / how to deploy | Status |
 | --- | --- | --- | --- | --- | --- |
-| Session docs/deck/skills/native profiles | [Session repo](https://github.com/martinopedal/squad-terraform-session-2026-10-14) | Session clone `.\` | `docs`, `presentation\src`, `.github\skills`, `.github\agents` | Reviewed PR/normal main merge and existing Pages workflow; not Azure | Draft 0.22.4; branch/PR differs from released Pages |
+| Session docs/deck/skills/native profiles | [Session repo](https://github.com/martinopedal/squad-terraform-session-2026-10-14) | Session clone `.\` | `docs`, `presentation\src`, `.github\skills`, `.github\agents` | Reviewed PR/normal main merge and existing Pages workflow; not Azure | Released 0.22.4 / 39 full / 5 short slides; later local changes await their own review/release |
 | Upstream AKS Automatic module | [Automatic module](https://github.com/martinopedal/terraform-azapi-aks-automatic) | `<automatic-module-clone>` | Canonical module/tests | Reviewed reusable release, consumed by demo-env `v0.6.0` | Module source, not live environment entry |
 | Independent public Corp teaching module | [Corp module](https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp) | `<corp-module-clone>`; session `terraform\modules\aks-automatic-corp` copy | Canonical source, then mirror/manifest through release owner | Separate private approved Corp workload consumer | Unchanged copy pin/manifest, not native MicroVM design |
 | Existing Online AKS/demo VM | [Live consumer](https://github.com/martinopedal/aks-automatic-demo-env) | Consumer `deployments\online` and demo-VM root | Consumer roots/manifests/operator runbook | Existing gated workflow with private inputs/state/approval | Fresh app/2 replicas PASS under TLS bypass; canonical 26 PASS/2 BLOCKED/1 report-only, full health unproved |
-| Haflidi hosted Squad ACA Jobs | [Hosted implementation](https://github.com/haflidif/squad-on-aca) | `<hosted-implementation-clone>` | Read completed authored source, leave it alone | Existing working protected service, no source/deployment change | Implemented/previously demonstrated; new target/rehearsal pending is separate |
+| Haflidi hosted Squad ACA Jobs | [Hosted implementation](https://github.com/haflidif/squad-on-aca) | `<hosted-implementation-clone>` | Read completed authored source, leave it alone | Existing working protected service, no source/deployment change | Original SQUAD ON ACA APPS/JOBS implemented/previously demonstrated; fresh current E2E proof pending. New personal target readiness is separate; ACA SANDBOXES success does not qualify hosted Jobs |
 | Hosted issue/queue/bot-PR target | Intended private target, **not hosted source** | `<approved-target-clone>` | Approved target task/diff | Issue/label -> existing hosted queue/Job -> bot PR | Access acceptance/current read-back and fresh chain pending |
-| Native ACA SandboxGroup MicroVMs | [Demo-env](https://github.com/martinopedal/aks-automatic-demo-env) new native root; [official CLI](https://sandboxes.azure.com/docs/sandboxes/quickstart/setup-cli) | New `deployments\aca-sandboxes-online`, implementation preparing | Separate Bicep root/sandbox-only protected lane | Primary Online; five-object setup/credential-free probe scope approved, but actor/policy/budget/source/new plan/exact manifest qualify separately | Source repair in progress, not deployed/runtime-tested/plan-approved; preserve working AKS/Corp/Jobs, no integration GO |
+| Native ACA SandboxGroup MicroVMs | [Demo-env](https://github.com/martinopedal/aks-automatic-demo-env) native root; [official CLI](https://sandboxes.azure.com/docs/sandboxes/quickstart/setup-cli) | `deployments\aca-sandboxes-online` | Separate Bicep root/sandbox-only protected lane | Primary Online; approved one-time Owner bootstrap independently verified; public source PR human review remains separate | Five exact bindings/current operator access/base probe verified October 12; cleanup empty; corrected host runtime PASS / independent acceptance complete; card runtime-ready after acceptance; second-presenter/rehearsal stage GO pending; working AKS/Corp/Jobs unchanged |
 | Local Copilot sandbox | [GitHub local sandbox docs](https://docs.github.com/en/copilot/how-tos/cloud-and-local-sandboxes/using-local-sandboxing) | Presenter host cwd | Approved local sandbox policy, not repo guidance as enforcement | Native MXC, not Azure deployment | Startup exit 1/policy blocked; no global change/bypass |
 
 The demo starts from an existing public AKS Terraform root configuration. Its inherited code and known issues are not presented as newly generated work.
@@ -64,9 +65,12 @@ Documentation/generated source and executed evidence are distinct. Private Azure
 deployment/read-back pinned runtime module commit
 `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; public Corp module revision
 `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7` records that sanitized result. Deck 0.22.4
-preserves accepted 0.22.3 and completes the repo-map/progress/product-flow
-pass with unchanged on-screen markup, five/39 slides and clocks. It is local
-pending review/release; live Pages remains 0.22.2.
+is released on main/Pages with five/39 slides and unchanged clocks. Fresh
+HTTP responses matched the released clone. Older 0.22.2/0.22.3 checkpoints
+remain history; these later operator-doc corrections are not released until
+their own review/merge. Local deck 0.22.5 is the authorized notes/status export candidate. Its regeneration
+preserves design/commands/assets/39/5 slides and clocks; review/merge still gates
+publication, and released main/Pages remains 0.22.4.
 
 ## October 12 sandbox and readiness sources
 
@@ -84,11 +88,13 @@ pending review/release; live Pages remains 0.22.2.
 | Operator's fresh hosted readiness attempt | Scoped README-only smoke failed: existing Manual runner execution ended terminal Failed; associated issue queue workflow remains queued, not fresh issue-to-queue-to-job-to-PR success |
 | Supplied hosted progress / attribution | Two historical Oct 9 queue successes are shared-demonstration smoke, not current health/full bot PR. Fresh issue open, queue queued, no open PR at 10:28 UTC; image pull then short-lived registration failure. No newly confirmed Haflidi-authored technical update in supplied bounded search; request revision/fresh sanitized chain evidence |
 | Original hosted implementation versus new target | Haflidi original implementation completed/previously demonstrated; leave source/deployment unchanged. Fresh personal target registration/access/rehearsal failure is not evidence that original is missing/broken and is not native Sandbox prerequisite. Native ACA integration is remaining build |
-| Native Online target direction / forwarded lead plan | Proposed demo-env `deployments\aca-sandboxes-online` plus separate sandbox-only workflow/protected `online` environment; neither exists/deployed yet. Separate group/RG, standard managed network if policy allows, no Corp BYO VNet/UAMI/FIC transplant. Candidate RG read-back 404. Graph proposal: RG + SandboxGroup + two group Data Owner grants; conditional RG Contributor for existing GitHub actor if needed. Actor authority/exact new scope/source/plan qualification pending; no apply approval. Corp/AKS/Jobs untouched |
+| Independently verified primary Online target / base probe, October 12 | Separate demo-env `deployments\aca-sandboxes-online` source and sandbox-only protected lane. Approved one-time Owner bootstrap Succeeded; live exact five bindings, group configuration and operator data-plane list passed. Credential-free base exec/public-fs/stop-resume/delete verified; empty cleanup list. Standard managed network, no Corp BYO VNet/UAMI/FIC transplant. Public source PR human review remains separate; full host integration/second-presenter/rehearsal pending. Corp/AKS/Jobs untouched |
 | Host ACA authentication and wrong-target doctor | Auth status exit 0, ARM/data-plane tokens authenticated only. Actual doctor 9/9 exit 0 printed cached Management/Norway East despite explicit target flags; not Corp/Online preflight. Compare printed target and independent exact-ID read-back; no config change/Management fallback/create |
 | Actual local MXC / optional cloud help | Local startup exit 1 before command on proxy/masking/auth loopback/private-network requirement; no bypass/global change. Cloud explicit help parse exit 0 is not entitlement, billing or runtime |
 | [Official ACA CLI quickstart](https://sandboxes.azure.com/docs/sandboxes/quickstart/setup-cli), full article retrieved October 12 | Install/version, Azure auth, group provisioning/Data Owner attempt/`--set-config`, doctor, label-based create/exec/delete and cleanup; agent-skill next step explicitly supports host Copilot-driven commands. Do not copy implicit default targeting, create/delete or stale auth examples. HTML canonical points to containerapps.azure.com same path, whose direct fetch returned 404 here |
 | Fresh existing Online cluster validation, corrected scoring | App/source-matching assets/two replicas PASS with explicit TLS bypass. Canonical 26 PASS/2 BLOCKED/1 report-only, not 29/29; supplemental 10 PASS/1 FAIL (untrusted/mismatched TLS)/1 NOT_APPLICABLE (external `/healthz`; source requires direct-pod `/healthz` 200 `ok`). Native Kubernetes/ResourceHealth unavailable; full health unproved. Eleven policy-noncompliant resources are in the demo RG across AKS/network/state, not 11 cluster failures or subscription-wide |
+| Earlier host Copilot/Squad attempt, controlled learning history | Approximately 77-second local CRLF failure: source transport/cleanup passed, positive work failed and downstream challenges blocked. Corrected source/parser qualification supersedes this as current runtime status; not a global ACA failure |
+| Corrected host runtime receipt, October 12 | Actual host coordinator/worker/ACA tools/guest summary/cleanup handoff; one 26.768-second sandbox. LF/source-byte hash round trip, three guest checks/JSON+SHA, actual guest/host exit23, one HTTPS403 plus new exact-sandbox networkEgress.denied causal audit, exact deletion/empty list/NotFound/watchdog stopped. Independent evidence acceptance complete; card runtime-ready after acceptance, not human rehearsal/stage GO or inside-guest agents/OAuth |
 
 Public GitHub metadata independently confirmed all five linked source/consumer
 repos as public, including the Corp module and Haflidi implementation. Metadata

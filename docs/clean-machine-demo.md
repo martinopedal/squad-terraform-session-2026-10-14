@@ -2,7 +2,10 @@
 
 C0 is a 3-minute live chapter (deck slide `demo-c0`, 05:30-08:30, Haflidi leads). It shows the from-zero install of Copilot CLI and Squad on a machine that has never had them, which a presenter laptop cannot show.
 
-Everything below was checked on 2026-10-07 against the deployed VM and a throwaway clone. Re-run the preflight before the live demo because package versions move.
+The historical C0 flow and VM snapshot below were checked on 2026-10-07 against
+the deployed VM and a throwaway clone. The later automated dependency setup is
+validated with controlled mocks, not a fresh-VM installation. Re-run the
+preflight before the live demo because package versions move.
 
 That is historical setup evidence, not a completed current clean-VM/manual-login
 rehearsal. October 12 one laptop 18/18 does not close those gates. See [current
@@ -13,6 +16,63 @@ driving native ACA MicroVMs are separate [product demo flows](demo-runbook.md#tw
 the VM is only a presenter host. Native separate Online group/RG remains
 proposed/unqualified, not AKS/hosted Jobs. No current integration readiness.
 For the fuller operator setup with `-WhatIf`, repo clone, `copilot login`, `squad init`, and a GitHub App checklist, see [bootstrap.md](bootstrap.md) and [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1). Keep the live chapter on the shorter flow below.
+
+## Automated dependency setup (preparation, not a clean C0 take)
+
+Use the **existing** bootstrap for the complete host toolchain: Git, VS Code,
+Copilot CLI and desktop app, Azure CLI, GitHub CLI, Terraform, Node.js LTS/npm,
+PowerShell 7, Squad 1.0.1 and the official ACA CLI. WinGet must already be
+available for default presenter mode; Windows PowerShell 5.1 can start the
+setup. Explicit machine mode uses pinned native payloads without WinGet.
+From a staged checkout:
+
+```powershell
+Set-Location C:\src\squad-terraform-session-2026-10-14
+# Preview safely even when the predicted tools are not installed.
+.\scripts\bootstrap-demo-vm.ps1 -WhatIf -SkipLogin
+# Default: install/check, supported status-aware interactive sign-in, clone/init.
+.\scripts\bootstrap-demo-vm.ps1
+# Unattended credential-free variant: absolutely no auth calls.
+.\scripts\bootstrap-demo-vm.ps1 -SkipLogin
+# Packages only; no clone, repository check or Squad/profile initialization.
+.\scripts\bootstrap-demo-vm.ps1 -SkipLogin -SkipRepository
+# Optional local Terraform MCP backend, only after operator-prepared WSL 2.
+.\scripts\bootstrap-demo-vm.ps1 -InstallDocker -SkipLogin
+if (-not $? -or $LASTEXITCODE -ne 0) { throw "Bootstrap stopped: $LASTEXITCODE" }
+```
+
+Choose **one** real-run variant. Repeated runs preserve the same host, VM,
+OS/data disks, existing repository and Squad state; they do not recreate or
+reset anything. `-RepoUrl`/`-RepoPath` remain configurable. Restart installer
+codes stop visibly; no reboot is requested. Docker/WSL are optional for the
+local Terraform MCP lane, not silently installed/enabled: missing WSL 2 blocks
+`-InstallDocker`, and VM virtualization, admin and Docker license approval
+remain operator responsibilities. See [the optional setup gates](bootstrap.md#optional-local-terraform-mcp-docker-and-wsl).
+
+Desktop sign-in/onboarding, Copilot `/user`/entitlement, native permissions,
+explicit-target `aca doctor`, presenter preflight and rehearsal still need
+human qualification. GitHub CLI auth availability is not Copilot readiness.
+If needed, use `copilot login --device-code` manually; never copy credentials.
+The version inventory and controlled tests are not a fresh-VM execution claim.
+Preparing this bundle also makes the machine unsuitable for claiming the
+three tools were absent during C0; disclose the checkpoint instead of resetting
+the current VM under this setup task.
+For the separately reviewed existing-VM CSE lane, stage the same script plus
+`scripts\bootstrap-demo-vm.packages.json`, verify both immutable source hashes,
+then use explicit **`-AllUsers`** through 64-bit PowerShell. Preview only:
+
+```powershell
+.\scripts\bootstrap-demo-vm.ps1 -AllUsers -WhatIf
+```
+
+That mode enforces zero auth/no repository or roster initialization, checks
+fixed Program Files roots/pinned versions, preserves MACHINE PATH entries and
+writes a fresh machine-core receipt only after successful verification.
+Desktop app installation/onboarding, optional extensions and all user sign-ins
+remain **deferred per user**, not machine core PASS. See [the CSE invocation,
+pins and receipt contract](bootstrap.md#existing-vm-custom-script-extension-contract-allusers).
+No live CSE deployment or both-presenter qualification is claimed by source
+tests; future IaC execution needs Haflidi approval and preserves the existing VM.
 
 ## What the machine is
 

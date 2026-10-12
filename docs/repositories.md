@@ -21,8 +21,11 @@ The session's copied Corp teaching module and its unchanged [manifest](../terraf
 Haflidi's original hosted implementation is completed/previously demonstrated;
 leave it unchanged. The new personal target/rehearsal status is separate and
 must not be read as missing original implementation or a native Sandbox gate.
+Fresh current **SQUAD ON ACA APPS/JOBS** issue -> Job/agent -> PR qualification
+is pending; both independent demos need their own proof. Corrected **ACA
+SANDBOXES** host/MicroVM success does not establish that hosted chain.
 
-The intended private hosted target, `martinopedal/squad-on-aca-demo-target`, receives issues, queue workflow activity, and bot PRs. It is **a target, not the hosted service implementation repository**. Public docs alone cannot run that private issue-to-workflow-to-job-to-bot-PR chain. Operator examples use `<approved-private-target>`; access, invitation acceptance, runner registration, and the approved service connection must be independently read back.
+The intended private hosted target, `<approved-private-target>`, receives issues, queue workflow activity, and bot PRs. It is **a target, not the hosted service implementation repository**. Public docs alone cannot run that private issue-to-workflow-to-job-to-bot-PR chain. Access, invitation acceptance, runner registration, and the approved service connection must be independently read back.
 
 Real environment values, tenant/subscription/resource identifiers, credentials, backend/state, saved plans, exact approvals, and private diagnostics belong at the private deployment boundary. Use aliases such as `<approved-subscription>`, `<approved-resource-group>`, and `<approved-sandbox-group>` in public examples. A public consumer can own generic wiring without publishing those values.
 
@@ -36,18 +39,19 @@ GitHub repo visibility does not determine network placement, ingress or
 control-plane exposure. AKS has a public demo app; native SandboxGroup access
 still requires the approved authenticated scope and may remain private.
 
-The existing Online demo placement is the **confirmed target direction for a separate native ACA SandboxGroup and resource group**. Its technical design remains proposed/planning only, not created, deployed, tested or independently plan-approved. It does not run inside AKS and is not Haflidi's hosted Squad Jobs/runner. Prefer the standard managed-network quickstart if policy allows, not a transplant of Corp BYO VNet/UAMI/FIC wiring. Leave Corp resources untouched. The new Corp qualification was blocked on an unexpected change-type check; no apply performed. This is not a proven Corp policy restriction, and changing placement is not a promised fix.
+The existing Online placement is primary for a **separate native ACA SandboxGroup and resource group**. The five-object deployment and credential-free base probe were independently verified October 12, including current exact-group access and an empty cleanup list. It does not run inside AKS and is not Haflidi's hosted Squad Jobs/runner. Standard managed networking is not a transplant of Corp BYO VNet/UAMI/FIC wiring. Leave Corp resources untouched. The held Corp qualification was blocked on an unexpected change-type check; no apply performed in that qualification. This is not a proven Corp policy restriction or a claim that changing placement fixes policy.
 
-Online describes placement, not anonymous MicroVM ingress or permission to expose credentials, change Corp networking, relocate resources, or redeploy a healthy AKS cluster. Lead is qualifying the proposed target read-only against the [official ACA CLI quickstart](https://sandboxes.azure.com/docs/sandboxes/quickstart/setup-cli); no forwarded acceptance is available here. Use the [progress matrix](sandboxing.md#october-12-progress-and-next-actions) and [runtime coverage checklist](aca-sandboxes.md#full-test-coverage-checklist) before any demo GO decision.
+Online describes placement, not anonymous MicroVM ingress or permission to expose credentials, change Corp networking, relocate resources, or redeploy a healthy AKS cluster. Use the [official ACA CLI quickstart](https://sandboxes.azure.com/docs/sandboxes/quickstart/setup-cli), [progress matrix](sandboxing.md#october-12-progress-and-next-actions) and [runtime coverage checklist](aca-sandboxes.md#full-test-coverage-checklist) before any demo GO decision. Basic provisioning/access/probe acceptance is not full host Copilot/Squad integration, both-presenter readiness or rehearsal GO.
 
-Forwarded lead plan proposes native source in the same demo-env consumer at
+Native source is in the same demo-env consumer at
 `deployments\aca-sandboxes-online` and a separate sandbox-only workflow protected
-by `online`. These are **proposed, not existing/deployed**, with actor authority
-and new exact scope/source/plan qualification unresolved. Minimal proposed
-graph is RG + SandboxGroup + two group Data Owner grants, with a conditional
-RG Contributor grant for the existing GitHub actor if needed. It does not change
+by `online`. The independently verified graph is RG + SandboxGroup + two group Data Owner
+grants + one RG Contributor grant for the existing consumer actor. The approved
+one-time Owner bootstrap and current readbacks are separate from the public
+source PR's still-pending human review; they are not a claim that GitHub merged
+or executed that source lane. It does not change
 Corp, AKS or hosted Jobs. Existing AKS source stays `deployments\online` and
 `deploy-online.yml`; hosted Jobs deployment stays at its private protected
-boundary. Do not confuse a source-folder proposal with an applyable consumer.
+boundary. A source folder/workflow is not authority for another apply.
 
 Keep four demo lanes independent: existing Online AKS consumer; native ACA SandboxGroup MicroVMs; hosted Squad ACA Jobs issue-to-PR; local Copilot sandbox. GitHub-managed `--cloud` is an additional optional account/runtime lane, not another name for any of these.
