@@ -17,7 +17,7 @@ GitHub-managed cloud lane; AKS is not a sandbox host in that comparison.
 | --- | --- | --- |
 | Copilot local `/sandbox` | Host OS/MXC isolation, with local filesystem/network policy | Actual Windows startup failed before the command, exit 1; local policy blocked |
 | GitHub-managed Copilot cloud sandboxes | Built on ACA, with GitHub identity, policy, and billing; preview | Help parse exited 0; account access, billing, and runtime remain unproved |
-| Customer-managed ACA MicroVMs via `aca` | Customer Azure group, data-plane access, egress and lifecycle | New Corp qualification blocked; no apply performed. Existing Online placement is a proposed, unqualified fallback |
+| Customer-managed ACA MicroVMs via `aca` | Customer Azure group, data-plane access, egress and lifecycle | New Corp qualification blocked; no apply performed. Existing Online placement is primary for eligible demos; the new separate native group/RG remains proposed and unqualified |
 | Squad on ACA hosted Apps/Jobs | Queue-driven agent hosting with workload identity, Key Vault and KEDA | Historical hosted demonstration; fresh issue open, queue queued, runner registration blocked |
 
 Hosted Apps/Jobs are not MicroVMs and do not use an ACA sandbox-group resource. Installing Copilot CLI, Squad, or `aca` on the host is not proof those programs ran inside a MicroVM. Full CLI+Squad process/agent/prompt proof requires actual in-MicroVM execution and separately consented supported sign-in, storage, and egress. Never copy host authentication into a sandbox.

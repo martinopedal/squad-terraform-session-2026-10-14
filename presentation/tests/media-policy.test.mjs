@@ -377,6 +377,36 @@ test('repo map identifies canonical public sources and private target boundaries
 });
 
 test('current placement and corrected cluster scoring preserve working resources and evidence limits', () => {
+  const nativeRows = documentText('docs/sandboxing.md').split(/\r?\n/)
+    .filter(line => /^\| Customer-managed ACA MicroVMs via `aca` \|/.test(line));
+  assert.equal(nativeRows.length, 1, 'execution-host table has one customer-managed native ACA row');
+  const [nativeRow] = nativeRows;
+  const nativeStatus = nativeRow.split('|')[3].trim();
+  const assertNativePlacement = row => {
+    const status = row.split('|')[3].trim();
+    assert.match(status, /Existing Online placement is primary for eligible demos/i,
+      'native ACA status keeps the primary placement decision');
+    assert.match(status, /new separate native group\/RG remains proposed and unqualified/i,
+      'only the new native group/RG remains proposed and unqualified');
+    assert.doesNotMatch(status, /\bfallback\b/i,
+      'native ACA status must not reclassify primary Online placement as fallback');
+  };
+  assertNativePlacement(nativeRow);
+  for (const [name, wrongStatus] of [
+    ['rejected row with nonadjacent Online/fallback', nativeStatus.replace(
+      /Existing Online placement.*$/,
+      'Existing Online placement is a proposed, unqualified fallback')],
+    ['reordered fallback placement', nativeStatus.replace(
+      'Existing Online placement is primary for eligible demos',
+      'Fallback placement for eligible demos is Online')],
+    ['contradictory fallback despite a primary claim', `${nativeStatus} Online placement is a fallback.`],
+    ['unproved new-group qualification', nativeStatus.replace(
+      'proposed and unqualified', 'deployed and qualified')]
+  ]) {
+    assert.notEqual(wrongStatus, nativeStatus, `${name} mutates the actual native ACA status`);
+    assert.throws(() => assertNativePlacement(nativeRow.replace(nativeStatus, wrongStatus)),
+      { code: 'ERR_ASSERTION' }, `${name} must be rejected by the same row assertions`);
+  }
   for (const [name, text] of [
     ...['README.md', 'docs/source-provenance.md', 'docs/run-plan.md', 'docs/talk-track.md',
       'docs/talking-points.md', 'docs/sandboxing.md', 'haflidi-overview.html']
