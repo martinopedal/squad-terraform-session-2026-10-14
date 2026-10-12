@@ -1,5 +1,6 @@
 import { escape, speakerProfiles, gateMapText } from './slides.mjs';
 
+export const sessionName = 'No More Spec-ulation: AI Agent Teams Building Production-Grade IaC';
 export const shortTitle = 'From prompt to reusable Terraform: Copilot CLI and Squad, short deck';
 const shortB1v2Prompt = String.raw`Work only in terraform\modules\aks-automatic-corp.
 
@@ -22,13 +23,24 @@ const speakerCard = (speaker, imageUrl) => `<article class="short-speaker-card">
   </div>
 </article>`;
 
-export function createShortSlides({ martinPhoto, haflidiPhoto }) {
+export function createShortSlides({ martinPhoto, haflidiPhoto, martinQr = '', haflidiQr = '' }) {
   const [martin, haflidi] = speakerProfiles;
   return [
     {
+      id: 'short-nic26-title',
+      title: sessionName,
+      time: 'Short deck / slide 1',
+      layer: 'Session title',
+      kind: 'short-title',
+      tip: 'Open the session.',
+      sources: [],
+      notes: '<p><strong>Driver:</strong> The speaker opens the session and moves to the introductions.</p>',
+      content: '<div class="short-title-logo" role="img" aria-label="NIC26 logo"></div>'
+    },
+    {
       id: 'short-who-we-are',
       title: 'Who we are.',
-      time: 'Short deck / slide 1',
+      time: 'Short deck / slide 2',
       layer: 'Speakers',
       kind: 'short',
       tip: 'Open with the two speakers, public links, and the session promise.',
@@ -46,7 +58,7 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
     {
       id: 'short-what-we-show',
       title: 'What we show.',
-      time: 'Short deck / slide 2',
+      time: 'Short deck / slide 3',
       layer: 'Five-step flow',
       kind: 'short',
       tip: 'Walk the five steps once and keep the chapter names short.',
@@ -66,7 +78,7 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
     {
       id: 'short-snippets',
       title: 'A few concrete snippets.',
-      time: 'Short deck / slide 3',
+      time: 'Short deck / slide 4',
       layer: 'Proof points',
       kind: 'short',
       tip: 'Pick one snippet per minute and move on.',
@@ -84,7 +96,7 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
     {
       id: 'short-takeaways',
       title: 'What you take away.',
-      time: 'Short deck / slide 4',
+      time: 'Short deck / slide 5',
       layer: 'Takeaways',
       kind: 'short',
       tip: 'Explain what the next engineer needs to inspect.',
@@ -100,22 +112,38 @@ export function createShortSlides({ martinPhoto, haflidiPhoto }) {
       </div>`
     },
     {
-      id: 'short-links',
-      title: 'Links.',
-      time: 'Short deck / slide 5',
-      layer: 'Public handoff',
+      id: 'short-thank-you',
+      title: 'Thank you.',
+      time: 'Short deck / slide 6',
+      layer: 'Closing',
       kind: 'short',
-      tip: 'Point to the public assets and the manually run bootstrap file.',
+      tip: 'Thank the room, point to the NIC Event App for evaluation, and share the public links.',
       sources: [
         { label: 'Session repo', url: 'https://github.com/martinopedal/squad-terraform-session-2026-10-14' },
         { label: 'Module repo', url: 'https://github.com/martinopedal/terraform-azapi-aks-automatic' }
       ],
-      notes: '<p><strong>Driver:</strong> Martin lands on the public follow-up links.</p><p>Invite the audience to start with the bootstrap and short deck.</p>',
-      content: `<div class="short-links-grid">
-        <a href="../index.html"><strong>Full deck</strong><span>Reveal.js session deck with notes</span></a>
-        <a href="../../docs/bootstrap.md"><strong>Bootstrap guide</strong><span>Manual setup file, login, init, and rehearsal checklist</span></a>
-        <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14"><strong>Session repo</strong><span>Public repo with deck, docs, and generated assets</span></a>
-        <a href="../../docs/sandboxing.md"><strong>Copilot local sandboxing</strong><span>Short note, separate from ACA Sandboxes</span></a>
+      notes: '<p><strong>Driver:</strong> Both speakers close together.</p><p>Thank the room. Remind the room to evaluate this session in the NIC Event App; the QR code to open it is on the back of the badge. Encourage evaluation: feedback is very valuable to NIC and to the speakers. Invite people to connect on LinkedIn by scanning the two QR codes, one for Martin and one for Haflidi, and open the repo, presentation, and module.</p>',
+      content: `<div class="short-close-top">
+        <div class="short-close-card" role="group" aria-label="Feedback">
+          <div><h3>Feedback</h3><p>Please evaluate this session in the NIC Event App. Scan the QR code on the back of your badge to open it.</p><p>Your feedback is very valuable to us and to the speakers.</p></div>
+        </div>
+        ${[martin, haflidi].map(speaker => `<div class="short-close-card" role="group" aria-label="Connect with ${escape(speaker.name)} on LinkedIn">
+          <div class="short-close-id">
+            <img class="short-close-photo" src="${speaker === martin ? martinPhoto : haflidiPhoto}" alt="${escape(speaker.name)}" width="72" height="72">
+            <div><p class="eyebrow">Connect on LinkedIn</p><h3>${escape(speaker.name)}</h3></div>
+          </div>
+          <div class="short-close-connect">
+            <img class="short-qr" src="${speaker === martin ? martinQr : haflidiQr}" alt="${escape(speaker.name)} LinkedIn QR code" width="120" height="120">
+            <div class="short-link-pills">${speaker.links
+              .map(link => `<a href="${escape(link.url)}">${escape(link.label)}</a>`)
+              .join('')}</div>
+          </div>
+        </div>`).join('')}
+      </div>
+      <div class="short-close-links">
+        <a href="https://github.com/martinopedal/squad-terraform-session-2026-10-14"><strong>Repo</strong><span>github.com/martinopedal/squad-terraform-session-2026-10-14</span></a>
+        <a href="https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/"><strong>Presentation</strong><span>martinopedal.github.io/squad-terraform-session-2026-10-14/presentation</span></a>
+        <a href="https://github.com/martinopedal/terraform-azapi-aks-automatic"><strong>Terraform module</strong><span>github.com/martinopedal/terraform-azapi-aks-automatic</span></a>
       </div>`
     }
   ];

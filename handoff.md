@@ -5,7 +5,7 @@ Updated October 9, 2026. This file describes the public deliverables and the rem
 ## Current result
 
 - Reveal.js presentation version **0.22.2**. Presentation metadata reports **39 slides total**, including the untimed legal/pre-show slide, the timed main flow, and the appendix.
-- A five-slide companion deck is built at `presentation\short\index.html`.
+- A six-slide companion deck is built at `presentation\short\index.html`.
 - Current delivery contract: **3:00 intro; planned content to about 55:00; 55:00-58:00 protected recovery block; 58:00-60:00 close**. The planned content includes **29:00 of live C0-C7 demo chapters** and the rest as live explanation. Questions are only if time allows. There is no scheduled Q&A block. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
 - Live-demo rule: **C0-C7 are live**, with optional reviewed fallback evidence if a chapter fails live.
 - Sessionize copy, feature guide, prompt pack, repeatability eval, and the C0-C7 operator runbook are present in the public repository.
@@ -45,7 +45,7 @@ The module is pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. Its 35-file 
 | Deck 0.22.2 checks, October 9 | 41 Node tests passed. The short deck passed 43 browser checks across 10 captures; the full deck passed 102 interaction/content checks across 88 captured states at two resolutions. Removing the C4 qualification note from the real source failed the new regression as intended; restoration passed. Generated hashes, five/39 slide counts, unchanged on-screen markup, and 55:00/3:00/2:00 timing were checked. These are local presentation checks, not a Corp deployment, actual-authentication check, or clean-VM/manual-login rehearsal. |
 | Hosted module CI | Terraform matrix run 36990206303 passed at b7133679a89b1e2b36677400d659a03907c0f3f6; native agent setup passed run 37286068987 at 00787f59ac19e3db0c3869a96ff45805c6cb523d; final module run 37286237657 passed at 02e10e56bc15cc30c3193dce3ddc8e608cb87daf; Azure-validation docs release run 37305768318 passed at b01256eb9b1ea6046b9bb8a403662f724a7b6fa7. |
 | Azure | **Privately validated.** Private IaC PR workflow planned, environment-approved, applied, and read back runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized public facts only. |
-| Short deck | Five slides build from the same pinned runtime, theme, and public source links. |
+| Short deck | Six slides build from the same pinned runtime, theme, and public source links. |
 
 See [the module evidence summary](terraform/modules/aks-automatic-corp/VALIDATION.md). Local mocks do not establish private DNS, firewall routing, RBAC, policy compliance, or Azure service acceptance.
 

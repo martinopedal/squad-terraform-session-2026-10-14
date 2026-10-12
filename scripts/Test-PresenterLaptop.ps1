@@ -59,8 +59,8 @@ try {
     [regex]::Matches($_.Value, '(?is)(?<name>[^\s/=>]+)\s*=\s*(?:"(?<value>[^"]*)"|''(?<value>[^'']*)''|(?<value>[^\s>]+))') |
       Where-Object { $_.Groups['name'].Value -ieq 'id' } | ForEach-Object { $_.Groups['value'].Value }
   })
-  $expected = @('short-who-we-are', 'short-what-we-show', 'short-snippets', 'short-takeaways', 'short-links')
-  Out-Check 'live five-slide companion' ($p.StatusCode -eq 200 -and $sections.Count -eq 5 -and ($ids -join ',') -ceq ($expected -join ',')) "HTTP $($p.StatusCode); $($sections.Count) sections; expected five slide IDs"
-} catch { Out-Check 'live five-slide companion' $false 'request or section inspection failed' }
+  $expected = @('short-nic26-title', 'short-who-we-are', 'short-what-we-show', 'short-snippets', 'short-takeaways', 'short-thank-you')
+  Out-Check 'live six-slide companion' ($p.StatusCode -eq 200 -and $sections.Count -eq 6 -and ($ids -join ',') -ceq ($expected -join ',')) "HTTP $($p.StatusCode); $($sections.Count) sections; expected six slide IDs"
+} catch { Out-Check 'live six-slide companion' $false 'request or section inspection failed' }
 $free = [math]::Round((Get-PSDrive C).Free/1GB,1); Out-Check 'disk free >= 10 GiB' ($free -ge 10) "$free GiB"
 "--- $fail failure(s)"; exit $fail
