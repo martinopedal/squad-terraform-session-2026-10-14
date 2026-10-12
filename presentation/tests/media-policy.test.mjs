@@ -248,7 +248,8 @@ test('documented cloud preview is not claimed available in local 1.0.94 help', (
     /off by default/, /Allow local network/, /honoring the proxy/,
     /best-effort/, /remote MCP servers are not sandboxed/,
     /offers `ca`, not `status`/, /paid usage includes stopped storage/,
-    /autoSuspend is not a hard active timeout or credential revocation/
+    /not a hard active timeout or credential revocation/,
+    /saved base autoSuspend interval was 600 seconds/
   ]) assert.match(guide, pattern);
   for (const text of [guide, documentText('docs/feature-guide.md'), applyNoteFactOverrides('s07-agent-setup', '')]) {
     for (const pattern of [
@@ -344,7 +345,7 @@ test('readiness does not turn one laptop, historical checks or dated obligations
     /B1 clean VM/, /B2 both presenter hosts/, /B3 full 60-minute rehearsal/,
     /B4 private target invitation/, /B5 current NIC listing/, /Unknown/,
     /Oct 13 warmup\/reset/, /Oct 17 teardown \/ Oct 31 expiry/,
-    /Pool A1\/Dependabot/, /live Pages remains 0\.22\.2/i,
+    /Pool A1\/Dependabot/, /Released 0\.22\.4 on main\/Pages/i,
     /source-only correction/, /34\/34/, /not a new Azure plan or deployment/,
     /artifact suite 85\/85/, /runtime suite 31\/31/, /source\/tooling checks/,
     /no new sealed manifest\/raw exact deltas/i, /no new apply established/,
@@ -370,9 +371,10 @@ test('repo map identifies canonical public sources and private target boundaries
     /independently reusable \*\*public\*\* Corp/i,
     /module-public/, /target, not the hosted service implementation/i,
     /Public docs alone cannot run/, /private deployment boundary/,
-    /not.*created.*deployed.*tested/i, /Leave Corp resources untouched/,
-    /separate.*resource group/i, /standard managed-network quickstart if policy allows/i,
-    /not a transplant of Corp BYO VNet\/UAMI\/FIC/
+    /five-object deployment.*independently verified/i, /Leave Corp resources untouched/,
+    /separate.*resource group/i, /Standard managed networking/i,
+    /not a transplant of Corp BYO VNet\/UAMI\/FIC/,
+    /public\s+source PR.*human review/is
   ]) assert.match(map, pattern);
 });
 
@@ -386,8 +388,16 @@ test('current placement and corrected cluster scoring preserve working resources
     const status = row.split('|')[3].trim();
     assert.match(status, /Existing Online placement is primary for eligible demos/i,
       'native ACA status keeps the primary placement decision');
-    assert.match(status, /new separate native group\/RG remains proposed and unqualified/i,
-      'only the new native group/RG remains proposed and unqualified');
+    assert.match(status, /five-object deployment\/current operator access\/base probe independently verified/i,
+      'bounded current native milestones are established, not proposed-only');
+    assert.match(status, /Corrected host runtime PASS \/ independent acceptance complete/,
+      'actual corrected runtime proof is independently accepted');
+    assert.match(status, /native card runtime-ready after acceptance/,
+      'runtime card readiness is conditional, not an acceptance bypass');
+    assert.match(status, /stage GO pending manual preflight\/rehearsal/,
+      'corrected runtime proof does not establish human stage readiness');
+    assert.doesNotMatch(status, /proposed and unqualified|not deployed|integration PASS/i,
+      'reject stale no-deployment and overclaimed successful-integration status');
     assert.doesNotMatch(status, /\bfallback\b/i,
       'native ACA status must not reclassify primary Online placement as fallback');
   };
@@ -400,8 +410,15 @@ test('current placement and corrected cluster scoring preserve working resources
       'Existing Online placement is primary for eligible demos',
       'Fallback placement for eligible demos is Online')],
     ['contradictory fallback despite a primary claim', `${nativeStatus} Online placement is a fallback.`],
-    ['unproved new-group qualification', nativeStatus.replace(
-      'proposed and unqualified', 'deployed and qualified')]
+    ['stale proposed-only status', nativeStatus.replace(
+      'five-object deployment/current operator access/base probe independently verified',
+      'new separate native group/RG remains proposed and unqualified')],
+    ['superseded failure kept as current verdict', nativeStatus.replace(
+      'Corrected host runtime PASS / independent acceptance complete', 'Current host runtime FAILED')],
+    ['wrong product reclassification', nativeStatus.replace(
+      'native card runtime-ready after acceptance', 'hosted Apps/Jobs runtime-ready now')],
+    ['unproved stage GO', nativeStatus.replace(
+      'stage GO pending manual preflight/rehearsal', 'stage GO passed')]
   ]) {
     assert.notEqual(wrongStatus, nativeStatus, `${name} mutates the actual native ACA status`);
     assert.throws(() => assertNativePlacement(nativeRow.replace(nativeStatus, wrongStatus)),
@@ -411,13 +428,13 @@ test('current placement and corrected cluster scoring preserve working resources
     ...['README.md', 'docs/source-provenance.md', 'docs/run-plan.md', 'docs/talk-track.md',
       'docs/talking-points.md', 'docs/sandboxing.md', 'haflidi-overview.html']
       .map(path => [path, documentText(path)]),
-    ['current consumer notes', applyNoteFactOverrides('s20-consumer', '')],
-    ['current C4 notes', applyNoteFactOverrides('demo-c4', '')]
+    ['released consumer notes', applyNoteFactOverrides('s20-consumer', '')],
+    ['released C4 notes', applyNoteFactOverrides('demo-c4', '')]
   ]) {
     const prose = text.replace(/\s+/g, ' ');
     assert.match(prose, /primary (?:Online )?(?:eligible demo )?placement|Online is primary|Online.*primary/i, name);
     assert.doesNotMatch(prose, /Online (?:ACA )?fallback/i, name);
-    if (name !== 'current C4 notes') {
+    if (name !== 'released C4 notes') {
       for (const pattern of [
         /26 PASS\s*\/\s*2 BLOCKED\s*\/\s*1 report-only/,
         /10 PASS\s*\/\s*1 FAIL/, /1 NOT_APPLICABLE/,
@@ -447,7 +464,11 @@ test('native coverage rejects wrong-target doctor and separates basic host orche
     /Host Copilot CLI\/Squad remote orchestration/, /Optional in-VM Copilot/,
     /COMPLETED/, /BLOCKED/, /PENDING/,
     /need not themselves run inside the MicroVM/,
-    /No working Online MicroVM or host-orchestrated integration is established/
+    /Online basic provisioning\/access\/runtime is verified/,
+    /ACCEPTED ACA SANDBOXES ENGINEERING CONTRACT \/ RUNTIME READY/,
+    /CRLF/,
+    /actual guest\/CLI exit-23 propagation passed/,
+    /stage GO.*manual preflight\/rehearsal/is
   ]) assert.match(guide, pattern, `coverage retains ${pattern}`);
   const c4 = applyNoteFactOverrides('demo-c4', '');
   for (const pattern of [
@@ -461,7 +482,7 @@ test('two product flows retain separate triggers, integration evidence, cuts and
   const cards = documentText('docs/demo-runbook.md');
   for (const pattern of [
     /Two product demo flows: hosted Squad and native ACA Sandboxes/,
-    /Card A: Haflidi hosted Squad on ACA, issue to bot PR/,
+    /Card A: Haflidi hosted Squad on ACA Apps\/Jobs, issue to bot PR/,
     /Card B: native ACA Sandboxes/,
     /haflidif\/squad-on-aca/, /<approved-private-target>/,
     /selected Squad\/skill/, /validator\/reviewer handoff/,
@@ -510,4 +531,203 @@ test('news dates, billing caveats, public checkout examples, and current version
     assert.ok(documentText(path).toLowerCase().includes(`deck ${version}`), `${path} matches the current deck`);
   }
   assert.ok(documentText('handoff.md').includes(`presentation version **${version}**`));
+});
+
+test('current public release fronts distinguish completed deck publication from local corrections', () => {
+  const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8')).version;
+  for (const path of [
+    'README.md', 'handoff.md', 'PUBLICATION.md', 'presentation/README.md',
+    'docs/run-plan.md', 'docs/source-provenance.md', 'docs/talk-track.md',
+    'docs/talking-points.md', 'docs/feature-guide.md', 'docs/whats-new.md',
+    'docs/demo-runbook.md'
+  ]) {
+    const text = documentText(path);
+    assert.ok(text.includes(version), `${path} names the released deck version`);
+    assert.match(text, /released.*main\/Pages|main\/Pages publication is complete/is, path);
+    assert.match(text, /later.*(?:local|correction)|local.*(?:correction|change)/is, path);
+    assert.doesNotMatch(text, /Live Pages remains 0\.22\.2|neither is\s+published|0\.22\.4.*not merged or released/i, path);
+  }
+});
+
+const currentNativeStatusSurfaces = [
+  ['docs/whats-new.md', '', '## Key updates'],
+  ['docs/bootstrap.md', '', '## What this bootstrap does'],
+  ['docs/clean-machine-demo.md', '', '## Automated dependency setup'],
+  ['docs/talking-points.md', '### 03:30-04:00, s04-news, Martin', '### 04:00-05:00'],
+  ['docs/run-plan.md', '## Separate product demo flows, not one combined runtime', '## Timing contract']
+];
+
+for (const [path, start, end] of currentNativeStatusSurfaces) {
+  test(`current native status in ${path} rejects stale opening claims`, () => {
+    const text = documentText(path);
+    assert.ok(!start || text.includes(start), `${path} retains its current status section`);
+    const section = start ? text.split(start)[1] : text;
+    assert.ok(section.includes(end), `${path} retains the next section boundary`);
+    const current = section.split(end)[0].replace(/\s+/g, ' ');
+    for (const pattern of [
+      /host Copilot\/Squad.*independently accepted/i,
+      /26\.768-second/, /runtime-ready|runtime readiness/,
+      /human (?:stage GO|preflight\/rehearsal)/i,
+      /second-presenter sign-in/, /selected Terraform variant/,
+      /remain separate gates/,
+      /hosted Apps\/Jobs.*(?:E2E.*BLOCKED|BLOCKED.*E2E)/i,
+      /registration404\/custom-agent-profile/
+    ]) assert.match(current, pattern, `${path} current prose retains ${pattern}`);
+    assert.doesNotMatch(current,
+      /Native ACA integration remains build work|(?:Online|native)[^.]*\b(?:proposed|unqualified)\b|No current integration readiness|runtime PASS awaits independent acceptance|(?:prompt\/tool\/validation\/)?handoff evidence still missing|independent acceptance pending|stage GO (?:passed|complete)|all ACA (?:products )?(?:are )?ready/i,
+      `${path} current prose must not contradict accepted fixture engineering or overclaim stage readiness`);
+    if (path !== 'docs/run-plan.md') {
+      for (const pattern of [
+        /five-object deployment/, /current operator access/,
+        /375-second/, /independently verified/
+      ]) assert.match(current, pattern, `${path} opening preserves verified provisioning: ${pattern}`);
+    } else {
+      for (const pattern of [
+        /actual coordinator prompt, worker\/ACA tools, guest results, validation and reviewer handoff evidence is independently accepted/,
+        /LF\/source\+result SHA/, /three positive guest checks\/JSON/,
+        /exact guest\/host exit23/,
+        /causal HTTPS403 with new exact-sandbox networkEgress\.denied audit/,
+        /exact-ID cleanup\/empty list\/NotFound/,
+        /85 evidence files were independently rehashed/,
+        /credential-free policy challenge alone used per-request curl --insecure/,
+        /trusted TLS and inside-MicroVM agents\/OAuth remain unproved/
+      ]) assert.match(current, pattern, `${path} accepted host evidence retains ${pattern}`);
+      const timingCue = text.split(/\r?\n/).find(line => line.startsWith('- ACA Sandboxes is a conditional C4 variant'));
+      assert.ok(timingCue, `${path} retains the conditional C4 timing cue`);
+      assert.match(timingCue, /host-driven fixture engineering are independently accepted/);
+      assert.doesNotMatch(timingCue, /successful-work integration\/rehearsal remains pending/);
+    }
+    if (path === 'docs/whats-new.md') {
+      const relatedCues = text.split(/\r?\n/).filter(line =>
+        line.startsWith('| 9 |') || line.startsWith("- Native ACA's official quickstart"));
+      assert.equal(relatedCues.length, 2, `${path} retains both current native news cues`);
+      for (const cue of relatedCues) {
+        assert.match(cue, /fixture engineering (?:are|is) independently accepted/);
+        assert.doesNotMatch(cue, /Online.*remains proposed|Neither is currently proved for Online/);
+      }
+    }
+  });
+}
+
+test('source and exported speaker notes carry accepted Sandbox proof without qualifying hosted Jobs or human stage', () => {
+  const generated = documentText('presentation/index.html');
+  const assertNativeNotes = notes => {
+    for (const pattern of [
+      /ACA SANDBOXES/, /26\.768/, /three positive guest checks\/JSON\+SHA/,
+      /actual guest and host exit23/, /networkEgress\.denied/,
+      /85 evidence files/, /independently accepted/,
+      /empty list\/NotFound/, /watchdog stop/,
+      /per-request curl --insecure/, /not trusted-TLS readiness/,
+      /not human stage GO/, /inside-guest agents\/OAuth/,
+      /not inside AKS or hosted Jobs\/runner/,
+      /Earlier CRLF failure is controlled learning history/
+    ]) assert.match(notes, pattern);
+    assert.doesNotMatch(notes, /Not deployed\/runtime-tested\/plan-approved|remains proposed\/unqualified|No current Online integration GO|Native ACA integration is remaining build/);
+  };
+  for (const id of ['demo-c4', 's07-agent-setup', 's20-consumer']) {
+    const source = applyNoteFactOverrides(id, '');
+    const emitted = generated.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/section>`))?.[1];
+    assert.ok(emitted, `actual emitted ${id} exists`);
+    assertNativeNotes(source);
+    assertNativeNotes(emitted);
+    for (const [before, after] of [
+      ['independently accepted', 'acceptance pending'],
+      ['actual guest and host exit23', 'exit propagation untested'],
+      ['networkEgress.denied', 'HTTP403 alone'],
+      ['not human stage GO', 'human stage GO passed'],
+      ['ACA SANDBOXES', 'all ACA products']
+    ]) {
+      assert.ok(emitted.includes(before), `${id} mutation targets emitted fact: ${before}`);
+      assert.throws(() => assertNativeNotes(emitted.replaceAll(before, after)), { code: 'ERR_ASSERTION' });
+    }
+  }
+  const hosted = applyNoteFactOverrides('s20-consumer', '');
+  for (const pattern of [
+    /SQUAD ON ACA APPS\/JOBS/, /qualification is BLOCKED/,
+    /runner-registration404\/custom-agent-profile/,
+    /Original haflidif\/squad-on-aca implementation is user-confirmed/,
+    /missing-agent\/error-only closed PR stubs are failure artifacts/,
+    /native Sandbox success does not qualify this hosted chain/
+  ]) assert.match(hosted, pattern);
+  const news = applyNoteFactOverrides('s04-news', '');
+  assert.match(news, /ACA SANDBOXES.*26\.768/s);
+  assert.match(news, /SQUAD ON ACA APPS\/JOBS fresh E2E separately BLOCKED/);
+});
+
+test('product prompts require positive guest work, accountable handoff and original hosted ownership', () => {
+  const text = documentText('docs/prompt-pack.md');
+  const native = text.split('### Native host Squad isolated work')[1]?.split('### Original hosted Squad issue-to-PR work')[0];
+  const hosted = text.split('### Original hosted Squad issue-to-PR work')[1]?.split('## What makes results repeatable')[0];
+  assert.ok(native && hosted, 'two runnable public product recipes have distinct sections');
+  const assertNativeRecipe = recipe => {
+    for (const pattern of [
+      /Copilot CLI\/Squad and the worker stay on the host/,
+      /Invoke the aca-sandboxes skill/, /explicit subscription\/resource-group\/sandbox-group\/region/,
+      /independent validator\/reviewer/, /UTF-8 LF/, /throw 'Shell fixture must use LF/,
+      /positive work fails, stop/, /numeric guest exits.*host process exit/s,
+      /Decode the.*fs JSON content wrapper/s,
+      /No anonymous ingress/, /No.*sign in|Do not sign in/,
+      /separately approved exact-ID cleanup/,
+      /ACA SANDBOXES/,
+      /three positive guest checks\/JSON\+SHA/,
+      /actual exit23/,
+      /one HTTPS403 with new exact-sandbox networkEgress\.denied causal audit/,
+      /Independent acceptance complete; card runtime-ready after acceptance/,
+      /Earlier CRLF shell failed positive work/,
+      /not a global\s+ACA SANDBOXES outage/,
+      /no retry/i
+    ]) assert.match(recipe, pattern);
+  };
+  assertNativeRecipe(native);
+  for (const [before, after] of [
+    ['positive work fails, stop', 'positive work fails, continue'],
+    ['three positive guest checks/JSON+SHA', 'three positive guest checks BLOCKED'],
+    ['one HTTPS403 with new exact-sandbox networkEgress.denied causal audit', 'one HTTPS403 alone'],
+    ['Independent acceptance complete; card runtime-ready after acceptance', 'Independent acceptance pending; card ready now'],
+    ['Copilot CLI/Squad and the worker stay on the host', 'Copilot CLI/Squad and the worker run inside the MicroVM'],
+    ['separately approved exact-ID cleanup', 'delete all groups']
+  ]) {
+    assert.ok(native.includes(before), `mutation changes actual native recipe: ${before}`);
+    assert.throws(() => assertNativeRecipe(native.replace(before, after)), { code: 'ERR_ASSERTION' });
+  }
+  for (const pattern of [
+    /haflidif\/squad-on-aca/, /<approved-private-target>/,
+    /Original implementation is completed\/previously demonstrated/,
+    /new personal target.*BLOCKED.*runner registration\/custom-agent discovery/s,
+    /ACA APPS\/JOBS/,
+    /Fresh current end-to-end qualification remains pending/i,
+    /ACA SANDBOXES success does not count as that proof/,
+    /Change only README\.md/, /Do not merge or deploy/,
+    /actual ACA Job.*bot PR\/diff/s, /Correlate the same issue/,
+    /Never modify\/delete the original hosted service/
+  ]) assert.match(hosted, pattern);
+  assert.doesNotMatch(documentText('docs/repositories.md'), /martinopedal\/squad-on-aca-demo-target/);
+});
+
+test('both current source tables reject stale no-apply and unproved integration GO', () => {
+  const assertNativeTable = row => {
+    for (const pattern of [
+      /Primary Online/, /five-object|five exact bindings/i,
+      /current operator access/, /base probe verified/i,
+      /cleanup empty/,
+      /corrected host runtime PASS \/ independent acceptance complete/i,
+      /stage GO pending/
+    ]) assert.match(row, pattern);
+    assert.doesNotMatch(row, /no apply|not deployed|not runtime-tested|source repair in progress|integration PASS|stage GO passed/i);
+  };
+  for (const path of ['README.md', 'docs/source-provenance.md']) {
+    const row = documentText(path).split(/\r?\n/)
+      .find(line => line.startsWith('| Native ACA SandboxGroup MicroVMs |'));
+    assert.ok(row, `${path} has the real native component row`);
+    assertNativeTable(row);
+    for (const mutation of [
+      `${row} no apply performed`,
+      `${row} integration PASS`,
+      row.replace(/base probe verified/i, 'base probe proposed'),
+      row.replace('cleanup empty', 'cleanup unverified')
+    ]) {
+      assert.notEqual(mutation, row, `${path} mutation changes the actual row`);
+      assert.throws(() => assertNativeTable(mutation), { code: 'ERR_ASSERTION' });
+    }
+  }
 });

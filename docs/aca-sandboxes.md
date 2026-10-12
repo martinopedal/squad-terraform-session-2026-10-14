@@ -2,7 +2,24 @@
 
 Audience: presenters and the approved sandbox operator. Purpose: show where qualification stops, what the full runtime test contract requires, and when the existing C4 substitution is safe.
 
-Current status, October 12: Online is **primary placement for eligible demo components**, with native deployment proposed for a separate SandboxGroup/RG, not a fallback, AKS-hosted MicroVM or Haflidi Jobs/runner. Use minimal managed networking if policy permits, not Corp BYO VNet/UAMI/FIC transplantation. Candidate not created/deployed/tested/plan-approved. Corp-required private workloads remain Corp and untouched; earlier Corp qualification blocked/no apply is history, not justification for policy escape. Public GitHub visibility is separate from placement and authenticated/private native control-plane scope.
+**ACA SANDBOXES only:** native host-Squad -> hardware MicroVM runtime is not
+**SQUAD ON ACA APPS/JOBS**. Both independent demos need accepted current proof.
+The original hosted implementation remains completed/previously shown, but its
+fresh issue -> Job/agent -> PR qualification is pending.
+
+Current status, October 12: Online is **primary placement for eligible demo components**, with a separate independently verified five-object SandboxGroup/RG deployment, not a fallback, AKS-hosted MicroVM or Haflidi Jobs/runner. All five exact bindings/current operator group access passed. A credential-free base probe verified exec/public filesystem/stop-resume/deletion and an empty cleanup list. Standard managed networking is not Corp BYO VNet/UAMI/FIC transplantation. Corp-required workloads remain Corp and untouched; its held blocked/no-apply qualification is separate history. Public visibility is not anonymous control-plane access.
+
+The **corrected host Copilot/Squad runtime receipt passed its requested contracts**
+in one 26.768-second sandbox run: LF/source-byte hash round trip, three positive
+guest checks, returned JSON plus matching guest SHA256, actual guest/host exit 23,
+and one HTTPS 403 correlated with a new same-sandbox `networkEgress.denied` audit
+record. Exact deletion/empty list/NotFound and watchdog stop passed.
+Independent parent evidence acceptance completed October 12 at 19:10 UTC:
+all 85 evidence files were rehashed. The **ACA SANDBOXES engineering contract is
+DONE**, and the native card is runtime-ready, not automatically human stage GO. Second-presenter
+access, manual UI/login and timed rehearsal remain separate. No Copilot/Squad
+agent or OAuth ran inside the guest. The earlier CRLF attempt is controlled
+learning history, not the current failed lane or a globally broken ACA service.
 
 Historical MicroVM execution checks succeeded in a Management-side group, not current Corp or Online qualification. The official plugin is installed and enabled; its earlier disabled state remains historical. Base C4 stays the default until an explicit target, approved plan/apply, access/policy read-back and prepared-sandbox rehearsal pass.
 
@@ -30,7 +47,7 @@ This talk already shows Copilot CLI and Squad helping with Terraform. ACA Sandbo
 - Public disks available on this machine included `copilot`, `azure-dev`, `ubuntu`, several Python disks, Node 22 and 24, and .NET 8 through 10
 - Sandbox tiers from Learn: XS, S, M, L, XL
 - Quota note from Learn: Sandboxes and Express are limited to 2,000 cores
-- Cost note from Learn: suspended native MicroVM compute charges stop, but storage can continue; this runbook did not derive a bill-backed per-run amount. Five-minute autoSuspend is not a hard active timeout or credential revocation
+- Cost note from Learn: suspended native MicroVM compute charges stop, but storage can continue; this runbook did not derive a bill-backed per-run amount. AutoSuspend is not a hard active timeout or credential revocation
 
 ## Current qualification and target boundary
 
@@ -38,23 +55,23 @@ The Corp source correction is merged. The subsequent read-only qualification was
 
 Last recorded Corp baseline remains 8 present / 3 absent: the group exists, but the default VNet connection and both presenter Data Owner grants are missing. Full convergence, effective access and actual in-MicroVM CLI/Squad remain unproved. Preserve those resources untouched.
 
-Lead's forwarded plan proposes demo-env `deployments\aca-sandboxes-online` plus
-a separate sandbox-only workflow/protected `online` environment; neither exists
-or is deployed. Minimal proposed graph is RG/SandboxGroup/two group Data Owner
-grants, plus conditional RG Contributor for the existing GitHub actor if needed.
-Actor authority and exact new scope/source/plan qualification remain unresolved.
+Native source is demo-env `deployments\aca-sandboxes-online`, with a separate
+sandbox-only workflow/protected `online` lane. The verified five-object graph is
+RG/SandboxGroup/two group Data Owner grants/one consumer RG Contributor grant.
+The approved one-time Owner bootstrap and deployment/readbacks are independently
+verified; public source PR human review is still separate and not claimed merged.
 Read-only qualification uses the [official CLI quickstart](https://sandboxes.azure.com/docs/sandboxes/quickstart/setup-cli).
-The source proposal is not approval of a new group, lifecycle or deployment.
+Source presence and a completed probe do not authorize another group, lifecycle or deployment.
 Online is not anonymous ingress, credential exposure, Corp networking change or
 moving the hosted service; no Corp/AKS/Jobs modification.
 
-Latest approved scope is isolated five-object Online native Bicep setup plus one
-credential-free Ubuntu 1 CPU/2 GiB ten-minute probe and deletion only of the new
-test ID. The native implementation owner is preparing the separate consumer
-root/protected lane. This is source repair in progress, not deployment, access
-repair, a passed probe or Copilot/Squad integration. Actor bootstrap, policy,
-budget, source/new-plan qualification and future exact manifest approval remain
-gates. No existing working Azure changes or inside-MicroVM OAuth authorized.
+The original credential-free Ubuntu 1 CPU/2 GiB base probe completed in 375 seconds.
+Independent fresh review confirmed deployment Succeeded, all five exact bindings,
+current operator group data-plane access and an empty list. The earlier separately approved host attempt failed local CRLF work and cleaned
+up in about 77 seconds. A corrected separately approved run then completed all
+requested guest/exit/causal-denial/cleanup contracts in 26.768 seconds.
+Independent evidence acceptance is complete. None of these probes grants another create/retry,
+group/RG teardown, existing-workload changes or inside-MicroVM OAuth.
 
 Read [the repository map](repositories.md) and [four-lane progress matrix](sandboxing.md#october-12-progress-and-next-actions). The public session clone is not the live AKS consumer or a runnable private hosted target.
 
@@ -93,22 +110,26 @@ States below are **COMPLETED**, **BLOCKED**, or **PENDING**. A pending row has n
 | --- | --- | --- |
 | Host CLI version / operator | COMPLETED, host only | `aca` 1.0.0-preview.4; host Copilot 1.0.94, Squad 1.0.1, plugin 0.0.5-beta enabled. Not inside a MicroVM |
 | Host token authentication / operator | COMPLETED, tokens only | Auth status exit 0, ARM/data-plane authenticated true. Not group Data Owner or correct target |
-| Explicit Online target and approved separate group/RG / lead + reviewer | PENDING | Confirm target read-only; standard managed network only if policy permits. No forwarded target verdict, deployment or plan approval |
-| Effective Data Owner / operator + reviewer | BLOCKED | Corp presenter grants absent in last baseline. Read actual scoped role/effective access for the chosen target; successful scoped data-plane operation required |
+| Explicit Online target and approved separate group/RG / lead + reviewer | COMPLETED, exact target | Independent fresh five-object bindings/configuration and terminal Succeeded matched the approved Online graph; no implicit host default |
+| Effective Data Owner / operator + reviewer | COMPLETED for operator; PENDING for second presenter | Fresh exact-group data-plane list passed and was empty. Exact grants exist; second presenter must independently authenticate/test access |
 | Targeted doctor / operator | BLOCKED, WRONG TARGET | Actual 9/9 exit 0 resolved to cached Management/Norway East, not requested target; lead reproduced with Online flags. Compare printed subscription/RG/group/region with approved target plus independent exact-ID read-back; resolve targeting read-only before retry. No Corp/Online doctor acceptance |
-| Approved group configuration / operator + reviewer | BLOCKED | Reviewed exact plan/apply plus authoritative provisioning, policy, network, egress, budget and cleanup read-back. Unexpected change-type check blocked new Corp qualification; no apply performed |
-| MicroVM create/list/get/delete / operator | BLOCKED | Actual bounded lifecycle under separate consent; record sandbox identity privately, phase/time/state, numeric exits and verified owned-only cleanup |
-| Exec / operator | BLOCKED | Actual in-MicroVM harmless command, process/OS context and immediate numeric exit. A CLI help/config parse does not qualify it |
-| Filesystem / operator | BLOCKED | Approved public-only upload/read/write/download and hash round-trip; no host credentials, private inputs or auth-bearing snapshots |
-| Egress / operator + reviewer | BLOCKED | Read configured defaults/rules/inspection and corroborated allowed/denied requests with diagnostics. HTTP 200/403 alone does not attribute enforcement |
-| Suspend/resume / operator | BLOCKED | Actual state transitions, bounded resumed exec and sanitized storage/lifecycle result; suspend billing documentation is not a runtime test |
+| Approved group configuration / operator + reviewer | COMPLETED, bounded provisioning | Exact approved graph and current configuration matched independent readbacks. This is not universal effective-policy/full demo acceptance; held Corp no-apply result stays separate |
+| MicroVM create/list/get/delete / operator | COMPLETED, bounded owned probes | Base lifecycle and later exact new-ID cleanup verified; final group list empty and later probe NotFound. No shared/group/RG deletion |
+| Exec / operator | COMPLETED base; corrected runtime PASS, acceptance complete | Three positive guest checks returned JSON; actual guest/CLI exit-23 propagation passed. Earlier CRLF host-exit-2 failure remains labeled learning history |
+| Filesystem / operator | Corrected runtime PASS, acceptance complete | LF source-byte SHA256 round trip and returned JSON/guest-computed result SHA256 matched. This is public fixture evidence, not a Terraform archive or credentials |
+| Egress / operator + reviewer | Corrected runtime PASS, acceptance complete | Deny/Full/no ports plus one actual HTTPS403 and new timestamped exact-sandbox networkEgress.denied record prove this bounded denial. Per-request TLS bypass on public credential-free endpoint is not trusted-TLS readiness |
+| Suspend/resume / operator | COMPLETED, base probe | Stop/resume and preserved public state verified in the base probe; not rerun or inferred from documentation in the later integration attempt |
 | Offline Terraform / operator | BLOCKED | Reviewed public archive revision/hash, isolated provider mocks, backend-disabled init, validate, root tests and real numeric exits inside selected MicroVM. Historical Management 10/10 is not current target or 52+2 module qualification |
-| Host Copilot CLI/Squad remote orchestration / presenter + operator | BLOCKED | Actual host prompt -> selected Squad/skill -> inspected `aca` calls -> in-MicroVM filesystem/validation/exits -> validator/reviewer handoff with target/source/time. Basic integration does not require in-MicroVM CLI installation, but no current Online integration trace exists |
+| Host Copilot CLI/Squad remote orchestration / presenter + operator | ACCEPTED ACA SANDBOXES ENGINEERING CONTRACT / RUNTIME READY | Actual host coordinator/worker -> ACA tools -> three positive guest checks/JSON+SHA -> exit23/causal denial -> exact cleanup -> handoff. Native card runtime-ready after acceptance; stage GO still requires manual preflight/rehearsal. No inside-guest agents/OAuth |
 | Optional in-VM Copilot + Squad / consenting presenter + operator | BLOCKED, advanced optional | Separate supported install/sign-in/entitlement, runtime egress and safe auth storage; actual in-VM paths/versions/process/selected agent/prompt/output. No host auth-cache copy; not a prerequisite for basic host orchestration |
 | Presenter C4 rehearsal / both presenters | PENDING | Chosen target qualified, all required checks PASS, actual manual auth and one prepared-sandbox prompt within 29:30-33:30/cut 32:30; no stage provisioning or retry |
 | Teardown / expiry / resource owner | PENDING, scheduled | Exact separately approved owned-resource cleanup Oct 17; credential expiry Oct 31. Verified deletion/cost stop, not dates alone |
 
-No aggregate runtime PASS exists. Doctor/help/config parse, laptop 18/18, hosted Jobs and AKS metadata are different checks. USD 20 through Oct 31 is an alert, not a hard cap; retained Corp consumes budget and primary Online placement is not free by assumption.
+Corrected bounded successful-work evidence exists; independent acceptance is complete; human stage GO remains pending. Doctor/help/config parse,
+laptop 18/18, hosted Jobs and AKS metadata are different checks. Earlier USD 20
+is historical planning/alert context, not current execution authority; scoped
+cost consent stays private and retained costs/storage still need cleanup proof.
+The saved base auto-suspend interval was 600 seconds, not a hard active timeout.
 
 ## Copilot CLI and Squad integration: two distinct meanings
 
@@ -122,7 +143,12 @@ bounded remote-work claim.
 Integration acceptance needs an actual prompt/selected agent/skill/tool/output/
 handoff trace tied to the separately qualified target and archive revision.
 Standalone hello, filesystem and lifecycle checks are prerequisites, not this
-demo. No working Online MicroVM or host-orchestrated integration is established.
+demo. Online basic provisioning/access/runtime is verified; the corrected
+host-orchestrated run returned positive guest JSON/SHA, actual exit23 and causal
+denial/cleanup evidence. Parent acceptance is complete; the earlier failed attempt
+is history, not the current runtime verdict.
+Use [the reusable native prompt](prompt-pack.md#native-host-squad-isolated-work)
+only after its preparation/approval gate; a real failed trace is not full GO.
 See [the two product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
 
 **Advanced optional variant is in-MicroVM CLI/Squad:** installation, supported
@@ -146,15 +172,16 @@ No successful Corp sandbox creation/runtime test or full CLI+Squad execution ins
 Fresh forwarded read-only checks confirm the explicitly targeted Corp group is
 Succeeded with no VNet connections and the actual scoped sandbox list returned
 403/exit 1. That access failure overrides no green result: wrong-target doctor
-cannot replace it. The proposed new Online candidate RG returned 404, confirming
-absence, not permission to create. Lead's source plan is received, but target/source/execution
-qualification remains pending; no native Online runtime or integration acceptance exists.
+cannot replace it. The earlier Online candidate RG 404 is superseded by the independently verified
+separate Online deployment and base probe. It was an absence observation, not
+creation authority. Corp remains held; current Online successful-work integration
+acceptance is complete; only human stage preflight/rehearsal and hosted Apps/Jobs qualification remain separate.
 
 ## Intended variant: Squad inside a customer-managed ACA MicroVM
 
 This is an intended in-MicroVM installation/execution variant, not a fifth product or a new Squad sandbox command. It is not currently executed or qualified. `aca` operates the customer-owned MicroVM; Copilot CLI and Squad would run inside it after separate approvals. A `copilot` disk label or host-installed programs do not establish that runtime.
 
-Before attempting it, the operator must close the separately approved selected-target deployment/access/policy gate above, review supported in-MicroVM installation and pinned Linux-compatible packages, and approve model-service/GitHub egress, sign-in, persistent storage, expiry and cleanup. The proposed Online group is separate from AKS and hosted Jobs. Do not copy host auth caches, tokens, personal memory or private team histories. Keep supported sign-in human-driven and separate from the uncredentialed Terraform check lane.
+Before attempting it, the operator must close the separately approved selected-target deployment/access/policy gate above, review supported in-MicroVM installation and pinned Linux-compatible packages, and approve model-service/GitHub egress, sign-in, persistent storage, expiry and cleanup. The verified Online group is separate from AKS and hosted Jobs. Do not copy host auth caches, tokens, personal memory or private team histories. Keep supported sign-in human-driven and separate from the uncredentialed Terraform check lane.
 
 Qualification must record sanitized output from inside the MicroVM: process/OS context, resolved executable paths and versions, the actual `copilot --agent squad` process, selected agent/team and a bounded public-only prompt with its real output and exit. Link this to the approved sandbox and source revision in private evidence. Host `copilot --version`, `squad --version`, `aca auth status`, a worktree, or a tool filter cannot replace these checks. Do not add installation/sign-in to timed C4; it remains the prepared uncredentialed validation variant only.
 
@@ -170,7 +197,7 @@ The earlier Corp-only direction is historical, superseded by the confirmed separ
 | --- | --- | --- | --- |
 | Copilot CLI local `/sandbox` | On the presenter machine | Host OS/MXC isolation with filesystem and network policy | Mention as context only |
 | GitHub-managed Copilot cloud sandboxes | GitHub-managed ACA, preview | GitHub identity, policy and billing | Documented preview/account-build gate; explicit help parse exit 0 is not account/runtime proof |
-| Customer-managed ACA MicroVMs via `aca` | Customer Azure sandbox group | MicroVM isolation, configurable egress, suspend and resume, explicit lifecycle | Separate Online group/RG proposed; conditional C4 only after target qualification |
+| Customer-managed ACA MicroVMs via `aca` | Customer Azure sandbox group | MicroVM isolation, configurable egress, suspend and resume, explicit lifecycle | Online deployment/access/base verified; successful-work integration/rehearsal pending, conditional C4 only after its full gate |
 | Squad on ACA hosted Apps/Jobs | Azure Container Apps Jobs and supporting Azure services | Queue workflow, workload identity, Key Vault and KEDA; not MicroVMs | Corp, Norway East placement read back; fresh queue-driven readiness is not established |
 
 Squad is coordination/configuration over the hosting Copilot session, not a sandbox product; installed 1.0.1 help has no sandbox verb. A worktree/tool filter does not isolate credentials. Hosted Jobs placement is distinct from Corp MicroVM acceptance and from effective-policy/runtime qualification. See [all four execution hosts](sandboxing.md).
@@ -193,7 +220,7 @@ October 12 native host checks: Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-pr
 2. Run `copilot plugin list`.
 3. If the plugin shows `[disabled]`, run `copilot plugin enable sandboxes@Azure-Container-Apps`.
 4. Install the `aca` CLI from Learn and verify `aca --help`.
-5. Confirm the explicit selected target and exact private IaC change, reviewed plan, and human environment approval. For the proposed Online target, qualify a separate group/RG and standard managed network if policy allows; do not transplant Corp network/identity wiring. Read back provisioning, approved deny-by-default egress and effective policy inheritance, parameters, enforcement, exclusions, and exemptions. Confirm the approved group exists and targeted `aca doctor` passes. A green doctor result is connectivity evidence, not this policy gate.
+5. Confirm the explicit selected target and exact private IaC change, reviewed plan, and human environment approval. For the verified Online target, recheck current exact-group access and the separately approved prepared-runtime scope; do not transplant Corp network/identity wiring. Read back provisioning, approved deny-by-default egress and effective policy inheritance, parameters, enforcement, exclusions, and exemptions. Confirm the approved group exists and targeted `aca doctor` passes. A green doctor result is connectivity evidence, not this policy gate.
 6. Confirm the approved data-plane scope, operator access, capacity, budget, expiry, and cleanup owner. Prepare one sandbox, its Terraform 1.16.5 installation, dependencies, and a reviewed public-only archive before the timed chapter. Run `/workspaces/bin/terraform init -backend=false -input=false` in `/workspaces/module` during this preflight, not on stage. Keep sandbox checks uncredentialed for Azure, with the reviewed mocked test suite. Do not provision a group or change networking on stage.
 7. Record the archive's source revision and hash. It must contain the intended root `tests\validation.tftest.hcl` suite, not private inputs, credentials, backend/state, or a saved plan. Keep the archive at a generic operator-resolved path such as `<reviewed-module-archive.zip>`.
 8. Require all presenter checks PASS, with actual authentication verified manually. Rehearse the exact prepared-sandbox prompt below on the separately approved selected target, retaining real numeric process exits and sanitized output. Prepare labeled fallback evidence and confirm no identifiers appear on screen. Preliminary planning approval, plugin enablement, `aca doctor`, and the Management-side runs alone do not qualify this variant.
@@ -245,9 +272,9 @@ The prepared shell-only path was faster, but that does not predict a fresh Copil
 
 ## Recommended live use
 
-Keep the base C4 skill, read-only MCP lookup, and permission flow when the Corp gate is unmet. If useful, show a sanitized saved excerpt explicitly labeled **Management-side execution evidence, not Corp validation**. Never rerun the Management target to stand in for Corp.
+Keep the base C4 skill, read-only MCP lookup, and permission flow when the selected-target successful-work integration/rehearsal gate is unmet. If useful, show a sanitized saved excerpt explicitly labeled **Management-side execution evidence, not Corp validation**. Never rerun the Management target to stand in for Corp.
 
-Only after approved selected-target IaC, access/policy read-back, full required runtime coverage and the exact presenter preflight pass may the operator select the C4 variant. Online remains proposed/unqualified; approved Corp IaC was the earlier condition, not the current exclusive placement rule. It replaces part of the deeper MCP lookup inside **29:30-33:30**, with the same **32:30 cut**. It adds no chapter, changes no other slide budgets, and uses none of the 55:00-58:00 protected slack. See [the C4 operator procedure](demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes).
+Only after approved selected-target IaC, access/policy read-back, full required runtime coverage and the exact presenter preflight pass may the operator select the C4 variant. Online basic provisioning/access/probe is verified, but full integration/rehearsal remains unqualified; approved Corp IaC was the earlier condition, not the current exclusive placement rule. It replaces part of the deeper MCP lookup inside **29:30-33:30**, with the same **32:30 cut**. It adds no chapter, changes no other slide budgets, and uses none of the 55:00-58:00 protected slack. See [the C4 operator procedure](demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes).
 
 | Wall clock | Budget | Operator action |
 | --- | --- | --- |
@@ -269,6 +296,6 @@ Keep operator records outside public source. Generic rehearsal pointers are `evi
 ## Fallback if capacity, plugin, or network misbehaves
 
 - Resolve a disabled plugin before rehearsal. The disabled state was a local observation, not a universal installation default.
-- If Corp qualification or prepared-resource rehearsal is incomplete, keep base C4. A saved Management-side excerpt must retain that label and its Boolean-exit/403 limitations.
+- If selected-target successful-work integration or prepared-resource rehearsal is incomplete, keep base C4. A saved Management-side excerpt must retain that label and its Boolean-exit/403 limitations.
 - If the chosen live variant fails or reaches the cut, do not retry, switch regions, change allow rules, or start the historical fresh-sandbox flow. Show already reviewed evidence with its actual scope, or return to the original MCP demonstration.
 - Direct `aca` operation is a separate manually rehearsed option, not an unrehearsed rescue during C4. No capacity or venue-network failure authorizes changes to existing infrastructure.

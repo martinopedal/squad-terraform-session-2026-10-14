@@ -8,8 +8,10 @@ Operator reference, not extra stage narration: [repository map](repositories.md)
 [four-lane progress matrix](sandboxing.md#october-12-progress-and-next-actions),
 [full native coverage](aca-sandboxes.md#full-test-coverage-checklist), and
 [two product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
-Current local deck 0.22.4 preserves prior accepted draft 0.22.3; neither is
-published here. Live Pages remains 0.22.2.
+Deck 0.22.4 is released on main/Pages, 39 full and five short slides.
+Local deck 0.22.5 synchronizes the exported factual notes without changing this
+script/clock/design. It awaits independent source/export review and publication;
+the accepted native engineering result is not hosted or human stage proof.
 
 This targets a rehearsed 60-minute show, not exploratory pair programming; the full human rehearsal is still pending. Before the timed show starts, show the untimed legal/futures notice: preview features may change; recheck status before 14 Oct 2026; no warranties; dates are subject to change. C0-C7 remain 29 minutes total. Planned content ends at 55:00, then the protected slack holds 55:00-58:00 before the close.
 
@@ -49,7 +51,7 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 **Haflidi:** On stage, pin `/model` to `claude-sonnet-5` for eval parity and present Auto or HydraFusion as the cost lever, not as a live variable in the room. The rest of the slide anchors the platform story: Copilot CLI GA, Squad 1.0.1, Terraform MCP, Azure MCP, GitHub agent news, and one AKS line about new 1.36 Automatic clusters defaulting toward Gateway API while this demo stays on the managed NGINX path.
 
-> ACA context, not another timed headline: Azure Container Apps Sandboxes reached GA in September after June preview. Conditional C4 requires independently approved selected-target IaC, access/policy read-back, full required runtime coverage and presenter rehearsal. Separate Online group/RG is proposed, not AKS or hosted Jobs. Keep base C4 today. HydraFusion figures remain offline benchmarks/estimated cost, not savings from this run. See [whats-new.md](whats-new.md).
+> ACA context, not another timed headline: Azure Container Apps Sandboxes reached GA in September after June preview. Conditional C4 requires independently approved selected-target IaC, access/policy read-back, full required runtime coverage and presenter rehearsal. Separate Online deployment/access/base is verified, not AKS or hosted Jobs; corrected runtime receipt passes; independent acceptance complete, runtime-ready after acceptance, human stage GO separate. Keep base C4 today. HydraFusion figures remain offline benchmarks/estimated cost, not savings from this run. See [whats-new.md](whats-new.md).
 
 ## s04-layers | 04:00-05:00 | One workflow, three distinct layers
 
@@ -161,7 +163,7 @@ Use `/skills info test-discipline`, `/mcp`, then ask for test-discipline, unchan
 
 > October 12 current result: Corp source correction merged, new qualification blocked on an unexpected change-type check; no apply performed. Last 8 present / 3 absent baseline still has connection and two Data Owner grants missing. No new sealed manifest/raw exact deltas. Fresh explicit Corp group get is Succeeded/no VNet connections; scoped list remains 403/exit 1. No successful Corp sandbox creation/runtime test or full CLI+Squad execution inside a MicroVM is established. Earlier 34/85/31 source/tooling checks are not runtime acceptance.
 
-> Native Online card: confirmed placement direction for a separate group/RG, proposed standard managed network if policy allows, not Corp BYO VNet/UAMI/FIC transplant. Not inside AKS or Haflidi's hosted Jobs. Candidate RG absent; no creation/deployment/test/independent plan approval. Leave Corp untouched; not a proven policy restriction/fix. Host tokens authenticated, but doctor 9/9 resolved to cached Management despite explicit flags: WRONG TARGET, not GO. Compare printed target fields and independent exact-ID read-back. No config change/Management fallback. [Official quickstart](https://sandboxes.azure.com/docs/sandboxes/quickstart/setup-cli).
+> Native Online card: separate primary Online deployment/all five exact bindings/current operator access/base exec/fs/stop-resume/delete independently verified; cleanup list empty. No Corp BYO VNet/UAMI/FIC transplant or AKS/hosted Jobs dependency. Corrected 26.768-second ACA SANDBOXES host run passed LF/hash/three guest checks/JSON+SHA/exit23/causal denial/cleanup. Independent acceptance complete; runtime-ready after acceptance, human stage GO separate. Earlier CRLF is controlled history; base C4 if stage gates unmet. Historical wrong-target doctor remains a warning, not a substitute for fresh exact-ID/access evidence. [Official quickstart](https://sandboxes.azure.com/docs/sandboxes/quickstart/setup-cli).
 
 **Martin, only for the qualified variant:** This is a separately approved prepared native MicroVM. The VM is just our control console. We run the public filesystem and offline Terraform checks here, not AKS or the hosted issue-to-PR service. Inspect actual output and exits.
 
@@ -170,7 +172,10 @@ coordinate the task, invoke the ACA skill, inspect each tool call and hand actua
 isolated validation results to the validator/reviewer. That is not Copilot/Squad
 running inside the MicroVM. The advanced inside variant needs separate auth and
 runtime evidence; it is not required for this basic remote-orchestration claim.
-We have no current Online integration result yet.
+We have a corrected positive ACA SANDBOXES host trace; independent acceptance
+is complete, then runtime-ready. This is not human stage GO or SQUAD ON ACA
+APPS/JOBS proof; fresh hosted E2E qualification is separate. The [native prompt recipe](prompt-pack.md#native-host-squad-isolated-work)
+requires separately qualified preparation and keeps missing checks blocked.
 
 **Haflidi:** A 403 alone does not establish egress or Azure Policy enforcement. If the live result is missing at the cut, say so. Our earlier saved runs are Management-side execution evidence, not Corp validation; they printed Boolean fields rather than numeric exits. Fresh runs took about 2:58 and 1:47, so we don't promise a 90-second agent turn or take time from protected slack.
 
@@ -257,7 +262,7 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 > Card A timing: optional 53:00-54:30 only if ahead and newly qualified, cut 54:30; no queue-completion promise. Use `gh issue create/edit`, `gh run list` and `gh pr list` with `<approved-private-target>`/`<approved-bot-app>` from the operator card, not live private values in public notes. Fallback: reviewed dated historical excerpt or skip. Approved owned issue/PR/execution cleanup off-stage.
 
-> Attribution/next action: Haflidi's authored implementation role is documented, but supplied bounded search found no current Haflidi-authored technical confirmation. Do not present Martin's historical status as his new progress. Ask him for implementation revision and a fresh sanitized issue-to-PR chain result. USD 20 through October 31 is an alert, not a cap; retained Corp costs remain. Teardown October 17/credential expiry October 31 are scheduled.
+> Attribution/next action: Haflidi's authored implementation role is documented, but supplied bounded search found no current Haflidi-authored technical confirmation. Do not present Martin's historical status as his new progress. Ask him for implementation revision and a fresh sanitized issue-to-PR chain result. Earlier USD 20 is historical planning/alert context, not execution authority; retained Corp costs remain. Teardown October 17/credential expiry October 31 are scheduled.
 
 ## s21-limits | 53:00-55:00 | Make the next change easier to review
 
@@ -307,7 +312,7 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 > Reference only. Keep the full upstream source pin, reviewed module revision, and exact check evidence with the release. For a detailed Terraform plan, exit codes are 0 for unchanged, 2 for proposed changes, and 1 for error. Private scope, state, network compatibility, policy evaluation, and authorized read-back remain separate gates; the October 5 validation closes them only for the cited private consumer run.
 
-## a-online | Appendix | Same module, Online landing zone
+## a-online | Appendix | Upstream Automatic, Online consumer
 
 > Reference only. Answer "can this run somewhere simpler?" Keywords: same module, thin root, guardrails constrain, bounded runtime evidence. The demo-env repo root `deployments/online` consumes the module by tag `v0.6.0` and owns providers, backend, network, and the namespace. Three landing-zone controls shaped it: storage forced private (state through a private endpoint, so an ephemeral VNet-integrated runner), `Deny-Subnet-Without-Nsg` (the AKS-managed VNet was rejected, so BYO subnets with NSGs and an explicit NAT Gateway), and AKS RBAC Writer cannot create namespaces (managed namespace through ARM). Nothing was exempted. The chain: PR, protected branch, human environment gate, OIDC, plan and apply in one job with no plan artifact, a public API server that accepts only the runner's static egress IP, Entra-only kubeconfig, and a runtime check step that fails unless the hostname returns HTTPS 200, HTTP redirects, and DNS resolves to the App Routing controller Service address. This demo uses Azure's managed NGINX application-routing path for AKS. For new AKS 1.36 Automatic clusters, Learn now points the default ingress story at Gateway API instead; NGINX stays supported for critical fixes through November 2026. The current page at `https://aks-online-demo.swedencentral.cloudapp.azure.com/` is the branded NIC 2026 demo, served by pinned `nginx-unprivileged`, showing the serving pod, render time, flow, and speakers; apply runs 37771532872 and 37772290635 both ended with plan "No changes", DNS matching the ingress IP, HTTPS 200 by hostname, and title "AKS Automatic | NIC 2026 demo". `Test-OnlineSecurity.ps1` is 29/29 PASS. The real runs found seven issues: five module fixes written test-first (user-assigned identity for BYO subnets, `userAssignedNATGateway` egress, two perpetual drifts, and the SKU: the module sent `Base`, now `cluster_sku = "Automatic"` with managed system node pools), one root fix (no module-level `depends_on`), and one later public-module fix for the plan-time-unknown subnet count. The public module repo (`martinopedal/terraform-azapi-aks-automatic` v0.6.0) has `use_external_subnets`, and the Online root in `martinopedal/aks-automatic-demo-env` sets `use_external_subnets = true`. The public module repo at v0.6.0 also includes `tests/external_subnets.tftest.hcl`. This repository's local Corp module copy (`terraform/modules/aks-automatic-corp`, pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`) does not have that flag. The cluster was rebuilt as the Automatic SKU because Base to Automatic migration is not supported. Detail and evidence: `docs/online-demo.md`. Do not show subscription, tenant, or principal IDs.
 

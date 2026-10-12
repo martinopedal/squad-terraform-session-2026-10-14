@@ -11,12 +11,142 @@ values/state into public source.
 
 For the separate product demos use [hosted Squad issue-to-PR versus host
 Copilot/Squad-driven native ACA isolation](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
-Native Online group/RG is proposed/unqualified, not AKS/hosted Jobs or Corp
-network/identity transplantation. The installed ACA skill gives guidance; real
-prompt/tool/validation/handoff evidence is still missing. Advanced in-MicroVM
+Native Online five-object provisioning/current operator access/base probe were
+independently verified October 12, not AKS/hosted Jobs or Corp network/identity
+transplantation. A corrected 26.768-second host run returned three positive guest checks/JSON+SHA,
+actual exit23 and causal HTTPS-denial/cleanup proof. Independent acceptance is
+complete; native card runtime-ready after acceptance, stage GO still separate.
+The earlier CRLF harness failure is learning history.
+The installed ACA skill gives guidance, not acceptance. Advanced in-MicroVM
 CLI/Squad runtime is optional and separately consented, not the basic host
 orchestration prerequisite. Current [progress/coverage](aca-sandboxes.md#full-test-coverage-checklist)
 must not be replaced by these example prompts.
+
+## Two product demo prompt recipes
+
+These recipes describe **host Squad isolated work** and **Haflidi's original
+hosted issue-to-agent-to-PR flow**, not two VM paths. They are reusable briefs,
+not transcripts or permission to create resources. Privately bind approved
+targets and exact input revisions; retain raw commands/results outside public
+source. Show sanitized source/check/handoff evidence, never tokens or private
+context. [Operator cards](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes)
+own the timing, fallback and cleanup.
+
+<a id="native-host-squad-isolated-work"></a>
+
+### Native host Squad isolated work: ACA SANDBOXES
+
+This is native hardware-isolated MicroVM work, not ACA Apps/Jobs hosting.
+Both product paths need their own accepted current proof; this receipt does
+not establish the hosted issue -> Job/agent -> PR chain.
+
+| Field | Contract |
+| --- | --- |
+| Owner / roles | Martin/host Squad coordinates; one native operator/worker runs the bounded ACA calls; an independent validator/reviewer checks returned output and limits |
+| Repos / roots | Public session clone for prompts/notes and approved public fixture; [demo-env](https://github.com/martinopedal/aks-automatic-demo-env) `deployments\aca-sandboxes-online` owns native provisioning source. CLI/Squad stay on the host; isolated work runs in the MicroVM |
+| Verified now | Separate Online five-object deployment, current operator access and credential-free base exec/fs/stop-resume/delete passed; final list empty. This is not both-presenter or successful-work integration GO |
+| Corrected current run | Actual host coordinator/worker/tools/guest-results/cleanup handoff. One 26.768-second sandbox: LF/source-byte hash round trip, three positive guest checks/JSON+SHA, actual exit23, one HTTPS403 with new exact-sandbox networkEgress.denied causal audit, exact cleanup/empty list/NotFound/watchdog stopped. Independent acceptance complete; card runtime-ready after acceptance, not stage GO |
+| Learning history | Earlier CRLF shell failed positive work; downstream negatives were blocked and exact cleanup passed. Corrected LF/parser qualification resolved that local harness issue; do not keep it as the current failed runtime lane |
+| Before reuse | Separately approved prepared sandbox or bounded preparation; explicit exact group/region/access; reviewed public LF fixture/source/hash; installed CLI help/output parser; permitted lifecycle and cost/cleanup owner. Reject CR bytes and parse-test locally before cloud work |
+| Timing / fallback | Conditional C4 29:30-33:30; cut 32:30, one attempt, no on-stage create/upload/install/rule change. Until independent runtime acceptance and rehearsal are complete, use base C4 or the labeled failure/cleanup trace |
+| Results | Actual host prompt, selected Squad/skill, inspected tool arguments, guest output and numeric exits, input/output hashes, validator/reviewer handoff; missing checks remain BLOCKED |
+
+Before any separately approved preparation, the operator checks only the
+reviewed public fixture, not credential/configuration files:
+
+```powershell
+$source = '<reviewed-public-shell-fixture>'
+$bytes = [IO.File]::ReadAllBytes($source)
+if ($bytes -contains 13) { throw 'Shell fixture must use LF, not CRLF.' }
+$sourceHash = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash
+aca --version
+# Inspect installed exec/fs/apply help and parse its actual response shapes.
+# Local fixture/parse checks do not authorize a cloud create or reuse.
+```
+
+Start the host CLI in the public session clone/disclosed checkpoint, select
+`/agent squad`, confirm the ACA skill/tools are available in that session, then
+submit this brief only after its private preparation gate:
+
+```text
+Squad: coordinate one approved public-only isolated-work check.
+Copilot CLI/Squad and the worker stay on the host, not inside the MicroVM.
+Invoke the aca-sandboxes skill; use the operator's approved prepared sandbox
+and explicit subscription/resource-group/sandbox-group/region on every call.
+Assign one native worker and an independent validator/reviewer.
+
+Read the prevalidated UTF-8 LF public fixture and its source/hash manifest.
+Confirm the prepared guest is 1 CPU/2 GiB, no ports, Deny/Full unchanged.
+Execute the fixture once: transform only its public input, assert the expected
+public output, and return its JSON check summary and SHA256. Capture immediate
+numeric guest exits and the actual host process exit separately. Decode the
+installed fs JSON content wrapper before comparing downloaded bytes.
+If positive work fails, stop; do not count downstream checks as passed.
+Run deliberate exit-23 and one HTTPS-denial check only if separately permitted
+and the positive phase passed; attribute denial using configuration/diagnostics,
+not just an HTTP status. Keep skipped/unattributed checks BLOCKED.
+
+Do not create/upload/install/change egress or lifecycle during the timed demo.
+Do not read/copy host auth, tokens, private state or context. Do not sign in or
+run Copilot/Squad agents inside the guest. No anonymous ingress or snapshots.
+Return actual prompt/skill/tool/output/exits/hash evidence, changed guest files,
+failed or missing checks, and a validator/reviewer handoff. Stop at the cut;
+no retry. The operator handles only separately approved exact-ID cleanup and
+list/NotFound verification off-stage. Never delete the group or shared resources.
+```
+
+For a Terraform variant, first bind a separately qualified public archive commit,
+hash, provider mirror, root/test files and numeric oracle. Do not assume the
+historical ten root tests are the current upstream suite or the Corp copy's
+52+2 cases. Neither a byte round trip nor an agent summary proves guest tests.
+The earlier failed local harness is controlled preparation history, not a global
+ACA SANDBOXES outage or the current runtime verdict. The corrected run proved the requested
+public fixture work; it did not prove offline Terraform or inside-guest agents.
+Another cloud attempt requires new approval, not an automatic retry.
+
+<a id="original-hosted-squad-issue-to-pr-work"></a>
+
+### Original hosted Squad issue-to-PR work: ACA APPS/JOBS
+
+This **SQUAD ON ACA APPS/JOBS** path is the existing hosted agent flow, not a
+SandboxGroup/MicroVM. Fresh current end-to-end qualification remains pending;
+the corrected ACA SANDBOXES success does not count as that proof.
+
+| Field | Contract |
+| --- | --- |
+| Owner / roles | Haflidi explains his authored implementation; the approved target operator triggers; existing hosted Squad worker returns a bot PR; human reviewer owns acceptance |
+| Repos / roots | Read [haflidif/squad-on-aca](https://github.com/haflidif/squad-on-aca) for completed hosted implementation. Use a separately authorized `<approved-private-target>` clone for issue/queue/bot PR, not the public session clone or native SandboxGroup |
+| Verified versus pending | Original implementation is completed/previously demonstrated and stays unchanged. Fresh current original Apps/Jobs end-to-end qualification is not proved. Separately, read-only qualification of the new personal target is BLOCKED on runner registration/custom-agent discovery and co-presenter access; it does not mean original source/runtime is broken |
+| Before trigger | Supported manual GitHub auth, accepted target rights, approved repo-scoped registration/queue wiring and a sanitized completed chain rehearsal. No token/cache copy or service rebuild |
+| Timing / fallback | Optional 53:00-54:30 only if ahead and freshly qualified; hard cut 54:30. Otherwise show dated original chain evidence or skip; no second issue or on-stage registration repair |
+| Cleanup | Only the newly created owned test issue/PR/execution, after separate owner approval; verify queue drain. Never modify/delete the original hosted service or native group |
+
+Use this bounded issue body after the target owner approves the exact README
+change. It is a workload brief for the existing hosted flow, not a host terminal
+instruction or a claim that work completed:
+
+```text
+Demo task: add one approved public-facing README paragraph explaining how this
+repository hands a bounded issue to Squad and receives a reviewable bot PR.
+Change only README.md; do not alter code, workflows, deployment or permissions.
+Use no credentials, private environment values, personal context or copied logs.
+Preserve existing instructions and attribution. Return one small PR with the
+exact diff, checks actually run, missing checks and a human-review handoff.
+Do not merge or deploy. Stop and report blocked access rather than rebuilding
+the hosted service or changing the task to make it appear successful.
+```
+
+The operator resolves aliases privately and follows the existing hosted procedure:
+`gh auth status`, create the approved issue, add its configured Squad routing
+label, then read its matching queue workflow, actual ACA Job and bot PR/diff.
+Correlate the same issue across all four; a queued workflow, pulled image or
+successful Job alone is not a complete issue-to-PR result. Error-only/missing-
+agent PR stubs are failure artifacts, not successful Squad work; never substitute
+them for the original implementation's confirmed demonstration or fresh E2E proof.
+Resolve supported repo-scoped runner registration and clone-only agent discovery/
+entitlement with its human owner; accept the existing invitation if needed.
+These new-target blockers do not establish an original hosted-service failure
+and do not reopen the accepted ACA SANDBOXES engineering contract.
 
 ## What makes results repeatable
 

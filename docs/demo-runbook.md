@@ -16,7 +16,7 @@ Local module qualification passed: 52 module cases, two caller cases, and both m
 
 Source roles: the live demo consumer is `martinopedal/aks-automatic-demo-env`, pinning `martinopedal/terraform-azapi-aks-automatic` by `v0.6.0`. C1-C7 use this session's copied Corp teaching module from the independently reusable public `alz-avm-tf-demo/terraform-azapi-aks-automatic-corp`, whose separate upstream pin/manifest stay unchanged. The [repo map](repositories.md) identifies what to clone/read/change and keeps Haflidi's hosted implementation separate from the private target.
 
-October 12: one laptop's corrected read-only preflight passed 18/18 with Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-preview.4 and enabled official plugin 0.0.5-beta. Clean-VM/manual sign-in, both presenter hosts, full rehearsal, invitation acceptance/current read-back and exact NIC listing remain separate gates. Prior accepted 0.22.3 draft preserved; local deck 0.22.4 is not published; live Pages remains 0.22.2. See [current readiness](run-plan.md#october-12-readiness-evidence).
+October 12: one laptop's corrected read-only preflight passed 18/18 with Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-preview.4 and enabled official plugin 0.0.5-beta. Clean-VM/manual sign-in, both presenter hosts, full rehearsal, invitation acceptance/current read-back and exact NIC listing remain separate gates. Deck 0.22.4 is released on main/Pages; this later operator-doc correction awaits its own review/release. See [current readiness](run-plan.md#october-12-readiness-evidence).
 
 For component -> repo -> folder -> edit -> deploy -> status, use the canonical
 [source/deployment table](source-provenance.md#source-and-deployment-table).
@@ -29,36 +29,50 @@ Native Kubernetes access unavailable/ResourceHealth provider unregistered;
 full cluster health unproved. Eleven policy-noncompliant resources are in the
 demo RG across AKS/network/state, not 11 cluster failures or subscription-wide.
 
+Local deck 0.22.5 propagates these native/hosted status boundaries into exported
+speaker notes. It is an unpublished candidate, not a new runtime/rehearsal proof.
+
 ## Two product demo flows: hosted Squad and native ACA Sandboxes
 
-Forwarded lead source plan: existing AKS remains demo-env `deployments\online`/
-`deploy-online.yml`; native source is proposed demo-env
+Source ownership: existing AKS remains demo-env `deployments\online`/
+`deploy-online.yml`; native source is demo-env
 `deployments\aca-sandboxes-online` with a separate sandbox-only workflow/protected
-`online` environment, **not existing/deployed**. Actor authority and exact new
-scope/source/plan qualification remain pending. Hosted implementation is
+`online` environment. Approved one-time Owner bootstrap and five-object
+deployment/current operator access/base probe were independently verified;
+public source PR human review remains separate. Hosted implementation is
 `haflidif/squad-on-aca`; its Jobs deployment remains private/protected. No
 Corp/AKS/Jobs change is part of the native plan.
 
-These are **plans, not execution receipts**. The Windows VM is the control
+These cards are **operator recipes, not execution transcripts**. The Windows VM is the control
 console detail, not either product flow's identity. Existing Online AKS, native ACA MicroVMs, hosted Squad ACA Jobs and
 local Copilot sandbox stay independent. Optional GitHub-managed cloud is another
 account/runtime lane. Do not run either card until its own private bindings,
 access, rehearsal and consent pass. No deployment or mutation was performed by
 this docs pass.
 
-Latest native scope approval: isolated five-object Online Bicep setup plus one
-credential-free Ubuntu 1 CPU/2 GiB ten-minute probe/delete-only-new-test-ID.
-Implementation preparing in demo-env `deployments\aca-sandboxes-online` under a
-separate protected lane. Source/actor authority/policy/budget/new plan/exact
-manifest remain gates; not deployed or runtime/integration passed. This does
-not authorize inside-MicroVM OAuth or changes to working AKS/Corp/hosted Jobs.
+Native basic evidence: isolated five-object Online deployment, exact bindings,
+current operator access and one credential-free Ubuntu 1 CPU/2 GiB base probe
+were independently verified. Base exec/fs/stop-resume/delete and cleanup empty
+passed. A corrected ACA SANDBOXES host run completed in 26.768 seconds: LF/source hash
+round trip, three guest checks/JSON+SHA, actual exit23, HTTPS403/new exact-sandbox
+causal denied audit, exact cleanup/empty list/NotFound/watchdog stopped.
+Independent acceptance is complete; card runtime-ready after acceptance, stage GO
+still requires manual preflight/rehearsal. Earlier CRLF is learning history. No automatic retry, inside-MicroVM OAuth or working AKS/Corp/
+hosted Jobs changes. Use the [two reusable prompt recipes](prompt-pack.md#two-product-demo-prompt-recipes).
 
 Online is primary placement for eligible demo components, not fallback/policy
 escape. Corp-required private workloads stay Corp. Source repo visibility and
 network/authenticated control-plane placement are separate; no anonymous
 native ingress, exposed credentials or private-state publication.
 
-### Card A: Haflidi hosted Squad on ACA, issue to bot PR
+<a id="card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr"></a>
+
+### Card A: Haflidi hosted Squad on ACA Apps/Jobs, issue to bot PR
+
+Both independent product paths must qualify: this **SQUAD ON ACA APPS/JOBS**
+issue -> Job/agent -> bot PR path needs fresh current end-to-end evidence.
+The corrected **ACA SANDBOXES** host-to-MicroVM receipt does not prove it.
+Parent/operator qualify the original hosted path without changing its source.
 
 The original implementation is completed and previously demonstrated. Leave
 Haflidi's source/deployment unchanged. This card's fresh registration/access/
@@ -73,7 +87,7 @@ not imply missing original implementation or block the native Sandbox build.
 | Preflight / GO | Current runner registration works, queue path connected, one sanitized fresh issue -> workflow -> job -> bot PR completed and reviewed. Earlier two Oct 9 queue successes are historical smoke/shared-demonstration evidence only. Current fresh issue open/queue queued, no PR at 10:28 UTC and registration blocked: **NO-GO** |
 | Expected proof | Correlate the same approved issue, queue workflow, actual ACA Job execution and bot-authored PR/diff. Job success or an image pull alone is not full chain proof and not native MicroVM/Squad proof |
 | Timing / cut | Optional 53:00-54:30 only if ahead and newly qualified; compress limits to 54:30-55:00. Hard cut 54:30, skip before 55:00-58:00 recovery. No promise that queued work finishes in 90 seconds; full pre-stage chain testing is separate |
-| Fallback | State current runner blocker; show only dated reviewed historical chain excerpt, or skip. Do not trigger another issue or repair registration on stage |
+| Fallback | State the new-target registration/agent-discovery blocker; use only dated original confirmed implementation evidence or skip. Missing-agent/error-only personal PR stubs are not successful Squad work. No second issue or registration repair on stage |
 | Cleanup | After separate owner approval, close only the created test issue/PR, stop only owned test execution and verify queue drain. No shared service, Corp resource or unrelated runner deletion |
 
 Privately resolve target and bot aliases; commands below are proposed operator
@@ -98,18 +112,22 @@ native SandboxGroup target. Ask Haflidi for the actual implementation revision
 and fresh sanitized chain result; no new Haflidi-authored technical confirmation
 is established by the supplied historical status records.
 
+The [original hosted workload brief](prompt-pack.md#original-hosted-squad-issue-to-pr-work)
+defines the small README-only task and human-review handoff. Fresh target gating
+applies to the new target, not to rebuilding Haflidi's completed implementation.
+
 ### Card B: native ACA Sandboxes for host Copilot CLI and Squad
 
 | Field | Operator plan |
 | --- | --- |
 | Owner | Martin drives; approved native sandbox operator prepares resources and evidence; Haflidi explains the limits |
-| Repo / folder | VM `C:\demo\session-repo` clone of this public session repository for notes/public archive. Native target is a proposed **separate Online SandboxGroup and RG**, not AKS or Card A's hosted Jobs/runner. Standard managed network if policy allows; no Corp BYO VNet/UAMI/FIC transplant |
+| Repo / folder | Host `C:\demo\session-repo` public clone for notes/reviewed public fixture; demo-env `deployments\aca-sandboxes-online` owns native source. Target is a verified **separate Online SandboxGroup and RG**, not AKS or Card A's hosted Jobs/runner. No Corp BYO VNet/UAMI/FIC transplant |
 | Login | Supported manual Azure CLI/Entra login, then host ACA auth status; current token status exit 0 proves tokens only. Never copy host authentication into a MicroVM. Optional in-VM Copilot/Squad requires separate supported sign-in/storage/egress consent |
-| Preflight / GO | Full [official quickstart test matrix](aca-sandboxes.md#full-test-coverage-checklist), explicit target flags, printed target/exact-ID match, effective Data Owner/policy/egress, actor authority/new exact scope/source/plan and separate apply consent, prepared MicroVM/archive/hash and rehearsal. Doctor wrong-target; candidate RG 404. Lead source plan received, but implementation/qualification/runtime remain **NO-GO** |
+| Preflight / GO | Independent five-object provisioning/current operator access/base probe verified; second presenter and full [coverage](aca-sandboxes.md#full-test-coverage-checklist) remain. Prevalidate public UTF-8 LF source/hash and installed parsers; separately approve prepared runtime/lifecycle; verify exact target/access/egress and successful work/rehearsal. Corrected public-fixture runtime receipt PASS, independent acceptance complete; card runtime-ready after acceptance, **NO-GO** for stage until human preflight/rehearsal; doctor wrong-target remains a warning, not proof of absent service |
 | Trigger | Host Copilot CLI with Squad coordinates a bounded public-only brief; invoke `aca-sandboxes`, inspect actual `aca` tool requests, and drive prepared MicroVM filesystem/offline Terraform work. No on-stage create/upload/install/egress/region changes |
-| Expected proof | Actual host prompt -> selected Squad/skill -> inspected tool calls -> in-MicroVM output/numeric exits -> validator/reviewer handoff citing target/source/time. Standalone `aca` hello/lifecycle checks are prerequisites, not this integration demonstration. Full create/list/get/delete, upload/download, attributable egress and suspend/resume must pass off-stage |
+| Expected proof | Actual host prompt -> selected Squad/skill -> inspected tool calls -> positive public guest output/numeric exits/hash -> validator/reviewer handoff citing target/source/time. Real failed output is retained, not edited into PASS. Standalone lifecycle checks are prerequisites, not successful integration. Full required source/result transport, negative exits and attributable egress must pass off-stage |
 | Timing / cut | Conditional substitution within C4 29:30-33:30 only; cut 32:30, no retry or protected-slack spend. Full runtime QA is pre-stage, not a four-minute promise. Base skill/MCP C4 remains default today |
-| Fallback | Base C4 or dated Management-side execution evidence, not Corp validation or Online qualification. No Management MicroVM fallback execution authorized |
+| Fallback | Base C4 or accepted corrected ACA SANDBOXES trace; earlier CRLF is labeled learning history. Runtime evidence is not human stage GO or hosted Apps/Jobs proof. No fallback runtime execution or automatic retry |
 | Cleanup | Record owned lifecycle and cleanup scope before preparation. Approved stop/delete and read-back off-stage only; separate group/RG, no AKS/hosted Jobs/Corp teardown. Oct 17 teardown/Oct 31 credential expiry scheduled, not done |
 
 Standalone exec checks are prerequisite tests, not the Copilot/Squad integration demo.
@@ -155,7 +173,10 @@ with source revision, checks, evidence limits and missing results. Stop at the c
 The [prepared C4 prompt](aca-sandboxes.md#recommended-live-use) is the exact
 bounded remote-execution recipe. Show actual selected agent, skill invocation,
 tool arguments, outputs and handoff, not just this text or agent summary. No
-working Online MicroVM or host-orchestration integration is proved today.
+successful-work host-orchestration GO is proved today. The Online base and actual
+corrected host trace are separate, observed milestones; acceptance is complete. Use the
+[native public-work prompt](prompt-pack.md#native-host-squad-isolated-work)
+for a separately approved prepared-runtime rehearsal.
 Full filesystem round-trip/lifecycle/suspend/resume are pre-stage tests.
 Running Copilot CLI/Squad **inside** the MicroVM is a distinct advanced optional
 variant requiring separate install/auth/storage/egress consent and actual
@@ -348,7 +369,7 @@ test file.
 
 ## C4: Invoke guidance and a source | 29:30-33:30 | 4 minutes
 
-**Pre-staged:** Docker Desktop running; required MCP servers already connected; fallback `c4-source` excerpt sanitized. Choose base C4 unless the separate selected-target gate below is complete. Online remains proposed/unqualified. No second live attempt.
+**Pre-staged:** Docker Desktop running; required MCP servers already connected; fallback `c4-source` excerpt sanitized. Choose base C4 unless the separate selected-target gate below is complete. Online basic provisioning/access is verified; successful-work integration and rehearsal remain pending. No second live attempt.
 
 **Cut at 32:30 (3:00 into C4):** Cut whichever flow was selected. State any missing live result, show reviewed fallback with its actual scope, and hand off by 33:30. Do not retry or spend 55:00-58:00 protected slack.
 
@@ -372,15 +393,21 @@ invented output.
 ### Conditional ACA variant, replacing deeper lookup
 
 This is not a second chapter. Historical Management-side checks do not qualify
-Corp or Online. Current new Corp qualification blocked on an unexpected
+Corp or Online. The held Corp qualification was blocked on an unexpected
 change-type check; no apply performed. Last baseline 8 present / 3 absent,
 connection/two presenter Data Owner grants missing; effective access and runtime
-unproved. Separate Online group/RG is confirmed direction but proposed/unqualified,
+unproved for that Corp lane. Separate Online provisioning/access/base is verified,
 not AKS or hosted Jobs/runner. Standard managed network if policy allows; leave
 Corp untouched. No successful Corp sandbox creation/runtime test or full
 CLI+Squad execution inside a MicroVM is established. Host installs/plugin and
 hosted Jobs do not supply that evidence; supported sign-in, storage and egress
 require separate consent, never copied host authentication.
+
+The corrected ACA SANDBOXES host worker returned three positive guest checks/
+JSON+SHA, actual exit23 and causal HTTPS-denial/cleanup proof. Independent
+acceptance is complete; card runtime-ready after acceptance, stage GO after
+manual preflight/rehearsal. Earlier CRLF is controlled learning history.
+This does not qualify hosted Apps/Jobs issue-to-PR.
 
 Select the variant only after independently approved selected-target IaC,
 effective access/policy read-back, full required runtime coverage and exact
@@ -393,7 +420,7 @@ Martin manually selects the rehearsed, separately scoped ACA session. Keep the T
 
 1. **29:30-30:00:** Name the independently qualified selected scope and pre-staged resources. Show the skill and one prepared source citation. Say this source was fetched in preflight, not by a live MCP call.
 2. **30:00-32:00:** Submit the single [prepared-sandbox prompt](aca-sandboxes.md#recommended-live-use). Privately substitute reviewed group/resource-group/sandbox identifiers. Approve only inspected requests in the native permission flow. Run validation and the root negative-validation suite once; no create, upload, install, rule change, or retry.
-3. **32:00-32:30:** Inspect completed output, actual numeric exits captured inside the sandbox, and HTTP observations. Confirm the archive revision/hash against preflight. Expect the root suite's 10 checks, not 52 child-module plus two caller cases. An agent summary, Boolean exit field, or 403 alone is not policy-enforcement evidence.
+3. **32:00-32:30:** Inspect completed output, actual numeric exits captured inside the sandbox, and HTTP observations. Confirm the archive revision/hash against preflight. Use the exact approved archive's oracle/count; historical ten root checks are not the Corp 52+2 qualification or a timeless count for current upstream. An agent summary, Boolean exit field, or 403 alone is not policy-enforcement evidence.
 4. **32:30-33:30:** Cut the live attempt even if the model is still running. State unfinished checks. Show only reviewed, target-qualified evidence if available, otherwise an excerpt labeled "Management-side execution evidence, not Corp validation" with its recorded limitations. It is not Online qualification either. Return to the unchanged Terraform checkpoint before C5; approved lifecycle stop/cleanup is off-stage.
 
 The earlier fresh Copilot runs took about 2:58 and 1:47 in Management. They don't qualify Corp or guarantee a 90-second turn. If the gate is unmet, keep the base skill/MCP flow above; capacity, plugin, or venue-network trouble does not authorize another target or infrastructure change.

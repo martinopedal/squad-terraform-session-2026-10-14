@@ -86,11 +86,16 @@ Only genuine Copilot CLI with Squad selected, standalone or in a real integrated
 
 Source qualification may finish before delivery. The live chapter must execute from a disclosed clean checkpoint or explicitly use the Offline fallback line. Do not substitute prior qualification output for a live result.
 
-Deck 0.22.4 preserves the accepted uncommitted 0.22.3 work and follows the same
+Released baseline deck 0.22.4 and local candidate deck 0.22.5 follow the same
 60-minute contract: 55 minutes scripted content, 55:00-58:00 protected recovery
 and two-minute close. Full 39-slide and short five-slide sources retain their
-on-screen design/IDs/clocks. This local full docs/notes pass awaits review/release;
-live Pages remains 0.22.2. Rebuild generated HTML/manifests only with `npm run build`.
+on-screen design/IDs/clocks. Main/Pages publication is complete, fresh full and
+short HTML previously matched that release. Local deck 0.22.5 is now rebuilt
+only for directly coupled factual speaker-note/status propagation, preserving
+all slide design, commands, counts and clocks. Accepted ACA SANDBOXES proof and
+blocked hosted Apps/Jobs are synchronized into its notes; no guest-agent/human
+stage readiness or publication claim. Review the exact candidate exports before
+publication; live Pages remains the previously released 0.22.4 until normal merge.
 
 The live demo consumer is `martinopedal/aks-automatic-demo-env`, pinning `martinopedal/terraform-azapi-aks-automatic` at `v0.6.0`; the copied Corp teaching module retains its separate unchanged source pin/manifest. Speaker notes distinguish four execution hosts: local OS/MXC, GitHub-managed Copilot cloud preview built on ACA, customer-managed ACA MicroVMs via `aca`, and hosted Squad Apps/Jobs, not MicroVMs. Squad is coordination/configuration over Copilot, not a sandbox product. Host installs do not prove full CLI+Squad execution inside a MicroVM; sign-in/storage/egress need separate consent, never copied host authentication.
 
@@ -110,9 +115,13 @@ detail only. Optional CLI/Squad **inside** a MicroVM has separate auth/runtime
 consent and proof, not a basic remote-orchestration prerequisite.
 
 Native target direction is a separate Online group/RG, not AKS or hosted Jobs/
-runner. Standard managed network if policy permits remains proposed, not Corp
-BYO VNet/UAMI/FIC transplant. Candidate absent; no creation/deployment/test/
-independent plan approval; leave Corp untouched. No current integration readiness.
+runner. Standard managed network is not Corp BYO VNet/UAMI/FIC transplant.
+Independent fresh review verified five-object deployment/current operator
+access/base exec/fs/stop-resume/delete and cleanup empty; leave Corp untouched.
+Corrected ACA SANDBOXES host runtime passes LF/hash/three guest checks/JSON+SHA/
+exit23/causal denial/exact cleanup in 26.768 seconds. Independent acceptance
+complete, then runtime-ready; human stage GO and hosted Apps/Jobs E2E separate.
+Earlier CRLF is controlled learning history, not the current failed lane.
 Hosted implementation is `haflidif/squad-on-aca`, not the private target;
 historical Oct 9 smoke is not today's chain. Fresh issue open/queue queued,
 registration blocked/no open PR at 10:28 UTC; no current Haflidi-authored technical
@@ -128,8 +137,8 @@ Online is primary for eligible demos, not fallback/policy escape. Corp-required
 private workloads stay Corp; public GitHub source does not define network
 exposure. Preserve working AKS/Corp/Jobs; no checklist redeploy or automatic
 repair from reported limitations. Separate native five-object scope/credential-free
-Ubuntu 1 CPU/2 GiB ten-minute probe/test-ID-only deletion approved; source preparing.
-Actor authority/policy/budget/new plan/exact manifest pending; no runtime PASS.
+Ubuntu 1 CPU/2 GiB base probe/test-ID-only deletion independently verified.
+No automatic retry, inside-MicroVM OAuth, service rebuild or wider scope consent.
 
 Use [two product operator cards](../docs/demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes)
 and [full pre-stage coverage](../docs/aca-sandboxes.md#full-test-coverage-checklist).
@@ -138,7 +147,14 @@ optional 53:00-54:30/cut 54:30. No extra slides/tour/retry or protected-slack sp
 [Progress/next actions](../docs/sandboxing.md#october-12-progress-and-next-actions)
 retains both hosts, clean VM, manual login/rehearsal, invitation acceptance/
 current read-back and scheduled Oct 13 checks/warmup, Oct 17 teardown/Oct 31
-credential expiry. USD 20 total is an alert, not hard cap; retained Corp costs remain.
+credential expiry. Earlier USD 20 is historical planning/alert context, not
+execution authority; retained costs and private scoped cost consent remain.
+
+Use the [native host and original hosted prompt recipes](../docs/prompt-pack.md#two-product-demo-prompt-recipes)
+for explicit roles/repository roots, public-only work, source/exits/handoff
+evidence and the unchanged cuts. An earlier local-harness failure is useful labeled learning history; the corrected
+receipt supplies positive runtime evidence after independent acceptance.
+Neither proves human stage readiness or the hosted Apps/Jobs path.
 
 The legacy `src\media.json` file remains harmless metadata for evidence review, but the current live deck does not render chapter-media placeholders or autoplay controls.
 
@@ -164,7 +180,7 @@ The check first exercises the live-demo slide contract, short-deck paths and
 actual bootstrap script with safe native executable mocks (PowerShell 7 required).
 Writing checks cover full/short copy, notes, public docs and Haflidi page. Bounded
 prose regressions protect source/copy/consumer roles, separate product flows,
-proposed Online/not deployed status, blocked Corp qualification/wrong-target
+verified Online base versus failed local positive-work/pending GO, held Corp qualification/wrong-target
 doctor and distinct host-orchestration/optional in-MicroVM evidence. Existing
 timing, permission, historical and live-demo guards remain.
 Loopback browser checks cover both decks at 1280 x 720 and 1920 x 1080 with

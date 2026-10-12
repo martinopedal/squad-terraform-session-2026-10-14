@@ -22,12 +22,16 @@ reported TLS/native-API limits are not automatic repair/redeploy authorization.
 [The repo map](repositories.md) keeps the public Corp module/source copy and
 live consumer distinct. [Two product flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes)
 are hosted Squad issue-to-PR and host Copilot/Squad driving isolated native
-MicroVM work; optional in-MicroVM CLI/Squad is separate. Proposed native
-Online group/RG is not AKS/hosted Jobs or Corp BYO VNet/UAMI/FIC transplant.
+MicroVM work; optional in-MicroVM CLI/Squad is separate. Independently verified
+Online provisioning/access/base probe is not AKS/hosted Jobs or Corp BYO
+VNet/UAMI/FIC transplant. Corrected ACA SANDBOXES host runtime passes guest checks/JSON+SHA/exit23 and
+timestamped exact-sandbox causal denial/cleanup. Acceptance complete; runtime-
+ready after acceptance, not stage GO or hosted Apps/Jobs qualification.
+Earlier CRLF is controlled learning history.
 New Corp qualification blocked; no apply performed, leave Corp untouched.
 Green wrong-target doctor/token auth and local helper checks cannot prove access
 or runtime. No anonymous MicroVM ingress or exposed credentials authorized.
-USD 20 through Oct 31 is an alert, not cap; teardown Oct 17/credential expiry
+Earlier USD 20 is historical planning/alert context, not execution authority; teardown Oct 17/credential expiry
 Oct 31 and Oct 13 warmup/checks remain separately gated.
 
 ## 1. The delivery chain

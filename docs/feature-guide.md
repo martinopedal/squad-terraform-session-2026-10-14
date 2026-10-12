@@ -11,9 +11,13 @@ The example is a reusable Terraform module for a fresh, private AKS Automatic cl
 
 ## Evidence and availability
 
+Local deck 0.22.5 propagates accepted ACA SANDBOXES engineering and blocked
+hosted Apps/Jobs facts into speaker notes. Released main/Pages baseline is 0.22.4;
+the candidate has unchanged 39/5 slides/clocks and awaits reviewed publication.
+
 Reviewed September 30, 2026. We read current GitHub documentation and pinned Squad's default `dev` branch at `93aec83accb44e08c39e4a799f13b55208215a13`. The stable `main` comparison is `5e086cece467686b2d3c6950241cf87bca5fffe8`. Squad v1.0.0 (October 3) and v1.0.1 (October 4) release tags exist, and the demo machine uses 1.0.1. The pinned reference docs at `93aec83` still carry an Experimental/alpha banner, so docs may lag releases. See [whats-new.md](whats-new.md).
 
-Current native host checks are **Copilot CLI 1.0.94, Squad 1.0.1 (October 12, 2026)**, with ACA CLI 1.0.0-preview.4 and enabled official sandbox plugin 0.0.5-beta. One laptop's corrected read-only preflight passed 18/18; this is not both presenters, clean VM/manual sign-in, full rehearsal or MicroVM acceptance. October 8 validation used Copilot CLI 1.0.93. Historical local probes used Copilot CLI **1.0.88** directly and Squad **0.13.0**, before the 1.0 releases; the unqualified `copilot` command then returned **1.0.89**, so a command name alone isn't a version pin. Earlier changes from 1.0.88 to 1.0.92 are listed in [whats-new.md](whats-new.md). Re-probe the live-demo build before delivery. Deck 0.21.0 introduced the public status badges. Deck 0.22.4 preserves accepted 0.22.3 and completes repo-map/progress/operator notes without on-screen or clock changes; live Pages remains 0.22.2 pending review/release. Read stage labels from the badge table in `presentation\src\slides.mjs`.
+Current native host checks are **Copilot CLI 1.0.94, Squad 1.0.1 (October 12, 2026)**, with ACA CLI 1.0.0-preview.4 and enabled official sandbox plugin 0.0.5-beta. One laptop's corrected read-only preflight passed 18/18; this is not both presenters, clean VM/manual sign-in, full rehearsal or MicroVM acceptance. October 8 validation used Copilot CLI 1.0.93. Historical local probes used Copilot CLI **1.0.88** directly and Squad **0.13.0**, before the 1.0 releases; the unqualified `copilot` command then returned **1.0.89**, so a command name alone isn't a version pin. Earlier changes from 1.0.88 to 1.0.92 are listed in [whats-new.md](whats-new.md). Re-probe the live-demo build before delivery. Deck 0.21.0 introduced the public status badges. Deck 0.22.4 preserves accepted 0.22.3 and completes repo-map/progress/operator notes without on-screen or clock changes; deck 0.22.4 is released on main/Pages; later local operator-doc corrections await their own reviewed release. Read stage labels from the badge table in `presentation\src\slides.mjs`.
 
 Squad 1.0.1 is the session's installed version. The WinGet catalog confirms package availability; see [bootstrap.md](bootstrap.md). A zero exit from generic help does not verify standalone model, models, list, remote-state, or heartbeat behavior. Use the native Copilot CLI `/model` and `/subagents` controls for this session. Historical release notes about `squad models refresh` describe v0.12, not an installed 1.0.1 qualification.
 
@@ -34,8 +38,12 @@ Corp MicroVM recovery failed; no successful Corp sandbox creation/runtime test o
 Current qualification: Corp source merged, new qualification blocked on an
 unexpected change-type check; no apply performed. Confirmed native direction is
 a separate Online SandboxGroup/RG, not inside AKS or hosted Jobs; standard managed
-network if policy allows is proposed, not Corp BYO VNet/UAMI/FIC transplantation.
-Candidate RG absent; not created/deployed/tested/independently plan-approved.
+networking is verified, not Corp BYO VNet/UAMI/FIC transplantation.
+Online deployment/all five exact bindings/current operator access/base probe
+were independently verified October 12; cleanup empty. Corrected ACA SANDBOXES host runtime passes three guest checks/JSON+SHA,
+actual exit23 and causal HTTPS-denial/cleanup proof in 26.768 seconds.
+Independent acceptance complete; runtime-ready after acceptance, not human
+stage GO or hosted Apps/Jobs E2E proof. Earlier CRLF is controlled history.
 Leave Corp untouched. Host token auth passed; doctor 9/9 resolved to cached
 Management despite explicit flags, so compare printed target and independent
 exact-ID read-back, not its exit alone. Actual Corp scoped list remains forbidden.
