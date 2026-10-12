@@ -520,13 +520,18 @@
           <p>We present a 60-minute session on Squad and GitHub Copilot CLI used to build, review, and ship Terraform.</p>
           <p>The main story is the working method: agents, prompts, PRs, GHAS, review, gates, and checks.</p>
           <p>The deployed AKS Automatic cluster is the outcome and an added benefit. It serves the page <code>AKS Automatic | NIC 2026 demo</code>.</p>
+          <p>October 12 readiness is not all green: one laptop's read-only preflight passed 18/18 with Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-preview.4 and enabled plugin 0.0.5-beta. Clean VM/manual sign-in, both presenter hosts, full rehearsal, existing invitation acceptance/current read-back and exact NIC listing remain open. Accepted draft 0.22.3 preserved; local deck 0.22.4 awaits review/release, live Pages remains 0.22.2. See <a href="docs/run-plan.md#october-12-readiness-evidence">readiness</a>.</p>
+          <p>Both existing Online and Corp AKS clusters were independently read through Azure MCP as Automatic SKU/Standard tier, provisioning Succeeded and power Running; no redeploy is indicated by that metadata. Online app GET returned HTTP 200 with branded NIC/AKS text using explicit known-demo certificate bypass, not TLS certificate validation or a fresh 29-check security suite. Nodepool/full-runtime qualification stays separate. Corp MicroVM connection source correction passed 34/34 compiler/closed official-schema contracts, source-only and not a new Azure plan or deployment.</p>
+          <p>Squad is coordination/configuration over Copilot, not a sandbox product; 1.0.1 help has no sandbox verb. Four hosts: local OS/MXC <code>/sandbox</code>; GitHub-managed Copilot cloud sandboxes built on ACA in preview; customer-managed ACA MicroVMs via <code>aca</code>; and hosted Squad Apps/Jobs, not MicroVMs. A worktree/tool filter does not isolate credentials.</p>
+          <p>GitHub documents interactive-only <code>copilot --cloud --experimental</code>, never with <code>-p</code>/<code>-i</code>, but local 1.0.94 help does not expose <code>--cloud</code>: documented preview/account-build gate, not a rehearsed command. Local sandboxing is off by default. Windows proxy rules require Allow local network and applications honoring the proxy; file tools are best-effort and remote MCP is not sandboxed. See <a href="docs/sandboxing.md">sandboxing</a>.</p>
+          <p>Installed <code>copilot help sandbox</code> documents one-session <code>--sandbox</code>; actual Windows MXC startup failed before command, exit 1, on proxy/masking/auth loopback/private-network requirements. Policy blocked; no bypass/global change. Needs authorized policy review and actual backend/session preflight rerun. Windows build 26300 is OS metadata, not successful backend operation. Explicit cloud help parse exit 0 is not account/billing/runtime proof.</p>
         </section>
 
         <section class="card">
           <div class="section-head">
             <h2>B. Which repo does what</h2>
           </div>
-          <p class="lede">These descriptions were checked against the current READMEs and the repository metadata.</p>
+          <p class="lede">Public GitHub metadata confirmed these source/consumer identities and visibility on October 12. Read <a href="docs/repositories.md">which repo to clone, read and change</a>. Metadata does not prove collaborator rights or running services.</p>
           <table class="repo-table">
             <thead>
               <tr>
@@ -544,9 +549,9 @@
                     <span>The session repo</span>
                   </div>
                 </td>
-                <td>Public session source for the two-speaker Terraform on Azure talk. It holds the deck, talk track, run plan, playbook, and agent profiles.</td>
+                <td>Public deck/notes/session setup, generic Corp module copy and native teaching profiles. Not the live environment deployment entry.</td>
                 <td>We present from it. Read the deck. Comment or open pull requests when you want wording or flow changes.</td>
-                <td>Write</td>
+                <td>Public read; verify current write permission separately.</td>
               </tr>
               <tr>
                 <td>
@@ -557,7 +562,7 @@
                 </td>
                 <td>Reusable Terraform module that shows the contract, tests, and reviewable change pattern. AKS Automatic is the example workload.</td>
                 <td>This is the Terraform part of the story. Read the code and the tests to see what Squad and GitHub are shaping.</td>
-                <td>Write</td>
+                <td>Public read; verify current write permission separately.</td>
               </tr>
               <tr>
                 <td>
@@ -566,20 +571,32 @@
                     <span>The consumer and demo environment</span>
                   </div>
                 </td>
-                <td>Public consumer environment that shows GitHub PRs, GHAS, protected main, OIDC, gates, and pipeline delivery around the module. AKS is the example workload.</td>
-                <td>Use it to log into the VM and watch the gated pipeline path from reviewed change to runtime checks.</td>
-                <td>Write</td>
+                <td>The live demo consumer: public Online/demo-VM roots and gated workflows, pinning <code>martinopedal/terraform-azapi-aks-automatic</code> by <code>v0.6.0</code>. The session's copied Corp teaching module retains its separate unchanged source-copy pin/manifest.</td>
+                <td>Use this live Online AKS/demo-VM consumer's runbook for separately approved deployment and presenter-host access. Real environment, secrets, state and approvals remain private.</td>
+                <td>Public read; verify operator/write rights separately.</td>
+              </tr>
+              <tr>
+                <td><div class="repo-name"><a href="https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp">alz-avm-tf-demo/terraform-azapi-aks-automatic-corp</a><span>Independent public Corp teaching module</span></div></td>
+                <td>Canonical reusable Corp module. Local module-public checkout maps here; it is not a private repository.</td>
+                <td>Read/change canonical Corp source here. The session copy and unchanged source manifest preserve its separate pin, not the live consumer's v0.6.0.</td>
+                <td>Public read; release/write review is separate.</td>
               </tr>
               <tr>
                 <td>
                   <div class="repo-name">
                     <a href="https://github.com/haflidif/squad-on-aca">haflidif/squad-on-aca</a>
-                    <span>Optional Squad-on-ACA segment. Current evidence is from Management; the Corp gate remains open.</span>
+                    <span>Original hosted implementation completed/previously demonstrated; leave it alone. Separate personal target/rehearsal: fresh queue-driven readiness is not established.</span>
                   </div>
                 </td>
-                <td>Squad runs as Azure Container Apps jobs against a private target repository. Sweden Central had no capacity, so the documented run used Norway East under Management. This does not establish Corp validation.</td>
-                <td>Use it only if time allows. Proof chain: issue #2 in <code>martinopedal/squad-on-aca-demo-target</code> to enqueue workflow <code>37921482752</code> to bot PR #3.</td>
-                <td>Write on the session repo, module repo, demo-env, and both Squad-on-ACA repos</td>
+                <td>Native October 12 inventory verified Corp, Norway East placement and two succeeded historical Oct 9 agent-job executions lasting 56 seconds. Hosted Apps/Jobs use workload identity, Key Vault and KEDA; they are not MicroVMs. Placement alone is not effective-policy/routing or fresh runtime acceptance.</td>
+                <td>Hosted implementation, not the issue/queue/bot-PR target. Optional 53:00-54:30 only if ahead and newly qualified, cut 54:30; never use recovery. Scoped README-only smoke: Manual runner execution ended terminal Failed; associated issue queue workflow remains queued. Historical smoke is not current readiness.</td>
+                <td>Public source read. Private target invitation pending acceptance/current read-back.</td>
+              </tr>
+              <tr>
+                <td><div class="repo-name"><span>Intended private hosted target</span></div></td>
+                <td><code>martinopedal/squad-on-aca-demo-target</code> receives approved issues, queue workflow and bot PRs. It is not hosted service implementation.</td>
+                <td>Resolve <code>&lt;approved-private-target&gt;</code> privately. This public clone alone cannot run the chain; real bindings, auth and target rights remain private.</td>
+                <td>Existing WRITE invitation needs acceptance and current rights read-back; do not reinvite.</td>
               </tr>
             </tbody>
           </table>
@@ -627,7 +644,7 @@
                 </div>
                 <div class="step-row">
                   <div class="step-label">How</div>
-                  <div class="step-value">From <code>C:\git\squad-terraform-session-2026-10-14\public</code>, start <code>copilot --agent squad</code> and use <code>/plan</code>.</div>
+                  <div class="step-value">From your public clone or checkpoint, for example <code>C:\git\session-repo</code>, start <code>copilot --agent squad</code> and use <code>/plan</code>.</div>
                 </div>
                 <div class="step-row">
                   <div class="step-label">Minutes</div>
@@ -746,7 +763,7 @@
               <tr>
                 <td>5. Runtime proof</td>
                 <td>The cluster and the public page <code>AKS Automatic | NIC 2026 demo</code>.</td>
-                <td>The runtime check step fails unless the hostname returns HTTPS 200, HTTP redirects, and DNS resolves to the App Routing controller Service address. The current Online read-back result is 29/29 PASS.</td>
+                <td>The runtime check step fails unless the hostname returns HTTPS 200, HTTP redirects, and DNS resolves to the App Routing controller Service address. The October 8 Online read-back result was 29/29 PASS; no fresh October 12 rerun is inferred.</td>
                 <td>The human decided that runtime evidence, not local success alone, was the acceptance point for the deployed outcome.</td>
               </tr>
             </tbody>
@@ -755,21 +772,41 @@
 
         <section class="card">
           <div class="section-head">
-            <h2>Deterministic prompts, and the alternative</h2>
+            <h2>Pinned briefs, and the alternative</h2>
           </div>
-          <p>Deterministic prompts help us replay how we got there. The current eval in <code>docs/determinism-eval.md</code> is B1v2 5/5, B2 5/5, and B3 4/5.</p>
-          <p>That gives us a stable path for the main story. It lets Haflidi see what is supposed to happen and why.</p>
+          <p>Pinned briefs and fixed checks let us inspect the recorded runs. The eval in <code>docs/determinism-eval.md</code> is B1v2 5/5, B2 5/5, B3 4/5; original B1 remains 0/5.</p>
+          <p>This measured checkpoint helps rehearsal, not a future-output guarantee. The live run still has to pass.</p>
           <p>If time is short, or if we want something fresh, we can run the existing <code>demo-c4</code> chapter live on a new small task instead.</p>
           <p>That path already uses an agent, a skill, and <code>/mcp</code> for the Terraform and documentation grounding story. It stays small and easy to explain.</p>
+          <p>Keep base C4. Corp source merged, new qualification blocked on an unexpected change-type check; no apply performed. Last 8 present / 3 absent baseline still lacks connection/two Data Owner grants. Fresh explicit Corp group get Succeeded/no VNet connections, scoped list 403/exit 1. No new sealed manifest/raw exact deltas; Corp validation remains a separate gate. No successful Corp sandbox creation/runtime test or full CLI+Squad execution inside a MicroVM is established. Earlier 34/85/31 source/tooling checks and historical Management-side MicroVM evidence do not close the gate. Preserve 29:30-33:30/cut 32:30, no retry.</p>
+          <p>Native direction: existing Online placement but a separate SandboxGroup/RG, not inside AKS or hosted Jobs/runner. Standard managed network if policy allows is proposed, not Corp BYO VNet/UAMI/FIC transplant. Candidate absent; no creation/deployment/test/independent plan approval. Leave Corp untouched; not a proven policy restriction or promised fix. Host tokens passed, but doctor 9/9 printed cached Management despite explicit flags: wrong-target, not Corp/Online preflight. Compare printed target plus independent exact-ID read-back. No config change/Management fallback/create authorized. <a href="docs/aca-sandboxes.md#full-test-coverage-checklist">Official quickstart and full coverage</a>.</p>
+        </section>
+
+        <section class="card">
+          <h2>Two product demo flows and your next evidence</h2>
+          <p>Your original <code>haflidif/squad-on-aca</code> is implemented and previously demonstrated; no source/deployment change. The new personal queue target/access/registration/rehearsal status below is separate, not proof your implementation is broken/missing and not native Sandbox prerequisite. Native ACA integration remains build work.</p>
+          <p>The presenter VM is only host detail. Keep existing Online AKS, native ACA MicroVMs, hosted Squad ACA Jobs and local Copilot sandbox independent. Optional GitHub-managed cloud is another unqualified account/runtime lane.</p>
+          <table class="repo-table">
+            <thead><tr><th>Flow / owner</th><th>Actual progress</th><th>Demo / evidence contract</th><th>Blocker / next action</th></tr></thead>
+            <tbody>
+              <tr><td>Haflidi hosted Squad on ACA; hosted operator + Haflidi</td><td>Two historical Oct 9 queue successes/56 seconds, Corp, Norway East placement. Fresh issue open/queue queued/no PR at 10:28 UTC; runner image pulled then registration failed.</td><td>Issue -> Squad agent work in hosted ACA Job -> bot PR/diff, through the same gates. Actual prompt/workflow/job/PR correlation. Optional 53:00-54:30/cut 54:30, fallback dated historical excerpt or skip.</td><td>No current Haflidi-authored technical confirmation in supplied evidence. Confirm implementation revision and fresh sanitized chain result; accept existing target invitation then read back rights. Fresh queue-driven readiness is not established.</td></tr>
+              <tr><td>Native ACA Sandboxes with host Copilot CLI/Squad; Martin + native operator</td><td>Separate Online group/RG proposed, candidate absent; no native runtime/integration proof. Token auth only; doctor wrong-target. Local/AKS/hosted Jobs checks do not qualify it.</td><td>Host prompt -> selected Squad/ACA skill -> inspected aca calls -> isolated MicroVM public filesystem/offline Terraform/numeric exits -> validator/reviewer handoff. Full QA pre-stage; C4 conditional 29:30-33:30/cut 32:30. Basic orchestration does not require inside-VM OAuth/install.</td><td>Target/plan/access/policy/lifecycle/exec/fs/egress/suspend/resume coverage pending or blocked. Advanced optional Copilot/Squad inside MicroVM needs separate sign-in/storage/egress consent and actual process/agent/prompt proof; never copy host authentication.</td></tr>
+              <tr><td>Existing Online AKS; separate health reviewer</td><td>Fresh full cluster validation: app/assets/two responding replicas PASS with explicit TLS bypass. Canonical 26 PASS/2 BLOCKED/1 report-only, not 29/29.</td><td>Corrected supplemental 10 PASS/1 FAIL (TLS)/1 NOT_APPLICABLE (external <code>/healthz</code>; source requires direct-pod 200 <code>ok</code>). Native Kubernetes/ResourceHealth unavailable, full health unproved.</td><td>No renewed 29/29/full TLS. Eleven noncompliant resources within demo RG incl AKS/network/state, not 11 cluster failures/subscription-wide. C1 Oct 13 remains.</td></tr>
+            </tbody>
+          </table>
+          <p><a href="docs/demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes">Two operator cards: repo, owner, login, preflight, trigger, proof, cut, fallback and cleanup</a> · <a href="docs/sandboxing.md#october-12-progress-and-next-actions">All-lane owner/date/progress matrix</a></p>
+          <p>Online is primary placement for eligible demos, not fallback/policy escape. Corp-required private workloads stay Corp; public visibility is separate from native authenticated/private control-plane scope. Preserve working AKS/Corp/hosted Jobs, no checklist redeploy/automatic repair. Separate native five-object setup/credential-free Ubuntu 1 CPU/2 GiB ten-minute probe/new-test-ID-only deletion scope approved; source preparing. Actor/policy/budget/new plan/exact manifest pending, no deployment/runtime/integration or inside-VM OAuth PASS.</p>
+          <p>USD 20 through Oct 31 is an alert, not a hard cap; retained Corp costs remain. C2 MCP minreplicas 1 Oct 13/revert Oct 14, teardown Oct 17/credential expiry Oct 31 are scheduled, not done. Both-host checks, clean VM/manual login and full 60-minute rehearsal remain open.</p>
         </section>
 
         <section class="card">
           <div class="section-head">
             <h2>Model choice and cost</h2>
           </div>
-          <p>Auto model selection in Copilot CLI routes by task, lets us switch with <code>/model</code>, honors admin model policies, and gives paid plans a 10% AI-credit discount in Auto.</p>
+          <p>Auto model selection in Copilot CLI routes by task, lets us switch with <code>/model</code>, honors admin model policies, and gives paid plans a 10% discount. Legacy annual Pro/Pro+ plans use premium-request billing until expiry.</p>
           <p>Project HydraFusion is a research preview with Single, Cascade, and Critique patterns; GitHub reports offline benchmark cost savings versus Opus 5.</p>
           <p>For our repeatability eval, we pinned <code>claude-sonnet-5</code>.</p>
+          <p>Hosted Jobs' under-USD-0.01 variable-cost figure is a historical estimate with separate holding costs, not a current measured bill or hard cap. Suspended native MicroVM compute charges stop but storage can continue; five-minute autoSuspend is not a hard active timeout or credential revocation.</p>
         </section>
 
         <section class="card">
@@ -823,11 +860,11 @@
               <tr>
                 <td>The pre-staged module</td>
                 <td>It keeps the live time on the agents, prompts, tests, and review path instead of first-time implementation. The repo presents a qualified module revision and a bounded live change.</td>
-                <td>Read the module at <a href="https://github.com/martinopedal/terraform-azapi-aks-automatic">martinopedal/terraform-azapi-aks-automatic</a>.<br><code>terraform test -filter=tests\contract.tftest.hcl -no-color</code><br><code>terraform test -filter=tests\example.tftest.hcl -var-file=terraform.tfvars.example -no-color</code></td>
+                <td>The copied teaching module is <code>terraform\modules\aks-automatic-corp</code> in the session repo, with its unchanged <a href="terraform/module-source.json">source-copy manifest</a>. Follow <a href="docs/demo-runbook.md">the runbook</a> for its 52+2 checks. The live consumer instead pins <a href="https://github.com/martinopedal/terraform-azapi-aks-automatic">martinopedal/terraform-azapi-aks-automatic</a> at <code>v0.6.0</code>.</td>
               </tr>
               <tr>
                 <td>The pre-deployed Online environment</td>
-                <td>It gives the audience an already deployed result while the live session spends time on the agents and GitHub flow. The repo documents runtime checks at 29/29 PASS and a gated OIDC pipeline path.</td>
+                <td>It gives the audience a previously deployed result while the live session spends time on the agents and GitHub flow. The repo documents October 8 runtime checks at 29/29 PASS and a gated OIDC pipeline path; refresh at warmup.</td>
                 <td><a href="https://github.com/martinopedal/aks-automatic-demo-env">martinopedal/aks-automatic-demo-env</a><br><code>./scripts/Test-OnlineSecurity.ps1</code><br><a href="https://aks-online-demo.swedencentral.cloudapp.azure.com/">Live page</a> · GitHub Actions runs in the demo-env repo</td>
               </tr>
             </tbody>
@@ -850,14 +887,14 @@
               <div class="command-list">
                 <code>az login</code>
                 <code>$env:AZURE_SUBSCRIPTION_ID_ONLINE = '&lt;set in your shell only&gt;'</code>
-                <code>./scripts/Set-GuestLocalLogin.ps1 -UserName haflidi -FullName 'Haflidi (demo)'</code>
+                <code>.\scripts\Set-GuestLocalLogin.ps1 -UserName '&lt;approved-local-demo-user&gt;' -FullName '&lt;approved-demo-label&gt;'</code>
                 <code>./scripts/Connect-DemoVm.ps1 -LocalAccount</code>
               </div>
-              <p class="meta">Sign in as <code>.\haflidi</code> when Windows prompts. Martin hands over the generated password in person or by phone. Re-run the setup after <code>action=recreate-vm</code>.</p>
+              <p class="meta">Use the approved local demo account. Operator-created credentials are handed over out of band, never in public docs or chat. Setup/reset requires separate approval. Host login does not qualify either product demo flow.</p>
             </li>
             <li>
-              <h3>Propose one 30-minute run-through</h3>
-              <p>Pick a time next week. Keep it simple. We only need one half-hour pass on the shared flow and handoffs.</p>
+              <h3>Complete the full 60-minute rehearsal</h3>
+              <p>Log chapter wall times and test the cut lines with both presenters. A short handoff check is useful but does not close B3. Oct 13 warmup/reset, Oct 17 teardown and Oct 31 expiry are scheduled obligations, not completion evidence.</p>
             </li>
             <li>
               <h3>Open pull requests for anything you want changed</h3>
@@ -897,7 +934,7 @@
         <section class="card agree">
           <h2>To agree</h2>
           <ul>
-            <li>Squad on ACA stays optional. Management evidence: issue #2 in <code>martinopedal/squad-on-aca-demo-target</code> to enqueue workflow <code>37921482752</code> to ACA job execution <code>caj-squad-aca-agent-corp-ne-dtbhx</code> to bot PR #3. The job name does not establish its management-group scope. Corp validation remains a separate gate.</li>
+            <li>Squad hosted Apps/Jobs stay optional. Corp, Norway East placement is verified, not fresh policy/runtime acceptance. The target runner job is Manual with 7200-second timeout, no registered target runners were found today and the private invitation is pending; fresh queue-driven readiness is not established. Historical Management-side MicroVM evidence and the open Corp MicroVM gate remain separate.</li>
             <li>Confirm whether we mention the hosted Terraform MCP beside the pinned Docker Terraform MCP.</li>
             <li>Keep the 55:00-58:00 rule clear. Use that window for recovery only.</li>
             <li>Keep the guest VM login flow simple. Local account. Private password handoff. One quick test before rehearsal week.</li>

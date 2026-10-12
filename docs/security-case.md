@@ -4,6 +4,32 @@ This is an evidence-based account of the controls around the Online AKS demo and
 
 Evidence date: 2026-10-08. Demo-env repository: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env). Module repository: [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic), which now holds only the reusable module and no deployment environment or Azure federated credential (removed 2026-10-08 after re-validation from the demo-env repository).
 
+October 12 documentation addendum, not a new security review: the checks and
+controls below remain dated historical evidence. Fresh 10:47 UTC reviewer:
+app/source-matching assets/two responding replicas PASS under explicit TLS
+bypass; canonical 26 PASS/2 BLOCKED/1 report-only, not 29/29; supplemental
+10 PASS/1 FAIL (TLS)/1 NOT_APPLICABLE (external `/healthz`; source requires
+direct-pod `/healthz` 200 `ok`, not that external route). Native Kubernetes access
+unavailable/ResourceHealth provider unregistered, full cluster health unproved.
+Eleven noncompliant resources are scoped to demo RG across AKS/network/state,
+not 11 cluster failures/subscription-wide. No renewed 29/29/full trusted TLS.
+
+Online is primary for eligible demos, not fallback/policy escape. Corp-required
+private workloads stay Corp; public-source visibility does not define network/
+authenticated control-plane exposure. Preserve working AKS/Corp/hosted Jobs;
+reported TLS/native-API limits are not automatic repair/redeploy authorization.
+
+[The repo map](repositories.md) keeps the public Corp module/source copy and
+live consumer distinct. [Two product flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes)
+are hosted Squad issue-to-PR and host Copilot/Squad driving isolated native
+MicroVM work; optional in-MicroVM CLI/Squad is separate. Proposed native
+Online group/RG is not AKS/hosted Jobs or Corp BYO VNet/UAMI/FIC transplant.
+New Corp qualification blocked; no apply performed, leave Corp untouched.
+Green wrong-target doctor/token auth and local helper checks cannot prove access
+or runtime. No anonymous MicroVM ingress or exposed credentials authorized.
+USD 20 through Oct 31 is an alert, not cap; teardown Oct 17/credential expiry
+Oct 31 and Oct 13 warmup/checks remain separately gated.
+
 ## 1. The delivery chain
 
 | Control | Evidence |

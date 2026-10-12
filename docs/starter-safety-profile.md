@@ -1,6 +1,16 @@
 # Starter safety profile
 
-This repository uses a fresh Squad CLI 0.13.0 starter, with a narrow adaptation for the conference's human-reviewed workflow.
+Historical starter provenance is Squad CLI 0.13.0; the installed session baseline
+is Squad 1.0.1. This page describes the retained narrow adaptation for the
+conference's human-reviewed workflow, not a claim that current runtime is 0.13.0.
+
+Audience: maintainers inspecting starter provenance. [The repo map](repositories.md)
+and [four-lane progress](sandboxing.md#october-12-progress-and-next-actions)
+separate this public teaching configuration from deployment and runtime. Tool
+profiles/Squad configuration do not isolate credentials. Local MXC startup is
+currently policy blocked; native separate Online group/RG is proposed/unqualified.
+Host Copilot/Squad remote orchestration and optional in-MicroVM runtime need
+different actual evidence; neither follows from starter setup.
 
 The active and template copies of `cross-squad-communication` use an operator-led Plan-mode invocation instead of blanket tool/path approvals. Their upstream prototype results are historical; they do not validate this modified recipe.
 

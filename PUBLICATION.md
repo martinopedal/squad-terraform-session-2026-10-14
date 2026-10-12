@@ -2,6 +2,18 @@
 
 Publish only the generic presentation, module source, examples, recording tools, and approved evidence.
 
+Audience: maintainers approving a public release. Purpose: keep reusable source
+and sanitized evidence separate from private operations. Use [the repository
+map](docs/repositories.md): the independent Corp module is public, while real
+deployment values/state and the hosted issue/queue/bot-PR target remain private.
+The session clone is not a deployment entry or evidence of target access.
+
+Keep proposed Online placement separate from achieved deployment. Do not publish
+private run/PR identifiers, raw errors/logs, credential material, or personal
+communications to explain a blocker. Current public wording is: new qualification
+blocked on an unexpected change-type check; no apply performed. A local draft
+and generated HTML are not a published revision.
+
 The following must stay out of this repository:
 
 - Real environment tfvars/backend configuration and Terraform state or saved plans.

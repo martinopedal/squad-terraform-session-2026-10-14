@@ -4,6 +4,19 @@ Keep the reusable module public and the environment-specific deployment root sep
 
 This document describes an integration contract, not a completed Azure deployment or a published module release.
 
+Audience: reusable-module consumers. The canonical Corp module
+`alz-avm-tf-demo/terraform-azapi-aks-automatic-corp` is public and independently
+reusable; the session has a teaching copy with its own immutable manifest.
+The live Online AKS consumer is `martinopedal/aks-automatic-demo-env`, using the
+different upstream Automatic module at `v0.6.0`. See [the repo map](repositories.md).
+
+This Corp AKS contract is not the native ACA SandboxGroup plan. Current native
+direction is a separate Online group/RG with standard managed networking if
+policy allows, not this Corp BYO VNet/UAMI/FIC wiring or a MicroVM inside AKS.
+It remains proposed/unqualified. New Corp sandbox qualification blocked on an
+unexpected change-type check; no apply performed. Leave Corp untouched; do not
+infer a policy restriction or approval to relocate resources.
+
 ## Separate responsibilities
 
 | Owner | Responsibility |
