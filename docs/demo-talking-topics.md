@@ -18,12 +18,12 @@ Glance sheet for use DURING the live demo. Source of truth: [talk-track.md](talk
 | C1 | 12:30-15:30 | 14:45 | Martin operates, Haflidi compares | Same task, compare one consequence | One C1-A point, saved C1-B excerpt |
 | C2 | 17:30-21:30 | 20:30 | Martin | Plan mode, approve a plan | Saved approved plan |
 | C3 | 22:00-26:00 | 25:00 | Martin | One writer, B1v2 brief | B1v2 eval excerpt |
-| C4 | 29:30-33:30 | 32:30 | Martin | Skill plus source | Reviewed fallback, hand off 33:30 |
+| C4 | 29:30-33:30 | 32:30 | Martin | Skill plus source (base C4 is the default today) | Reviewed fallback, hand off 33:30 |
 | C5 | 33:30-38:30 | 37:15 | Haflidi | Seed, fail, repair | Saved seeded-failure and repaired logs |
 | C6 | 42:00-45:00 | 44:15 | Haflidi | Save decision, resume, cite | `c6-decision.md` plus screenshots |
 | C7 | 47:00-50:00 | 49:15 | Haflidi (Martin names boundary) | Checks, diff, independent review | Saved green exits and diff |
 | s20 | 50:00-53:00 | start by 50:00 | Martin | Online consumer reveal 50:30-51:00 | Screenshot plus two apply runs |
-| Optional ACA | 53:00-54:30 | skip if it hits 55:00 | Martin, Haflidi | Unattended agent to PR | Show finished proof |
+| Optional ACA | 53:00-54:30 | hard cut 54:30 | Martin, Haflidi | Unattended agent to PR (only if ahead and newly qualified; NO-GO today) | Dated historical excerpt or skip |
 
 ## Mine vs Martin's
 
@@ -173,8 +173,24 @@ Glance sheet for use DURING the live demo. Source of truth: [talk-track.md](talk
 - [ ] (M) Cite source and version
 
 **If it stalls:** say live result is missing, show reviewed fallback with its actual scope. No retry. No slack.
-**Do not claim:** (H) a 403 alone proves egress or Azure Policy enforcement. Saved runs are Management-side evidence, not Corp validation. A 90-second agent turn (fresh runs about 2:58 and 1:47).
+**Do not claim:** (H) a 403 alone proves neither egress nor Azure Policy enforcement. Saved runs are Management-side execution evidence, not Corp validation or Online qualification. A 90-second agent turn (fresh runs about 2:58 and 1:47).
 **Point at:** cited source/version, `/permissions`.
+
+### Conditional variant: Card B (not an extra chapter)
+
+**Base C4 is the default today.** Switch only if ALL are done: independently approved selected-target IaC, actual access/policy read-back, full required runtime coverage, prepared-sandbox rehearsal. Currently not deployed or qualified (NO-GO). No Corp change implied.
+
+- [ ] (M) Host Copilot CLI/Squad drives `aca` tools into a separate proposed Online SandboxGroup/RG (not AKS, not hosted Jobs, not Copilot/Squad inside the MicroVM)
+- [ ] (M) VM is only the control console. Public filesystem and offline Terraform checks, not an AKS deployment
+- [ ] (H) Proof chain: actual host prompt, selected skill, inspected `aca` tools with explicit target, MicroVM filesystem/offline Terraform/numeric exits, validator/reviewer handoff
+- [ ] (H) Show the actual prompt/tool/output trace, not an agent summary
+- [ ] (H) 10 root negative-validation checks, not 52+2 or an AKS deployment
+- [ ] (H) 403 alone proves neither egress nor Azure Policy enforcement
+
+**Clock:** 29:30-30:00 guidance/prepared source. 30:00-32:00 one bounded prompt. 32:00-32:30 inspect numeric exits/HTTP observations. **Cut 32:30**, return to C5 by 33:30.
+**Not live:** create, upload, install, rule change. No retry. No use of 55:00-58:00 slack.
+**If it stalls:** base C4, or reviewed target-qualified evidence, or an excerpt labeled "Management-side execution evidence, not Corp validation" (not Online qualification either). Full QA is pre-stage, no four-minute promise.
+**Details:** [Card B](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad), [C4 procedure](demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes), [prepared prompt](aca-sandboxes.md#recommended-live-use)
 
 <details><summary>Show</summary>
 
@@ -182,7 +198,7 @@ Glance sheet for use DURING the live demo. Source of truth: [talk-track.md](talk
 - Ask: test-discipline, unchanged assertions, read-only Microsoft Learn source for AKS Automatic private/custom network
 - No Azure account, provider, or write access
 - `/permissions`
-- Conditional ACA variant only after approved Corp IaC, policy read-back, prepared-sandbox preflight. Else base flow. Timing: [runbook C4](demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes)
+- ACA variant (Card B) only after the gate above. Else base flow. Timing: [runbook C4](demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes)
 
 </details>
 
@@ -278,9 +294,10 @@ Glance sheet for use DURING the live demo. Source of truth: [talk-track.md](talk
 - [ ] (M) Gaps visible: single-maintainer admin override, self-review setting, env gate before apply job's plan (mitigated by plan-only run and in-job comparison)
 - [ ] (M) Reuse of code, not of the private environment
 
-**If unreachable:** offline screenshot plus apply runs 37771532872 and 37772290635.
-**Do not claim:** reuse of private inputs or state.
-**Point at:** branded page, pipeline flow, serving pod name, speakers section, 29/29 runtime checks (runbook).
+**If unreachable:** offline screenshot plus apply runs 37771532872 and 37772290635. Date the historical Oct 8 29/29 checks; no fresh suite inferred.
+**Do not claim:** reuse of private inputs or state. 29/29 as fresh. TLS certificate validation.
+**Point at:** branded page, pipeline flow, serving pod name, speakers section.
+**Current Online result (Oct 12):** app responding under explicit TLS bypass, not TLS certificate validation. Canonical 26 PASS / 2 BLOCKED / 1 report-only, not 29/29. Full cluster health unproved. 29/29 is historical (Oct 8) and stays dated.
 
 <details><summary>Show</summary>
 
@@ -291,20 +308,24 @@ Glance sheet for use DURING the live demo. Source of truth: [talk-track.md](talk
 
 ## Optional squad-on-aca (53:00-54:30)
 
-**Only if ahead** | Skip if the clock would enter 55:00
+**Only if ahead AND newly qualified** | **Hard cut 54:30** | Never use 55:00-58:00 slack | Today: NO-GO (not established)
 
-- [ ] (M) `haflidif/squad-on-aca`: Squad agents as ACA jobs. Evidence is Management, Corp is a separate gate
-- [ ] (H) Unattended, Key Vault, managed identity, still a PR through the same gates
-- [ ] (H) Variable cost well under USD 0.01 per run, separate fixed holding costs
+- [ ] (M) `haflidif/squad-on-aca`: hosted ACA Apps/Jobs, not MicroVMs. This is Card A, not Card B
+- [ ] (M) Corp, Norway East placement verified. Placement only, not a fresh queue-driven run
+- [ ] (H) Workload identity, Key Vault, KEDA. Changes return as PRs through the same gates
+- [ ] (H) Under USD 0.01 variable cost per run is a historical estimate, not a current bill or hard cap. Holding costs are separate
+- [ ] (M) Compress `s21-limits` to 54:30-55:00
 
-**If it stalls:** say it failed, show finished issue to workflow to job to PR proof.
-**Point at:** 9 Oct run: job finished in 56 seconds, bot opened the PR.
+**Status:** fresh runner execution failed, queue workflow queued, no registered target runners, invitation pending. Blocked, not a fresh bot-PR result.
+**Historical only:** two succeeded Oct 9 agent-job executions of 56 seconds are shared demonstration evidence, not current health.
+**If it stalls:** state the blocker. Show a reviewed dated historical excerpt, or skip. No stage repair, no retry, no new issue.
+**Do not claim:** current readiness, or that this proves native MicroVM/Squad.
 
-<details><summary>Show</summary>
+<details><summary>Show (only if newly qualified)</summary>
 
-- Issue in `martinopedal/squad-on-aca-demo-target`, label `squad:ripley`
-- `squad-queue.yml` runs, ACA job execution, bot PR
-- Exact commands: optional section of the [track](talk-track.md)
+- Issue in the approved private target, label `squad:ripley`
+- Queue workflow, actual hosted ACA Job, bot PR
+- Exact commands: [Card A](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr) and the optional section of the [track](talk-track.md)
 
 </details>
 
@@ -331,3 +352,5 @@ Glance sheet for use DURING the live demo. Source of truth: [talk-track.md](talk
 **Say "runtime check" / "runtime evidence".** Evidence belongs to the exact thing it checks. Local mocks are not Azure acceptance evidence.
 
 **Never on screen:** subscription IDs, tenant IDs, private IPs, raw state, secrets, private run URLs, personal memory.
+
+**Source conflict (track wins):** [talking-points.md](talking-points.md), [run-plan.md](run-plan.md), [demo-runbook.md](demo-runbook.md) and some `slides.mjs` notes still list 29/29 Online checks in the s20 51:00-52:10 line. The track and the Oct 12 result say 26 PASS / 2 BLOCKED / 1 report-only, so this sheet dates 29/29 as Oct 8 historical.

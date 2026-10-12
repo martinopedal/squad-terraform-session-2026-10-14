@@ -12,7 +12,7 @@ Keep all verified enrichment added in the 0.21.0 deck round and carried into dec
 
 Decision: reuse `s01-outcome` as the 00:00-03:00 intro instead of adding a new `s00-intro`. Reason: it already carries the outcome and speaker visual, and a new slide would add navigation/test churn without improving the story.
 
-Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.22.4, full repo-map/progress/operator notes pass without changing on-screen markup), the reviewed Oct 8 eval, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout. The five-slide companion and full 39-slide deck retain their slide counts and clocks. Live Pages remains 0.22.2 pending reviewed release.
+Sources of truth for this plan: current `presentation\src\slides.mjs` (deck 0.22.4, full repo-map/progress/operator notes pass without changing on-screen markup), the reviewed Oct 8 eval, and the 2026-10-09 directive that keeps the 5:00 slack principle inside the 60:00 layout. The six-slide companion and full 39-slide deck retain their slide counts and clocks. Live Pages remains 0.22.2 pending reviewed release.
 
 ## Evidence used for timing
 
