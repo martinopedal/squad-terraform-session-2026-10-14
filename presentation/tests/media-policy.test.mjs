@@ -549,6 +549,66 @@ test('current public release fronts distinguish completed deck publication from 
   }
 });
 
+const currentNativeStatusSurfaces = [
+  ['docs/whats-new.md', '', '## Key updates'],
+  ['docs/bootstrap.md', '', '## What this bootstrap does'],
+  ['docs/clean-machine-demo.md', '', '## Automated dependency setup'],
+  ['docs/talking-points.md', '### 03:30-04:00, s04-news, Martin', '### 04:00-05:00'],
+  ['docs/run-plan.md', '## Separate product demo flows, not one combined runtime', '## Timing contract']
+];
+
+for (const [path, start, end] of currentNativeStatusSurfaces) {
+  test(`current native status in ${path} rejects stale opening claims`, () => {
+    const text = documentText(path);
+    assert.ok(!start || text.includes(start), `${path} retains its current status section`);
+    const section = start ? text.split(start)[1] : text;
+    assert.ok(section.includes(end), `${path} retains the next section boundary`);
+    const current = section.split(end)[0].replace(/\s+/g, ' ');
+    for (const pattern of [
+      /host Copilot\/Squad.*independently accepted/i,
+      /26\.768-second/, /runtime-ready|runtime readiness/,
+      /human (?:stage GO|preflight\/rehearsal)/i,
+      /second-presenter sign-in/, /selected Terraform variant/,
+      /remain separate gates/,
+      /hosted Apps\/Jobs.*(?:E2E.*BLOCKED|BLOCKED.*E2E)/i,
+      /registration404\/custom-agent-profile/
+    ]) assert.match(current, pattern, `${path} current prose retains ${pattern}`);
+    assert.doesNotMatch(current,
+      /Native ACA integration remains build work|(?:Online|native)[^.]*\b(?:proposed|unqualified)\b|No current integration readiness|runtime PASS awaits independent acceptance|(?:prompt\/tool\/validation\/)?handoff evidence still missing|independent acceptance pending|stage GO (?:passed|complete)|all ACA (?:products )?(?:are )?ready/i,
+      `${path} current prose must not contradict accepted fixture engineering or overclaim stage readiness`);
+    if (path !== 'docs/run-plan.md') {
+      for (const pattern of [
+        /five-object deployment/, /current operator access/,
+        /375-second/, /independently verified/
+      ]) assert.match(current, pattern, `${path} opening preserves verified provisioning: ${pattern}`);
+    } else {
+      for (const pattern of [
+        /actual coordinator prompt, worker\/ACA tools, guest results, validation and reviewer handoff evidence is independently accepted/,
+        /LF\/source\+result SHA/, /three positive guest checks\/JSON/,
+        /exact guest\/host exit23/,
+        /causal HTTPS403 with new exact-sandbox networkEgress\.denied audit/,
+        /exact-ID cleanup\/empty list\/NotFound/,
+        /85 evidence files were independently rehashed/,
+        /credential-free policy challenge alone used per-request curl --insecure/,
+        /trusted TLS and inside-MicroVM agents\/OAuth remain unproved/
+      ]) assert.match(current, pattern, `${path} accepted host evidence retains ${pattern}`);
+      const timingCue = text.split(/\r?\n/).find(line => line.startsWith('- ACA Sandboxes is a conditional C4 variant'));
+      assert.ok(timingCue, `${path} retains the conditional C4 timing cue`);
+      assert.match(timingCue, /host-driven fixture engineering are independently accepted/);
+      assert.doesNotMatch(timingCue, /successful-work integration\/rehearsal remains pending/);
+    }
+    if (path === 'docs/whats-new.md') {
+      const relatedCues = text.split(/\r?\n/).filter(line =>
+        line.startsWith('| 9 |') || line.startsWith("- Native ACA's official quickstart"));
+      assert.equal(relatedCues.length, 2, `${path} retains both current native news cues`);
+      for (const cue of relatedCues) {
+        assert.match(cue, /fixture engineering (?:are|is) independently accepted/);
+        assert.doesNotMatch(cue, /Online.*remains proposed|Neither is currently proved for Online/);
+      }
+    }
+  });
+}
+
 test('source and exported speaker notes carry accepted Sandbox proof without qualifying hosted Jobs or human stage', () => {
   const generated = documentText('presentation/index.html');
   const assertNativeNotes = notes => {

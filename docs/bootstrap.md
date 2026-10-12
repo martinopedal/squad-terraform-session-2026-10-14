@@ -21,8 +21,15 @@ October 12: one laptop 18/18 and helper 46 scenarios + 3 native checks per
 PowerShell engine, not second-host interactive checks, clean VM/manual login or
 rehearsal. Actual local MXC startup failed before command, exit 1; policy blocked,
 no bypass/global change. ACA host token auth passed, but wrong-target doctor
-cannot qualify Corp/Online. Separate native Online group/RG is proposed/unqualified,
-not AKS or hosted Jobs. See [the progress matrix](sandboxing.md#october-12-progress-and-next-actions).
+cannot qualify Corp/Online. Separate native Online five-object deployment/current
+operator access/base 375-second probe are independently verified, not AKS or
+hosted Jobs. Corrected 26.768-second host Copilot/Squad fixture engineering is
+independently accepted and runtime-ready. Human preflight/rehearsal,
+second-presenter sign-in and any selected Terraform variant remain separate
+gates. Fresh hosted Apps/Jobs E2E remains BLOCKED on
+registration404/custom-agent-profile qualification. These native checks do not
+prove bootstrap installation or live SYSTEM/CSE execution.
+See [the progress matrix](sandboxing.md#october-12-progress-and-next-actions).
 
 ## What this bootstrap does
 

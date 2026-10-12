@@ -13,8 +13,14 @@ readiness](run-plan.md#october-12-readiness-evidence) and [the repo map](reposit
 VM deployment/access belongs to the live `martinopedal/aks-automatic-demo-env`
 consumer, not this session clone. Hosted Squad issue-to-PR and Copilot/Squad
 driving native ACA MicroVMs are separate [product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes);
-the VM is only a presenter host. Native separate Online group/RG remains
-proposed/unqualified, not AKS/hosted Jobs. No current integration readiness.
+the VM is only a presenter host. Native separate Online five-object deployment/current
+operator access/base 375-second probe are independently verified, not AKS/hosted
+Jobs. Corrected 26.768-second host Copilot/Squad fixture engineering is
+independently accepted and runtime-ready. Human preflight/rehearsal,
+second-presenter sign-in and any selected Terraform variant remain separate
+gates. Fresh hosted Apps/Jobs E2E remains BLOCKED on
+registration404/custom-agent-profile qualification; none of this proves a
+current clean-VM install/manual-login rehearsal.
 For the fuller operator setup with `-WhatIf`, repo clone, `copilot login`, `squad init`, and a GitHub App checklist, see [bootstrap.md](bootstrap.md) and [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1). Keep the live chapter on the shorter flow below.
 
 ## Automated dependency setup (preparation, not a clean C0 take)

@@ -86,10 +86,20 @@ cleanup instructions are in [Card A and Card B](demo-runbook.md#two-product-demo
 | B, native ACA isolation for host Copilot CLI/Squad | Public session prompt/fixture on host; verified separate Online group/RG, not AKS/hosted Jobs. Martin coordinates, native operator/worker runs, independent validator/reviewer checks | Actual host prompt/Squad/ACA tools -> three guest checks/JSON+SHA -> exit23/causal denial -> cleanup/handoff. Corrected receipt PASS; independent acceptance complete, runtime-ready after acceptance, human stage GO separate | C4 29:30-33:30/cut 32:30 only after successful-work/rehearsal GO. Base C4 or labeled failure/cleanup today; no retry or slack spend. Exact owned cleanup off-stage |
 
 No full runtime QA is promised in four minutes. Host Copilot/Squad orchestrating
-isolated work is the primary native flow, with actual prompt/tool/validation/
-handoff evidence still missing. Optional CLI/Squad inside the MicroVM has
-separate consent/process/agent/prompt proof, not a basic remote-orchestration
-prerequisite or Card A's hosted execution.
+isolated fixture work is the primary native flow; actual coordinator prompt,
+worker/ACA tools, guest results, validation and reviewer handoff evidence is
+independently accepted. The 26.768-second run passed LF/source+result SHA,
+three positive guest checks/JSON, exact guest/host exit23, causal HTTPS403 with
+new exact-sandbox networkEgress.denied audit and exact-ID cleanup/empty
+list/NotFound; 85 evidence files were independently rehashed. This is fixture
+engineering acceptance and runtime readiness, not human stage GO:
+manual preflight/rehearsal, second-presenter sign-in and any selected Terraform
+variant remain separate gates. The credential-free policy challenge alone used
+per-request curl --insecure; trusted TLS and inside-MicroVM agents/OAuth
+remain unproved. Optional CLI/Squad inside the MicroVM needs separate
+consent/process/agent/prompt proof, not a basic remote-orchestration
+prerequisite. Hosted Apps/Jobs fresh E2E remains BLOCKED on
+registration404/custom-agent-profile qualification, not qualified by Card B.
 
 ## Timing contract
 
@@ -137,7 +147,7 @@ Nothing was cut from the already-placed enrichment:
 - The legal notice remains the untimed pre-show slide.
 - The Rubber Duck appendix note stays in the appendix.
 - Feature badges remain in the deck.
-- ACA Sandboxes is a conditional C4 variant, not an inserted chapter. Only independently approved selected-target IaC, effective access/policy read-back, full required runtime coverage and validated presenter preflight permit it. Online base is verified; successful-work integration/rehearsal remains pending and Corp untouched. It replaces part of the deeper MCP lookup within the existing 29:30-33:30 C4 slot and keeps the 32:30 cut. No extra bridge trims are assumed; `s05-parallel`, `s18-memory`, and `s21-limits` keep their table budgets.
+- ACA Sandboxes is a conditional C4 variant, not an inserted chapter. Only independently approved selected-target IaC, effective access/policy read-back, full required runtime coverage and validated presenter preflight permit it. Online base and host-driven fixture engineering are independently accepted; human rehearsal and any selected Terraform variant remain pending, with Corp untouched. It replaces part of the deeper MCP lookup within the existing 29:30-33:30 C4 slot and keeps the 32:30 cut. No extra bridge trims are assumed; `s05-parallel`, `s18-memory`, and `s21-limits` keep their table budgets.
 
 ### Conditional C4 variant, same clock
 
