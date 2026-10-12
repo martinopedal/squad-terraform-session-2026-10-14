@@ -4,6 +4,20 @@ Run these prompts in order to build or extend an AKS Automatic Terraform module 
 
 Repeatable does not mean identical output. A model can choose differently on two runs. These prompts narrow the choices, make every claim checkable, and make a wrong turn visible early. Measure it: run a brief five times from the same checkpoint and count green runs (see [Measure repeatability](#measure-repeatability)).
 
+Audience: public module contributors. [The repo map](repositories.md) separates
+canonical reusable Automatic/Corp source, this session's teaching copy and the
+live AKS consumer. These prompts do not approve a deployment or move private
+values/state into public source.
+
+For the separate product demos use [hosted Squad issue-to-PR versus host
+Copilot/Squad-driven native ACA isolation](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
+Native Online group/RG is proposed/unqualified, not AKS/hosted Jobs or Corp
+network/identity transplantation. The installed ACA skill gives guidance; real
+prompt/tool/validation/handoff evidence is still missing. Advanced in-MicroVM
+CLI/Squad runtime is optional and separately consented, not the basic host
+orchestration prerequisite. Current [progress/coverage](aca-sandboxes.md#full-test-coverage-checklist)
+must not be replaced by these example prompts.
+
 ## What makes results repeatable
 
 | Lever | How these prompts use it |

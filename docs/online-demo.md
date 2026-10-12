@@ -4,6 +4,48 @@ This appendix shows what changes when we run the same module in an Online subscr
 
 Source: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env): `deployments/online/`, `manifests/online/`, `.github/workflows/deploy-online.yml`, `scripts/start-online-runner.ps1`. The root pins the reusable module [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic) by tag `v0.6.0`.
 
+Audience: presenters and approved AKS consumer operators. Use [the repo
+map](repositories.md): this session clone is teaching/source material, not the
+live deployment entry. The independent public Corp teaching module has a
+different unchanged source-copy pin/manifest.
+
+## Current AKS evidence versus the native sandbox proposal
+
+Earlier October 12 Online/Corp metadata was Succeeded/Running. Fresh 10:47 UTC
+reviewer: branded app/source-matching assets and two responding replicas PASS
+with explicit TLS bypass. Canonical 26 PASS/2 BLOCKED/1 report-only, not 29/29;
+corrected supplemental 10 PASS/1 FAIL (TLS)/1 NOT_APPLICABLE (external `/healthz`;
+source requires direct-pod `/healthz` 200 `ok`, not that external route).
+Native Kubernetes access unavailable/ResourceHealth provider unregistered;
+full cluster health unproved. Eleven noncompliant resources are in the demo RG
+across AKS/network/state, not 11 cluster failures or subscription-wide.
+No renewed 29/29 or full trusted TLS. Historical Oct 8 checks stay dated.
+C1 fresh OnlineSecurity 29/DemoVM is scheduled Oct 13, not completed here.
+
+Native ACA MicroVMs use the same Online placement direction but a **separate
+SandboxGroup and resource group**, not inside AKS or Haflidi's hosted Jobs/runner.
+Standard managed-network design if policy permits is proposed, not Corp BYO
+VNet/UAMI/FIC transplant. Candidate RG absent; no creation/deployment/test or
+independent plan approval. Leave Corp untouched; a failed qualification is not
+a proven Corp policy restriction or promise Online fixes it. No anonymous
+MicroVM ingress or exposed credentials are authorized.
+
+Use [two product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes),
+[native test coverage](aca-sandboxes.md#full-test-coverage-checklist) and [progress
+matrix](sandboxing.md#october-12-progress-and-next-actions). Host Copilot/Squad
+remote orchestration is distinct from optional in-MicroVM CLI/Squad proof.
+USD 20 total through Oct 31 is an alert, not a hard cap; retained Corp costs
+remain. MCP minreplicas 1 Oct 13/revert Oct 14, teardown Oct 17 and credential
+expiry Oct 31 are scheduled separate gates.
+
+Online is primary placement for eligible demos, not fallback/policy escape.
+Corp-required private workloads stay Corp; public repo visibility is not network/
+authenticated control-plane exposure. Preserve existing working AKS/Corp/Jobs.
+Report TLS/native-API limits, do not automatically repair or redeploy the cluster.
+The new separate native five-object Online scope/Ubuntu 1 CPU/2 GiB ten-minute
+credential-free probe/new-test-ID-only deletion has scope consent; source is
+preparing. Actor/policy/budget/new plan/exact manifest remain gates; no runtime PASS.
+
 ## Talk it in keywords
 
 - The demo-env repo uses the same module through a thin root in `deployments/online/` with `source = "git::https://github.com/martinopedal/terraform-azapi-aks-automatic.git?ref=v0.6.0"`. The module stays provider-free.
@@ -60,7 +102,12 @@ This is the point of consuming your own module like a customer: the Corp path ha
 7. **App deploy** with an Entra-only kubeconfig (`kubelogin`) and namespace-scoped writes.
 8. **Runtime check step**: fails unless the hostname returns HTTPS 200, HTTP 308 to HTTPS, and DNS resolves to the App Routing controller Service address; results go to the run summary.
 
-## Run it
+## Run the AKS consumer only under separate approval
+
+The commands below belong to a separately approved deployment window, not the
+native SandboxGroup proposal or a request to redeploy healthy AKS now. Public
+clone access is not plan/apply consent; real environment/state/identity bindings
+remain private and must be explicitly confirmed against the approved target.
 
 ```powershell
 # From a clone of martinopedal/aks-automatic-demo-env.

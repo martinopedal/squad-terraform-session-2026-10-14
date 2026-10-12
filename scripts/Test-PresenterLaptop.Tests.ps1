@@ -11,8 +11,8 @@ if ($CaseBase64) {
 
   function copilot {
     if ($script:case.MissingCopilot) { throw 'Synthetic missing Copilot CLI' }
-    Set-Variable -Name LASTEXITCODE -Value 0 -Scope Global
-    '1.0.93'
+    Set-Variable -Name LASTEXITCODE -Value $(if ($script:case.CopilotExitFailure) { 1 } else { 0 }) -Scope Global
+    if ($script:case.CopilotOutput) { $script:case.CopilotOutput } else { '1.0.93' }
   }
   function squad {
     if ($script:case.MissingSquad) { throw 'Synthetic missing Squad' }
@@ -149,6 +149,12 @@ $cases = @(
   @{Name='Terraform prerelease fails'; Terraform='1.14.8-alpha1'; Failures=1; FailedChecks=@('terraform >=1.14.8 <2')}
   @{Name='Malformed Terraform version fails'; Terraform='99999999999999.14.8'; Failures=1; FailedChecks=@('terraform >=1.14.8 <2')}
   @{Name='Copilot CLI missing fails'; MissingCopilot=$true; Failures=1; FailedChecks=@('copilot cli 1.0.x')}
+  @{Name='Current Copilot CLI banner with final period passes'; CopilotOutput='GitHub Copilot CLI 1.0.94.'; Failures=0}
+  @{Name='Copilot CLI banner without final period passes'; CopilotOutput='GitHub Copilot CLI 1.0.93'; Failures=0}
+  @{Name='Copilot CLI prerelease fails'; CopilotOutput='GitHub Copilot CLI 1.0.94-preview'; Failures=1; FailedChecks=@('copilot cli 1.0.x')}
+  @{Name='Copilot CLI wrong version family fails'; CopilotOutput='GitHub Copilot CLI 2.0.0.'; Failures=1; FailedChecks=@('copilot cli 1.0.x')}
+  @{Name='Copilot CLI embedded version cannot pass'; CopilotOutput='Error: cached version 1.0.94'; Failures=1; FailedChecks=@('copilot cli 1.0.x')}
+  @{Name='Copilot CLI command failure cannot pass'; CopilotOutput='GitHub Copilot CLI 1.0.94.'; CopilotExitFailure=$true; Failures=1; FailedChecks=@('copilot cli 1.0.x')}
   @{Name='Squad missing fails'; MissingSquad=$true; Failures=1; FailedChecks=@('squad 1.0.1')}
   @{Name='Squad baseline preserved'; SquadVersion='1.0.2'; Failures=1; FailedChecks=@('squad 1.0.1')}
   @{Name='VS Code missing fails'; MissingCode=$true; Failures=1; FailedChecks=@('VS Code CLI available')}

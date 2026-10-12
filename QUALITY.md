@@ -2,6 +2,21 @@
 
 The public demonstration must satisfy the checks below before it is described as complete.
 
+Audience: maintainers and presenters. Purpose: require evidence for the exact
+artifact and claim. [The repo map](docs/repositories.md) identifies source and
+deployment ownership; [the four-lane progress matrix](docs/sandboxing.md#october-12-progress-and-next-actions)
+and [full MicroVM checklist](docs/aca-sandboxes.md#full-test-coverage-checklist)
+separate completed checks from blocked and pending runtime work.
+
+Online is primary placement for eligible demo components; native deployment
+there is planning only, not a fallback. Corp-required private workloads stay in
+Corp. Repo visibility and network/control-plane exposure are different facts.
+Leave Corp resources untouched.
+The new Corp qualification was blocked on an unexpected change-type check; no
+apply performed. This is not a proven Corp policy restriction. Help, doctor,
+token authentication, host preflight, hosted Jobs and AKS read-back cannot replace
+customer-managed MicroVM lifecycle and in-VM Copilot/Squad evidence.
+
 ## Terraform source
 
 Use the [HashiCorp style guide](https://developer.hashicorp.com/terraform/language/style), appropriate [module structure](https://developer.hashicorp.com/terraform/language/modules/develop/structure), and [provider ownership](https://developer.hashicorp.com/terraform/language/modules/develop/providers).

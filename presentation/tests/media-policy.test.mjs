@@ -32,8 +32,8 @@ const slideSurfaces = slide => [
 const shortSlides = createShortSlides({ martinPhoto: 'martin', haflidiPhoto: 'haflidi' });
 const documentPaths = [
   'README.md', 'handoff.md', 'haflidi-overview.html', 'presentation/README.md',
-  ...['aca-sandboxes', 'bootstrap', 'demo-runbook', 'feature-guide', 'online-demo', 'playbook',
-    'prompt-pack', 'run-plan', 'sandboxing', 'security-case', 'sessionize',
+  ...['aca-sandboxes', 'bootstrap', 'demo-runbook', 'feature-guide', 'online-demo', 'overview', 'playbook',
+    'prompt-pack', 'repositories', 'run-plan', 'sandboxing', 'security-case', 'sessionize',
     'source-provenance', 'talk-track', 'talking-points', 'whats-new']
     .map(name => `docs/${name}.md`)
 ];
@@ -64,14 +64,14 @@ test('each live demo slide has presenter notes with an offline fallback', () => 
   }
 });
 
-test('C4 source and generated notes retain the conditional Corp gate and unchanged cut', () => {
+test('C4 source and generated notes retain the conditional selected-target gate and unchanged cut', () => {
   const notes = applyNoteFactOverrides('demo-c4', '');
   const generated = documentText('presentation/index.html')
     .match(/<section\b[^>]*id="demo-c4"[^>]*>([\s\S]*?)<\/section>/)?.[1];
   assert.ok(generated, 'generated deck must contain the actual C4 section');
   for (const [name, artifact] of [['source notes', notes], ['generated C4', generated]]) {
     for (const pattern of [
-      /approved Corp IaC/, /effective-policy read-back/, /all checks PASS/,
+      /independently approved selected-target IaC/, /effective-policy read-back/, /all checks PASS/,
       /actual authentication verified manually/, /prepared sandbox/,
       /Preliminary planning approval is not deployment or qualification/,
       /29:30-30:00/, /30:00-32:00/, /32:00-32:30/, /32:30-33:30/,
@@ -193,7 +193,292 @@ test('writing preserves manual bootstrap, human confirmation, and the ACA eviden
     assert.match(text, /Management/, `${path} must scope the ACA evidence`);
     assert.match(text, /Corp validation remains a separate gate|Corp gate remains open/,
       `${path} must keep the Corp gate`);
-    assert.doesNotMatch(text, /Live-capable in Corp|current Corp proof|jobs in a corp landing zone/i);
+    assert.doesNotMatch(text, /Live-capable in Corp|current Corp proof/i);
+    assert.match(text, /Corp, Norway East placement/, `${path} separates hosted Jobs placement`);
+    assert.match(text, /fresh queue-driven readiness is not established/i,
+      `${path} does not infer a fresh hosted run from placement`);
+    assert.doesNotMatch(text,
+      /current run evidence is under Management|current evidence is from Management|Norway East under Management/i,
+      `${path} must not misplace current hosted Jobs under Management`);
+  }
+});
+
+test('sandbox guides and presenter notes distinguish all four execution hosts and host credentials', () => {
+  for (const [name, text] of [
+    ['sandbox guide', documentText('docs/sandboxing.md')],
+    ['ACA guide', documentText('docs/aca-sandboxes.md')],
+    ['setup notes', applyNoteFactOverrides('s07-agent-setup', '')],
+    ['C4 notes', applyNoteFactOverrides('demo-c4', '')],
+    ['handoff appendix notes', applyNoteFactOverrides('a-handoffs', '')]
+  ]) {
+    for (const pattern of [
+      /OS\/MXC/, /GitHub-managed Copilot cloud sandboxes/,
+      /customer-managed ACA MicroVMs/i, /hosted Apps\/Jobs/,
+      /not MicroVMs/, /coordination\/configuration/, /not a sandbox product/,
+      /no sandbox verb/, /worktree\/tool filter does not isolate credentials/,
+      /sign-in, storage.*egress/i, /never copy host authentication/i
+    ]) assert.match(text, pattern, `${name} retains ${pattern}`);
+    assert.doesNotMatch(text, /(?:^|\n|`|<code>)\s*(?:squad sandbox|\/squad sandbox)\b/i,
+      `${name} must not offer an unsupported Squad sandbox command`);
+  }
+});
+
+test('documented cloud preview is not claimed available in local 1.0.94 help', () => {
+  for (const [name, text] of [
+    ['sandbox guide', documentText('docs/sandboxing.md')],
+    ['feature guide', documentText('docs/feature-guide.md')],
+    ['setup notes', applyNoteFactOverrides('s07-agent-setup', '')]
+  ]) {
+    for (const pattern of [
+      /1\.0\.94/, /does not expose|Neither.*(?:exposes|exposed)/, /--cloud/,
+      /documented preview\/account-build gate/i, /interactive-only/,
+      /never (?:with|combine it with)/i
+    ]) assert.match(text, pattern, `${name} retains documented-versus-installed availability: ${pattern}`);
+    const literalCommands = [
+      ...codeBlocks(text),
+      ...[...text.matchAll(/^```[^\n]*\n([\s\S]*?)^```[ \t]*$/gm)].map(match => match[1])
+    ];
+    for (const command of literalCommands) {
+      assert.doesNotMatch(command, /copilot --cloud[^\n]*\s-(?:p|i)\b/,
+        `${name} must not recommend cloud batch/initial-prompt mode`);
+    }
+  }
+  const guide = documentText('docs/sandboxing.md');
+  for (const pattern of [
+    /off by default/, /Allow local network/, /honoring the proxy/,
+    /best-effort/, /remote MCP servers are not sandboxed/,
+    /offers `ca`, not `status`/, /paid usage includes stopped storage/,
+    /autoSuspend is not a hard active timeout or credential revocation/
+  ]) assert.match(guide, pattern);
+  for (const text of [guide, documentText('docs/feature-guide.md'), applyNoteFactOverrides('s07-agent-setup', '')]) {
+    for (const pattern of [
+      /copilot help sandbox/, /one-session/, /--sandbox/, /backend\/session preflight/,
+      /26300/, /OS metadata, not successful.*backend operation/
+    ]) assert.match(text, pattern, `local flag is installed-help documentation, not backend proof: ${pattern}`);
+  }
+});
+
+test('blocked Corp qualification and intended in-VM Squad variant stay explicitly unqualified', () => {
+  for (const [name, text] of [
+    ['ACA guide', documentText('docs/aca-sandboxes.md')],
+    ['run plan', documentText('docs/run-plan.md')],
+    ['C4 notes', applyNoteFactOverrides('demo-c4', '')],
+    ['generated C4', documentText('presentation/index.html')
+      .match(/<section\b[^>]*id="demo-c4"[^>]*>([\s\S]*?)<\/section>/)?.[1] ?? '']
+  ]) {
+    for (const pattern of [
+      /qualification blocked|blocked on an unexpected change-type check/i,
+      /no apply performed/, /8\/11|8 present/, /Data Owner grants(?: were)? absent|Data Owner grants.*missing/,
+      /403\/exit 1|403 with exit 1/,
+      /no successful Corp sandbox creation\/runtime test/i,
+      /full CLI\+Squad execution inside a MicroVM/,
+      /host(?:ed| installs| installation)/i
+    ]) assert.match(text, pattern, `${name} must not relabel host/partial deployment as MicroVM success: ${pattern}`);
+    assert.doesNotMatch(text,
+      /Corp (?:MicroVM|sandbox) (?:creation|runtime(?: test)?|acceptance|qualification) (?:passed|succeeded|qualified|validated)|full CLI\+Squad (?:ran|executed) inside (?:a |the )?(?:Corp )?MicroVM/i,
+      `${name} must not add affirmative Corp runtime/full CLI claims`);
+  }
+  for (const [name, text] of [
+    ['sandbox guide', documentText('docs/sandboxing.md')],
+    ['ACA guide', documentText('docs/aca-sandboxes.md')],
+    ['C4 notes', applyNoteFactOverrides('demo-c4', '')]
+  ]) {
+    assert.match(text, /intended in-MicroVM installation\/execution variant/,
+      `${name} keeps the requested potential variant`);
+    assert.match(text, /not a fifth product/);
+    assert.match(text, /not currently executed or qualified/);
+  }
+});
+
+test('hosted Jobs notes keep current placement separate from historical runs and runner readiness', () => {
+  const texts = [
+    ...['docs/run-plan.md', 'docs/talk-track.md', 'docs/talking-points.md', 'haflidi-overview.html']
+      .map(path => [path, documentText(path)]),
+    ['consumer notes', applyNoteFactOverrides('s20-consumer', '')]
+  ];
+  for (const [name, text] of texts) {
+    for (const pattern of [
+      /Corp, Norway East placement/, /historical Oct 9/, /56 seconds/,
+      /Manual/, /7200-second/, /no registered target runners/i,
+      /invitation (?:is |remains )?pending|private invitation pending/i,
+      /fresh queue-driven readiness is not established/i,
+      /README-only/, /Manual runner execution ended terminal Failed/,
+      /associated issue queue workflow remains queued/,
+      /53:00-54:30/, /55:00-58:00/, /Management-side MicroVM/,
+      /historical (?:variable-cost )?estimate/i, /not a current.*(?:bill|measured)/i
+    ]) assert.match(text, pattern, `${name} retains hosted placement/runtime/cost scope: ${pattern}`);
+    assert.doesNotMatch(text,
+      /current run evidence is under Management|current evidence is from Management|Norway East under Management/i);
+    assert.doesNotMatch(text, /caj-[a-z0-9-]+|\/subscriptions\/[0-9a-f-]{36}/i,
+      `${name} must not publish raw private job/workflow identifiers`);
+  }
+});
+
+test('live consumer provenance stays distinct from the unchanged copied teaching module', () => {
+  for (const [name, text] of [
+    ...['README.md', 'docs/source-provenance.md', 'docs/run-plan.md', 'handoff.md']
+      .map(path => [path, documentText(path)]),
+    ['baseline notes', applyNoteFactOverrides('s03-baseline', '')],
+    ['consumer notes', applyNoteFactOverrides('s20-consumer', '')]
+  ]) {
+    for (const pattern of [
+      /live demo consumer/i, /martinopedal\/aks-automatic-demo-env/,
+      /martinopedal\/terraform-azapi-aks-automatic/, /v0\.6\.0/,
+      /teaching module/, /alz-avm-tf-demo\/terraform-azapi-aks-automatic-corp/,
+      /pin.*manifest|manifest.*pin/
+    ]) assert.match(text, pattern, `${name} must retain consumer/source-copy roles`);
+  }
+  const readme = documentText('README.md');
+  assert.ok(readme.indexOf('The live demo consumer') < readme.indexOf('b01256eb'),
+    'README foregrounds the live consumer without replacing the teaching-copy pin');
+  for (const value of ['b01256eb9b1ea6046b9bb8a403662f724a7b6fa7', '068e88ecc484ba4b4c4353653c1be7a99e8b5ab8']) {
+    assert.ok(documentText('terraform/module-source.json').includes(value),
+      `source-copy manifest retains ${value}`);
+  }
+});
+
+test('readiness does not turn one laptop, historical checks or dated obligations into all green', () => {
+  const text = documentText('docs/run-plan.md');
+  for (const pattern of [
+    /one laptop|one host/, /18\/18/, /46\/46/, /PowerShell 7 and 5\.1/,
+    /B1 clean VM/, /B2 both presenter hosts/, /B3 full 60-minute rehearsal/,
+    /B4 private target invitation/, /B5 current NIC listing/, /Unknown/,
+    /Oct 13 warmup\/reset/, /Oct 17 teardown \/ Oct 31 expiry/,
+    /Pool A1\/Dependabot/, /live Pages remains 0\.22\.2/i,
+    /source-only correction/, /34\/34/, /not a new Azure plan or deployment/,
+    /artifact suite 85\/85/, /runtime suite 31\/31/, /source\/tooling checks/,
+    /no new sealed manifest\/raw exact deltas/i, /no new apply established/,
+    /workflow 17\/17/, /checkout 10\/10/, /toolchain 12\/12/, /GitHub-script 10\/10/,
+    /two Linux smokes skipped on Windows/,
+    /both existing clusters independently read back through Azure MCP/i,
+    /not TLS certificate validation or a fresh 29-check security suite/i
+  ]) assert.match(text, pattern);
+  assert.doesNotMatch(text, /all (?:infrastructure|sandboxes|readiness gates) (?:is |are )?(?:deployed|passed|green)/i);
+});
+
+test('repo map identifies canonical public sources and private target boundaries', () => {
+  const map = documentText('docs/repositories.md');
+  for (const repo of [
+    'martinopedal/squad-terraform-session-2026-10-14',
+    'martinopedal/aks-automatic-demo-env',
+    'martinopedal/terraform-azapi-aks-automatic',
+    'alz-avm-tf-demo/terraform-azapi-aks-automatic-corp',
+    'haflidif/squad-on-aca'
+  ]) assert.ok(map.includes(`https://github.com/${repo}`), `map links ${repo}`);
+  for (const pattern of [
+    /not the live environment deployment entry/,
+    /independently reusable \*\*public\*\* Corp/i,
+    /module-public/, /target, not the hosted service implementation/i,
+    /Public docs alone cannot run/, /private deployment boundary/,
+    /not.*created.*deployed.*tested/i, /Leave Corp resources untouched/,
+    /separate.*resource group/i, /standard managed-network quickstart if policy allows/i,
+    /not a transplant of Corp BYO VNet\/UAMI\/FIC/
+  ]) assert.match(map, pattern);
+});
+
+test('current placement and corrected cluster scoring preserve working resources and evidence limits', () => {
+  const nativeRows = documentText('docs/sandboxing.md').split(/\r?\n/)
+    .filter(line => /^\| Customer-managed ACA MicroVMs via `aca` \|/.test(line));
+  assert.equal(nativeRows.length, 1, 'execution-host table has one customer-managed native ACA row');
+  const [nativeRow] = nativeRows;
+  const nativeStatus = nativeRow.split('|')[3].trim();
+  const assertNativePlacement = row => {
+    const status = row.split('|')[3].trim();
+    assert.match(status, /Existing Online placement is primary for eligible demos/i,
+      'native ACA status keeps the primary placement decision');
+    assert.match(status, /new separate native group\/RG remains proposed and unqualified/i,
+      'only the new native group/RG remains proposed and unqualified');
+    assert.doesNotMatch(status, /\bfallback\b/i,
+      'native ACA status must not reclassify primary Online placement as fallback');
+  };
+  assertNativePlacement(nativeRow);
+  for (const [name, wrongStatus] of [
+    ['rejected row with nonadjacent Online/fallback', nativeStatus.replace(
+      /Existing Online placement.*$/,
+      'Existing Online placement is a proposed, unqualified fallback')],
+    ['reordered fallback placement', nativeStatus.replace(
+      'Existing Online placement is primary for eligible demos',
+      'Fallback placement for eligible demos is Online')],
+    ['contradictory fallback despite a primary claim', `${nativeStatus} Online placement is a fallback.`],
+    ['unproved new-group qualification', nativeStatus.replace(
+      'proposed and unqualified', 'deployed and qualified')]
+  ]) {
+    assert.notEqual(wrongStatus, nativeStatus, `${name} mutates the actual native ACA status`);
+    assert.throws(() => assertNativePlacement(nativeRow.replace(nativeStatus, wrongStatus)),
+      { code: 'ERR_ASSERTION' }, `${name} must be rejected by the same row assertions`);
+  }
+  for (const [name, text] of [
+    ...['README.md', 'docs/source-provenance.md', 'docs/run-plan.md', 'docs/talk-track.md',
+      'docs/talking-points.md', 'docs/sandboxing.md', 'haflidi-overview.html']
+      .map(path => [path, documentText(path)]),
+    ['current consumer notes', applyNoteFactOverrides('s20-consumer', '')],
+    ['current C4 notes', applyNoteFactOverrides('demo-c4', '')]
+  ]) {
+    const prose = text.replace(/\s+/g, ' ');
+    assert.match(prose, /primary (?:Online )?(?:eligible demo )?placement|Online is primary|Online.*primary/i, name);
+    assert.doesNotMatch(prose, /Online (?:ACA )?fallback/i, name);
+    if (name !== 'current C4 notes') {
+      for (const pattern of [
+        /26 PASS\s*\/\s*2 BLOCKED\s*\/\s*1 report-only/,
+        /10 PASS\s*\/\s*1 FAIL/, /1 NOT_APPLICABLE/,
+        /direct-pod/, /demo RG/, /not 11 cluster failures/,
+        /full (?:cluster )?health.*unproved/i
+      ]) assert.match(prose, pattern, `${name} retains ${pattern}`);
+      assert.doesNotMatch(prose, /10 PASS\s*\/\s*2 FAIL/);
+    }
+  }
+  for (const path of ['README.md', 'docs/source-provenance.md', 'docs/demo-runbook.md']) {
+    assert.match(documentText(path), /visibility.*placement|placement.*visibility/is, path);
+  }
+  assert.match(documentText('README.md'), /Preserve existing working AKS, Corp and hosted Jobs/);
+});
+
+test('native coverage rejects wrong-target doctor and separates basic host orchestration from optional in-VM execution', () => {
+  const guide = documentText('docs/aca-sandboxes.md');
+  for (const pattern of [
+    /https:\/\/sandboxes\.azure\.com\/docs\/sandboxes\/quickstart\/setup-cli/,
+    /Host CLI version/, /Host token authentication/, /tokens only/,
+    /WRONG TARGET|Wrong-target warning/, /9\/9.*exit 0/,
+    /cached Management\/Norway East/, /Compare the printed/,
+    /independently read back the exact resource ID/, /no config change/i,
+    /Explicit Online target/, /Effective Data Owner/, /Targeted doctor/,
+    /MicroVM create\/list\/get\/delete/, /Exec \//, /Filesystem \//,
+    /Egress \//, /Suspend\/resume/, /Offline Terraform/,
+    /Host Copilot CLI\/Squad remote orchestration/, /Optional in-VM Copilot/,
+    /COMPLETED/, /BLOCKED/, /PENDING/,
+    /need not themselves run inside the MicroVM/,
+    /No working Online MicroVM or host-orchestrated integration is established/
+  ]) assert.match(guide, pattern, `coverage retains ${pattern}`);
+  const c4 = applyNoteFactOverrides('demo-c4', '');
+  for (const pattern of [
+    /separate group\/RG/, /not inside AKS or hosted Jobs\/runner/,
+    /WRONG TARGET/, /no apply performed/, /host.*orchestrat/i,
+    /prompt.*tool.*trace/i, /not a four-minute promise/
+  ]) assert.match(c4, pattern);
+});
+
+test('two product flows retain separate triggers, integration evidence, cuts and ownership', () => {
+  const cards = documentText('docs/demo-runbook.md');
+  for (const pattern of [
+    /Two product demo flows: hosted Squad and native ACA Sandboxes/,
+    /Card A: Haflidi hosted Squad on ACA, issue to bot PR/,
+    /Card B: native ACA Sandboxes/,
+    /haflidif\/squad-on-aca/, /<approved-private-target>/,
+    /selected Squad\/skill/, /validator\/reviewer handoff/,
+    /standalone.*prerequisite tests/i, /not a four-minute promise/,
+    /Hard cut 54:30/, /cut 32:30/, /No-GO|NO-GO/,
+    /advanced optional/, /not mandatory for the basic/,
+    /Cleanup/, /Login/, /Expected proof/
+  ]) assert.match(cards, pattern, `operator cards retain ${pattern}`);
+  for (const path of ['docs/run-plan.md', 'docs/talk-track.md', 'docs/talking-points.md', 'haflidi-overview.html']) {
+    const text = documentText(path);
+    for (const pattern of [
+      /Card A|operator cards/i, /Card B|native ACA/i,
+      /host.*(?:orchestrat|Copilot)/i, /in-MicroVM|inside.*MicroVM/,
+      /registration/, /no.*current.*Haflidi-authored|no current Haflidi-authored/i,
+      /fresh.*(?:cluster validation|full Online.*validation)/i,
+      /no.*(?:renewed 29\/29|full TLS)/i
+    ]) assert.match(text, pattern, `${path} retains ${pattern}`);
   }
 });
 

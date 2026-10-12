@@ -1,11 +1,16 @@
 # Public project handoff
 
-Updated October 9, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
+Haflidi original `haflidif/squad-on-aca` is implemented/previously demonstrated;
+leave source/deployment alone. Current fresh personal target registration/access/
+rehearsal is separate, not proof original is broken/missing and not native
+Sandbox prerequisite. Native integration is remaining build, source preparing.
+
+Updated October 12, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
 
 ## Current result
 
-- Reveal.js presentation version **0.22.2**. Presentation metadata reports **39 slides total**, including the untimed legal/pre-show slide, the timed main flow, and the appendix.
-- A six-slide companion deck is built at `presentation\short\index.html`.
+- Local Reveal.js presentation version **0.22.4**, full docs/notes pass pending independent review/release; prior accepted uncommitted 0.22.3 preserved, live Pages remains 0.22.2. Presentation metadata reports **39 slides total**, including the untimed legal/pre-show slide, the timed main flow, and the appendix.
+- A six-slide companion deck ending in the Thank you slide (no Links slide) is built at `presentation\short\index.html`.
 - Current delivery contract: **3:00 intro; planned content to about 55:00; 55:00-58:00 protected recovery block; 58:00-60:00 close**. The planned content includes **29:00 of live C0-C7 demo chapters** and the rest as live explanation. Questions are only if time allows. There is no scheduled Q&A block. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
 - Live-demo rule: **C0-C7 are live**, with optional reviewed fallback evidence if a chapter fails live.
 - Sessionize copy, feature guide, prompt pack, repeatability eval, and the C0-C7 operator runbook are present in the public repository.
@@ -15,6 +20,7 @@ Native profile selection and full human rehearsal remain separate verification g
 
 ## Public locations
 
+- [Repository map: clone/read/change and private boundary](docs/repositories.md)
 - [Live Reveal presentation](https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/)
 - [Session repository](https://github.com/martinopedal/squad-terraform-session-2026-10-14)
 - [Reusable module repository](https://github.com/martinopedal/terraform-azapi-aks-automatic)
@@ -29,7 +35,7 @@ Native profile selection and full human rehearsal remain separate verification g
 - [C0 clean-machine demo](docs/clean-machine-demo.md)
 - [Bootstrap guide](docs/bootstrap.md)
 
-The module is pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. Its 35-file Git tree is `068e88ecc484ba4b4c4353653c1be7a99e8b5ab8`. The copy under `terraform/modules/aks-automatic-corp` must retain that same tree.
+The live demo consumer is `martinopedal/aks-automatic-demo-env`, pinning `martinopedal/terraform-azapi-aks-automatic` by `v0.6.0`. The separate copied Corp teaching module from `alz-avm-tf-demo/terraform-azapi-aks-automatic-corp` remains pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. Its 35-file Git tree is `068e88ecc484ba4b4c4353653c1be7a99e8b5ab8`. The copy under `terraform/modules/aks-automatic-corp` and its manifest must retain that same binding.
 
 ## Verified and unverified
 
@@ -42,12 +48,59 @@ The module is pinned to `b01256eb9b1ea6046b9bb8a403662f724a7b6fa7`. Its 35-file 
 | Earlier presentation checks | Ten media-policy tests, 99 browser/content checks, and slide/fragment captures across two resolutions. The updated evidence slide was visually inspected. These counts describe earlier evidence, not the current revision's test run. |
 | Earlier deck 0.22.0 checks, October 9 | 39 Node tests passed, including the actual bootstrap script with controlled native-executable mocks. The short deck passed 43 browser checks across 10 captures; the full deck passed 102 interaction/content checks across 88 captured states at two resolutions. The static setup checker and its 45 tests passed. These are local checks, not clean-VM/manual-login rehearsal or new Azure validation. |
 | Earlier deck 0.22.1 checks, October 9 | 40 Node tests passed. The short deck passed 43 browser checks across 10 captures; the full deck passed 102 interaction/content checks across 88 captured states. The static setup checker and its 45 tests passed again. This revision corrects Azure MCP documentation dates and sources, qualifies legacy annual billing, and replaces machine-specific checkout examples. The separate clean-VM/manual-login and Corp gates remain open. |
-| Deck 0.22.2 checks, October 9 | 41 Node tests passed. The short deck passed 43 browser checks across 10 captures; the full deck passed 102 interaction/content checks across 88 captured states at two resolutions. Removing the C4 qualification note from the real source failed the new regression as intended; restoration passed. Generated hashes, five/39 slide counts, unchanged on-screen markup, and 55:00/3:00/2:00 timing were checked. These are local presentation checks, not a Corp deployment, actual-authentication check, or clean-VM/manual-login rehearsal. |
+| Earlier deck 0.22.2 checks, October 9 | 41 Node tests passed. The short deck passed 43 browser checks across 10 captures; the full deck passed 102 interaction/content checks across 88 captured states at two resolutions. Removing the C4 qualification note from the real source failed the new regression as intended; restoration passed. Generated hashes, five/39 slide counts, unchanged on-screen markup, and 55:00/3:00/2:00 timing were checked. These are local presentation checks, not a Corp deployment, actual-authentication check, or clean-VM/manual-login rehearsal. |
+| Local deck 0.22.3 checks, October 12 | Build passed; 47 Node tests, 43 short-deck browser checks across 10 captures, and 102 full-deck interaction/content checks across 88 states at two resolutions passed. Static setup checker and 45 tests passed; exact non-note slide objects and all eight on-screen demo blocks match the previous source. Real-source mutations removing a host distinction, claiming Corp MicroVM runtime passed, and misplacing hosted Jobs under Management each failed the intended guard; all mutations were restored. Five/39 slides, 29 demo minutes, C4 32:30 cut and 55:00/3:00/2:00 clock are unchanged. These are presentation/source-safety checks, not runtime/authentication/rehearsal or release evidence. |
+| Local deck 0.22.3 receipt follow-up, October 12 | Rebuild passed after installed-help/local-flag, source/proposal-only capture and failed hosted-smoke updates. All 23 targeted media/short-deck Node tests, 43 short-browser checks and 102 full-browser checks passed; on-screen slide objects/demo blocks, clocks and protected sources remain identical. The earlier 47-test full Node and 45-test static setup runs above remain separately scoped evidence. No new backend, Azure deployment, MicroVM runtime, hosted end-to-end success or publication is inferred. |
 | Hosted module CI | Terraform matrix run 36990206303 passed at b7133679a89b1e2b36677400d659a03907c0f3f6; native agent setup passed run 37286068987 at 00787f59ac19e3db0c3869a96ff45805c6cb523d; final module run 37286237657 passed at 02e10e56bc15cc30c3193dce3ddc8e608cb87daf; Azure-validation docs release run 37305768318 passed at b01256eb9b1ea6046b9bb8a403662f724a7b6fa7. |
-| Azure | **Privately validated.** Private IaC PR workflow planned, environment-approved, applied, and read back runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized public facts only. |
+| AKS Azure, historical October 5 | **Privately validated for that run.** Private IaC PR workflow planned, environment-approved, applied, and read back runtime module commit `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; sanitized public facts only. Not current sandbox or hosted Jobs acceptance. |
+| October 12 native tools / one laptop | Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-preview.4, enabled official plugin 0.0.5-beta; corrected read-only laptop preflight 18/18 PASS. Banner terminal-period helper fix passed 46/46 controlled regressions and three harmless native helper checks on each PowerShell 7 and 5.1. Not both hosts, clean VM/manual sign-in or rehearsal. |
+| Installed local sandbox help | `copilot help sandbox` explicitly documents one-session `--sandbox` despite top-level-help omission. Needs actual backend/session preflight; Windows build 26300 is OS metadata, not successful backend operation. Native interactive `/sandbox enable` and `/sandbox status` remain documented controls. |
+| October 12 current Corp qualification | Source correction merged; new qualification blocked on an unexpected change-type check; no apply performed. Last baseline 8 present / 3 absent: group exists, default VNet connection and two presenter Data Owner grants missing. No new sealed manifest/raw exact deltas; full convergence/access and in-MicroVM CLI/Squad unproved. Private diagnostic retention repair is separate, not deployment or scope weakening. |
+| Proposed native Online MicroVM target | Confirmed separate group/RG, not AKS/hosted Jobs. Lead proposes demo-env `deployments\aca-sandboxes-online` and sandbox-only workflow/protected `online` environment, not existing/deployed. Managed network if policy allows, no Corp BYO VNet/UAMI/FIC transplant. Actor authority/new exact scope/source/plan qualification pending; no apply/runtime acceptance. Corp untouched, not a proven placement fix. |
+| Earlier October 12 source/tooling checks | Contracts 34/34, artifact suite 85/85, runtime suite 31/31, workflow 17/17, checkout 10/10, toolchain 12/12 and GitHub-script 10/10 passed, two Linux smokes skipped on Windows. These precede the blocked qualification; no runtime/apply claim. |
+| October 12 host auth / wrong-target doctor | ACA 1.0.0-preview.4 auth status exit 0: ARM/data-plane tokens authenticated. Doctor returned 9/9 exit 0 but printed cached Management/Norway East rather than requested Corp. Not selected-target acceptance; compare printed target and independent exact-ID read-back. No config change, Management fallback or create authorized. |
+| October 12 local / optional GitHub cloud | Actual local Windows MXC startup exit 1 before command on proxy/masking/auth loopback/private-network requirement; policy blocked, no bypass/global change. Explicit cloud help parse exit 0 is not account/billing/runtime or full-Squad proof. |
+| October 12 hosted Squad Apps/Jobs | `haflidif/squad-on-aca` is the public authored implementation; private queue/issue/bot-PR target is not implementation source. Corp, Norway East placement verified; two succeeded historical Oct 9 agent-job executions lasted 56 seconds, historical shared demo only. Manual target runner with 7200-second timeout, no registered target runners today, private target invitation pending acceptance/current read-back. Scoped README-only smoke: Manual runner execution ended terminal Failed after image pull and short-lived registration failure; associated issue queue workflow remains queued. Fresh issue open, no open PRs at 10:28 UTC; fresh queue-driven readiness is not established. No new Haflidi-authored technical confirmation; request fresh sanitized chain evidence. |
+| October 12 AKS / app read-back | Both existing Online and Corp clusters independently read through Azure MCP: Automatic SKU/Standard tier, provisioning Succeeded, power Running; no redeploy indicated by metadata. Online app GET returned HTTP 200 and branded NIC/AKS text with explicit known-demo certificate bypass, not TLS certificate validation or a fresh 29-check security suite. Nodepool/full-runtime qualification remains separate. |
 | Short deck | Six slides build from the same pinned runtime, theme, and public source links. |
 
 See [the module evidence summary](terraform/modules/aks-automatic-corp/VALIDATION.md). Local mocks do not establish private DNS, firewall routing, RBAC, policy compliance, or Azure service acceptance.
+
+Squad is coordination/configuration over the hosting Copilot session, not a sandbox product. [Four sandbox hosts](docs/sandboxing.md) distinguishes local OS/MXC, optional GitHub-managed cloud preview, native customer-managed ACA MicroVMs and hosted Apps/Jobs. Separately keep four demo lanes independent: existing Online AKS, native MicroVM group/RG, hosted Jobs issue-to-PR and local sandbox. Cloud account/runtime availability is unqualified. Squad inside a customer-managed ACA MicroVM is an intended in-MicroVM installation/execution variant, not currently executed or qualified. Host installation is not process/agent/prompt proof; supported sign-in/storage/egress need separate consent without copying host authentication.
+
+The [official quickstart and full test checklist](docs/aca-sandboxes.md#full-test-coverage-checklist)
+cover target/access/doctor, lifecycle/exec/fs/egress/suspend/resume, offline
+Terraform and actual in-VM Copilot/Squad. Auth status, green wrong-target doctor,
+18/18 laptop checks, hosted Jobs or AKS metadata cannot close those runtime gates.
+USD 20 total through October 31 is an alert, not a hard cap; retained Corp consumes
+budget. Oct 13 C1 OnlineSecurity 29/DemoVM and C2 MCP minreplicas 1/revert Oct 14
+remain scheduled. Teardown Oct 17/credential expiry Oct 31 require separate proof.
+
+Two product demo flows are planned, not executed: [hosted Squad agent work to
+bot PR and host Copilot CLI/Squad-driven native isolation](docs/demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
+The host/VM is only presenter detail. Native acceptance needs actual host
+prompt/selected Squad/ACA skill/tool/output/validation/reviewer handoff, not
+standalone hello/lifecycle or hosted Jobs. Advanced CLI/Squad inside a MicroVM
+has separate supported auth/install/runtime consent and proof; it is optional,
+not required for the basic remote-orchestration claim. No current integration GO.
+Fresh full existing Online AKS validation at 10:47 UTC: app/source-matching
+assets and two responding replicas PASS under explicit TLS bypass. Canonical
+26 PASS/2 BLOCKED/1 report-only, not 29/29; corrected supplemental
+10 PASS/1 FAIL (untrusted/mismatched TLS)/1 NOT_APPLICABLE (external `/healthz`;
+source requires direct-pod `/healthz` 200 `ok`, not that external route).
+Native Kubernetes access unavailable/ResourceHealth provider unregistered;
+Full cluster health unproved. Eleven noncompliant resources are scoped to the
+demo RG across AKS/network/state, not 11 cluster failures/subscription-wide.
+No renewed 29/29/full TLS; C1 Oct 13 remains. Online is primary placement for
+eligible demos, not fallback/policy escape; Corp-required private workloads
+stay Corp. Repo visibility is separate from network/authenticated control-plane
+scope. Preserve working AKS/Corp/hosted Jobs; no checklist redeploy or automatic
+cluster repair. Five-object separate Online native setup and one credential-free
+Ubuntu 1 CPU/2 GiB ten-minute probe/new-test-ID-only deletion have scope approval;
+source implementation preparing, actor/policy/budget/new plan/exact manifest
+still qualify. No native deployment/runtime/integration or inside-VM OAuth PASS.
+
+The [readiness table](docs/run-plan.md#october-12-readiness-evidence) retains B1 clean VM, B2 both-host interactive checks, B3 full 60-minute rehearsal, B4 pending invitation, B5 exact NIC listing unknown, Oct 13 warmup/reset, Oct 17 teardown and Oct 31 expiry. Pool A1/Dependabot are held for their own review, not auto-merged. No recording, full rehearsal, new Pages publication or complete current deployment is claimed.
 
 ## Resume presentation work
 
@@ -64,8 +117,6 @@ For the existing Windows development environment:
 ```powershell
 Set-Location .\presentation
 npm run build
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 npm test
 ```
 
