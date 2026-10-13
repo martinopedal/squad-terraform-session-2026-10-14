@@ -156,10 +156,40 @@ All commands run in PowerShell 7.
 - [ ] `.\scripts\Test-PresenterLaptop.ps1` passes except unpublished-deck checks
 - [ ] Leakage checklist (section 7) done on the laptop too; it is a corporate device, so mind browser profile and signed-in accounts
 
-## 9. Day-of timeline
+## 9. Snapshot and rehearsal
+
+Order: pre-snapshot checks, snapshot, rehearse C0-C7 once, restore, post-restore check. Take the snapshot BEFORE rehearsing C0-C7.
+
+- [ ] Pre-snapshot state, all must hold:
+  - `TFMCP_KEY` set as a User environment variable, length 43 (check length only, never print it)
+  - terraform 1.16.5, TFLint 0.64.0, Git and Copilot CLI present
+  - squad CLI NOT installed (host prep prompt runs without the Squad CLI by design, confirmed by Haflidi)
+  - `$HOME\demo\aks-module` absent
+  - `C:\demo\checkpoints\take-20261014` has `A`, `B`, `guided`, `evidence`, `offline`
+  - `terraform.tfrc` is `filesystem_mirror` only (no `direct`)
+  - no `ARM_`, `AZURE_`, `TF_VAR_` or `TF_CLI_ARGS` environment variables
+  - `git status` in `C:\demo\session-repo` shows only the two locally modified profiles (`terraform-coder`, `terraform-reviewer`, remote MCP edit, never pushed)
+  - `gh` is not installed on the VM and is not needed (C0 clones public repos anonymously)
+  - Copilot CLI is logged in
+  - remote Terraform MCP (ACA) for the VM is known and agreed by Martin (confirmed by Haflidi); keep the endpoint up and do not rotate the key until after the session
+  - throwaway clone of `terraform-azapi-aks-automatic` worked and was deleted
+- [ ] Under Squad, `/agent` shows Squad plus the three `terraform-*` project agents
+- [ ] Under Squad, `/mcp` shows only the built-in GitHub server (expected). The `terraform` and `microsoft-learn` servers appear only under `terraform-coder` or `terraform-reviewer`
+- [ ] Close all Copilot and PowerShell windows
+- [x] Take the VM snapshot. Real name: `demo-ready-20261310-133943` (the suggested `pre-session-20261013` was not used). Taken 2026-10-13 13:43 UTC (15:43 CEST) from the VM OS disk; VM left deallocated afterwards
+- [ ] The snapshot contains `TFMCP_KEY`: keep it private, never share it, rotate the key after the session
+- [ ] Rehearse C0-C7 once, then restore the snapshot. Takes are never reused, so a used take cannot be re-run
+- [ ] After restore, from `C:\demo\session-repo`: `copilot --agent terraform-reviewer -p "Reply with exactly: READY"`; expect `READY`
+- [ ] The runbook wording "network-restricted" does not mean real network isolation in this demo; it only shows wrong parameters or changes. Network isolation is not a prep step here (runbook left unchanged)
+- [ ] Open questions for Martin (none block the snapshot):
+  - Who types on the VM during Martin's chapters?
+  - Rule for switching to the laptop backup
+  - C7 driver: the short sheet says Haflidi, `run-plan.md:90` says Martin drives the handoff
+
+## 10. Day-of timeline
 
 - [ ] T-60: VM reachable; remote Terraform MCP connected (`/mcp`, key set); laptop only: Docker running, image pulled; `tflint --version` 0.64.0; clones clean; take A/B/guided and `offline` mirror exist (UNKNOWN: exact T-60 items are not in the sources)
 - [ ] T-30: `Test-DemoVm.ps1`, then `Connect-DemoVm.ps1` (Bastion RDP); notifications off, 125% scaling, PowerShell 7 tab open, terminal zoomed (source: clean-machine-demo.md)
-- [ ] T-30: preflight `READY`, `/agent` three profiles, `/mcp` two servers
+- [ ] T-30: preflight `READY`, `/agent` three profiles; `/mcp` under Squad shows only the built-in GitHub server, and `microsoft-learn` and `terraform` appear connected only under `terraform-coder` or `terraform-reviewer`
 - [ ] T-10: Copilot started from `C:\demo\session-repo` or worktree, `/cwd` confirms; no secrets in clipboard; leakage checklist reviewed. T-10 timing itself UNKNOWN
 - [ ] 07:45 session clock: C0 cut line. Do not spend recovery on installs
