@@ -140,6 +140,8 @@ close stay in the [full track](talk-track.md).
 **Current gate:** HELD on publisher/image/auth/chain/human rehearsal. This is the
 qualified recipe, **not permission to run it now**; original service stays untouched.
 VM root `C:\demo\hosted-target` must be operator-created/verified.
+**PREP:** [create/verify that approved target clone](demo-runbook.md#hosted-target-preparation);
+resolve its existing issue/App binding privately before the RUN steps below.
 
 1. **Browser, approved target Issues:** open the existing approved README task;
    compare its exact body with [hosted workload brief](prompt-pack.md#original-hosted-squad-issue-to-pr-work).
@@ -170,6 +172,9 @@ VM root `C:\demo\hosted-target` must be operator-created/verified.
 **Current gate:** accepted engineering, but **no current prepared sandbox ID,
 guest staging or human stage GO established**. The earlier sandbox was deleted.
 Host CLI/Squad controls an existing MicroVM; no guest agents or host-token copy.
+**PREP:** [VM public-root creator](demo-runbook.md#create-and-verify-the-agreed-vm-layout)
+then [off-stage exact LF fixture staging](demo-runbook.md#native-fixture-staging);
+the existing operator supplies the separately approved prepared sandbox and GO.
 
 1. **Shell, VM `C:\demo\session-repo`:** run
    [prepared-ID/source precheck](demo-runbook.md#native-prepared-id-and-source-precheck);
@@ -180,7 +185,8 @@ Host CLI/Squad controls an existing MicroVM; no guest agents or host-token copy.
 2. **TUI:** paste the [basic fixture prompt](prompt-pack.md#native-basic-fixture-paste).
    Invoke `aca-sandboxes`, inspect each exact-ID request, approve
    `sh /root/native-validation.sh` **once**, then `/root/native-result.json`
-   filesystem readback. Expect real MicroVM work, not auth/doctor status.
+   filesystem readback using [exact exec/fs/exit23 argv](demo-runbook.md#native-fixture-run).
+   Expect real MicroVM work, not auth/doctor status.
 
 3. **TUI/returned output:** show three true checks, source/result SHA and
    numeric exit `0`, then the separately approved deliberate exit `23`.

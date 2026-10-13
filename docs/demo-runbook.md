@@ -107,6 +107,8 @@ not `reset`, `checkout`, or forced pull. Preserve Haflidi's incoming source.
 The separate clean C0 demonstration still needs actual absent tools/new clone
 and manual login; this prepared layout doesn't establish those preconditions.
 
+<a id="hosted-target-preparation"></a>
+
 **Optional hosted checkout, off-stage and private:** `C:\demo\hosted-target`
 is the agreed target path, not verified on the VM. Only its operator may create
 it from the already approved private target URL. Never clone the implementation
@@ -405,6 +407,17 @@ Tests used disposable public-source roots, not the private coordinator or VM.
 | Credential-free C5/C7 offline Terraform/TFLint | MOCKED | Actual local commands: 52 module + 2 caller cases, intended private-API mutation fails then restored 52 pass/original hash. Providers mocked; not Azure acceptance. PowerShell 7 is the stage requirement, not a PS5 qualification claim. |
 | ACA auth/doctor/get/exec/fs/egress and hosted `gh`/Job observation flags | HELPONLY | Actual installed ACA preview.4 subcommand help/argument parsing, gh 2.101.0 App filter and Azure Job-list help checked; not a live target read/trigger. |
 | Hosted label/queue/Job/PR; current native prepared-ID/staged fixture/runtime | BLOCKED | No demo mutation or new runtime attempt: hosted chain/image/auth/GO held; native current ID/staging/human GO absent. Existing accepted engineering stays separately dated. |
+
+**Per-flow command inventory (new live RUN steps remain blocked):**
+
+| Flow / phase | Exact commands or UI / paste source | Coverage |
+| --- | --- | --- |
+| Hosted PREP | [target clone/root/origin/status](#hosted-target-preparation), operator-bound approved issue/App | Public clone mechanics EXECUTED only in disposable QA; private target/binding BLOCKED. |
+| Hosted RUN | `gh issue view`; `gh issue edit --add-label squad:ripley`; `gh pr list --app ... --head ...`, all in [one-label block](#hosted-one-label-trigger); [exact README workload body](prompt-pack.md#original-hosted-squad-issue-to-pr-work) | Flags HELPONLY; actual approved issue/read/label/PR private flow BLOCKED, no new issue or retry. |
+| Hosted SHOW | Poller/queue same-issue receipt → portal existing Job Executions; alternative `az containerapp job execution list`; GitHub PR Files changed → README | Job-list HELPONLY, queue/job/PR runtime BLOCKED; source CI/status isn't chain proof. |
+| Native PREP | [local 684-byte LF copy/hash](#native-fixture-staging); approved off-stage `aca sandbox fs write --id ... --path ... --file ...`; [dynamic `get` + guest source `fs cat`](#native-prepared-id-and-source-precheck) | Local fixture/staging/duplicate refusal EXECUTED; ACA argv HELPONLY; current guest staging/ID readback BLOCKED. |
+| Native RUN | `copilot --agent squad`; [exact basic host prompt](prompt-pack.md#native-basic-fixture-paste); [exact `aca sandbox exec`/`fs cat`/exit23 argv](#native-fixture-run) | Real selected host Squad/native Plan batch EXECUTED separately; current MicroVM positive/exit23 flow BLOCKED. |
+| Native SHOW / review | [one causal-denial exec/fs/egress block](#native-causal-denial-paste), source/result checks; validator → `/new`, `/agent terraform-reviewer` | Audit parsers/realistic negative cases MOCKED; ACA argv HELPONLY; current exact-sandbox result/audit and interactive reviewer handoff BLOCKED. |
 
 **Evidence method, not another stage action:** the independent test archived
 public source `4979eb4` into a disposable checkpoint, isolated Copilot configuration
@@ -922,6 +935,8 @@ The accepted run deleted its sandbox: **no current prepared ID is established**.
 The operator supplies a separately approved current ID; never reuse the
 historical deleted ID or create a replacement on stage.
 
+<a id="native-fixture-staging"></a>
+
 **Off-stage fixture staging, only after separate preparation consent.**
 Run on the VM after this reviewed source is available; this preserves the
 canonical bytes and rejects CRLF/hash mismatch:
@@ -1024,6 +1039,8 @@ source hash. Supply that captured nonsecret binding **privately in the host TUI*
 before the [basic fixture paste](prompt-pack.md#native-basic-fixture-paste);
 variables do not cross shell/TUI turns. Keep private target readback out of public
 source/evidence. This is a prerequisite, not the MicroVM result itself.
+
+<a id="native-fixture-run"></a>
 
 **Actual inspected positive/exit23 operations, only after that precheck and GO:**
 
