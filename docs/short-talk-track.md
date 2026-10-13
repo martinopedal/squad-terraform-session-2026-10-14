@@ -9,6 +9,8 @@ Squad → optional native Sandbox last. Extras never use recovery/close time.
 **Agent swaps:** use `/agent NAME` in the same Copilot TUI; do not start another
 CLI just to change agents. `/new` creates a fresh conversation where specified.
 Plan mode is separate from agent selection.
+**Who drives:** Haflidi runs C0. Who types and speaks in C1-C7 is decided
+between the two speakers and may swap between chapters (decided live, after rehearsal).
 
 ## Prepare once - Squad creates paths before you use them
 
