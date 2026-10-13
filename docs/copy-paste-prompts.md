@@ -193,7 +193,7 @@ Add one run block named alternate_network_payload to tests\contract.tftest.hcl. 
 
 ## C4
 
-Where: TUI, guided, Squad agent.
+Where: TUI, guided, Squad agent for step 1, then the reviewer agent for step 2 (read-only; check `/mcp` lists `microsoft-learn` connected). The MCP servers live on the profiles, Squad only coordinates.
 
 ```text
 /agent squad
@@ -201,10 +201,19 @@ Where: TUI, guided, Squad agent.
 
 ```text
 Invoke test-discipline now. Identify which existing contract assertions must
-remain unchanged during the mutation. Through the configured Microsoft Learn
-MCP, perform only a read-only search/fetch for AKS Automatic private/custom
-network requirements. Cite the source/version relevant to private API access
-and hosted-system subnets. Don't contact an Azure account or change providers.
+remain unchanged during the mutation.
+```
+
+```text
+/agent terraform-reviewer
+/mcp
+```
+
+```text
+Through the configured Microsoft Learn MCP, perform only a read-only search/fetch
+for AKS Automatic private/custom network requirements. Cite the source/version
+relevant to private API access and hosted-system subnets. Don't contact an Azure
+account or change providers.
 ```
 
 ## C5

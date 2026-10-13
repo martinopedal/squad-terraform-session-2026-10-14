@@ -208,14 +208,20 @@ Show actual starts/handoffs and one changed test/four asserts/error messages.
 
 ## C4 - base skill and source only
 
-**TUI, guided:** `/agent squad`; paste the test-discipline/MCP request ([source](prompt-pack.md#c4---martin-2930-3330-cut-3230---base-only)):
+**TUI, guided:** `/agent squad`; paste the test-discipline request ([source](prompt-pack.md#c4---martin-2930-3330-cut-3230---base-only)):
 
 ```text
 Invoke test-discipline now. Identify which existing contract assertions must
-remain unchanged during the mutation. Through the configured Microsoft Learn
-MCP, perform only a read-only search/fetch for AKS Automatic private/custom
-network requirements. Cite the source/version relevant to private API access
-and hosted-system subnets. Don't contact an Azure account or change providers.
+remain unchanged during the mutation.
+```
+
+Then `/agent terraform-reviewer` (read-only; check `/mcp` lists `microsoft-learn` connected) and paste the Microsoft Learn lookup. The MCP servers live on the profiles, Squad only coordinates:
+
+```text
+Through the configured Microsoft Learn MCP, perform only a read-only search/fetch
+for AKS Automatic private/custom network requirements. Cite the source/version
+relevant to private API access and hosted-system subnets. Don't contact an Azure
+account or change providers.
 ```
 
 Show skill invocation, source URL/version and narrow permission.

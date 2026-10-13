@@ -148,14 +148,21 @@ Checkpoint: one changed test, four asserts/error messages; assignment is not com
 
 ### C4 - Martin, 29:30-33:30; cut 32:30 - base only
 
-TUI: `/agent squad`, `/skills info test-discipline`, `/mcp`; paste:
+TUI: `/agent squad`, `/skills info test-discipline`; paste:
 
 ```text
 Invoke test-discipline now. Identify which existing contract assertions must
-remain unchanged during the mutation. Through the configured Microsoft Learn
-MCP, perform only a read-only search/fetch for AKS Automatic private/custom
-network requirements. Cite the source/version relevant to private API access
-and hosted-system subnets. Don't contact an Azure account or change providers.
+remain unchanged during the mutation.
+```
+
+Then `/agent terraform-reviewer` (read-only; check `/mcp` lists `microsoft-learn`
+connected). The MCP servers live on the profiles, Squad only coordinates. Paste:
+
+```text
+Through the configured Microsoft Learn MCP, perform only a read-only search/fetch
+for AKS Automatic private/custom network requirements. Cite the source/version
+relevant to private API access and hosted-system subnets. Don't contact an Azure
+account or change providers.
 ```
 
 Inspect `/permissions`; approve only the read-only call. Checkpoint: URL/version,
