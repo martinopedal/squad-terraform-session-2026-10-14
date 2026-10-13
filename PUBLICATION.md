@@ -9,10 +9,18 @@ deployment values/state and the hosted issue/queue/bot-PR target remain private.
 The session clone is not a deployment entry or evidence of target access.
 
 Keep achieved deployment, bounded runtime checks and full demo readiness separate.
-The released full/short deck is 0.22.4 on main/Pages. A later local docs or bootstrap
-change is not published merely because that baseline is live. Local deck 0.22.5
+The released full/short deck is 0.22.5 on main/Pages. A later local docs or bootstrap
+change is not published merely because that baseline is live. Local deck 0.22.6
 is the directly coupled notes/status export candidate; independent source/export
 review and normal publication still gate it.
+Owned hosted fork/target/publisher source is accepted/merged, not live E2E proof.
+Private publisher qualification awaits its existing human gate; owner-native
+Terraform, image/authentication and actual README bot PR remain separate.
+Owner-native source preparation is under review; executable delivery remains
+held, not deploy-on-merge or merely missing operator receipts.
+The VM source proposal remains under human review and a fresh disk-binding/SYSTEM
+preservation hold. Publish neither private topology/cost/receipts nor a deployed
+VM, installed bootstrap, hosted GO or completed human rehearsal claim.
 The separate primary Online five-object native target and one credential-free
 base probe were independently verified October 12; current exact-group access
 passed and the list was empty after cleanup. Host Copilot/Squad integration and

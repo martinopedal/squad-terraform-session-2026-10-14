@@ -108,16 +108,18 @@ Another cloud attempt requires new approval, not an automatic retry.
 
 ### Original hosted Squad issue-to-PR work: ACA APPS/JOBS
 
-This **SQUAD ON ACA APPS/JOBS** path is the existing hosted agent flow, not a
-SandboxGroup/MicroVM. Fresh current end-to-end qualification remains pending;
-the corrected ACA SANDBOXES success does not count as that proof.
+This **SQUAD ON ACA APPS/JOBS** path is hosted agent work, not a SandboxGroup/
+MicroVM. Original Haflidi runtime remains working and unchanged; the owned MIT
+fork/target handoff/publisher source is independently accepted/merged, not live
+E2E. Fresh current end-to-end qualification remains pending; ACA SANDBOXES
+success does not count as that proof.
 
 | Field | Contract |
 | --- | --- |
 | Owner / roles | Haflidi explains his authored implementation; the approved target operator triggers; existing hosted Squad worker returns a bot PR; human reviewer owns acceptance |
-| Repos / roots | Read [haflidif/squad-on-aca](https://github.com/haflidif/squad-on-aca) for completed hosted implementation. Use a separately authorized `<approved-private-target>` clone for issue/queue/bot PR, not the public session clone or native SandboxGroup |
-| Verified versus pending | Original implementation is completed/previously demonstrated and stays unchanged. Fresh current original Apps/Jobs end-to-end qualification is not proved. Separately, read-only qualification of the new personal target is BLOCKED on runner registration/custom-agent discovery and co-presenter access; it does not mean original source/runtime is broken |
-| Before trigger | Supported manual GitHub auth, accepted target rights, approved repo-scoped registration/queue wiring and a sanitized completed chain rehearsal. No token/cache copy or service rebuild |
+| Repos / roots | Read [haflidif/squad-on-aca](https://github.com/haflidif/squad-on-aca) for completed original implementation; [martinopedal/squad-on-aca PR1](https://github.com/martinopedal/squad-on-aca/pull/1) is the owned MIT fork, @haflidif credit/license retained. Use a separately authorized `<approved-private-target>` clone, not the session clone/native group |
+| Verified versus pending | Original implementation is completed/previously demonstrated and stays unchanged. Owned fork/target source accepted/merged, target runtimeProven false; credential-free manual status is source-prepared. Live E2E is BLOCKED on private publisher qualification/existing human gate, owner-native Terraform/full QA/real plan/image/auth and actual README bot PR, not new runner registration/AppAdmin |
+| Before trigger | Existing human approvals/current target rights, accepted full owner-native Terraform source/exact plan, private publisher Docker/DNS/TLS qualification, immutable image and genuine worker authentication, then sanitized chain rehearsal. No token/cache copy, service rebuild or second standalone fork Bicep writer |
 | Timing / fallback | Optional 53:00-54:30 only if ahead and freshly qualified; hard cut 54:30. Otherwise show dated original chain evidence or skip; no second issue or on-stage registration repair |
 | Cleanup | Only the newly created owned test issue/PR/execution, after separate owner approval; verify queue drain. Never modify/delete the original hosted service or native group |
 
@@ -136,17 +138,28 @@ Do not merge or deploy. Stop and report blocked access rather than rebuilding
 the hosted service or changing the task to make it appear successful.
 ```
 
-The operator resolves aliases privately and follows the existing hosted procedure:
-`gh auth status`, create the approved issue, add its configured Squad routing
+The operator resolves aliases privately and follows the accepted source-prepared
+private scheduled poller mode: one approved issue -> existing queue -> genuine
+Squad UID10001 worker -> trusted README App-bot PR. `gh auth status` and the
+credential-free manual status check do not authorize a live trigger. Only after
+all separate runtime/human gates pass, create the approved issue, add its routing
 label, then read its matching queue workflow, actual ACA Job and bot PR/diff.
 Correlate the same issue across all four; a queued workflow, pulled image or
 successful Job alone is not a complete issue-to-PR result. Error-only/missing-
 agent PR stubs are failure artifacts, not successful Squad work; never substitute
 them for the original implementation's confirmed demonstration or fresh E2E proof.
-Resolve supported repo-scoped runner registration and clone-only agent discovery/
-entitlement with its human owner; accept the existing invitation if needed.
-These new-target blockers do not establish an original hosted-service failure
-and do not reopen the accepted ACA SANDBOXES engineering contract.
+No new runner registration or AppAdmin is required by the chosen poller mode.
+Leave the old zero-step queued run untouched, not cancelled or consumed as proof.
+Private publisher qualification is waiting at its existing human gate with zero
+executed steps; no image/push/digest yet. Owner-native Terraform remains the sole
+whole-body writer; full source acceptance/delivery integration, real plan/auth/
+budget/owner/image/Job/actual PR gates remain. These holds do not establish an
+original hosted-service failure or reopen accepted ACA SANDBOXES engineering.
+Owner-native source preparation is under review; executable delivery remains
+held. Plan/apply/destroy paths are currently unconditionally disabled, with
+signer/current-head/private-plan transport/executable integration not yet
+provisioned. These are remaining implementation gates, not deploy-on-merge or
+just missing operator receipts.
 
 ## What makes results repeatable
 

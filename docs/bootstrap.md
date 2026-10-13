@@ -26,10 +26,28 @@ operator access/base 375-second probe are independently verified, not AKS or
 hosted Jobs. Corrected 26.768-second host Copilot/Squad fixture engineering is
 independently accepted and runtime-ready. Human preflight/rehearsal,
 second-presenter sign-in and any selected Terraform variant remain separate
-gates. Fresh hosted Apps/Jobs E2E remains BLOCKED on
-registration404/custom-agent-profile qualification. These native checks do not
+gates. Fresh hosted Apps/Jobs E2E remains BLOCKED: owned fork/target source is
+accepted, but private publisher qualification, owner-native Terraform, immutable
+image, authentication and actual README bot PR remain unproved. These native checks do not
 prove bootstrap installation or live SYSTEM/CSE execution.
 See [the progress matrix](sandboxing.md#october-12-progress-and-next-actions).
+Owner-native hosted source preparation is under review; executable delivery
+remains held, not deploy-on-merge or only missing operator receipts.
+
+October 13 VM hold: [demo-env PR21](https://github.com/martinopedal/aks-automatic-demo-env/pull/21)
+is independently source-accepted and awaiting Haflidi/Online human review and
+execution approval, not deployed. Its D8s_v5 (8 vCPU/32 GiB), in-place Premium SSD
+and AllUsers SYSTEM bootstrap proposal must preserve the exact currently attached
+disk. Fresh read-back found the VM deallocated and its OS-disk attachment different
+from the earlier receipt. Preserve both disks: never swap back, recreate or delete
+either. Refresh the current binding/baseline and runnable SYSTEM context before
+any plan/apply. Sparse metrics do not prove a CPU/RAM bottleneck; HDD responsiveness
+is only a candidate, not sustained causality.
+The current creation-semantic precondition is met. Accepted source already
+sequences IaC deallocate -> VM update -> disk update -> start -> CSE; no missing
+start implementation or imperative power workaround. If SYSTEM owner evidence
+is absent, a separately gated harmless SYSTEM preflight may be reviewed; it is
+not deployed or permission to start the VM here.
 
 ## What this bootstrap does
 
@@ -332,8 +350,13 @@ when the separate desktop installation/sign-in steps are wanted.
 Controlled source/mocked validation is not live CSE or both-presenter evidence.
 The demo-env IaC owner retains immutable binding, execution and receipt
 qualification; Haflidi's approval remains required before future VM apply.
-The existing VM and disks stay unchanged by this source task. No deployment,
-size/disk change, restart or execution approval is implied.
+The existing VM and both disks stay unchanged by this source task. Actual owner
+attestations `system_payload_accepted` and `upgrade.bootstrap.system_accepted`
+mean acceptance of the exact reviewed payload, not prior installation. A genuine
+harmless LocalSYSTEM transport check is still required. The launcher allows an
+absent prior receipt, then requires a fresh successful receipt after first install;
+no fabricated acceptance or ordinary CI substitute. Bootstrap is not installed.
+No deployment, size/disk change, power operation or execution approval is implied.
 
 After a successful run, open **GitHub Copilot** from the Start menu, choose **Sign in to GitHub**, and complete onboarding yourself. Add the cloned repository via **Projects → Add project → Local folder or repository**. Follow the [official app quickstart](https://docs.github.com/en/copilot/get-started/quickstart-copilot-app); the [official download page](https://github.com/features/ai/github-app) is an alternative installation route.
 

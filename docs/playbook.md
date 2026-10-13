@@ -61,6 +61,14 @@ Expected result: the pinned digest is present locally. **Verified 2026-10-08.**
 
 For repeatable Windows dependency setup, use [bootstrap.md](bootstrap.md) and [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1). It installs/checks the core toolchain, supports clean-machine `-WhatIf` and zero-auth `-SkipLogin`, uses supported status-aware login paths, and preserves existing repository/Squad state. Docker/WSL and actual native UI/target readiness remain explicit separate gates; no VM/disk reset is performed.
 
+October 13 existing-VM hold: source-accepted consumer PR21 still requires
+Haflidi/Online human review and execution approval. VM is deallocated; current
+OS-disk attachment differs from the earlier receipt. Preserve both disks,
+never swap back/recreate/delete either; refresh exact binding/baseline/runnable
+SYSTEM context before plan/apply. Bootstrap is not installed and per-user sign-in
+remains deferred. Squad 1.0.1 stays current; a stale cached coordinator context
+needs a fresh session handoff, not a source upgrade or roster regeneration.
+
 Before stage, run the separate manual [`scripts\Test-PresenterLaptop.ps1`](..\scripts\Test-PresenterLaptop.ps1)
 from this repository root. Expect **all checks PASS** and exit `0`; the
 [current 18-check inventory and controlled tests](bootstrap.md#manual-live-session-laptop-preflight)
