@@ -224,128 +224,36 @@ Native consumer source: `demo-env\deployments\aca-sandboxes-online`.
 
 ## Optional extras - only after the complete core flow
 
-| Flow | Entry | Work/result |
-| --- | --- | --- |
-| [Hosted Squad](#hosted-demo) | Approved GitHub issue → label once → poller/queue | Hosted ACA agent Job → matching bot PR/README diff |
-| [Native Sandbox](#native-demo) | Prompt host Squad on the VM; **no issue assignment or queue** | Host agent executes prepared MicroVM fixture → results → review |
-
-Both recipes below require their own GO and genuine spare time; native is last.
+Both flows are optional after core wrap; hosted comes first, native last. Before either, the operator privately prepares `C:\demo\operator-targets.json` with current bindings, URLs, guest ID and GO for the selected flow. Include no credentials. Never commit or display it; each prompt rereads it because shell variables do not persist.
 
 <a id="hosted-demo"></a>
 
 ## Hosted Squad on ACA Apps/Jobs - optional final tail, first
 
-**PREP:** operator creates/verifies `C:\demo\hosted-target` using
-[existing hosted checkout/recipe](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr).
-Privately supply approved target/issue/App, poller Job/execution/log view and
-worker binding. Current image/auth/chain/human GO is **HELD**, not permission.
+**Host Squad prompt, only after fresh hosted GO and one-attempt human approval:**
 
-1. **TUI, host Squad in that verified root:** paste this RUN request only after fresh GO:
+```text
+Host Squad: read C:\demo\operator-targets.json privately; never print it. Require hosted.go=true, hosted.repo, hosted.issue, hosted.issueUrl, hosted.pollerUrl and hosted.workerUrl; missing/stale data means STOP. Reread/rebind on every shell/tool call. Read the existing issue with `gh issue view` using hosted.issue and hosted.repo. Verify the approved README-only request from docs/prompt-pack.md#original-hosted-squad-issue-to-pr-work and no prior queue/attempt/result. Only after one-attempt GO, add `squad:ripley` once; no new issue, manual dispatch, Job start, auth mint or retry. Open the exact file-bound URLs. Match the poller receipt's message ID + issue + repository + agent to the actual ACA Job/worker and its App-bot PR; require only README.md changed. Hand off for independent review; do not merge/deploy. Manual status is not enqueue proof.
+```
 
-   ```text
-   Host Squad: read C:\demo\session-repo\docs\demo-runbook.md's hosted recipe and
-   C:\demo\session-repo\docs\prompt-pack.md's
-   "Original hosted Squad issue-to-PR work" exact README body. Bind the owner's
-   target/issue/App/poller/worker receipt; missing GO/binding is BLOCKED.
-   Bind $targetRepo/$demoIssue to that receipt in each whole command invocation;
-   don't assume shell variables survive TUI turns. Read:
-   gh issue view $demoIssue --repo $targetRepo --json title,body,labels,state
-   Compare exact README scope/prior-attempt receipt; stop if attempted. Only
-   after explicit human one-attempt permission run
-   gh issue edit $demoIssue --repo $targetRepo --add-label squad:ripley ONCE.
-   No held execution/new issue/workflow dispatch/Job start/auth mint/retry.
-   Return same issue/label; manual squad-queue.yml status isn't enqueue evidence.
-   ```
-
-2. **Browser:** approved issue → show the one label. Azure portal →
-   Container App Jobs → **owner-bound poller Job** → Executions →
-   approved execution → Logs (or supplied approved log URL). Wait for:
-   `Approved issue #NUMBER accepted as queue message MESSAGE_ID; processing label recorded.`
-   This is the **same-issue queue receipt**, not a guessed timestamp.
-
-3. **Browser:** existing `caj-squad-aca-agent-corp-ne` → Executions →
-   matching worker execution → Logs. Match
-   `Queue message=MSG_ID; issue #ISSUE_NUMBER; agent=AGENT_TYPE; mode=MSG_TYPE; repo=GITHUB_REPO`.
-   Require **message ID + issue + repository + agent**, then real worker/result.
-
-4. **Browser:** that issue's linked approved App-bot PR → Files changed →
-   `README.md`; show actual paragraph/diff/checks and human review handoff.
-   Error-only stubs, unrelated PRs and Job success alone fail.
-
-**STOP:** hold, prior attempt, missing log binding/correlation/result or spare time =
-dated original evidence/SKIP; original implementation untouched, no merge/retry.
+**Show:** file-bound URLs; issue → actual queued ACA Job → matching bot PR/README diff. **STOP:** missing GO, old attempt, incomplete correlation, non-README change, error stub or no time; no retry.
+[README-only issue brief](prompt-pack.md#original-hosted-squad-issue-to-pr-work); [full hosted procedure](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr).
 
 <a id="native-demo"></a>
 
 ## Native ACA Sandboxes - optional final tail, dead last
 
-**PREP:** verified `C:\demo\session-repo`; separate Online target:
-subscription `714ac8e0-8874-428d-a4f3-79bd3765bfed`,
-`rg-aca-sandboxes-online-swc-001` / `sbg-squad-nic2026-online-swc-001`, `swedencentral`.
-No current prepared ID/guest staging/human GO established; earlier sandbox deleted.
+**Off-stage prepare prompt, only after explicit permission for one guest and fixture staging:**
 
-1. **TUI, host Squad:** paste this OFF-STAGE preparation/precheck request:
+```text
+Host Squad: read C:\demo\operator-targets.json privately. Require native.prepareOneGuest=true, exact native.subscription/resourceGroup/group/region, and no current native.sandboxId; else STOP. Use installed aca 1.0.0-preview.4 help. Verify exact group and empty current list; explicitly bind --subscription, --resource-group, --region and command-specific --group (not diagnostic --sandbox-group) from native.* on every target command. Inspect `aca sandbox create --help`; run exactly one `aca sandbox create` for an Ubuntu guest with 1000m CPU, 2048Mi, Deny/Full egress, no ports/credentials and 300-second auto-suspend. If help/schema cannot express and verify all properties, STOP before create. Capture its UUID even if `-o json` prints text; never create again to fix parsing. Verify target/config; `aca sandbox fs write` canonical 684-byte LF docs/fixtures/native-validation.sh to /root/native-validation.sh; read `.content` and verify SHA-256 75d8fc0f08005317bbdc21c8de9ad43f3b7e06736e419014e7cf8678b9cab2a5. Save only the new ID/hash privately. No group/role/install/network changes.
+```
 
-   ```text
-   Read docs/demo-runbook.md's native recipe and docs/fixtures/native-validation.sh.
-   Bind only the approved current ID/target above; match get to current receipt,
-   not doctor/list. Missing ID/consent/source/hash is BLOCKED.
-   Canonical fixture is684 LF bytes, source SHA256
-   75d8fc0f08005317bbdc21c8de9ad43f3b7e06736e419014e7cf8678b9cab2a5.
-   The published local staging block produces C:\demo\native-fixture\native-validation.sh.
-   Only separately approved off-stage, bind $sandboxId/current ID and
-   $nativeTarget/exact subscription/RG/group/region above; verify local684LF/SHA.
-   Use --group for sandbox get/exec/fs/egress, NOT diagnostic --sandbox-group.
-   Inspect get before the approved write:
-   aca sandbox fs write --id $sandboxId --path '/root/native-validation.sh' --file 'C:\demo\native-fixture\native-validation.sh' @nativeTarget -o json
-   Stop on error/unapproved staging; fs cat guest source, decode .content,
-   verify684LF/SHA. Return ID/target/revision/hash. No create/install/auth-copy/
-   retry or upload while held/on stage; missing stage GO stops RUN.
-   ```
+**On-stage host Squad prompt, after human stage GO:** use `/agent squad` in the host repo; never run the fixture on the host or install/sign in inside the guest.
 
-   [Existing canonical staging/operations](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad).
+```text
+Host Squad: read C:\demo\operator-targets.json privately; require native.go=true, current native.sandboxId and exact native.subscription/resourceGroup/group/region, else STOP. Reread/rebind --subscription, --resource-group, --region and command-specific --group from native.* for every tool call. Invoke aca-sandboxes; exact-ID get, then execute `sh /root/native-validation.sh` once and fs cat /root/native-result.json, decoding `.content`. Require schema native-squad-validation-v1, three true checks, matching source/result SHA and actual exit 0. Use the linked runbook's single `https://example.com/` denial/audit probe with this ID; read the current timestamped audit before cleanup, allowing up to 10 seconds. HTTP 403 alone, immediate empty audit or post-delete 404 is not proof. Return real output/exits for `/agent terraform-validator`, then `/new` + `/agent terraform-reviewer` independent handoff. No issue/queue, guest agents, create/upload/install, auth/egress changes or retry.
+```
 
-2. **TUI, after human GO:** confirm `/cwd`, use `/agent squad` in
-   **Interactive** mode (not Plan); paste:
-
-   ```text
-   Invoke aca-sandboxes: host Squad/worker, not guest agents. Use captured
-   approved ID/target/hash and docs/prompt-pack.md "Native host Squad isolated work".
-   Inspect exact-ID calls/native permissions; use published basic-demo block:
-   aca sandbox exec --id $sandboxId -c 'sh /root/native-validation.sh' @nativeTarget -o json
-   aca sandbox fs cat --id $sandboxId --path '/root/native-result.json' @nativeTarget -o json
-   Once: require0/three true checks/source+UTF-8-LF resultSHA/RESULT_SHA256.
-   Separately approved only: deliberate sh -c 'exit 23' once, require23;
-   whole published causal-denial block, one example.com HTTPS403 plus NEW
-   same-ID timestamped denied audit (not403 alone). Missing audit BLOCKED.
-   No issue queue/create/upload/install/auth/rule change/guest agents/retry.
-   Return tools/JSON/exits/hashes/audit/limits.
-   ```
-
-3. **TUI/returned output:** show schema `native-squad-validation-v1`,
-   `arithmetic=true`, `uppercase=true`, `fixtureHash=true`, matching SHA,
-   exits0/23 and fresh same-ID denied audit. Status/doctor isn't the demo.
-
-4. **TUI:** `/agent terraform-validator`; provide sanitized actual evidence,
-   current ID/target/source revision (inline or approved host evidence path); paste:
-
-   ```text
-   Read-only host validation: cite evidence/ID/target/revision; schema/three
-   checks/canonical source+UTF-8-LF resultSHA matching RESULT_SHA256/0+23 exits/
-   NEW same-ID example.com denied audit within probe timestamps, using the
-   published exact hashes. Missing evidence BLOCKED. Return per-check results/
-   limits; no commands/edits/auth/guest agents/deploy/lifecycle/retry/acceptance.
-   ```
-
-5. **TUI:** `/new`, `/agent terraform-reviewer`; supply the saved handoff/evidence; paste:
-
-   ```text
-   Independently review supplied evidence/validator handoff. Cite ID/target/
-   revision/evidence path; verify schema/three checks/source+resultSHA/0+23/
-   fresh same-ID denied audit against published hashes. Missing evidence BLOCKED.
-   Report consequence/limits to human; no commands/edits/guest agents/issue queue/
-   deploy/retry/automatic acceptance.
-   ```
-
-**STOP:** missing current ID/staging/GO, mismatched target/hash/result/audit/error or
-no spare time = accepted dated trace/SKIP; owned cleanup off-stage only.
+**Show:** guest JSON/hash, one denied request/current audit; no guest URL or preview exists. Open authenticated [sandbox-group discovery](https://containerapps.azure.com/sandbox-groups) or [regional management](https://management.swedencentral.azuredevcompute.io); neither is a guest website. **STOP:** missing GO/ID, mismatch, failed check/audit or no time; use accepted evidence or skip.
+[Full native operations and audit](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad).

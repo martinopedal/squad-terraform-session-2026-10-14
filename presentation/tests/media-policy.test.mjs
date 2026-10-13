@@ -93,9 +93,10 @@ function assertShortTrackLocalPaths(text) {
   assert.doesNotMatch(text, /Set-Location 'C:\\git\\/);
   assert.match(section('C0'), /New `\$HOME\\demo\\aks-module` clone/);
   assert.match(section('C1'), /preparation verified both roots at the same checkpoint/);
-  assert.match(section('C2'), /start guided/);
-  assert.match(section('Hosted'), /C:\\demo\\hosted-target/);
-  assert.match(section('Native'), /No current prepared ID\/guest staging\/human GO established/);
+  assert.match(section('C2'), /after guided preparation passes/);
+  assert.match(section('Hosted'), /C:\\demo\\operator-targets\.json/);
+  assert.match(section('Hosted'), /hosted\.issueUrl[\s\S]*hosted\.pollerUrl[\s\S]*hosted\.workerUrl/);
+  assert.match(section('Native'), /native\.sandboxId/);
   for (let chapter = 0; chapter < 8; chapter++) {
     const cue = section(`C${chapter}`);
     assert.match(cue, /\*\*(?:Shell|TUI)/, `C${chapter} names its surface`);
@@ -119,7 +120,7 @@ test('short monitor local-path contract rejects fake roots and unqualified check
     ['workstation used on stage', text.replace(publicLocation, String.raw`Set-Location 'C:\git\squad-terraform-session-2026-10-14\public'`)],
     ['no path producer', text.replace('using git worktree add (not Set-Location)', 'use Set-Location only')],
     ['silent A/B checkpoint', text.replace('preparation verified both roots at the same checkpoint', 'use any roots')],
-    ['no native binding stop', text.replace('No current prepared ID/guest staging/human GO established', 'Native ready')],
+    ['no native binding stop', text.replaceAll('native.sandboxId', 'native.staleSandboxId')],
     ['wrong actual consumer entry', text.replace('C:\\demo\\aks-automatic-demo-env\\deployments\\online\\main.tf', 'C:\\demo\\session-repo\\main.tf')],
     ['checkpoint mislabeled consumer', text.replace('session checkpoint, **not a native consumer', 'live consumer')],
     ['missing stop cue', text.replace('**STOP:** unqualified clean host', '**NEXT:** unqualified clean host')],
@@ -138,20 +139,55 @@ function assertPromptFirstTrack(text) {
   for (const heading of ['Hosted Squad on ACA Apps/Jobs', 'Native ACA Sandboxes'])
     assert.ok(rendered.includes(`<h2>${heading}`), `${heading} is rendered H2`);
   const section = name => text.split(`## ${name}`)[1]?.split('\n## ')[0] ?? '';
-  for (const [name, count] of [['Hosted Squad', 4], ['Native ACA', 5]]) {
-    const body = section(name);
-    assert.match(marked(body), /<ol>\s*<li>/);
-    assert.equal((marked(body).match(/<li>/g) ?? []).length, count);
-    assert.match(body, /```text/);
-    assert.equal((body.match(/\*\*STOP:/g) ?? []).length, 1);
-  }
-  assert.match(text, /no issue assignment or queue/);
-  assert.match(section('Hosted'), /message ID \+ issue \+ repository \+ agent/);
-  assert.match(section('Hosted'), /gh issue edit \$demoIssue --repo \$targetRepo --add-label squad:ripley ONCE/);
-  assert.match(section('Native'), /Use --group[\s\S]*NOT diagnostic --sandbox-group/);
-  assert.match(section('Native'), /aca sandbox fs write --id \$sandboxId --path '\/root\/native-validation\.sh' --file 'C:\\demo\\native-fixture\\native-validation\.sh' @nativeTarget/);
-  assert.match(section('Native'), /Read-only host validation/);
-  assert.match(section('Native'), /Independently review supplied evidence/);
+  const hosted = section('Hosted Squad');
+  const native = section('Native ACA');
+  const extras = text.split('## Optional extras - only after the complete core flow')[1] ?? '';
+  assert.ok(extras, 'optional cards exist');
+  assert.ok(extras.trim().split('\n').length <= 70, 'both optional cards stay concise');
+  assert.ok(extras.split(/\s+/).filter(Boolean).length <= 600, 'both optional cards stay under 600 words');
+  const recommended = documentText('docs/aca-sandboxes.md').split('## Recommended live use')[1]?.split('\n## ')[0] ?? '';
+  assert.ok(native.split(/\s+/).filter(Boolean).length * 2 < recommended.split(/\s+/).filter(Boolean).length,
+    'native card remains materially shorter than recommended-live-use');
+  const prepare = native.split('Off-stage prepare prompt')[1]?.split('On-stage host Squad prompt')[0] ?? '';
+  const run = native.split('On-stage host Squad prompt')[1] ?? '';
+  assert.match(text, /C:\\demo\\operator-targets\.json/);
+  assert.match(text, /Never commit or display it/);
+  assert.doesNotMatch(`${hosted}\n${native}`, /\$targetRepo|\$demoIssue|\$sandboxId|\$nativeTarget/);
+  for (const field of ['hosted.go', 'hosted.repo', 'hosted.issue', 'hosted.issueUrl',
+    'hosted.pollerUrl', 'hosted.workerUrl']) assert.ok(hosted.includes(field), `private hosted binding: ${field}`);
+  assert.match(hosted, /hosted\.go=true/);
+  assert.match(hosted, /Reread\/rebind on every shell\/tool call/);
+  assert.equal((hosted.match(/\*\*STOP:/g) ?? []).length, 1);
+  assert.match(hosted, /README-only request/);
+  assert.match(hosted, /squad:ripley` once/);
+  assert.match(hosted, /message ID \+ issue \+ repository \+ agent/);
+  assert.match(hosted, /actual ACA Job\/worker/);
+  assert.match(hosted, /Manual status is not enqueue proof/);
+  assert.match(hosted, /do not merge\/deploy/);
+  assert.equal((native.match(/\*\*STOP:/g) ?? []).length, 1);
+  assert.match(prepare, /native\.prepareOneGuest=true/);
+  assert.match(prepare, /native\.sandboxId/);
+  assert.match(prepare, /1000m CPU, 2048Mi, Deny\/Full egress, no ports\/credentials and 300-second auto-suspend/);
+  assert.match(prepare, /--subscription, --resource-group, --region and command-specific --group/);
+  assert.match(prepare, /not diagnostic --sandbox-group/);
+  assert.match(prepare, /aca sandbox create --help/);
+  assert.match(prepare, /run exactly one `aca sandbox create`/);
+  assert.match(prepare, /Capture its UUID even if `-o json` prints text/);
+  assert.match(prepare, /never create again to fix parsing/);
+  assert.match(prepare, /aca sandbox fs write/);
+  assert.ok(prepare.includes(fixtureHash), 'preparation prompt binds canonical source');
+  assert.match(run, /native\.go=true/);
+  assert.match(run, /native\.sandboxId/);
+  assert.match(run, /--subscription, --resource-group, --region and command-specific --group/);
+  assert.match(run, /native-squad-validation-v1/);
+  assert.match(run, /https:\/\/example\.com\//);
+  assert.match(run, /current timestamped audit before cleanup/);
+  assert.match(run, /HTTP 403 alone, immediate empty audit or post-delete 404 is not proof/);
+  assert.match(run, /\/agent terraform-validator.*\/new.*\/agent terraform-reviewer/);
+  assert.match(native, /no guest URL or preview exists/);
+  assert.match(native, /https:\/\/containerapps\.azure\.com\/sandbox-groups/);
+  assert.match(native, /https:\/\/management\.swedencentral\.azuredevcompute\.io/);
+  assert.match(native, /No issue\/queue/);
   const plan = section('C2');
   for (const pattern of [/native `\/plan`/, /displayed \*\*Plan\*\*/, /Revise only/,
     /I approve repository code only/, /\*\*Shift\+Tab\*\*/, /\*\*Interactive\*\*/,
@@ -174,23 +210,27 @@ function assertPromptFirstTrack(text) {
 test('prompt-first ownerless track renders two exact flows, Plan sequence and actual consumer entry', () => {
   assertPromptFirstTrack(documentText('docs/short-talk-track.md'));
 });
-test('prompt-first track rejects missing producer, log join, Plan exit, review and wrong consumer claims', () => {
+test('concise optional cards reject missing gates, stale guest IDs and lost queue correlation', () => {
   const text = documentText('docs/short-talk-track.md');
-  for (const [before, after] of [
-    ['## Native ACA Sandboxes', 'Native ACA Sandboxes'],
-    ['message ID + issue + repository + agent', 'timestamp only'],
-    ['--add-label squad:ripley ONCE', '--add-label squad:ripley repeatedly'],
-    ['NOT diagnostic --sandbox-group', 'reuse diagnostic flags'],
-    ['Read-only host validation', 'Accept status only'],
-    ['Independently review supplied evidence', 'Skip review'],
-    ['**Shift+Tab**', '`/exit`'],
-    ['**before** coder/commands', 'after coder/commands'],
-    ['enable_private_cluster=false', 'enable_private_cluster=true'],
-    ['untested manual checks', 'UI proved'],
-    ['Native ACA Sandboxes - optional', 'Native ACA Sandboxes - Martin optional']
+  for (const [name, before, after] of [
+    ['missing native heading', '## Native ACA Sandboxes', 'Native ACA Sandboxes'],
+    ['missing hosted GO', 'hosted.go', 'hosted.notReady'],
+    ['missing native GO', 'native.go=true', 'native.stageReady=false'],
+    ['stale guest ID', 'native.sandboxId', 'native.staleSandboxId'],
+    ['lost queue correlation', 'message ID + issue + repository + agent', 'timestamp only'],
+    ['duplicate issue routing', 'squad:ripley` once', 'squad:ripley` twice'],
+    ['missing ACA worker', 'actual ACA Job/worker', 'manual status only'],
+    ['guest issue queue', 'No issue/queue', 'enqueue an issue in the guest'],
+    ['missing independent reviewer', 'then `/new` + `/agent terraform-reviewer`', 'then `/new` + `/agent terraform-validator`'],
+    ['Plan mode not exited', '**Shift+Tab**', '`/exit`'],
+    ['Plan exit after implementation', '**before** coder/commands', 'after coder/commands'],
+    ['wrong consumer claim', 'enable_private_cluster=false', 'enable_private_cluster=true'],
+    ['unverified manual checks', 'untested manual checks', 'UI proved'],
+    ['wrong native heading ownership', 'Native ACA Sandboxes - optional', 'Native ACA Sandboxes - Martin optional']
   ]) {
     assert.ok(text.includes(before));
-    assert.throws(() => assertPromptFirstTrack(text.replace(before, after)), { name: 'AssertionError' });
+    const mutant = before === 'native.sandboxId' ? text.replaceAll(before, after) : text.replace(before, after);
+    assert.throws(() => assertPromptFirstTrack(mutant), { name: 'AssertionError' }, name);
   }
 });
 function assertNativeFixture(bytes) {
