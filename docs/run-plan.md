@@ -81,7 +81,7 @@ Nothing was cut from the already-placed enrichment:
 | `demo-c3` | 22:00-26:00 | 4:00 | 26:00 | No | Martin | Route B1v2 to `terraform-coder`; cut at 25:00. |
 | `s12-source-check` | 26:00-26:30 | 0:30 | 26:30 | No | Haflidi | Source claim becomes assertion. |
 | `s13-test-gap` | 26:30-29:30 | 3:00 | 29:30 | No | Haflidi | B1 0/5 -> oracle rule -> B1v2 5/5; no causal or repeatability guarantee; live still must pass. |
-| `demo-c4` | 29:30-33:30 | 4:00 | 33:30 | No | Martin | Base skill + read-only source lookup + permissions, or independently qualified selected-target ACA substitution; cut at 32:30 either way. Online fixture engineering accepted; human/selected-variant GO pending. |
+| `demo-c4` | 29:30-33:30 | 4:00 | 33:30 | No | Martin | Base skill + read-only source lookup + permissions only; cut at 32:30. Cloud extras never substitute for C4. |
 | `demo-c5` | 33:30-38:30 | 5:00 | 38:30 | No | Haflidi | Validator before/seeded/repaired; cut at 37:15. Checkpoint: must be out of C5 at 38:30. |
 | `s15-proof` | 38:30-41:30 | 3:00 | 41:30 | No | Haflidi with Martin handoff | Evidence levels; say runtime check/evidence, not evidence for everything. |
 | `s16-continuity` | 41:30-42:00 | 0:30 | 42:00 | No | Martin | Record the decision and why we made it. |
@@ -105,7 +105,7 @@ The 75% rule still stands. The absolute cut-line clocks move earlier because the
 | C1 | 12:30-15:30 | 3:00 | 14:45 | Stop comparison at one C1-A consequence and use saved C1-B excerpt. |
 | C2 | 17:30-21:30 | 4:00 | 20:30 | Use saved approved plan; approval covers repo changes only. |
 | C3 | 22:00-26:00 | 4:00 | 25:00 | Stop live coder turn, use B1v2 eval excerpt, no causal or repeatability guarantee. |
-| C4 | 29:30-33:30 | 4:00 | 32:30 | Cut the selected flow, state the missing result, and show scoped fallback. Management evidence is not Corp qualification. No second attempt. |
+| C4 | 29:30-33:30 | 4:00 | 32:30 | Cut the base skill/MCP flow, state the missing result, and show scoped fallback. No cloud substitution or second attempt. |
 | C5 | 33:30-38:30 | 5:00 | 37:15 | Stop mutation work, show saved before/seeded/repaired logs. |
 | C6 | 42:00-45:00 | 3:00 | 44:15 | Show decision file and state constraints directly. |
 | C7 | 47:00-50:00 | 3:00 | 49:15 | Show saved green exits and diff; do not run a second suite live. |
@@ -161,7 +161,7 @@ Keep the live reveal itself exactly 30 seconds.
 |---|---|---|---|
 | 0:00-0:30 | 50:00-50:30 | Point at consumer-to-module diagram | "Reuse the module code, not the private environment." |
 | 0:30-1:00 | 50:30-51:00 | Live reveal `https://aks-online-demo.swedencentral.cloudapp.azure.com/` | Show branded page, pipeline flow, serving pod name, and speakers section. |
-| 1:00-2:10 | 51:00-52:10 | State delivery gate and runtime evidence | PR to plan to human approval to apply; 29/29 outside-in runtime checks. |
+| 1:00-2:10 | 51:00-52:10 | State delivery gate and runtime evidence | PR to plan to human approval to apply. Historical 2026-10-08: 29/29 outside-in runtime checks. Current recorded 2026-10-12: 26 PASS / 2 BLOCKED / 1 report-only under TLS bypass; no fresh suite, trusted TLS or full cluster health established. |
 | 2:10-3:00 | 52:10-53:00 | State boundary | `a-online` and `a-security` are appendix/hallway depth, not main-flow slides. |
 
 Use "runtime check" or "runtime evidence". Do not use stronger certainty language.

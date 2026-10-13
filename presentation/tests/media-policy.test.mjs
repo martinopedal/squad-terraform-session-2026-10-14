@@ -91,13 +91,118 @@ test('C4 stays base only and the final appendix retains selected-target gates', 
       /10 root negative-validation checks, not 52 child-module plus two caller cases/,
       /A 403 alone does not establish egress or Azure Policy enforcement/,
       /href="\.\.\/docs\/aca-sandboxes\.md#recommended-live-use"/,
-      /href="\.\.\/docs\/demo-runbook\.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes"/
+      /href="\.\.\/docs\/demo-runbook\.md#native-procedure-reference---final-optional-tail-never-c4"/
     ]) assert.match(artifact, pattern, `${name} retains ${pattern}`);
+    assert.doesNotMatch(artifact, /href="[^"]*#c4-invoke-guidance/);
   }
   const c4 = demoSlides.find(slide => slide.chapter === 'C4');
   assert.equal(c4.time, '29:30-33:30');
   assert.equal(c4.duration, 240);
   assert.match(codeBlocks(demoContent(c4))[0], /\/skills info test-discipline/);
+});
+
+test('active C4 operator schedule and native references cannot reintroduce a cloud substitution', () => {
+  const plan = documentText('docs/run-plan.md');
+  const scheduleRow = plan.split(/\r?\n/).find(line => line.startsWith('| `demo-c4` |'));
+  const assertSchedule = row => {
+    assert.ok(row, 'actual active C4 schedule row exists');
+    assert.match(row, /Base skill \+ read-only source lookup \+ permissions only; cut at 32:30/);
+    assert.doesNotMatch(row, /or independently qualified|selected-target ACA substitution/i);
+  };
+  assertSchedule(scheduleRow);
+  const revertedRow = scheduleRow.replace('permissions only; cut at 32:30',
+    'permissions, or independently qualified selected-target ACA substitution; cut at 32:30 either way');
+  assert.notEqual(revertedRow, scheduleRow);
+  assert.throws(() => assertSchedule(revertedRow), { code: 'ERR_ASSERTION' });
+
+  const guide = documentText('docs/aca-sandboxes.md').split('## Recommended live use')[1]
+    ?.split('## Fallback if capacity')[0];
+  const assertFinalTail = text => {
+    for (const pattern of [
+      /Keep C4 base-only/, /Only after complete core wrap and a genuine early finish/,
+      /hosted Apps\/Jobs, then native Sandboxes/, /independently approved selected-target IaC/,
+      /Do not compress core content/, /Cut before \*\*55:00\*\*/,
+      /never use \*\*55:00-58:00\*\* protected recovery or \*\*58:00-60:00\*\* close/,
+      /not an allocated live slot/
+    ]) assert.match(text, pattern);
+    assert.doesNotMatch(text, /select the C4 variant|replaces part of the deeper MCP lookup|\| 29:30-30:00 \|/);
+  };
+  assertFinalTail(guide);
+  const revertedGuide = guide.replace('Keep C4 base-only', 'The operator may select the C4 variant');
+  assert.notEqual(revertedGuide, guide);
+  assert.throws(() => assertFinalTail(revertedGuide), { code: 'ERR_ASSERTION' });
+
+  const anchor = 'demo-runbook.md#native-procedure-reference---final-optional-tail-never-c4';
+  assert.ok(documentText('docs/demo-runbook.md')
+    .includes('### Native procedure reference - final optional tail, never C4'));
+  const assertNativeLink = text => {
+    assert.ok(text.includes(anchor), 'native references point to the actual final procedure');
+    assert.doesNotMatch(text, /demo-runbook\.md#c4-invoke-guidance/);
+  };
+  for (const path of ['docs/aca-sandboxes.md', 'docs/talk-track.md', 'docs/talking-points.md']) {
+    const text = documentText(path);
+    assertNativeLink(text);
+    const wrongLink = text.replace(anchor, 'demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes');
+    assert.notEqual(wrongLink, text);
+    assert.throws(() => assertNativeLink(wrongLink), { code: 'ERR_ASSERTION' });
+  }
+});
+
+test('locally actionable Online runtime cues date historical full checks and qualify current evidence', () => {
+  const planCue = documentText('docs/run-plan.md').split(/\r?\n/)
+    .find(line => line.startsWith('| 1:00-2:10 | 51:00-52:10 |'));
+  const appendixCue = documentText('docs/talking-points.md').split(/\r?\n/)
+    .find(line => line.startsWith('- Runtime evidence:'));
+  const assertCue = cue => {
+    assert.ok(cue, 'actual stage runtime cue exists');
+    for (const pattern of [
+      /historical 2026-10-08[:,]?\s*29\/29/i,
+      /Current recorded 2026-10-12: 26 PASS \/ 2 BLOCKED \/ 1 report-only under TLS bypass/,
+      /no fresh suite, trusted TLS or full cluster health established/
+    ]) assert.match(cue, pattern);
+  };
+  for (const cue of [planCue, appendixCue]) {
+    assertCue(cue);
+    for (const [before, after] of [
+      [/historical 2026-10-08[:,]?\s*/i, ''],
+      ['26 PASS / 2 BLOCKED / 1 report-only under TLS bypass', '29/29 PASS'],
+      ['no fresh suite, trusted TLS or full cluster health established', 'fresh full health established']
+    ]) {
+      const reverted = cue.replace(before, after);
+      assert.notEqual(reverted, cue);
+      assert.throws(() => assertCue(reverted), { code: 'ERR_ASSERTION' });
+    }
+  }
+});
+
+test('every preserved PowerShell placeholder template has a local resolve-before-paste label', () => {
+  const playbook = documentText('docs/playbook.md');
+  const templateBlocks = text => [...text.matchAll(/^```powershell\r?\n([\s\S]*?)^```[ \t]*$/gm)]
+    .filter(match => /<[^>\r\n]+>/.test(match[1]));
+  const assertLabels = text => {
+    const blocks = templateBlocks(text);
+    assert.ok(blocks.length > 0, 'actual legacy templates remain in the playbook');
+    for (const match of blocks) {
+      const label = text.slice(0, match.index).trimEnd().split(/\r?\n\s*\r?\n/).at(-1);
+      assert.match(label, /Legacy command template, resolve before paste:/);
+      assert.match(label, /not runnable as written/);
+      for (const token of new Set([...match[1].matchAll(/<[^>\r\n]+>/g)].map(item => item[0]))) {
+        assert.ok(label.includes(token), `adjacent label explains ${token}`);
+      }
+    }
+  };
+  assertLabels(playbook);
+  for (const match of templateBlocks(playbook)) {
+    const label = playbook.slice(0, match.index).trimEnd().split(/\r?\n\s*\r?\n/).at(-1);
+    const missingLabel = playbook.replace(label, 'Copy and paste the template.');
+    assert.notEqual(missingLabel, playbook);
+    assert.deepEqual(templateBlocks(missingLabel).map(item => item[0]),
+      templateBlocks(playbook).map(item => item[0]), 'negative mutant preserves actual fenced commands');
+    assert.throws(() => assertLabels(missingLabel), { code: 'ERR_ASSERTION' });
+  }
+  const unboundTag = playbook.replace('git checkout -b module/<tag>', 'git checkout -b module/<unbound-tag>');
+  assert.notEqual(unboundTag, playbook);
+  assert.throws(() => assertLabels(unboundTag), { code: 'ERR_ASSERTION' });
 });
 
 test('demo on-screen prompts are exact excerpts or visibly abridged', () => {

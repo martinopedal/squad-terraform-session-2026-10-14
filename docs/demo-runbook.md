@@ -581,7 +581,7 @@ Return actual prompt/tool/output evidence and hand off to the validator/reviewer
 with source revision, checks, evidence limits and missing results. Stop at the cut.
 ```
 
-The [prepared C4 prompt](aca-sandboxes.md#recommended-live-use) is the exact
+The [prepared final-native prompt](aca-sandboxes.md#recommended-live-use) is the exact
 bounded remote-execution recipe. Show actual selected agent, skill invocation,
 tool arguments, outputs and handoff, not just this text or agent summary. Accepted host-orchestration engineering is not human stage GO. The Online base and actual
 corrected host trace are separate, observed milestones; acceptance is complete. Use the
@@ -620,7 +620,7 @@ was wrong-target. Compare printed subscription/RG/group/region with approved
 target plus independent exact-ID read-back. Follow [the full
 checklist](aca-sandboxes.md#full-test-coverage-checklist) and Card B above.
 
-Martin manually selects the rehearsed, separately scoped ACA session. Keep the Terraform validator profile unchanged; this variant does not grant it ACA tools or wider shell authority. All setup, archive upload, dependency installation, and lifecycle preparation happen before the timed slot under the approved scope, not on stage. The old C4 sub-slot below is retained only as preparation history,
+Martin manually selects the rehearsed, separately scoped ACA session. Keep the Terraform validator profile unchanged; this variant does not grant it ACA tools or wider shell authority. All setup, archive upload, dependency installation, and lifecycle preparation happen before the optional tail under the approved scope, not on stage. Earlier C4 sub-slot timings are superseded preparation history,
 not the current run order. Use relative phases within genuine spare time and stop
 before 55:00; never return to or replace C4.
 

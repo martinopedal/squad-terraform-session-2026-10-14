@@ -277,16 +277,18 @@ The prepared shell-only path was faster, but that does not predict a fresh Copil
 
 ## Recommended live use
 
-Keep the base C4 skill, read-only MCP lookup, and permission flow when the selected-target successful-work integration/rehearsal gate is unmet. If useful, show a sanitized saved excerpt explicitly labeled **Management-side execution evidence, not Corp validation**. Never rerun the Management target to stand in for Corp.
+Keep C4 base-only: skill, read-only MCP lookup and permissions. Native Sandboxes never replace it. If useful in the final optional tail, show a sanitized saved excerpt explicitly labeled **Management-side execution evidence, not Corp validation**. Never rerun the Management target to stand in for Corp.
 
-Only after approved selected-target IaC, access/policy read-back, full required runtime coverage and the exact presenter preflight pass may the operator select the C4 variant. Online basic provisioning/access/probe is verified, but full integration/rehearsal remains unqualified; approved Corp IaC was the earlier condition, not the current exclusive placement rule. It replaces part of the deeper MCP lookup inside **29:30-33:30**, with the same **32:30 cut**. It adds no chapter, changes no other slide budgets, and uses none of the 55:00-58:00 protected slack. See [the C4 operator procedure](demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes).
+Only after complete core wrap and a genuine early finish may hosted Apps/Jobs, then native Sandboxes, be considered as optional extras. Native work also requires independently approved selected-target IaC, access/policy read-back, full required runtime coverage and exact presenter preflight/rehearsal. Online basic provisioning/access/probe and corrected host fixture engineering are independently accepted; human stage GO and any selected Terraform variant remain separate gates. Approved Corp IaC was the earlier condition, not the current exclusive placement rule. Do not compress core content to buy time. Cut before **55:00**; never use **55:00-58:00** protected recovery or **58:00-60:00** close. See [the final native procedure](demo-runbook.md#native-procedure-reference---final-optional-tail-never-c4).
 
-| Wall clock | Budget | Operator action |
+The former C4 sub-slot is superseded. These relative durations are preparation references, not an allocated live slot or a runtime promise. Skip if the whole bounded attempt cannot fit genuine spare time.
+
+| Relative phase | Preparation reference | Operator action |
 | --- | --- | --- |
-| 29:30-30:00 | 0:30 | Name the selected variant and approved scope; show the skill and one prepared, cited read-only source. Label the source as preflight evidence, not a live MCP call. |
-| 30:00-32:00 | 2:00 | Manually select the rehearsed, separately scoped ACA session and submit the single prompt below against the prepared sandbox. Inspect each native permission request. No creation, upload, dependency installation, or retry on stage. |
-| 32:00-32:30 | 0:30 | Inspect completed checks, actual numeric exits, and HTTP observations; if unfinished, state that and use labeled fallback. |
-| 32:30-33:30 | 1:00 | Cut the live attempt, state evidence limits, and hand back to the base Terraform checkpoint for C5. |
+| Guidance/prepared source | 0:30 | Name the selected variant and approved scope; show the skill and one prepared, cited read-only source. Label the source as preflight evidence, not a live MCP call. |
+| One bounded prompt | 2:00 | Manually select the rehearsed, separately scoped ACA session and submit the single prompt below against the prepared sandbox. Inspect each native permission request. No creation, upload, dependency installation, or retry on stage. |
+| Inspect evidence | 0:30 | Inspect completed checks, actual numeric exits, and HTTP observations; if unfinished, state that and use labeled fallback. |
+| Cut/fallback before 55:00 | 1:00 | Cut the live attempt and state evidence limits. C0-C7 and core wrap are already complete; no protected recovery or close time is available for extras. |
 
 The operator privately resolves all explicit target values before rehearsal. Do not display their real values or an unreviewed raw response. The ACA session uses its own inspected tools and permissions; do not broaden the native Terraform validator to run it.
 
@@ -301,6 +303,6 @@ Keep operator records outside public source. Generic rehearsal pointers are `evi
 ## Fallback if capacity, plugin, or network misbehaves
 
 - Resolve a disabled plugin before rehearsal. The disabled state was a local observation, not a universal installation default.
-- If selected-target successful-work integration or prepared-resource rehearsal is incomplete, keep base C4. A saved Management-side excerpt must retain that label and its Boolean-exit/403 limitations.
-- If the chosen live variant fails or reaches the cut, do not retry, switch regions, change allow rules, or start the historical fresh-sandbox flow. Show already reviewed evidence with its actual scope, or return to the original MCP demonstration.
-- Direct `aca` operation is a separate manually rehearsed option, not an unrehearsed rescue during C4. No capacity or venue-network failure authorizes changes to existing infrastructure.
+- If selected-target successful-work integration or prepared-resource rehearsal is incomplete, skip the final native extra. A saved Management-side excerpt must retain that label and its Boolean-exit/403 limitations. C4 stays base-only regardless.
+- If the chosen live variant fails or reaches the cut, do not retry, switch regions, change allow rules, or start the historical fresh-sandbox flow. Show already reviewed evidence with its actual scope, or end the optional tail before 55:00.
+- Direct `aca` operation is a separate manually rehearsed final-tail option, not an unrehearsed rescue during C4. No capacity or venue-network failure authorizes changes to existing infrastructure.

@@ -2,13 +2,15 @@
 
 Session: **Copilot CLI + Squad for Terraform**, October 14, 2026, Martin Opedal and Haflidi Fridthjofsson.
 
-Use this as a copy-paste rehearsal script. Results are **repeatable enough for rehearsal**. The prompts and oracles are designed to make fresh runs converge often enough to demonstrate the workflow. They do not promise identical model text or diffs.
+Use this as a rehearsal script. Concrete commands are copy-paste examples; retained legacy command templates are not runnable as written and must be resolved before paste, as labeled beside each block. Results are **repeatable enough for rehearsal**. The prompts and oracles are designed to make fresh runs converge often enough to demonstrate the workflow. They do not promise identical model text or diffs.
 
 Verification tags in this file:
 
 - **Verified 2026-10-08** means the command was executed in the playbook validation run or the B2 smoke run.
 - **Needs interactive confirmation** means the command opens the Copilot CLI TUI or a gated Azure workflow and cannot honestly be proved headlessly here.
 - **Not run** means intentionally not executed because it installs software, overwrites a prepared repo, or changes Azure.
+
+For legacy templates, historical verification refers to a concretely bound run, not parse or execution success of the unbound text below.
 
 ## 1. Prerequisites
 
@@ -153,6 +155,8 @@ Expected result: Squad-owned files refresh, customized `squad.agent.md` is backe
 
 Copy the three profiles into `.github\agents\`. In this repo they already exist at the root and inside the reusable module copy.
 
+Legacy command template, resolve before paste: replace every `<session-repo>` (including angle brackets) with the actual public session clone path, for example `C:\git\session-repo`, and quote each complete source path. PowerShell reserves unquoted `<`; this block is not runnable as written.
+
 ```powershell
 New-Item -ItemType Directory -Force .github\agents | Out-Null
 Copy-Item <session-repo>\.github\agents\terraform-coder.agent.md .github\agents\
@@ -237,6 +241,8 @@ Use the lanes like this:
 
 Expected result: `/agent` lists `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, and `terraform-validator` marked `project`, then the interactive session switches to the writer lane. **Needs interactive confirmation.**
 
+Legacy command template, resolve before paste: replace both `<repo>` tokens (including angle brackets) with the same quoted, absolute public repo path. This block is not runnable as written.
+
 ```powershell
 copilot -C <repo> --add-dir <repo> --agent terraform-validator --disable-builtin-mcps --no-ask-user --no-color --allow-tool read --allow-tool search -p "Read README.md and report one sentence. Do not edit files, run shell commands, or use MCP."
 ```
@@ -267,6 +273,8 @@ Expected result: the interactive MCP dashboard shows server status. **Needs inte
 
 Optional user-level hosted Terraform MCP, if you have one, must keep its header key outside source:
 
+Legacy command template, resolve before paste: replace `<host>` with the approved hostname, `<header-name>` with its actual header name and `<read from your secret store>` with the value obtained privately at execution time. Remove the angle brackets; never display or commit the resolved secret. This block is not runnable as written.
+
 ```powershell
 copilot mcp add --transport http terraform-hosted https://<host>/mcp --header "<header-name>: <read from your secret store>"
 ```
@@ -274,6 +282,8 @@ copilot mcp add --transport http terraform-hosted https://<host>/mcp --header "<
 Expected result: `terraform-hosted` appears in `copilot mcp list`. **Not run 2026-10-08:** this would alter the presenter user's MCP configuration and must never print the secret value.
 
 For repeatability runs, disable unrelated user-level servers and built-ins, then allow only the profile tools you need:
+
+Legacy command template, resolve before paste: replace `<worktree>` with the quoted absolute prepared worktree path and `<brief>` with the chosen full brief, escaped for the quoted PowerShell argument. Replace `<each unrelated user-level server>` with a quoted actual server name, repeating the option per server or omitting it if none. Remove every placeholder's angle brackets. This block is not runnable as written.
 
 ```powershell
 copilot -C <worktree> --agent terraform-coder --model claude-sonnet-5 --disable-builtin-mcps --no-ask-user --no-color --allow-tool read --allow-tool search --allow-tool write --allow-tool edit --allow-tool microsoft-learn --allow-tool terraform --disable-mcp-server <each unrelated user-level server> -p "<brief>"
@@ -361,6 +371,8 @@ Expected result: one new plan-mode test run with four separate asserts, each wit
 
 ### Programmatic command shape
 
+Legacy command template, resolve before paste: replace `<fresh-worktree>` with the quoted absolute fresh worktree path and `<brief>` with the chosen full brief, escaped for the quoted PowerShell argument. Replace `<each unrelated user-level server>` with a quoted actual server name, repeating the option per server or omitting it if none. Remove every placeholder's angle brackets. This block is not runnable as written.
+
 ```powershell
 copilot -C <fresh-worktree> --agent terraform-coder --model claude-sonnet-5 --disable-builtin-mcps --no-ask-user --no-color --allow-tool read --allow-tool search --allow-tool write --allow-tool edit --allow-tool microsoft-learn --allow-tool terraform --disable-mcp-server <each unrelated user-level server> -p "<brief>"
 ```
@@ -395,6 +407,8 @@ Public consumer repo: <https://github.com/martinopedal/aks-automatic-demo-env>. 
 
 1. Open a PR that changes only the module `?ref=` tag in `deployments/online/main.tf` plus directly required docs.
 
+Legacy command template, resolve before paste: replace both `<tag>` tokens (including angle brackets) with the same reviewed module release tag in the branch name and PR title. Resolve the source edit to that tag before creating the PR. This block is not runnable as written.
+
 ```powershell
 gh repo clone martinopedal/aks-automatic-demo-env
 Set-Location aks-automatic-demo-env
@@ -407,6 +421,8 @@ gh pr create --base main --title "chore: consume module <tag>" --body "Plan-only
 Expected result: a PR for the thin root. **Not run 2026-10-08:** would create a public PR.
 
 2. Plan only, read the plan, then apply through the gated workflow.
+
+Legacy command template, resolve before paste: replace `<set in your shell only>` with the approved Online subscription ID, removing angle brackets and keeping the value private. Separate human plan review and apply approval still gate these operations; this block is not runnable as written and is not execution permission.
 
 ```powershell
 $env:AZURE_SUBSCRIPTION_ID_ONLINE = '<set in your shell only>'

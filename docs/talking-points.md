@@ -236,7 +236,7 @@ pending independent review, normal merge and Pages byte verification. They retai
 ### a-online
 - Same module, consumed by tag from a separate repo.
 - Guardrails shape the design: private state, NSG on every subnet, limited API access.
-- Runtime evidence: 29/29 outside-in checks for the Online path.
+- Runtime evidence: historical 2026-10-08, 29/29 outside-in checks for the Online path. Current recorded 2026-10-12: 26 PASS / 2 BLOCKED / 1 report-only under TLS bypass; no fresh suite, trusted TLS or full cluster health established.
 - Keep the same approval and evidence boundaries in the Online consumer.
 
 ### a-security
@@ -299,7 +299,7 @@ owned-runtime verdict or new permission. Follow the current live gate above.
 ### ACA Sandboxes - optional, dead last
 
 - C4 is base only. This final optional extra needs selected-target IaC, effective access/policy read-back, full required coverage and prepared-sandbox rehearsal; Online fixture engineering is accepted, human/selected-variant stage GO remains pending and Corp stays untouched.
-- Final-tail phases only: guidance/prepared source -> one bounded ACA skill prompt -> inspect actual exits/HTTP observations -> cut before 55:00; C5-C7 and core wrap are already complete. No create/upload/install/retry on stage. [Procedure](demo-runbook.md#c4-invoke-guidance-and-a-source--2930-3330--4-minutes).
+- Final-tail phases only: guidance/prepared source -> one bounded ACA skill prompt -> inspect actual exits/HTTP observations -> cut before 55:00; C5-C7 and core wrap are already complete. No create/upload/install/retry on stage. [Final native procedure](demo-runbook.md#native-procedure-reference---final-optional-tail-never-c4).
 - Evidence uses the exact qualified archive's numeric oracle; historical ten root checks are not the Corp 52+2 qualification or an AKS deployment. A 403 alone proves neither egress nor Azure Policy enforcement.
 - If not ready, skip or use explicitly labeled Management-side evidence, not Corp validation. Earlier runs took about 2:58 and 1:47; no 90-second guarantee and no use of 55:00-58:00 slack.
 - Corp source merged, new qualification blocked on an unexpected change-type check; no apply performed. Last baseline 8 present / 3 absent, connection/two Data Owner grants missing; no new sealed manifest/raw exact deltas. Explicit Corp get Succeeded/no VNet connections, scoped list 403/exit 1. No successful Corp sandbox creation/runtime test or full CLI+Squad execution inside a MicroVM is established. Earlier 34/85/31 source/tooling checks are not runtime acceptance.
