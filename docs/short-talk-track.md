@@ -186,15 +186,38 @@ Not parent reload: human revision/approval/visible indicator/exit remain
 
 ## C3 - one coder, actual handoffs
 
-**TUI, same guided CLI, now Interactive:** keep Squad selected and paste
-[coordination request](prompt-pack.md#c3---martin-2200-2600-cut-2500).
-Then `/agent terraform-coder`; paste **B1v2** from that same section.
+**TUI, same guided CLI, now Interactive:** keep Squad selected and paste the
+coordination request ([source](prompt-pack.md#c3---martin-2200-2600-cut-2500)):
+
+```text
+Squad: assign independent read-only source research and review preparation.
+One coder owns the test; return actual task starts and accountable handoffs.
+Do not run a concurrent writer on the shared test file.
+```
+
+Then `/agent terraform-coder`; paste **B1v2** from that same section:
+
+```text
+Work only in terraform\modules\aks-automatic-corp.
+
+Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16 and DNS service IP 10.241.0.10. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file.
+```
+
 Show actual starts/handoffs and one changed test/four asserts/error messages.
 **STOP:** concurrent writers, missing handoffs or cut; switching profiles is not parallel work.
 
 ## C4 - base skill and source only
 
-**TUI, guided:** `/agent squad`; paste [test-discipline/MCP request](prompt-pack.md#c4---martin-2930-3330-cut-3230---base-only).
+**TUI, guided:** `/agent squad`; paste the test-discipline/MCP request ([source](prompt-pack.md#c4---martin-2930-3330-cut-3230---base-only)):
+
+```text
+Invoke test-discipline now. Identify which existing contract assertions must
+remain unchanged during the mutation. Through the configured Microsoft Learn
+MCP, perform only a read-only search/fetch for AKS Automatic private/custom
+network requirements. Cite the source/version relevant to private API access
+and hosted-system subnets. Don't contact an Azure account or change providers.
+```
+
 Show skill invocation, source URL/version and narrow permission.
 **STOP:** missing skill/MCP, failed lookup or cut; BASE ONLY, no cloud extra.
 
@@ -209,14 +232,67 @@ require intended private_automatic_contract failure/original hash. Stop on error
 No weakened checks/provider/lock/Azure/retry.
 ```
 
-[Exact block/mutation](prompt-pack.md#c5---haflidi-3330-3830-cut-3715).
+Run this block via `!` in the same guided CLI window, once per phase (set `$phase` to `before`, then `seeded-failure`, then `repaired`)
+([source](prompt-pack.md#c5---haflidi-3330-3830-cut-3715)):
+
+```powershell
+$PSNativeCommandUseErrorActionPreference = $false
+$env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path
+$env:CHECKPOINT_DISABLE = '1'; $env:TF_IN_AUTOMATION = '1'
+if (Get-ChildItem Env: | Where-Object Name -Match '^(ARM_|AZURE_(?!CORE_)|TF_VAR_|TF_CLI_ARGS)') {
+  throw 'Remove inherited credentials/overrides in the isolated child, without displaying values.'
+}
+$phase = 'before' # Repeat as seeded-failure and repaired, using new log names.
+$log = "..\evidence\c5-$phase.log"
+if (Test-Path $log) { throw 'Keep the previous result; choose a new take.' }
+terraform -chdir='terraform\modules\aks-automatic-corp' init -backend=false -input=false -lockfile=readonly
+if ($LASTEXITCODE) { throw 'Offline initialization failed.' }
+terraform -chdir='terraform\modules\aks-automatic-corp' test `
+  -no-color 2>&1 | Tee-Object $log
+$code = $LASTEXITCODE
+$code | Set-Content "..\evidence\c5-$phase.exit.txt"
+"Exit: $code"
+if ($phase -ne 'seeded-failure' -and $code) { throw 'Clean check failed.' }
+if ($phase -eq 'seeded-failure' -and -not $code) { throw 'Mutation was not detected.' }
+```
+
+Then `/agent terraform-coder`; paste the labeled **DELIBERATE LAB MUTATION**:
+
+```text
+Native terraform-coder: in this disposable worktree only, change
+body.properties.apiServerAccessProfile.enablePrivateCluster from true to false.
+Change nothing else. Keep the tests, mocks, provider, and permissions unchanged.
+```
+
+After the seeded-failure rerun, ask the coder to restore only that field, inspect `/diff`, then rerun as `repaired`.
 Show pass → intended fail → pass/hash. **STOP:** before/wrong failure/isolation/cut.
 
 ## C6 - save and resume the public reason
 
-**TUI, guided:** `/agent squad`; paste [public Scribe request and resume sequence](prompt-pack.md#c6---haflidi-4200-4500-cut-4415).
-Record first, then `/new`, `/resume guided-clean-run`, `/cwd`, `/context`, `/usage`;
-ask `Read the saved decision; cite its file and the constraints for the next change.`
+**TUI, guided:** `/agent squad`; paste the public Scribe request ([source](prompt-pack.md#c6---haflidi-4200-4500-cut-4415)):
+
+```text
+Scribe: record the public-only decision under .squad\decisions\inbox\ for later
+merge into .squad\decisions.md. Include private API, caller-owned provider/backend,
+network regression, labeled mutation/restoration, exact checks and evidence
+limits. No private targets, histories, credentials or full conversations.
+```
+
+Record first, then the resume sequence:
+
+```text
+/new
+/resume guided-clean-run
+/cwd
+/context
+/usage
+```
+
+Then ask:
+
+```text
+Read the saved decision; cite its file and the constraints for the next change.
+```
 **STOP:** missing record/resume/citation or cut; hide unrelated sessions.
 
 ## C7 - offline checks, fresh reviewer
@@ -229,8 +305,51 @@ logs/exits/module+caller tests. Narrowly approve commands, stop at first failure
 Return diff/revision/files/results; no Azure/upgrades.
 ```
 
-[Exact checks/review](prompt-pack.md#c7---haflidi-4700-5000-cut-4915).
-`/new`, `/agent terraform-reviewer`; paste that section's exact-diff brief;
+Run this Check block via `!` in the same isolated guided shell, approving each command
+([source](prompt-pack.md#c7---haflidi-4700-5000-cut-4915)):
+
+```powershell
+$PSNativeCommandUseErrorActionPreference = $false
+$env:TF_CLI_CONFIG_FILE = (Resolve-Path '..\offline\terraform.tfrc').Path
+$env:CHECKPOINT_DISABLE = '1'; $env:TF_IN_AUTOMATION = '1'
+if (Get-ChildItem Env: | Where-Object Name -Match '^(ARM_|AZURE_(?!CORE_)|TF_VAR_|TF_CLI_ARGS)') {
+  throw 'Inherited credentials/overrides are not permitted.'
+}
+function Check($id, $exe, [string[]]$argv) {
+  $log = "..\evidence\c7-$id.log"
+  if (Test-Path $log) { throw 'Result already exists.' }
+  "$exe $($argv -join ' ')" | Set-Content $log
+  & $exe @argv 2>&1 | Tee-Object -FilePath $log -Append
+  $code = $LASTEXITCODE
+  $code | Set-Content "$log.exit.txt"
+  if ($code) { throw "$id failed: $code" }
+}
+$m = 'terraform\modules\aks-automatic-corp'
+$e = "$m\examples\corp-existing"
+Check fmt terraform @("-chdir=$m",'fmt','-check','-recursive')
+Check init terraform @("-chdir=$m",'init','-backend=false','-input=false','-lockfile=readonly')
+Check validate terraform @("-chdir=$m",'validate','-no-color')
+Check lint tflint @("--chdir=$m",'--config=.tflint.hcl','--no-color')
+Check module terraform @("-chdir=$m",'test','-no-color')
+Check example-init terraform @("-chdir=$e",'init','-backend=false','-input=false','-lockfile=readonly')
+Check example-validate terraform @("-chdir=$e",'validate','-no-color')
+Check example terraform @("-chdir=$e",'test','-var-file','terraform.tfvars.example','-no-color')
+Check diff git @('--no-pager','diff','--',$m)
+```
+
+`/new`, `/agent terraform-reviewer`; paste the exact-diff brief:
+
+```text
+Review the supplied exact baseline/current revision and diff for
+terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl. Confirm the
+separately labeled main.tf mutation is restored to its original SHA-256.
+Use the supplied sanitized failure-and-repair and final-check logs and numeric exits; if absent, stop as
+blocked. Check caller/module ownership, unknown-at-plan
+values in count or for_each, lifecycle guards, test intent, and the
+private API and unchanged payload assertions. Return findings with severity, file and line,
+consequence, and repair. Missing evidence is blocked, not passed.
+```
+
 `/agent squad` for human acceptance. **STOP:** tool/check/diff/cut; mocks aren't Azure evidence.
 
 ## Technical evidence - public source and browser
