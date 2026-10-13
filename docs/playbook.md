@@ -2,30 +2,15 @@
 
 Session: **Copilot CLI + Squad for Terraform**, October 14, 2026, Martin Opedal and Haflidi Fridthjofsson.
 
-October 12 operator addendum: [the repo map](repositories.md) identifies this
-presenter/teaching clone, the independent public Corp module, upstream Automatic
-module, live demo-env deployment entry and Haflidi hosted implementation versus
-private issue target. Keep the historical command-verification tags below.
-One laptop 18/18 is not full rehearsal/runtime. Current local MXC is policy
-blocked; separate native Online deployment/current operator access/base probe
-was independently verified, not AKS or hosted Jobs. Token auth/green wrong-target
-doctor alone is not target access.
-Use [current progress](sandboxing.md#october-12-progress-and-next-actions) and
-[two product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
-Host Copilot/Squad orchestrating MicroVM checks is distinct from advanced
-optional in-MicroVM CLI/Squad installation/auth/runtime proof. Corrected ACA SANDBOXES host runtime passes positive/JSON/SHA/exit23/causal
-denial/cleanup contracts; independent acceptance complete, then runtime-ready.
-Human stage GO and fresh hosted Apps/Jobs E2E remain separate. No
-fresh new-target bot PR or renewed 29/29/full TLS is inferred. Use the
-[two product prompt recipes](prompt-pack.md#two-product-demo-prompt-recipes).
-
-Use this as a copy-paste rehearsal script. Results are **repeatable enough for rehearsal**. The prompts and oracles are designed to make fresh runs converge often enough to demonstrate the workflow. They do not promise identical model text or diffs.
+Use this as a rehearsal script. Concrete commands are copy-paste examples; retained legacy command templates are not runnable as written and must be resolved before paste, as labeled beside each block. Results are **repeatable enough for rehearsal**. The prompts and oracles are designed to make fresh runs converge often enough to demonstrate the workflow. They do not promise identical model text or diffs.
 
 Verification tags in this file:
 
 - **Verified 2026-10-08** means the command was executed in the playbook validation run or the B2 smoke run.
 - **Needs interactive confirmation** means the command opens the Copilot CLI TUI or a gated Azure workflow and cannot honestly be proved headlessly here.
 - **Not run** means intentionally not executed because it installs software, overwrites a prepared repo, or changes Azure.
+
+For legacy templates, historical verification refers to a concretely bound run, not parse or execution success of the unbound text below.
 
 ## 1. Prerequisites
 
@@ -170,6 +155,8 @@ Expected result: Squad-owned files refresh, customized `squad.agent.md` is backe
 
 Copy the three profiles into `.github\agents\`. In this repo they already exist at the root and inside the reusable module copy.
 
+Legacy command template, resolve before paste: replace every `<session-repo>` (including angle brackets) with the actual public session clone path, for example `C:\git\session-repo`, and quote each complete source path. PowerShell reserves unquoted `<`; this block is not runnable as written.
+
 ```powershell
 New-Item -ItemType Directory -Force .github\agents | Out-Null
 Copy-Item <session-repo>\.github\agents\terraform-coder.agent.md .github\agents\
@@ -254,6 +241,8 @@ Use the lanes like this:
 
 Expected result: `/agent` lists `Squad` (user) plus `terraform-coder`, `terraform-reviewer`, and `terraform-validator` marked `project`, then the interactive session switches to the writer lane. **Needs interactive confirmation.**
 
+Legacy command template, resolve before paste: replace both `<repo>` tokens (including angle brackets) with the same quoted, absolute public repo path. This block is not runnable as written.
+
 ```powershell
 copilot -C <repo> --add-dir <repo> --agent terraform-validator --disable-builtin-mcps --no-ask-user --no-color --allow-tool read --allow-tool search -p "Read README.md and report one sentence. Do not edit files, run shell commands, or use MCP."
 ```
@@ -284,6 +273,8 @@ Expected result: the interactive MCP dashboard shows server status. **Needs inte
 
 Optional user-level hosted Terraform MCP, if you have one, must keep its header key outside source:
 
+Legacy command template, resolve before paste: replace `<host>` with the approved hostname, `<header-name>` with its actual header name and `<read from your secret store>` with the value obtained privately at execution time. Remove the angle brackets; never display or commit the resolved secret. This block is not runnable as written.
+
 ```powershell
 copilot mcp add --transport http terraform-hosted https://<host>/mcp --header "<header-name>: <read from your secret store>"
 ```
@@ -291,6 +282,8 @@ copilot mcp add --transport http terraform-hosted https://<host>/mcp --header "<
 Expected result: `terraform-hosted` appears in `copilot mcp list`. **Not run 2026-10-08:** this would alter the presenter user's MCP configuration and must never print the secret value.
 
 For repeatability runs, disable unrelated user-level servers and built-ins, then allow only the profile tools you need:
+
+Legacy command template, resolve before paste: replace `<worktree>` with the quoted absolute prepared worktree path and `<brief>` with the chosen full brief, escaped for the quoted PowerShell argument. Replace `<each unrelated user-level server>` with a quoted actual server name, repeating the option per server or omitting it if none. Remove every placeholder's angle brackets. This block is not runnable as written.
 
 ```powershell
 copilot -C <worktree> --agent terraform-coder --model claude-sonnet-5 --disable-builtin-mcps --no-ask-user --no-color --allow-tool read --allow-tool search --allow-tool write --allow-tool edit --allow-tool microsoft-learn --allow-tool terraform --disable-mcp-server <each unrelated user-level server> -p "<brief>"
@@ -378,6 +371,8 @@ Expected result: one new plan-mode test run with four separate asserts, each wit
 
 ### Programmatic command shape
 
+Legacy command template, resolve before paste: replace `<fresh-worktree>` with the quoted absolute fresh worktree path and `<brief>` with the chosen full brief, escaped for the quoted PowerShell argument. Replace `<each unrelated user-level server>` with a quoted actual server name, repeating the option per server or omitting it if none. Remove every placeholder's angle brackets. This block is not runnable as written.
+
 ```powershell
 copilot -C <fresh-worktree> --agent terraform-coder --model claude-sonnet-5 --disable-builtin-mcps --no-ask-user --no-color --allow-tool read --allow-tool search --allow-tool write --allow-tool edit --allow-tool microsoft-learn --allow-tool terraform --disable-mcp-server <each unrelated user-level server> -p "<brief>"
 ```
@@ -412,6 +407,8 @@ Public consumer repo: <https://github.com/martinopedal/aks-automatic-demo-env>. 
 
 1. Open a PR that changes only the module `?ref=` tag in `deployments/online/main.tf` plus directly required docs.
 
+Legacy command template, resolve before paste: replace both `<tag>` tokens (including angle brackets) with the same reviewed module release tag in the branch name and PR title. Resolve the source edit to that tag before creating the PR. This block is not runnable as written.
+
 ```powershell
 gh repo clone martinopedal/aks-automatic-demo-env
 Set-Location aks-automatic-demo-env
@@ -424,6 +421,8 @@ gh pr create --base main --title "chore: consume module <tag>" --body "Plan-only
 Expected result: a PR for the thin root. **Not run 2026-10-08:** would create a public PR.
 
 2. Plan only, read the plan, then apply through the gated workflow.
+
+Legacy command template, resolve before paste: replace `<set in your shell only>` with the approved Online subscription ID, removing angle brackets and keeping the value private. Separate human plan review and apply approval still gate these operations; this block is not runnable as written and is not execution permission.
 
 ```powershell
 $env:AZURE_SUBSCRIPTION_ID_ONLINE = '<set in your shell only>'
@@ -477,3 +476,58 @@ Sources researched on **2026-10-08**:
 - GitHub Copilot CLI custom instructions: <https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions>
 - Demo environment README: <https://github.com/martinopedal/aks-automatic-demo-env/blob/main/README.md>
 - Demo environment operations runbook: <https://github.com/martinopedal/aks-automatic-demo-env/blob/main/docs/operations-runbook.md>
+
+## Optional final extras - only if time and live gates permit
+
+Finish essentials, C0-C7, the technical explanation, consumer reveal and core
+wrap **before** either extra. Only a genuine early finish creates spare time
+before 55:00; do not shorten core content to manufacture it. Both extras may
+be skipped. Stop before 55:00; 55:00-58:00 is protected recovery and
+58:00-60:00 is the protected close, never appendix time. Hosted Apps/Jobs
+comes first, native ACA Sandboxes last. No stage GO is inferred from source,
+an engineering receipt or this reordering.
+
+**Current live gate:** owned hosted source preparation is accepted/merged,
+but successful publisher qualification, immutable image, genuine worker auth
+and actual README bot PR remain unproved. The qualified attempt failed on
+network/TLS/DNS/local Docker limits; live GO is **not** true. External authority,
+owner, network, private-evidence and human stage gates remain separate.
+No new issue, unsafe Job start or authentication mint while held.
+Native 26.768-second fixture engineering/85 rehashes is accepted, not a human
+rehearsal or guest-agent/OAuth proof. Both can SKIP.
+
+The dated background retained below preserves the original content, including
+earlier waiting/source-review stages. It is preparation history, not the latest
+owned-runtime verdict or new permission. Follow the current live gate above.
+
+
+### Squad on ACA Apps/Jobs - optional, first
+
+Read-only source/chain discussion only while the owned live path is held. Use
+[Card A](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr), not a
+new issue or unsafe job start. Preserve Haflidi's original service.
+
+### ACA Sandboxes - optional, dead last
+
+Use [Card B](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad)
+only after its own human preflight/rehearsal and exact-target gates. Host CLI/Squad
+is the controller, not an authenticated guest agent.
+
+### Retained operator addendum
+
+October 12 operator addendum: [the repo map](repositories.md) identifies this
+presenter/teaching clone, the independent public Corp module, upstream Automatic
+module, live demo-env deployment entry and Haflidi hosted implementation versus
+private issue target. Keep the historical command-verification tags below.
+One laptop 18/18 is not full rehearsal/runtime. Current local MXC is policy
+blocked; separate native Online deployment/current operator access/base probe
+was independently verified, not AKS or hosted Jobs. Token auth/green wrong-target
+doctor alone is not target access.
+Use [current progress](sandboxing.md#october-12-progress-and-next-actions) and
+[two product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
+Host Copilot/Squad orchestrating MicroVM checks is distinct from advanced
+optional in-MicroVM CLI/Squad installation/auth/runtime proof. Corrected ACA SANDBOXES host runtime passes positive/JSON/SHA/exit23/causal
+denial/cleanup contracts; independent acceptance complete, then runtime-ready.
+Human stage GO and fresh hosted Apps/Jobs E2E remain separate. No
+fresh new-target bot PR or renewed 29/29/full TLS is inferred. Use the
+[two product prompt recipes](prompt-pack.md#two-product-demo-prompt-recipes).
