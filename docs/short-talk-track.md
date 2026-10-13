@@ -117,9 +117,17 @@ Continue only after preparation verified both roots at the same checkpoint.
 Repo: Corp teaching copy `terraform\modules\aks-automatic-corp` in the session repo, disposable; nothing pushed upstream.
 **Shell, each verified A/B root:** run `copilot --agent squad --plan`.
 **TUI:** confirm `/cwd`, Squad and the **Plan** indicator; use sessions
-`C1-A`/`C1-B` and the same model. Paste the
-[exact A/B request](prompt-pack.md#c1---martin-drives-haflidi-compares-1230-1530-cut-1445);
-show one consequence.
+`C1-A`/`C1-B` and the same model. Paste the exact A/B request
+([source](prompt-pack.md#c1---martin-drives-haflidi-compares-1230-1530-cut-1445)):
+
+```text
+Plan only: add alternate_network_payload to the existing module contract tests.
+Use pod 172.21.0.0/16, service 10.241.0.0/16, and DNS 10.241.0.10.
+Assert propagation into the requested body while preserving the private API.
+Don't edit files or deploy. Identify affected files, one writer, and checks.
+```
+
+Show one consequence.
 **STOP:** root/checkpoint/model mismatch or cut; identical plans are valid.
 
 <a id="native-plan-with-squad"></a>
