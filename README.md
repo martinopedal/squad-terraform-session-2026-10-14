@@ -63,10 +63,28 @@ The presentation shell and speaker material are built and reviewed. The public T
 
 The live demo consumer is [martinopedal/aks-automatic-demo-env](https://github.com/martinopedal/aks-automatic-demo-env). It owns the Online/demo-VM roots and gated deployment workflows and pins [martinopedal/terraform-azapi-aks-automatic](https://github.com/martinopedal/terraform-azapi-aks-automatic) by tag `v0.6.0`. The copied Corp teaching module below is a separate source and evidence lineage, not that consumer's module pin.
 
+## This repository and the demo stack
+
+The table above is preserved. This repo supplies **docs, prompts, Squad
+coordination and presentation material**, not all private infrastructure.
+[Stack overview](docs/stack-overview.md) adds the approved demo-only
+resource-group/subscription matrix, owner-root boundaries, capabilities diagram
+and actual AKS app ingress. [Module consumption](docs/module-consumption.md)
+explains the existing consumer's exact source/pin, typed inputs, root providers/
+authentication/backend, outputs and separate human gates. The upstream Automatic
+module is a consumed dependency: do not change it for documentation or silently
+upgrade it; a verified bug needs separate evidence/owner review.
+
+Read essentials -> walkthrough -> technical detail. Hosted ACA Apps/Jobs and
+native ACA Sandboxes are separate optional lanes, last and only if time allows.
+The guides add architecture facts, not deployment authority or a new run sheet.
+
 | Path | Content |
 | --- | --- |
 | [`presentation`](presentation/README.md) | Offline-capable Reveal.js presentation with speaker notes |
 | [`docs\repositories.md`](docs/repositories.md) | Public source/copy/consumer map, private deployment boundary and hosted target distinction |
+| [`docs\stack-overview.md`](docs/stack-overview.md) | This repo's role, approved demo RG/subscription inventory, owner roots, capabilities and actual AKS ingress |
+| [`docs\module-consumption.md`](docs/module-consumption.md) | Existing consumer's exact Automatic module pin, typed wiring, root auth/backend/state, outputs and execution boundaries |
 | [`docs\talk-track.md`](docs/talk-track.md) | Timed Martin/Haflidi script, handoffs, and prepared Q&A |
 | [`docs\run-plan.md`](docs/run-plan.md) | Countdown, minute-by-minute run sheet, preflight, and fallbacks |
 | [`docs\overview.md`](docs/overview.md) | One-page high-level overview of the session flow and why the gates matter |
@@ -145,7 +163,12 @@ Open `http://127.0.0.1:4173/presentation/` and press `S` for speaker view or `N`
 
 ## Public code, separate deployment configuration
 
-The module and its generic examples are public. Real subscription/resource identifiers, environment inputs, credentials, private policy evidence, and Terraform state remain outside this repository.
+The module and its generic examples are public. The user-approved nonsecret
+demo-stack RG names and four subscription IDs are documented only in the
+[bounded stack matrix](docs/stack-overview.md#resource-group-and-subscription-matrix)
+and directly related explanation. Other real identifiers, environment inputs,
+credentials, private policy evidence and Terraform state remain outside this
+repository; the matrix grants no resource-creation or deployment authority.
 
 The reusable public module is [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic). Demo-environment roots, manifests, operational scripts, and gated deployment workflows now live in [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env), which pins the module by tag `v0.6.0`.
 
