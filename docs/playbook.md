@@ -78,8 +78,8 @@ to real authentication or the still-future October 13 dress rehearsal/reset.
 1. Start in a fresh Git repo.
 
 ```powershell
-New-Item -ItemType Directory -Force $HOME\demo\squad-zero | Out-Null
-Set-Location $HOME\demo\squad-zero
+New-Item -ItemType Directory -Force C:\demo\squad-zero | Out-Null
+Set-Location C:\demo\squad-zero
 git init
 Set-Content README.md '# squad zero'
 git add README.md

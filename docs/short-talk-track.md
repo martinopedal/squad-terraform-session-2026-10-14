@@ -80,7 +80,7 @@ source/mocked checks need no Azure login.
 
 **Shell/TUI:** [clean-host recipe](clean-machine-demo.md#the-live-chapter-target-300).
 Repo: upstream clone `terraform-azapi-aks-automatic`; no code change.
-New `$HOME\demo\aks-module` clone → `squad init` → roster → `squad doctor`.
+New `C:\demo\aks-module` clone → `squad init` → roster → `squad doctor`.
 At the roster step paste [Hire the team](prompt-pack.md#hire-the-team-c0-first-squad-demo-squad-coordinator-plan-mode):
 
 ```text

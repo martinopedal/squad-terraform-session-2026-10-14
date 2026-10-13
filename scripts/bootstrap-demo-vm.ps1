@@ -1,7 +1,7 @@
 [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Low')]
 param(
     [string]$RepoUrl = 'https://github.com/martinopedal/terraform-azapi-aks-automatic.git',
-    [string]$RepoPath = "$HOME\demo\aks-module",
+    [string]$RepoPath = "C:\demo\aks-module",
     [ValidateSet('Npm', 'Winget')]
     [string]$SquadInstallSource = 'Winget',
     [ValidateSet('WebFlow', 'DeviceCode')]

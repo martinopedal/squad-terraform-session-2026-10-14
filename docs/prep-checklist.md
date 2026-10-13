@@ -77,7 +77,7 @@ All commands run in PowerShell 7.
   copilot --agent squad
   ```
 - [x] Origin guard: origins are treated as equivalent with or without `.git` (source: Haflidi, 2026-10-13). Earlier wording required an exact match including `.git` (`https://github.com/martinopedal/squad-terraform-session-2026-10-14.git`); no `set-url` step is needed for a missing suffix. The consumer repo has the same guard (`https://github.com/martinopedal/aks-automatic-demo-env.git`, checked in the same runbook layout block, "Wrong source origin"); the session guard is also in the runbook C0/preparation block (source: demo-runbook.md) (VM, 2026-10-13)
-- [x] Upstream module repo: do NOT pre-clone `terraform-azapi-aks-automatic` to `$HOME\demo\aks-module` (C0 clones it live, then `squad init`). Keep that path empty, with no `.squad` folder and no squad CLI there. Test GitHub reachability by cloning `martinopedal/terraform-azapi-aks-automatic` into a throwaway folder, then delete it. Optional backup copy outside the demo path (e.g. `C:\demo\backup\aks-module`) in case the network fails during C0. Path absent; throwaway clone worked and was deleted (VM, 2026-10-13)
+- [x] Upstream module repo: do NOT pre-clone `terraform-azapi-aks-automatic` to `C:\demo\aks-module` (C0 clones it live, then `squad init`). Keep that path empty, with no `.squad` folder and no squad CLI there. Test GitHub reachability by cloning `martinopedal/terraform-azapi-aks-automatic` into a throwaway folder, then delete it. Optional backup copy outside the demo path (e.g. `C:\demo\backup\aks-module`) in case the network fails during C0. Path absent; throwaway clone worked and was deleted (VM, 2026-10-13)
 - [ ] Never start Copilot from the private coordinator folder; existing checkouts are never overwritten (source: short-talk-track.md, demo-runbook.md)
 - [ ] `Set-Location C:\demo\session-repo; git status --short` is clean (source: short-talk-track.md Essentials)
 - [ ] Hosted checkout `C:\demo\hosted-target` only for optional Card A, by its operator from the approved private URL (source: demo-runbook.md). Not needed for core
@@ -137,15 +137,15 @@ All commands run in PowerShell 7.
   ```
 - [ ] Clone upstream module and init:
   ```powershell
-  git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git $HOME\demo\aks-module
-  Set-Location $HOME\demo\aks-module
+  git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git C:\demo\aks-module
+  Set-Location C:\demo\aks-module
   squad init
   git status --short
   copilot --agent squad
   ```
 - [ ] Paste the Flaaklypa roster prompt, now inline in short-talk-track.md C0 (copy from that file; the same text is in docs\prompt-pack.md "Hire the team")
 - [ ] Human confirms roster; TUI `/exit`; shell `squad doctor` (docs expect `10 passed, 0 failed`, source: clean-machine-demo.md)
-- [ ] Reset after test: delete `$HOME\demo`, then `winget uninstall --id bradygaster.Squad` (source: clean-machine-demo.md; its Git/Copilot uninstalls do NOT apply, they are pre-installed). Sign-out of GitHub in Edge is NOT wanted here
+- [ ] Reset after test: delete `C:\demo`, then `winget uninstall --id bradygaster.Squad` (source: clean-machine-demo.md; its Git/Copilot uninstalls do NOT apply, they are pre-installed). Sign-out of GitHub in Edge is NOT wanted here
 - [ ] C5 and C7 once in the guided worktree (commands in demo-runbook.md C5 and C7 sections; `/agent terraform-validator`, approve each command)
 - [ ] C6 rehearsal: the guided session must be named `guided-clean-run` (`/rename guided-clean-run` at C2 start, source: demo-runbook.md C2). Then Scribe records the public decision under `.squad\decisions\inbox\` BEFORE `/new`, `/resume guided-clean-run`, `/cwd`, `/context`, `/usage`; ask it to cite the file (source: demo-runbook.md C6, short-talk-track.md C6). Keep unrelated sessions off screen; sanitized decision excerpt ready; offline fallback `c6-decision.md`
 - [ ] Runbook has no section titled "VM demo cues"; C6 is the only such cue found, covered above. Confirm with Martin whether another cue list exists. UNKNOWN
@@ -182,7 +182,7 @@ Order: pre-snapshot checks, snapshot, rehearse C0-C7 once, restore, post-restore
   - `TFMCP_KEY` set as a User environment variable, length 43 (check length only, never print it)
   - terraform 1.16.5, TFLint 0.64.0, Git and Copilot CLI present
   - squad CLI NOT installed (host prep prompt runs without the Squad CLI by design, confirmed by Haflidi)
-  - `$HOME\demo\aks-module` absent
+  - `C:\demo\aks-module` absent
   - `C:\demo\checkpoints\take-20261014` has `A`, `B`, `guided`, `evidence`, `offline`
   - `terraform.tfrc` is `filesystem_mirror` only (no `direct`)
   - no `ARM_`, `AZURE_`, `TF_VAR_` or `TF_CLI_ARGS` environment variables
