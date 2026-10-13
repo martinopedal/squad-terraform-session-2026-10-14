@@ -348,8 +348,8 @@ Finish essentials, C0-C7, the technical explanation, consumer reveal and core
 wrap **before** either extra. Only a genuine early finish creates spare time
 before 55:00; do not shorten core content to manufacture it. Both extras may
 be skipped. Stop before 55:00; 55:00-58:00 is protected recovery and
-58:00-60:00 is the protected close, never appendix time. Hosted Apps/Jobs
-comes first, native ACA Sandboxes last. No stage GO is inferred from source,
+58:00-60:00 is the protected close, never appendix time. Native ACA Sandboxes
+come first, Squad on ACA Apps/Jobs is the very last section. No stage GO is inferred from source,
 an engineering receipt or this reordering.
 
 **Current live gate:** owned hosted source preparation is accepted/merged,
