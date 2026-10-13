@@ -4,10 +4,13 @@ A two-speaker session by **Martin Opedal, Enterprise Cloud Solution Architect, M
 
 **Planned session:** October 14, 2026, 10:00-11:00, UTC+02:00, Room 6. Exact current NIC listing remains a manual confirmation gate.
 
-Local candidate **deck 0.22.6** synchronizes exported speaker notes with accepted
+Released **deck 0.22.6** synchronizes exported speaker notes with accepted
 ACA SANDBOXES engineering, accepted owned-hosted source/runtime holds and VM preservation.
-Released main/Pages stays **0.22.5** until this candidate's reviewed publication;
-39/5 slides, on-screen design/commands and 55/3/2 timing are preserved.
+Main/Pages publication completed October 13 after PR22's normal merge and
+full/short HTML byte verification. The 39/5 slides, on-screen design/commands
+and 55/3/2 timing are preserved. Later local corrections still require independent
+review, normal merge and Pages byte verification; a matching version is not proof
+that new bytes are published. Publication grants no runtime or human stage GO.
 Owner-native source preparation is under review; executable delivery remains
 held, with plan/apply/destroy unconditionally disabled and signer/private-plan
 transport/executable integration not provisioned. This is not deploy-on-merge.
@@ -46,7 +49,7 @@ no inside-MicroVM OAuth, credential copying or wider resource authority.
 
 | Component | Canonical repo / source | Local folder | Where to edit | Where / how to deploy | Status |
 | --- | --- | --- | --- | --- | --- |
-| Session docs, deck, skills/native profiles | [Session repo](https://github.com/martinopedal/squad-terraform-session-2026-10-14) | Session clone `.\` | `docs`, `presentation\src`, `.github\skills`, `.github\agents` | Reviewed PR -> normal `main` merge -> existing Pages release; not Azure deployment | Released 0.22.5 / 39 full / 5 short slides; local 0.22.6 changes await their own review/release |
+| Session docs, deck, skills/native profiles | [Session repo](https://github.com/martinopedal/squad-terraform-session-2026-10-14) | Session clone `.\` | `docs`, `presentation\src`, `.github\skills`, `.github\agents` | Reviewed PR -> normal `main` merge -> existing Pages release; not Azure deployment | Released 0.22.6 on main/Pages / 39 full / 5 short slides; later local corrections require their own review/release |
 | Upstream AKS Automatic module | [Automatic module](https://github.com/martinopedal/terraform-azapi-aks-automatic) | `<automatic-module-clone>` | Canonical module contract/tests | Reviewed module release; consumed by demo-env pin `v0.6.0` | Public reusable source, not environment deployment entry |
 | Independent Corp teaching module | [Public Corp module](https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp) | `<corp-module-clone>`; session copy `terraform\modules\aks-automatic-corp` | Canonical Corp module, then reviewed mirror/manifest | Private approved Corp consumer, not session clone | Separate unchanged pin/manifest; public source |
 | Existing Online AKS / demo VM | [Live demo-env consumer](https://github.com/martinopedal/aks-automatic-demo-env) | Consumer clone `deployments\online` and its demo-VM root | Consumer roots/manifests/runbook | Existing gated consumer workflow, private environment/state and exact approval | App/2 replicas PASS with TLS bypass; canonical 26 PASS/2 BLOCKED/1 report-only, not full health |
@@ -183,11 +186,17 @@ execution authority; scoped cost consent remains private and retained costs rema
 MCP minreplicas 1 is scheduled October 13/revert October 14, teardown October 17
 and credential expiry October 31, not completed.
 
-The accepted status revision and deck **0.22.5** were released through public PR21
+2026-10-13 pre-publication source freeze: the accepted status revision and deck
+**0.22.5** had been released through public PR21
 on main/Pages at `fa11ccfd6a3e3e12827c0c94bd1f9b4300f5e68c`.
-These later operator-doc and bootstrap corrections are local until their own
-reviewed release. The directly coupled notes/status fix now produces local deck 0.22.6 exports;
-no redesign/new sections/media. Only reviewed publication changes live Pages.
+
+Current notes/status release: released deck 0.22.6 on main/Pages followed PR22's
+normal merge October 13, successful Pages and full/short HTTP 200 byte verification
+against the initially accepted exports. Later local correction bytes remain
+unpublished pending independent review, normal merge and Pages byte verification.
+The directly coupled notes/status fix retains 0.22.6 with no redesign/new
+sections/media; a local build or matching version does not publish the correction
+bytes. Publication is not runtime or human stage GO.
 
 The [two product demo flows](docs/demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes)
 are Haflidi's hosted Squad agent work to bot PR, and host Copilot CLI/Squad +

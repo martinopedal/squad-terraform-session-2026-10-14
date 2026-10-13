@@ -79,7 +79,7 @@ Edit `src\slides.mjs` for composition, `src\theme.css` for the fixed NIC 2026 te
 
 The design is fixed: 1280 x 720, official NIC 2026 cyan and ink surfaces, embedded Roboto, NIC26 logos, and restrained motion. This is a screen-only deck. No print or PowerPoint output is maintained.
 
-Before each content revision, preserve the previous generated HTML outside the release package. Increment `src\version.json` in the same revision. Keep `0.x` until the presenters approve the final content.
+Before each content revision, preserve the previous generated HTML outside the release package. Increment `src\version.json` in the same revision, except for post-publication status reconciliation that retains the actual released version and changes no slide content. Keep `0.x` until the presenters approve the final content.
 
 ## Live demos and fallback notes
 
@@ -89,17 +89,17 @@ Only genuine Copilot CLI with Squad selected, standalone or in a real integrated
 
 Source qualification may finish before delivery. The live chapter must execute from a disclosed clean checkpoint or explicitly use the Offline fallback line. Do not substitute prior qualification output for a live result.
 
-Released baseline deck 0.22.5 and local candidate deck 0.22.6 follow the same
+Released deck 0.22.6 on main/Pages follows the same
 60-minute contract: 55 minutes scripted content, 55:00-58:00 protected recovery
 and two-minute close. Full 39-slide and short five-slide sources retain their
-on-screen design/IDs/clocks. Main/Pages publication is complete, fresh full and
-short HTML previously matched that release. Local deck 0.22.6 is now rebuilt
-only for directly coupled factual speaker-note/status propagation, preserving
-all slide design, commands, counts and clocks. Accepted ACA SANDBOXES proof and
-blocked hosted Apps/Jobs are synchronized into its notes; no guest-agent/human
-stage readiness or publication claim. Review the exact candidate exports before
-publication; live Pages remains the previously released 0.22.5 until normal merge
-and Pages verification. A local build or PR does not publish this candidate.
+on-screen design/IDs/clocks. Main/Pages publication is complete: PR22 normally
+merged October 13, Pages succeeded, and full/short HTTP 200 responses matched
+the accepted export bytes. Accepted ACA SANDBOXES proof and blocked hosted
+Apps/Jobs remain distinct in its notes; publication grants no guest-agent,
+installer or human stage readiness. Later local corrections retain 0.22.6 for
+publication-state reconciliation, but still require independent review, normal
+merge and Pages byte verification. A local build or matching version does not
+publish new correction bytes. Dated source-freeze history is not current release status.
 
 The live demo consumer is `martinopedal/aks-automatic-demo-env`, pinning `martinopedal/terraform-azapi-aks-automatic` at `v0.6.0`; the copied Corp teaching module retains its separate unchanged source pin/manifest. Speaker notes distinguish four execution hosts: local OS/MXC, GitHub-managed Copilot cloud preview built on ACA, customer-managed ACA MicroVMs via `aca`, and hosted Squad Apps/Jobs, not MicroVMs. Squad is coordination/configuration over Copilot, not a sandbox product. Host installs do not prove full CLI+Squad execution inside a MicroVM; sign-in/storage/egress need separate consent, never copied host authentication.
 

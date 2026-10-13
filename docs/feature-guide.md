@@ -15,13 +15,16 @@ The example is a reusable Terraform module for a fresh, private AKS Automatic cl
 
 ## Evidence and availability
 
-Local deck 0.22.6 propagates accepted ACA SANDBOXES engineering, accepted owned-hosted
-source/runtime holds and VM preservation into notes. Released main/Pages baseline is 0.22.5;
-the candidate has unchanged 39/5 slides/clocks and awaits reviewed publication.
+Released deck 0.22.6 on main/Pages propagates accepted ACA SANDBOXES engineering,
+accepted owned-hosted source/runtime holds and VM preservation into notes.
+PR22 normally merged October 13, Pages succeeded and full/short HTTP 200 bodies
+matched the initially accepted exports. Later local correction bytes remain
+unpublished pending independent review, normal merge and Pages byte verification.
+They retain 0.22.6 with unchanged 39/5 slides/clocks, not new runtime or human stage proof.
 
 Reviewed September 30, 2026. We read current GitHub documentation and pinned Squad's default `dev` branch at `93aec83accb44e08c39e4a799f13b55208215a13`. The stable `main` comparison is `5e086cece467686b2d3c6950241cf87bca5fffe8`. Squad v1.0.0 (October 3) and v1.0.1 (October 4) release tags exist, and the demo machine uses 1.0.1. The pinned reference docs at `93aec83` still carry an Experimental/alpha banner, so docs may lag releases. See [whats-new.md](whats-new.md).
 
-Current native host checks are **Copilot CLI 1.0.94, Squad 1.0.1 (October 12, 2026)**, with ACA CLI 1.0.0-preview.4 and enabled official sandbox plugin 0.0.5-beta. One laptop's corrected read-only preflight passed 18/18; this is not both presenters, clean VM/manual sign-in, full rehearsal or MicroVM acceptance. October 8 validation used Copilot CLI 1.0.93. Historical local probes used Copilot CLI **1.0.88** directly and Squad **0.13.0**, before the 1.0 releases; the unqualified `copilot` command then returned **1.0.89**, so a command name alone isn't a version pin. Earlier changes from 1.0.88 to 1.0.92 are listed in [whats-new.md](whats-new.md). Re-probe the live-demo build before delivery. Deck 0.21.0 introduced the public status badges. Historical 0.22.3/0.22.4 checkpoints remain preserved; deck 0.22.5 is released on main/Pages, and later local operator-doc corrections await their own reviewed release. Read stage labels from the badge table in `presentation\src\slides.mjs`.
+Current native host checks are **Copilot CLI 1.0.94, Squad 1.0.1 (October 12, 2026)**, with ACA CLI 1.0.0-preview.4 and enabled official sandbox plugin 0.0.5-beta. One laptop's corrected read-only preflight passed 18/18; this is not both presenters, clean VM/manual sign-in, full rehearsal or MicroVM acceptance. October 8 validation used Copilot CLI 1.0.93. Historical local probes used Copilot CLI **1.0.88** directly and Squad **0.13.0**, before the 1.0 releases; the unqualified `copilot` command then returned **1.0.89**, so a command name alone isn't a version pin. Earlier changes from 1.0.88 to 1.0.92 are listed in [whats-new.md](whats-new.md). Re-probe the live-demo build before delivery. Deck 0.21.0 introduced the public status badges. Historical 0.22.3/0.22.4 checkpoints remain preserved. Released deck 0.22.6 on main/Pages followed PR22's normal merge and initial full/short byte verification. Later local correction bytes remain unpublished pending independent review, normal merge and Pages byte verification; publication does not close the remaining runtime/human gates. Read stage labels from the badge table in `presentation\src\slides.mjs`.
 
 Squad 1.0.1 is the session's installed version. The WinGet catalog confirms package availability; see [bootstrap.md](bootstrap.md). A zero exit from generic help does not verify standalone model, models, list, remote-state, or heartbeat behavior. Use the native Copilot CLI `/model` and `/subagents` controls for this session. Historical release notes about `squad models refresh` describe v0.12, not an installed 1.0.1 qualification.
 

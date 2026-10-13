@@ -8,10 +8,12 @@ Operator reference, not extra stage narration: [repository map](repositories.md)
 [four-lane progress matrix](sandboxing.md#october-12-progress-and-next-actions),
 [full native coverage](aca-sandboxes.md#full-test-coverage-checklist), and
 [two product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
-Deck 0.22.5 is released on main/Pages, 39 full and five short slides.
-Local deck 0.22.6 synchronizes the exported factual notes without changing this
-script/clock/design. It awaits independent source/export review and publication;
-the accepted native engineering result is not hosted or human stage proof.
+Released deck 0.22.6 on main/Pages has 39 full and five short slides:
+PR22 normally merged October 13, Pages succeeded and full/short HTTP 200 bodies
+matched the initially accepted exports. Later local correction bytes remain
+unpublished pending independent review, normal merge and Pages byte verification.
+They retain 0.22.6 without changing this script/clock/design; the accepted native
+engineering result and publication are not hosted or human stage proof.
 
 This targets a rehearsed 60-minute show, not exploratory pair programming; the full human rehearsal is still pending. Before the timed show starts, show the untimed legal/futures notice: preview features may change; recheck status before 14 Oct 2026; no warranties; dates are subject to change. C0-C7 remain 29 minutes total. Planned content ends at 55:00, then the protected slack holds 55:00-58:00 before the close.
 

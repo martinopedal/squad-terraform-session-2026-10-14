@@ -14,12 +14,14 @@ remain unproved. The original implementation is unchanged.
 Owner-native source preparation is under review; executable delivery remains
 held, not deploy-on-merge or merely missing operator receipts.
 
-Reviewed October 5, 2026, for the October 14 session; current operator status updated October 13. Deck 0.22.5 is released on main/Pages; later local operator-doc corrections await their own reviewed release. Auto/HydraFusion remain the leading news. C0-C7 remain live demo chapters with optional fallback evidence. Every row links to a primary source. Statuses change quickly, so recheck them before quoting one on stage. Product news is context, not target runtime proof. Earlier Management-side MicroVM execution remains historical evidence. Corp source merged but new qualification blocked on an unexpected change-type check; no apply performed. Current Online native proof is bounded to the accepted fixture, not human stage GO. Hosted Apps/Jobs and existing AKS remain independent.
+Reviewed October 5, 2026, for the October 14 session; current operator status updated October 13. Released deck 0.22.6 on main/Pages followed PR22's normal merge, successful Pages and initial full/short HTTP 200 byte verification. Later local correction bytes remain unpublished pending independent review, normal merge and Pages byte verification. Auto/HydraFusion remain the leading news. C0-C7 remain live demo chapters with optional fallback evidence. Every row links to a primary source. Statuses change quickly, so recheck them before quoting one on stage. Product news is context, not target runtime proof. Earlier Management-side MicroVM execution remains historical evidence. Corp source merged but new qualification blocked on an unexpected change-type check; no apply performed. Current Online native proof is bounded to the accepted fixture, not human stage GO. Hosted Apps/Jobs and existing AKS remain independent.
 
 ## Key updates
 
-Local deck 0.22.6 is a notes/status-only candidate; released main/Pages stays
-0.22.5 until reviewed publication. It adds no new headline, tour or slide.
+Released deck 0.22.6 on main/Pages already includes the initially accepted
+notes/status export. Later local correction bytes remain unpublished pending
+independent review, normal merge and Pages byte verification; they retain 0.22.6,
+not a new headline or runtime proof. It adds no new headline, tour or slide.
 
 | # | Date | News | Status | Why a Terraform or platform engineer cares |
 | --- | --- | --- | --- | --- |
