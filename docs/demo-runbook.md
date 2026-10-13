@@ -673,12 +673,13 @@ wrap; cut before 55:00.
    and, only if never queued/attempted, add `squad:ripley` once. SHOW its
    approved README body/label in GitHub Issues. EXPECT one authorized task.
    STOP on prior attempt, missing binding or unexpected body; no issue creation.
-2. **Operator, existing hosted service, no manual invocation:** WAIT for the
-   private poller's five-minute UTC schedule. It checks that issue/approval,
-   defers if the existing queue isn't empty, enqueues the bound task and marks
-   processing. KEDA starts the existing **event Job** from that queue.
-   SHOW the matching sanitized poller/queue receipt and worker execution.
-   The queue is source-selected `squad-work-queue`, TTL600/visibility10.
+2. **Operator, existing hosted service, no manual invocation:** the label event
+   starts the target's "Squad Issue Queue" enqueue workflow (`issues: labeled`,
+   self-hosted runner). It skips if the issue is already processing, marks it
+   processing and enqueues the bound task. KEDA starts the existing **event Job** from that queue.
+   SHOW the new enqueue run for that exact issue (discovered after the label, not
+   pre-bound) and the worker execution.
+   The queue is source-selected `squad-work-queue`.
    EXPECT the same issue throughout. STOP on absent/mismatched evidence;
    don't `gh workflow run`, `az ... job start`, or inspect secret queue payloads.
 3. **Operator, Azure portal:** Container App Jobs ->
@@ -711,7 +712,7 @@ registration/AppAdmin. These holds do not block accepted native engineering.
 | Owner | Haflidi explains his authored implementation; Martin/hosted operator controls approved target trigger and verifies evidence |
 | Repo / folder | Original `haflidif/squad-on-aca` is working/unchanged; [owned MIT fork PR1](https://github.com/martinopedal/squad-on-aca/pull/1) is source-accepted/merged, @haflidif credit/license preserved. Workstation public fork is `C:\git\squad-terraform-session-2026-10-14\worktrees\hosted-source-fork`, local `411bbf1`, not original main. VM `C:\demo\hosted-target` is an intended private target checkout, NOT verified until its operator setup above; never use the implementation/session clone as target |
 | Login | Manually verify host sign-in/`gh auth status`/current target rights. Source-prepared credential-free manual status is not a trigger or runtime proof. Genuine worker authentication is separately gated; no host PAT/cache copy |
-| Preflight / GO | Chosen private scheduled poller -> one approved issue -> existing queue -> genuine Squad UID10001 worker -> trusted README App-bot PR. Private publisher Docker/DNS/TLS qualification waits at existing human gate/zero steps; owner-native Terraform/full QA/plan, immutable image/auth/actual PR/rehearsal pending: **NO-GO**. No new registration/AppAdmin requirement |
+| Preflight / GO | Deployed label path: one approved unlabelled issue -> "Squad Issue Queue" enqueue workflow -> existing queue -> existing agent Job worker -> README App-bot PR (fresh run [38479777642](https://github.com/martinopedal/squad-on-aca-demo-target/actions/runs/38479777642), PR #13). Owned-image/poller adoption and the private publisher qualification are separate and not required for this path. No new registration/AppAdmin requirement |
 | Expected proof | Correlate the same approved issue, queue workflow, actual ACA Job execution and bot-authored PR/diff. Job success or an image pull alone is not full chain proof and not native MicroVM/Squad proof |
 | Timing / cut | Final optional tail after the complete core wrap, only if genuinely early and newly qualified. Hard cut before 55:00, skip before 55:00-58:00 recovery. No promise that queued work finishes in 90 seconds; full pre-stage chain testing is separate |
 | Fallback | State source-accepted/runtime-held status and the actual publisher/owner-native Terraform/image/auth/PR gates; use dated original confirmed implementation evidence or skip. Missing-agent/error-only personal PR stubs are not successful Squad work. No second issue or on-stage repair |
@@ -720,10 +721,11 @@ registration/AppAdmin. These holds do not block accepted native engineering.
 **DO, only after new hosted GO:** use the **existing approved README issue**,
 not a new issue. The operator binds its number/target/bot privately from the
 accepted owner runbook and confirms it hasn't already been queued/attempted.
-Current target `.github\squad-transport.json` selects `private-aca-poller`;
-its `squad-queue.yml` is **manual status only**, not enqueue or chain evidence.
+Current target workflow `squad-queue.yml` ("Squad Issue Queue") triggers on
+`issues: labeled` and enqueues to `squad-work-queue`; no live poller is claimed.
 Read public implementation in the verified workstation fork's
-`agents\base\poller-entrypoint.sh`, `entrypoint.sh`, and `docs\owned-runtime.md`.
+`agents\base\poller-entrypoint.sh`, `entrypoint.sh`, and `docs\owned-runtime.md`
+for the owned-image path only.
 The private owner-native Terraform runbook is the only infrastructure authority;
 don't run the fork's Bicep/Quick Start as a second writer.
 
@@ -760,8 +762,8 @@ az containerapp job execution list `
 if ($LASTEXITCODE) { throw 'Matching hosted execution read failed.' }
 ```
 
-**SHOW:** correlate that SAME issue -> actual private scheduled poller ->
-durable existing queue -> genuine UID10001 Squad worker/ACA Job -> trusted
+**SHOW:** correlate that SAME issue -> new enqueue workflow run ->
+durable existing queue -> existing agent Job worker/ACA Job -> trusted
 README-only App-bot commit/PR. The operator reads the matching Job through the
 existing reviewed owner procedure with its approved hosted target, not the
 native SandboxGroup. Missing bound Job observation is STOP, not an invented

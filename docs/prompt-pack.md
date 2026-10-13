@@ -544,23 +544,25 @@ Do not merge or deploy. Stop and report blocked access rather than rebuilding
 the hosted service or changing the task to make it appear successful.
 ```
 
-The operator resolves aliases privately and follows the accepted source-prepared
-private scheduled poller mode: one existing approved issue -> existing queue -> genuine
-Squad UID10001 worker -> trusted README App-bot PR. `gh auth status` and the
+The operator resolves aliases privately and follows the deployed label-triggered
+path: one existing approved unlabelled issue -> "Squad Issue Queue" enqueue workflow
+(`issues: labeled`) -> existing queue -> existing agent Job worker -> App-bot README PR.
+`gh auth status` and the
 credential-free manual status check do not authorize a live trigger. Only after
 all separate runtime/human gates pass, read the existing approved issue and
 confirm it hasn't already been queued/attempted. Route it once with
-`squad:ripley`, then inspect the matching private poller, durable queue, actual
+`squad:ripley`, then discover the new enqueue run for that exact issue, the durable
+queue message, actual
 ACA Job and bot PR/diff through [Card A](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr).
-Do not create another issue. The target's `squad-queue.yml` is manual status
-only, not enqueue or real-chain proof. Correlate the actual ACA Job and bot
+Do not create another issue on stage. The run URL exists only after the label event; do
+not require it beforehand. A manual status run is not enqueue or real-chain proof. Correlate the actual ACA Job and bot
 PR/diff to this same approved issue; neither status alone nor an unrelated PR
 passes.
 Correlate the same issue across all four; a queued workflow, pulled image or
 successful Job alone is not a complete issue-to-PR result. Error-only/missing-
 agent PR stubs are failure artifacts, not successful Squad work; never substitute
 them for the original implementation's confirmed demonstration or fresh E2E proof.
-No new runner registration or AppAdmin is required by the chosen poller mode.
+No new runner registration or AppAdmin is required by the deployed enqueue mode.
 Leave the old zero-step queued run untouched, not cancelled or consumed as proof.
 Private publisher qualification is waiting at its existing human gate with zero
 executed steps; no image/push/digest yet. Owner-native Terraform remains the sole
