@@ -217,6 +217,7 @@ Order: pre-snapshot checks, snapshot, rehearse C0-C7 once, restore, post-restore
 
 ## 10. Day-of timeline
 
+- [ ] T-60 (about 09:00 for the 10:00 session): fresh clean take. Restore snapshot `demo-ready-20261310-133943` (or reset `C:\demo\aks-module` and create a new take folder under `C:\demo\checkpoints` with a new date), re-run the READY check, confirm A, B and guided worktrees are at the pin, then do a quick C0 to C7 smoke pass. Why: the C5 and C7 guards refuse to overwrite existing logs (`c5-*.log`, `c7-*.log`), and the current take already holds rehearsal evidence, so stale logs make the guards throw `Result already exists.` live
 - [ ] T-60: VM reachable; remote Terraform MCP connected (`/mcp`, key set); laptop only: Docker running, image pulled; `tflint --version` 0.64.0; clones clean; take A/B/guided and `offline` mirror exist (UNKNOWN: exact T-60 items are not in the sources)
 - [ ] T-30: `Test-DemoVm.ps1`, then `Connect-DemoVm.ps1` (Bastion RDP); notifications off, 125% scaling, PowerShell 7 tab open, terminal zoomed (source: clean-machine-demo.md)
 - [ ] T-30: preflight `READY`, `/agent` three profiles; `/mcp` under Squad shows only the built-in GitHub server, and `microsoft-learn` and `terraform` appear connected only under `terraform-coder` or `terraform-reviewer`
