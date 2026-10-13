@@ -18,9 +18,12 @@ operator access/base 375-second probe are independently verified, not AKS/hosted
 Jobs. Corrected 26.768-second host Copilot/Squad fixture engineering is
 independently accepted and runtime-ready. Human preflight/rehearsal,
 second-presenter sign-in and any selected Terraform variant remain separate
-gates. Fresh hosted Apps/Jobs E2E remains BLOCKED on
-registration404/custom-agent-profile qualification; none of this proves a
+gates. Fresh hosted Apps/Jobs E2E remains BLOCKED: owned fork/target source is
+accepted, but private publisher qualification, owner-native Terraform, immutable
+image, authentication and actual README bot PR remain unproved; none of this proves a
 current clean-VM install/manual-login rehearsal.
+Owner-native hosted source preparation is under review; executable delivery
+remains held, not deploy-on-merge or only missing operator receipts.
 For the fuller operator setup with `-WhatIf`, repo clone, `copilot login`, `squad init`, and a GitHub App checklist, see [bootstrap.md](bootstrap.md) and [`scripts\bootstrap-demo-vm.ps1`](..\scripts\bootstrap-demo-vm.ps1). Keep the live chapter on the shorter flow below.
 
 ## Automated dependency setup (preparation, not a clean C0 take)
@@ -78,7 +81,15 @@ Desktop app installation/onboarding, optional extensions and all user sign-ins
 remain **deferred per user**, not machine core PASS. See [the CSE invocation,
 pins and receipt contract](bootstrap.md#existing-vm-custom-script-extension-contract-allusers).
 No live CSE deployment or both-presenter qualification is claimed by source
-tests; future IaC execution needs Haflidi approval and preserves the existing VM.
+tests. October 13: [consumer PR21](https://github.com/martinopedal/aks-automatic-demo-env/pull/21)
+is source-accepted, still awaiting Haflidi/Online human review and execution
+approval. The VM is deallocated; its currently attached OS disk differs from
+the earlier receipt. Preserve both disks, never swap back/recreate/delete either.
+Refresh the exact current binding/baseline and runnable SYSTEM context before
+plan/apply. Owner payload acceptance and harmless SYSTEM transport are not prior
+installation; the first install may start without an old receipt but must produce
+a fresh success afterward. Machine bootstrap is not installed; sign-in remains
+deferred per user. No power/reset action is authorized by this guide.
 
 ## What the machine is
 

@@ -34,6 +34,16 @@ or runtime. No anonymous MicroVM ingress or exposed credentials authorized.
 Earlier USD 20 is historical planning/alert context, not execution authority; teardown Oct 17/credential expiry
 Oct 31 and Oct 13 warmup/checks remain separately gated.
 
+October 13 status addendum, not a new security review: owned hosted fork/target/
+publisher source acceptance is not live E2E; qualification/human gates, sole
+owner-native Terraform/full QA/plan/image/auth/actual PR remain separate.
+VM source PR21 is accepted but REVIEW_REQUIRED under original Haflidi/Online
+human gates; fresh read-back found a
+deallocated VM and changed OS-disk attachment. Preserve both disks and refresh
+current binding/baseline/runnable SYSTEM context before plan/apply. No disk swap,
+recreation/deletion, machine installation or VM/disk/CSE/power change is claimed.
+Bootstrap not installed; authentication remains deferred per user.
+
 ## 1. The delivery chain
 
 | Control | Evidence |

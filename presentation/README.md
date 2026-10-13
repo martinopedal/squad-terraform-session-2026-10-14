@@ -1,9 +1,12 @@
 # Present and maintain the deck
 
 Haflidi's original hosted Squad implementation is completed/previously
-demonstrated; leave source/deployment alone. Fresh new personal queue target
-access/registration/rehearsal is separate, not missing original implementation
-or a native Sandbox prerequisite. Native ACA integration remains build work.
+demonstrated; leave source/deployment alone. Owned MIT fork/target/publisher
+source accepted/merged is not live E2E or a native Sandbox prerequisite.
+Native host fixture engineering is independently accepted; human stage and
+selected Terraform variants remain separate gates.
+Owner-native source preparation is under review; executable delivery remains
+held, not deploy-on-merge or merely missing operator receipts.
 
 Martin, Haflidi, and the presentation operator can use this directory to build, rehearse, and deliver the offline Reveal.js deck. Contributors can update approved evidence without replacing the slide design or the spoken script.
 
@@ -86,16 +89,17 @@ Only genuine Copilot CLI with Squad selected, standalone or in a real integrated
 
 Source qualification may finish before delivery. The live chapter must execute from a disclosed clean checkpoint or explicitly use the Offline fallback line. Do not substitute prior qualification output for a live result.
 
-Released baseline deck 0.22.4 and local candidate deck 0.22.5 follow the same
+Released baseline deck 0.22.5 and local candidate deck 0.22.6 follow the same
 60-minute contract: 55 minutes scripted content, 55:00-58:00 protected recovery
 and two-minute close. Full 39-slide and short five-slide sources retain their
 on-screen design/IDs/clocks. Main/Pages publication is complete, fresh full and
-short HTML previously matched that release. Local deck 0.22.5 is now rebuilt
+short HTML previously matched that release. Local deck 0.22.6 is now rebuilt
 only for directly coupled factual speaker-note/status propagation, preserving
 all slide design, commands, counts and clocks. Accepted ACA SANDBOXES proof and
 blocked hosted Apps/Jobs are synchronized into its notes; no guest-agent/human
 stage readiness or publication claim. Review the exact candidate exports before
-publication; live Pages remains the previously released 0.22.4 until normal merge.
+publication; live Pages remains the previously released 0.22.5 until normal merge
+and Pages verification. A local build or PR does not publish this candidate.
 
 The live demo consumer is `martinopedal/aks-automatic-demo-env`, pinning `martinopedal/terraform-azapi-aks-automatic` at `v0.6.0`; the copied Corp teaching module retains its separate unchanged source pin/manifest. Speaker notes distinguish four execution hosts: local OS/MXC, GitHub-managed Copilot cloud preview built on ACA, customer-managed ACA MicroVMs via `aca`, and hosted Squad Apps/Jobs, not MicroVMs. Squad is coordination/configuration over Copilot, not a sandbox product. Host installs do not prove full CLI+Squad execution inside a MicroVM; sign-in/storage/egress need separate consent, never copied host authentication.
 
@@ -123,9 +127,17 @@ exit23/causal denial/exact cleanup in 26.768 seconds. Independent acceptance
 complete, then runtime-ready; human stage GO and hosted Apps/Jobs E2E separate.
 Earlier CRLF is controlled learning history, not the current failed lane.
 Hosted implementation is `haflidif/squad-on-aca`, not the private target;
-historical Oct 9 smoke is not today's chain. Fresh issue open/queue queued,
-registration blocked/no open PR at 10:28 UTC; no current Haflidi-authored technical
-confirmation. Fresh 10:47 UTC AKS validation: app/source-matching assets/two
+historical Oct 9 smoke is not today's chain. Owned fork/target source accepted/
+merged is not live E2E: private scheduled poller -> one approved issue -> existing
+queue -> genuine Squad UID10001 worker -> trusted README App-bot PR. No new
+runner registration/AppAdmin. Publisher Docker/DNS/TLS qualification waits at the
+existing human gate/zero steps; owner-native Terraform/full QA/plan/image/auth/
+actual PR remain pending. Old zero-step queued run untouched, runtimeProven false.
+VM source PR21 is REVIEW_REQUIRED under original Haflidi/Online human gates:
+deallocated/current OS disk differs from
+earlier receipt. Preserve both disks, refresh current binding/baseline/runnable SYSTEM
+context, never swap back/recreate/delete either; bootstrap not installed.
+Fresh October 12 10:47 UTC AKS validation: app/source-matching assets/two
 replicas PASS under TLS bypass; canonical 26 PASS/2 BLOCKED/1 report-only, not
 29/29; corrected supplemental 10 PASS/1 FAIL (TLS)/1 NOT_APPLICABLE (external
 `/healthz`; source requires direct-pod 200 `ok`). Native Kubernetes/ResourceHealth

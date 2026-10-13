@@ -16,7 +16,15 @@ Local module qualification passed: 52 module cases, two caller cases, and both m
 
 Source roles: the live demo consumer is `martinopedal/aks-automatic-demo-env`, pinning `martinopedal/terraform-azapi-aks-automatic` by `v0.6.0`. C1-C7 use this session's copied Corp teaching module from the independently reusable public `alz-avm-tf-demo/terraform-azapi-aks-automatic-corp`, whose separate upstream pin/manifest stay unchanged. The [repo map](repositories.md) identifies what to clone/read/change and keeps Haflidi's hosted implementation separate from the private target.
 
-October 12: one laptop's corrected read-only preflight passed 18/18 with Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-preview.4 and enabled official plugin 0.0.5-beta. Clean-VM/manual sign-in, both presenter hosts, full rehearsal, invitation acceptance/current read-back and exact NIC listing remain separate gates. Deck 0.22.4 is released on main/Pages; this later operator-doc correction awaits its own review/release. See [current readiness](run-plan.md#october-12-readiness-evidence).
+October 12: one laptop's corrected read-only preflight passed 18/18 with Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-preview.4 and enabled official plugin 0.0.5-beta. Clean-VM/manual sign-in, both presenter hosts, full rehearsal, invitation acceptance/current read-back and exact NIC listing remain separate gates. Deck 0.22.5 is released on main/Pages; this later local operator-doc correction awaits its own review/release. See [current readiness](run-plan.md#october-12-readiness-evidence).
+
+October 13 VM preservation hold: consumer PR21 is source-accepted but
+Haflidi/Online human review and execution approval remain required. VM is
+deallocated; its attached OS disk differs from the earlier receipt. Preserve
+both disks, never swap back/recreate/delete either; refresh current binding/
+baseline and runnable SYSTEM context before plan/apply. No installation,
+power/reset or CSE execution is claimed. Use disclosed host fallback or skip C0
+if its clean-machine/manual-login preconditions are not qualified.
 
 For component -> repo -> folder -> edit -> deploy -> status, use the canonical
 [source/deployment table](source-provenance.md#source-and-deployment-table).
@@ -29,7 +37,7 @@ Native Kubernetes access unavailable/ResourceHealth provider unregistered;
 full cluster health unproved. Eleven policy-noncompliant resources are in the
 demo RG across AKS/network/state, not 11 cluster failures or subscription-wide.
 
-Local deck 0.22.5 propagates these native/hosted status boundaries into exported
+Local deck 0.22.6 propagates these native/hosted status boundaries into exported
 speaker notes. It is an unpublished candidate, not a new runtime/rehearsal proof.
 
 ## Two product demo flows: hosted Squad and native ACA Sandboxes
@@ -72,26 +80,30 @@ native ingress, exposed credentials or private-state publication.
 Both independent product paths must qualify: this **SQUAD ON ACA APPS/JOBS**
 issue -> Job/agent -> bot PR path needs fresh current end-to-end evidence.
 The corrected **ACA SANDBOXES** host-to-MicroVM receipt does not prove it.
-Parent/operator qualify the original hosted path without changing its source.
+The owned fork/target path is source-accepted; this does not authorize execution
+or any change to the working original source/runtime.
 
 The original implementation is completed and previously demonstrated. Leave
-Haflidi's source/deployment unchanged. This card's fresh registration/access/
-rehearsal gates belong to the separate new personal queue target only; they do
-not imply missing original implementation or block the native Sandbox build.
+Haflidi's source/deployment unchanged. Owned MIT fork/target handoff and private
+publisher source are accepted/merged, but live E2E remains pending publisher/
+owner-native Terraform/image/auth/actual PR/human gates, not new runner
+registration/AppAdmin. These holds do not block accepted native engineering.
 
 | Field | Operator plan |
 | --- | --- |
 | Owner | Haflidi explains his authored implementation; Martin/hosted operator controls approved target trigger and verifies evidence |
-| Repo / folder | Read `haflidif/squad-on-aca` for implementation. In the VM use `C:\demo\hosted-target`, a separately authorized clone of `<approved-private-target>`; it is the issue/queue/bot-PR target, not the service source. Public session clone alone cannot run it |
-| Login | Manually verify VM sign-in and GitHub `gh auth status` for intended account/target permission. Existing target WRITE invitation needs acceptance/current read-back. Use supported hosted runner repo-scoped registration; no host PAT/cache copy |
-| Preflight / GO | Current runner registration works, queue path connected, one sanitized fresh issue -> workflow -> job -> bot PR completed and reviewed. Earlier two Oct 9 queue successes are historical smoke/shared-demonstration evidence only. Current fresh issue open/queue queued, no PR at 10:28 UTC and registration blocked: **NO-GO** |
+| Repo / folder | Original `haflidif/squad-on-aca` is working/unchanged; [owned MIT fork PR1](https://github.com/martinopedal/squad-on-aca/pull/1) is source-accepted/merged, @haflidif credit/license preserved. Use authorized `C:\demo\hosted-target` / `<approved-private-target>` for task/queue/PR, not public session clone |
+| Login | Manually verify host sign-in/`gh auth status`/current target rights. Source-prepared credential-free manual status is not a trigger or runtime proof. Genuine worker authentication is separately gated; no host PAT/cache copy |
+| Preflight / GO | Chosen private scheduled poller -> one approved issue -> existing queue -> genuine Squad UID10001 worker -> trusted README App-bot PR. Private publisher Docker/DNS/TLS qualification waits at existing human gate/zero steps; owner-native Terraform/full QA/plan, immutable image/auth/actual PR/rehearsal pending: **NO-GO**. No new registration/AppAdmin requirement |
 | Expected proof | Correlate the same approved issue, queue workflow, actual ACA Job execution and bot-authored PR/diff. Job success or an image pull alone is not full chain proof and not native MicroVM/Squad proof |
 | Timing / cut | Optional 53:00-54:30 only if ahead and newly qualified; compress limits to 54:30-55:00. Hard cut 54:30, skip before 55:00-58:00 recovery. No promise that queued work finishes in 90 seconds; full pre-stage chain testing is separate |
-| Fallback | State the new-target registration/agent-discovery blocker; use only dated original confirmed implementation evidence or skip. Missing-agent/error-only personal PR stubs are not successful Squad work. No second issue or registration repair on stage |
+| Fallback | State source-accepted/runtime-held status and the actual publisher/owner-native Terraform/image/auth/PR gates; use dated original confirmed implementation evidence or skip. Missing-agent/error-only personal PR stubs are not successful Squad work. No second issue or on-stage repair |
 | Cleanup | After separate owner approval, close only the created test issue/PR, stop only owned test execution and verify queue drain. No shared service, Corp resource or unrelated runner deletion |
 
 Privately resolve target and bot aliases; commands below are proposed operator
-steps, not executed here or permission to consume the already queued issue:
+steps, not executed here or permission to consume/cancel the old zero-step queued
+run, which remains untouched. Standalone fork Bicep must not become a second
+whole-body infrastructure writer; owner-native Terraform keeps sole ownership:
 
 ```powershell
 Set-Location C:\demo\hosted-target
@@ -111,6 +123,11 @@ Job execution with explicit approved hosted subscription/RG/job. That is not the
 native SandboxGroup target. Ask Haflidi for the actual implementation revision
 and fresh sanitized chain result; no new Haflidi-authored technical confirmation
 is established by the supplied historical status records.
+
+Owner-native source preparation is under independent review; executable delivery
+remains held. Plan/apply/destroy are currently unconditionally disabled; signer,
+current-head/private-plan transport and executable integration remain
+implementation work, not just operator receipts or deploy-on-merge.
 
 The [original hosted workload brief](prompt-pack.md#original-hosted-squad-issue-to-pr-work)
 defines the small README-only task and human-review handoff. Fresh target gating
@@ -580,7 +597,7 @@ between reviewed module code and private environment inputs.
 
 - **0:00-0:30 (50:00-50:30):** show the consumer-to-module diagram.
 - **0:30-1:00 (50:30-51:00):** open `https://aks-online-demo.swedencentral.cloudapp.azure.com/`; the certificate warning is expected. Point at the pipeline flow, serving pod name, and speakers section.
-- **1:00-2:10 (51:00-52:10):** say "gated pipeline PR → plan → human approval → apply" and state the 29/29 outside-in runtime checks.
+- **1:00-2:10 (51:00-52:10):** say "gated pipeline PR → plan → human approval → apply"; label October 8 29/29 as historical. Current October 12 canonical counts are 26 PASS/2 BLOCKED/1 report-only, not renewed full health/trusted TLS.
 - **2:10-3:00 (52:10-53:00):** restate the boundary. If the app is unreachable, use the offline screenshot plus apply runs 37771532872 and 37772290635 as fallback evidence.
 
 ## Protected slack | 55:00-58:00

@@ -4,8 +4,13 @@ Audience: presenters and the approved sandbox operator. Purpose: show where qual
 
 **ACA SANDBOXES only:** native host-Squad -> hardware MicroVM runtime is not
 **SQUAD ON ACA APPS/JOBS**. Both independent demos need accepted current proof.
-The original hosted implementation remains completed/previously shown, but its
-fresh issue -> Job/agent -> PR qualification is pending.
+The original hosted implementation remains working/previously shown and unchanged.
+Owned fork/target/publisher source is accepted/merged, but publisher qualification/
+human gate, owner-native Terraform/full QA/plan/image/auth and actual README bot
+PR remain pending. Chosen owned mode is private scheduled poller, not new runner
+registration/AppAdmin; native acceptance does not qualify hosted E2E.
+Owner-native source preparation is under review; executable delivery remains
+held, not deploy-on-merge or merely missing operator receipts.
 
 Current status, October 12: Online is **primary placement for eligible demo components**, with a separate independently verified five-object SandboxGroup/RG deployment, not a fallback, AKS-hosted MicroVM or Haflidi Jobs/runner. All five exact bindings/current operator group access passed. A credential-free base probe verified exec/public filesystem/stop-resume/deletion and an empty cleanup list. Standard managed networking is not Corp BYO VNet/UAMI/FIC transplantation. Corp-required workloads remain Corp and untouched; its held blocked/no-apply qualification is separate history. Public visibility is not anonymous control-plane access.
 

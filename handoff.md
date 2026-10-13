@@ -1,18 +1,18 @@
 # Public project handoff
 
 Haflidi original `haflidif/squad-on-aca` is implemented/previously demonstrated;
-leave source/deployment alone. Current fresh personal target registration/access/
-rehearsal is separate, not proof original is broken/missing and not native
+leave source/deployment alone. Owned fork/target/publisher source is accepted/
+merged, but current runtime holds are separate, not proof original is broken/missing and not native
 Sandbox prerequisite. Native Online provisioning/access/base is verified;
 corrected ACA SANDBOXES host runtime passes, independent acceptance complete,
 then runtime-ready. Human stage GO and fresh SQUAD ON ACA APPS/JOBS E2E remain
 separate; earlier CRLF is learning history.
 
-Updated October 12, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
+Updated October 13, 2026. This file describes the public deliverables and the remaining release gates. Private environment inputs and operational evidence are intentionally absent.
 
 ## Current result
 
-- Released Reveal.js baseline **0.22.4** on main/Pages, **39 full / 5 short slides**. Local presentation version **0.22.5** is the authorized factual notes/status export candidate, not a new published release. Existing design/commands/media/IDs/clocks are unchanged; source/export review gates publication.
+- Released Reveal.js baseline **0.22.5** on main/Pages, **39 full / 5 short slides**. Local presentation version **0.22.6** is the authorized factual notes/status export candidate, not a new published release. Existing design/commands/media/IDs/clocks are unchanged; source/export review gates publication.
 - A five-slide companion deck is built at `presentation\short\index.html`.
 - Current delivery contract: **3:00 intro; planned content to about 55:00; 55:00-58:00 protected recovery block; 58:00-60:00 close**. The planned content includes **29:00 of live C0-C7 demo chapters** and the rest as live explanation. Questions are only if time allows. There is no scheduled Q&A block. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
 - Live-demo rule: **C0-C7 are live**, with optional reviewed fallback evidence if a chapter fails live.
@@ -65,7 +65,10 @@ The live demo consumer is `martinopedal/aks-automatic-demo-env`, pinning `martin
 | Earlier October 12 source/tooling checks | Contracts 34/34, artifact suite 85/85, runtime suite 31/31, workflow 17/17, checkout 10/10, toolchain 12/12 and GitHub-script 10/10 passed, two Linux smokes skipped on Windows. These precede the blocked qualification; no runtime/apply claim. |
 | October 12 host auth / wrong-target doctor | ACA 1.0.0-preview.4 auth status exit 0: ARM/data-plane tokens authenticated. Doctor returned 9/9 exit 0 but printed cached Management/Norway East rather than requested Corp. Not selected-target acceptance; compare printed target and independent exact-ID read-back. No config change, Management fallback or create authorized. |
 | October 12 local / optional GitHub cloud | Actual local Windows MXC startup exit 1 before command on proxy/masking/auth loopback/private-network requirement; policy blocked, no bypass/global change. Explicit cloud help parse exit 0 is not account/billing/runtime or full-Squad proof. |
-| October 12 hosted Squad Apps/Jobs | `haflidif/squad-on-aca` is the public authored implementation; private queue/issue/bot-PR target is not implementation source. Corp, Norway East placement verified; two succeeded historical Oct 9 agent-job executions lasted 56 seconds, historical shared demo only. Manual target runner with 7200-second timeout, no registered target runners today, private target invitation pending acceptance/current read-back. Scoped README-only smoke: Manual runner execution ended terminal Failed after image pull and short-lived registration failure; associated issue queue workflow remains queued. Fresh issue open, no open PRs at 10:28 UTC; fresh queue-driven readiness is not established. No new Haflidi-authored technical confirmation; request fresh sanitized chain evidence. |
+| Earlier October 12 hosted history | `haflidif/squad-on-aca` original remains working/unchanged. Corp, Norway East placement and historical Oct 9/56 seconds are dated evidence. Earlier Manual/7200-second runner/no registered target runners/README-only Manual runner execution ended terminal Failed; associated issue queue workflow remains queued. Not chosen owned-mode blocker; fresh queue-driven readiness is not established. |
+| October 13 owned hosted source | Public MIT [fork PR1](https://github.com/martinopedal/squad-on-aca/pull/1) accepted/normal merged, 71 tests plus actual Linux image/UID/protected-publication CI SUCCESS, @haflidif credit/license retained. Private target handoff accepted/merged with 42 source tests, runtimeProven false; source-prepared credential-free manual status/private scheduled poller. No new runner registration/AppAdmin. |
+| October 13 hosted live holds | Private publisher source accepted/merged with 18 tests, actual Docker/DNS/TLS qualification waits at existing human gate/zero steps; no image/push/digest. Owner-native Terraform sole whole-body writer, combined draft 38 Terraform mocks + 60 non-Terraform contracts PASS, full source review pending. Plan/apply/destroy currently unconditionally disabled, signer/current-head/private-plan transport/executable integration not provisioned. Source preparation only; executable delivery remains held, not deploy-on-merge or merely operator receipts. Auth/budget/owner/image/Job/actual README App-bot PR pending; old zero-step queued run untouched. |
+| October 13 VM preservation/SYSTEM hold | [Consumer PR21](https://github.com/martinopedal/aks-automatic-demo-env/pull/21) source accepted/REVIEW_REQUIRED, original Haflidi/Online gates unchanged. VM deallocated/current OS disk differs from earlier receipt; preserve both disks, never swap back/recreate/delete either. Refresh current binding/baseline/runnable SYSTEM context before plan/apply. Payload owner acceptance/harmless SYSTEM transport missing, no machine installation or VM/disk/CSE/power change. Sparse metrics do not prove CPU/RAM bottleneck or sustained causality. |
 | October 12 AKS / app read-back | Both existing Online and Corp clusters independently read through Azure MCP: Automatic SKU/Standard tier, provisioning Succeeded, power Running; no redeploy indicated by metadata. Online app GET returned HTTP 200 and branded NIC/AKS text with explicit known-demo certificate bypass, not TLS certificate validation or a fresh 29-check security suite. Nodepool/full-runtime qualification remains separate. |
 | Short deck | Five slides build from the same pinned runtime, theme, and public source links. |
 
@@ -88,7 +91,8 @@ The host/VM is only presenter detail. Native acceptance needs actual host
 prompt/selected Squad/ACA skill/tool/output/validation/reviewer handoff, not
 standalone hello/lifecycle or hosted Jobs. Advanced CLI/Squad inside a MicroVM
 has separate supported auth/install/runtime consent and proof; it is optional,
-not required for the basic remote-orchestration claim. No current integration GO.
+not required for the basic remote-orchestration claim. Native fixture engineering
+is accepted; human/selected-Terraform stage GO remains pending.
 Fresh full existing Online AKS validation at 10:47 UTC: app/source-matching
 assets and two responding replicas PASS under explicit TLS bypass. Canonical
 26 PASS/2 BLOCKED/1 report-only, not 29/29; corrected supplemental
@@ -109,7 +113,7 @@ Fresh hosted Apps/Jobs E2E and human stage GO remain separate.
 Inside-VM OAuth/agents remain unproved and not authorized by these probes.
 
 The [readiness table](docs/run-plan.md#october-12-readiness-evidence) retains B1 clean VM, B2 both-host interactive checks, B3 full 60-minute rehearsal, B4 pending invitation, B5 exact NIC listing unknown, Oct 13 warmup/reset, Oct 17 teardown and Oct 31 expiry. Pool A1/Dependabot are held for their own review, not auto-merged. No recording, full rehearsal, new corrected-doc Pages publication or full
-successful-work integration is claimed. The released deck and independently
+selected-Terraform integration is claimed. The released deck and independently
 verified bounded Online deployment are completed milestones, not new tasks.
 
 ## Resume presentation work

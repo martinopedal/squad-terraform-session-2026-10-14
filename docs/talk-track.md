@@ -8,8 +8,8 @@ Operator reference, not extra stage narration: [repository map](repositories.md)
 [four-lane progress matrix](sandboxing.md#october-12-progress-and-next-actions),
 [full native coverage](aca-sandboxes.md#full-test-coverage-checklist), and
 [two product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
-Deck 0.22.4 is released on main/Pages, 39 full and five short slides.
-Local deck 0.22.5 synchronizes the exported factual notes without changing this
+Deck 0.22.5 is released on main/Pages, 39 full and five short slides.
+Local deck 0.22.6 synchronizes the exported factual notes without changing this
 script/clock/design. It awaits independent source/export review and publication;
 the accepted native engineering result is not hosted or human stage proof.
 
@@ -244,9 +244,9 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 ## optional-squad-on-aca | 53:00-54:30 if ahead | Optional unattended-agent side track
 
 > Original Haflidi implementation is completed/previously demonstrated: leave
-> source/deployment alone. The fresh personal queue target/rehearsal below is
-> separate, not evidence original hosted Squad is broken/missing and not a
-> native Sandbox prerequisite. Native ACA integration is remaining build.
+> source/deployment alone. Owned MIT fork/target/publisher source is accepted/
+> merged, not live E2E or a native Sandbox prerequisite. Native host fixture
+> engineering is independently accepted; human stage/selected variants remain separate.
 
 > Use only if the show is ahead. Keep it inside content time, compress `s21-limits` to 0:30 if needed, and skip it if the clock would enter 55:00-58:00.
 
@@ -254,15 +254,25 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 
 **Haflidi:** The hosted design uses workload identity, Key Vault and KEDA. Changes return as PRs through the same gates. The historical variable-cost estimate was under USD 0.01 per run, with separate holding costs; it is not a current measured bill or a hard cap.
 
-> Fresh queue-driven readiness is not established: the target runner job is Manual with 7200-second timeout, no registered target runners were found today, and the private target invitation is pending. Today's scoped README-only smoke failed: existing Manual runner execution ended terminal Failed; associated issue queue workflow remains queued. No successful fresh issue-to-PR chain or effective-policy/routing proof is claimed. Use historical proof unless separately qualified. The Management-side MicroVM evidence remains a different story.
+> Earlier October 12 runner history: Manual/7200-second timeout, no registered target runners, scoped README-only Manual runner execution ended terminal Failed; associated issue queue workflow remains queued. Those failures are not the chosen poller path's current blocker. Old zero-step queued run remains untouched, not cancelled/proof. Fresh queue-driven readiness is not established; historical Management-side MicroVM evidence remains separate.
 
-**Martin:** Earlier October 9 target-queue successes are historical shared-demonstration evidence. Today the fresh issue is open, the queue is queued and no open PR was recorded at 10:28 UTC. The actual runner pulled its image, then failed short-lived registration. That is blocked, not a fresh bot-PR result.
+**Martin:** The owned MIT fork and private target handoff are source-accepted and merged, with Haflidi's credit preserved. The chosen path is one approved issue through the existing queue to a genuine Squad worker and a trusted README bot PR. Publisher qualification and owner-native Terraform, image, authentication and actual PR proof are still pending.
 
-**Haflidi, planned Card A only after qualification:** From `C:\demo\hosted-target` on the VM, verify manual GitHub sign-in and target rights, then create the approved tiny issue, label it, follow the queue and actual hosted ACA Job, and inspect the bot PR. This target is not my hosted implementation repo. The VM controls the trigger; the job executes elsewhere. [Card A](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr) owns exact bindings and cleanup.
+> Current owned path: private scheduled poller -> genuine Squad UID10001 worker -> trusted README App-bot PR; no new runner registration or AppAdmin. Publisher source is accepted/merged, actual Docker/DNS/TLS qualification waits at its existing human gate with zero executed steps; no image/push/digest. Owner-native Terraform is the sole whole-body writer, not standalone fork Bicep; source preparation is under review, executable delivery remains held. Plan/apply/destroy are currently unconditionally disabled; signer/current-head/private-plan transport/executable integration still need implementation, not merely receipts. Auth/budget/owner/actual Job and PR remain missing. Credential-free manual status is source-prepared, runtimeProven false. This is not Hosted GO.
+
+**Haflidi, planned Card A only after qualification:** From `C:\demo\hosted-target` on the host, verify manual GitHub sign-in and current target rights, then create the approved tiny issue, label it, follow the queue and actual hosted ACA Job, and inspect the bot PR. This target is not my hosted implementation repo. The host controls the trigger; the job executes elsewhere. [Card A](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr) owns exact bindings and cleanup.
 
 > Card A timing: optional 53:00-54:30 only if ahead and newly qualified, cut 54:30; no queue-completion promise. Use `gh issue create/edit`, `gh run list` and `gh pr list` with `<approved-private-target>`/`<approved-bot-app>` from the operator card, not live private values in public notes. Fallback: reviewed dated historical excerpt or skip. Approved owned issue/PR/execution cleanup off-stage.
 
 > Attribution/next action: Haflidi's authored implementation role is documented, but supplied bounded search found no current Haflidi-authored technical confirmation. Do not present Martin's historical status as his new progress. Ask him for implementation revision and a fresh sanitized issue-to-PR chain result. Earlier USD 20 is historical planning/alert context, not execution authority; retained Corp costs remain. Teardown October 17/credential expiry October 31 are scheduled.
+
+> VM operator hold, not extra stage narration: source-accepted consumer PR21 is
+> REVIEW_REQUIRED under original Haflidi/Online human gates. VM is deallocated,
+> current OS-disk attachment differs from earlier receipt; preserve both disks,
+> never swap back/recreate/delete either. Refresh current binding/baseline and
+> runnable SYSTEM context before plan/apply. Owner payload acceptance/harmless
+> SYSTEM transport is not prior install; bootstrap not installed, per-user auth
+> deferred. Sparse metrics do not prove CPU/RAM bottleneck or sustained causality.
 
 ## s21-limits | 53:00-55:00 | Make the next change easier to review
 

@@ -301,7 +301,7 @@ test('hosted Jobs notes keep current placement separate from historical runs and
     for (const pattern of [
       /Corp, Norway East placement/, /historical Oct 9/, /56 seconds/,
       /Manual/, /7200-second/, /no registered target runners/i,
-      /invitation (?:is |remains )?pending|private invitation pending/i,
+      /current target rights|invitation (?:is |remains )?pending|private invitation pending/i,
       /fresh queue-driven readiness is not established/i,
       /README-only/, /Manual runner execution ended terminal Failed/,
       /associated issue queue workflow remains queued/,
@@ -345,7 +345,7 @@ test('readiness does not turn one laptop, historical checks or dated obligations
     /B1 clean VM/, /B2 both presenter hosts/, /B3 full 60-minute rehearsal/,
     /B4 private target invitation/, /B5 current NIC listing/, /Unknown/,
     /Oct 13 warmup\/reset/, /Oct 17 teardown \/ Oct 31 expiry/,
-    /Pool A1\/Dependabot/, /Released 0\.22\.4 on main\/Pages/i,
+    /Pool A1\/Dependabot/, /Released 0\.22\.5 on main\/Pages/i,
     /source-only correction/, /34\/34/, /not a new Azure plan or deployment/,
     /artifact suite 85\/85/, /runtime suite 31\/31/, /source\/tooling checks/,
     /no new sealed manifest\/raw exact deltas/i, /no new apply established/,
@@ -571,10 +571,12 @@ for (const [path, start, end] of currentNativeStatusSurfaces) {
       /second-presenter sign-in/, /selected Terraform variant/,
       /remain separate gates/,
       /hosted Apps\/Jobs.*(?:E2E.*BLOCKED|BLOCKED.*E2E)/i,
-      /registration404\/custom-agent-profile/
+      /owned fork\/target source is accepted/,
+      /private publisher qualification/, /owner-native Terraform/,
+      /actual README bot PR remain unproved/
     ]) assert.match(current, pattern, `${path} current prose retains ${pattern}`);
     assert.doesNotMatch(current,
-      /Native ACA integration remains build work|(?:Online|native)[^.]*\b(?:proposed|unqualified)\b|No current integration readiness|runtime PASS awaits independent acceptance|(?:prompt\/tool\/validation\/)?handoff evidence still missing|independent acceptance pending|stage GO (?:passed|complete)|all ACA (?:products )?(?:are )?ready/i,
+      /Native ACA integration remains build work|(?:Online|native)[^.]*\b(?:proposed|unqualified)\b|No current integration readiness|runtime PASS awaits independent acceptance|(?:prompt\/tool\/validation\/)?handoff evidence still missing|independent acceptance pending|stage GO (?:passed|complete)|all ACA (?:products )?(?:are )?ready|BLOCKED on registration404|BLOCKED on runner registration|custom-agent-profile qualification/i,
       `${path} current prose must not contradict accepted fixture engineering or overclaim stage readiness`);
     if (path !== 'docs/run-plan.md') {
       for (const pattern of [
@@ -644,7 +646,10 @@ test('source and exported speaker notes carry accepted Sandbox proof without qua
   const hosted = applyNoteFactOverrides('s20-consumer', '');
   for (const pattern of [
     /SQUAD ON ACA APPS\/JOBS/, /qualification is BLOCKED/,
-    /runner-registration404\/custom-agent-profile/,
+    /owned MIT fork.*source independently accepted\/normal merged/,
+    /No new runner registration or AppAdmin/,
+    /actual Docker\/DNS\/TLS qualification WAITING at existing human gate with zero executed steps/,
+    /checker runtimeProven false/,
     /Original haflidif\/squad-on-aca implementation is user-confirmed/,
     /missing-agent\/error-only closed PR stubs are failure artifacts/,
     /native Sandbox success does not qualify this hosted chain/
@@ -693,15 +698,164 @@ test('product prompts require positive guest work, accountable handoff and origi
   for (const pattern of [
     /haflidif\/squad-on-aca/, /<approved-private-target>/,
     /Original implementation is completed\/previously demonstrated/,
-    /new personal target.*BLOCKED.*runner registration\/custom-agent discovery/s,
+    /Owned fork\/target source accepted\/merged/,
+    /Live E2E is BLOCKED on private publisher qualification/,
+    /No new runner registration or AppAdmin/,
     /ACA APPS\/JOBS/,
     /Fresh current end-to-end qualification remains pending/i,
-    /ACA SANDBOXES success does not count as that proof/,
+    /ACA SANDBOXES\s+success does not count as that proof/,
     /Change only README\.md/, /Do not merge or deploy/,
     /actual ACA Job.*bot PR\/diff/s, /Correlate the same issue/,
     /Never modify\/delete the original hosted service/
   ]) assert.match(hosted, pattern);
   assert.doesNotMatch(documentText('docs/repositories.md'), /martinopedal\/squad-on-aca-demo-target/);
+});
+
+test('current release fronts bind live0225 and unpublished0226 without stale release claims', () => {
+  for (const path of [
+    'README.md', 'PUBLICATION.md', 'handoff.md', 'haflidi-overview.html',
+    'presentation/README.md', 'docs/run-plan.md', 'docs/source-provenance.md',
+    'docs/talk-track.md', 'docs/talking-points.md', 'docs/feature-guide.md',
+    'docs/whats-new.md', 'docs/demo-runbook.md'
+  ]) {
+    const text = documentText(path).replace(/\s+/g, ' ');
+    assert.match(text, /(?:Released|released|live)[^.]{0,100}(?:\*\*)?0\.22\.5|0\.22\.5[^.]{0,80}(?:released|main\/Pages)/, path);
+    assert.match(text, /(?:Local|local)[^.]{0,80}(?:\*\*)?0\.22\.6/, path);
+    assert.match(text, /candidate|review.*publication|unpublished/, path);
+    assert.doesNotMatch(text,
+      /(?:Released|released) main\/Pages (?:stays|baseline is deck|baseline is) (?:\*\*)?0\.22\.4|live Pages remains (?:the previously released )?0\.22\.[24]|0\.22\.6 is released on main\/Pages/i, path);
+  }
+});
+
+test('current hosted prose distinguishes accepted owned source from pending publisher and live proof', () => {
+  for (const path of [
+    'README.md', 'PUBLICATION.md', 'handoff.md', 'haflidi-overview.html',
+    'presentation/README.md', 'docs/run-plan.md', 'docs/source-provenance.md',
+    'docs/repositories.md', 'docs/sandboxing.md', 'docs/demo-runbook.md',
+    'docs/prompt-pack.md', 'docs/talk-track.md', 'docs/talking-points.md',
+    'docs/feature-guide.md', 'docs/whats-new.md', 'docs/overview.md',
+    'docs/aca-sandboxes.md', 'docs/bootstrap.md', 'docs/clean-machine-demo.md'
+  ]) {
+    const text = documentText(path).replace(/\s+/g, ' ');
+    assert.match(text, /owned.{0,120}(?:fork|source).{0,100}accepted/i, path);
+    assert.match(text, /publisher.{0,80}(?:qualification|Docker)/i, path);
+    assert.match(text, /owner-native Terraform/i, path);
+    assert.match(text, /(?:actual|genuine).{0,40}(?:README|bot PR)|actual PR/i, path);
+    assert.doesNotMatch(text, /(?:current|fresh).{0,70}(?:registration404|missing-agent-profile)|Hosted GO (?:passed|complete)|owned.{0,60}live E2E (?:proved|passed)/i, path);
+  }
+  for (const path of ['README.md', 'docs/source-provenance.md', 'docs/repositories.md']) {
+    const text = documentText(path);
+    for (const pattern of [
+      /https:\/\/github\.com\/martinopedal\/squad-on-aca\/pull\/1/,
+      /411bbf1810799bbfeea176e0c4123504a05430e8/,
+      /623c1906c1b8cacd13ccd1890d3d77ad3241560/,
+      /@haflidif/, /(?:MIT|license)/, /71 tests/,
+      /(?:sole whole-body|sole whole-body infrastructure) writer|sole whole-body writer/,
+      /standalone fork Bicep/i
+    ]) assert.match(text, pattern, `${path} binds the owned source contract`);
+  }
+});
+
+test('current VM prose retains fresh disk binding, human approval and uninstalled SYSTEM holds', () => {
+  for (const path of [
+    'README.md', 'handoff.md', 'haflidi-overview.html', 'presentation/README.md',
+    'docs/run-plan.md', 'docs/source-provenance.md', 'docs/sandboxing.md',
+    'docs/bootstrap.md', 'docs/clean-machine-demo.md', 'docs/demo-runbook.md',
+    'docs/talk-track.md', 'docs/talking-points.md', 'docs/playbook.md', 'docs/security-case.md'
+  ]) {
+    const text = documentText(path).replace(/\s+/g, ' ');
+    for (const pattern of [
+      /deallocated/i, /(?:disk|attachment).{0,60}(?:differs|different|changed)|changed OS-disk attachment/i,
+      /preserve both disks/i, /never swap back(?:\/recreate\/delete|, recreate or delete) either|No disk swap, recreation\/deletion/i,
+      /(?:current|exact).{0,30}binding.{0,40}baseline.{0,50}(?:runnable )?SYSTEM context/i,
+      /Haflidi\/Online/, /(?:not installed|no (?:machine )?installation|No installation)/i
+    ]) assert.match(text, pattern, `${path} retains VM hold ${pattern}`);
+    assert.doesNotMatch(text, /(?:current )?bootstrap is installed|VM upgrade (?:deployed|complete)|swap back to (?:the )?(?:old|previous) disk/i, path);
+  }
+  const bootstrap = documentText('docs/bootstrap.md').replace(/\s+/g, ' ');
+  for (const pattern of [
+    /system_payload_accepted/, /upgrade\.bootstrap\.system_accepted/,
+    /not prior installation/, /harmless LocalSYSTEM transport/,
+    /allows an absent prior receipt/, /fresh successful receipt after first install/
+  ]) assert.match(bootstrap, pattern);
+});
+
+test('actual exported notes preserve source-only owned mode and VM hold boundaries', () => {
+  const html = documentText('presentation/index.html');
+  const assertOwnedNotes = notes => {
+    for (const pattern of [
+      /private scheduled poller/, /one approved issue/, /genuine Squad UID10001 worker/,
+      /trusted README App-bot PR/, /No new runner registration or AppAdmin/,
+      /source independently accepted\/normal merged/, /checker runtimeProven false/,
+      /actual Docker\/DNS\/TLS qualification WAITING at existing human gate with zero executed steps/,
+      /no image\/push\/digest/, /Owner-native Terraform is sole whole-body writer/,
+      /not full source acceptance/, /actual README bot PR remain pending/,
+      /Owner-native source preparation is under independent review/,
+      /Executable delivery remains held/,
+      /Plan\/apply\/destroy paths are currently unconditionally disabled/,
+      /actual private-plan transport and executable integration are not provisioned/,
+      /Old zero-step queued run remains untouched, not cancelled\/proof/,
+      /original.*working and unchanged|Original.*working and unchanged/i
+    ]) assert.match(notes, pattern);
+    assert.doesNotMatch(notes, /E2E passed|runtimeProven true|new-target registration\/custom-agent|runner-registration404|AppAdmin approval required/);
+  };
+  const assertVmNotes = notes => {
+    for (const pattern of [
+      /REVIEW_REQUIRED/, /VM is deallocated/, /OS-disk attachment differs/,
+      /Preserve both disks/, /never swap back\/recreate\/delete either/,
+      /Refresh current binding\/baseline and runnable SYSTEM context/,
+      /Bootstrap not installed/, /allows absent prior receipt/,
+      /requires fresh successful receipt after first install/,
+      /CPU\/RAM bottleneck and sustained causality unproved/
+    ]) assert.match(notes, pattern);
+  };
+  for (const id of ['s20-consumer', 's07-agent-setup', 'demo-c0', 'a-bootstrap']) {
+    const source = applyNoteFactOverrides(id, '');
+    const emitted = html.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/section>`))?.[1];
+    assert.ok(emitted, `actual emitted ${id} exists`);
+    assertVmNotes(source);
+    assertVmNotes(emitted);
+    if (id === 's20-consumer') {
+      assertOwnedNotes(source);
+      assertOwnedNotes(emitted);
+      for (const [before, after] of [
+        ['checker runtimeProven false', 'checker runtimeProven true'],
+        ['actual README bot PR remain pending', 'actual README bot PR passed'],
+        ['No new runner registration or AppAdmin', 'AppAdmin approval required'],
+        ['Old zero-step queued run remains untouched, not cancelled/proof', 'Old queued run cancelled'],
+        ['Owner-native Terraform is sole whole-body writer', 'Standalone fork Bicep is another whole-body writer']
+      ]) {
+        assert.ok(emitted.includes(before), `${id} mutation targets actual emitted fact`);
+        assert.throws(() => assertOwnedNotes(emitted.replaceAll(before, after)), { code: 'ERR_ASSERTION' });
+      }
+    }
+  }
+});
+
+test('owner delivery is code preparation under review and VM source already sequences start before CSE', () => {
+  for (const path of [
+    'README.md', 'handoff.md', 'docs/run-plan.md', 'docs/source-provenance.md',
+    'docs/sandboxing.md', 'docs/repositories.md', 'docs/prompt-pack.md',
+    'docs/demo-runbook.md', 'docs/talk-track.md', 'docs/talking-points.md',
+    'haflidi-overview.html'
+  ]) {
+    const text = documentText(path).replace(/\s+/g, ' ');
+    assert.match(text, /(?:source preparation.{0,50}under.{0,20}review|full (?:independent )?(?:source )?review pending)/i, path);
+    assert.match(text, /plan\/apply\/destroy.{0,60}unconditionally disabled/i, path);
+    assert.match(text, /signer.{0,100}(?:private-plan transport|private plan transport)/i, path);
+    assert.match(text, /executable (?:delivery.{0,20}remains held|integration.{0,35}not provisioned)/i, path);
+    assert.doesNotMatch(text, /owner-native.{0,50}(?:source fully accepted|delivery working|deployment complete)/i, path);
+  }
+  for (const text of [
+    documentText('docs/bootstrap.md').replace(/\s+/g, ' '),
+    documentText('docs/run-plan.md').replace(/\s+/g, ' '),
+    applyNoteFactOverrides('demo-c0', ''),
+    applyNoteFactOverrides('s20-consumer', '')
+  ]) {
+    assert.match(text, /creation-semantic precondition is (?:now |currently )?met/);
+    assert.match(text, /IaC deallocate -> VM update -> disk update -> start -> CSE/);
+    assert.match(text, /no missing[- ]start implementation or imperative power workaround/i);
+  }
 });
 
 test('both current source tables reject stale no-apply and unproved integration GO', () => {
@@ -731,3 +885,53 @@ test('both current source tables reject stale no-apply and unproved integration 
     }
   }
 });
+
+const hostedFlowSurfaces = [
+  ['README.md', '| Hosted issues / queue / bot PRs |', 5],
+  ['docs/source-provenance.md', '| Hosted issue/queue/bot-PR target |', 5],
+  ['docs/run-plan.md', '| A, hosted Squad ACA Jobs |', 3]
+];
+const hostedFlowStages = [
+  /^One approved(?: README)? issue$/i,
+  /^private scheduled poller$/,
+  /^existing queue$/,
+  /^genuine Squad UID10001 worker$/,
+  /^trusted (?:README )?App-bot PR(?:\/diff)?$/
+];
+const hostedFlowColumn = (text, prefix, column) => {
+  const rows = text.split(/\r?\n/).filter(line => line.startsWith(prefix));
+  assert.equal(rows.length, 1, `${prefix} identifies one actual hosted row`);
+  const cell = rows[0].split('|')[column]?.trim();
+  assert.ok(cell, `${prefix} contains its flow column`);
+  return cell.split('. ')[0];
+};
+const assertHostedFlow = (text, prefix, column) => {
+  const stages = hostedFlowColumn(text, prefix, column).split(' -> ');
+  assert.equal(stages.length, hostedFlowStages.length, 'hosted flow has exactly five stages');
+  stages.forEach((stage, index) =>
+    assert.match(stage, hostedFlowStages[index], `hosted stage ${index + 1} is in causal order`));
+};
+
+for (const [path, prefix, column] of hostedFlowSurfaces) {
+  test(`actual hosted flow in ${path} orders issue, poller, queue, worker and App-bot PR`, () => {
+    assertHostedFlow(documentText(path), prefix, column);
+  });
+
+  test(`actual hosted flow in ${path} rejects reversed stages even beside a correct chain`, () => {
+    const text = documentText(path);
+    assertHostedFlow(text, prefix, column);
+    const flow = hostedFlowColumn(text, prefix, column);
+    const stages = flow.split(' -> ');
+    for (let index = 0; index < stages.length - 1; index++) {
+      const reversed = [...stages];
+      [reversed[index], reversed[index + 1]] = [reversed[index + 1], reversed[index]];
+      const mutation = text.replace(flow, reversed.join(' -> '));
+      assert.notEqual(mutation, text, `${path} changes the actual flow at stage ${index + 1}`);
+      assert.throws(() => assertHostedFlow(mutation, prefix, column), { code: 'ERR_ASSERTION' });
+      if (index === 1) {
+        const decoy = mutation.replace(prefix, `${prefix} ${flow}; `);
+        assert.throws(() => assertHostedFlow(decoy, prefix, column), { code: 'ERR_ASSERTION' });
+      }
+    }
+  });
+}
