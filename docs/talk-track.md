@@ -12,8 +12,19 @@ Released deck 0.22.6 on main/Pages has 39 full and five short slides:
 PR22 normally merged October 13, Pages succeeded and full/short HTTP 200 bodies
 matched the initially accepted exports. Later local correction bytes remain
 unpublished pending independent review, normal merge and Pages byte verification.
-They retain 0.22.6 without changing this script/clock/design; the accepted native
-engineering result and publication are not hosted or human stage proof.
+The grounded operator-note revision is **candidate 0.22.7**, unpublished until
+independent review, normal merge, and byte verification. It preserves all
+39/5 visual slides, clock/design, and immutable producer pins. The accepted
+native engineering result/publication are not hosted or human stage proof.
+
+**Operator setup, not narration:** actual stage commands use the approved VM
+`C:\demo\session-repo` / `C:\demo\aks-automatic-demo-env`. Those directories
+are intended, not verified until [VM setup](demo-runbook.md#create-and-verify-the-agreed-vm-layout).
+C1 uses newly created `C:\demo\checkpoints\take-20261014\A` and `\B`; C2-C7
+use `\guided`, from the disclosed public `0abb202f` checkpoint. Workstation
+`C:\git` paths are preparation only. Complete conditional HUMAN sign-in before
+Plan; source/mocked checks need no Azure login. Copy exact prompts from the
+prompt pack, full logging blocks from the runbook; shell variables don't persist.
 
 This targets a rehearsed 60-minute show, not exploratory pair programming; the full human rehearsal is still pending. Before the timed show starts, show the untimed legal/futures notice: preview features may change; recheck status before 14 Oct 2026; no warranties; dates are subject to change. C0-C7 remain 29 minutes total. Planned content ends at 55:00, then the protected slack holds 55:00-58:00 before the close.
 
@@ -100,6 +111,10 @@ Use the C0 block from [demo-runbook.md](demo-runbook.md): show Git/Copilot/Squad
 > DRIVER Martin operates; Haflidi compares. Cut at 14:45.
 
 Use `/new`, `/agent` Squad, `/model`, `/plan`, `/rename C1-A`; repeat as `C1-B`. Prompt: plan only, add `alternate_network_payload`, use the prepared pod CIDR, service CIDR, and DNS service IP from the brief, preserve private API, no edits or deploy.
+
+> Exact authorized test: `terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl`;
+> pod `172.21.0.0/16`, service `10.241.0.0/16`, DNS `10.241.0.10`.
+> C3 adds four separate requested-body/private-API asserts, not computed mock output.
 
 **Haflidi:** Compare one consequence, not verbosity. B1 failed because every run wrote two asserts against a pre-registered minimum of three. B1v2 was a separate, clarified brief that asks for four separate asserts. It was 5/5 in re-measurement. That is a measured checkpoint, not a causal claim about every future run. The live run still has to pass.
 
@@ -362,14 +377,35 @@ owned-runtime verdict or new permission. Follow the current live gate above.
 
 > Current owned path: private scheduled poller -> genuine Squad UID10001 worker -> trusted README App-bot PR; no new runner registration or AppAdmin. Publisher source is accepted/merged, actual Docker/DNS/TLS qualification waits at its existing human gate with zero executed steps; no image/push/digest. Owner-native Terraform is the sole whole-body writer, not standalone fork Bicep; source preparation is under review, executable delivery remains held. Plan/apply/destroy are currently unconditionally disabled; signer/current-head/private-plan transport/executable integration still need implementation, not merely receipts. Auth/budget/owner/actual Job and PR remain missing. Credential-free manual status is source-prepared, runtimeProven false. This is not Hosted GO.
 
-**Haflidi, planned Card A only after qualification:** From `C:\demo\hosted-target` on the host, verify manual GitHub sign-in and current target rights, then create the approved tiny issue, label it, follow the queue and actual hosted ACA Job, and inspect the bot PR. This target is not my hosted implementation repo. The host controls the trigger; the job executes elsewhere. [Card A](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr) owns exact bindings and cleanup.
+**Haflidi, Card A only after new GO:** This is the existing approved README
+issue, not a new one. The VM triggers the hosted service; the Job runs elsewhere.
+Existing session/current target rights and worker-runtime GO are prerequisites,
+not new per-agent login.
 
-> Card A timing: final optional tail only after core wrap and freshly qualified, cut before 55:00; no queue-completion promise. Use `gh issue create/edit`, `gh run list` and `gh pr list` with `<approved-private-target>`/`<approved-bot-app>` from the operator card, not live private values in public notes. Fallback: reviewed dated historical excerpt or skip. Approved owned issue/PR/execution cleanup off-stage.
+1. Operator at VM `C:\demo\hosted-target`: read the existing approved issue,
+   confirm body/no prior attempt, then `gh issue edit` with `squad:ripley` once
+   using [Card A's complete bound block](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr).
+2. WAIT for the five-minute private poller -> `squad-work-queue` -> automatic
+   event worker. SHOW the same-issue sanitized queue receipt. The target
+   `squad-queue.yml` is status only; no workflow dispatch or manual Job start.
+3. Operator browser: Azure portal -> Container App Jobs ->
+   `caj-squad-aca-agent-corp-ne` -> Executions -> matching start/status/result.
+   Missing runtime/correlation is STOP, not source CI success.
+4. Haflidi browser: actual same-issue App-bot PR -> Files changed -> `README.md`;
+   show real paragraph/checks and human review handoff. EXPECT README only;
+   STOP on no PR/stub, held gates, failure, or cut before 55:00. No merge.
+
+> One fallback: dated original hosted chain evidence/SKIP. No second issue,
+> label reset, retry, service repair, or protected recovery spend.
 
 > Attribution/next action: Haflidi's authored implementation role is documented, but supplied bounded search found no current Haflidi-authored technical confirmation. Do not present Martin's historical status as his new progress. Ask him for implementation revision and a fresh sanitized issue-to-PR chain result. Earlier USD 20 is historical planning/alert context, not execution authority; retained Corp costs remain. Teardown October 17/credential expiry October 31 are scheduled.
 
-> VM operator hold, not extra stage narration: source-accepted consumer PR21 is
-> REVIEW_REQUIRED under original Haflidi/Online human gates. VM is deallocated,
+> Current VM operator hold, not extra stage narration: accepted consumer source
+> includes Haflidi's merged changes. An ephemeral runner recovered, then the
+> existing attempt failed closed on unqualified private backend plan-prefix
+> transport, before Azure login/backend access/actual plan/saved-plan approval/apply.
+> No VM/bootstrap execution success. VM was last reported deallocated;
+> original Haflidi/Online exact human gates remain, not replaced by CI/source acceptance.
 > current OS-disk attachment differs from earlier receipt; preserve both disks,
 > never swap back/recreate/delete either. Refresh current binding/baseline and
 > runnable SYSTEM context before plan/apply. Owner payload acceptance/harmless
@@ -386,6 +422,24 @@ owned-runtime verdict or new permission. Follow the current live gate above.
 > Native Online card: separate primary Online deployment/all five exact bindings/current operator access/base exec/fs/stop-resume/delete independently verified; cleanup list empty. No Corp BYO VNet/UAMI/FIC transplant or AKS/hosted Jobs dependency. Corrected 26.768-second ACA SANDBOXES host run passed LF/hash/three guest checks/JSON+SHA/exit23/causal denial/cleanup. Independent acceptance complete; runtime-ready after acceptance, human stage GO separate. Earlier CRLF is controlled history; skip the final extra if stage gates unmet. Historical wrong-target doctor remains a warning, not a substitute for fresh exact-ID/access evidence. [Official quickstart](https://sandboxes.azure.com/docs/sandboxes/quickstart/setup-cli).
 
 **Martin, only for the qualified variant:** This is a separately approved prepared native MicroVM. The VM is just our control console. We run the public filesystem and offline Terraform checks here, not AKS or the hosted issue-to-PR service. Inspect actual output and exits.
+
+> Basic fixture and Terraform are separate variants. The accepted 26.768-second
+> basic fixture isn't the `/workspaces/module` Terraform archive. Current basic
+> fixture is now published at `docs\fixtures\native-validation.sh`, canonical
+> 684-byte LF/SHA-256 bound by Card B. VM staging and a current prepared ID
+> still require the operator before GO; the historical sandbox was deleted.
+
+1. Martin, VM PowerShell `C:\demo\session-repo`: `copilot --agent squad`;
+   SHOW `/cwd`/Squad and approved prepared ID/fixture/hash.
+2. Martin, TUI: [exact basic fixture prompt](prompt-pack.md#native-host-squad-isolated-work),
+   `aca-sandboxes`; inspect each Online exact-ID exec/filesystem request. EXPECT
+   `sh /root/native-validation.sh` once, `/root/native-result.json` readback,
+   and the approved `sh -c 'exit 23'` negative. No create/upload/install/auth/rule change.
+3. Haflidi: SHOW actual guest JSON/SHA/numeric exits, approved exit23 and
+   exact-sandbox causal-denial audit, not auth status or a 403 alone.
+4. Martin: actual evidence -> validator/fresh reviewer -> human handoff.
+   STOP on missing input/result/GO, wrong target, failure, or cut before 55:00.
+   One fallback: accepted dated native trace/SKIP. Owned cleanup off-stage.
 
 **Haflidi, only after integration qualification:** The host Copilot CLI and Squad
 coordinate the task, invoke the ACA skill, inspect each tool call and hand actual

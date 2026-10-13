@@ -18,13 +18,19 @@ Source roles: the live demo consumer is `martinopedal/aks-automatic-demo-env`, p
 
 October 12: one laptop's corrected read-only preflight passed 18/18 with Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-preview.4 and enabled official plugin 0.0.5-beta. Clean-VM/manual sign-in, both presenter hosts, full rehearsal, invitation acceptance/current read-back and exact NIC listing remain separate gates. Released deck 0.22.6 on main/Pages followed PR22's normal merge October 13, successful Pages and initial full/short HTTP 200 byte verification. Later local correction bytes remain unpublished pending independent review, normal merge and Pages byte verification; publication does not close those gates. See [current readiness](run-plan.md#october-12-readiness-evidence).
 
-October 13 VM preservation hold: consumer PR21 is source-accepted but
-Haflidi/Online human review and execution approval remain required. VM is
-deallocated; its attached OS disk differs from the earlier receipt. Preserve
-both disks, never swap back/recreate/delete either; refresh current binding/
-baseline and runnable SYSTEM context before plan/apply. No installation,
-power/reset or CSE execution is claimed. Use disclosed host fallback or skip C0
-if its clean-machine/manual-login preconditions are not qualified.
+October 13 current VM hold: consumer source is accepted/merged, including
+Haflidi's changes; the existing plan attempt obtained a recovered ephemeral
+runner, then failed closed because the existing private backend plan-prefix
+transport was not qualified. This was **before Azure login/backend access,
+actual Terraform plan, saved-plan approval, or apply**. Runner absence is no
+longer that attempt's blocker; no VM/bootstrap success or installation follows.
+The last deallocated/changed OS-disk attachment receipt is historical.
+Fresh read-only VM metadata reports D8s_v5 and its same attached 127 GiB
+Premium_LRS/Detach disk, but no DemoMachineBootstrap CSE. Resize actor/time
+are unknown; don't attribute it to this attempt or downgrade it. Preserve both
+disks; never swap back/recreate/delete either. Refresh current binding/baseline
+and runnable SYSTEM context; retain original Haflidi/Online exact human gates.
+Use disclosed host fallback or skip C0 if clean/manual-login prerequisites fail.
 
 For component -> repo -> folder -> edit -> deploy -> status, use the canonical
 [source/deployment table](source-provenance.md#source-and-deployment-table).
@@ -49,6 +55,108 @@ Martin operates; Haflidi checks evidence. In [feature-guide.md](feature-guide.md
 In the current CLI, use `/cwd` to confirm the public repository. Execute PowerShell blocks through the `!` shell escape in this same window. Each block is one shell invocation; shell variables don't carry into later CLI turns.
 
 Start Copilot CLI from the public session repository folder or from one of its clean checkpoint worktrees. Do not start it from the coordinator/private folder. From the wrong folder, `/agent` only lists user-level agents plus Squad, without `terraform-coder`, `terraform-validator`, or `terraform-reviewer`.
+
+### Create and verify the agreed VM layout
+
+**Primary on-stage host: the VM, using `C:\demo`.** The user approved this
+layout; its actual directories/checkouts remain **unverified** until the
+operator runs setup inside that VM. The verified `C:\git` directories in the
+[monitor preparation map](short-talk-track.md) belong to the workstation,
+not the VM. Never substitute them into VM commands.
+
+Off-stage source preparation only, after VM/host setup is separately authorized
+and Git is available. This creates missing **public source** clones and checks
+existing ones without resetting, switching branches, or overwriting dirt:
+
+```powershell
+$ErrorActionPreference = 'Stop'
+$repos = @(
+  @{ Path = 'C:\demo\session-repo'; Url = 'https://github.com/martinopedal/squad-terraform-session-2026-10-14.git' },
+  @{ Path = 'C:\demo\aks-automatic-demo-env'; Url = 'https://github.com/martinopedal/aks-automatic-demo-env.git' }
+)
+foreach ($repo in $repos) {
+  if (-not (Test-Path $repo.Path)) {
+    New-Item -ItemType Directory -Force 'C:\demo' | Out-Null
+    git clone --branch main --single-branch $repo.Url $repo.Path
+    if ($LASTEXITCODE) { throw 'Public source clone failed.' }
+  }
+  $root = git -C $repo.Path rev-parse --show-toplevel
+  if ($LASTEXITCODE -or $root.Trim().Replace('/','\') -ne $repo.Path) {
+    throw 'Existing directory is not the expected Git root; preserve it.'
+  }
+  $remote = git -C $repo.Path remote get-url origin
+  if ($LASTEXITCODE -or $remote.Trim() -ne $repo.Url) { throw 'Wrong source origin.' }
+  git -C $repo.Path log -1 --oneline
+  git -C $repo.Path status --short --branch
+}
+foreach ($file in @(
+  'C:\demo\session-repo\terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl',
+  'C:\demo\session-repo\.github\agents\terraform-validator.agent.md',
+  'C:\demo\aks-automatic-demo-env\manifests\online\ingress.yaml'
+)) {
+  if (-not (Test-Path -LiteralPath $file -PathType Leaf)) { throw "Required public file missing: $file" }
+}
+```
+
+Expected: two distinct roots/origins, actual heads/status, named source files.
+Record them; a successful clone isn't module/runtime qualification. Existing
+local edits, stale heads, wrong origin, or absent files require operator review,
+not `reset`, `checkout`, or forced pull. Preserve Haflidi's incoming source.
+The separate clean C0 demonstration still needs actual absent tools/new clone
+and manual login; this prepared layout doesn't establish those preconditions.
+
+**Optional hosted checkout, off-stage and private:** `C:\demo\hosted-target`
+is the agreed target path, not verified on the VM. Only its operator may create
+it from the already approved private target URL. Never clone the implementation
+repo here or copy the workstation coordinator. This template requests the
+nonsecret approved URL; it neither signs in nor grants consent:
+
+```powershell
+$ErrorActionPreference = 'Stop'
+$targetUrl = Read-Host 'Operator-approved existing private target Git URL'
+if ([string]::IsNullOrWhiteSpace($targetUrl)) { throw 'Approved target binding missing.' }
+if (-not (Test-Path 'C:\demo\hosted-target')) {
+  git clone $targetUrl 'C:\demo\hosted-target'
+  if ($LASTEXITCODE) { throw 'Authorized target clone failed.' }
+}
+$root = git -C 'C:\demo\hosted-target' rev-parse --show-toplevel
+if ($LASTEXITCODE -or $root.Trim().Replace('/','\') -ne 'C:\demo\hosted-target') { throw 'Wrong target root.' }
+$origin = git -C 'C:\demo\hosted-target' remote get-url origin
+if ($LASTEXITCODE -or $origin.Trim() -ne $targetUrl) { throw 'Wrong approved target origin.' }
+git -C 'C:\demo\hosted-target' log -1 --oneline
+git -C 'C:\demo\hosted-target' status --short
+```
+
+Expected: the approved target origin/actual head and reviewed status. Confirm
+current accepted poller transport/native setup before using Card A; a stale
+clone/checker doesn't qualify worker runtime. Missing private binding or
+existing dirt means STOP, not reset/copy/reinitialize. Keep this screen private.
+
+### Conditional human setup before Plan
+
+Use the existing authorized session. The HUMAN operator completes missing
+sign-in before readiness, Plan, approval, and implementation, not once per
+agent. Check the execution host, repository, intended operation, and required
+permissions first.
+
+| Lane | Setup and expected result | Stop condition |
+| --- | --- | --- |
+| Copilot | Existing signed-in session; HUMAN `/login` only if absent. The deliberate clean C0 login stays a separate demo step. | Missing session: no READY probe or Plan yet. |
+| Source-only C1-C7 | Public source, filesystem provider mirror, credential-free mocked/backend-disabled checks. **No Azure login required.** | Missing mirror/isolation or inherited credentials: stop; Azure sign-in isn't a repair. |
+| Authenticated GitHub work | HUMAN resolves missing GitHub CLI sign-in; check `gh auth status --active --hostname github.com` without token-display flags, then the selected operation's rights. | Wrong host/repo, failed readiness, or missing task permission: no issue/PR trigger. |
+| Authorized local Azure operation | HUMAN completes missing Azure CLI sign-in in the separately scoped operator session; verify exact target and the approved nonsecret service read. | Cached account metadata or a token alone doesn't prove target/data-plane access. |
+
+Agents must not start interactive/device login, retrieve/export tokens, copy
+credential caches into guests, change RBAC/App permissions, or put private values
+in prompts/logs. CI OIDC, hosted managed identity, GitHub App authorization, and
+guest OAuth are distinct boundaries; authentication is not deployment or stage GO.
+
+GitHub MCP is optional repository/code/Space context, not an "authentication
+MCP". This session exposes five read/context tools: `get_copilot_space`,
+`get_file_contents`, `list_copilot_spaces`, `search_code`, and `search_users`.
+None mutates PRs, issues, or workflows. Keep working `gh` for the GitHub
+lifecycle; don't install a duplicate MCP or widen permissions for these demos.
+The isolated native MCP window below intentionally disables unrelated servers.
 
 **20-second repo-folder preflight (hard stop):** from the public repo folder, run the headless check below and expect the literal reply `READY`. Then, interactively, open `/agent` and confirm that `terraform-coder`, `terraform-validator`, and `terraform-reviewer` all appear before you continue. If `/agent` only shows user-level agents plus Squad, exit, change to the public session repo folder or the selected checkpoint worktree, and restart Copilot there.
 
@@ -112,13 +220,33 @@ tflint --version
 
 Stop here if `tflint --version` does not report 0.64.0. Do not spend C7 time installing or troubleshooting TFLint.
 
-Wait for an approved qualification commit containing the module. From that checkpoint, create new sparse worktrees without resetting existing work. Copy public definitions, not histories, logs, or personal memory:
+### Create the disposable C1-C7 checkpoints
+
+No existing A/B/guided paths were verified October 13. This **off-stage
+operator recipe creates them**, not a claim that they already exist.
+Use the reviewed public `0abb202f` checkpoint, not the private coordinator Git
+history or the preparation clone's uncommitted files. The source worktree and
+incoming Haflidi changes remain untouched. Each new detached worktree shares
+only the public repository's object database; sparse files include reviewed
+public team definitions/decisions, not private histories, captures, or memory.
+
+Expected creation:
+`C:\demo\checkpoints\take-20261014\A`,
+`\B`, `\guided`, `\evidence`, and later `\offline`. If that take already exists,
+STOP and have the operator select a newly approved take name everywhere,
+never reset or reuse an earlier result.
 
 ```powershell
-$pin = (git rev-parse HEAD).Trim()
+$ErrorActionPreference = 'Stop'
+Set-Location 'C:\demo\session-repo'
+$pin = '0abb202f34af385b7e0a34b1775643aa5b4871ed'
+$take = 'C:\demo\checkpoints\take-20261014'
+if ((git remote get-url origin).Trim() -ne 'https://github.com/martinopedal/squad-terraform-session-2026-10-14.git') {
+  throw 'Wrong public source repository.'
+}
 git cat-file -e "${pin}:terraform/modules/aks-automatic-corp/tests/contract.tftest.hcl"
 if ($LASTEXITCODE) { throw 'The reviewed module checkpoint is not committed yet.' }
-$take = Join-Path (Split-Path (Get-Location)) ('clean-run-' + [guid]::NewGuid().ToString('N'))
+if (Test-Path $take) { throw 'Take exists; preserve it and choose a new approved take.' }
 New-Item -ItemType Directory "$take\evidence" | Out-Null
 $paths = @('AGENTS.md','QUALITY.md','PUBLICATION.md','README.md','CONTRIBUTING.md','.gitignore',
   '.github\agents\','.github\skills\','.github\instructions\','.github\copilot-instructions.md',
@@ -135,6 +263,8 @@ foreach ($run in 'A','B','guided') {
   if ($LASTEXITCODE) { throw 'Sparse checkout failed.' }
   git -C "$take\$run" checkout -q --detach
   if ($LASTEXITCODE) { throw 'Checkout failed.' }
+  git -C "$take\$run" rev-parse HEAD
+  git -C "$take\$run" status --short
 }
 $pin | Set-Content "$take\evidence\checkpoint.txt"
 git -C "$take\guided" ls-files -s -- 'terraform\modules\aks-automatic-corp' |
@@ -142,11 +272,70 @@ git -C "$take\guided" ls-files -s -- 'terraform\modules\aks-automatic-corp' |
 $take
 ```
 
-Review the checkpoint's public decision ledger before copying it; never substitute the coordinator's private `.squad`. Git sparse patterns use Git's slash syntax. Keep the printed take location private. Enter `/cwd` with the actual A, B, or guided path when instructed below.
+Expected: three identical printed commit IDs and empty status. Review the
+checkpoint's public decision ledger before copying it; never substitute the
+coordinator's private `.squad`. Git sparse patterns use Git's slash syntax.
+In each new root, confirm `/cwd`, all three native profiles, and
+`terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl` before Plan.
+Don't start C1 if the test already contains `alternate_network_payload`.
 
-Pre-stage a filesystem-only provider mirror and `offline\terraform.tfrc` beside the worktrees, following the module README. One online staging step populates the mirror: from the module directory, `terraform providers mirror -platform=windows_amd64 C:\terraform-offline\providers`. Then copy the README's `terraform.tfrc` to `$take\offline\`. Terraform subprocesses must be uncredentialed and network-restricted, separately from CLI/model access. Stop if isolation is unavailable. Never use cached Azure login, direct download fallback, or ordinary `terraform plan`.
+### Stage the filesystem-only mirror
+
+Off-stage operator preparation, not a C5/C7 validator command or Azure
+operation: stage the locked Windows provider into this exact take. Public
+Registry access is needed for this one staging step, **not Azure login**.
+Preserve/check the AzAPI 2.12.0 lock hashes and follow the
+[module's mirror policy](../terraform/modules/aks-automatic-corp/README.md#offline-qualification).
+The block is self-contained:
+
+```powershell
+$ErrorActionPreference = 'Stop'
+$take = 'C:\demo\checkpoints\take-20261014'
+Set-Location "$take\guided"
+if (Test-Path "$take\offline") { throw 'Mirror exists; qualify it without overwriting.' }
+New-Item -ItemType Directory "$take\offline\providers" | Out-Null
+terraform -chdir='terraform\modules\aks-automatic-corp' providers mirror `
+  -platform=windows_amd64 "$take\offline\providers"
+if ($LASTEXITCODE) { throw 'Locked provider staging failed.' }
+$mirror = "$take\offline\providers".Replace('\','\\')
+@"
+provider_installation {
+  filesystem_mirror {
+    path = "$mirror"
+    include = ["registry.terraform.io/azure/azapi"]
+  }
+}
+"@ | Set-Content "$take\offline\terraform.tfrc" -Encoding utf8
+```
+
+Expected: mirror package and `offline\terraform.tfrc`, with no `direct` fallback.
+Before live execution, qualify locked init/tests in a separately uncredentialed,
+network-restricted Terraform subprocess. Stop if that isolation is unavailable.
+The guard doesn't detect every host credential source. Never use cached Azure
+login, direct downloads, or ordinary `terraform plan` as a substitute.
 
 ## Quick troubleshooting
+
+### What the offline PowerShell checks do
+
+C5 records the before/fail/repair loop; C7 records the final module and caller
+suite. Paste each **whole** block through `!` in the guided CLI window. Variables,
+environment assignments, and the local `Check` function don't persist across
+CLI shell turns. `Check` is defined inside the C7 block, not an installed helper.
+
+| Statement/check | Purpose and expected result | Failure means |
+| --- | --- | --- |
+| `$PSNativeCommandUseErrorActionPreference = $false` | Let the block capture the real native exit, including C5's deliberate nonzero result, before applying its explicit stop checks. | This doesn't suppress failures: every required clean step must still exit `0`. |
+| `TF_CLI_CONFIG_FILE` | Select the qualified **filesystem-only** AzAPI 2.12.0 mirror policy. No direct-download fallback. | Missing configuration/package/hash: stop before tests. A plugin cache alone isn't isolation. |
+| `CHECKPOINT_DISABLE` / `TF_IN_AUTOMATION` | Disable Terraform update checks and use automation-style output. | Neither variable isolates networking or credentials; the approved restricted subprocess remains required. |
+| Credential/override guard | Reject inherited `ARM_`, relevant `AZURE_`, `TF_VAR_`, and `TF_CLI_ARGS` names without printing their values. | Stop. Resolve isolation off-stage; don't sign in or dump the environment. |
+| `init -backend=false -input=false -lockfile=readonly` | Load locked providers/modules locally, without configuring remote state, prompting, or rewriting locks. Exit `0`. | Provider/lock/mirror problem, not permission to upgrade or contact Azure. Backend-disabled init alone isn't a network sandbox. |
+| `fmt -check -recursive` | Check HCL layout without rewriting source. Exit `0`. | Formatting changes needed; no silent rewrite during validation. |
+| `validate -no-color` | Check configuration/types against the installed provider schema. Exit `0`. | Syntax/schema error; not an Azure deployment result. |
+| `tflint ... --config=.tflint.hcl` | Run the committed lint policy using TFLint 0.64.0. Exit `0`. | Tool/setup or lint failure: stop, don't remove rules or suppress diagnostics. |
+| `test -no-color` | Execute the module's mock-AzAPI plan contract and the caller's separate mocked suite. Clean phases exit `0`; seeded C5 must fail on `private_automatic_contract`. | Auth/syntax failures don't prove the mutation was detected. Mocks don't prove Azure acceptance. |
+| `Tee-Object`, captured `$LASTEXITCODE`, `.exit.txt` | Preserve actual command/output and numeric exit before another command can overwrite it. New filenames prevent overwriting a prior take. | Missing output/exit or preexisting logs: blocked, not passed. |
+| `git diff`, before/after SHA-256 | Inspect the exact allowed test change and verify `main.tf` is restored byte-for-byte. | Unrelated edits, altered assertions, or changed source hash: no acceptance. |
 
 | Symptom | Recovery | Verification |
 | --- | --- | --- |
@@ -196,7 +385,7 @@ Inspect `/session plan`. Revise genuinely: "Put unchanged payload assertions and
 **Pre-staged:** B1v2 prompt copied exactly; checkpoint can be reset; fallback B1v2 eval excerpt ready; no causal claim from B1v2 to live result; from the session repo folder, start Copilot with the exact command below before C3.
 
 ```powershell
-cd C:\git\session-repo   # your public repo clone or checkpoint worktree
+Set-Location 'C:\demo\checkpoints\take-20261014\guided'
 copilot --agent squad
 ```
 
@@ -471,6 +660,38 @@ native ingress, exposed credentials or private-state publication.
 
 ### Card A: Haflidi hosted Squad on ACA Apps/Jobs, issue to bot PR
 
+**Running it, short recipe.** PRECHECK: hosted image/auth/chain and human
+rehearsal remain HELD. No live steps until the operator confirms the exact
+current target/issue, publisher/worker gates and new GO. One fallback: dated
+original hosted evidence, otherwise SKIP. Only genuine spare time after core
+wrap; cut before 55:00.
+
+1. **Haflidi + operator, VM PowerShell, `C:\demo\hosted-target`:** use the
+   whole privately bound block below to **read the existing approved issue**
+   and, only if never queued/attempted, add `squad:ripley` once. SHOW its
+   approved README body/label in GitHub Issues. EXPECT one authorized task.
+   STOP on prior attempt, missing binding or unexpected body; no issue creation.
+2. **Operator, existing hosted service, no manual invocation:** WAIT for the
+   private poller's five-minute UTC schedule. It checks that issue/approval,
+   defers if the existing queue isn't empty, enqueues the bound task and marks
+   processing. KEDA starts the existing **event Job** from that queue.
+   SHOW the matching sanitized poller/queue receipt and worker execution.
+   The queue is source-selected `squad-work-queue`, TTL600/visibility10.
+   EXPECT the same issue throughout. STOP on absent/mismatched evidence;
+   don't `gh workflow run`, `az ... job start`, or inspect secret queue payloads.
+3. **Operator, Azure portal:** Container App Jobs ->
+   source-selected `caj-squad-aca-agent-corp-ne` -> **Executions** ->
+   matching execution/start/status. Its source RG is `rg-squad-aca-corp-swc`,
+   environment Norway East; confirm owner-bound actual deployment first.
+   The read-only CLI observation block below is an alternative.
+   SHOW real Squad UID10001 worker result plus same-issue correlation.
+   EXPECT genuine completion, not just an image pull. STOP on missing runtime.
+4. **Haflidi, GitHub browser, approved target:** Pull requests -> matching
+   App-bot PR linked to that issue -> **Files changed** -> `README.md`.
+   SHOW actual paragraph/diff/checks, then independent human review handoff.
+   EXPECT README only, no merge/deploy. STOP on stub/no PR/wrong author or cut.
+   Owned cleanup is separately approved off-stage.
+
 Both independent product paths must qualify: this **SQUAD ON ACA APPS/JOBS**
 issue -> Job/agent -> bot PR path needs fresh current end-to-end evidence.
 The corrected **ACA SANDBOXES** host-to-MicroVM receipt does not prove it.
@@ -486,7 +707,7 @@ registration/AppAdmin. These holds do not block accepted native engineering.
 | Field | Operator plan |
 | --- | --- |
 | Owner | Haflidi explains his authored implementation; Martin/hosted operator controls approved target trigger and verifies evidence |
-| Repo / folder | Original `haflidif/squad-on-aca` is working/unchanged; [owned MIT fork PR1](https://github.com/martinopedal/squad-on-aca/pull/1) is source-accepted/merged, @haflidif credit/license preserved. Use authorized `C:\demo\hosted-target` / `<approved-private-target>` for task/queue/PR, not public session clone |
+| Repo / folder | Original `haflidif/squad-on-aca` is working/unchanged; [owned MIT fork PR1](https://github.com/martinopedal/squad-on-aca/pull/1) is source-accepted/merged, @haflidif credit/license preserved. Workstation public fork is `C:\git\squad-terraform-session-2026-10-14\worktrees\hosted-source-fork`, local `411bbf1`, not original main. VM `C:\demo\hosted-target` is an intended private target checkout, NOT verified until its operator setup above; never use the implementation/session clone as target |
 | Login | Manually verify host sign-in/`gh auth status`/current target rights. Source-prepared credential-free manual status is not a trigger or runtime proof. Genuine worker authentication is separately gated; no host PAT/cache copy |
 | Preflight / GO | Chosen private scheduled poller -> one approved issue -> existing queue -> genuine Squad UID10001 worker -> trusted README App-bot PR. Private publisher Docker/DNS/TLS qualification waits at existing human gate/zero steps; owner-native Terraform/full QA/plan, immutable image/auth/actual PR/rehearsal pending: **NO-GO**. No new registration/AppAdmin requirement |
 | Expected proof | Correlate the same approved issue, queue workflow, actual ACA Job execution and bot-authored PR/diff. Job success or an image pull alone is not full chain proof and not native MicroVM/Squad proof |
@@ -494,29 +715,65 @@ registration/AppAdmin. These holds do not block accepted native engineering.
 | Fallback | State source-accepted/runtime-held status and the actual publisher/owner-native Terraform/image/auth/PR gates; use dated original confirmed implementation evidence or skip. Missing-agent/error-only personal PR stubs are not successful Squad work. No second issue or on-stage repair |
 | Cleanup | After separate owner approval, close only the created test issue/PR, stop only owned test execution and verify queue drain. No shared service, Corp resource or unrelated runner deletion |
 
-Privately resolve target and bot aliases; commands below are proposed operator
-steps, not executed here or permission to consume/cancel the old zero-step queued
-run, which remains untouched. Standalone fork Bicep must not become a second
-whole-body infrastructure writer; owner-native Terraform keeps sole ownership:
+**DO, only after new hosted GO:** use the **existing approved README issue**,
+not a new issue. The operator binds its number/target/bot privately from the
+accepted owner runbook and confirms it hasn't already been queued/attempted.
+Current target `.github\squad-transport.json` selects `private-aca-poller`;
+its `squad-queue.yml` is **manual status only**, not enqueue or chain evidence.
+Read public implementation in the verified workstation fork's
+`agents\base\poller-entrypoint.sh`, `entrypoint.sh`, and `docs\owned-runtime.md`.
+The private owner-native Terraform runbook is the only infrastructure authority;
+don't run the fork's Bicep/Quick Start as a second writer.
+
+**TYPE, privately bound operator template, NOT runnable while held:** replace
+each quoted marker with the existing owner-approved binding. The issue number
+is not a newly invented demo issue. Stop before this block if any binding or
+exactly-one-attempt permission is missing. No login/token/config operation:
 
 ```powershell
-Set-Location C:\demo\hosted-target
+Set-Location 'C:\demo\hosted-target'
 $targetRepo = '<approved-private-target>'
-$demoIssue = '<approved-demo-issue-number>'
+$demoIssue = '<existing-approved-issue-number>'
 $botApp = '<approved-bot-app>'
-gh auth status
-gh issue create --repo $targetRepo --title "Demo task" --body "Make the approved tiny public README change."
-# Resolve $demoIssue to the created issue before continuing.
+gh issue view $demoIssue --repo $targetRepo --json title,body,labels,state
+if ($LASTEXITCODE) { throw 'Existing approved issue read failed.' }
+# STOP if already queued, attempted, processing, or the body isn't the approved README task.
 gh issue edit $demoIssue --repo $targetRepo --add-label squad:ripley
-gh run list --repo $targetRepo --workflow squad-queue.yml --limit 3
-gh pr list --repo $targetRepo --author $botApp --state open
+if ($LASTEXITCODE) { throw 'Approved issue routing failed; no retry.' }
+gh pr list --repo $targetRepo --head "squad/ripley/issue-$demoIssue" `
+  --state open --json number,url,headRefName,author
+if ($LASTEXITCODE) { throw 'Bot PR read failed.' }
 ```
 
-Use the operator's existing reviewed service procedure to read the matching ACA
-Job execution with explicit approved hosted subscription/RG/job. That is not the
-native SandboxGroup target. Ask Haflidi for the actual implementation revision
-and fresh sanitized chain result; no new Haflidi-authored technical confirmation
-is established by the supplied historical status records.
+**Read-only Job observation alternative, only after owner verifies this
+source-selected target and permits the read.** This lists executions; it
+doesn't start a Job or prove same-issue correlation:
+
+```powershell
+az containerapp job execution list `
+  --subscription '9d5a5ae2-a09a-4691-9d2b-52a700bb07a7' `
+  --resource-group 'rg-squad-aca-corp-swc' `
+  --name 'caj-squad-aca-agent-corp-ne' `
+  --query '[].{execution:name,status:properties.status,start:properties.startTime,end:properties.endTime}' -o table
+if ($LASTEXITCODE) { throw 'Matching hosted execution read failed.' }
+```
+
+**SHOW:** correlate that SAME issue -> actual private scheduled poller ->
+durable existing queue -> genuine UID10001 Squad worker/ACA Job -> trusted
+README-only App-bot commit/PR. The operator reads the matching Job through the
+existing reviewed owner procedure with its approved hosted target, not the
+native SandboxGroup. Missing bound Job observation is STOP, not an invented
+`az` command or a status-workflow substitute. Inspect the actual PR diff and
+checks, then hand it to an independent human reviewer; don't merge.
+The expected source branch is `squad/ripley/issue-$demoIssue`; verify actual
+App-bot attribution and issue closure reference against `$botApp`, not a
+personal/error-only stub.
+
+**EXPECT:** one genuine README change, numeric worker result, same-issue
+correlation and reviewable bot PR. Source CI/status/image pulls alone don't pass.
+**STOP:** current image/auth/custody/rehearsal hold, old queued issue, missing
+source/bindings/runtime receipt, failed command or no time = dated original
+evidence/SKIP. No new issue, duplicate label/reset/retry or unsafe Job start.
 
 Owner-native source preparation is under independent review; executable delivery
 remains held. Plan/apply/destroy are currently unconditionally disabled; signer,
@@ -529,10 +786,38 @@ applies to the new target, not to rebuilding Haflidi's completed implementation.
 
 ### Card B: native ACA Sandboxes for host Copilot CLI and Squad
 
+**Running it, short recipe.** PRECHECK: basic engineering accepted, but actual
+prepared ID and human stage GO must be supplied by the existing native operator.
+The [exact accepted LF fixture](fixtures/native-validation.sh) is now published
+as source, not installed on the VM/guest. One fallback:
+accepted dated native trace, otherwise SKIP. Dead last, genuine spare time only,
+cut before 55:00; status/doctor isn't the demo.
+
+1. **Martin, VM PowerShell, `C:\demo\session-repo`:**
+   `copilot --agent squad`. SHOW `/cwd`, selected Squad and approved prepared
+   Online group/ID. EXPECT the host controls a MicroVM, not a guest agent.
+   STOP if root, exact ID/fixture/hash, access or human GO is missing.
+2. **Martin, Copilot TUI:** paste the
+   [basic fixture prompt](prompt-pack.md#native-host-squad-isolated-work);
+   invoke `aca-sandboxes`, inspect each exact-ID `exec`/filesystem request
+   before narrow approval. SHOW actual tool arguments and guest output.
+   EXPECT `sh /root/native-validation.sh` once and result readback below.
+   STOP on a different script,
+   target, create/upload/install/auth/rule request or error.
+3. **Haflidi, returned guest results:** SHOW positive JSON and source/result
+   SHA-256, immediate numeric exits including the deliberate `23` negative,
+   and denial with its new exact-sandbox audit if that check is approved.
+   EXPECT the accepted fixture's check contract, not a 403-only policy claim.
+   STOP on missing/mismatched outputs; never relabel incomplete checks PASS.
+4. **Martin, host handoff:** give actual prompt/tools/results/hash/exits to
+   validator and fresh-context reviewer, then human acceptance. SHOW findings
+   and limits. EXPECT no guest OAuth/Copilot claim or hosted-Job equivalence.
+   STOP at the cut; exact owned lifecycle/cleanup happens off-stage only.
+
 | Field | Operator plan |
 | --- | --- |
 | Owner | Martin drives; approved native sandbox operator prepares resources and evidence; Haflidi explains the limits |
-| Repo / folder | Host `C:\demo\session-repo` public clone for notes/reviewed public fixture; demo-env `deployments\aca-sandboxes-online` owns native source. Target is a verified **separate Online SandboxGroup and RG**, not AKS or Card A's hosted Jobs/runner. No Corp BYO VNet/UAMI/FIC transplant |
+| Repo / folder | VM host `C:\demo\session-repo` for notes/public fixture; VM consumer `C:\demo\aks-automatic-demo-env\deployments\aca-sandboxes-online` owns native source. Both must be created/verified during VM setup above. Target is separate Online `rg-aca-sandboxes-online-swc-001` / `sbg-squad-nic2026-online-swc-001`, `swedencentral`, not AKS or Card A's Jobs/runner. No Corp BYO VNet/UAMI/FIC transplant |
 | Login | Supported manual Azure CLI/Entra login, then host ACA auth status; current token status exit 0 proves tokens only. Never copy host authentication into a MicroVM. Optional in-VM Copilot/Squad requires separate supported sign-in/storage/egress consent |
 | Preflight / GO | Independent five-object provisioning/current operator access/base probe verified; second presenter and full [coverage](aca-sandboxes.md#full-test-coverage-checklist) remain. Prevalidate public UTF-8 LF source/hash and installed parsers; separately approve prepared runtime/lifecycle; verify exact target/access/egress and successful work/rehearsal. Corrected public-fixture runtime receipt PASS, independent acceptance complete; card runtime-ready after acceptance, **NO-GO** for stage until human preflight/rehearsal; doctor wrong-target remains a warning, not proof of absent service |
 | Trigger | Host Copilot CLI with Squad coordinates a bounded public-only brief; invoke `aca-sandboxes`, inspect actual `aca` tool requests, and drive prepared MicroVM filesystem/offline Terraform work. No on-stage create/upload/install/egress/region changes |
@@ -541,26 +826,192 @@ applies to the new target, not to rebuilding Haflidi's completed implementation.
 | Fallback | Accepted corrected ACA SANDBOXES trace or skip; earlier CRLF is labeled learning history. Runtime evidence is not human stage GO or hosted Apps/Jobs proof. No fallback runtime execution or automatic retry |
 | Cleanup | Record owned lifecycle and cleanup scope before preparation. Approved stop/delete and read-back off-stage only; separate group/RG, no AKS/hosted Jobs/Corp teardown. Oct 17 teardown/Oct 31 credential expiry scheduled, not done |
 
-Standalone exec checks are prerequisite tests, not the Copilot/Squad integration demo.
-Read-only target checks and harmless exec belong before stage. Run exec only after
-separate target/access/runtime consent:
+**Current exact binding, not stage GO:** October 13 09:33 UTC exact ARM GET
+returned that Online group `Succeeded`. This isn't doctor, presenter access,
+or new runtime evidence. The Online subscription GUID is approved in the
+[narrow public demo matrix](stack-overview.md);
+"Online" alone is a placement alias, not a verified CLI subscription name.
+
+**DO:** human/operator binds the actual pre-approved prepared sandbox ID and
+stages the exact [684-byte public LF fixture](fixtures/native-validation.sh)
+off-stage. Accepted source SHA-256:
+`75d8fc0f08005317bbdc21c8de9ad43f3b7e06736e419014e7cf8678b9cab2a5`.
+Guest source is `/root/native-validation.sh`; result is `/root/native-result.json`.
+The accepted run deleted its sandbox: **no current prepared ID is established**.
+The operator supplies a separately approved current ID; never reuse the
+historical deleted ID or create a replacement on stage.
+
+**Off-stage fixture staging, only after separate preparation consent.**
+Run on the VM after this reviewed source is available; this preserves the
+canonical bytes and rejects CRLF/hash mismatch:
 
 ```powershell
-Set-Location C:\demo\session-repo
-aca --version
-$nativeTarget = @('--subscription', '<approved-online-subscription>',
-  '--resource-group', '<approved-native-resource-group>',
-  '--sandbox-group', '<approved-native-sandbox-group>',
-  '--region', '<approved-native-region>')
-aca auth status @nativeTarget -o json
-aca doctor @nativeTarget
-# Compare printed target fields and independently read back the exact group ID.
-# STOP on mismatch, missing group/access, or missing approval.
-aca sandbox exec @nativeTarget -l 'name=<approved-prepared-label>' -c 'pwd; uname -s; test -r /workspaces/module/README.md; result=$?; printf "filesystem_exit=%s\n" "$result"; exit "$result"'
+$ErrorActionPreference = 'Stop'
+$source = 'C:\demo\session-repo\docs\fixtures\native-validation.sh'
+$bytes = [IO.File]::ReadAllBytes($source)
+if ($bytes.Length -ne 684 -or $bytes -contains 13) { throw 'Expected canonical 684-byte LF fixture.' }
+$expected = '75d8fc0f08005317bbdc21c8de9ad43f3b7e06736e419014e7cf8678b9cab2a5'
+if ((Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected) {
+  throw 'Canonical fixture hash mismatch.'
+}
+if (Test-Path 'C:\demo\native-fixture\native-validation.sh') { throw 'Preserve existing staging; qualify it separately.' }
+New-Item -ItemType Directory -Force 'C:\demo\native-fixture' | Out-Null
+Copy-Item -LiteralPath $source -Destination 'C:\demo\native-fixture\native-validation.sh'
 ```
 
-Inspect the installed exec help before rehearsal; preserve native permissions
-and immediate numeric exits inside the Linux sandbox, not a host success Boolean.
+Expected: same bytes/hash, not guest deployment/readiness. The approved operator
+uploads **off-stage only** using installed `aca sandbox fs write --id` with
+`--path '/root/native-validation.sh' --file 'C:\demo\native-fixture\native-validation.sh'`
+and the exact target flags below. That existing source-backed action doesn't
+authorize a new sandbox, lifecycle, auth, egress, or installation.
+
+**TYPE, read-only prerequisite, not the demo:** existing public host, exact
+consented group. These commands don't create a sandbox or clear the human gate:
+
+```powershell
+Set-Location 'C:\demo\session-repo'
+aca --version
+$nativeTarget = @('--subscription', '714ac8e0-8874-428d-a4f3-79bd3765bfed',
+  '--resource-group', 'rg-aca-sandboxes-online-swc-001',
+  '--group', 'sbg-squad-nic2026-online-swc-001',
+  '--region', 'swedencentral')
+aca auth status @nativeTarget -o json
+if ($LASTEXITCODE) { throw 'Native auth readiness failed.' }
+aca doctor @nativeTarget
+if ($LASTEXITCODE) { throw 'Native diagnostic failed.' }
+# Compare printed target fields and independently read back the exact group ID.
+# STOP on mismatch, missing group/access, or missing approval.
+```
+
+**TYPE, actual basic demo after all bindings and HUMAN GO:** host shell
+`copilot --agent squad`; use the [basic fixture prompt](prompt-pack.md#native-host-squad-isolated-work),
+invoke `aca-sandboxes`, inspect each exact-ID `exec`/filesystem request. One
+approved LF public fixture only; no guest authentication. The skill is guidance,
+not evidence or a new permission.
+The inspected host requests must use these exact guest operations. This
+**operator-input block** requests the approved current sandbox ID and checks
+its exact-target readback before exec. Every block is one invocation; don't
+assume an ID variable survives CLI turns. Empty/failed/mismatched readback means
+STOP. The negative step expects host exit `23`, not success.
+
+```powershell
+$PSNativeCommandUseErrorActionPreference = $false
+$sandboxId = Read-Host 'Operator-approved current prepared sandbox ID'
+if ([string]::IsNullOrWhiteSpace($sandboxId)) { throw 'Current prepared ID missing; SKIP.' }
+$nativeTarget = @('--subscription', '714ac8e0-8874-428d-a4f3-79bd3765bfed',
+  '--resource-group', 'rg-aca-sandboxes-online-swc-001',
+  '--region', 'swedencentral', '--group', 'sbg-squad-nic2026-online-swc-001')
+aca sandbox get --id $sandboxId @nativeTarget -o json
+if ($LASTEXITCODE) { throw 'Approved current sandbox readback failed; SKIP.' }
+# Operator compares returned ID/target/source staging with the approved prepared receipt before exec.
+aca sandbox exec --id $sandboxId -c 'sh /root/native-validation.sh' @nativeTarget -o json
+$positiveExit = $LASTEXITCODE
+if ($positiveExit) { throw "Positive fixture failed: $positiveExit" }
+aca sandbox fs cat --id $sandboxId --path '/root/native-result.json' @nativeTarget -o json
+if ($LASTEXITCODE) { throw 'Result filesystem readback failed.' }
+aca sandbox exec --id $sandboxId -c "sh -c 'exit 23'" @nativeTarget -o json
+$negativeExit = $LASTEXITCODE
+if ($negativeExit -ne 23) { throw "Expected deliberate guest/host exit 23, got $negativeExit" }
+```
+
+**Expected visible result:** JSON `schema=native-squad-validation-v1`,
+`arithmetic=true`, `uppercase=true`, `fixtureHash=true`; `sourceSha256` matches
+the canonical source; stdout prints `RESULT_SHA256`.
+Decode filesystem response `.content`, not the transport envelope, and hash
+its UTF-8 bytes **including final LF**. Match stdout's `RESULT_SHA256`; the
+accepted unchanged fixture's result hash is
+`2e172d6dbe2d2c600c1f4935d8a4748ad519ec5e896e54d87be0c640cb7edb25`.
+Preserve actual numeric exits/stdout/stderr and hand them to validator/reviewer.
+Causal HTTPS denial needs its separately approved exact-sandbox audit probe;
+run the source-backed block below only after the positive phase passes and
+the operator separately approves that probe. Missing audit stays BLOCKED,
+never "403 proves enforcement".
+
+**Whole causal-denial block, same approved current sandbox, one HTTPS request.**
+The installed `curl` is a prerequisite; no installation. This records before/
+after exact-ID egress decisions and requires a new matching denied event.
+`--insecure` is deliberately **per-request**, credential-free `example.com`
+only, to isolate the policy check. It does not prove trusted TLS or change trust.
+
+```powershell
+$PSNativeCommandUseErrorActionPreference = $false
+$sandboxId = Read-Host 'Operator-approved current prepared sandbox ID'
+if ([string]::IsNullOrWhiteSpace($sandboxId)) { throw 'Current prepared ID missing; SKIP.' }
+$target = @('--subscription', '714ac8e0-8874-428d-a4f3-79bd3765bfed',
+  '--resource-group', 'rg-aca-sandboxes-online-swc-001',
+  '--region', 'swedencentral', '--group', 'sbg-squad-nic2026-online-swc-001', '-o', 'json')
+aca sandbox get --id $sandboxId @target
+if ($LASTEXITCODE) { throw 'Approved current sandbox readback failed; SKIP.' }
+# Operator verifies this exact ID/target is still the approved prepared sandbox before the probe.
+aca sandbox exec --id $sandboxId -c 'command -v curl' @target
+if ($LASTEXITCODE) { throw 'Preinstalled curl missing; no install.' }
+$beforeText = aca sandbox egress decisions --id $sandboxId @target
+if ($LASTEXITCODE) { throw 'Before-audit read failed.' }
+$before = [Text.Json.JsonDocument]::Parse(($beforeText -join "`n"))
+$beforeEvents = @($before.RootElement.GetProperty('networkEgress').GetProperty('denied').EnumerateArray() |
+  ForEach-Object { $_.GetRawText() })
+$denyCommand = 'set +e; curl --insecure --head --silent --show-error --connect-timeout 5 --max-time 12 --write-out ''\nCURL_HTTP_CODE=%{http_code}\n'' https://example.com/ > /root/native-egress-output.txt 2> /root/native-egress-error.txt; c=$?; printf ''{"curlExit":%s,"host":"example.com","url":"https://example.com/"}\n'' "$c" > /root/native-egress-result.json; cat /root/native-egress-result.json; cat /root/native-egress-output.txt; cat /root/native-egress-error.txt'
+$probeStart = [DateTimeOffset]::UtcNow
+aca sandbox exec --id $sandboxId -c $denyCommand @target
+$probeExit = $LASTEXITCODE
+if ($probeExit) { throw "Probe execution failed: $probeExit" }
+$curlResultText = aca sandbox fs cat --id $sandboxId --path '/root/native-egress-result.json' @target
+if ($LASTEXITCODE) { throw 'Probe result read failed.' }
+$curlResult = ($curlResultText | ConvertFrom-Json).content | ConvertFrom-Json
+if ($curlResult.curlExit -ne 0 -or $curlResult.host -ne 'example.com' -or $curlResult.url -ne 'https://example.com/') {
+  throw 'Unexpected curl result; no denial success claim.'
+}
+$httpText = aca sandbox fs cat --id $sandboxId --path '/root/native-egress-output.txt' @target
+if ($LASTEXITCODE) { throw 'HTTP observation read failed.' }
+$http = ($httpText | ConvertFrom-Json).content
+if ($http -notmatch '(?m)^CURL_HTTP_CODE=403\s*$' -or $http -notmatch '(?im)^x-deny-reason:\s*example\.com:HEAD\s*$') {
+  throw 'Expected HTTP403 and exact deny reason missing.'
+}
+$curlResult | ConvertTo-Json -Compress
+$http
+$causal = @()
+for ($read = 0; $read -lt 3; $read++) {
+  if ($read) { Start-Sleep -Seconds 2 }
+  $afterText = aca sandbox egress decisions --id $sandboxId @target
+  if ($LASTEXITCODE) { throw 'After-audit read failed.' }
+  $auditEnd = [DateTimeOffset]::UtcNow
+  $after = [Text.Json.JsonDocument]::Parse(($afterText -join "`n"))
+  $causal = @($after.RootElement.GetProperty('networkEgress').GetProperty('denied').EnumerateArray() | Where-Object {
+    $stamp = [DateTimeOffset]::MinValue
+    [DateTimeOffset]::TryParse($_.GetProperty('timestamp').GetString(), [ref]$stamp) -and
+    $_.GetProperty('host').GetString() -eq 'example.com' -and $_.GetProperty('method').GetString() -eq 'HEAD' -and
+    $_.GetProperty('scheme').GetString() -eq 'https' -and $_.GetProperty('path').GetString() -eq '/' -and
+    $stamp -ge $probeStart -and $stamp -le $auditEnd -and
+    $beforeEvents -notcontains $_.GetRawText()
+  })
+  if ($causal.Count) { break }
+}
+if (-not $causal.Count) { throw 'No new exact-sandbox causal denied event; BLOCKED.' }
+$causal | ForEach-Object { $_.GetRawText() }
+```
+
+**SHOW/EXPECT:** `CURL_HTTP_CODE=403`, `x-deny-reason: example.com:HEAD`,
+decoded result `curlExit=0`, actual exec exit `0`, and the new matching record
+from `networkEgress.denied` between probe start/final read. HTTP403 can coexist
+with shell/curl `0`; don't call that a numeric exit failure. Allowed-only,
+old/wrong-host/missing events don't pass. No second HTTPS request or rule change.
+Retain actual before/after/result/exits privately; show only the bounded
+sanitized correlation and give it to validator/fresh reviewer.
+The JSON DOM preserves the raw fractional timestamp. Casting a PowerShell
+auto-decoded date to string can lose precision and reject a genuine fresh event.
+**SHOW:** actual host prompt/selected Squad/skill/tool arguments, guest
+JSON/stdout/stderr, numeric exits, source/result hashes and validator/reviewer
+handoff. **EXPECT:** positive checks, deliberate negative exit, attributable
+denial only with its exact-sandbox audit, then separately approved owned cleanup.
+**STOP:** missing fixture/ID/consent, wrong target, failure or cut before 55:00.
+Show the accepted dated trace or SKIP. Status/doctor isn't the demo.
+
+**Separate Terraform variant, NOT the accepted basic fixture:** the following
+prepared archive `/workspaces/module` recipe requires its own source/archive
+hash, installed guest Terraform, mock/oracle/access, and human rehearsal
+qualification. The 26.768-second shell engineering receipt doesn't qualify it.
+The consumer's `runtime-procedure.md` is an older preparation proposal, not the
+accepted fixture source or authority to replay.
 
 **Primary Flow 2 integration, only after its own GO:** start the host CLI from
 the public session clone or disclosed checkpoint with `copilot --agent squad`.

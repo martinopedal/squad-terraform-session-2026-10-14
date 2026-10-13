@@ -45,7 +45,18 @@ A five-slide companion cut is generated at [`short/index.html`](short/index.html
 
 ## Open the presentation
 
-From this directory, run `npm run serve`, then open <http://127.0.0.1:4173/presentation/index.html> in Edge or Chromium. The server exposes only the public worktree, so links to the public documents work too. The generated `index.html` contains Reveal.js 5.2.1, its notes and highlight plugins, the theme, and the diagrams. Serving the existing HTML requires Python, not npm dependencies. The equivalent command is:
+Double-click `index.html` in Edge or Chromium for bundled offline slides.
+You don't need npm, Python, or an internet connection to view them. The HTML
+contains Reveal.js 5.2.1, notes/highlight plugins, the theme, and the diagrams.
+For reliable `S` speaker-window messaging, use the
+[published deck](https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/)
+or a local HTTP server; browser `file:` restrictions can block that window.
+
+If Python is already available, run the optional command below from this
+directory, then open <http://127.0.0.1:4173/presentation/index.html>. The server
+exposes only the public worktree, so public document links work too.
+`npm run serve` is a convenience alias for the same command, not a viewing
+prerequisite:
 
 ```powershell
 python -m http.server 4173 --bind 127.0.0.1 --directory ..
@@ -176,7 +187,7 @@ Pin and display the actual live-demo executable versions. October 12 native host
 
 Update `src\evidence.json` only from approved, sanitized evidence. A source inspection is not a test pass. Local tests are not Azure deployment or policy compliance evidence; cite only approved sanitized Azure validation facts. Do not insert private scope names, account identifiers, state, credentials, raw plans, or private policy links.
 
-Keep `index.html` and `short\index.html` with the generated manifests. Internet access is not needed for slides or speaker notes. Public source links are optional reading, not runtime dependencies.
+Keep `index.html` and `short\index.html` with the generated manifests. Local HTTP needs no internet for slides or the speaker window; double-click viewing needs no server. Public source links are optional reading, not runtime dependencies.
 
 ## Check the build
 
