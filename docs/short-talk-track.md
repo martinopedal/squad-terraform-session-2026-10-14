@@ -4,11 +4,61 @@ Use rendered Markdown (GitHub/editor preview); local HTTP serves `.md` as text.
 Prompts below go to **host Copilot**, not PowerShell. Keep native permissions.
 Full narration/clocks/recovery/close: [full track](talk-track.md).
 
-**Order:** prepare → core C0-C7 → Online evidence/core wrap → optional hosted
-Squad → optional native Sandbox last. Extras never use recovery/close time.
+**Order:** prepare → core C0-C7 → Online evidence/core wrap → optional
+[native ACA Sandboxes](#native-demo) → optional [Squad on ACA](#hosted-demo), the
+very last section. Extras never use recovery/close time.
 **Agent swaps:** use `/agent NAME` in the same Copilot TUI; do not start another
 CLI just to change agents. `/new` creates a fresh conversation where specified.
 Plan mode is separate from agent selection.
+
+<a id="evidence-links"></a>
+
+## Evidence links - open these
+
+Verified 2026-10-13 (links open in rendered preview). Presenter: open the row, say the
+"proves" column, never more.
+
+| Evidence | What it proves (and does not) | Date (UTC) | Link |
+| --- | --- | --- | --- |
+| **AKS cluster + website deploy, primary** | "Deploy Online" run: Terraform plan, kubectl deploy of the demo app, step "Prove the app is reachable over HTTPS only" all green. Terraform Apply was skipped (the cluster already existed), so this run is deploy-and-prove, not first creation | 2026-10-09 13:39 | [run 37938422464](https://github.com/martinopedal/aks-automatic-demo-env/actions/runs/37938422464) |
+| AKS deploy history (same workflow, same steps green) | Five more successful runs, newest first | 2026-10-08 to 10-09 | [37926600486](https://github.com/martinopedal/aks-automatic-demo-env/actions/runs/37926600486), [37925167869](https://github.com/martinopedal/aks-automatic-demo-env/actions/runs/37925167869), [37923904591](https://github.com/martinopedal/aks-automatic-demo-env/actions/runs/37923904591), [37905403525](https://github.com/martinopedal/aks-automatic-demo-env/actions/runs/37905403525), [37772290635](https://github.com/martinopedal/aks-automatic-demo-env/actions/runs/37772290635) |
+| Workflow and source | [Deploy Online workflow page](https://github.com/martinopedal/aks-automatic-demo-env/actions/workflows/deploy-online.yml), [workflow file](https://github.com/martinopedal/aks-automatic-demo-env/blob/main/.github/workflows/deploy-online.yml), [deployments/online/main.tf](https://github.com/martinopedal/aks-automatic-demo-env/blob/main/deployments/online/main.tf) (consumes the AKS Automatic module); run logs do not print the SKU, so no SKU claim from runs | - | links in row |
+| **Live website** | HTTP 200 on 2026-10-13; known certificate warning, so show the branded page, not trusted TLS | 2026-10-13 | [aks-online-demo.swedencentral.cloudapp.azure.com](https://aks-online-demo.swedencentral.cloudapp.azure.com/) |
+| Native ACA Sandboxes, read-only qualification | Workflow "ACA Sandboxes Online - source and read-only native qualification" succeeded twice. It proves read-only qualification of the separate Online sandbox group, **not** a guest run or a website; [open PR #20](https://github.com/martinopedal/aks-automatic-demo-env/pull/20) | 2026-10-12 15:22 / 11:26 | [run 38269775990](https://github.com/martinopedal/aks-automatic-demo-env/actions/runs/38269775990), [run 38242636237](https://github.com/martinopedal/aks-automatic-demo-env/actions/runs/38242636237) |
+| Squad on ACA image qualify/publish (**private, needs org access**) | `alz-avm-tf-demo/alz-prod` "Squad on ACA Image Build" job succeeded. Image path only: not an issue → agent → PR run | 2026-10-13 15:29 | [run 38422445270](https://github.com/alz-avm-tf-demo/alz-prod/actions/runs/38422445270) |
+| Squad on ACA source and secrets runs (**private, needs org access**) | Earlier green runs: "Corp Squad source and private gated delivery" (source checks) and "Squad on ACA Secrets" (Key Vault upload). Setup history, not an end-to-end run | 2026-10-09 / 10-13 | [37920348866](https://github.com/alz-avm-tf-demo/alz-prod/actions/runs/37920348866), [38343284044](https://github.com/alz-avm-tf-demo/alz-prod/actions/runs/38343284044) |
+
+**Honest gap:** no fresh, verified Squad-on-ACA issue → agent → bot PR run exists today;
+the Oct 9 agent-job executions are historical. Do not present one as current.
+
+### Named instances (read with `az graph query`, 2026-10-13)
+
+Subscription names are `ME-MngEnvMCAP464621-martinopedal-N`.
+
+| Service | Resource (type) | Resource group | Region | Subscription (name, ID) |
+| --- | --- | --- | --- | --- |
+| AKS Automatic demo (public) | `aks-online-demo` (managed cluster) | `rg-aks-online-demo` | swedencentral | -5, `714ac8e0-8874-428d-a4f3-79bd3765bfed` |
+| AKS Corp (private) | `aks-corp-automatic-swc` (managed cluster) | `rg-corp-aks-automatic-swc` | swedencentral | -6, `9d5a5ae2-a09a-4691-9d2b-52a700bb07a7` |
+| Squad on ACA | Container Apps environment `cae-squad-aca-corp-ne` | `rg-squad-aca-corp-swc` | norwayeast | -6, `9d5a5ae2-a09a-4691-9d2b-52a700bb07a7` |
+| Squad on ACA | Jobs `caj-squad-aca-agent-corp-ne`, `caj-squad-aca-runner-target`, `caj-squad-aca-runner-alz-prod`, `caj-squad-aca-kaniko-build`, `caj-squad-aca-kv-probe` (no Container Apps, Jobs only) | `rg-squad-aca-corp-swc` | norwayeast | -6, `9d5a5ae2-a09a-4691-9d2b-52a700bb07a7` |
+| Squad on ACA | ACR `crsquadacaazthp0` | `rg-squad-aca-corp-swc` | swedencentral | -6, `9d5a5ae2-a09a-4691-9d2b-52a700bb07a7` |
+| ACA Sandboxes, Online (native demo group) | SandboxGroup `sbg-squad-nic2026-online-swc-001` | `rg-aca-sandboxes-online-swc-001` | swedencentral | -5, `714ac8e0-8874-428d-a4f3-79bd3765bfed` |
+| ACA Sandboxes, Corp | SandboxGroup `sbg-squad-nic2026-corp-swc-001` (with `id-aca-sandboxes-corp-swc-001`) | `rg-aca-sandboxes-corp-swc-001` | swedencentral | -6, `9d5a5ae2-a09a-4691-9d2b-52a700bb07a7` |
+| ACA Sandboxes, Corp Norway | SandboxGroup `sbg-squad-nic2026-corp-ne-002` | `rg-aca-sandboxes-corp-ne-002` | norwayeast | -1, `7ebcc54a-6228-410d-acec-9efffa9ed693` |
+
+**Sandbox IDs:** none exist now. `aca sandbox list` returns an empty list for the Online and Corp-Norway groups (the operator creates exactly one guest in the off-stage prepare step); the Corp Sweden group list is 403 for this operator. Bind the new ID only in `operator-targets.json`.
+
+## Agent cheat-sheet
+
+| Agent | Used in | Switch (TUI) |
+| --- | --- | --- |
+| `squad` | Prepare, Essentials, C0-C2, C4, C6, close of C7, extras | Shell: `copilot --agent squad` (add `--plan` for C1/C2); in TUI `/agent squad` |
+| `terraform-coder` | C3 test, C5 mutation and restore (the only writer) | `/agent terraform-coder` |
+| `terraform-validator` | C5 before/seeded-failure/repaired, C7 checks (runs, never edits) | `/agent terraform-validator` |
+| `terraform-reviewer` | C4 Learn lookup, C7 independent review (read-only, fresh `/new`) | `/agent terraform-reviewer` |
+
+Slash commands go in the Copilot **TUI**; `Set-Location`/`copilot` go in the **Shell**.
+Every step below names agent, surface, expected result and **STOP**.
 **Who drives:** Haflidi runs C0. Who types and speaks in C1-C7 is decided
 between the two speakers and may swap between chapters (decided live, after rehearsal).
 
@@ -229,7 +279,7 @@ Show skill invocation, source URL/version and narrow permission.
 
 ## C5 - before, deliberate failure, repair
 
-The validator has no edit tool: it checks, the coder makes the one lab change. Follow the steps in order; the PowerShell block at the end of this section is what the validator runs each time.
+**TUI, guided CLI:** the validator has no edit tool: it checks, the coder makes the one lab change. Follow the steps in order; the PowerShell block at the end of this section is what the validator runs each time.
 
 1. **Agent:** `/agent terraform-validator`. **Do:** paste:
 
@@ -401,6 +451,7 @@ verified consumer HEAD `dbb7e4c6f19a6c8fcd31ca61085e449d1a9fd87c`, recheck on VM
 **Browser:** `https://aks-online-demo.swedencentral.cloudapp.azure.com/`
 (known certificate warning); show branded page, not renewed health/trusted TLS.
 **STOP:** unavailable page = dated screenshot, no repair; [full core wrap](talk-track.md).
+**Evidence:** open [AKS deploy runs and live website](#evidence-links) here (agent: Squad, surface: TUI for the paste, browser for the page).
 
 ## Workstation preparation map - not VM stage commands
 
@@ -412,24 +463,23 @@ Native consumer source: `demo-env\deployments\aca-sandboxes-online`.
 
 ## Optional extras - only after the complete core flow
 
-Both flows are optional after core wrap; hosted comes first, native last. Before either, the operator privately prepares `C:\demo\operator-targets.json` with current bindings, URLs, guest ID and GO for the selected flow. Include no credentials. Never commit or display it; each prompt rereads it because shell variables do not persist.
-
-<a id="hosted-demo"></a>
-
-## Hosted Squad on ACA Apps/Jobs - optional final tail, first
-
-**Host Squad prompt, only after fresh hosted GO and one-attempt human approval:**
-
-```text
-Host Squad: read C:\demo\operator-targets.json privately; never print it. Require hosted.go=true, hosted.repo, hosted.issue, hosted.issueUrl, hosted.pollerUrl and hosted.workerUrl; missing/stale data means STOP. Reread/rebind on every shell/tool call. Read the existing issue with `gh issue view` using hosted.issue and hosted.repo. Verify the approved README-only request from docs/prompt-pack.md#original-hosted-squad-issue-to-pr-work and no prior queue/attempt/result. Only after one-attempt GO, add `squad:ripley` once; no new issue, manual dispatch, Job start, auth mint or retry. Open the exact file-bound URLs. Match the poller receipt's message ID + issue + repository + agent to the actual ACA Job/worker and its App-bot PR; require only README.md changed. Hand off for independent review; do not merge/deploy. Manual status is not enqueue proof.
-```
-
-**Show:** file-bound URLs; issue → actual queued ACA Job → matching bot PR/README diff. **STOP:** missing GO, old attempt, incomplete correlation, non-README change, error stub or no time; no retry.
-[README-only issue brief](prompt-pack.md#original-hosted-squad-issue-to-pr-work); [full hosted procedure](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr).
+Both flows are optional after core wrap; native Sandboxes come first, Squad on ACA is the very last section. Before either, the operator privately prepares `C:\demo\operator-targets.json` with current bindings, URLs, guest ID and GO for the selected flow. Include no credentials. Never commit or display it; each prompt rereads it because shell variables do not persist.
+Evidence rows for both: [Evidence links](#evidence-links).
 
 <a id="native-demo"></a>
 
-## Native ACA Sandboxes - optional final tail, dead last
+## Native ACA Sandboxes - optional tail (Squad sandboxes), native first
+
+**Prerequisites checklist (off-stage, tick all or SKIP):**
+- [ ] `aca` CLI **1.0.0-preview.4** installed (`aca --version`); Azure CLI signed in by the human.
+- [ ] `C:\demo\operator-targets.json` has `native.subscription`, `native.resourceGroup`, `native.group`, `native.region`, `native.prepareOneGuest` (prepare) and `native.go` + `native.sandboxId` (stage). No credentials in it; never printed.
+- [ ] Exact sandbox group exists in that resource group and region; current list is empty before prepare.
+- [ ] Explicit permission for one guest and fixture staging; independent stage GO obtained.
+
+**Part 1 - off-stage prepare (agent: `squad`, surface: Copilot TUI in the host repo)**
+
+1. **Presenter does:** `/agent squad`; paste the prepare prompt below after the human grants one-guest permission.
+   **Expect:** one guest created, 684-byte fixture written, SHA-256 verified, new ID/hash saved privately. **STOP:** help cannot express every property, group not empty, or any mismatch. No second create.
 
 **Off-stage prepare prompt, only after explicit permission for one guest and fixture staging:**
 
@@ -437,11 +487,49 @@ Host Squad: read C:\demo\operator-targets.json privately; never print it. Requir
 Host Squad: read C:\demo\operator-targets.json privately. Require native.prepareOneGuest=true, exact native.subscription/resourceGroup/group/region, and no current native.sandboxId; else STOP. Use installed aca 1.0.0-preview.4 help. Verify exact group and empty current list; explicitly bind --subscription, --resource-group, --region and command-specific --group (not diagnostic --sandbox-group) from native.* on every target command. Inspect `aca sandbox create --help`; run exactly one `aca sandbox create` for an Ubuntu guest with 1000m CPU, 2048Mi, Deny/Full egress, no ports/credentials and 300-second auto-suspend. If help/schema cannot express and verify all properties, STOP before create. Capture its UUID even if `-o json` prints text; never create again to fix parsing. Verify target/config; `aca sandbox fs write` canonical 684-byte LF docs/fixtures/native-validation.sh to /root/native-validation.sh; read `.content` and verify SHA-256 75d8fc0f08005317bbdc21c8de9ad43f3b7e06736e419014e7cf8678b9cab2a5. Save only the new ID/hash privately. No group/role/install/network changes.
 ```
 
-**On-stage host Squad prompt, after human stage GO:** use `/agent squad` in the host repo; never run the fixture on the host or install/sign in inside the guest.
+**Part 2 - on-stage (agent: `squad`, then `terraform-validator`, then `terraform-reviewer`; surface: Copilot TUI)**
+
+1. **Presenter does:** after human stage GO, `/agent squad` in the host repo; paste the on-stage prompt below. Never run the fixture on the host or install/sign in inside the guest.
+   **Say:** "A hardware-isolated sandbox, driven from my host Copilot; the host never runs the fixture."
+   **Show:** actual aca output: exact-ID get, one `sh /root/native-validation.sh`, decoded `native-result.json`.
+2. **Presenter does:** wait for the single `https://example.com/` denial probe and the current timestamped audit (up to 10 seconds).
+   **Say:** "One request is denied, and the audit shows it."
+   **Show:** guest JSON (schema `native-squad-validation-v1`, three true checks, matching SHA, exit 0), denied request, current audit. HTTP 403 alone, an immediate empty audit or a post-delete 404 is not proof.
+3. **Presenter does:** `/agent terraform-validator` with the real output/exits, then `/new` and `/agent terraform-reviewer` for the independent handoff.
+   **Expect:** reviewer cites actual outputs. **STOP:** missing GO/ID, mismatch, failed check/audit or no time.
+
+**What the audience sees:** guest JSON/hash, one denied request and its audit line; no guest URL or preview exists. Open authenticated [sandbox-group discovery](https://containerapps.azure.com/sandbox-groups) or [regional management](https://management.swedencentral.azuredevcompute.io); neither is a guest website.
+
+**On-stage host Squad prompt, after human stage GO:**
 
 ```text
 Host Squad: read C:\demo\operator-targets.json privately; require native.go=true, current native.sandboxId and exact native.subscription/resourceGroup/group/region, else STOP. Reread/rebind --subscription, --resource-group, --region and command-specific --group from native.* for every tool call. Invoke aca-sandboxes; exact-ID get, then execute `sh /root/native-validation.sh` once and fs cat /root/native-result.json, decoding `.content`. Require schema native-squad-validation-v1, three true checks, matching source/result SHA and actual exit 0. Use the linked runbook's single `https://example.com/` denial/audit probe with this ID; read the current timestamped audit before cleanup, allowing up to 10 seconds. HTTP 403 alone, immediate empty audit or post-delete 404 is not proof. Return real output/exits for `/agent terraform-validator`, then `/new` + `/agent terraform-reviewer` independent handoff. No issue/queue, guest agents, create/upload/install, auth/egress changes or retry.
 ```
 
-**Show:** guest JSON/hash, one denied request/current audit; no guest URL or preview exists. Open authenticated [sandbox-group discovery](https://containerapps.azure.com/sandbox-groups) or [regional management](https://management.swedencentral.azuredevcompute.io); neither is a guest website. **STOP:** missing GO/ID, mismatch, failed check/audit or no time; use accepted evidence or skip.
+**If it fails (exact fallback):** do not retry or create another guest. Say it is optional, open the dated read-only qualification [run 38269775990](https://github.com/martinopedal/aks-automatic-demo-env/actions/runs/38269775990) from [Evidence links](#evidence-links), state it proves read-only qualification only, and move on or skip.
 [Full native operations and audit](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad).
+
+<a id="hosted-demo"></a>
+
+## Squad on ACA (hosted Apps/Jobs) - optional tail, the very last section
+
+**Prerequisites checklist (off-stage, tick all or SKIP):**
+- [ ] `C:\demo\operator-targets.json` has all `hosted.*` fields (go, repo, issue, issueUrl, pollerUrl, workerUrl); fresh GO, no prior queue/attempt/result on the issue.
+- [ ] Existing approved README-only issue ([brief](prompt-pack.md#original-hosted-squad-issue-to-pr-work)); `gh` signed in by the human with access to the target repo.
+- [ ] One-attempt human approval given. Private evidence needs org access: [Evidence links](#evidence-links).
+
+1. **Presenter does:** `/agent squad` (TUI); paste the prompt below after fresh hosted GO and one-attempt approval.
+   **Say:** "An issue label queues a hosted Job; the agent answers with a bot PR."
+   **Show:** file-bound URLs, issue, actual queued ACA Job, matching bot PR/README diff.
+   **Expect:** the poller receipt, the actual Job/worker and the App-bot PR all match on one message, issue, repository and agent; only README.md changed.
+2. **Presenter does:** hand off for independent review (`/new`, `/agent terraform-reviewer`); do not merge/deploy.
+   **If it fails:** **STOP:** missing GO, old attempt, incomplete correlation, non-README change, error stub or no time; no retry. Fallback: open the private image-build [run 38422445270](https://github.com/alz-avm-tf-demo/alz-prod/actions/runs/38422445270) (needs org access; image path only) or skip; no fresh issue → PR run is verified today.
+
+**Host Squad prompt, only after fresh hosted GO and one-attempt human approval:**
+
+```text
+Host Squad: read C:\demo\operator-targets.json privately; never print it. Require hosted.go=true, hosted.repo, hosted.issue, hosted.issueUrl, hosted.pollerUrl and hosted.workerUrl; missing/stale data means STOP. Reread/rebind on every shell/tool call. Read the existing issue with `gh issue view` using hosted.issue and hosted.repo. Verify the approved README-only request from docs/prompt-pack.md#original-hosted-squad-issue-to-pr-work and no prior queue/attempt/result. Only after one-attempt GO, add `squad:ripley` once; no new issue, manual dispatch, Job start, auth mint or retry. Open the exact file-bound URLs. Match the poller receipt's message ID + issue + repository + agent to the actual ACA Job/worker and its App-bot PR; require only README.md changed. Hand off for independent review; do not merge/deploy. Manual status is not enqueue proof.
+```
+
+[README-only issue brief](prompt-pack.md#original-hosted-squad-issue-to-pr-work); [full hosted procedure](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr).
+
