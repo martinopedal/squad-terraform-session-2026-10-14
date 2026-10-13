@@ -95,7 +95,7 @@ function assertShortTrackLocalPaths(text) {
   assert.match(section('C1'), /preparation verified both roots at the same checkpoint/);
   assert.match(section('C2'), /after guided preparation passes/);
   assert.match(section('Squad on ACA'), /C:\\demo\\operator-targets\.json/);
-  assert.match(section('Squad on ACA'), /hosted\.issueUrl[\s\S]*hosted\.pollerUrl[\s\S]*hosted\.workerUrl/);
+  assert.match(section('Squad on ACA'), /hosted\.issueUrl[\s\S]*hosted\.workflowUrl[\s\S]*hosted\.workerUrl/);
   assert.match(section('Native'), /native\.sandboxId/);
   for (let chapter = 0; chapter < 8; chapter++) {
     const cue = section(`C${chapter}`);
@@ -156,7 +156,8 @@ function assertPromptFirstTrack(text) {
   assert.match(text, /Never commit or display it/);
   assert.doesNotMatch(`${hosted}\n${native}`, /\$targetRepo|\$demoIssue|\$sandboxId|\$nativeTarget/);
   for (const field of ['hosted.go', 'hosted.repo', 'hosted.issue', 'hosted.issueUrl',
-    'hosted.pollerUrl', 'hosted.workerUrl']) assert.ok(hosted.includes(field), `private hosted binding: ${field}`);
+    'hosted.workflowUrl', 'hosted.workerUrl']) assert.ok(hosted.includes(field), `private hosted binding: ${field}`);
+  assert.doesNotMatch(hosted, /hosted\.pollerUrl/);
   assert.match(hosted, /hosted\.go=true/);
   assert.match(hosted, /Reread\/rebind on every shell\/tool call/);
   assert.ok((hosted.match(/\*\*STOP:/g) ?? []).length >= 1);
@@ -164,7 +165,7 @@ function assertPromptFirstTrack(text) {
   assert.match(hosted, /squad:ripley` once/);
   assert.match(hosted, /message ID \+ issue \+ repository \+ agent/);
   assert.match(hosted, /actual ACA Job\/worker/);
-  assert.match(hosted, /Manual status is not enqueue proof/);
+  assert.match(hosted, /status-only run is not enqueue proof/);
   assert.match(hosted, /do not merge\/deploy/);
   assert.ok((native.match(/\*\*STOP:/g) ?? []).length >= 1);
   assert.match(prepare, /native\.prepareOneGuest=true/);
@@ -264,7 +265,7 @@ function assertRunningRecipes(text) {
   }
   assert.match(hosted, /existing approved issue/);
   assert.match(hosted, /--add-label squad:ripley/);
-  assert.match(hosted, /five-minute UTC schedule/);
+  assert.match(hosted, /Squad Issue Queue[\s\S]*issues: labeled/);
   assert.match(hosted, /squad-work-queue/);
   assert.match(hosted, /Container App Jobs[\s\S]*Executions/);
   assert.match(hosted, /--head "squad\/ripley\/issue-\$demoIssue"/);
