@@ -39,6 +39,61 @@ const documentPaths = [
 ];
 const documentText = path => readFileSync(new URL(`../../${path}`, import.meta.url), 'utf8');
 
+function assertShortTrackLocalPaths(text) {
+  const localRoot = String.raw`C:\git\squad-terraform-session-2026-10-14`;
+  const section = heading => text.split(`## ${heading}`)[1]?.split('\n## ')[0] ?? '';
+  for (const folder of ['public', 'demo-env', 'module-public', 'aca-sandboxes']) {
+    assert.ok(text.includes(`\`${localRoot}\\${folder}\``), `${folder} has a dated existing local path`);
+  }
+  assert.match(text, /verified October 13, 2026.*not the separately qualified C0 clean VM/);
+  assert.match(text, /canonical Corp module, read-only.*not the upstream Automatic module/);
+  assert.match(text, /Session checkpoint directory.*not an independent native consumer clone or a private target/);
+  assert.match(text, /Native consumer source belongs in `demo-env\\deployments\\aca-sandboxes-online`/);
+  assert.doesNotMatch(text, /C:\\demo\\(?:session-repo|aks-automatic-demo-env|hosted-target)/);
+  for (const heading of ['Essentials', 'Optional final extras']) {
+    assert.ok(section(heading).includes(`Set-Location '${localRoot}\\public'`), `${heading} navigates the existing public clone`);
+  }
+  assert.ok(section('Technical evidence / core wrap').includes(`Set-Location '${localRoot}\\demo-env'`));
+  assert.match(section('Technical evidence / core wrap'), /Get-Content \.\\manifests\\online\\ingress-controller\.yaml, \.\\manifests\\online\\ingress\.yaml, \.\\manifests\\online\\service\.yaml/);
+  assert.match(section('C0'), /creates a \*\*new\*\* upstream Automatic clone/);
+  assert.match(section('C0'), /git clone https:\/\/github\.com\/martinopedal\/terraform-azapi-aks-automatic\.git \$HOME\\demo\\aks-module/);
+  assert.match(section('C1'), /Required setup, paths not yet verified here/);
+  assert.match(section('C1'), /same starting commit and clean status/);
+  assert.match(section('C2'), /Required setup, guided path not yet verified here/);
+  assert.match(section('C2'), /confirm `\/cwd` and the shell's actual directory before each whole `!` block/);
+  assert.match(section('Optional final extras'), /Resolve before paste.*no existing hosted-target clone path is verified here/);
+  assert.match(section('Optional final extras'), /Set-Location '<approved-existing-hosted-target-clone>'/);
+  assert.match(section('Optional final extras'), /Unbound template is not runnable/);
+  assert.match(section('Optional final extras'), /replace every private native target alias in this block/);
+}
+
+test('short monitor track distinguishes verified local roots from clean and unresolved checkpoints', () => {
+  assertShortTrackLocalPaths(documentText('docs/short-talk-track.md'));
+});
+
+test('short monitor local-path contract rejects fake roots and unqualified checkpoints', () => {
+  const text = documentText('docs/short-talk-track.md');
+  const publicLocation = String.raw`Set-Location 'C:\git\squad-terraform-session-2026-10-14\public'`;
+  const consumerLocation = String.raw`Set-Location 'C:\git\squad-terraform-session-2026-10-14\demo-env'`;
+  const mutations = [
+    ['fake session location', text.replace(publicLocation, String.raw`Set-Location C:\demo\session-repo`)],
+    ['fake consumer location', text.replace(consumerLocation, String.raw`Set-Location C:\demo\aks-automatic-demo-env`)],
+    ['fake hosted location', text.replace("Set-Location '<approved-existing-hosted-target-clone>'", String.raw`Set-Location C:\demo\hosted-target`)],
+    ['wrong existing consumer root', text.replace(consumerLocation, publicLocation)],
+    ['preparation host labeled clean', text.replace('not the separately qualified C0 clean VM', 'the qualified C0 clean VM')],
+    ['silent A/B checkpoint', text.replace('Required setup, paths not yet verified here', 'Prepared A/B paths')],
+    ['silent guided checkpoint', text.replace('Required setup, guided path not yet verified here', 'Prepared guided path')],
+    ['checkpoint mislabeled consumer', text.replace('not an independent native consumer clone or a private target', 'the native consumer clone')],
+    ['missing hosted resolve label', text.replace('Resolve before paste:** no existing hosted-target clone path is verified here', 'Existing hosted-target clone')],
+    ['missing native resolve label', text.replace('replace every private native target alias in this block', 'use these native target aliases')],
+    ['C0 upstream confused with Corp', text.replace('git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git', 'git clone https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp.git')]
+  ];
+  for (const [name, mutant] of mutations) {
+    assert.notEqual(mutant, text, `${name} must change the actual short track`);
+    assert.throws(() => assertShortTrackLocalPaths(mutant), { name: 'AssertionError' }, name);
+  }
+});
+
 test('each live demo slide renders a command block and expected result', () => {
   assert.equal(demoSlides.length, 8);
   for (const slide of demoSlides) {

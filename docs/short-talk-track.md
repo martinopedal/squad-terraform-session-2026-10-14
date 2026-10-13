@@ -1,12 +1,24 @@
 # Short talk track - monitor cues and commands
 **Order:** essentials -> C0-C7 walkthrough -> technical evidence -> core wrap -> optional cloud tail.
 **Clock:** 55 main / 3 protected recovery / 2 close. Cuts win; one attempt, then dated fallback.
-**Context:** PowerShell 7; `C:\demo\session-repo` = public clone/checkpoint; `C:\demo\aks-automatic-demo-env` = pre-staged public consumer.
+**Context:** PowerShell 7. Existing local paths verified October 13, 2026 on the current preparation/rehearsal machine, **not the separately qualified C0 clean VM**:
+
+| Existing local path | Source / boundary |
+| --- | --- |
+| `C:\git\squad-terraform-session-2026-10-14\public` | `martinopedal/squad-terraform-session-2026-10-14`: session deck and copied Corp teaching module/C1-C7; not a live deployment root. |
+| `C:\git\squad-terraform-session-2026-10-14\demo-env` | `martinopedal/aks-automatic-demo-env`: live consumer source, including public ingress manifests; source navigation is not deployment consent. |
+| `C:\git\squad-terraform-session-2026-10-14\module-public` | `alz-avm-tf-demo/terraform-azapi-aks-automatic-corp`: canonical Corp module, read-only for this walkthrough; not the upstream Automatic module. |
+| `C:\git\squad-terraform-session-2026-10-14\aca-sandboxes` | Session checkpoint directory under the session repository, not an independent native consumer clone or a private target. Native consumer source belongs in `demo-env\deployments\aca-sandboxes-online`. |
+
+These paths establish existing directories/source ownership, not clean checkpoints, runtime access or rehearsal GO. The upstream Automatic module is `martinopedal/terraform-azapi-aks-automatic`; C0 creates its new clone on the clean host below. [Repository ownership](repositories.md).
 `!` = whole shell block, same CLI window; variables do not survive turns. Slash actions = TUI; other text = human prompt; no private root/evidence.
 No secrets/state, blanket approval, provider/lock upgrades, live plan/apply/import/state removal.
 ## Essentials | Martin says: artifact • owner • reason • evidence • human stop
+Navigation/read-only orientation in the existing public clone, not permission to use it as a clean C1/C2 write checkpoint:
 ```powershell
-Set-Location C:\demo\session-repo
+Set-Location 'C:\git\squad-terraform-session-2026-10-14\public'
+git rev-parse --show-toplevel
+git log -1 --oneline
 git status --short
 git --version; copilot --version; squad --version
 copilot --agent squad
@@ -26,7 +38,7 @@ $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [En
 git --version; copilot --version; squad --version
 copilot
 ```
-TUI `/login`, `/exit`; then shell:
+TUI `/login`, `/exit`; then shell. This creates a **new** upstream Automatic clone at `$HOME\demo\aks-module` on that clean host; it is not an existing path on the preparation machine:
 ```powershell
 git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git $HOME\demo\aks-module
 Set-Location $HOME\demo\aks-module
@@ -38,6 +50,7 @@ Prompt: `We maintain a reusable Terraform module for AKS Automatic on azapi that
 Human confirms roster; TUI `/exit`; shell `squad doctor`. Checkpoint: actual files/diagnostics, not code correctness.
 ## C1 | Martin drives / Haflidi compares 12:30-15:30, CUT 14:45 | fixed inputs
 Return to the prepared PUBLIC session A/B worktrees, not the C0 upstream clone.
+**Required setup, paths not yet verified here:** resolve the two existing prepared A/B worktree paths before starting their CLIs. Verify each root/remote is the public session repository, disclose the same starting commit and clean status, and confirm `terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl`. The current `public` clone is inherited preparation, not silently either checkpoint. Missing qualified paths = dated fallback.
 TUI `/new`, `/agent` → Squad, `/model`, `/plan`, `/rename C1-A`; repeat `C1-B`.
 ```text
 Plan only: add alternate_network_payload to the existing module contract tests. Use pod 172.21.0.0/16, service 10.241.0.0/16, and DNS 10.241.0.10.
@@ -45,6 +58,7 @@ Assert propagation into the requested body while preserving the private API. Don
 ```
 Checkpoint: one consequence; same model/checkpoint; no retry for different prose.
 ## C2 | Martin 17:30-21:30, CUT 20:30 | plan • revise • code-only approval
+**Required setup, guided path not yet verified here:** resolve and qualify the disposable public session worktree before starting Copilot; disclose its starting commit/status and module files. Do not edit the current `public` clone or canonical `module-public` as a substitute. C2-C7 use that guided checkpoint; confirm `/cwd` and the shell's actual directory before each whole `!` block. Its `..\offline\terraform.tfrc` mirror must already be qualified per the runbook; missing checkpoint/mirror = fallback.
 Guided worktree TUI `/new`, `/rename guided-clean-run`, `/agent` → Squad, `/instructions`, `/plan`.
 ```text
 @terraform\modules\aks-automatic-corp\main.tf @terraform\modules\aks-automatic-corp\variables.tf @terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl
@@ -117,7 +131,7 @@ Ingress keywords: Azure DNS label/LB -> dedicated managed NGINX -> `/` rule -> S
 Site ConfigMap mounts page/config; namespace policy admits App Routing traffic. HTTP redirects; default self-signed TLS, no trusted cert/AGC/ALB.
 Source-only screen cue, pre-staged PUBLIC consumer clone; no login/kubeconfig/secret queries:
 ```powershell
-Set-Location C:\demo\aks-automatic-demo-env
+Set-Location 'C:\git\squad-terraform-session-2026-10-14\demo-env'
 Get-Content .\manifests\online\ingress-controller.yaml, .\manifests\online\ingress.yaml, .\manifests\online\service.yaml
 ```
 Checkpoint: exact public manifests, not runtime health. [Source trace and limits](talk-track.md#s20-consumer--5000-5300--an-online-consumer).
@@ -137,8 +151,9 @@ flowchart LR
 **1. Squad on ACA Apps/Jobs - Haflidi; currently HELD, read-only or SKIP.** Original service untouched.
 Accepted source ≠ live E2E; publisher network/TLS/DNS/Docker failure, image/auth/actual bot PR gates remain.
 Only authorized hosted-target clone, operator-resolved aliases, private screen; read-only existing-chain probe:
+**Resolve before paste:** no existing hosted-target clone path is verified here. Replace `<approved-existing-hosted-target-clone>` with its approved existing absolute path, and resolve the private target/bot aliases in this same block. Unbound template is not runnable; missing approved clone/identity = SKIP, not the public session or hosted implementation clone.
 ```powershell
-Set-Location C:\demo\hosted-target
+Set-Location '<approved-existing-hosted-target-clone>'
 $targetRepo = '<approved-private-target>'; $botApp = '<approved-bot-app>'
 gh auth status
 gh run list --repo $targetRepo --workflow squad-queue.yml --limit 3
@@ -147,8 +162,9 @@ gh pr list --repo $targetRepo --author $botApp --state open
 No new issue/label/unsafe Job/auth mint while held. Require same issue→queue→actual Job→bot PR; missing proof = SKIP.
 **2. ACA Sandboxes - Martin; own human GO or SKIP.** Host Squad/controller, native MicroVM, not Apps/Jobs or guest OAuth.
 Accepted 26.768s/85 rehashes ≠ human rehearsal. Read-only exact-target gate, only in separately approved host session:
+**Resolve before paste:** replace every private native target alias in this block through the approved private procedure. The existing public session root below is for host teaching profiles, not the native infrastructure owner or evidence of target access. Unresolved aliases/no separate GO = SKIP.
 ```powershell
-Set-Location C:\demo\session-repo
+Set-Location 'C:\git\squad-terraform-session-2026-10-14\public'
 aca --version
 $nativeTarget = @('--subscription', '<approved-online-subscription>', '--resource-group', '<approved-native-resource-group>', '--sandbox-group', '<approved-native-sandbox-group>', '--region', '<approved-native-region>')
 aca auth status @nativeTarget -o json
