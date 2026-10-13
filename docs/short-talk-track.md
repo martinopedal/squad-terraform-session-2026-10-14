@@ -4,24 +4,42 @@ Use rendered Markdown (GitHub/editor preview); local HTTP serves `.md` as text.
 Prompts below go to **host Copilot**, not PowerShell. Keep native permissions.
 Full narration/clocks/recovery/close: [full track](talk-track.md).
 
-| Flow | Entry | Work/result |
-| --- | --- | --- |
-| [Hosted Squad](#hosted-demo) | Approved GitHub issue → label once → poller/queue | Hosted ACA agent Job → matching bot PR/README diff |
-| [Native Sandbox](#native-demo) | Prompt host Squad on the VM; **no issue assignment or queue** | Host agent executes prepared MicroVM fixture → results → review |
+**Order:** prepare → core C0-C7 → Online evidence/core wrap → optional hosted
+Squad → optional native Sandbox last. Extras never use recovery/close time.
+**Agent swaps:** use `/agent NAME` in the same Copilot TUI; do not start another
+CLI just to change agents. `/new` creates a fresh conversation where specified.
+Plan mode is separate from agent selection.
 
 ## Prepare once - Squad creates paths before you use them
 
-**TUI, existing reviewed public session checkout:** start `copilot --agent squad`,
-confirm `/cwd` and selected Squad. If no public checkout exists, an operator
-first uses [public clone setup](demo-runbook.md#create-and-verify-the-agreed-vm-layout).
-Never launch from the private coordinator or a not-yet-created A/B/guided root.
-Paste:
+**Fresh VM, Git/Copilot already installed, no public checkout yet:** run this
+in PowerShell from an existing directory:
+
+```powershell
+if (Test-Path 'C:\demo\session-repo') { throw 'Checkout exists: verify it instead of cloning over it.' }
+New-Item -ItemType Directory -Path 'C:\demo' -Force | Out-Null
+git clone https://github.com/martinopedal/squad-terraform-session-2026-10-14.git 'C:\demo\session-repo'
+if ($LASTEXITCODE -ne 0) { throw 'Clone failed; stop here.' }
+Set-Location 'C:\demo\session-repo'
+copilot --agent squad
+```
+
+**Existing checkout:** verify its origin and clean status using the
+[public clone setup](demo-runbook.md#create-and-verify-the-agreed-vm-layout),
+then start Squad there. Never overwrite it or launch from the private coordinator.
+Cloning creates the repository directory. `squad init` creates team configuration
+in the current repository; it does **not** create A/B/guided/offline/evidence.
+The preparation task below creates/verifies those paths **before** any use.
+
+**TUI:** confirm `/cwd` is `C:\demo\session-repo` and Squad is selected. Paste:
 
 ```text
 Host Squad: prepare off-stage using docs/demo-runbook.md's existing VM layout,
 disposable-checkpoint and filesystem-mirror blocks, not a new helper/deployment.
 Create/verify C:\demo\session-repo and C:\demo\aks-automatic-demo-env: exact
 published origins, heads, clean status; stop/preserve dirt or mismatched paths.
+If the consumer is absent, clone https://github.com/martinopedal/aks-automatic-demo-env.git
+into C:\demo\aks-automatic-demo-env; verify success/files before entering it.
 From the public session repository use reviewed commit
 0abb202f34af385b7e0a34b1775643aa5b4871ed. Create the parent take directory and
 detached sparse Git worktrees C:\demo\checkpoints\take-20261014\A, B and guided
@@ -65,18 +83,27 @@ Show files/diagnostics, not correctness.
 
 ## C1 - compare two bounded plans
 
-**Shell/TUI:** use the [A/B entry and exact request](prompt-pack.md#c1---martin-drives-haflidi-compares-1230-1530-cut-1445)
-only after preparation verified both roots at the same checkpoint.
-Same model, native `/plan`, sessions `C1-A`/`C1-B`; show one consequence.
+**Shell, each verified A/B root:** run `copilot --agent squad --plan`.
+**TUI:** confirm `/cwd`, Squad and the **Plan** indicator; use sessions
+`C1-A`/`C1-B` and the same model. Paste the
+[exact A/B request](prompt-pack.md#c1---martin-drives-haflidi-compares-1230-1530-cut-1445);
+show one consequence.
 **STOP:** root/checkpoint/model mismatch or cut; identical plans are valid.
 
 <a id="native-plan-with-squad"></a>
 
 ## C2 - native Plan with selected Squad, then code-only approval
 
-1. **Shell/TUI:** [start guided](prompt-pack.md#c2---martin-1730-2130-cut-2030);
-   `/cwd`, `/agent` → Squad. Enter native `/plan`; verify displayed **Plan**.
-   Selecting Squad, asking “plan”, or `squad init` is not that transition.
+1. **Shell, after guided preparation passes:**
+
+   ```powershell
+   Set-Location 'C:\demo\checkpoints\take-20261014\guided'
+   copilot --agent squad --plan
+   ```
+
+   **TUI:** confirm `/cwd`, selected Squad and displayed **Plan**.
+   Already in a CLI? Use `/agent squad`, then native `/plan` instead.
+   Selecting Squad, asking “plan”, or `squad init` alone does not enter Plan.
    Paste:
 
    ```text
@@ -117,8 +144,9 @@ Not parent reload: human revision/approval/visible indicator/exit remain
 
 ## C3 - one coder, actual handoffs
 
-**TUI, guided:** `/agent squad`; paste [coordination request](prompt-pack.md#c3---martin-2200-2600-cut-2500),
-then `/agent terraform-coder`; paste **B1v2** from that same section.
+**TUI, same guided CLI, now Interactive:** keep Squad selected and paste
+[coordination request](prompt-pack.md#c3---martin-2200-2600-cut-2500).
+Then `/agent terraform-coder`; paste **B1v2** from that same section.
 Show actual starts/handoffs and one changed test/four asserts/error messages.
 **STOP:** concurrent writers, missing handoffs or cut; switching profiles is not parallel work.
 
@@ -184,6 +212,23 @@ verified consumer HEAD `dbb7e4c6f19a6c8fcd31ca61085e449d1a9fd87c`, recheck on VM
 **Browser:** `https://aks-online-demo.swedencentral.cloudapp.azure.com/`
 (known certificate warning); show branded page, not renewed health/trusted TLS.
 **STOP:** unavailable page = dated screenshot, no repair; [full core wrap](talk-track.md).
+
+## Workstation preparation map - not VM stage commands
+
+Verified `C:\git\squad-terraform-session-2026-10-14` roots:
+`public` session source; `demo-env` consumer; `module-public` canonical Corp
+module (read-only); `aca-sandboxes` session checkpoint, **not a native consumer**.
+Native consumer source: `demo-env\deployments\aca-sandboxes-online`.
+[Ownership](repositories.md). These roots prove neither VM paths nor live GO.
+
+## Optional extras - only after the complete core flow
+
+| Flow | Entry | Work/result |
+| --- | --- | --- |
+| [Hosted Squad](#hosted-demo) | Approved GitHub issue → label once → poller/queue | Hosted ACA agent Job → matching bot PR/README diff |
+| [Native Sandbox](#native-demo) | Prompt host Squad on the VM; **no issue assignment or queue** | Host agent executes prepared MicroVM fixture → results → review |
+
+Both recipes below require their own GO and genuine spare time; native is last.
 
 <a id="hosted-demo"></a>
 
@@ -259,7 +304,8 @@ No current prepared ID/guest staging/human GO established; earlier sandbox delet
 
    [Existing canonical staging/operations](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad).
 
-2. **TUI, after human GO:** confirm `/cwd`, `/agent` → Squad; paste:
+2. **TUI, after human GO:** confirm `/cwd`, use `/agent squad` in
+   **Interactive** mode (not Plan); paste:
 
    ```text
    Invoke aca-sandboxes: host Squad/worker, not guest agents. Use captured
@@ -302,11 +348,3 @@ No current prepared ID/guest staging/human GO established; earlier sandbox delet
 
 **STOP:** missing current ID/staging/GO, mismatched target/hash/result/audit/error or
 no spare time = accepted dated trace/SKIP; owned cleanup off-stage only.
-
-## Workstation preparation map - not VM stage commands
-
-Verified `C:\git\squad-terraform-session-2026-10-14` roots:
-`public` session source; `demo-env` consumer; `module-public` canonical Corp
-module (read-only); `aca-sandboxes` session checkpoint, **not a native consumer**.
-Native consumer source: `demo-env\deployments\aca-sandboxes-online`.
-[Ownership](repositories.md). These roots prove neither VM paths nor live GO.
