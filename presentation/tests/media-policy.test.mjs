@@ -34,7 +34,7 @@ const documentPaths = [
   'README.md', 'handoff.md', 'haflidi-overview.html', 'presentation/README.md',
   ...['aca-sandboxes', 'bootstrap', 'demo-runbook', 'feature-guide', 'online-demo', 'overview', 'playbook',
     'prompt-pack', 'repositories', 'run-plan', 'sandboxing', 'security-case', 'sessionize',
-    'source-provenance', 'talk-track', 'talking-points', 'whats-new']
+    'source-provenance', 'talk-track', 'short-talk-track', 'talking-points', 'whats-new']
     .map(name => `docs/${name}.md`)
 ];
 const documentText = path => readFileSync(new URL(`../../${path}`, import.meta.url), 'utf8');
@@ -64,18 +64,28 @@ test('each live demo slide has presenter notes with an offline fallback', () => 
   }
 });
 
-test('C4 source and generated notes retain the conditional selected-target gate and unchanged cut', () => {
+test('C4 stays base only and the final appendix retains selected-target gates', () => {
   const notes = applyNoteFactOverrides('demo-c4', '');
   const generated = documentText('presentation/index.html')
     .match(/<section\b[^>]*id="demo-c4"[^>]*>([\s\S]*?)<\/section>/)?.[1];
   assert.ok(generated, 'generated deck must contain the actual C4 section');
   for (const [name, artifact] of [['source notes', notes], ['generated C4', generated]]) {
     for (const pattern of [
+      /base skill\/MCP/, /final optional appendix/, /Cut at 32:30 \(75%\)/,
+      /no second live attempt/, /55:00-58:00 protected slack/
+    ]) assert.match(artifact, pattern, `${name} retains ${pattern}`);
+    assert.doesNotMatch(artifact, /aca sandbox exec|Conditional ACA SANDBOXES variant|one bounded ACA prompt/);
+  }
+  const tail = applyNoteFactOverrides('a-use-cases', '');
+  const emittedTail = documentText('presentation/index.html')
+    .match(/<section\b[^>]*id="a-use-cases"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+  for (const [name, artifact] of [['final source notes', tail], ['generated final appendix', emittedTail]]) {
+    for (const pattern of [
       /independently approved selected-target IaC/, /effective-policy read-back/, /all checks PASS/,
       /actual authentication verified manually/, /prepared sandbox/,
       /Preliminary planning approval is not deployment or qualification/,
-      /29:30-30:00/, /30:00-32:00/, /32:00-32:30/, /32:30-33:30/,
-      /Cut at 32:30 \(75%\)/, /no second live attempt/,
+      /after C0-C7, technical explanation and core wrap/, /cut before 55:00/,
+      /no second live attempt/,
       /Do not retry or spend 55:00-58:00 protected slack/,
       /Management-side execution evidence, not Corp validation/,
       /10 root negative-validation checks, not 52 child-module plus two caller cases/,
@@ -207,9 +217,7 @@ test('sandbox guides and presenter notes distinguish all four execution hosts an
   for (const [name, text] of [
     ['sandbox guide', documentText('docs/sandboxing.md')],
     ['ACA guide', documentText('docs/aca-sandboxes.md')],
-    ['setup notes', applyNoteFactOverrides('s07-agent-setup', '')],
-    ['C4 notes', applyNoteFactOverrides('demo-c4', '')],
-    ['handoff appendix notes', applyNoteFactOverrides('a-handoffs', '')]
+    ['final optional appendix notes', applyNoteFactOverrides('a-use-cases', '')]
   ]) {
     for (const pattern of [
       /OS\/MXC/, /GitHub-managed Copilot cloud sandboxes/,
@@ -227,7 +235,7 @@ test('documented cloud preview is not claimed available in local 1.0.94 help', (
   for (const [name, text] of [
     ['sandbox guide', documentText('docs/sandboxing.md')],
     ['feature guide', documentText('docs/feature-guide.md')],
-    ['setup notes', applyNoteFactOverrides('s07-agent-setup', '')]
+    ['final optional appendix notes', applyNoteFactOverrides('a-use-cases', '')]
   ]) {
     for (const pattern of [
       /1\.0\.94/, /does not expose|Neither.*(?:exposes|exposed)/, /--cloud/,
@@ -251,7 +259,7 @@ test('documented cloud preview is not claimed available in local 1.0.94 help', (
     /not a hard active timeout or credential revocation/,
     /saved base autoSuspend interval was 600 seconds/
   ]) assert.match(guide, pattern);
-  for (const text of [guide, documentText('docs/feature-guide.md'), applyNoteFactOverrides('s07-agent-setup', '')]) {
+  for (const text of [guide, documentText('docs/feature-guide.md'), applyNoteFactOverrides('a-use-cases', '')]) {
     for (const pattern of [
       /copilot help sandbox/, /one-session/, /--sandbox/, /backend\/session preflight/,
       /26300/, /OS metadata, not successful.*backend operation/
@@ -263,9 +271,9 @@ test('blocked Corp qualification and intended in-VM Squad variant stay explicitl
   for (const [name, text] of [
     ['ACA guide', documentText('docs/aca-sandboxes.md')],
     ['run plan', documentText('docs/run-plan.md')],
-    ['C4 notes', applyNoteFactOverrides('demo-c4', '')],
-    ['generated C4', documentText('presentation/index.html')
-      .match(/<section\b[^>]*id="demo-c4"[^>]*>([\s\S]*?)<\/section>/)?.[1] ?? '']
+    ['final optional appendix notes', applyNoteFactOverrides('a-use-cases', '')],
+    ['generated final appendix', documentText('presentation/index.html')
+      .match(/<section\b[^>]*id="a-use-cases"[^>]*>([\s\S]*?)<\/section>/)?.[1] ?? '']
   ]) {
     for (const pattern of [
       /qualification blocked|blocked on an unexpected change-type check/i,
@@ -282,7 +290,7 @@ test('blocked Corp qualification and intended in-VM Squad variant stay explicitl
   for (const [name, text] of [
     ['sandbox guide', documentText('docs/sandboxing.md')],
     ['ACA guide', documentText('docs/aca-sandboxes.md')],
-    ['C4 notes', applyNoteFactOverrides('demo-c4', '')]
+    ['final optional appendix notes', applyNoteFactOverrides('a-use-cases', '')]
   ]) {
     assert.match(text, /intended in-MicroVM installation\/execution variant/,
       `${name} keeps the requested potential variant`);
@@ -295,7 +303,7 @@ test('hosted Jobs notes keep current placement separate from historical runs and
   const texts = [
     ...['docs/run-plan.md', 'docs/talk-track.md', 'docs/talking-points.md', 'haflidi-overview.html']
       .map(path => [path, documentText(path)]),
-    ['consumer notes', applyNoteFactOverrides('s20-consumer', '')]
+    ['final optional appendix notes', applyNoteFactOverrides('a-use-cases', '')]
   ];
   for (const [name, text] of texts) {
     for (const pattern of [
@@ -305,7 +313,7 @@ test('hosted Jobs notes keep current placement separate from historical runs and
       /fresh queue-driven readiness is not established/i,
       /README-only/, /Manual runner execution ended terminal Failed/,
       /associated issue queue workflow remains queued/,
-      /53:00-54:30/, /55:00-58:00/, /Management-side MicroVM/,
+      /55:00-58:00/, /Management-side MicroVM/,
       /historical (?:variable-cost )?estimate/i, /not a current.*(?:bill|measured)/i
     ]) assert.match(text, pattern, `${name} retains hosted placement/runtime/cost scope: ${pattern}`);
     assert.doesNotMatch(text,
@@ -429,7 +437,7 @@ test('current placement and corrected cluster scoring preserve working resources
       'docs/talking-points.md', 'docs/sandboxing.md', 'haflidi-overview.html']
       .map(path => [path, documentText(path)]),
     ['released consumer notes', applyNoteFactOverrides('s20-consumer', '')],
-    ['released C4 notes', applyNoteFactOverrides('demo-c4', '')]
+    ['released final optional appendix notes', applyNoteFactOverrides('a-use-cases', '')]
   ]) {
     const prose = text.replace(/\s+/g, ' ');
     assert.match(prose, /primary (?:Online )?(?:eligible demo )?placement|Online is primary|Online.*primary/i, name);
@@ -470,7 +478,7 @@ test('native coverage rejects wrong-target doctor and separates basic host orche
     /actual guest\/CLI exit-23 propagation passed/,
     /stage GO.*manual preflight\/rehearsal/is
   ]) assert.match(guide, pattern, `coverage retains ${pattern}`);
-  const c4 = applyNoteFactOverrides('demo-c4', '');
+  const c4 = applyNoteFactOverrides('a-use-cases', '');
   for (const pattern of [
     /separate group\/RG/, /not inside AKS or hosted Jobs\/runner/,
     /WRONG TARGET/, /no apply performed/, /host.*orchestrat/i,
@@ -487,7 +495,7 @@ test('two product flows retain separate triggers, integration evidence, cuts and
     /haflidif\/squad-on-aca/, /<approved-private-target>/,
     /selected Squad\/skill/, /validator\/reviewer handoff/,
     /standalone.*prerequisite tests/i, /not a four-minute promise/,
-    /Hard cut 54:30/, /cut 32:30/, /No-GO|NO-GO/,
+    /Hard cut before 55:00/, /Cut at 32:30/, /No-GO|NO-GO/,
     /advanced optional/, /not mandatory for the basic/,
     /Cleanup/, /Login/, /Expected proof/
   ]) assert.match(cards, pattern, `operator cards retain ${pattern}`);
@@ -553,8 +561,8 @@ const currentNativeStatusSurfaces = [
   ['docs/whats-new.md', '', '## Key updates'],
   ['docs/bootstrap.md', '', '## What this bootstrap does'],
   ['docs/clean-machine-demo.md', '', '## Automated dependency setup'],
-  ['docs/talking-points.md', '### 03:30-04:00, s04-news, Martin', '### 04:00-05:00'],
-  ['docs/run-plan.md', '## Separate product demo flows, not one combined runtime', '## Timing contract']
+  ['docs/talking-points.md', '### Deferred operator context', null],
+  ['docs/run-plan.md', '## Separate product demo flows, not one combined runtime', null]
 ];
 
 for (const [path, start, end] of currentNativeStatusSurfaces) {
@@ -562,8 +570,8 @@ for (const [path, start, end] of currentNativeStatusSurfaces) {
     const text = documentText(path);
     assert.ok(!start || text.includes(start), `${path} retains its current status section`);
     const section = start ? text.split(start)[1] : text;
-    assert.ok(section.includes(end), `${path} retains the next section boundary`);
-    const current = section.split(end)[0].replace(/\s+/g, ' ');
+    if (end) assert.ok(section.includes(end), `${path} retains the next section boundary`);
+    const current = (end ? section.split(end)[0] : section).replace(/\s+/g, ' ');
     for (const pattern of [
       /host Copilot\/Squad.*independently accepted/i,
       /26\.768-second/, /runtime-ready|runtime readiness/,
@@ -594,10 +602,9 @@ for (const [path, start, end] of currentNativeStatusSurfaces) {
         /credential-free policy challenge alone used per-request curl --insecure/,
         /trusted TLS and inside-MicroVM agents\/OAuth remain unproved/
       ]) assert.match(current, pattern, `${path} accepted host evidence retains ${pattern}`);
-      const timingCue = text.split(/\r?\n/).find(line => line.startsWith('- ACA Sandboxes is a conditional C4 variant'));
-      assert.ok(timingCue, `${path} retains the conditional C4 timing cue`);
-      assert.match(timingCue, /host-driven fixture engineering are independently accepted/);
-      assert.doesNotMatch(timingCue, /successful-work integration\/rehearsal remains pending/);
+      assert.match(text, /ACA Sandboxes is a final optional extra/);
+      assert.match(text, /C4 is the base skill, read-only MCP lookup and permissions flow only/);
+      assert.match(text, /host-driven fixture engineering are independently accepted/);
     }
     if (path === 'docs/whats-new.md') {
       const relatedCues = text.split(/\r?\n/).filter(line =>
@@ -626,7 +633,7 @@ test('source and exported speaker notes carry accepted Sandbox proof without qua
     ]) assert.match(notes, pattern);
     assert.doesNotMatch(notes, /Not deployed\/runtime-tested\/plan-approved|remains proposed\/unqualified|No current Online integration GO|Native ACA integration is remaining build/);
   };
-  for (const id of ['demo-c4', 's07-agent-setup', 's20-consumer']) {
+  for (const id of ['a-use-cases']) {
     const source = applyNoteFactOverrides(id, '');
     const emitted = generated.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/section>`))?.[1];
     assert.ok(emitted, `actual emitted ${id} exists`);
@@ -643,7 +650,7 @@ test('source and exported speaker notes carry accepted Sandbox proof without qua
       assert.throws(() => assertNativeNotes(emitted.replaceAll(before, after)), { code: 'ERR_ASSERTION' });
     }
   }
-  const hosted = applyNoteFactOverrides('s20-consumer', '');
+  const hosted = applyNoteFactOverrides('a-use-cases', '');
   for (const pattern of [
     /SQUAD ON ACA APPS\/JOBS/, /qualification is BLOCKED/,
     /owned MIT fork.*source independently accepted\/normal merged/,
@@ -655,14 +662,14 @@ test('source and exported speaker notes carry accepted Sandbox proof without qua
     /native Sandbox success does not qualify this hosted chain/
   ]) assert.match(hosted, pattern);
   const news = applyNoteFactOverrides('s04-news', '');
-  assert.match(news, /ACA SANDBOXES.*26\.768/s);
-  assert.match(news, /SQUAD ON ACA APPS\/JOBS fresh E2E separately BLOCKED/);
+  assert.doesNotMatch(news, /26\.768|one bounded ACA prompt/);
+  assert.match(news, /optional cloud detail is deferred/);
 });
 
 test('product prompts require positive guest work, accountable handoff and original hosted ownership', () => {
   const text = documentText('docs/prompt-pack.md');
   const native = text.split('### Native host Squad isolated work')[1]?.split('### Original hosted Squad issue-to-PR work')[0];
-  const hosted = text.split('### Original hosted Squad issue-to-PR work')[1]?.split('## What makes results repeatable')[0];
+  const hosted = text.split('### Original hosted Squad issue-to-PR work')[1]?.split('<a id="native-host-squad-isolated-work">')[0];
   assert.ok(native && hosted, 'two runnable public product recipes have distinct sections');
   const assertNativeRecipe = recipe => {
     for (const pattern of [
@@ -799,13 +806,15 @@ test('actual exported notes preserve source-only owned mode and VM hold boundari
       /CPU\/RAM bottleneck and sustained causality unproved/
     ]) assert.match(notes, pattern);
   };
-  for (const id of ['s20-consumer', 's07-agent-setup', 'demo-c0', 'a-bootstrap']) {
+  for (const id of ['s20-consumer', 's07-agent-setup', 'demo-c0', 'a-bootstrap', 'a-use-cases']) {
     const source = applyNoteFactOverrides(id, '');
     const emitted = html.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/section>`))?.[1];
     assert.ok(emitted, `actual emitted ${id} exists`);
-    assertVmNotes(source);
-    assertVmNotes(emitted);
-    if (id === 's20-consumer') {
+    if (id !== 'a-use-cases') {
+      assertVmNotes(source);
+      assertVmNotes(emitted);
+    }
+    if (id === 'a-use-cases') {
       assertOwnedNotes(source);
       assertOwnedNotes(emitted);
       for (const [before, after] of [
@@ -1100,13 +1109,14 @@ test('actual current release fronts and the entry table reject stale publication
 
 test('actual source and emitted presenter notes call the published version released without clearing runtime gates', () => {
   const html = documentText('presentation/index.html');
-  for (const id of ['s04-news', 's07-agent-setup']) {
+  for (const id of ['s04-news', 'a-use-cases']) {
     const emitted = html.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/section>`))?.[1];
     const notes = emitted?.match(/<aside class="notes">([\s\S]*?)<\/aside>/)?.[1];
     for (const [kind, current] of [['source', applyNoteFactOverrides(id, '')], ['emitted', notes]]) {
       const name = `${kind} ${id}`;
       assertPublishedRelease(current, name);
-      assert.match(current, /SQUAD ON ACA APPS\/JOBS fresh E2E separately BLOCKED/, name);
+      if (id === 'a-use-cases') assert.match(current, /SQUAD ON ACA APPS\/JOBS fresh E2E separately BLOCKED/, name);
+      else assert.match(current, /optional cloud detail is deferred/, name);
       assert.match(current, /human stage GO|Human stage\/rehearsal/, name);
       for (const mutation of [
         current.replaceAll('0.22.6', '0.22.5'),

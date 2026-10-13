@@ -2,23 +2,6 @@
 
 Session: **Copilot CLI + Squad for Terraform**, October 14, 2026, Martin Opedal and Haflidi Fridthjofsson.
 
-October 12 operator addendum: [the repo map](repositories.md) identifies this
-presenter/teaching clone, the independent public Corp module, upstream Automatic
-module, live demo-env deployment entry and Haflidi hosted implementation versus
-private issue target. Keep the historical command-verification tags below.
-One laptop 18/18 is not full rehearsal/runtime. Current local MXC is policy
-blocked; separate native Online deployment/current operator access/base probe
-was independently verified, not AKS or hosted Jobs. Token auth/green wrong-target
-doctor alone is not target access.
-Use [current progress](sandboxing.md#october-12-progress-and-next-actions) and
-[two product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
-Host Copilot/Squad orchestrating MicroVM checks is distinct from advanced
-optional in-MicroVM CLI/Squad installation/auth/runtime proof. Corrected ACA SANDBOXES host runtime passes positive/JSON/SHA/exit23/causal
-denial/cleanup contracts; independent acceptance complete, then runtime-ready.
-Human stage GO and fresh hosted Apps/Jobs E2E remain separate. No
-fresh new-target bot PR or renewed 29/29/full TLS is inferred. Use the
-[two product prompt recipes](prompt-pack.md#two-product-demo-prompt-recipes).
-
 Use this as a copy-paste rehearsal script. Results are **repeatable enough for rehearsal**. The prompts and oracles are designed to make fresh runs converge often enough to demonstrate the workflow. They do not promise identical model text or diffs.
 
 Verification tags in this file:
@@ -477,3 +460,58 @@ Sources researched on **2026-10-08**:
 - GitHub Copilot CLI custom instructions: <https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions>
 - Demo environment README: <https://github.com/martinopedal/aks-automatic-demo-env/blob/main/README.md>
 - Demo environment operations runbook: <https://github.com/martinopedal/aks-automatic-demo-env/blob/main/docs/operations-runbook.md>
+
+## Optional final extras - only if time and live gates permit
+
+Finish essentials, C0-C7, the technical explanation, consumer reveal and core
+wrap **before** either extra. Only a genuine early finish creates spare time
+before 55:00; do not shorten core content to manufacture it. Both extras may
+be skipped. Stop before 55:00; 55:00-58:00 is protected recovery and
+58:00-60:00 is the protected close, never appendix time. Hosted Apps/Jobs
+comes first, native ACA Sandboxes last. No stage GO is inferred from source,
+an engineering receipt or this reordering.
+
+**Current live gate:** owned hosted source preparation is accepted/merged,
+but successful publisher qualification, immutable image, genuine worker auth
+and actual README bot PR remain unproved. The qualified attempt failed on
+network/TLS/DNS/local Docker limits; live GO is **not** true. External authority,
+owner, network, private-evidence and human stage gates remain separate.
+No new issue, unsafe Job start or authentication mint while held.
+Native 26.768-second fixture engineering/85 rehashes is accepted, not a human
+rehearsal or guest-agent/OAuth proof. Both can SKIP.
+
+The dated background retained below preserves the original content, including
+earlier waiting/source-review stages. It is preparation history, not the latest
+owned-runtime verdict or new permission. Follow the current live gate above.
+
+
+### Squad on ACA Apps/Jobs - optional, first
+
+Read-only source/chain discussion only while the owned live path is held. Use
+[Card A](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr), not a
+new issue or unsafe job start. Preserve Haflidi's original service.
+
+### ACA Sandboxes - optional, dead last
+
+Use [Card B](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad)
+only after its own human preflight/rehearsal and exact-target gates. Host CLI/Squad
+is the controller, not an authenticated guest agent.
+
+### Retained operator addendum
+
+October 12 operator addendum: [the repo map](repositories.md) identifies this
+presenter/teaching clone, the independent public Corp module, upstream Automatic
+module, live demo-env deployment entry and Haflidi hosted implementation versus
+private issue target. Keep the historical command-verification tags below.
+One laptop 18/18 is not full rehearsal/runtime. Current local MXC is policy
+blocked; separate native Online deployment/current operator access/base probe
+was independently verified, not AKS or hosted Jobs. Token auth/green wrong-target
+doctor alone is not target access.
+Use [current progress](sandboxing.md#october-12-progress-and-next-actions) and
+[two product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
+Host Copilot/Squad orchestrating MicroVM checks is distinct from advanced
+optional in-MicroVM CLI/Squad installation/auth/runtime proof. Corrected ACA SANDBOXES host runtime passes positive/JSON/SHA/exit23/causal
+denial/cleanup contracts; independent acceptance complete, then runtime-ready.
+Human stage GO and fresh hosted Apps/Jobs E2E remain separate. No
+fresh new-target bot PR or renewed 29/29/full TLS is inferred. Use the
+[two product prompt recipes](prompt-pack.md#two-product-demo-prompt-recipes).
