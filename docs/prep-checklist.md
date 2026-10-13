@@ -10,27 +10,27 @@ All commands run in PowerShell 7.
 
 - [x] RESOLVED: checkpoint pin is `0abb202f34af385b7e0a34b1775643aa5b4871ed`, take `take-20261014` (source: demo-runbook.md "Create the disposable C1-C7 checkpoints"; short-talk-track.md Prepare once)
 - [x] RESOLVED: layout is `C:\demo\session-repo`, `C:\demo\aks-automatic-demo-env`, `C:\demo\checkpoints\take-20261014` (source: demo-runbook.md "Create and verify the agreed VM layout"). Still unverified on the VM until the operator runs setup
-- [ ] Who types on the VM during Martin's chapters. UNKNOWN (runbook C1 says Martin operates the worktrees, Haflidi leads; VM typist not stated)
+- [x] RESOLVED: Haflidi runs C0; who types and speaks in C1-C7 is decided live between the speakers and may swap (source: Haflidi 2026-10-13; note in short-talk-track.md)
 - [x] RESOLVED: the demo URL stays in Sweden Central (`aks-online-demo.swedencentral...`), no new region (source: Haflidi, confirmed 2026-10-13)
 - [x] Are the offline mirror and TFLint 0.64.0 already on the VM? Yes: both present. The mirror is built per take under `take\offline` (VM, 2026-10-13)
-- [ ] `squad --version` is in the Essentials/versions list, but short-talk-track.md Prepare once starts Squad (`copilot --agent squad`) before C0 installs it, while C0 uses `winget install bradygaster.Squad`. Still conflicting: confirm with Martin whether Squad is pre-installed on the VM. UNKNOWN decision
-- [ ] Switch-to-laptop-backup rule. UNKNOWN
+- [x] RESOLVED: Squad CLI is NOT pre-installed on the VM (verified 2026-10-13). The Prepare once prompt ran without it via the repo's `copilot --agent squad` profile (mirror and A/B/guided worktrees created); C0 installs it live with `winget install bradygaster.Squad`. The winget install itself is not yet run on the VM and is covered by the rehearsal (section 9)
+- [x] RESOLVED: no formal switch rule; the laptop is kept as a prepared backup, ready to run (source: Haflidi 2026-10-13)
 
 ## 2. VM base tools
 
-- [ ] PowerShell 7: `$PSVersionTable.PSVersion` (source: short-talk-track.md C0)
+- [x] PowerShell 7: `$PSVersionTable.PSVersion` (source: short-talk-track.md C0)
 - [x] Git and Copilot present: `git --version; copilot --version` (source: short-talk-track.md Essentials). Git 2.55.0, Copilot CLI 1.0.96 (VM, 2026-10-13)
 - [x] Copilot signed in (pre-done per Haflidi; interactive `/login` is the documented route, source: short-talk-track.md C0) (VM, 2026-10-13)
-- [ ] winget available (source: clean-machine-demo.md, "WinGet must already be" present)
+- [x] winget available (source: clean-machine-demo.md, "WinGet must already be" present)
 - [x] TFLint 0.64.0 (source: demo-runbook.md Prepare the checkpoint) (VM, 2026-10-13):
   ```powershell
   winget install --id TerraformLinters.tflint --version 0.64.0 --exact --source winget --accept-package-agreements --accept-source-agreements --silent
   tflint --version
   ```
-- [ ] STOP if `tflint --version` is not 0.64.0. Do not fix it during C7 (source: demo-runbook.md)
+- [x] STOP if `tflint --version` is not 0.64.0. Do not fix it during C7 (source: demo-runbook.md)
 - [x] Terraform `>=1.14.8,<2.0`: no documented install command. Check with `terraform version` (source: README offline section). Terraform 1.16.5 (VM, 2026-10-13)
 - [x] AzAPI provider: nothing to install by hand. Terraform must be installed (`>=1.14.8,<2.0`). The offline mirror comes from runbook block "Stage the filesystem-only mirror" (`terraform providers mirror -platform=windows_amd64`; public Registry access once, no Azure login). Result: `take-20261014\offline\providers` and `offline\terraform.tfrc` with no `direct` block (source: demo-runbook.md). AzAPI 2.12.0 mirror staged (VM, 2026-10-13)
-- [ ] VM decision: no Docker Desktop on the VM (nested virtualization); the VM uses the remote Terraform MCP in the section below. Docker is for the laptop backup only (source: Haflidi). Laptop only: Docker Desktop installed and running. Install is opt-in: `.\scripts\bootstrap-demo-vm.ps1 -InstallDocker -SkipLogin` needs WSL 2 and licence review first (source: bootstrap.md)
+- [x] VM decision: no Docker Desktop on the VM (nested virtualization); the VM uses the remote Terraform MCP in the section below. Docker is for the laptop backup only (source: Haflidi). Laptop only: Docker Desktop installed and running. Install is opt-in: `.\scripts\bootstrap-demo-vm.ps1 -InstallDocker -SkipLogin` needs WSL 2 and licence review first (source: bootstrap.md)
 - [ ] Laptop only: pull the pinned MCP image (source: demo-runbook.md):
   ```powershell
   docker pull hashicorp/terraform-mcp-server:1.3.0@sha256:423a6b8e2ee06affcf090892f40c86469caba45fd2448ffa8ca5d717a174f7d5
@@ -194,10 +194,8 @@ Order: pre-snapshot checks, snapshot, rehearse C0-C7 once, restore, post-restore
 
 - [ ] After restore, from `C:\demo\session-repo`: `copilot --agent terraform-reviewer -p "Reply with exactly: READY"`; expect `READY`
 - [ ] The runbook wording "network-restricted" does not mean real network isolation in this demo; it only shows wrong parameters or changes. Network isolation is not a prep step here (runbook left unchanged)
-- [ ] Open questions for Martin (none block the snapshot):
-  - Who types on the VM during Martin's chapters?
-  - Rule for switching to the laptop backup
-  - C7 driver: the short sheet says Haflidi, `run-plan.md:90` says Martin drives the handoff
+- [x] Open questions for Martin: none
+  - RESOLVED: drivers after C0 are decided live between the speakers (source: Haflidi 2026-10-13); prompt-pack headings still name drivers and may be neutralized after rehearsal
 
 ## 10. Day-of timeline
 
