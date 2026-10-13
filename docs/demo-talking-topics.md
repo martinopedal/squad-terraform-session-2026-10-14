@@ -40,6 +40,7 @@ Glance sheet for use DURING the live demo. Source of truth: [talk-track.md](talk
 - [ ] (H) `squad init` = shell command
 - [ ] (H) `copilot --agent squad` = coordinator
 - [ ] (H) Init Mode writes team only after confirm
+- [ ] (H) Hire prompt: [Hire the team](prompt-pack.md#hire-the-team-c0-first-squad-demo-squad-coordinator-plan-mode); Flåklypa Grand Prix cast is the fun moment
 - [ ] (M) Team reviewable in Git from minute one
 - [ ] (M) Setup is not Terraform correctness
 

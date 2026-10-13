@@ -184,6 +184,35 @@ Run `/model` and note the model for each lane. In `/mcp`, confirm `microsoft-lea
 
 Headless MCP check fallback: `copilot mcp list --json` confirms configured server names without adding or removing servers.
 
+## Hire the team (C0, first Squad demo, Squad coordinator, Plan mode)
+
+```text
+Cast the team from the Flaaklypa Grand Prix (Flåklypa Grand Prix) characters.
+Use names only, no role-play: fun but professional.
+
+Project: a reusable Terraform child module, terraform-azapi-aks-automatic,
+that deploys an AKS Automatic cluster using the azapi provider. The module
+has no provider blocks, backend or credentials; root consumers own those.
+Needs: secure defaults, typed variables with validation, clear outputs, a
+README with examples, offline tests (terraform validate and tftest, no
+Azure), a security and policy review before shipping, and a consumer
+example pinned to a released module version.
+
+Roles needed: lead (architecture, task boundaries), Terraform module
+author, tester, security reviewer, docs writer.
+Rules: exactly one writer per file; the reviewer is never the author of
+what they review.
+
+Hint, not forced: Reodor Felgen as lead and architect (the inventor who
+owns the design), Ludvig as the cautious security reviewer (the worrier),
+Solan Gundersen as the upbeat docs writer. For the module author and
+tester, pick further well-known Flaaklypa characters yourself.
+
+Propose the team and wait for my confirmation before creating anything.
+```
+
+Note: Squad accepts custom universes and uses the names only. Use this on a clean VM or folder in C0, not in this repository's existing roster. The audience sees the proposal before anything is created.
+
 ## 0. Frame the contract (Squad lead, Plan mode)
 
 ```text
