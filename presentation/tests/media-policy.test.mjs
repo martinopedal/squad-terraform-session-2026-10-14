@@ -885,3 +885,53 @@ test('both current source tables reject stale no-apply and unproved integration 
     }
   }
 });
+
+const hostedFlowSurfaces = [
+  ['README.md', '| Hosted issues / queue / bot PRs |', 5],
+  ['docs/source-provenance.md', '| Hosted issue/queue/bot-PR target |', 5],
+  ['docs/run-plan.md', '| A, hosted Squad ACA Jobs |', 3]
+];
+const hostedFlowStages = [
+  /^One approved(?: README)? issue$/i,
+  /^private scheduled poller$/,
+  /^existing queue$/,
+  /^genuine Squad UID10001 worker$/,
+  /^trusted (?:README )?App-bot PR(?:\/diff)?$/
+];
+const hostedFlowColumn = (text, prefix, column) => {
+  const rows = text.split(/\r?\n/).filter(line => line.startsWith(prefix));
+  assert.equal(rows.length, 1, `${prefix} identifies one actual hosted row`);
+  const cell = rows[0].split('|')[column]?.trim();
+  assert.ok(cell, `${prefix} contains its flow column`);
+  return cell.split('. ')[0];
+};
+const assertHostedFlow = (text, prefix, column) => {
+  const stages = hostedFlowColumn(text, prefix, column).split(' -> ');
+  assert.equal(stages.length, hostedFlowStages.length, 'hosted flow has exactly five stages');
+  stages.forEach((stage, index) =>
+    assert.match(stage, hostedFlowStages[index], `hosted stage ${index + 1} is in causal order`));
+};
+
+for (const [path, prefix, column] of hostedFlowSurfaces) {
+  test(`actual hosted flow in ${path} orders issue, poller, queue, worker and App-bot PR`, () => {
+    assertHostedFlow(documentText(path), prefix, column);
+  });
+
+  test(`actual hosted flow in ${path} rejects reversed stages even beside a correct chain`, () => {
+    const text = documentText(path);
+    assertHostedFlow(text, prefix, column);
+    const flow = hostedFlowColumn(text, prefix, column);
+    const stages = flow.split(' -> ');
+    for (let index = 0; index < stages.length - 1; index++) {
+      const reversed = [...stages];
+      [reversed[index], reversed[index + 1]] = [reversed[index + 1], reversed[index]];
+      const mutation = text.replace(flow, reversed.join(' -> '));
+      assert.notEqual(mutation, text, `${path} changes the actual flow at stage ${index + 1}`);
+      assert.throws(() => assertHostedFlow(mutation, prefix, column), { code: 'ERR_ASSERTION' });
+      if (index === 1) {
+        const decoy = mutation.replace(prefix, `${prefix} ${flow}; `);
+        assert.throws(() => assertHostedFlow(decoy, prefix, column), { code: 'ERR_ASSERTION' });
+      }
+    }
+  });
+}
