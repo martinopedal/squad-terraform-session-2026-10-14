@@ -13,13 +13,24 @@ native teaching profiles, not live deployment. The live Online AKS consumer is
 `haflidif/squad-on-aca` is the hosted implementation; the private issue/queue/PR
 target is not its source repository.
 
-Online is primary placement for eligible demo components; native deployment
-there remains proposed/unqualified, not a fallback. Corp-required private
+Online is primary placement for eligible demo components; the separate native
+five-object target and credential-free base probe were independently verified
+October 12. Current exact-group access passed; cleanup list was empty.
+Corrected host runtime evidence passes; independent acceptance is complete,
+then the native card is runtime-ready. Stage GO still needs human preflight/
+rehearsal; this is not a fallback.
+Corp-required private
 workloads stay in Corp. Public GitHub visibility does not define network
 placement or anonymous ingress.
 Leave Corp resources untouched. No failed plan authorizes relocation, anonymous
 MicroVM ingress, credentials exposure or a weaker scope check. Real environment,
 state, secrets and exact deployment approvals stay at the private boundary.
+
+Use [the two operator cards](docs/demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes)
+and [the product prompt recipes](docs/prompt-pack.md#two-product-demo-prompt-recipes).
+Standalone native lifecycle checks are prerequisites, not agent integration.
+Haflidi's original hosted implementation is completed/previously demonstrated;
+the separate new target's access/queue/rehearsal gate does not change that fact.
 
 ## Working rules
 

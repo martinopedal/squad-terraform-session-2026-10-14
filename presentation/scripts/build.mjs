@@ -183,6 +183,7 @@ const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escape(title)}</title>
 <!-- Document version: ${version.version} (${version.status})
+Source-build history below records dated source freezes, not current publication status.
 ${version.changes.join('\n')}
 Promote to 1.0 only after presenter approval.
 Built with reveal.js 5.2.1 (MIT), highlight.js ${highlightVersion} (BSD-3-Clause), RevealHighlight and RevealNotes bundled with Reveal 5.2.1.

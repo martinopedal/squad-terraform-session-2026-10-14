@@ -8,7 +8,9 @@ Audience: maintainers inspecting starter provenance. [The repo map](repositories
 and [four-lane progress](sandboxing.md#october-12-progress-and-next-actions)
 separate this public teaching configuration from deployment and runtime. Tool
 profiles/Squad configuration do not isolate credentials. Local MXC startup is
-currently policy blocked; native separate Online group/RG is proposed/unqualified.
+currently policy blocked; native separate Online deployment/access/base is
+independently verified. Corrected ACA SANDBOXES host runtime passes; acceptance
+complete, then runtime-ready. Stage GO and hosted Apps/Jobs E2E remain separate.
 Host Copilot/Squad remote orchestration and optional in-MicroVM runtime need
 different actual evidence; neither follows from starter setup.
 

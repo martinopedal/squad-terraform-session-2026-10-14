@@ -248,7 +248,8 @@ test('documented cloud preview is not claimed available in local 1.0.94 help', (
     /off by default/, /Allow local network/, /honoring the proxy/,
     /best-effort/, /remote MCP servers are not sandboxed/,
     /offers `ca`, not `status`/, /paid usage includes stopped storage/,
-    /autoSuspend is not a hard active timeout or credential revocation/
+    /not a hard active timeout or credential revocation/,
+    /saved base autoSuspend interval was 600 seconds/
   ]) assert.match(guide, pattern);
   for (const text of [guide, documentText('docs/feature-guide.md'), applyNoteFactOverrides('s07-agent-setup', '')]) {
     for (const pattern of [
@@ -300,7 +301,7 @@ test('hosted Jobs notes keep current placement separate from historical runs and
     for (const pattern of [
       /Corp, Norway East placement/, /historical Oct 9/, /56 seconds/,
       /Manual/, /7200-second/, /no registered target runners/i,
-      /invitation (?:is |remains )?pending|private invitation pending/i,
+      /current target rights|invitation (?:is |remains )?pending|private invitation pending/i,
       /fresh queue-driven readiness is not established/i,
       /README-only/, /Manual runner execution ended terminal Failed/,
       /associated issue queue workflow remains queued/,
@@ -344,7 +345,7 @@ test('readiness does not turn one laptop, historical checks or dated obligations
     /B1 clean VM/, /B2 both presenter hosts/, /B3 full 60-minute rehearsal/,
     /B4 private target invitation/, /B5 current NIC listing/, /Unknown/,
     /Oct 13 warmup\/reset/, /Oct 17 teardown \/ Oct 31 expiry/,
-    /Pool A1\/Dependabot/, /live Pages remains 0\.22\.2/i,
+    /Pool A1\/Dependabot/, /Released deck 0\.22\.6 on main\/Pages/i,
     /source-only correction/, /34\/34/, /not a new Azure plan or deployment/,
     /artifact suite 85\/85/, /runtime suite 31\/31/, /source\/tooling checks/,
     /no new sealed manifest\/raw exact deltas/i, /no new apply established/,
@@ -370,9 +371,10 @@ test('repo map identifies canonical public sources and private target boundaries
     /independently reusable \*\*public\*\* Corp/i,
     /module-public/, /target, not the hosted service implementation/i,
     /Public docs alone cannot run/, /private deployment boundary/,
-    /not.*created.*deployed.*tested/i, /Leave Corp resources untouched/,
-    /separate.*resource group/i, /standard managed-network quickstart if policy allows/i,
-    /not a transplant of Corp BYO VNet\/UAMI\/FIC/
+    /five-object deployment.*independently verified/i, /Leave Corp resources untouched/,
+    /separate.*resource group/i, /Standard managed networking/i,
+    /not a transplant of Corp BYO VNet\/UAMI\/FIC/,
+    /public\s+source PR.*human review/is
   ]) assert.match(map, pattern);
 });
 
@@ -386,8 +388,16 @@ test('current placement and corrected cluster scoring preserve working resources
     const status = row.split('|')[3].trim();
     assert.match(status, /Existing Online placement is primary for eligible demos/i,
       'native ACA status keeps the primary placement decision');
-    assert.match(status, /new separate native group\/RG remains proposed and unqualified/i,
-      'only the new native group/RG remains proposed and unqualified');
+    assert.match(status, /five-object deployment\/current operator access\/base probe independently verified/i,
+      'bounded current native milestones are established, not proposed-only');
+    assert.match(status, /Corrected host runtime PASS \/ independent acceptance complete/,
+      'actual corrected runtime proof is independently accepted');
+    assert.match(status, /native card runtime-ready after acceptance/,
+      'runtime card readiness is conditional, not an acceptance bypass');
+    assert.match(status, /stage GO pending manual preflight\/rehearsal/,
+      'corrected runtime proof does not establish human stage readiness');
+    assert.doesNotMatch(status, /proposed and unqualified|not deployed|integration PASS/i,
+      'reject stale no-deployment and overclaimed successful-integration status');
     assert.doesNotMatch(status, /\bfallback\b/i,
       'native ACA status must not reclassify primary Online placement as fallback');
   };
@@ -400,8 +410,15 @@ test('current placement and corrected cluster scoring preserve working resources
       'Existing Online placement is primary for eligible demos',
       'Fallback placement for eligible demos is Online')],
     ['contradictory fallback despite a primary claim', `${nativeStatus} Online placement is a fallback.`],
-    ['unproved new-group qualification', nativeStatus.replace(
-      'proposed and unqualified', 'deployed and qualified')]
+    ['stale proposed-only status', nativeStatus.replace(
+      'five-object deployment/current operator access/base probe independently verified',
+      'new separate native group/RG remains proposed and unqualified')],
+    ['superseded failure kept as current verdict', nativeStatus.replace(
+      'Corrected host runtime PASS / independent acceptance complete', 'Current host runtime FAILED')],
+    ['wrong product reclassification', nativeStatus.replace(
+      'native card runtime-ready after acceptance', 'hosted Apps/Jobs runtime-ready now')],
+    ['unproved stage GO', nativeStatus.replace(
+      'stage GO pending manual preflight/rehearsal', 'stage GO passed')]
   ]) {
     assert.notEqual(wrongStatus, nativeStatus, `${name} mutates the actual native ACA status`);
     assert.throws(() => assertNativePlacement(nativeRow.replace(nativeStatus, wrongStatus)),
@@ -411,13 +428,13 @@ test('current placement and corrected cluster scoring preserve working resources
     ...['README.md', 'docs/source-provenance.md', 'docs/run-plan.md', 'docs/talk-track.md',
       'docs/talking-points.md', 'docs/sandboxing.md', 'haflidi-overview.html']
       .map(path => [path, documentText(path)]),
-    ['current consumer notes', applyNoteFactOverrides('s20-consumer', '')],
-    ['current C4 notes', applyNoteFactOverrides('demo-c4', '')]
+    ['released consumer notes', applyNoteFactOverrides('s20-consumer', '')],
+    ['released C4 notes', applyNoteFactOverrides('demo-c4', '')]
   ]) {
     const prose = text.replace(/\s+/g, ' ');
     assert.match(prose, /primary (?:Online )?(?:eligible demo )?placement|Online is primary|Online.*primary/i, name);
     assert.doesNotMatch(prose, /Online (?:ACA )?fallback/i, name);
-    if (name !== 'current C4 notes') {
+    if (name !== 'released C4 notes') {
       for (const pattern of [
         /26 PASS\s*\/\s*2 BLOCKED\s*\/\s*1 report-only/,
         /10 PASS\s*\/\s*1 FAIL/, /1 NOT_APPLICABLE/,
@@ -447,7 +464,11 @@ test('native coverage rejects wrong-target doctor and separates basic host orche
     /Host Copilot CLI\/Squad remote orchestration/, /Optional in-VM Copilot/,
     /COMPLETED/, /BLOCKED/, /PENDING/,
     /need not themselves run inside the MicroVM/,
-    /No working Online MicroVM or host-orchestrated integration is established/
+    /Online basic provisioning\/access\/runtime is verified/,
+    /ACCEPTED ACA SANDBOXES ENGINEERING CONTRACT \/ RUNTIME READY/,
+    /CRLF/,
+    /actual guest\/CLI exit-23 propagation passed/,
+    /stage GO.*manual preflight\/rehearsal/is
   ]) assert.match(guide, pattern, `coverage retains ${pattern}`);
   const c4 = applyNoteFactOverrides('demo-c4', '');
   for (const pattern of [
@@ -461,7 +482,7 @@ test('two product flows retain separate triggers, integration evidence, cuts and
   const cards = documentText('docs/demo-runbook.md');
   for (const pattern of [
     /Two product demo flows: hosted Squad and native ACA Sandboxes/,
-    /Card A: Haflidi hosted Squad on ACA, issue to bot PR/,
+    /Card A: Haflidi hosted Squad on ACA Apps\/Jobs, issue to bot PR/,
     /Card B: native ACA Sandboxes/,
     /haflidif\/squad-on-aca/, /<approved-private-target>/,
     /selected Squad\/skill/, /validator\/reviewer handoff/,
@@ -509,5 +530,613 @@ test('news dates, billing caveats, public checkout examples, and current version
     'docs/whats-new.md', 'presentation/README.md']) {
     assert.ok(documentText(path).toLowerCase().includes(`deck ${version}`), `${path} matches the current deck`);
   }
-  assert.ok(documentText('handoff.md').includes(`presentation version **${version}**`));
+  assert.ok(documentText('handoff.md').includes(`Released Reveal.js **deck ${version}** on main/Pages`));
+});
+
+test('current public release fronts distinguish completed deck publication from local corrections', () => {
+  const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8')).version;
+  for (const path of [
+    'README.md', 'handoff.md', 'PUBLICATION.md', 'presentation/README.md',
+    'docs/run-plan.md', 'docs/source-provenance.md', 'docs/talk-track.md',
+    'docs/talking-points.md', 'docs/feature-guide.md', 'docs/whats-new.md',
+    'docs/demo-runbook.md'
+  ]) {
+    const text = documentText(path);
+    assert.ok(text.includes(version), `${path} names the released deck version`);
+    assert.match(text, /released.*main\/Pages|main\/Pages publication is complete/is, path);
+    assert.match(text, /later.*(?:local|correction)|local.*(?:correction|change)/is, path);
+    assert.doesNotMatch(text, /Live Pages remains 0\.22\.2|neither is\s+published|0\.22\.4.*not merged or released/i, path);
+  }
+});
+
+const currentNativeStatusSurfaces = [
+  ['docs/whats-new.md', '', '## Key updates'],
+  ['docs/bootstrap.md', '', '## What this bootstrap does'],
+  ['docs/clean-machine-demo.md', '', '## Automated dependency setup'],
+  ['docs/talking-points.md', '### 03:30-04:00, s04-news, Martin', '### 04:00-05:00'],
+  ['docs/run-plan.md', '## Separate product demo flows, not one combined runtime', '## Timing contract']
+];
+
+for (const [path, start, end] of currentNativeStatusSurfaces) {
+  test(`current native status in ${path} rejects stale opening claims`, () => {
+    const text = documentText(path);
+    assert.ok(!start || text.includes(start), `${path} retains its current status section`);
+    const section = start ? text.split(start)[1] : text;
+    assert.ok(section.includes(end), `${path} retains the next section boundary`);
+    const current = section.split(end)[0].replace(/\s+/g, ' ');
+    for (const pattern of [
+      /host Copilot\/Squad.*independently accepted/i,
+      /26\.768-second/, /runtime-ready|runtime readiness/,
+      /human (?:stage GO|preflight\/rehearsal)/i,
+      /second-presenter sign-in/, /selected Terraform variant/,
+      /remain separate gates/,
+      /hosted Apps\/Jobs.*(?:E2E.*BLOCKED|BLOCKED.*E2E)/i,
+      /owned fork\/target source is accepted/,
+      /private publisher qualification/, /owner-native Terraform/,
+      /actual README bot PR remain unproved/
+    ]) assert.match(current, pattern, `${path} current prose retains ${pattern}`);
+    assert.doesNotMatch(current,
+      /Native ACA integration remains build work|(?:Online|native)[^.]*\b(?:proposed|unqualified)\b|No current integration readiness|runtime PASS awaits independent acceptance|(?:prompt\/tool\/validation\/)?handoff evidence still missing|independent acceptance pending|stage GO (?:passed|complete)|all ACA (?:products )?(?:are )?ready|BLOCKED on registration404|BLOCKED on runner registration|custom-agent-profile qualification/i,
+      `${path} current prose must not contradict accepted fixture engineering or overclaim stage readiness`);
+    if (path !== 'docs/run-plan.md') {
+      for (const pattern of [
+        /five-object deployment/, /current operator access/,
+        /375-second/, /independently verified/
+      ]) assert.match(current, pattern, `${path} opening preserves verified provisioning: ${pattern}`);
+    } else {
+      for (const pattern of [
+        /actual coordinator prompt, worker\/ACA tools, guest results, validation and reviewer handoff evidence is independently accepted/,
+        /LF\/source\+result SHA/, /three positive guest checks\/JSON/,
+        /exact guest\/host exit23/,
+        /causal HTTPS403 with new exact-sandbox networkEgress\.denied audit/,
+        /exact-ID cleanup\/empty list\/NotFound/,
+        /85 evidence files were independently rehashed/,
+        /credential-free policy challenge alone used per-request curl --insecure/,
+        /trusted TLS and inside-MicroVM agents\/OAuth remain unproved/
+      ]) assert.match(current, pattern, `${path} accepted host evidence retains ${pattern}`);
+      const timingCue = text.split(/\r?\n/).find(line => line.startsWith('- ACA Sandboxes is a conditional C4 variant'));
+      assert.ok(timingCue, `${path} retains the conditional C4 timing cue`);
+      assert.match(timingCue, /host-driven fixture engineering are independently accepted/);
+      assert.doesNotMatch(timingCue, /successful-work integration\/rehearsal remains pending/);
+    }
+    if (path === 'docs/whats-new.md') {
+      const relatedCues = text.split(/\r?\n/).filter(line =>
+        line.startsWith('| 9 |') || line.startsWith("- Native ACA's official quickstart"));
+      assert.equal(relatedCues.length, 2, `${path} retains both current native news cues`);
+      for (const cue of relatedCues) {
+        assert.match(cue, /fixture engineering (?:are|is) independently accepted/);
+        assert.doesNotMatch(cue, /Online.*remains proposed|Neither is currently proved for Online/);
+      }
+    }
+  });
+}
+
+test('source and exported speaker notes carry accepted Sandbox proof without qualifying hosted Jobs or human stage', () => {
+  const generated = documentText('presentation/index.html');
+  const assertNativeNotes = notes => {
+    for (const pattern of [
+      /ACA SANDBOXES/, /26\.768/, /three positive guest checks\/JSON\+SHA/,
+      /actual guest and host exit23/, /networkEgress\.denied/,
+      /85 evidence files/, /independently accepted/,
+      /empty list\/NotFound/, /watchdog stop/,
+      /per-request curl --insecure/, /not trusted-TLS readiness/,
+      /not human stage GO/, /inside-guest agents\/OAuth/,
+      /not inside AKS or hosted Jobs\/runner/,
+      /Earlier CRLF failure is controlled learning history/
+    ]) assert.match(notes, pattern);
+    assert.doesNotMatch(notes, /Not deployed\/runtime-tested\/plan-approved|remains proposed\/unqualified|No current Online integration GO|Native ACA integration is remaining build/);
+  };
+  for (const id of ['demo-c4', 's07-agent-setup', 's20-consumer']) {
+    const source = applyNoteFactOverrides(id, '');
+    const emitted = generated.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/section>`))?.[1];
+    assert.ok(emitted, `actual emitted ${id} exists`);
+    assertNativeNotes(source);
+    assertNativeNotes(emitted);
+    for (const [before, after] of [
+      ['independently accepted', 'acceptance pending'],
+      ['actual guest and host exit23', 'exit propagation untested'],
+      ['networkEgress.denied', 'HTTP403 alone'],
+      ['not human stage GO', 'human stage GO passed'],
+      ['ACA SANDBOXES', 'all ACA products']
+    ]) {
+      assert.ok(emitted.includes(before), `${id} mutation targets emitted fact: ${before}`);
+      assert.throws(() => assertNativeNotes(emitted.replaceAll(before, after)), { code: 'ERR_ASSERTION' });
+    }
+  }
+  const hosted = applyNoteFactOverrides('s20-consumer', '');
+  for (const pattern of [
+    /SQUAD ON ACA APPS\/JOBS/, /qualification is BLOCKED/,
+    /owned MIT fork.*source independently accepted\/normal merged/,
+    /No new runner registration or AppAdmin/,
+    /actual Docker\/DNS\/TLS qualification WAITING at existing human gate with zero executed steps/,
+    /checker runtimeProven false/,
+    /Original haflidif\/squad-on-aca implementation is user-confirmed/,
+    /missing-agent\/error-only closed PR stubs are failure artifacts/,
+    /native Sandbox success does not qualify this hosted chain/
+  ]) assert.match(hosted, pattern);
+  const news = applyNoteFactOverrides('s04-news', '');
+  assert.match(news, /ACA SANDBOXES.*26\.768/s);
+  assert.match(news, /SQUAD ON ACA APPS\/JOBS fresh E2E separately BLOCKED/);
+});
+
+test('product prompts require positive guest work, accountable handoff and original hosted ownership', () => {
+  const text = documentText('docs/prompt-pack.md');
+  const native = text.split('### Native host Squad isolated work')[1]?.split('### Original hosted Squad issue-to-PR work')[0];
+  const hosted = text.split('### Original hosted Squad issue-to-PR work')[1]?.split('## What makes results repeatable')[0];
+  assert.ok(native && hosted, 'two runnable public product recipes have distinct sections');
+  const assertNativeRecipe = recipe => {
+    for (const pattern of [
+      /Copilot CLI\/Squad and the worker stay on the host/,
+      /Invoke the aca-sandboxes skill/, /explicit subscription\/resource-group\/sandbox-group\/region/,
+      /independent validator\/reviewer/, /UTF-8 LF/, /throw 'Shell fixture must use LF/,
+      /positive work fails, stop/, /numeric guest exits.*host process exit/s,
+      /Decode the.*fs JSON content wrapper/s,
+      /No anonymous ingress/, /No.*sign in|Do not sign in/,
+      /separately approved exact-ID cleanup/,
+      /ACA SANDBOXES/,
+      /three positive guest checks\/JSON\+SHA/,
+      /actual exit23/,
+      /one HTTPS403 with new exact-sandbox networkEgress\.denied causal audit/,
+      /Independent acceptance complete; card runtime-ready after acceptance/,
+      /Earlier CRLF shell failed positive work/,
+      /not a global\s+ACA SANDBOXES outage/,
+      /no retry/i
+    ]) assert.match(recipe, pattern);
+  };
+  assertNativeRecipe(native);
+  for (const [before, after] of [
+    ['positive work fails, stop', 'positive work fails, continue'],
+    ['three positive guest checks/JSON+SHA', 'three positive guest checks BLOCKED'],
+    ['one HTTPS403 with new exact-sandbox networkEgress.denied causal audit', 'one HTTPS403 alone'],
+    ['Independent acceptance complete; card runtime-ready after acceptance', 'Independent acceptance pending; card ready now'],
+    ['Copilot CLI/Squad and the worker stay on the host', 'Copilot CLI/Squad and the worker run inside the MicroVM'],
+    ['separately approved exact-ID cleanup', 'delete all groups']
+  ]) {
+    assert.ok(native.includes(before), `mutation changes actual native recipe: ${before}`);
+    assert.throws(() => assertNativeRecipe(native.replace(before, after)), { code: 'ERR_ASSERTION' });
+  }
+  for (const pattern of [
+    /haflidif\/squad-on-aca/, /<approved-private-target>/,
+    /Original implementation is completed\/previously demonstrated/,
+    /Owned fork\/target source accepted\/merged/,
+    /Live E2E is BLOCKED on private publisher qualification/,
+    /No new runner registration or AppAdmin/,
+    /ACA APPS\/JOBS/,
+    /Fresh current end-to-end qualification remains pending/i,
+    /ACA SANDBOXES\s+success does not count as that proof/,
+    /Change only README\.md/, /Do not merge or deploy/,
+    /actual ACA Job.*bot PR\/diff/s, /Correlate the same issue/,
+    /Never modify\/delete the original hosted service/
+  ]) assert.match(hosted, pattern);
+  assert.doesNotMatch(documentText('docs/repositories.md'), /martinopedal\/squad-on-aca-demo-target/);
+});
+
+test('all current operator release carriers name published0226, not filename-classified history', () => {
+  for (const [path, label, extract] of operatorReleaseSurfaces) {
+    assertOperatorRelease(extract(documentText(path)), `${path} ${label}`);
+  }
+});
+
+test('current hosted prose distinguishes accepted owned source from pending publisher and live proof', () => {
+  for (const path of [
+    'README.md', 'PUBLICATION.md', 'handoff.md', 'haflidi-overview.html',
+    'presentation/README.md', 'docs/run-plan.md', 'docs/source-provenance.md',
+    'docs/repositories.md', 'docs/sandboxing.md', 'docs/demo-runbook.md',
+    'docs/prompt-pack.md', 'docs/talk-track.md', 'docs/talking-points.md',
+    'docs/feature-guide.md', 'docs/whats-new.md', 'docs/overview.md',
+    'docs/aca-sandboxes.md', 'docs/bootstrap.md', 'docs/clean-machine-demo.md'
+  ]) {
+    const text = documentText(path).replace(/\s+/g, ' ');
+    assert.match(text, /owned.{0,120}(?:fork|source).{0,100}accepted/i, path);
+    assert.match(text, /publisher.{0,80}(?:qualification|Docker)/i, path);
+    assert.match(text, /owner-native Terraform/i, path);
+    assert.match(text, /(?:actual|genuine).{0,40}(?:README|bot PR)|actual PR/i, path);
+    assert.doesNotMatch(text, /(?:current|fresh).{0,70}(?:registration404|missing-agent-profile)|Hosted GO (?:passed|complete)|owned.{0,60}live E2E (?:proved|passed)/i, path);
+  }
+  for (const path of ['README.md', 'docs/source-provenance.md', 'docs/repositories.md']) {
+    const text = documentText(path);
+    for (const pattern of [
+      /https:\/\/github\.com\/martinopedal\/squad-on-aca\/pull\/1/,
+      /411bbf1810799bbfeea176e0c4123504a05430e8/,
+      /623c1906c1b8cacd13ccd1890d3d77ad3241560/,
+      /@haflidif/, /(?:MIT|license)/, /71 tests/,
+      /(?:sole whole-body|sole whole-body infrastructure) writer|sole whole-body writer/,
+      /standalone fork Bicep/i
+    ]) assert.match(text, pattern, `${path} binds the owned source contract`);
+  }
+});
+
+test('current VM prose retains fresh disk binding, human approval and uninstalled SYSTEM holds', () => {
+  for (const path of [
+    'README.md', 'handoff.md', 'haflidi-overview.html', 'presentation/README.md',
+    'docs/run-plan.md', 'docs/source-provenance.md', 'docs/sandboxing.md',
+    'docs/bootstrap.md', 'docs/clean-machine-demo.md', 'docs/demo-runbook.md',
+    'docs/talk-track.md', 'docs/talking-points.md', 'docs/playbook.md', 'docs/security-case.md'
+  ]) {
+    const text = documentText(path).replace(/\s+/g, ' ');
+    for (const pattern of [
+      /deallocated/i, /(?:disk|attachment).{0,60}(?:differs|different|changed)|changed OS-disk attachment/i,
+      /preserve both disks/i, /never swap back(?:\/recreate\/delete|, recreate or delete) either|No disk swap, recreation\/deletion/i,
+      /(?:current|exact).{0,30}binding.{0,40}baseline.{0,50}(?:runnable )?SYSTEM context/i,
+      /Haflidi\/Online/, /(?:not installed|no (?:machine )?installation|No installation)/i
+    ]) assert.match(text, pattern, `${path} retains VM hold ${pattern}`);
+    assert.doesNotMatch(text, /(?:current )?bootstrap is installed|VM upgrade (?:deployed|complete)|swap back to (?:the )?(?:old|previous) disk/i, path);
+  }
+  const bootstrap = documentText('docs/bootstrap.md').replace(/\s+/g, ' ');
+  for (const pattern of [
+    /system_payload_accepted/, /upgrade\.bootstrap\.system_accepted/,
+    /not prior installation/, /harmless LocalSYSTEM transport/,
+    /allows an absent prior receipt/, /fresh successful receipt after first install/
+  ]) assert.match(bootstrap, pattern);
+});
+
+test('actual exported notes preserve source-only owned mode and VM hold boundaries', () => {
+  const html = documentText('presentation/index.html');
+  const assertOwnedNotes = notes => {
+    for (const pattern of [
+      /private scheduled poller/, /one approved issue/, /genuine Squad UID10001 worker/,
+      /trusted README App-bot PR/, /No new runner registration or AppAdmin/,
+      /source independently accepted\/normal merged/, /checker runtimeProven false/,
+      /actual Docker\/DNS\/TLS qualification WAITING at existing human gate with zero executed steps/,
+      /no image\/push\/digest/, /Owner-native Terraform is sole whole-body writer/,
+      /not full source acceptance/, /actual README bot PR remain pending/,
+      /Owner-native source preparation is under independent review/,
+      /Executable delivery remains held/,
+      /Plan\/apply\/destroy paths are currently unconditionally disabled/,
+      /actual private-plan transport and executable integration are not provisioned/,
+      /Old zero-step queued run remains untouched, not cancelled\/proof/,
+      /original.*working and unchanged|Original.*working and unchanged/i
+    ]) assert.match(notes, pattern);
+    assert.doesNotMatch(notes, /E2E passed|runtimeProven true|new-target registration\/custom-agent|runner-registration404|AppAdmin approval required/);
+  };
+  const assertVmNotes = notes => {
+    for (const pattern of [
+      /REVIEW_REQUIRED/, /VM is deallocated/, /OS-disk attachment differs/,
+      /Preserve both disks/, /never swap back\/recreate\/delete either/,
+      /Refresh current binding\/baseline and runnable SYSTEM context/,
+      /Bootstrap not installed/, /allows absent prior receipt/,
+      /requires fresh successful receipt after first install/,
+      /CPU\/RAM bottleneck and sustained causality unproved/
+    ]) assert.match(notes, pattern);
+  };
+  for (const id of ['s20-consumer', 's07-agent-setup', 'demo-c0', 'a-bootstrap']) {
+    const source = applyNoteFactOverrides(id, '');
+    const emitted = html.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/section>`))?.[1];
+    assert.ok(emitted, `actual emitted ${id} exists`);
+    assertVmNotes(source);
+    assertVmNotes(emitted);
+    if (id === 's20-consumer') {
+      assertOwnedNotes(source);
+      assertOwnedNotes(emitted);
+      for (const [before, after] of [
+        ['checker runtimeProven false', 'checker runtimeProven true'],
+        ['actual README bot PR remain pending', 'actual README bot PR passed'],
+        ['No new runner registration or AppAdmin', 'AppAdmin approval required'],
+        ['Old zero-step queued run remains untouched, not cancelled/proof', 'Old queued run cancelled'],
+        ['Owner-native Terraform is sole whole-body writer', 'Standalone fork Bicep is another whole-body writer']
+      ]) {
+        assert.ok(emitted.includes(before), `${id} mutation targets actual emitted fact`);
+        assert.throws(() => assertOwnedNotes(emitted.replaceAll(before, after)), { code: 'ERR_ASSERTION' });
+      }
+    }
+  }
+});
+
+test('owner delivery is code preparation under review and VM source already sequences start before CSE', () => {
+  for (const path of [
+    'README.md', 'handoff.md', 'docs/run-plan.md', 'docs/source-provenance.md',
+    'docs/sandboxing.md', 'docs/repositories.md', 'docs/prompt-pack.md',
+    'docs/demo-runbook.md', 'docs/talk-track.md', 'docs/talking-points.md',
+    'haflidi-overview.html'
+  ]) {
+    const text = documentText(path).replace(/\s+/g, ' ');
+    assert.match(text, /(?:source preparation.{0,50}under.{0,20}review|full (?:independent )?(?:source )?review pending)/i, path);
+    assert.match(text, /plan\/apply\/destroy.{0,60}unconditionally disabled/i, path);
+    assert.match(text, /signer.{0,100}(?:private-plan transport|private plan transport)/i, path);
+    assert.match(text, /executable (?:delivery.{0,20}remains held|integration.{0,35}not provisioned)/i, path);
+    assert.doesNotMatch(text, /owner-native.{0,50}(?:source fully accepted|delivery working|deployment complete)/i, path);
+  }
+  for (const text of [
+    documentText('docs/bootstrap.md').replace(/\s+/g, ' '),
+    documentText('docs/run-plan.md').replace(/\s+/g, ' '),
+    applyNoteFactOverrides('demo-c0', ''),
+    applyNoteFactOverrides('s20-consumer', '')
+  ]) {
+    assert.match(text, /creation-semantic precondition is (?:now |currently )?met/);
+    assert.match(text, /IaC deallocate -> VM update -> disk update -> start -> CSE/);
+    assert.match(text, /no missing[- ]start implementation or imperative power workaround/i);
+  }
+});
+
+test('both current source tables reject stale no-apply and unproved integration GO', () => {
+  const assertNativeTable = row => {
+    for (const pattern of [
+      /Primary Online/, /five-object|five exact bindings/i,
+      /current operator access/, /base probe verified/i,
+      /cleanup empty/,
+      /corrected host runtime PASS \/ independent acceptance complete/i,
+      /stage GO pending/
+    ]) assert.match(row, pattern);
+    assert.doesNotMatch(row, /no apply|not deployed|not runtime-tested|source repair in progress|integration PASS|stage GO passed/i);
+  };
+  for (const path of ['README.md', 'docs/source-provenance.md']) {
+    const row = documentText(path).split(/\r?\n/)
+      .find(line => line.startsWith('| Native ACA SandboxGroup MicroVMs |'));
+    assert.ok(row, `${path} has the real native component row`);
+    assertNativeTable(row);
+    for (const mutation of [
+      `${row} no apply performed`,
+      `${row} integration PASS`,
+      row.replace(/base probe verified/i, 'base probe proposed'),
+      row.replace('cleanup empty', 'cleanup unverified')
+    ]) {
+      assert.notEqual(mutation, row, `${path} mutation changes the actual row`);
+      assert.throws(() => assertNativeTable(mutation), { code: 'ERR_ASSERTION' });
+    }
+  }
+});
+
+const hostedFlowSurfaces = [
+  ['README.md', '| Hosted issues / queue / bot PRs |', 5],
+  ['docs/source-provenance.md', '| Hosted issue/queue/bot-PR target |', 5],
+  ['docs/run-plan.md', '| A, hosted Squad ACA Jobs |', 3]
+];
+const hostedFlowStages = [
+  /^One approved(?: README)? issue$/i,
+  /^private scheduled poller$/,
+  /^existing queue$/,
+  /^genuine Squad UID10001 worker$/,
+  /^trusted (?:README )?App-bot PR(?:\/diff)?$/
+];
+const hostedFlowColumn = (text, prefix, column) => {
+  const rows = text.split(/\r?\n/).filter(line => line.startsWith(prefix));
+  assert.equal(rows.length, 1, `${prefix} identifies one actual hosted row`);
+  const cell = rows[0].split('|')[column]?.trim();
+  assert.ok(cell, `${prefix} contains its flow column`);
+  return cell.split('. ')[0];
+};
+const assertHostedFlow = (text, prefix, column) => {
+  const stages = hostedFlowColumn(text, prefix, column).split(' -> ');
+  assert.equal(stages.length, hostedFlowStages.length, 'hosted flow has exactly five stages');
+  stages.forEach((stage, index) =>
+    assert.match(stage, hostedFlowStages[index], `hosted stage ${index + 1} is in causal order`));
+};
+
+for (const [path, prefix, column] of hostedFlowSurfaces) {
+  test(`actual hosted flow in ${path} orders issue, poller, queue, worker and App-bot PR`, () => {
+    assertHostedFlow(documentText(path), prefix, column);
+  });
+
+  test(`actual hosted flow in ${path} rejects reversed stages even beside a correct chain`, () => {
+    const text = documentText(path);
+    assertHostedFlow(text, prefix, column);
+    const flow = hostedFlowColumn(text, prefix, column);
+    const stages = flow.split(' -> ');
+    for (let index = 0; index < stages.length - 1; index++) {
+      const reversed = [...stages];
+      [reversed[index], reversed[index + 1]] = [reversed[index + 1], reversed[index]];
+      const mutation = text.replace(flow, reversed.join(' -> '));
+      assert.notEqual(mutation, text, `${path} changes the actual flow at stage ${index + 1}`);
+      assert.throws(() => assertHostedFlow(mutation, prefix, column), { code: 'ERR_ASSERTION' });
+      if (index === 1) {
+        const decoy = mutation.replace(prefix, `${prefix} ${flow}; `);
+        assert.throws(() => assertHostedFlow(decoy, prefix, column), { code: 'ERR_ASSERTION' });
+      }
+    }
+  });
+}
+
+const currentReleaseFront = path => {
+  const text = documentText(path);
+  if (path === 'README.md') return text.split('## What this repository contains')[0];
+  if (path === 'PUBLICATION.md') return text.split('Owned hosted fork/target/publisher source')[0];
+  return text.split('Source qualification may finish before delivery.')[1]
+    ?.split('The live demo consumer is')[0];
+};
+const releaseParagraph = anchor => text => {
+  const paragraphs = text.split(/\r?\n\s*\r?\n/).filter(paragraph => paragraph.includes(anchor));
+  assert.equal(paragraphs.length, 1, `exactly one actual paragraph contains ${anchor}`);
+  return paragraphs[0];
+};
+const releaseStatusCell = (prefix, column = -2) => text => {
+  const rows = text.split(/\r?\n/).filter(line => line.startsWith(prefix));
+  assert.equal(rows.length, 1, `exactly one actual status row starts ${prefix}`);
+  const cells = rows[0].split('|');
+  return cells.at(column);
+};
+const operatorReleaseSurfaces = [
+  ['README.md', 'operator notes/status release', releaseParagraph('The directly coupled notes/status fix')],
+  ['handoff.md', 'Current result release bullet', releaseParagraph('- Released Reveal.js')],
+  ['haflidi-overview.html', 'presenter readiness paragraph', text => {
+    const paragraphs = [...text.matchAll(/<p>([\s\S]*?)<\/p>/g)]
+      .map(match => match[1]).filter(paragraph => paragraph.startsWith('Readiness is not all green:'));
+    assert.equal(paragraphs.length, 1, 'exactly one actual presenter readiness paragraph');
+    return paragraphs[0];
+  }],
+  ['docs/run-plan.md', 'clock/source baseline', releaseParagraph('Clock/source baseline:')],
+  ['docs/run-plan.md', 'publication status cell', releaseStatusCell('| Deck / publication |', 2)],
+  ['docs/source-provenance.md', 'component status cell', releaseStatusCell('| Session docs/deck/skills/native profiles |')],
+  ['docs/source-provenance.md', 'release scope', releaseParagraph('Documentation/generated source and executed evidence are distinct.')],
+  ['docs/talk-track.md', 'opening delivery contract', releaseParagraph('[two product demo flows]')],
+  ['docs/talking-points.md', 'opening operator references', releaseParagraph('Operator references:')],
+  ['docs/feature-guide.md', 'evidence release declaration', releaseParagraph('propagates accepted ACA SANDBOXES engineering')],
+  ['docs/feature-guide.md', 'native host/current publication declaration', releaseParagraph('Current native host checks are')],
+  ['docs/whats-new.md', 'current operator status', releaseParagraph('current operator status updated October 13.')],
+  ['docs/whats-new.md', 'key updates release declaration', releaseParagraph('It adds no new headline, tour or slide.')],
+  ['docs/demo-runbook.md', 'preflight/current publication declaration', releaseParagraph("October 12: one laptop's corrected read-only preflight")],
+  ['docs/demo-runbook.md', 'exported notes release declaration', releaseParagraph('propagates these native/hosted status boundaries')]
+];
+const releaseBlocks = text => decodeHTML(text).replace(/<\/?(?:p|li|aside)\b[^>]*>/g, '\n\n')
+  .split(/\r?\n\s*\r?\n/).map(block => block.replaceAll('*', '').trim()).filter(Boolean);
+const isPrepublicationFreeze = block => {
+  const freeze = block.match(/^(?:0\.22\.\d+ - )?(\d{4}-\d{2}-\d{2}(?:T[\d:.]+Z)?) pre-publication source freeze:/i);
+  return Boolean(freeze && Date.parse(freeze[1]) < Date.parse('2026-10-13T03:57:48Z'));
+};
+const assertPublishedRelease = (text, name) => {
+  assert.ok(text, `${name} contains its current release surface`);
+  const current = releaseBlocks(text).filter(block => !isPrepublicationFreeze(block)).join(' ').replace(/\s+/g, ' ');
+  assert.match(current, /(?:released|published)(?: Reveal\.js)?(?: main\/Pages)?(?: full\/short)?(?: deck| release)? 0\.22\.6/i, name);
+  assert.match(current, /main\/Pages/i, name);
+  assert.doesNotMatch(current,
+    /local (?:candidate )?(?:deck |presentation version )?0\.22\.6|0\.22\.6 (?:is |remains )?(?:an? )?(?:unpublished|not (?:a )?published|candidate)|(?:released|live|published)[^.]{0,100}0\.22\.[245]|0\.22\.[245] (?:is )?(?:released|published|live)|live Pages remains (?:the previously released )?0\.22\.[245]/i,
+    `${name} must not label the published version as a current candidate or keep the old live baseline`);
+};
+const assertOperatorRelease = (text, name) => {
+  assertPublishedRelease(text, name);
+  const current = releaseBlocks(text).filter(block => !isPrepublicationFreeze(block)).join(' ').replace(/\s+/g, ' ');
+  assert.match(current, /later (?:local )?correction bytes remain unpublished/i, name);
+  for (const pattern of [/review/i, /normal merge/i, /Pages byte verification/i]) {
+    assert.match(current, pattern, `${name} preserves the correction publication gate`);
+  }
+  assert.doesNotMatch(current, /correction bytes (?:are |remain )?(?:live|published)|corrections (?:are |already )?(?:live|published)/i, name);
+};
+
+for (const [path, label, extract] of operatorReleaseSurfaces) {
+  test(`actual current publication carrier: ${path} ${label}`, () => {
+    assertOperatorRelease(extract(documentText(path)), `${path} ${label}`);
+  });
+}
+
+test('every actual operator carrier rejects stale facts even beside valid prose and table decoys', () => {
+  for (const [path, label, extract] of operatorReleaseSurfaces) {
+    const text = documentText(path);
+    const current = extract(text);
+    const name = `${path} ${label}`;
+    assertOperatorRelease(current, name);
+    for (const mutation of [
+      current.replaceAll('0.22.6', '0.22.5'),
+      `${current} Local deck 0.22.6 is an unpublished candidate.`,
+      `${current} Deck 0.22.5 is released on main/Pages.`,
+      `${current} Released main/Pages stays 0.22.5.`,
+      `${current} Live Pages remains the previously released 0.22.2.`,
+      current.replace(/remain\s+unpublished/g, 'are published'),
+      current.replace(/remain\s+unpublished/g, 'are live'),
+      current.replaceAll('normal merge', 'automatic publication')
+    ]) {
+      assert.notEqual(mutation, current, `${name} mutation changes the actual carrier`);
+      const mutatedDocument = text.replace(current, mutation);
+      assert.notEqual(mutatedDocument, text, `${name} mutation reaches the actual document`);
+      const withDecoy = `Released deck 0.22.6 on main/Pages.\n\n${mutatedDocument}`;
+      assert.throws(() => assertOperatorRelease(extract(withDecoy), name), { code: 'ERR_ASSERTION' },
+        `${name} rejects its actual mutated carrier: ${mutation}`);
+      if (label.endsWith('status cell')) {
+        const row = mutatedDocument.split(/\r?\n/).find(line => line.includes(mutation));
+        const cells = row.split('|');
+        cells[2] += ' Released deck 0.22.6 on main/Pages.';
+        const tableDecoy = mutatedDocument.replace(row, cells.join('|'));
+        assert.throws(() => assertOperatorRelease(extract(tableDecoy), name), { code: 'ERR_ASSERTION' });
+      }
+    }
+  }
+});
+
+test('run-plan publication remaining-gate cell cannot hide stale facts behind a correct published cell', () => {
+  const text = documentText('docs/run-plan.md');
+  const row = text.split(/\r?\n/).find(line => line.startsWith('| Deck / publication |'));
+  assertPublishedRelease(row, 'actual run-plan publication row');
+  const gate = releaseStatusCell('| Deck / publication |', 3)(text);
+  assert.match(gate, /fresh independent source\/export review/);
+  assert.match(gate, /not publication, runtime or human stage GO/);
+  for (const stale of [
+    'Local deck 0.22.6 is an unpublished candidate.',
+    'Deck 0.22.5 is released on main/Pages.',
+    'Later correction bytes are live.'
+  ]) {
+    const mutation = text.replace(gate, ` ${stale} `);
+    assertPublishedRelease(releaseStatusCell('| Deck / publication |', 2)(mutation), 'unchanged correct published cell');
+    const mutatedRow = mutation.split(/\r?\n/).find(line => line.startsWith('| Deck / publication |'));
+    assert.throws(() => assertOperatorRelease(mutatedRow, 'actual mutated publication row'), { code: 'ERR_ASSERTION' });
+  }
+});
+
+test('historical release facts require an explicit pre-publication freeze in their own prose block', () => {
+  const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8'));
+  const historical = version.changes.find(change => change.startsWith('0.22.6 - '));
+  assert.ok(isPrepublicationFreeze(historical), 'actual dated source-freeze record is historical');
+  for (const [path, label, extract] of operatorReleaseSurfaces) {
+    const current = extract(documentText(path));
+    const name = `${path} ${label}`;
+    for (const separator of ['\n\n', '</p><p>']) {
+      assertPublishedRelease(`${current}${separator}${historical}`, name);
+      const stale = 'Released main/Pages stays 0.22.5. Local deck 0.22.6 is an unpublished candidate.';
+      const scoped = `2026-10-13T03:50:00Z pre-publication source freeze: ${stale}`;
+      assertPublishedRelease(`${current}${separator}${scoped}`, name);
+      for (const unscoped of [
+        stale,
+        historical.replace('2026-10-13 pre-publication source freeze: ', ''),
+        `Updated October 13, 2026. ${stale}`,
+        `Historical operator snapshot: ${stale}`,
+        `2026-10-13 pre-publication source freeze:\n\n${stale}`,
+        `${scoped}${separator}${stale}`,
+        scoped.replace('03:50:00Z', '04:50:00Z')
+      ]) {
+        assert.throws(() => assertPublishedRelease(`${current}${separator}${unscoped}`, name), { code: 'ERR_ASSERTION' });
+      }
+      assert.throws(() => assertPublishedRelease(scoped, name), { code: 'ERR_ASSERTION' },
+        'historical prose alone cannot satisfy a current release carrier');
+    }
+  }
+});
+
+test('actual current release fronts and the entry table reject stale publication state beside valid release text', () => {
+  const surfaces = ['README.md', 'PUBLICATION.md', 'presentation/README.md']
+    .map(path => [path, currentReleaseFront(path)]);
+  const row = documentText('README.md').split(/\r?\n/)
+    .find(line => line.startsWith('| Session docs, deck, skills/native profiles |'));
+  surfaces.push(['README.md session deployment status', row?.split('|')[6]]);
+  for (const [name, current] of surfaces) {
+    assertPublishedRelease(current, name);
+    for (const mutation of [
+      current.replaceAll('0.22.6', '0.22.5'),
+      `${current} Local deck 0.22.6 unpublished candidate.`,
+      `${current} Released main/Pages stays 0.22.4.`,
+      `${current} Live Pages remains the previously released 0.22.2.`
+    ]) {
+      assert.notEqual(mutation, current, `${name} mutation changes the actual current surface`);
+      assert.throws(() => assertPublishedRelease(mutation, name), { code: 'ERR_ASSERTION' });
+    }
+  }
+});
+
+test('actual source and emitted presenter notes call the published version released without clearing runtime gates', () => {
+  const html = documentText('presentation/index.html');
+  for (const id of ['s04-news', 's07-agent-setup']) {
+    const emitted = html.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/section>`))?.[1];
+    const notes = emitted?.match(/<aside class="notes">([\s\S]*?)<\/aside>/)?.[1];
+    for (const [kind, current] of [['source', applyNoteFactOverrides(id, '')], ['emitted', notes]]) {
+      const name = `${kind} ${id}`;
+      assertPublishedRelease(current, name);
+      assert.match(current, /SQUAD ON ACA APPS\/JOBS fresh E2E separately BLOCKED/, name);
+      assert.match(current, /human stage GO|Human stage\/rehearsal/, name);
+      for (const mutation of [
+        current.replaceAll('0.22.6', '0.22.5'),
+        `${current}<p>Local deck 0.22.6 unpublished candidate.</p>`
+      ]) assert.throws(() => assertPublishedRelease(mutation, name), { code: 'ERR_ASSERTION' });
+    }
+  }
+});
+
+test('actual version status and both generated headers separate published0226 from dated source-freeze history', () => {
+  const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8'));
+  assert.equal(version.version, '0.22.6');
+  const full = documentText('presentation/index.html');
+  const short = documentText('presentation/short/index.html');
+  for (const [name, current] of [
+    ['version status', version.status],
+    ['full generated header', full.match(/<!-- Document version: ([^\n]+)/)?.[1]],
+    ['short generated header', short.match(/<!-- Document version: ([^\n]+)/)?.[1]]
+  ]) {
+    assertPublishedRelease(current, name);
+    assert.match(current, /2026-10-13/, name);
+    for (const mutation of [
+      current.replaceAll('0.22.6', '0.22.5'),
+      `${current} Local deck 0.22.6 unpublished candidate.`
+    ]) assert.throws(() => assertPublishedRelease(mutation, name), { code: 'ERR_ASSERTION' });
+  }
+  const freeze = version.changes.find(change => change.startsWith('0.22.6 - '));
+  assert.match(freeze, /2026-10-13 pre-publication source freeze:/);
+  assert.match(freeze, /candidate/);
+  assert.match(freeze, /Released main\/Pages remains0\.22\.5 until exact review/);
+  assert.match(full, /Source-build history below records dated source freezes, not current publication status\./);
+  assert.ok(full.includes(freeze), 'actual full export retains the explicitly frozen historical entry');
 });

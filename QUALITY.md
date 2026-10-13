@@ -8,14 +8,21 @@ deployment ownership; [the four-lane progress matrix](docs/sandboxing.md#october
 and [full MicroVM checklist](docs/aca-sandboxes.md#full-test-coverage-checklist)
 separate completed checks from blocked and pending runtime work.
 
-Online is primary placement for eligible demo components; native deployment
-there is planning only, not a fallback. Corp-required private workloads stay in
+Online is primary placement for eligible demo components; the separate native
+five-object target and credential-free base probe were independently verified
+October 12, not a fallback. Corp-required private workloads stay in
 Corp. Repo visibility and network/control-plane exposure are different facts.
 Leave Corp resources untouched.
-The new Corp qualification was blocked on an unexpected change-type check; no
-apply performed. This is not a proven Corp policy restriction. Help, doctor,
-token authentication, host preflight, hosted Jobs and AKS read-back cannot replace
-customer-managed MicroVM lifecycle and in-VM Copilot/Squad evidence.
+The held Corp qualification was blocked on an unexpected change-type check; no
+apply performed in that qualification. This is not a proven Corp policy restriction.
+Help, doctor, token authentication, host preflight, hosted Jobs and AKS read-back
+cannot replace target-specific evidence. Basic host orchestration requires the
+actual host prompt/selected Squad/ACA skill/tool/output/validation/handoff trace;
+Copilot/Squad inside the MicroVM is advanced optional and needs separate consent.
+The verified base probe is not full integration or stage GO. Corrected host
+runtime evidence now passes its public fixture/JSON/SHA/exit23/causal-denial/
+cleanup contracts; independent acceptance is complete. Runtime-ready card after
+acceptance is distinct from second-presenter/manual UI/login/timed rehearsal.
 
 ## Terraform source
 
@@ -50,7 +57,10 @@ Do not fabricate native CLI screens, terminal output, deployment results, or a s
 
 The Reveal deck must have readable text/code, accurate diagrams, accessible contrast, keyboard navigation, speaker notes, working local media controls, and offline behavior.
 
-The talk track for Martin Opedal and Haflidi Fridthjofsson must cover the content, including narration over the recorded chapters, with explicit timing and handoffs. Keep questions within the 60-minute slot.
+The talk track for Martin Opedal and Haflidi Fridthjofsson is live-first C0-C7,
+with explicit timing and handoffs. Keep 55 minutes of content, 3 minutes of
+protected recovery and a 2-minute close; questions only if time allows.
+Recordings are optional reviewed fallback, not required chapter media.
 
 ## Release evidence
 

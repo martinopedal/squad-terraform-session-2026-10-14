@@ -1,6 +1,6 @@
-# Online landing zone variant: same module, real guardrails
+# Online consumer: upstream Automatic module, real guardrails
 
-This appendix shows what changes when we run the same module in an Online subscription. The main talk targets a private Corp cluster. Here the topology is simpler, the guardrails stay in place, and we still use a gated pipeline. That work also pushed fixes back into the module.
+This appendix shows the upstream Automatic module's Online consumer. It is not the independently pinned Corp teaching copy used in the main talk. The topology is simpler, guardrails remain and the consumer uses a gated pipeline; findings pushed fixes into its upstream module.
 
 Source: [`martinopedal/aks-automatic-demo-env`](https://github.com/martinopedal/aks-automatic-demo-env): `deployments/online/`, `manifests/online/`, `.github/workflows/deploy-online.yml`, `scripts/start-online-runner.ps1`. The root pins the reusable module [`martinopedal/terraform-azapi-aks-automatic`](https://github.com/martinopedal/terraform-azapi-aks-automatic) by tag `v0.6.0`.
 
@@ -9,7 +9,7 @@ map](repositories.md): this session clone is teaching/source material, not the
 live deployment entry. The independent public Corp teaching module has a
 different unchanged source-copy pin/manifest.
 
-## Current AKS evidence versus the native sandbox proposal
+## Current AKS evidence versus the separate native sandbox
 
 Earlier October 12 Online/Corp metadata was Succeeded/Running. Fresh 10:47 UTC
 reviewer: branded app/source-matching assets and two responding replicas PASS
@@ -24,9 +24,13 @@ C1 fresh OnlineSecurity 29/DemoVM is scheduled Oct 13, not completed here.
 
 Native ACA MicroVMs use the same Online placement direction but a **separate
 SandboxGroup and resource group**, not inside AKS or Haflidi's hosted Jobs/runner.
-Standard managed-network design if policy permits is proposed, not Corp BYO
-VNet/UAMI/FIC transplant. Candidate RG absent; no creation/deployment/test or
-independent plan approval. Leave Corp untouched; a failed qualification is not
+Standard managed networking is not Corp BYO
+VNet/UAMI/FIC transplant. Independent October 12 review verified five-object
+deployment/current operator access/base exec/fs/stop-resume/delete and cleanup
+empty. Corrected ACA SANDBOXES runtime passes three guest checks/JSON+SHA, exit23,
+causal HTTPS-denial and exact cleanup in 26.768 seconds. Acceptance complete;
+native card runtime-ready after acceptance, human stage GO separate.
+Hosted Apps/Jobs remains independently gated; earlier CRLF is learning history. Leave Corp untouched; a failed qualification is not
 a proven Corp policy restriction or promise Online fixes it. No anonymous
 MicroVM ingress or exposed credentials are authorized.
 
@@ -34,7 +38,7 @@ Use [two product demo flows](demo-runbook.md#two-product-demo-flows-hosted-squad
 [native test coverage](aca-sandboxes.md#full-test-coverage-checklist) and [progress
 matrix](sandboxing.md#october-12-progress-and-next-actions). Host Copilot/Squad
 remote orchestration is distinct from optional in-MicroVM CLI/Squad proof.
-USD 20 total through Oct 31 is an alert, not a hard cap; retained Corp costs
+Earlier USD 20 is historical planning/alert context, not execution authority; retained Corp costs
 remain. MCP minreplicas 1 Oct 13/revert Oct 14, teardown Oct 17 and credential
 expiry Oct 31 are scheduled separate gates.
 
@@ -44,7 +48,8 @@ authenticated control-plane exposure. Preserve existing working AKS/Corp/Jobs.
 Report TLS/native-API limits, do not automatically repair or redeploy the cluster.
 The new separate native five-object Online scope/Ubuntu 1 CPU/2 GiB ten-minute
 credential-free probe/new-test-ID-only deletion has scope consent; source is
-preparing. Actor/policy/budget/new plan/exact manifest remain gates; no runtime PASS.
+accepted separately from the still-pending public source PR human review.
+Base provisioning/runtime is verified, not successful-work integration GO.
 
 ## Talk it in keywords
 
@@ -105,7 +110,7 @@ This is the point of consuming your own module like a customer: the Corp path ha
 ## Run the AKS consumer only under separate approval
 
 The commands below belong to a separately approved deployment window, not the
-native SandboxGroup proposal or a request to redeploy healthy AKS now. Public
+native SandboxGroup scope or a request to redeploy healthy AKS now. Public
 clone access is not plan/apply consent; real environment/state/identity bindings
 remain private and must be explicitly confirmed against the approved target.
 

@@ -8,11 +8,32 @@ map](docs/repositories.md): the independent Corp module is public, while real
 deployment values/state and the hosted issue/queue/bot-PR target remain private.
 The session clone is not a deployment entry or evidence of target access.
 
-Keep proposed Online placement separate from achieved deployment. Do not publish
-private run/PR identifiers, raw errors/logs, credential material, or personal
-communications to explain a blocker. Current public wording is: new qualification
-blocked on an unexpected change-type check; no apply performed. A local draft
-and generated HTML are not a published revision.
+Keep achieved deployment, bounded runtime checks and full demo readiness separate.
+The released full/short deck 0.22.6 is on main/Pages: PR22 normally merged
+October 13, Pages succeeded, and both HTTP 200 responses matched the accepted
+export bytes. A later local docs or bootstrap correction is not published merely
+because that version is live; it still needs independent source/export review,
+normal merge and Pages byte verification. This publication grants no runtime,
+installer, human preflight or rehearsal GO.
+Owned hosted fork/target/publisher source is accepted/merged, not live E2E proof.
+Private publisher qualification awaits its existing human gate; owner-native
+Terraform, image/authentication and actual README bot PR remain separate.
+Owner-native source preparation is under review; executable delivery remains
+held, not deploy-on-merge or merely missing operator receipts.
+The VM source proposal remains under human review and a fresh disk-binding/SYSTEM
+preservation hold. Publish neither private topology/cost/receipts nor a deployed
+VM, installed bootstrap, hosted GO or completed human rehearsal claim.
+The separate primary Online five-object native target and one credential-free
+base probe were independently verified October 12; current exact-group access
+passed and the list was empty after cleanup. Host Copilot/Squad integration and
+stage GO remain separate. The corrected real host receipt passes LF/source
+transport, three guest checks/JSON+SHA, exit23, causal HTTPS-denial and exact
+cleanup. Independent acceptance is complete; card runtime-ready after acceptance,
+not completed human preflight/rehearsal. Earlier CRLF failure remains labeled
+learning history, not the current failed lane or a broken deployed service.
+The held Corp qualification's no-apply result is dated history, not the current
+Online state. Do not publish private target names, run/PR identifiers, raw errors/
+logs, credential material or personal communications to explain these limits.
 
 The following must stay out of this repository:
 
