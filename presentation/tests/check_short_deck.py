@@ -14,8 +14,8 @@ from check_deck import EDGE, QuietHandler
 
 
 ROOT = Path(__file__).resolve().parents[1]
-IDS = ["short-who-we-are", "short-what-we-show", "short-snippets",
-       "short-takeaways", "short-links"]
+IDS = ["short-nic26-title", "short-who-we-are", "short-what-we-show", "short-snippets",
+       "short-takeaways", "short-thank-you"]
 
 
 def main():
@@ -60,13 +60,13 @@ def main():
             page.goto(url, wait_until="networkidle")
             page.wait_for_function("() => Reveal.isReady()")
             page.evaluate("() => document.fonts.ready")
-            check("five stable slides", page.locator(".slides > section").evaluate_all(
+            check("six stable slides", page.locator(".slides > section").evaluate_all(
                 "nodes => nodes.map(node => node.id)") == IDS)
             links = page.locator('.slide-content a[href]').evaluate_all(
                 "nodes => nodes.map(node => node.getAttribute('href'))")
             local_links = [href for href in links if not href.startswith(("https:", "#"))]
-            check("all nine documentation links emitted",
-                  len([href for href in local_links if "/docs/" in href]) == 9)
+            check("all seven documentation links emitted",
+                  len([href for href in local_links if "/docs/" in href]) == 7)
             for index, href in enumerate(local_links):
                 response = context.request.get(urljoin(url, href))
                 check(f"local link {index + 1}: {href}", response.ok, response.status)
@@ -123,7 +123,7 @@ def main():
                                 const range = document.createRange();
                                 range.selectNodeContents(node);
                                 for (const textRect of range.getClientRects()) {
-                                    const card = el.closest('.short-snippet,.short-speaker-card,.short-links-grid a');
+                                    const card = el.closest('.short-snippet,.short-speaker-card,.short-close-card,.short-close-links a');
                                     if (card && !inside(textRect, card.getBoundingClientRect()))
                                         issues.push(label + ': text outside card');
                                     if (!inside(textRect, canvas)) issues.push(label + ': text outside canvas');
@@ -138,6 +138,16 @@ def main():
                             codeBlocks: [...body.querySelectorAll('pre code')].map(el => el.textContent)};
                     }""")
                     check(f"{slide_id} {width}x{height} actual bounds", not geometry["issues"], geometry)
+                    if slide_id == "short-nic26-title":
+                        visible = page.evaluate("""() => {
+                            const c = Reveal.getCurrentSlide().querySelector('.slide-content');
+                            const logo = c.querySelector('.short-title-logo').getBoundingClientRect();
+                            return {text: c.innerText.trim(), logoWidth: logo.width,
+                                    footerShown: getComputedStyle(c.querySelector('.slide-footer')).display !== 'none'};
+                        }""")
+                        check(f"title slide shows only the session name and logo {width}x{height}",
+                              visible["text"] == "No More Spec-ulation: AI Agent Teams Building Production-Grade IaC"
+                              and visible["logoWidth"] > 0 and not visible["footerShown"], visible)
                     if slide_id == "short-snippets":
                         check(f"readable complete code at {width}x{height}",
                               geometry["smallestCodeFont"] >= 17 and
@@ -157,7 +167,7 @@ def main():
                 check(f"arrow navigation {width}", page.evaluate("Reveal.getCurrentSlide().id") == IDS[1])
                 page.locator("#open-navigation").click()
                 page.locator('.navigation-dialog [data-nav="short-snippets"]').click()
-                check(f"named navigation {width}", page.evaluate("Reveal.getCurrentSlide().id") == IDS[2])
+                check(f"named navigation {width}", page.evaluate("Reveal.getCurrentSlide().id") == IDS[3])
                 page.keyboard.press("End")
                 check(f"End navigation {width}", page.evaluate("Reveal.getCurrentSlide().id") == IDS[-1])
             check("no browser errors", not report["errors"], report["errors"])

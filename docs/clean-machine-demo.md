@@ -152,8 +152,8 @@ git --version; copilot --version; squad --version
 Block 2, scaffold (after `/login` and `/exit`):
 
 ```powershell
-git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git $HOME\demo\aks-module
-Set-Location $HOME\demo\aks-module
+git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git C:\demo\aks-module
+Set-Location C:\demo\aks-module
 squad init
 git status --short
 ```
@@ -174,7 +174,7 @@ Never push from the VM. The clone is a local demo copy; the four generated workf
 
 ## Reset between takes
 
-- Fast reset (same VM): delete `$HOME\demo`, then `winget uninstall --id bradygaster.Squad`, `GitHub.Copilot`, `Git.Git`; sign out of GitHub in Edge. Use this only for rehearsal.
+- Fast reset (same VM): delete `C:\demo`, then `winget uninstall --id bradygaster.Squad`, `GitHub.Copilot`, `Git.Git`; sign out of GitHub in Edge. Use this only for rehearsal.
 - Clean reset (for rehearsal, delivery, or fallback capture): `deploy-demo-vm.yml` action `recreate-vm` in the demo-env repo. It replaces the VM, OS disk, and VM-scoped extensions and re-checks the clean state.
 
 ## Offline fallback (if the live chapter stalls)

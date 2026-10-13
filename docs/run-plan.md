@@ -12,7 +12,7 @@ Keep all verified enrichment added in the 0.21.0 deck round and carried into dec
 
 Decision: reuse `s01-outcome` as the 00:00-03:00 intro instead of adding a new `s00-intro`. Reason: it already carries the outcome and speaker visual, and a new slide would add navigation/test churn without improving the story.
 
-Clock/source baseline: released deck 0.22.6 on main/Pages, the reviewed Oct 8 eval and the 2026-10-09 timing directive. PR22 normally merged October 13; Pages succeeded and full 39-slide/short five-slide HTTP 200 bodies matched the initially accepted exports. Its notes retain accepted owned-hosted source, remaining runtime gates and the VM preservation hold. Later local correction bytes remain unpublished pending independent review, normal merge and Pages byte verification. These corrections retain 0.22.6 and update readiness prose, not slide design/clocks or runtime proof; use the matrix/cards for operational scope.
+Clock/source baseline: released deck 0.22.6 on main/Pages, the reviewed Oct 8 eval and the 2026-10-09 timing directive. PR22 normally merged October 13; Pages succeeded and full 39-slide/short six-slide HTTP 200 bodies matched the initially accepted exports. Its notes retain accepted owned-hosted source, remaining runtime gates and the VM preservation hold. Later local correction bytes remain unpublished pending independent review, normal merge and Pages byte verification. These corrections retain 0.22.6 and update readiness prose, not slide design/clocks or runtime proof; use the matrix/cards for operational scope.
 
 ## Timing contract
 

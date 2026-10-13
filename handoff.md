@@ -12,8 +12,8 @@ Updated October 13, 2026. This file describes the public deliverables and the re
 
 ## Current result
 
-- Released Reveal.js **deck 0.22.6** on main/Pages, **39 full / 5 short slides**: PR22 normally merged October 13, Pages succeeded and full/short HTTP 200 bodies matched the initially accepted exports. Later local correction bytes remain unpublished pending independent review, normal merge and Pages byte verification. Existing design/commands/media/IDs/clocks are unchanged; publication is not runtime or human stage GO.
-- A five-slide companion deck is built at `presentation\short\index.html`.
+- Released Reveal.js **deck 0.22.6** on main/Pages, **39 full / 6 short slides**: PR22 normally merged October 13, Pages succeeded and full/short HTTP 200 bodies matched the initially accepted exports. Later local correction bytes remain unpublished pending independent review, normal merge and Pages byte verification. Existing design/commands/media/IDs/clocks are unchanged; publication is not runtime or human stage GO.
+- A six-slide companion deck ending in the Thank you slide (no Links slide) is built at `presentation\short\index.html`.
 - Current delivery contract: **3:00 intro; planned content to about 55:00; 55:00-58:00 protected recovery block; 58:00-60:00 close**. The planned content includes **29:00 of live C0-C7 demo chapters** and the rest as live explanation. Questions are only if time allows. There is no scheduled Q&A block. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
 - Live-demo rule: **C0-C7 are live**, with optional reviewed fallback evidence if a chapter fails live.
 - Sessionize copy, feature guide, prompt pack, repeatability eval, and the C0-C7 operator runbook are present in the public repository.
@@ -70,7 +70,7 @@ The live demo consumer is `martinopedal/aks-automatic-demo-env`, pinning `martin
 | October 13 hosted live holds | Private publisher source accepted/merged with 18 tests, actual Docker/DNS/TLS qualification waits at existing human gate/zero steps; no image/push/digest. Owner-native Terraform sole whole-body writer, combined draft 38 Terraform mocks + 60 non-Terraform contracts PASS, full source review pending. Plan/apply/destroy currently unconditionally disabled, signer/current-head/private-plan transport/executable integration not provisioned. Source preparation only; executable delivery remains held, not deploy-on-merge or merely operator receipts. Auth/budget/owner/image/Job/actual README App-bot PR pending; old zero-step queued run untouched. |
 | October 13 VM preservation/SYSTEM hold | [Consumer PR21](https://github.com/martinopedal/aks-automatic-demo-env/pull/21) source accepted/REVIEW_REQUIRED, original Haflidi/Online gates unchanged. VM deallocated/current OS disk differs from earlier receipt; preserve both disks, never swap back/recreate/delete either. Refresh current binding/baseline/runnable SYSTEM context before plan/apply. Payload owner acceptance/harmless SYSTEM transport missing, no machine installation or VM/disk/CSE/power change. Sparse metrics do not prove CPU/RAM bottleneck or sustained causality. |
 | October 12 AKS / app read-back | Both existing Online and Corp clusters independently read through Azure MCP: Automatic SKU/Standard tier, provisioning Succeeded, power Running; no redeploy indicated by metadata. Online app GET returned HTTP 200 and branded NIC/AKS text with explicit known-demo certificate bypass, not TLS certificate validation or a fresh 29-check security suite. Nodepool/full-runtime qualification remains separate. |
-| Short deck | Five slides build from the same pinned runtime, theme, and public source links. |
+| Short deck | Six slides build from the same pinned runtime, theme, and public source links. |
 
 See [the module evidence summary](terraform/modules/aks-automatic-corp/VALIDATION.md). Local mocks do not establish private DNS, firewall routing, RBAC, policy compliance, or Azure service acceptance.
 

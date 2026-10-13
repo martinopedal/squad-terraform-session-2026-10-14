@@ -151,8 +151,8 @@ git --version; copilot --version; squad --version
 copilot
 /login
 /exit
-git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git $HOME\demo\aks-module
-Set-Location $HOME\demo\aks-module
+git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git C:\demo\aks-module
+Set-Location C:\demo\aks-module
 squad init
 git status --short
 copilot --agent squad

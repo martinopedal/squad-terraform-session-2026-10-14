@@ -161,7 +161,7 @@ full module-copy comparison.
 
 The built [Reveal presentation](presentation/index.html) ([slide-by-slide preview](presentation/README.md#preview)) reports 39 slides total. Its 60-minute live-first contract uses a 3-minute intro, 52 minutes of planned content before recovery, a visible 3-minute protected recovery window, and a 2-minute close. The 29 live demo minutes for C0-C7 sit inside that planned content. Questions happen only if time allows. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
 
-A five-slide companion cut is built at [presentation/short/index.html](presentation/short/index.html).
+A six-slide companion cut is built at [presentation/short/index.html](presentation/short/index.html).
 
 For speaker notes, serve the clone locally:
 

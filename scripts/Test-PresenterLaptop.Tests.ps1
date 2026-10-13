@@ -131,9 +131,9 @@ if ($nativePass -ne 'synthetic-native-version' -or $nativeFail -ne '(unavailable
   throw 'Actual native command success/failure/missing-command handling regressed'
 }
 'PASS 3/3 actual native helper checks (cmd.exe only; no product commands)'
-$ids = @('short-who-we-are', 'short-what-we-show', 'short-snippets', 'short-takeaways', 'short-links')
+$ids = @('short-nic26-title', 'short-who-we-are', 'short-what-we-show', 'short-snippets', 'short-takeaways', 'short-thank-you')
 $shortHtml = ($ids | ForEach-Object { "<section id=`"$_`" data-title-id=`"$_-title`"></section>" }) -join "`n"
-$fourHtml = ($ids[0..3] | ForEach-Object { "<section id=`"$_`" data-title-id=`"$_-title`"></section>" }) -join "`n"
+$fiveHtml = ($ids[0..4] | ForEach-Object { "<section id=`"$_`" data-title-id=`"$_-title`"></section>" }) -join "`n"
 $cases = @(
   @{Name='OBS absent; all 18 mocked checks PASS'; Failures=0}
   @{Name='Alternate offline mirror root passes'; MirrorRoot='C:\synthetic-mirror'; Failures=0}
@@ -163,15 +163,15 @@ $cases = @(
   @{Name='Installed-app inventory unavailable fails'; MissingWinget=$true; Failures=1; FailedChecks=@('GitHub Copilot desktop app')}
   @{Name='Failed installed-app query cannot pass'; AppExitFailure=$true; Failures=1; FailedChecks=@('GitHub Copilot desktop app')}
   @{Name='App catalog is not installed evidence'; CatalogOnly=$true; Failures=1; FailedChecks=@('GitHub Copilot desktop app')}
-  @{Name='Missing companion fails'; ShortMissing=$true; Failures=1; FailedChecks=@('live five-slide companion')}
-  @{Name='Non-200 companion fails'; ShortStatus=404; Failures=1; FailedChecks=@('live five-slide companion')}
-  @{Name='Four slides with repeated data attrs fail'; ShortHtml=$fourHtml; Failures=1; FailedChecks=@('live five-slide companion')}
-  @{Name='Five sections with incorrect slide ID fail'; ShortHtml=$shortHtml.Replace('id="short-links"', 'id="wrong-slide"'); Failures=1; FailedChecks=@('live five-slide companion')}
-  @{Name='data-id cannot replace section ID'; ShortHtml=$shortHtml.Replace('id="short-links"', 'data-id="short-links"'); Failures=1; FailedChecks=@('live five-slide companion')}
-  @{Name='Quoted data attribute cannot impersonate ID'; ShortHtml=$fourHtml + '<section data-note="id=''short-links''"></section>'; Failures=1; FailedChecks=@('live five-slide companion')}
-  @{Name='Commented slide cannot pass'; ShortHtml=$fourHtml + '<!-- <section id="short-links"></section> -->'; Failures=1; FailedChecks=@('live five-slide companion')}
-  @{Name='Script string cannot impersonate section'; ShortHtml=$fourHtml + '<script>let fake = ''<section id="short-links"></section>'';</script>'; Failures=1; FailedChecks=@('live five-slide companion')}
-  @{Name='Extra sixth section fails'; ShortHtml=$shortHtml + '<section id="extra"></section>'; Failures=1; FailedChecks=@('live five-slide companion')}
+  @{Name='Missing companion fails'; ShortMissing=$true; Failures=1; FailedChecks=@('live six-slide companion')}
+  @{Name='Non-200 companion fails'; ShortStatus=404; Failures=1; FailedChecks=@('live six-slide companion')}
+  @{Name='Five slides with repeated data attrs fail'; ShortHtml=$fiveHtml; Failures=1; FailedChecks=@('live six-slide companion')}
+  @{Name='Six sections with incorrect slide ID fail'; ShortHtml=$shortHtml.Replace('id="short-thank-you"', 'id="wrong-slide"'); Failures=1; FailedChecks=@('live six-slide companion')}
+  @{Name='data-id cannot replace section ID'; ShortHtml=$shortHtml.Replace('id="short-thank-you"', 'data-id="short-thank-you"'); Failures=1; FailedChecks=@('live six-slide companion')}
+  @{Name='Quoted data attribute cannot impersonate ID'; ShortHtml=$fiveHtml + '<section data-note="id=''short-thank-you''"></section>'; Failures=1; FailedChecks=@('live six-slide companion')}
+  @{Name='Commented slide cannot pass'; ShortHtml=$fiveHtml + '<!-- <section id="short-thank-you"></section> -->'; Failures=1; FailedChecks=@('live six-slide companion')}
+  @{Name='Script string cannot impersonate section'; ShortHtml=$fiveHtml + '<script>let fake = ''<section id="short-thank-you"></section>'';</script>'; Failures=1; FailedChecks=@('live six-slide companion')}
+  @{Name='Extra seventh section fails'; ShortHtml=$shortHtml + '<section id="extra"></section>'; Failures=1; FailedChecks=@('live six-slide companion')}
   @{Name='Single-quoted IDs pass'; ShortHtml=($ids | ForEach-Object { "<section id='$_'></section>" }) -join "`n"; Failures=0}
   @{Name='Invalid isolated MCP config fails safely'; InvalidConfig=$true; Failures=1; Checks=17; FailedChecks=@('hosted MCP configured')}
   @{Name='Missing hosted configuration fails'; MissingHosted=$true; Failures=1; Checks=17; FailedChecks=@('hosted MCP configured')}
@@ -180,7 +180,7 @@ $cases = @(
   @{Name='gh authentication failure fails'; GhFailure=$true; Failures=1; FailedChecks=@('gh signed in')}
   @{Name='Inherited credential name fails'; InheritedCredentials=$true; Failures=1; FailedChecks=@('no inherited credentials')}
   @{Name='Public MCP failure fails'; LearnFailure=$true; Failures=1; FailedChecks=@('Microsoft Learn MCP')}
-  @{Name='Four independent failures aggregate exit 4'; Terraform='1.14.7'; MissingCode=$true; MissingApp=$true; ShortHtml=$fourHtml; Failures=4; FailedChecks=@('terraform >=1.14.8 <2', 'VS Code CLI available', 'GitHub Copilot desktop app', 'live five-slide companion')}
+  @{Name='Four independent failures aggregate exit 4'; Terraform='1.14.7'; MissingCode=$true; MissingApp=$true; ShortHtml=$fiveHtml; Failures=4; FailedChecks=@('terraform >=1.14.8 <2', 'VS Code CLI available', 'GitHub Copilot desktop app', 'live six-slide companion')}
 )
 
 $fixture = Join-Path $PSScriptRoot ("preflight-fixture-{0}" -f [guid]::NewGuid().ToString('N'))
@@ -211,7 +211,7 @@ try {
     }
     if ($text -match 'synthetic-only-not-a-key|OBS installed') { throw "$($test.Name): leaked fake header or retained OBS gate" }
     if ($test.Failures -eq 0) {
-      foreach ($name in @('copilot cli 1.0.x', 'squad 1.0.1', 'VS Code CLI available', 'GitHub Copilot desktop app', 'terraform >=1.14.8 <2', 'live five-slide companion', 'hosted MCP rejects no key', 'hosted MCP accepts key (cold ok)')) {
+      foreach ($name in @('copilot cli 1.0.x', 'squad 1.0.1', 'VS Code CLI available', 'GitHub Copilot desktop app', 'terraform >=1.14.8 <2', 'live six-slide companion', 'hosted MCP rejects no key', 'hosted MCP accepts key (cold ok)')) {
         if (-not @($checkLines | Where-Object { $_ -match ('^PASS\s+' + [regex]::Escape($name) + '(?:\s|$)') }).Count) { throw "Missing PASS for $name" }
       }
     }

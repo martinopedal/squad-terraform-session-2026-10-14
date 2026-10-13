@@ -168,20 +168,20 @@ Open an existing PowerShell terminal in the VM and start with a dry run:
 
 ```powershell
 Set-Location C:\src\squad-terraform-session-2026-10-14
-.\scripts\bootstrap-demo-vm.ps1 -WhatIf -SkipLogin -RepoPath "$HOME\demo\aks-module"
+.\scripts\bootstrap-demo-vm.ps1 -WhatIf -SkipLogin -RepoPath "C:\demo\aks-module"
 ```
 
 Run the real bootstrap:
 
 ```powershell
 Set-Location C:\src\squad-terraform-session-2026-10-14
-.\scripts\bootstrap-demo-vm.ps1 -RepoPath "$HOME\demo\aks-module"
+.\scripts\bootstrap-demo-vm.ps1 -RepoPath "C:\demo\aks-module"
 ```
 
 For credential-free unattended setup (subject to the VM's installer/UAC policy):
 
 ```powershell
-.\scripts\bootstrap-demo-vm.ps1 -SkipLogin -RepoPath "$HOME\demo\aks-module"
+.\scripts\bootstrap-demo-vm.ps1 -SkipLogin -RepoPath "C:\demo\aks-module"
 if (-not $? -or $LASTEXITCODE -ne 0) { throw "Bootstrap stopped: $LASTEXITCODE" }
 ```
 
@@ -363,7 +363,7 @@ After a successful run, open **GitHub Copilot** from the Start menu, choose **Si
 Open VS Code and the CLI yourself:
 
 ```powershell
-Set-Location $HOME\demo\aks-module
+Set-Location C:\demo\aks-module
 code .
 copilot --agent squad
 ```

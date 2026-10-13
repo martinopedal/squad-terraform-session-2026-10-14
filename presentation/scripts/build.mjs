@@ -28,7 +28,7 @@ const sanitizeHighlightBundle = value => {
   return sanitized;
 };
 const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, coreRaw, coreCSS, highlightRaw, highlightCSS, notes, licenses,
-  nicLogoInk, nicLogoCyan, nicLogoLargeInk, martinPhoto, haflidiPhoto, roboto400, roboto500, roboto700, cascadiaCode] = await Promise.all([
+  nicLogoInk, nicLogoCyan, nicLogoLargeInk, martinPhoto, haflidiPhoto, martinQr, haflidiQr, roboto400, roboto500, roboto700, cascadiaCode] = await Promise.all([
   read('../docs/talk-track.md'), read('../docs/sessionize.md'), read('src/theme.css'), read('src/runtime.js'),
   read('src/version.json'), read('src/media.json'), read('src/evidence.json'),
   read('node_modules/reveal.js/dist/reveal.js'), read('node_modules/reveal.js/dist/reveal.css'),
@@ -39,6 +39,8 @@ const [talk, sessionize, theme, runtime, versionText, mediaText, evidenceText, c
   assetData('src/assets/nic26-logo-large-ink.png', 'image/png'),
   assetData('src/assets/speakers/martin.jpg', 'image/jpeg'),
   assetData('src/assets/speakers/haflidi.jpg', 'image/jpeg'),
+  assetData('src/assets/qr/martin-linkedin.svg', 'image/svg+xml'),
+  assetData('src/assets/qr/haflidi-linkedin.svg', 'image/svg+xml'),
   fontFace(400, 'node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2'),
   fontFace(500, 'node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2'),
   fontFace(700, 'node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2'),
@@ -145,7 +147,7 @@ const build = {
   runtime: 'reveal.js 5.2.1', highlight: `highlight.js ${highlightVersion} (BSD-3-Clause)`,
   generatedAt: new Date().toISOString()
 };
-const shortSlides = createShortSlides({ martinPhoto, haflidiPhoto });
+const shortSlides = createShortSlides({ martinPhoto, haflidiPhoto, martinQr, haflidiQr });
 const shortBuild = {
   version: version.version,
   variant: 'short',
