@@ -4,8 +4,12 @@ A two-speaker session by **Martin Opedal, Enterprise Cloud Solution Architect, M
 
 **Planned session:** October 14, 2026, 10:00-11:00, UTC+02:00, Room 6. Exact current NIC listing remains a manual confirmation gate.
 
+**Open this one on the presenter monitor for 2026-10-14:**
+[**docs/short-talk-track.md** - the FINAL short talk track](docs/short-talk-track.md).
+Other documents are supporting references, not alternatives.
+
 **Separate-screen open order:** [short talk track](docs/short-talk-track.md)
-(monitor cues) -> [prompt pack](docs/prompt-pack.md) (exact paste) ->
+(monitor cues, FINAL) -> [prompt pack](docs/prompt-pack.md) (exact paste) ->
 [full talk track](docs/talk-track.md) (narration) ->
 [demo runbook](docs/demo-runbook.md) (checks/recovery) ->
 [deck](presentation/index.html) (audience).

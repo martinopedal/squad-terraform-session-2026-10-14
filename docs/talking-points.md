@@ -1,6 +1,6 @@
 # Presenter talking points: 60-minute layout
 
-Concise cheat-sheet for the Reveal deck. Run order: essentials -> walkthrough -> technical evidence -> core wrap -> optional cloud tail. Monitor commands: [short-talk-track.md](short-talk-track.md). Full script: [talk-track.md](talk-track.md). Live demo runbook: [demo-runbook.md](demo-runbook.md). Product update detail: [whats-new.md](whats-new.md). Deck URL: <https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/>.
+Concise cheat-sheet for the Reveal deck (supplementary; the monitor sheet is the FINAL [short-talk-track.md](short-talk-track.md)). Run order: essentials -> walkthrough -> technical evidence -> core wrap -> optional cloud tail. Monitor commands: [short-talk-track.md](short-talk-track.md). Full script: [talk-track.md](talk-track.md). Live demo runbook: [demo-runbook.md](demo-runbook.md). Product update detail: [whats-new.md](whats-new.md). Deck URL: <https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/>.
 
 Operator references: [repo map](repositories.md), [progress matrix](sandboxing.md#october-12-progress-and-next-actions),
 [full pre-stage coverage](aca-sandboxes.md#full-test-coverage-checklist) and
