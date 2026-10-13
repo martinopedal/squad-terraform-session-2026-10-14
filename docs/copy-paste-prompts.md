@@ -218,7 +218,7 @@ account or change providers.
 
 ## C5
 
-Where: TUI, guided, validator agent. The validator prompt refers to the PowerShell block below; run that block via `!` in the same guided CLI window, once per phase (set `$phase` to `before`, then `seeded-failure`, then `repaired`).
+Order: 1 validator (paste the prompt, `before` phase), 2 coder (mutation), 3 validator (`The coder step is done. Run seeded-failure.`), 4 coder (restore, `/diff`), 5 validator (`Restoration is done. Run repaired.`). The validator has no edit tool. The validator prompt refers to the PowerShell block below; it runs that block via `!` in the same guided CLI window, once per phase, with `$phase` edited each time (`before`, then `seeded-failure`, then `repaired`). Never rerun `before`; never run `seeded-failure` before the mutation.
 
 ```text
 /agent terraform-validator
@@ -264,10 +264,10 @@ body.properties.apiServerAccessProfile.enablePrivateCluster from true to false.
 Change nothing else. Keep the tests, mocks, provider, and permissions unchanged.
 ```
 
-Where: TUI, after the seeded-failure rerun.
+Where: TUI, after the seeded-failure rerun. Step 4, coder agent.
 
 ```text
-Ask the coder to restore only that field
+Restore only enablePrivateCluster to true. Change nothing else.
 ```
 
 ```text

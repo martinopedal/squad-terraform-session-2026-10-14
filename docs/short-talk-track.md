@@ -229,16 +229,47 @@ Show skill invocation, source URL/version and narrow permission.
 
 ## C5 - before, deliberate failure, repair
 
-**TUI, guided:** `/agent terraform-validator`; paste:
+The validator has no edit tool: it checks, the coder makes the one lab change. Follow the steps in order; the PowerShell block at the end of this section is what the validator runs each time.
 
-```text
-Use docs/prompt-pack.md's complete C5 block: before, labeled coder-only mutation,
-seeded-failure, restoration, repaired. Narrowly approve each offline command;
-require intended private_automatic_contract failure/original hash. Stop on error.
-No weakened checks/provider/lock/Azure/retry.
-```
+1. **Agent:** `/agent terraform-validator`. **Do:** paste:
 
-Run this block via `!` in the same guided CLI window, once per phase (set `$phase` to `before`, then `seeded-failure`, then `repaired`)
+   ```text
+   Use docs/prompt-pack.md's complete C5 block: before, labeled coder-only mutation,
+   seeded-failure, restoration, repaired. Narrowly approve each offline command;
+   require intended private_automatic_contract failure/original hash. Stop on error.
+   No weakened checks/provider/lock/Azure/retry.
+   ```
+
+   It runs a read-only preflight, then the `before` phase, then stops because it cannot edit.
+   **Say:** the validator checks, it does not edit.
+   **Expect:** exit 0, 53 passed 0 failed including `alternate_network_payload`; `main.tf` SHA-256 recorded (original hash, do not show it in full); init uses the lock read-only and the filesystem mirror (azapi v2.12.0); `git status` may show the two `.github\agents` profile edits (local MCP profile edit, never commit, never show the URL or key).
+
+2. **Agent:** `/agent terraform-coder`. **Do:** paste the labeled **DELIBERATE LAB MUTATION**:
+
+   ```text
+   Native terraform-coder: in this disposable worktree only, change
+   body.properties.apiServerAccessProfile.enablePrivateCluster from true to false.
+   Change nothing else. Keep the tests, mocks, provider, and permissions unchanged.
+   ```
+
+   **Say:** one deliberate change, labeled, in the disposable worktree only.
+   **Expect:** Edit `main.tf` +1 -1, `enablePrivateCluster` true to false, nothing else.
+
+3. **Agent:** `/agent terraform-validator`. **Do:** say `The coder step is done. Run seeded-failure.` and approve its command.
+   **Say:** the check must fail, and fail for the intended reason.
+   **Expect:** nonzero exit, 51 passed 2 failed; only `private_automatic_contract` and `alternate_network_payload` assert 4 fail; the printed condition shows `enablePrivateCluster == true` is false. Stop on any other failure, no retry.
+
+4. **Agent:** `/agent terraform-coder`. **Do:** ask `Restore only enablePrivateCluster to true. Change nothing else.` then run `/diff`.
+   **Say:** the repair is the same one field, back to its original value.
+   **Expect:** `main.tf` diff empty relative to baseline for that file (profile edits may still show; check the specific path).
+
+5. **Agent:** `/agent terraform-validator`. **Do:** say `Restoration is done. Run repaired.` and approve its command.
+   **Say:** pass, intended fail, pass, with the original hash back.
+   **Expect:** exit 0, 53/53, `main.tf` hash equals the original.
+
+**STOP:** before/wrong failure/isolation/cut.
+
+Block run by the validator via `!` in the same guided CLI window, once per phase, with `$phase` edited each time to `before`, then `seeded-failure`, then `repaired`
 ([source](prompt-pack.md#c5---haflidi-3330-3830-cut-3715)):
 
 ```powershell
@@ -262,16 +293,7 @@ if ($phase -ne 'seeded-failure' -and $code) { throw 'Clean check failed.' }
 if ($phase -eq 'seeded-failure' -and -not $code) { throw 'Mutation was not detected.' }
 ```
 
-Then `/agent terraform-coder`; paste the labeled **DELIBERATE LAB MUTATION**:
-
-```text
-Native terraform-coder: in this disposable worktree only, change
-body.properties.apiServerAccessProfile.enablePrivateCluster from true to false.
-Change nothing else. Keep the tests, mocks, provider, and permissions unchanged.
-```
-
-After the seeded-failure rerun, ask the coder to restore only that field, inspect `/diff`, then rerun as `repaired`.
-Show pass → intended fail → pass/hash. **STOP:** before/wrong failure/isolation/cut.
+**Guard:** edit `$phase` before every run (`before`, `seeded-failure`, `repaired`); never rerun `before`. Do not run `seeded-failure` before the mutation. If the block is run manually via `!` with the wrong phase it throws `Keep the previous result; choose a new take.`, and a stray log then blocks the real run. Restore the snapshot rather than deleting logs on stage.
 
 ## C6 - save and resume the public reason
 
