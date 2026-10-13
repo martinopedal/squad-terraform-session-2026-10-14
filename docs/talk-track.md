@@ -25,6 +25,12 @@ use `\guided`, from the disclosed public `0abb202f` checkpoint. Workstation
 `C:\git` paths are preparation only. Complete conditional HUMAN sign-in before
 Plan; source/mocked checks need no Azure login. Copy exact prompts from the
 prompt pack, full logging blocks from the runbook; shell variables don't persist.
+The actual Online entry is
+[`aks-automatic-demo-env/deployments/online/main.tf`](https://github.com/martinopedal/aks-automatic-demo-env/blob/main/deployments/online/main.tf),
+VM `C:\demo\aks-automatic-demo-env\deployments\online\main.tf`.
+C1-C7 edit only the disposable copied Corp contract-test fixture, not that
+consumer or its upstream dependency. Corp's private-API assertion is not
+the Online caller's API configuration.
 
 This targets a rehearsed 60-minute show, not exploratory pair programming; the full human rehearsal is still pending. Before the timed show starts, show the untimed legal/futures notice: preview features may change; recheck status before 14 Oct 2026; no warranties; dates are subject to change. C0-C7 remain 29 minutes total. Planned content ends at 55:00, then the protected slack holds 55:00-58:00 before the close.
 
@@ -50,7 +56,12 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 ## s03-baseline | 03:00-03:30 | Start with the code you have
 
-**Martin:** The starting point is a public AKS module revision, qualified before this live run. It had useful inputs, outputs, and tests, plus inherited issues we disclose instead of rewriting history.
+**Martin:** Start the Online explanation from the actual caller
+`aks-automatic-demo-env\deployments\online\main.tf`: its inputs and network/
+identity wiring consume `terraform-azapi-aks-automatic` pinned at `v0.6.0`.
+That upstream source is a dependency, not the live entry or an authoring task.
+Our C1-C7 edits instead use the disposable copied Corp contract-test fixture,
+qualified before this run; we are not editing or deploying the Online caller.
 
 **Haflidi:** Keep upstream source, qualified module revision, and clean live checkpoint separate. The live run demonstrates one bounded change. It is not an Azure apply.
 
@@ -222,7 +233,19 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 > or policy escape. Corp-required private workloads stay Corp. GitHub source
 > visibility is separate from network/authenticated control-plane placement.
 
-**Martin:** 50:00-50:30: show the consumer-to-module diagram. Consumers pin the module code. They do not copy private inputs, backend, state, identities, or secrets.
+**Martin:** 50:00-50:30: show
+[`deployments/online/main.tf`](https://github.com/martinopedal/aks-automatic-demo-env/blob/main/deployments/online/main.tf)
+first, then the consumer-to-module diagram. Read caller inputs/wiring and the
+module `aks` dependency `git::https://github.com/martinopedal/terraform-azapi-aks-automatic.git?ref=v0.6.0`.
+Online has `enable_private_cluster=false` and
+`authorized_ip_ranges=var.api_server_authorized_ip_ranges`: public API with
+environment-owned allow-listed ranges, not the Corp fixture's private API.
+Do not inspect private variable values, backend, state, identities or secrets.
+
+> Source navigation bound October 13 to verified consumer root/origin
+> `martinopedal/aks-automatic-demo-env`, HEAD `dbb7e4c6f19a6c8fcd31ca61085e449d1a9fd87c`;
+> tracked `deployments\online\main.tf` was clean. Recheck VM metadata before use;
+> this is source evidence, not new deployment or runtime qualification.
 
 **Martin:** Ingress is the web entry, not the cluster API. The Azure DNS label reaches a load-balancer frontend for the dedicated App Routing NGINX controller. Its `/` rule sends traffic to Service port 80, then two web pods on 8080. The site ConfigMap supplies the page. HTTP redirects, but TLS uses the default self-signed certificate.
 
@@ -246,7 +269,7 @@ PowerShell source inspection only; no Azure auth, kubeconfig or secret access:
 
 ```powershell
 Set-Location C:\demo\aks-automatic-demo-env
-Get-Content .\manifests\online\ingress-controller.yaml, .\manifests\online\ingress.yaml, .\manifests\online\service.yaml
+Get-Content .\deployments\online\main.tf, .\manifests\online\ingress-controller.yaml, .\manifests\online\ingress.yaml, .\manifests\online\service.yaml
 ```
 
 ```mermaid

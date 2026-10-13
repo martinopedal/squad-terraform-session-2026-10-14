@@ -1,201 +1,312 @@
-# Short talk track - monitor cues and commands
-**Order:** essentials -> C0-C7 walkthrough -> technical evidence -> core wrap -> optional cloud tail.
-**Clock:** 55 main / 3 protected recovery / 2 close. Cuts win; one attempt, then dated fallback.
-**Stage context:** PowerShell 7 **on the VM**, using agreed `C:\demo\session-repo`
-and `C:\demo\aks-automatic-demo-env`. These intended paths are **unverified
-on the VM** until [off-stage setup](demo-runbook.md#create-and-verify-the-agreed-vm-layout)
-creates/checks them and the disposable checkpoints/mirror.
+# Short talk track - prompt-first monitor
 
-**WORKSTATION PREPARATION ONLY:** Existing local paths verified October 13, 2026
-on the workstation, **not the separately qualified C0 clean VM**:
+Use rendered Markdown (GitHub/editor preview); local HTTP serves `.md` as text.
+Prompts below go to **host Copilot**, not PowerShell. Keep native permissions.
+Full narration/clocks/recovery/close: [full track](talk-track.md).
 
-| Existing local path | Source / boundary |
-| --- | --- |
-| `C:\git\squad-terraform-session-2026-10-14\public` | `martinopedal/squad-terraform-session-2026-10-14`: session deck and copied Corp teaching module/C1-C7; not a live deployment root. |
-| `C:\git\squad-terraform-session-2026-10-14\demo-env` | `martinopedal/aks-automatic-demo-env`: live consumer source, including public ingress manifests; source navigation is not deployment consent. |
-| `C:\git\squad-terraform-session-2026-10-14\module-public` | `alz-avm-tf-demo/terraform-azapi-aks-automatic-corp`: canonical Corp module, read-only for this walkthrough; not the upstream Automatic module. |
-| `C:\git\squad-terraform-session-2026-10-14\aca-sandboxes` | Session checkpoint directory under the session repository, not an independent native consumer clone or a private target. Native consumer source belongs in `demo-env\deployments\aca-sandboxes-online`. |
+| Flow | Entry | Work/result |
+| --- | --- | --- |
+| [Hosted Squad](#hosted-demo) | Approved GitHub issue → label once → poller/queue | Hosted ACA agent Job → matching bot PR/README diff |
+| [Native Sandbox](#native-demo) | Prompt host Squad on the VM; **no issue assignment or queue** | Host agent executes prepared MicroVM fixture → results → review |
 
-These paths establish existing directories/source ownership, not clean checkpoints, runtime access or rehearsal GO. The upstream Automatic module is `martinopedal/terraform-azapi-aks-automatic`; C0 creates its new clone on the clean host below. [Repository ownership](repositories.md).
-`!` = whole shell block, same CLI window; variables do not survive turns. Slash actions = TUI; other text = human prompt; no private root/evidence.
-No secrets/state, blanket approval, provider/lock upgrades, live plan/apply/import/state removal.
-**Before stage:** HUMAN completes only missing session/operation sign-in
-[once, before Plan](demo-runbook.md#conditional-human-setup-before-plan).
-Source/mocked C1-C7 need no Azure login. Optional GitHub MCP is read/context
-only here; working `gh` stays. Open [prompt pack](prompt-pack.md) for exact
-paste and [runbook](demo-runbook.md) for full checks, not extra narration.
+## Prepare once - Squad creates paths before you use them
 
-## Essentials | Martin says: artifact • owner • reason • evidence • human stop
-**WHERE:** VM `C:\demo\session-repo`, after setup verification; read-only orientation, not a write checkpoint.
-**TYPE:** shell:
+**TUI, existing reviewed public session checkout:** start `copilot --agent squad`,
+confirm `/cwd` and selected Squad. If no public checkout exists, an operator
+first uses [public clone setup](demo-runbook.md#create-and-verify-the-agreed-vm-layout).
+Never launch from the private coordinator or a not-yet-created A/B/guided root.
+Paste:
+
+```text
+Host Squad: prepare off-stage using docs/demo-runbook.md's existing VM layout,
+disposable-checkpoint and filesystem-mirror blocks, not a new helper/deployment.
+Create/verify C:\demo\session-repo and C:\demo\aks-automatic-demo-env: exact
+published origins, heads, clean status; stop/preserve dirt or mismatched paths.
+From the public session repository use reviewed commit
+0abb202f34af385b7e0a34b1775643aa5b4871ed. Create the parent take directory and
+detached sparse Git worktrees C:\demo\checkpoints\take-20261014\A, B and guided
+using git worktree add (not Set-Location). Require identical clean HEADs, profiles,
+terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl without the new test.
+Create sibling evidence/checkpoint.txt, checkpoint-tree.txt as documented.
+Do NOT run the published terraform providers mirror download block.
+Copy only the operator's qualified Windows AzAPI2.12.0 mirror packages into
+take/offline/providers; write offline/terraform.tfrc using the published
+filesystem_mirror structure, actual take path/AzAPI include, no direct fallback.
+Verify locked package hashes. Missing mirror/isolation is BLOCKED.
+Inspect each command for narrow approval. No downloads/install/Azure/credentials,
+private-history copy/reset/force/delete/overwrite. Preserve contributor changes.
+Return actual roots, pin/status/files/producers; no unverified VM-path claim.
+```
+
+Expect real **A/B/guided/offline/evidence** results; existing/dirty/mismatched take
+= STOP. The published blocks create paths; **no new preparation script**.
+
+## Essentials - start the verified VM root
+
+**Shell, only after preparation passes:**
+
 ```powershell
 Set-Location 'C:\demo\session-repo'
-git rev-parse --show-toplevel
-git log -1 --oneline
-git status --short
-git --version; copilot --version; squad --version
 copilot --agent squad
 ```
-TUI: `/cwd`, `/agent`, `/model` → `claude-sonnet-5`, `/instructions`, `/permissions`.
-Small read-only brief, `/agent terraform-reviewer`: `Explain module versus caller ownership and the private API invariant in five bullets. No edits, commands or Azure access.`
-**SHOW:** `/cwd`, instructions, three project profiles and permissions.
-**EXPECT:** five sourced bullets on module/caller/private API; no edits.
-**STOP:** wrong root/missing profiles = exit/restart, not reinstall Squad 1.0.1.
-## C0 | Haflidi 05:30-08:30, CUT 07:45 | install • init • hire • verify
-**WHERE:** separately qualified clean host; current VM/Haflidi/disk/SYSTEM gates stay.
-**TYPE:** [complete install/PATH block](clean-machine-demo.md#the-live-chapter-target-300),
-then HUMAN TUI `/login`, `/exit`. This creates a **new** upstream Automatic clone
-at `$HOME\demo\aks-module`, not an existing preparation-machine path:
-```powershell
-git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git $HOME\demo\aks-module
-Set-Location $HOME\demo\aks-module
-squad init
-git status --short
-copilot --agent squad
-```
-Prompt: `We maintain a reusable Terraform module for AKS Automatic on azapi that deploys into an existing Azure landing zone. Work is Terraform module code, terraform test contract tests, and consumer documentation. Propose a small team.`
-Human confirms roster; TUI `/exit`; shell `squad doctor`.
-**SHOW:** versions, created team files, roster confirmation and doctor.
-**EXPECT:** real install/init/hire/diagnostics, not code correctness.
-**STOP:** unqualified host or 07:45 stall = disclose fallback; no VM repair.
-## C1 | Martin drives / Haflidi compares 12:30-15:30, CUT 14:45 | fixed inputs
-**WHERE:** new public checkpoints
-`C:\demo\checkpoints\take-20261014\A`
-and `\B`, not the C0 upstream clone.
-**SETUP, paths not yet verified on VM:** the
-[runbook creation block](demo-runbook.md#create-the-disposable-c1-c7-checkpoints)
-must create/qualify these paths first: same starting commit and clean status,
-no private histories. The existing `public` clone isn't either checkpoint.
-**TYPE:** [A/B shell entry + exact prompt](prompt-pack.md#c1---martin-drives-haflidi-compares-1230-1530-cut-1445);
-TUI `/new`, `/agent` → Squad, `/model`, `/plan`, `/rename C1-A`; repeat `C1-B`.
+
+**TUI:** `/cwd`, `/agent`, `/instructions`, `/permissions`; show root/Squad/profiles.
+[Small read-only task](prompt-pack.md#essentials---start-here).
+**STOP:** wrong root/profile; restart correctly, not reinstall/reinitialize.
+[Human sign-in before Plan](demo-runbook.md#conditional-human-setup-before-plan);
+source/mocked checks need no Azure login.
+
+## C0 - install, initialize, confirm a team
+
+**Shell/TUI:** [clean-host recipe](clean-machine-demo.md#the-live-chapter-target-300).
+New `$HOME\demo\aks-module` clone → `squad init` → roster → `squad doctor`.
+Show files/diagnostics, not correctness.
+**STOP:** unqualified clean host or cut = dated fallback, no VM repair.
+
+## C1 - compare two bounded plans
+
+**Shell/TUI:** use the [A/B entry and exact request](prompt-pack.md#c1---martin-drives-haflidi-compares-1230-1530-cut-1445)
+only after preparation verified both roots at the same checkpoint.
+Same model, native `/plan`, sessions `C1-A`/`C1-B`; show one consequence.
+**STOP:** root/checkpoint/model mismatch or cut; identical plans are valid.
+
+<a id="native-plan-with-squad"></a>
+
+## C2 - native Plan with selected Squad, then code-only approval
+
+1. **Shell/TUI:** [start guided](prompt-pack.md#c2---martin-1730-2130-cut-2030);
+   `/cwd`, `/agent` → Squad. Enter native `/plan`; verify displayed **Plan**.
+   Selecting Squad, asking “plan”, or `squad init` is not that transition.
+   Paste:
+
+   ```text
+   Squad: plan only the alternate_network_payload regression in
+   terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl.
+   Use pod 172.21.0.0/16, service 10.241.0.0/16, DNS 10.241.0.10; four separate
+   requested-body/private-API assertions, existing AzAPI mocks and command=plan.
+   Coordinate read-only file/invariant/check planning, one future writer.
+   No edits/commands/implementation/Azure/deploy.
+   ```
+
+2. **TUI:** inspect the actual plan; human revises scope, then inspect the re-plan:
+
+   ```text
+   Revise only: keep C3 limited to that test file, not README or redesign.
+   Unchanged assertions/offline checks first; separate labeled C5
+   enablePrivateCluster mutation/restoration. Show criteria; no implementation.
+   ```
+
+3. **TUI:** human sends exact approval:
+
+   ```text
+   I approve repository code only: C3 may add the agreed four-assert regression
+   in tests\contract.tftest.hcl. C5 may separately change then restore only
+   body.properties.apiServerAccessProfile.enablePrivateCluster in main.tf,
+   in guided only. Preserve other source/mocks/locks. Do not implement yet.
+   No Azure/deploy/install/state/upgrade/publish/blanket or automatic approval.
+   ```
+
+4. **TUI:** **Shift+Tab** until the mode indicator visibly says **Interactive**,
+   not Plan/Autopilot, **before** coder/commands. `/exit` exits the entire CLI.
+
+**STOP:** missing indicator/approval/checkpoint/mirror or cut = [C2 fallback](demo-runbook.md#c2-revise-and-approve--1730-2130--4-minutes).
+Actual batch check: bundled CLI1.0.95 (`--no-auto-update`), launcher/help1.0.96,
+fresh child Squad1.0.1/native Plan events,52/52 source hashes unchanged.
+Not parent reload: human revision/approval/visible indicator/exit remain
+**untested manual checks**. Recheck the VM's actual launch version.
+
+## C3 - one coder, actual handoffs
+
+**TUI, guided:** `/agent squad`; paste [coordination request](prompt-pack.md#c3---martin-2200-2600-cut-2500),
+then `/agent terraform-coder`; paste **B1v2** from that same section.
+Show actual starts/handoffs and one changed test/four asserts/error messages.
+**STOP:** concurrent writers, missing handoffs or cut; switching profiles is not parallel work.
+
+## C4 - base skill and source only
+
+**TUI, guided:** `/agent squad`; paste [test-discipline/MCP request](prompt-pack.md#c4---martin-2930-3330-cut-3230---base-only).
+Show skill invocation, source URL/version and narrow permission.
+**STOP:** missing skill/MCP, failed lookup or cut; BASE ONLY, no cloud extra.
+
+## C5 - before, deliberate failure, repair
+
+**TUI, guided:** `/agent terraform-validator`; paste:
+
 ```text
-Plan only: add alternate_network_payload to the existing module contract tests. Use pod 172.21.0.0/16, service 10.241.0.0/16, and DNS 10.241.0.10.
-Assert propagation into the requested body while preserving the private API. Don't edit files or deploy. Identify affected files, one writer, and checks.
+Use docs/prompt-pack.md's complete C5 block: before, labeled coder-only mutation,
+seeded-failure, restoration, repaired. Narrowly approve each offline command;
+require intended private_automatic_contract failure/original hash. Stop on error.
+No weakened checks/provider/lock/Azure/retry.
 ```
-**SHOW:** one difference/consequence, not verbosity.
-**EXPECT:** same model/checkpoint; identical outcomes are valid.
-**STOP:** missing qualified paths or 14:45 = dated fallback; no prose-fishing retry.
-## C2 | Martin 17:30-21:30, CUT 20:30 | plan • revise • code-only approval
-**WHERE:** VM `C:\demo\checkpoints\take-20261014\guided`, for C2-C7.
-**SETUP, guided path not yet verified on VM:** create/qualify it with
-the same runbook block; disclose starting commit/status. Never substitute
-`public` or canonical `module-public`. Confirm `/cwd` and the shell's actual
-directory before each whole `!` block; qualify `..\offline\terraform.tfrc` first.
-**TYPE:** guided shell entry in prompt pack; TUI `/new`, `/rename guided-clean-run`,
-`/agent` → Squad, `/instructions`, `/plan`.
+
+[Exact block/mutation](prompt-pack.md#c5---haflidi-3330-3830-cut-3715).
+Show pass → intended fail → pass/hash. **STOP:** before/wrong failure/isolation/cut.
+
+## C6 - save and resume the public reason
+
+**TUI, guided:** `/agent squad`; paste [public Scribe request and resume sequence](prompt-pack.md#c6---haflidi-4200-4500-cut-4415).
+Record first, then `/new`, `/resume guided-clean-run`, `/cwd`, `/context`, `/usage`;
+ask `Read the saved decision; cite its file and the constraints for the next change.`
+**STOP:** missing record/resume/citation or cut; hide unrelated sessions.
+
+## C7 - offline checks, fresh reviewer
+
+**TUI, guided:** `/agent terraform-validator`; paste:
+
 ```text
-@terraform\modules\aks-automatic-corp\main.tf @terraform\modules\aks-automatic-corp\variables.tf @terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl
-This is prepared, qualified code. Plan the C1 regression test and its README explanation. Keep all eight inputs, six outputs, and the AzAPI resource intact.
-Plan a separately labeled enablePrivateCluster mutation and repair. No implementation, Azure lookup, apply, dependency upgrade, or state operation.
+Use the whole C7 block in docs/prompt-pack.md: local Check, qualified mirror,
+logs/exits/module+caller tests. Narrowly approve commands, stop at first failure.
+Return diff/revision/files/results; no Azure/upgrades.
 ```
-Revise: `Put unchanged payload assertions and offline checks before documentation; exclude infrastructure redesign.`
-**SHOW:** `/session plan`, genuine revision, human exact code-only approval; leave Plan mode via UI.
-**EXPECT:** one test writer, four payload/private API assertions; no implementation yet.
-**STOP:** missing checkpoint/mirror, unapproved scope, or 20:30 = fallback. Not deployment consent.
-## C3 | Martin 22:00-26:00, CUT 25:00 | genuine Squad • one writer • handoff
-**WHERE:** same guided CLI.
-**TYPE:** TUI `/agent squad`, `/tasks`, `/agent list`, `/mcp`; prompt: `Squad: assign independent read-only source research and review preparation. One coder owns the test; return actual task handoffs.`
-Then `/agent terraform-coder`; paste B1v2:
+
+[Exact checks/review](prompt-pack.md#c7---haflidi-4700-5000-cut-4915).
+`/new`, `/agent terraform-reviewer`; paste that section's exact-diff brief;
+`/agent squad` for human acceptance. **STOP:** tool/check/diff/cut; mocks aren't Azure evidence.
+
+## Technical evidence - public source and browser
+
+**TUI:** paste:
+
 ```text
-Work only in terraform\modules\aks-automatic-corp.
-Add one run block named alternate_network_payload to tests\contract.tftest.hcl. Reuse the existing AzAPI mock and command = plan. Use pod CIDR 172.21.0.0/16, service CIDR 10.241.0.0/16 and DNS service IP 10.241.0.10. Write four separate assert blocks, one each: the pod CIDR, the service CIDR and the DNS service IP propagate into the requested cluster body, and the API server stays private. Each assert gets its own error_message. Change only tests\contract.tftest.hcl. Don't deploy, don't change providers or the lock file.
+Read C:\demo\aks-automatic-demo-env\deployments\online\main.tf FIRST: actual
+Online caller/inputs/network+identity wiring. module aks consumes
+git::https://github.com/martinopedal/terraform-azapi-aks-automatic.git?ref=v0.6.0,
+a dependency, not live entry
+or upstream authoring. enable_private_cluster=false; authorized_ip_ranges
+uses env-owned var.api_server_authorized_ip_ranges, not Corp's private API.
+C1-C7 edit a disposable copied Corp test fixture, not this caller/upstream.
+Then read manifests/online ingress-controller.yaml, ingress.yaml, service.yaml
+for browser→LB→NGINX→Service→pods. No commands/private values/state/Azure.
 ```
-**SHOW:** real task starts/diff/handoffs; manual selection alone isn't parallel work.
-**EXPECT:** only `tests\contract.tftest.hcl` changed, four separate asserts/error messages.
-**STOP:** concurrent writers, missing actual handoffs, or 25:00. B1v2 5/5 is historical.
-## C4 | Martin 29:30-33:30, CUT 32:30 | BASE ONLY • skill • source • permission
-**WHERE:** same guided host, BASE ONLY, not either ACA demo.
-**TYPE:** TUI `/agent squad`, `/skills info test-discipline`, `/mcp`; prompt:
-```text
-Invoke test-discipline now. Identify which existing contract assertions must remain unchanged during the mutation.
-Through Microsoft Learn MCP, read-only search/fetch AKS Automatic private/custom network requirements; cite source/version for private API and hosted-system subnets. No Azure account or provider changes.
-```
-**SHOW:** actual skill invocation, source URL/version and `/permissions` narrow read-only request.
-**EXPECT:** unchanged assertions and sourced private/custom-network constraints.
-**STOP:** missing skill/server, failed lookup, or 32:30. Failed stays failed; no cloud extra.
-## C5 | Haflidi 33:30-38:30, CUT 37:15 | before • deliberate fail • narrow repair
-**WHERE:** same guided CLI; isolated credential-free Terraform subprocess/mirror.
-**TYPE:** `/agent terraform-validator`; `!` paste the **whole**
-[C5 logging block](demo-runbook.md#c5-seed-fail-repair--3330-3830--5-minutes)
-from prompt pack, first `before`, then `seeded-failure`, then `repaired`.
-Approve each command; preserve source hash. Coder alone changes
-`body.properties.apiServerAccessProfile.enablePrivateCluster` true -> false,
-then restores that one field. `/review` is read-only built-in mutation review.
-**SHOW:** DELIBERATE LAB MUTATION, exact assertion failure, `/diff`, numeric exits/hash.
-**EXPECT:** pass -> intended `private_automatic_contract` failure -> pass/original hash.
-**STOP:** before fails, wrong failure, unavailable isolation, or 37:15 = saved logs.
-[Why every check exists](demo-runbook.md#what-the-offline-powershell-checks-do);
-don't split environment variables across turns or omit exit guards.
-## C6 | Haflidi 42:00-45:00, CUT 44:15 | public reason • resume • cite
-**WHERE:** same guided CLI; public decision only.
-**TYPE:** `/agent squad`; public-only prompt:
-```text
-Scribe: record the public-only decision under .squad\decisions\inbox\ for later
-merge into .squad\decisions.md. Include private API, caller-owned provider/backend,
-network regression, labeled mutation/restoration, exact checks and evidence
-limits. No private targets, histories, credentials or full conversations.
-```
-TUI `/new`, `/resume guided-clean-run`, `/cwd`, `/context`, `/usage`.
-Prompt: `Read the saved decision; cite its file and the constraints for the next change.`
-**SHOW:** saved public file, resumed session and cited reason; hide unrelated sessions.
-**EXPECT:** next task cites private API/caller/check constraints.
-**STOP:** missing resume/citation or 44:15 = saved decision, not fabricated recovery.
-## C7 | Haflidi 47:00-50:00, CUT 49:15 | fixed offline checks • independent review
-**WHERE:** same guided isolated subprocess; TFLint 0.64.0 already qualified.
-**TYPE:** `/agent terraform-validator`; `!` paste the **whole**
-[C7 logging block](demo-runbook.md#c7-validate-the-consumer-and-review--4700-5000--3-minutes)
-from prompt pack. It defines `Check` locally and stops at the first failure.
-`/diff`; `/new`, `/agent terraform-reviewer`. Prompt: `Review this exact diff/revision/files and sanitized validator evidence. Report severity/file/line/consequence; missing evidence is blocked. No edits or commands.`
-**SHOW:** fmt/init/validate/lint/module+caller tests, logs/exits, exact diff and independent findings.
-**EXPECT:** all clean exits `0`, actual fresh-context review, `/agent squad` + human acceptance.
-**STOP:** missing/wrong tools, failed clean check, unrelated diff or 49:15 = reviewed fallback.
-Mocks aren't Azure proof; source-only checks need no Azure login.
-## Technical evidence / core wrap | Martin + Haflidi, finish by 55:00
-**WHERE:** VM consumer root; browser public app. **TYPE:** shell block below,
-then 50:30-51:00 browser `https://aks-online-demo.swedencentral.cloudapp.azure.com/`
-(known certificate warning).
-Say: module/caller • typed inputs • Automatic/Standard • private API • pins/root state • PR/checks/review/plan/human gate/OIDC/read-back.
-Current app/TLS-bypassed evidence is not full health or fresh 29/29. No live Terraform apply blob.
-Ingress keywords: Azure DNS label/LB -> dedicated managed NGINX -> `/` rule -> Service 80 -> two web pods 8080.
-Site ConfigMap mounts page/config; namespace policy admits App Routing traffic. HTTP redirects; default self-signed TLS, no trusted cert/AGC/ALB.
-Source-only screen cue, pre-staged PUBLIC consumer clone; no login/kubeconfig/secret queries:
-```powershell
-Set-Location 'C:\demo\aks-automatic-demo-env'
-Get-Content .\manifests\online\ingress-controller.yaml, .\manifests\online\ingress.yaml, .\manifests\online\service.yaml
-```
-**SHOW:** exact manifests/page. **EXPECT:** source route and branded app, not
-renewed cluster health/trusted TLS. **STOP:** unavailable app = dated screenshot,
-no repair; core wrap by 55:00. [Source trace](talk-track.md#s20-consumer--5000-5300--an-online-consumer).
-```mermaid
-flowchart LR
-  accTitle: Online demo request capabilities
-  accDescr: Public source flow from browser through Azure load balancer and managed NGINX to the Service and web pods, with a mounted site ConfigMap. Not live health proof.
-  B["Browser"] --> L["Azure LB / DNS label"]
-  L --> C["App Routing NGINX"]
-  C -->|"/ rule"| S["ClusterIP Service 80"]
-  S --> P["2 web pods 8080"]
-  K["Site ConfigMap"] --> P
-```
-53:00-55:00 limits/core wrap first; protect 55:00-58:00 recovery and 58:00-60:00 close. Questions only if time allows.
-## Optional final extras - only if time and live gates permit
-**DEAD LAST:** only genuine early finish after ALL core work/wrap; never compress core; protect 55:00-58:00 recovery / 58:00-60:00 close.
-**1. Squad on ACA Apps/Jobs - Haflidi; currently HELD, read-only or SKIP.** Original service untouched.
-**WHERE:** VM `C:\demo\hosted-target`, approved private target;
-intended optional `C:\demo\hosted-target` is not verified.
-1. **Haflidi, GitHub Issues:** SHOW existing approved README task; EXPECT correct body/no prior attempt; otherwise STOP.
-2. **Operator, VM PowerShell:** [whole Card A block](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr), `gh issue edit` with `squad:ripley` once; EXPECT label, no new issue.
-3. **Operator, hosted poller:** WAIT five-minute schedule; SHOW same-issue queue receipt; EXPECT automatic enqueue, not `gh workflow run`.
-4. **Operator, Azure portal:** Container App Jobs -> `caj-squad-aca-agent-corp-ne` -> Executions; SHOW matching actual worker/result. Missing correlation = STOP.
-5. **Haflidi, GitHub PR:** linked same-issue bot PR -> Files changed -> `README.md`; SHOW real diff/checks, EXPECT human review, not merge.
-**STOP:** held image/auth/chain, prior attempt, missing approved binding, no time = SKIP.
-No new issue, retry, unsafe Job start, auth mint, merge, or original-service rebuild.
-**2. ACA Sandboxes - Martin; own human GO or SKIP.** Host Squad/controller, native MicroVM, not Apps/Jobs or guest OAuth.
-**WHERE:** VM `C:\demo\session-repo`; separate Online
+
+[Actual caller](https://github.com/martinopedal/aks-automatic-demo-env/blob/main/deployments/online/main.tf);
+verified consumer HEAD `dbb7e4c6f19a6c8fcd31ca61085e449d1a9fd87c`, recheck on VM.
+**Browser:** `https://aks-online-demo.swedencentral.cloudapp.azure.com/`
+(known certificate warning); show branded page, not renewed health/trusted TLS.
+**STOP:** unavailable page = dated screenshot, no repair; [full core wrap](talk-track.md).
+
+<a id="hosted-demo"></a>
+
+## Hosted Squad on ACA Apps/Jobs - optional final tail, first
+
+**PREP:** operator creates/verifies `C:\demo\hosted-target` using
+[existing hosted checkout/recipe](demo-runbook.md#card-a-haflidi-hosted-squad-on-aca-issue-to-bot-pr).
+Privately supply approved target/issue/App, poller Job/execution/log view and
+worker binding. Current image/auth/chain/human GO is **HELD**, not permission.
+
+1. **TUI, host Squad in that verified root:** paste this RUN request only after fresh GO:
+
+   ```text
+   Host Squad: read C:\demo\session-repo\docs\demo-runbook.md's hosted recipe and
+   C:\demo\session-repo\docs\prompt-pack.md's
+   "Original hosted Squad issue-to-PR work" exact README body. Bind the owner's
+   target/issue/App/poller/worker receipt; missing GO/binding is BLOCKED.
+   Bind $targetRepo/$demoIssue to that receipt in each whole command invocation;
+   don't assume shell variables survive TUI turns. Read:
+   gh issue view $demoIssue --repo $targetRepo --json title,body,labels,state
+   Compare exact README scope/prior-attempt receipt; stop if attempted. Only
+   after explicit human one-attempt permission run
+   gh issue edit $demoIssue --repo $targetRepo --add-label squad:ripley ONCE.
+   No held execution/new issue/workflow dispatch/Job start/auth mint/retry.
+   Return same issue/label; manual squad-queue.yml status isn't enqueue evidence.
+   ```
+
+2. **Browser:** approved issue → show the one label. Azure portal →
+   Container App Jobs → **owner-bound poller Job** → Executions →
+   approved execution → Logs (or supplied approved log URL). Wait for:
+   `Approved issue #NUMBER accepted as queue message MESSAGE_ID; processing label recorded.`
+   This is the **same-issue queue receipt**, not a guessed timestamp.
+
+3. **Browser:** existing `caj-squad-aca-agent-corp-ne` → Executions →
+   matching worker execution → Logs. Match
+   `Queue message=MSG_ID; issue #ISSUE_NUMBER; agent=AGENT_TYPE; mode=MSG_TYPE; repo=GITHUB_REPO`.
+   Require **message ID + issue + repository + agent**, then real worker/result.
+
+4. **Browser:** that issue's linked approved App-bot PR → Files changed →
+   `README.md`; show actual paragraph/diff/checks and human review handoff.
+   Error-only stubs, unrelated PRs and Job success alone fail.
+
+**STOP:** hold, prior attempt, missing log binding/correlation/result or spare time =
+dated original evidence/SKIP; original implementation untouched, no merge/retry.
+
+<a id="native-demo"></a>
+
+## Native ACA Sandboxes - optional final tail, dead last
+
+**PREP:** verified `C:\demo\session-repo`; separate Online target:
+subscription `714ac8e0-8874-428d-a4f3-79bd3765bfed`,
 `rg-aca-sandboxes-online-swc-001` / `sbg-squad-nic2026-online-swc-001`, `swedencentral`.
-1. **Martin, VM PowerShell:** `copilot --agent squad`; SHOW `/cwd`/Squad; EXPECT host control. Missing approved ID/fixture/hash/GO = STOP.
-2. **Martin, Copilot TUI:** [basic prompt](prompt-pack.md#native-host-squad-isolated-work), `aca-sandboxes`; EXPECT inspected `sh /root/native-validation.sh` once, then filesystem `/root/native-result.json` readback.
-3. **Haflidi, guest results:** SHOW JSON/SHA/numeric exits, approved deliberate exit23 + exact-sandbox causal denial; missing/mismatched result = STOP.
-4. **Martin, host review:** SHOW validator/fresh reviewer handoff; EXPECT findings/limits, not guest-agent or hosted-Job proof. [Card B](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad).
-**STOP:** current prepared ID/guest staging not yet established, missing human GO, wrong target/error/no time = SKIP.
-26.768s/85 rehashes isn't human rehearsal; status/doctor isn't the demo.
-No create/upload/install/rule change, host-auth copy, or retry. Owned cleanup off-stage.
+No current prepared ID/guest staging/human GO established; earlier sandbox deleted.
+
+1. **TUI, host Squad:** paste this OFF-STAGE preparation/precheck request:
+
+   ```text
+   Read docs/demo-runbook.md's native recipe and docs/fixtures/native-validation.sh.
+   Bind only the approved current ID/target above; match get to current receipt,
+   not doctor/list. Missing ID/consent/source/hash is BLOCKED.
+   Canonical fixture is684 LF bytes, source SHA256
+   75d8fc0f08005317bbdc21c8de9ad43f3b7e06736e419014e7cf8678b9cab2a5.
+   The published local staging block produces C:\demo\native-fixture\native-validation.sh.
+   Only separately approved off-stage, bind $sandboxId/current ID and
+   $nativeTarget/exact subscription/RG/group/region above; verify local684LF/SHA.
+   Use --group for sandbox get/exec/fs/egress, NOT diagnostic --sandbox-group.
+   Inspect get before the approved write:
+   aca sandbox fs write --id $sandboxId --path '/root/native-validation.sh' --file 'C:\demo\native-fixture\native-validation.sh' @nativeTarget -o json
+   Stop on error/unapproved staging; fs cat guest source, decode .content,
+   verify684LF/SHA. Return ID/target/revision/hash. No create/install/auth-copy/
+   retry or upload while held/on stage; missing stage GO stops RUN.
+   ```
+
+   [Existing canonical staging/operations](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad).
+
+2. **TUI, after human GO:** confirm `/cwd`, `/agent` → Squad; paste:
+
+   ```text
+   Invoke aca-sandboxes: host Squad/worker, not guest agents. Use captured
+   approved ID/target/hash and docs/prompt-pack.md "Native host Squad isolated work".
+   Inspect exact-ID calls/native permissions; use published basic-demo block:
+   aca sandbox exec --id $sandboxId -c 'sh /root/native-validation.sh' @nativeTarget -o json
+   aca sandbox fs cat --id $sandboxId --path '/root/native-result.json' @nativeTarget -o json
+   Once: require0/three true checks/source+UTF-8-LF resultSHA/RESULT_SHA256.
+   Separately approved only: deliberate sh -c 'exit 23' once, require23;
+   whole published causal-denial block, one example.com HTTPS403 plus NEW
+   same-ID timestamped denied audit (not403 alone). Missing audit BLOCKED.
+   No issue queue/create/upload/install/auth/rule change/guest agents/retry.
+   Return tools/JSON/exits/hashes/audit/limits.
+   ```
+
+3. **TUI/returned output:** show schema `native-squad-validation-v1`,
+   `arithmetic=true`, `uppercase=true`, `fixtureHash=true`, matching SHA,
+   exits0/23 and fresh same-ID denied audit. Status/doctor isn't the demo.
+
+4. **TUI:** `/agent terraform-validator`; provide sanitized actual evidence,
+   current ID/target/source revision (inline or approved host evidence path); paste:
+
+   ```text
+   Read-only host validation: cite evidence/ID/target/revision; schema/three
+   checks/canonical source+UTF-8-LF resultSHA matching RESULT_SHA256/0+23 exits/
+   NEW same-ID example.com denied audit within probe timestamps, using the
+   published exact hashes. Missing evidence BLOCKED. Return per-check results/
+   limits; no commands/edits/auth/guest agents/deploy/lifecycle/retry/acceptance.
+   ```
+
+5. **TUI:** `/new`, `/agent terraform-reviewer`; supply the saved handoff/evidence; paste:
+
+   ```text
+   Independently review supplied evidence/validator handoff. Cite ID/target/
+   revision/evidence path; verify schema/three checks/source+resultSHA/0+23/
+   fresh same-ID denied audit against published hashes. Missing evidence BLOCKED.
+   Report consequence/limits to human; no commands/edits/guest agents/issue queue/
+   deploy/retry/automatic acceptance.
+   ```
+
+**STOP:** missing current ID/staging/GO, mismatched target/hash/result/audit/error or
+no spare time = accepted dated trace/SKIP; owned cleanup off-stage only.
+
+## Workstation preparation map - not VM stage commands
+
+Verified `C:\git\squad-terraform-session-2026-10-14` roots:
+`public` session source; `demo-env` consumer; `module-public` canonical Corp
+module (read-only); `aca-sandboxes` session checkpoint, **not a native consumer**.
+Native consumer source: `demo-env\deployments\aca-sandboxes-online`.
+[Ownership](repositories.md). These roots prove neither VM paths nor live GO.
