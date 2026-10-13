@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
 import { applyNoteFactOverrides, demoContent, slides } from '../src/slides.mjs';
 import { createShortSlides } from '../src/short-slides.mjs';
 
@@ -45,26 +47,36 @@ function assertShortTrackLocalPaths(text) {
   for (const folder of ['public', 'demo-env', 'module-public', 'aca-sandboxes']) {
     assert.ok(text.includes(`\`${localRoot}\\${folder}\``), `${folder} has a dated existing local path`);
   }
-  assert.match(text, /verified October 13, 2026.*not the separately qualified C0 clean VM/);
+  assert.match(text, /WORKSTATION PREPARATION ONLY/);
+  assert.match(text, /verified October 13, 2026[\s\S]*not the separately qualified C0 clean VM/);
   assert.match(text, /canonical Corp module, read-only.*not the upstream Automatic module/);
   assert.match(text, /Session checkpoint directory.*not an independent native consumer clone or a private target/);
   assert.match(text, /Native consumer source belongs in `demo-env\\deployments\\aca-sandboxes-online`/);
-  assert.doesNotMatch(text, /C:\\demo\\(?:session-repo|aks-automatic-demo-env|hosted-target)/);
-  for (const heading of ['Essentials', 'Optional final extras']) {
-    assert.ok(section(heading).includes(`Set-Location '${localRoot}\\public'`), `${heading} navigates the existing public clone`);
-  }
-  assert.ok(section('Technical evidence / core wrap').includes(`Set-Location '${localRoot}\\demo-env'`));
+  assert.match(text, /Stage context[\s\S]*on the VM[\s\S]*unverified[\s\S]*off-stage setup/);
+  assert.ok(section('Essentials').includes(String.raw`Set-Location 'C:\demo\session-repo'`));
+  assert.ok(section('Technical evidence / core wrap').includes(String.raw`Set-Location 'C:\demo\aks-automatic-demo-env'`));
+  assert.doesNotMatch(text, /Set-Location 'C:\\git\\/);
   assert.match(section('Technical evidence / core wrap'), /Get-Content \.\\manifests\\online\\ingress-controller\.yaml, \.\\manifests\\online\\ingress\.yaml, \.\\manifests\\online\\service\.yaml/);
   assert.match(section('C0'), /creates a \*\*new\*\* upstream Automatic clone/);
   assert.match(section('C0'), /git clone https:\/\/github\.com\/martinopedal\/terraform-azapi-aks-automatic\.git \$HOME\\demo\\aks-module/);
-  assert.match(section('C1'), /Required setup, paths not yet verified here/);
+  assert.match(section('C1'), /SETUP, paths not yet verified on VM/);
   assert.match(section('C1'), /same starting commit and clean status/);
-  assert.match(section('C2'), /Required setup, guided path not yet verified here/);
-  assert.match(section('C2'), /confirm `\/cwd` and the shell's actual directory before each whole `!` block/);
-  assert.match(section('Optional final extras'), /Resolve before paste.*no existing hosted-target clone path is verified here/);
-  assert.match(section('Optional final extras'), /Set-Location '<approved-existing-hosted-target-clone>'/);
-  assert.match(section('Optional final extras'), /Unbound template is not runnable/);
-  assert.match(section('Optional final extras'), /replace every private native target alias in this block/);
+  assert.match(section('C2'), /SETUP, guided path not yet verified on VM/);
+  assert.match(section('C2'), /Confirm `\/cwd` and the shell's actual\s+directory before each whole `!` block/);
+  assert.match(section('Optional final extras'), /C:\\demo\\hosted-target[\s\S]*not verified/);
+  assert.match(section('Optional final extras'), /existing approved README task/);
+  assert.match(section('Optional final extras'), /current prepared ID\/guest staging not yet established/);
+  for (let chapter = 0; chapter < 8; chapter++) {
+    const cue = section(`C${chapter}`);
+    for (const label of ['WHERE', 'TYPE', 'SHOW', 'EXPECT', 'STOP']) {
+      assert.ok(cue.includes(`**${label}:**`), `C${chapter} contains ${label}`);
+    }
+  }
+  for (const chapter of ['C5', 'C7']) {
+    assert.match(section(chapter), /whole/);
+    assert.match(section(chapter), /demo-runbook\.md#/);
+    assert.doesNotMatch(section(chapter), /```powershell/, 'monitor links complete logging blocks rather than duplicating weaker checks');
+  }
 }
 
 test('short monitor track distinguishes verified local roots from clean and unresolved checkpoints', () => {
@@ -73,25 +85,145 @@ test('short monitor track distinguishes verified local roots from clean and unre
 
 test('short monitor local-path contract rejects fake roots and unqualified checkpoints', () => {
   const text = documentText('docs/short-talk-track.md');
-  const publicLocation = String.raw`Set-Location 'C:\git\squad-terraform-session-2026-10-14\public'`;
-  const consumerLocation = String.raw`Set-Location 'C:\git\squad-terraform-session-2026-10-14\demo-env'`;
+  const publicLocation = String.raw`Set-Location 'C:\demo\session-repo'`;
+  const consumerLocation = String.raw`Set-Location 'C:\demo\aks-automatic-demo-env'`;
   const mutations = [
-    ['fake session location', text.replace(publicLocation, String.raw`Set-Location C:\demo\session-repo`)],
-    ['fake consumer location', text.replace(consumerLocation, String.raw`Set-Location C:\demo\aks-automatic-demo-env`)],
-    ['fake hosted location', text.replace("Set-Location '<approved-existing-hosted-target-clone>'", String.raw`Set-Location C:\demo\hosted-target`)],
+    ['workstation used on stage', text.replace(publicLocation, String.raw`Set-Location 'C:\git\squad-terraform-session-2026-10-14\public'`)],
+    ['wrong consumer stage location', text.replace(consumerLocation, String.raw`Set-Location 'C:\demo\session-repo'`)],
     ['wrong existing consumer root', text.replace(consumerLocation, publicLocation)],
     ['preparation host labeled clean', text.replace('not the separately qualified C0 clean VM', 'the qualified C0 clean VM')],
-    ['silent A/B checkpoint', text.replace('Required setup, paths not yet verified here', 'Prepared A/B paths')],
-    ['silent guided checkpoint', text.replace('Required setup, guided path not yet verified here', 'Prepared guided path')],
+    ['silent A/B checkpoint', text.replace('SETUP, paths not yet verified on VM', 'Prepared A/B paths')],
+    ['silent guided checkpoint', text.replace('SETUP, guided path not yet verified on VM', 'Prepared guided path')],
     ['checkpoint mislabeled consumer', text.replace('not an independent native consumer clone or a private target', 'the native consumer clone')],
-    ['missing hosted resolve label', text.replace('Resolve before paste:** no existing hosted-target clone path is verified here', 'Existing hosted-target clone')],
-    ['missing native resolve label', text.replace('replace every private native target alias in this block', 'use these native target aliases')],
+    ['missing native binding stop', text.replace('current prepared ID/guest staging not yet established', 'current prepared ID/guest staging ready')],
+    ['missing stop cue', text.replace('**STOP:** unqualified host', '**NEXT:** unqualified host')],
     ['C0 upstream confused with Corp', text.replace('git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git', 'git clone https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp.git')]
   ];
   for (const [name, mutant] of mutations) {
     assert.notEqual(mutant, text, `${name} must change the actual short track`);
     assert.throws(() => assertShortTrackLocalPaths(mutant), { name: 'AssertionError' }, name);
   }
+});
+
+const fixtureHash = '75d8fc0f08005317bbdc21c8de9ad43f3b7e06736e419014e7cf8678b9cab2a5';
+function assertNativeFixture(bytes) {
+  assert.equal(bytes.length, 684, 'accepted public fixture byte count');
+  assert.ok(!bytes.includes(13), 'shell fixture must remain LF');
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), fixtureHash);
+}
+
+test('published native fixture is exactly the accepted nonsecret LF source, not a replacement helper', () => {
+  const bytes = readFileSync(new URL('../../docs/fixtures/native-validation.sh', import.meta.url));
+  assertNativeFixture(bytes);
+  for (const mutant of [
+    Buffer.from(bytes.toString().replaceAll('\n', '\r\n')),
+    Buffer.from(bytes.toString().replace('17+25', '17+24')),
+    Buffer.from(bytes.toString().replace('/root/native-result.json', '/root/other.json'))
+  ]) assert.throws(() => assertNativeFixture(mutant), { code: 'ERR_ASSERTION' });
+});
+
+function assertRunningRecipes(text) {
+  const hosted = text.split('### Card A:')[1]?.split('### Card B:')[0] ?? '';
+  const native = text.split('### Card B:')[1]?.split('### Native procedure reference')[0] ?? '';
+  for (const section of [hosted, native]) {
+    assert.match(section, /Running it, short recipe/);
+    assert.match(section, /1\. \*\*/);
+    assert.match(section, /4\. \*\*/);
+    assert.match(section, /SHOW/);
+    assert.match(section, /EXPECT/);
+    assert.match(section, /STOP/);
+  }
+  assert.match(hosted, /existing approved issue/);
+  assert.match(hosted, /--add-label squad:ripley/);
+  assert.match(hosted, /five-minute UTC schedule/);
+  assert.match(hosted, /squad-work-queue/);
+  assert.match(hosted, /Container App Jobs[\s\S]*Executions/);
+  assert.match(hosted, /--head "squad\/ripley\/issue-\$demoIssue"/);
+  assert.doesNotMatch(hosted, /gh issue create|gh workflow run\s+--|az containerapp job start\s+--/);
+  assert.ok(native.includes(fixtureHash), 'running native card binds canonical source');
+  assert.match(native, /Read-Host 'Operator-approved current prepared sandbox ID'/);
+  assert.match(native, /aca sandbox get --id \$sandboxId/);
+  assert.match(native, /aca sandbox exec --id \$sandboxId -c 'sh \/root\/native-validation\.sh'/);
+  assert.match(native, /aca sandbox fs cat --id \$sandboxId --path '\/root\/native-result\.json'/);
+  assert.match(native, /\$negativeExit -ne 23/);
+  assert.match(native, /Decode filesystem response `\.content`/);
+  assert.match(native, /networkEgress\.denied/);
+  assert.match(native, /\$beforeEvents -notcontains/);
+  assert.match(native, /\$stamp -ge \$probeStart -and \$stamp -le \$auditEnd/);
+  assert.match(native, /curlExit=0[\s\S]*exec exit `0`/);
+  assert.doesNotMatch(native, /--sandbox-group|8a6c3e9a-1723-459d-b5e6-179a35553a9b/);
+}
+
+test('actual running cards reject duplicate hosted triggers and wrong native result/denial contracts', () => {
+  const text = documentText('docs/demo-runbook.md');
+  assertRunningRecipes(text);
+  for (const [before, after] of [
+    ['--add-label squad:ripley', '--add-label squad:unknown'],
+    ['squad-work-queue', 'status-workflow'],
+    ['aca sandbox get --id $sandboxId', 'aca sandbox list'],
+    ['sh /root/native-validation.sh', 'sh /root/invented-helper.sh'],
+    ['$negativeExit -ne 23', '$negativeExit -ne 0'],
+    ['Decode filesystem response `.content`', 'Hash the raw transport envelope'],
+    ['$beforeEvents -notcontains', '$beforeEvents -contains'],
+    ['$stamp -ge $probeStart -and $stamp -le $auditEnd', '$true'],
+    ['curlExit=0', 'curlExit=23']
+  ]) {
+    const mutant = text.replaceAll(before, after);
+    assert.notEqual(mutant, text, `mutant changes real running procedure: ${before}`);
+    assert.throws(() => assertRunningRecipes(mutant), { code: 'ERR_ASSERTION' });
+  }
+});
+
+test('actual native causal PowerShell accepts precise fresh denied JSON and rejects false positives', {
+  skip: process.platform !== 'win32' ? 'PowerShell 7 presenter contract is Windows-specific' : false
+}, () => {
+  const mock = String.raw`
+$ErrorActionPreference = 'Stop'
+$text = Get-Content docs\demo-runbook.md -Raw
+$blocks = [regex]::Matches($text, '(?ms)` + '```powershell\\r?\\n(.*?)\\r?\\n```' + String.raw`')
+$block = ($blocks | Where-Object { $_.Groups[1].Value.Contains('$denyCommand =') }).Groups[1].Value
+if (-not $block) { throw 'Actual causal block missing.' }
+function Read-Host { 'mock-prepared-id' }
+function Start-Sleep {}
+function aca {
+  $global:LASTEXITCODE = 0
+  if ($args[1] -eq 'fs') {
+    if ($args -contains '/root/native-egress-result.json') {
+      $exit = if ($script:scenario -eq 'curl-failure') { 60 } else { 0 }
+      @{content=(@{curlExit=$exit;host='example.com';url='https://example.com/'} | ConvertTo-Json -Compress)} | ConvertTo-Json -Compress
+    } else {
+      $http = if ($script:scenario -eq 'wrong-http') { 200 } else { 403 }
+      @{content="CURL_HTTP_CODE=$http` + '`n' + String.raw`x-deny-reason: example.com:HEAD"} | ConvertTo-Json -Compress
+    }
+    return
+  }
+  if ($args[1] -ne 'egress') {
+    if ($script:scenario -eq 'read-failure' -and $args[1] -eq 'get') { $global:LASTEXITCODE = 1 }
+    '{"mock":true}'
+    return
+  }
+  $script:auditReads++
+  $stamp = [DateTimeOffset]::UtcNow
+  if ($script:scenario -eq 'old-event') { $stamp = $stamp.AddHours(-1) }
+  $hostName = if ($script:scenario -eq 'wrong-host') { 'wrong.example' } else { 'example.com' }
+  $event = @{host=$hostName;method='HEAD';scheme='https';path='/';timestamp=$stamp.ToString('o')}
+  $denied = @()
+  if ($script:auditReads -gt 1 -and $script:scenario -notin @('empty','allowed-only')) { $denied = @($event) }
+  @{networkEgress=@{denied=$denied;allowed=@($event)}} | ConvertTo-Json -Depth 8 -Compress
+}
+foreach ($script:scenario in @('new-denied','old-event','wrong-host','empty','allowed-only','read-failure','curl-failure','wrong-http')) {
+  $script:auditReads = 0
+  $passed = $true
+  try { $null = & ([scriptblock]::Create($block)) } catch { $passed = $false }
+  if ($passed -ne ($script:scenario -eq 'new-denied')) { throw "Wrong actual causal-block outcome: $script:scenario" }
+}
+'Eight actual-block mock cases passed; no ACA/Azure executable invoked.'
+`;
+  const result = spawnSync('pwsh', ['-NoProfile', '-NonInteractive', '-Command', mock], {
+    cwd: new URL('../../', import.meta.url), encoding: 'utf8', timeout: 30_000
+  });
+  assert.equal(result.status, 0, `${result.error ?? ''}\n${result.stderr}\n${result.stdout}`);
+  assert.match(result.stdout, /Eight actual-block mock cases passed/);
 });
 
 test('each live demo slide renders a command block and expected result', () => {
@@ -478,8 +610,9 @@ test('hosted Jobs notes keep current placement separate from historical runs and
     ]) assert.match(text, pattern, `${name} retains hosted placement/runtime/cost scope: ${pattern}`);
     assert.doesNotMatch(text,
       /current run evidence is under Management|current evidence is from Management|Norway East under Management/i);
-    assert.doesNotMatch(text, /caj-[a-z0-9-]+|\/subscriptions\/[0-9a-f-]{36}/i,
-      `${name} must not publish raw private job/workflow identifiers`);
+    assert.doesNotMatch(text.replaceAll('caj-squad-aca-agent-corp-ne', ''),
+      /caj-[a-z0-9-]+|\/subscriptions\/[0-9a-f-]{36}/i,
+      `${name} permits only the explicitly approved demo worker name, not arbitrary private identifiers`);
   }
 });
 
@@ -654,7 +787,7 @@ test('two product flows retain separate triggers, integration evidence, cuts and
     /Card B: native ACA Sandboxes/,
     /haflidif\/squad-on-aca/, /<approved-private-target>/,
     /selected Squad\/skill/, /validator\/reviewer handoff/,
-    /standalone.*prerequisite tests/i, /not a four-minute promise/,
+    /read-only prerequisite, not the demo/i, /not a four-minute promise/,
     /Hard cut before 55:00/, /Cut at 32:30/, /No-GO|NO-GO/,
     /advanced optional/, /not mandatory for the basic/,
     /Cleanup/, /Login/, /Expected proof/
@@ -688,12 +821,12 @@ test('news dates, billing caveats, public checkout examples, and current version
   assert.match(news.content, /Paid plans get a 10% discount/);
   assert.match(applyNoteFactOverrides(news.id, ''), /premium-request billing until expiry/);
   assert.match(documentText('docs/whats-new.md'), /2026-04-01 \| `\/fleet`/);
-  const genericStart = String.raw`cd C:\git\session-repo`;
+  const genericStart = String.raw`Set-Location 'C:\demo\session-repo'`;
   for (const path of ['docs/demo-runbook.md', 'docs/playbook.md', 'docs/run-plan.md']) {
     assert.ok(documentText(path).includes(genericStart), `${path} uses a public checkout example`);
   }
-  assert.ok(applyNoteFactOverrides('demo-c3', '').includes(genericStart));
-  const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8')).version;
+  assert.ok(decodeHTML(applyNoteFactOverrides('demo-c3', '')).includes(String.raw`Set-Location 'C:\demo\checkpoints\take-20261014\guided'`));
+  const version = '0.22.6'; // Published release is distinct from the new source candidate.
   for (const path of ['docs/run-plan.md', 'docs/feature-guide.md', 'docs/source-provenance.md',
     'docs/whats-new.md', 'presentation/README.md']) {
     assert.ok(documentText(path).toLowerCase().includes(`deck ${version}`), `${path} matches the current deck`);
@@ -702,7 +835,7 @@ test('news dates, billing caveats, public checkout examples, and current version
 });
 
 test('current public release fronts distinguish completed deck publication from local corrections', () => {
-  const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8')).version;
+  const version = '0.22.6';
   for (const path of [
     'README.md', 'handoff.md', 'PUBLICATION.md', 'presentation/README.md',
     'docs/run-plan.md', 'docs/source-provenance.md', 'docs/talk-track.md',
@@ -872,7 +1005,7 @@ test('product prompts require positive guest work, accountable handoff and origi
     /Fresh current end-to-end qualification remains pending/i,
     /ACA SANDBOXES\s+success does not count as that proof/,
     /Change only README\.md/, /Do not merge or deploy/,
-    /actual ACA Job.*bot PR\/diff/s, /Correlate the same issue/,
+    /actual ACA Job.*bot\s+PR\/diff/s, /Correlate the same issue/,
     /Never modify\/delete the original hosted service/
   ]) assert.match(hosted, pattern);
   assert.doesNotMatch(documentText('docs/repositories.md'), /martinopedal\/squad-on-aca-demo-target/);
@@ -958,12 +1091,15 @@ test('actual exported notes preserve source-only owned mode and VM hold boundari
   };
   const assertVmNotes = notes => {
     for (const pattern of [
-      /REVIEW_REQUIRED/, /VM is deallocated/, /OS-disk attachment differs/,
-      /Preserve both disks/, /never swap back\/recreate\/delete either/,
-      /Refresh current binding\/baseline and runnable SYSTEM context/,
+      /source accepted\/merged/, /recovered ephemeral runner/,
+      /unqualified existing private backend plan-prefix transport/,
+      /No Azure login\/backend access, actual Terraform plan/,
+      /VM last reported deallocated\/current disk binding differs/,
+      /preserve both disks/i, /never swap back\/recreate\/delete either/,
+      /Refresh binding\/baseline and runnable SYSTEM context/,
       /Bootstrap not installed/, /allows absent prior receipt/,
       /requires fresh successful receipt after first install/,
-      /CPU\/RAM bottleneck and sustained causality unproved/
+      /do not prove CPU\/RAM bottleneck or sustained causality/
     ]) assert.match(notes, pattern);
   };
   for (const id of ['s20-consumer', 's07-agent-setup', 'demo-c0', 'a-bootstrap', 'a-use-cases']) {
@@ -1051,7 +1187,7 @@ const hostedFlowSurfaces = [
   ['docs/run-plan.md', '| A, hosted Squad ACA Jobs |', 3]
 ];
 const hostedFlowStages = [
-  /^One approved(?: README)? issue$/i,
+  /^One (?:existing )?approved(?: README)? issue$/i,
   /^private scheduled poller$/,
   /^existing queue$/,
   /^genuine Squad UID10001 worker$/,
@@ -1286,9 +1422,9 @@ test('actual source and emitted presenter notes call the published version relea
   }
 });
 
-test('actual version status and both generated headers separate published0226 from dated source-freeze history', () => {
+test('actual candidate version and generated headers retain published0226 and source-freeze history', () => {
   const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8'));
-  assert.equal(version.version, '0.22.6');
+  assert.equal(version.version, '0.22.7');
   const full = documentText('presentation/index.html');
   const short = documentText('presentation/short/index.html');
   for (const [name, current] of [
@@ -1296,12 +1432,10 @@ test('actual version status and both generated headers separate published0226 fr
     ['full generated header', full.match(/<!-- Document version: ([^\n]+)/)?.[1]],
     ['short generated header', short.match(/<!-- Document version: ([^\n]+)/)?.[1]]
   ]) {
-    assertPublishedRelease(current, name);
+    assert.match(current, /unpublished candidate 0\.22\.7/, name);
+    assert.match(current, /released main\/Pages 0\.22\.6 remains verified/, name);
     assert.match(current, /2026-10-13/, name);
-    for (const mutation of [
-      current.replaceAll('0.22.6', '0.22.5'),
-      `${current} Local deck 0.22.6 unpublished candidate.`
-    ]) assert.throws(() => assertPublishedRelease(mutation, name), { code: 'ERR_ASSERTION' });
+    assert.match(current, /independent semantic review/, name);
   }
   const freeze = version.changes.find(change => change.startsWith('0.22.6 - '));
   assert.match(freeze, /2026-10-13 pre-publication source freeze:/);

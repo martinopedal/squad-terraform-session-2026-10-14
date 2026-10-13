@@ -4,6 +4,14 @@ A two-speaker session by **Martin Opedal, Enterprise Cloud Solution Architect, M
 
 **Planned session:** October 14, 2026, 10:00-11:00, UTC+02:00, Room 6. Exact current NIC listing remains a manual confirmation gate.
 
+**Separate-screen open order:** [short talk track](docs/short-talk-track.md)
+(monitor cues) -> [prompt pack](docs/prompt-pack.md) (exact paste) ->
+[full talk track](docs/talk-track.md) (narration) ->
+[demo runbook](docs/demo-runbook.md) (checks/recovery) ->
+[deck](presentation/index.html) (audience).
+Double-click the bundled deck to view slides; use [Pages](https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/)
+or HTTP for reliable `S` speaker view. Viewing doesn't require npm or Python.
+
 Released **deck 0.22.6** synchronizes exported speaker notes with accepted
 ACA SANDBOXES engineering, accepted owned-hosted source/runtime holds and VM preservation.
 Main/Pages publication completed October 13 after PR22's normal merge and
@@ -14,6 +22,8 @@ that new bytes are published. Publication grants no runtime or human stage GO.
 Owner-native source preparation is under review; executable delivery remains
 held, with plan/apply/destroy unconditionally disabled and signer/private-plan
 transport/executable integration not provisioned. This is not deploy-on-merge.
+The current grounded operator-note candidate is **0.22.7**, not yet published;
+the released 0.22.6 facts above remain unchanged.
 
 ## What this repository contains
 
