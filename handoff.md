@@ -12,7 +12,7 @@ Updated October 13, 2026. This file describes the public deliverables and the re
 
 ## Current result
 
-- Released Reveal.js baseline **0.22.5** on main/Pages, **39 full / 5 short slides**. Local presentation version **0.22.6** is the authorized factual notes/status export candidate, not a new published release. Existing design/commands/media/IDs/clocks are unchanged; source/export review gates publication.
+- Released Reveal.js **deck 0.22.6** on main/Pages, **39 full / 5 short slides**: PR22 normally merged October 13, Pages succeeded and full/short HTTP 200 bodies matched the initially accepted exports. Later local correction bytes remain unpublished pending independent review, normal merge and Pages byte verification. Existing design/commands/media/IDs/clocks are unchanged; publication is not runtime or human stage GO.
 - A five-slide companion deck is built at `presentation\short\index.html`.
 - Current delivery contract: **3:00 intro; planned content to about 55:00; 55:00-58:00 protected recovery block; 58:00-60:00 close**. The planned content includes **29:00 of live C0-C7 demo chapters** and the rest as live explanation. Questions are only if time allows. There is no scheduled Q&A block. See [docs/run-plan.md](docs/run-plan.md) for the full minute-by-minute schedule.
 - Live-demo rule: **C0-C7 are live**, with optional reviewed fallback evidence if a chapter fails live.

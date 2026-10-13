@@ -5,9 +5,11 @@ Concise cheat-sheet for the Reveal deck. Full script: [talk-track.md](talk-track
 Operator references: [repo map](repositories.md), [progress matrix](sandboxing.md#october-12-progress-and-next-actions),
 [full pre-stage coverage](aca-sandboxes.md#full-test-coverage-checklist) and
 [two product operator cards](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
-Deck 0.22.5 is released on main/Pages, 39 full/five short slides. Later local
-operator-doc/bootstrap corrections await their own review/release. Local deck
-0.22.6 synchronizes exported status notes only, with unchanged design/39/5/clocks.
+Released deck 0.22.6 on main/Pages has 39 full/five short slides: PR22 normally
+merged October 13, Pages succeeded and full/short HTTP 200 bodies matched the
+initially accepted exports. Later local correction bytes remain unpublished
+pending independent review, normal merge and Pages byte verification. They retain
+0.22.6 with unchanged design/39/5/clocks; publication is not runtime or human stage GO.
 
 ## Opening hooks / big news
 

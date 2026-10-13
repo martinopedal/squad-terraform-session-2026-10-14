@@ -16,7 +16,7 @@ Local module qualification passed: 52 module cases, two caller cases, and both m
 
 Source roles: the live demo consumer is `martinopedal/aks-automatic-demo-env`, pinning `martinopedal/terraform-azapi-aks-automatic` by `v0.6.0`. C1-C7 use this session's copied Corp teaching module from the independently reusable public `alz-avm-tf-demo/terraform-azapi-aks-automatic-corp`, whose separate upstream pin/manifest stay unchanged. The [repo map](repositories.md) identifies what to clone/read/change and keeps Haflidi's hosted implementation separate from the private target.
 
-October 12: one laptop's corrected read-only preflight passed 18/18 with Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-preview.4 and enabled official plugin 0.0.5-beta. Clean-VM/manual sign-in, both presenter hosts, full rehearsal, invitation acceptance/current read-back and exact NIC listing remain separate gates. Deck 0.22.5 is released on main/Pages; this later local operator-doc correction awaits its own review/release. See [current readiness](run-plan.md#october-12-readiness-evidence).
+October 12: one laptop's corrected read-only preflight passed 18/18 with Copilot CLI 1.0.94, Squad 1.0.1, ACA CLI 1.0.0-preview.4 and enabled official plugin 0.0.5-beta. Clean-VM/manual sign-in, both presenter hosts, full rehearsal, invitation acceptance/current read-back and exact NIC listing remain separate gates. Released deck 0.22.6 on main/Pages followed PR22's normal merge October 13, successful Pages and initial full/short HTTP 200 byte verification. Later local correction bytes remain unpublished pending independent review, normal merge and Pages byte verification; publication does not close those gates. See [current readiness](run-plan.md#october-12-readiness-evidence).
 
 October 13 VM preservation hold: consumer PR21 is source-accepted but
 Haflidi/Online human review and execution approval remain required. VM is
@@ -37,8 +37,10 @@ Native Kubernetes access unavailable/ResourceHealth provider unregistered;
 full cluster health unproved. Eleven policy-noncompliant resources are in the
 demo RG across AKS/network/state, not 11 cluster failures or subscription-wide.
 
-Local deck 0.22.6 propagates these native/hosted status boundaries into exported
-speaker notes. It is an unpublished candidate, not a new runtime/rehearsal proof.
+Released deck 0.22.6 on main/Pages propagates these native/hosted status boundaries
+into the initially accepted exported speaker notes. Later local correction bytes
+remain unpublished pending independent review, normal merge and Pages byte
+verification; they retain 0.22.6 and are not a new runtime/rehearsal proof.
 
 ## Two product demo flows: hosted Squad and native ACA Sandboxes
 

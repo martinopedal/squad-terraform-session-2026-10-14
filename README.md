@@ -186,11 +186,17 @@ execution authority; scoped cost consent remains private and retained costs rema
 MCP minreplicas 1 is scheduled October 13/revert October 14, teardown October 17
 and credential expiry October 31, not completed.
 
-The accepted status revision and deck **0.22.5** were released through public PR21
+2026-10-13 pre-publication source freeze: the accepted status revision and deck
+**0.22.5** had been released through public PR21
 on main/Pages at `fa11ccfd6a3e3e12827c0c94bd1f9b4300f5e68c`.
-These later operator-doc and bootstrap corrections are local until their own
-reviewed release. The directly coupled notes/status fix now produces local deck 0.22.6 exports;
-no redesign/new sections/media. Only reviewed publication changes live Pages.
+
+Current notes/status release: released deck 0.22.6 on main/Pages followed PR22's
+normal merge October 13, successful Pages and full/short HTTP 200 byte verification
+against the initially accepted exports. Later local correction bytes remain
+unpublished pending independent review, normal merge and Pages byte verification.
+The directly coupled notes/status fix retains 0.22.6 with no redesign/new
+sections/media; a local build or matching version does not publish the correction
+bytes. Publication is not runtime or human stage GO.
 
 The [two product demo flows](docs/demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes)
 are Haflidi's hosted Squad agent work to bot PR, and host Copilot CLI/Squad +

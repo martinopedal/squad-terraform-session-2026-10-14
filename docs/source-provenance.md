@@ -27,7 +27,7 @@ coverage, host Copilot/Squad integration, rehearsal GO or inside-MicroVM OAuth.
 
 | Component | Canonical repo / reference | Local folder | Where to edit | Where / how to deploy | Status |
 | --- | --- | --- | --- | --- | --- |
-| Session docs/deck/skills/native profiles | [Session repo](https://github.com/martinopedal/squad-terraform-session-2026-10-14) | Session clone `.\` | `docs`, `presentation\src`, `.github\skills`, `.github\agents` | Reviewed PR/normal main merge and existing Pages workflow; not Azure | Released 0.22.5 / 39 full / 5 short slides; local 0.22.6 changes await their own review/release |
+| Session docs/deck/skills/native profiles | [Session repo](https://github.com/martinopedal/squad-terraform-session-2026-10-14) | Session clone `.\` | `docs`, `presentation\src`, `.github\skills`, `.github\agents` | Reviewed PR/normal main merge and existing Pages workflow; not Azure | Released deck 0.22.6 on main/Pages / 39 full / 5 short slides; PR22 normal merge/Pages/initial byte verification complete. Later correction bytes remain unpublished pending review/normal merge/Pages byte verification |
 | Upstream AKS Automatic module | [Automatic module](https://github.com/martinopedal/terraform-azapi-aks-automatic) | `<automatic-module-clone>` | Canonical module/tests | Reviewed reusable release, consumed by demo-env `v0.6.0` | Module source, not live environment entry |
 | Independent public Corp teaching module | [Corp module](https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp) | `<corp-module-clone>`; session `terraform\modules\aks-automatic-corp` copy | Canonical source, then mirror/manifest through release owner | Separate private approved Corp workload consumer | Unchanged copy pin/manifest, not native MicroVM design |
 | Existing Online AKS/demo VM | [Live consumer](https://github.com/martinopedal/aks-automatic-demo-env) | Consumer `deployments\online` and demo-VM root | Consumer roots/manifests/operator runbook | Existing gated workflow with private inputs/state/approval | Fresh app/2 replicas PASS under TLS bypass; canonical 26 PASS/2 BLOCKED/1 report-only, full health unproved |
@@ -66,13 +66,16 @@ The existing landing-zone implementation is a dependency of the private deployme
 Documentation/generated source and executed evidence are distinct. Private Azure
 deployment/read-back pinned runtime module commit
 `02e10e56bc15cc30c3193dce3ddc8e608cb87daf`; public Corp module revision
-`b01256eb9b1ea6046b9bb8a403662f724a7b6fa7` records that sanitized result. Deck 0.22.5
-is released on main/Pages with five/39 slides and unchanged clocks. Fresh
-HTTP responses matched the released clone. Older 0.22.2/0.22.3 checkpoints
-remain history; these later operator-doc corrections are not released until
-their own review/merge. Local deck 0.22.6 is the authorized notes/status export candidate. Its regeneration
-preserves design/commands/assets/39/5 slides and clocks; review/merge still gates
-publication, and released main/Pages remains 0.22.5.
+`b01256eb9b1ea6046b9bb8a403662f724a7b6fa7` records that sanitized result. Released
+deck 0.22.6 on main/Pages has 39 full/five short slides and unchanged clocks:
+PR22 normally merged October 13 at 03:57:48 UTC to
+`1ed6486962362e84cbf4d7901be0154893f04ae2`; Pages run 38344163902 succeeded,
+and full/short HTTP 200 bodies matched the initially accepted exports.
+Older 0.22.2/0.22.3 checkpoints remain history. Later local correction bytes
+remain unpublished pending independent review, normal merge and Pages byte
+verification. They retain 0.22.6 and preserve design/commands/assets/39/5 slides
+and clocks; a matching version or local regeneration does not publish them or
+establish runtime/rehearsal readiness.
 
 ## October 12 sandbox and readiness sources
 

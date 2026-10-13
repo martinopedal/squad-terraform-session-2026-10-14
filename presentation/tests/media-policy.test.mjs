@@ -345,7 +345,7 @@ test('readiness does not turn one laptop, historical checks or dated obligations
     /B1 clean VM/, /B2 both presenter hosts/, /B3 full 60-minute rehearsal/,
     /B4 private target invitation/, /B5 current NIC listing/, /Unknown/,
     /Oct 13 warmup\/reset/, /Oct 17 teardown \/ Oct 31 expiry/,
-    /Pool A1\/Dependabot/, /Released 0\.22\.5 on main\/Pages/i,
+    /Pool A1\/Dependabot/, /Released deck 0\.22\.6 on main\/Pages/i,
     /source-only correction/, /34\/34/, /not a new Azure plan or deployment/,
     /artifact suite 85\/85/, /runtime suite 31\/31/, /source\/tooling checks/,
     /no new sealed manifest\/raw exact deltas/i, /no new apply established/,
@@ -530,7 +530,7 @@ test('news dates, billing caveats, public checkout examples, and current version
     'docs/whats-new.md', 'presentation/README.md']) {
     assert.ok(documentText(path).toLowerCase().includes(`deck ${version}`), `${path} matches the current deck`);
   }
-  assert.ok(documentText('handoff.md').includes(`presentation version **${version}**`));
+  assert.ok(documentText('handoff.md').includes(`Released Reveal.js **deck ${version}** on main/Pages`));
 });
 
 test('current public release fronts distinguish completed deck publication from local corrections', () => {
@@ -711,23 +711,9 @@ test('product prompts require positive guest work, accountable handoff and origi
   assert.doesNotMatch(documentText('docs/repositories.md'), /martinopedal\/squad-on-aca-demo-target/);
 });
 
-test('reconciled release fronts name published0226 while frozen operator snapshots retain their source-stage boundary', () => {
-  for (const path of [
-    'README.md', 'PUBLICATION.md', 'handoff.md', 'haflidi-overview.html',
-    'presentation/README.md', 'docs/run-plan.md', 'docs/source-provenance.md',
-    'docs/talk-track.md', 'docs/talking-points.md', 'docs/feature-guide.md',
-    'docs/whats-new.md', 'docs/demo-runbook.md'
-  ]) {
-    const text = documentText(path).replace(/\s+/g, ' ');
-    if (['README.md', 'PUBLICATION.md', 'presentation/README.md'].includes(path)) {
-      assertPublishedRelease(currentReleaseFront(path), path);
-      continue;
-    }
-    assert.match(text, /(?:Released|released|live)[^.]{0,100}(?:\*\*)?0\.22\.5|0\.22\.5[^.]{0,80}(?:released|main\/Pages)/, path);
-    assert.match(text, /(?:Local|local)[^.]{0,80}(?:\*\*)?0\.22\.6/, path);
-    assert.match(text, /candidate|review.*publication|unpublished/, path);
-    assert.doesNotMatch(text,
-      /(?:Released|released) main\/Pages (?:stays|baseline is deck|baseline is) (?:\*\*)?0\.22\.4|live Pages remains (?:the previously released )?0\.22\.[24]|0\.22\.6 is released on main\/Pages/i, path);
+test('all current operator release carriers name published0226, not filename-classified history', () => {
+  for (const [path, label, extract] of operatorReleaseSurfaces) {
+    assertOperatorRelease(extract(documentText(path)), `${path} ${label}`);
   }
 });
 
@@ -947,15 +933,150 @@ const currentReleaseFront = path => {
   return text.split('Source qualification may finish before delivery.')[1]
     ?.split('The live demo consumer is')[0];
 };
+const releaseParagraph = anchor => text => {
+  const paragraphs = text.split(/\r?\n\s*\r?\n/).filter(paragraph => paragraph.includes(anchor));
+  assert.equal(paragraphs.length, 1, `exactly one actual paragraph contains ${anchor}`);
+  return paragraphs[0];
+};
+const releaseStatusCell = (prefix, column = -2) => text => {
+  const rows = text.split(/\r?\n/).filter(line => line.startsWith(prefix));
+  assert.equal(rows.length, 1, `exactly one actual status row starts ${prefix}`);
+  const cells = rows[0].split('|');
+  return cells.at(column);
+};
+const operatorReleaseSurfaces = [
+  ['README.md', 'operator notes/status release', releaseParagraph('The directly coupled notes/status fix')],
+  ['handoff.md', 'Current result release bullet', releaseParagraph('- Released Reveal.js')],
+  ['haflidi-overview.html', 'presenter readiness paragraph', text => {
+    const paragraphs = [...text.matchAll(/<p>([\s\S]*?)<\/p>/g)]
+      .map(match => match[1]).filter(paragraph => paragraph.startsWith('Readiness is not all green:'));
+    assert.equal(paragraphs.length, 1, 'exactly one actual presenter readiness paragraph');
+    return paragraphs[0];
+  }],
+  ['docs/run-plan.md', 'clock/source baseline', releaseParagraph('Clock/source baseline:')],
+  ['docs/run-plan.md', 'publication status cell', releaseStatusCell('| Deck / publication |', 2)],
+  ['docs/source-provenance.md', 'component status cell', releaseStatusCell('| Session docs/deck/skills/native profiles |')],
+  ['docs/source-provenance.md', 'release scope', releaseParagraph('Documentation/generated source and executed evidence are distinct.')],
+  ['docs/talk-track.md', 'opening delivery contract', releaseParagraph('[two product demo flows]')],
+  ['docs/talking-points.md', 'opening operator references', releaseParagraph('Operator references:')],
+  ['docs/feature-guide.md', 'evidence release declaration', releaseParagraph('propagates accepted ACA SANDBOXES engineering')],
+  ['docs/feature-guide.md', 'native host/current publication declaration', releaseParagraph('Current native host checks are')],
+  ['docs/whats-new.md', 'current operator status', releaseParagraph('current operator status updated October 13.')],
+  ['docs/whats-new.md', 'key updates release declaration', releaseParagraph('It adds no new headline, tour or slide.')],
+  ['docs/demo-runbook.md', 'preflight/current publication declaration', releaseParagraph("October 12: one laptop's corrected read-only preflight")],
+  ['docs/demo-runbook.md', 'exported notes release declaration', releaseParagraph('propagates these native/hosted status boundaries')]
+];
+const releaseBlocks = text => decodeHTML(text).replace(/<\/?(?:p|li|aside)\b[^>]*>/g, '\n\n')
+  .split(/\r?\n\s*\r?\n/).map(block => block.replaceAll('*', '').trim()).filter(Boolean);
+const isPrepublicationFreeze = block => {
+  const freeze = block.match(/^(?:0\.22\.\d+ - )?(\d{4}-\d{2}-\d{2}(?:T[\d:.]+Z)?) pre-publication source freeze:/i);
+  return Boolean(freeze && Date.parse(freeze[1]) < Date.parse('2026-10-13T03:57:48Z'));
+};
 const assertPublishedRelease = (text, name) => {
   assert.ok(text, `${name} contains its current release surface`);
-  const current = text.replaceAll('*', '').replace(/\s+/g, ' ');
-  assert.match(current, /(?:released|published)(?: main\/Pages)?(?: full\/short)?(?: deck| release)? 0\.22\.6/i, name);
+  const current = releaseBlocks(text).filter(block => !isPrepublicationFreeze(block)).join(' ').replace(/\s+/g, ' ');
+  assert.match(current, /(?:released|published)(?: Reveal\.js)?(?: main\/Pages)?(?: full\/short)?(?: deck| release)? 0\.22\.6/i, name);
   assert.match(current, /main\/Pages/i, name);
   assert.doesNotMatch(current,
-    /local (?:candidate )?(?:deck )?0\.22\.6|0\.22\.6 (?:is )?(?:an? )?(?:unpublished|not (?:a )?published|candidate)|(?:released|live)(?: main\/Pages)?(?: baseline)?(?: (?:is|stays|remains))?(?: deck)? 0\.22\.[245]|live Pages remains (?:the previously released )?0\.22\.[245]/i,
+    /local (?:candidate )?(?:deck |presentation version )?0\.22\.6|0\.22\.6 (?:is |remains )?(?:an? )?(?:unpublished|not (?:a )?published|candidate)|(?:released|live|published)[^.]{0,100}0\.22\.[245]|0\.22\.[245] (?:is )?(?:released|published|live)|live Pages remains (?:the previously released )?0\.22\.[245]/i,
     `${name} must not label the published version as a current candidate or keep the old live baseline`);
 };
+const assertOperatorRelease = (text, name) => {
+  assertPublishedRelease(text, name);
+  const current = releaseBlocks(text).filter(block => !isPrepublicationFreeze(block)).join(' ').replace(/\s+/g, ' ');
+  assert.match(current, /later (?:local )?correction bytes remain unpublished/i, name);
+  for (const pattern of [/review/i, /normal merge/i, /Pages byte verification/i]) {
+    assert.match(current, pattern, `${name} preserves the correction publication gate`);
+  }
+  assert.doesNotMatch(current, /correction bytes (?:are |remain )?(?:live|published)|corrections (?:are |already )?(?:live|published)/i, name);
+};
+
+for (const [path, label, extract] of operatorReleaseSurfaces) {
+  test(`actual current publication carrier: ${path} ${label}`, () => {
+    assertOperatorRelease(extract(documentText(path)), `${path} ${label}`);
+  });
+}
+
+test('every actual operator carrier rejects stale facts even beside valid prose and table decoys', () => {
+  for (const [path, label, extract] of operatorReleaseSurfaces) {
+    const text = documentText(path);
+    const current = extract(text);
+    const name = `${path} ${label}`;
+    assertOperatorRelease(current, name);
+    for (const mutation of [
+      current.replaceAll('0.22.6', '0.22.5'),
+      `${current} Local deck 0.22.6 is an unpublished candidate.`,
+      `${current} Deck 0.22.5 is released on main/Pages.`,
+      `${current} Released main/Pages stays 0.22.5.`,
+      `${current} Live Pages remains the previously released 0.22.2.`,
+      current.replace(/remain\s+unpublished/g, 'are published'),
+      current.replace(/remain\s+unpublished/g, 'are live'),
+      current.replaceAll('normal merge', 'automatic publication')
+    ]) {
+      assert.notEqual(mutation, current, `${name} mutation changes the actual carrier`);
+      const mutatedDocument = text.replace(current, mutation);
+      assert.notEqual(mutatedDocument, text, `${name} mutation reaches the actual document`);
+      const withDecoy = `Released deck 0.22.6 on main/Pages.\n\n${mutatedDocument}`;
+      assert.throws(() => assertOperatorRelease(extract(withDecoy), name), { code: 'ERR_ASSERTION' },
+        `${name} rejects its actual mutated carrier: ${mutation}`);
+      if (label.endsWith('status cell')) {
+        const row = mutatedDocument.split(/\r?\n/).find(line => line.includes(mutation));
+        const cells = row.split('|');
+        cells[2] += ' Released deck 0.22.6 on main/Pages.';
+        const tableDecoy = mutatedDocument.replace(row, cells.join('|'));
+        assert.throws(() => assertOperatorRelease(extract(tableDecoy), name), { code: 'ERR_ASSERTION' });
+      }
+    }
+  }
+});
+
+test('run-plan publication remaining-gate cell cannot hide stale facts behind a correct published cell', () => {
+  const text = documentText('docs/run-plan.md');
+  const row = text.split(/\r?\n/).find(line => line.startsWith('| Deck / publication |'));
+  assertPublishedRelease(row, 'actual run-plan publication row');
+  const gate = releaseStatusCell('| Deck / publication |', 3)(text);
+  assert.match(gate, /fresh independent source\/export review/);
+  assert.match(gate, /not publication, runtime or human stage GO/);
+  for (const stale of [
+    'Local deck 0.22.6 is an unpublished candidate.',
+    'Deck 0.22.5 is released on main/Pages.',
+    'Later correction bytes are live.'
+  ]) {
+    const mutation = text.replace(gate, ` ${stale} `);
+    assertPublishedRelease(releaseStatusCell('| Deck / publication |', 2)(mutation), 'unchanged correct published cell');
+    const mutatedRow = mutation.split(/\r?\n/).find(line => line.startsWith('| Deck / publication |'));
+    assert.throws(() => assertOperatorRelease(mutatedRow, 'actual mutated publication row'), { code: 'ERR_ASSERTION' });
+  }
+});
+
+test('historical release facts require an explicit pre-publication freeze in their own prose block', () => {
+  const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8'));
+  const historical = version.changes.find(change => change.startsWith('0.22.6 - '));
+  assert.ok(isPrepublicationFreeze(historical), 'actual dated source-freeze record is historical');
+  for (const [path, label, extract] of operatorReleaseSurfaces) {
+    const current = extract(documentText(path));
+    const name = `${path} ${label}`;
+    for (const separator of ['\n\n', '</p><p>']) {
+      assertPublishedRelease(`${current}${separator}${historical}`, name);
+      const stale = 'Released main/Pages stays 0.22.5. Local deck 0.22.6 is an unpublished candidate.';
+      const scoped = `2026-10-13T03:50:00Z pre-publication source freeze: ${stale}`;
+      assertPublishedRelease(`${current}${separator}${scoped}`, name);
+      for (const unscoped of [
+        stale,
+        historical.replace('2026-10-13 pre-publication source freeze: ', ''),
+        `Updated October 13, 2026. ${stale}`,
+        `Historical operator snapshot: ${stale}`,
+        `2026-10-13 pre-publication source freeze:\n\n${stale}`,
+        `${scoped}${separator}${stale}`,
+        scoped.replace('03:50:00Z', '04:50:00Z')
+      ]) {
+        assert.throws(() => assertPublishedRelease(`${current}${separator}${unscoped}`, name), { code: 'ERR_ASSERTION' });
+      }
+      assert.throws(() => assertPublishedRelease(scoped, name), { code: 'ERR_ASSERTION' },
+        'historical prose alone cannot satisfy a current release carrier');
+    }
+  }
+});
 
 test('actual current release fronts and the entry table reject stale publication state beside valid release text', () => {
   const surfaces = ['README.md', 'PUBLICATION.md', 'presentation/README.md']
