@@ -6,6 +6,24 @@ Disclose: "Git and Copilot pre-installed; not a fully clean machine."
 Tags: (source: file) = documented; UNKNOWN = needs Martin or no documented command.
 All commands run in PowerShell 7.
 
+## What's left
+
+- Before rehearsal:
+  - Section 2: PowerShell 7 and winget checks, laptop-only Docker items
+  - Section 3: both-clones verify block, clean `git status` check
+  - Section 4: remaining take and offline pre-check items
+  - Section 5: user MCP disable check, `Test-PresenterLaptop.ps1`, `Test-DemoVm.ps1`
+  - Section 7: leakage checklist
+- Rehearsal (section 9): run C0-C7 once on the VM, record chapter times, restore the snapshot, re-run the READY check
+- Laptop backup (section 8): prepare identically, ready to run
+- Day of (section 10): T-60, T-30, T-10, 07:45 cut line
+- After the session: rotate `TFMCP_KEY`, delete the snapshot
+- Ask Martin:
+  - How to save the versions file (`evidence\versions.txt`)
+  - How to read `Test-DemoVm.ps1` on this VM
+  - Whether another VM cue list exists
+  - Exact T-60 and T-10 timings
+
 ## 1. Decisions to confirm with Martin
 
 - [x] RESOLVED: checkpoint pin is `0abb202f34af385b7e0a34b1775643aa5b4871ed`, take `take-20261014` (source: demo-runbook.md "Create the disposable C1-C7 checkpoints"; short-talk-track.md Prepare once)
@@ -38,13 +56,13 @@ All commands run in PowerShell 7.
 
 ### Optional: remote Terraform MCP (local-only, never pushed)
 
-- [ ] The VM uses the Azure Container Apps endpoint (no Docker on the VM). The repo's pinned Docker image (`hashicorp/terraform-mcp-server:1.3.0@sha256:423a6b8e...`) stays the setup for the laptop backup. If the endpoint fails on the VM, there is no local fallback there: continue without the Terraform MCP (Microsoft Learn still works) or switch to the laptop (source: Haflidi; endpoint verified on the VM 2026-10-13: connected, HTTP 200 with key, 403 without)
-- [ ] What it is: an ACA app running the same pinned server image behind a Caddy sidecar that requires header `X-MCP-Key` (otherwise 403). No IP restriction, no Easy Auth, so a VM managed identity does not help. `ENABLE_TF_OPERATIONS=false`, no TFE credentials (registry lookups only) (source: Haflidi, verified 2026-10-13 on laptop)
-- [ ] Local edit only, in the VM's A, B, guided worktrees (and session repo if used): in `terraform-coder.agent.md` and `terraform-reviewer.agent.md`, replace the `terraform:` block (`type: stdio`, `command: docker`, `args`) with `type: http`, `url: https://<aca-fqdn>/mcp`, `headers:` `X-MCP-Key: "$TFMCP_KEY"`. Keep the `tools:` line and everything else. `squad.agent.md` and `terraform-validator.agent.md` need no change. Never commit or push these edits (source: Haflidi, verified 2026-10-13 on laptop)
-- [ ] Conflict: the edited worktrees show a dirty git status, which conflicts with the runbook's expected empty status. Decide with Martin. UNKNOWN: needs Martin sign-off because the profile was qualified with Docker
+- [x] The VM uses the Azure Container Apps endpoint (no Docker on the VM). The repo's pinned Docker image (`hashicorp/terraform-mcp-server:1.3.0@sha256:423a6b8e...`) stays the setup for the laptop backup. If the endpoint fails on the VM, there is no local fallback there: continue without the Terraform MCP (Microsoft Learn still works) or switch to the laptop (source: Haflidi; endpoint verified on the VM 2026-10-13: connected, HTTP 200 with key, 403 without) (VM, 2026-10-13)
+- [x] What it is: an ACA app running the same pinned server image behind a Caddy sidecar that requires header `X-MCP-Key` (otherwise 403). No IP restriction, no Easy Auth, so a VM managed identity does not help. `ENABLE_TF_OPERATIONS=false`, no TFE credentials (registry lookups only) (source: Haflidi, verified 2026-10-13 on laptop and VM) (VM, 2026-10-13)
+- [x] Local edit only, in the VM's A, B, guided worktrees (and session repo if used): in `terraform-coder.agent.md` and `terraform-reviewer.agent.md`, replace the `terraform:` block (`type: stdio`, `command: docker`, `args`) with `type: http`, `url: https://<aca-fqdn>/mcp`, `headers:` `X-MCP-Key: "$TFMCP_KEY"`. Keep the `tools:` line and everything else. `squad.agent.md` and `terraform-validator.agent.md` need no change. Never commit or push these edits (source: Haflidi, verified 2026-10-13 on laptop and VM) (VM, 2026-10-13)
+- [x] Closed: the edited profiles show a dirty git status, which differs from the runbook's expected empty status. Martin knows; the guided worktree is clean except the two local profiles (VM, 2026-10-13)
 - [x] Set `TFMCP_KEY` in the VM user environment, without printing it or leaving it in shell history: `$k = Read-Host 'TFMCP_KEY' -AsSecureString`, then `[Environment]::SetEnvironmentVariable('TFMCP_KEY', [System.Net.NetworkCredential]::new('', $k).Password, 'User')`. Open a new terminal, then check with `$env:TFMCP_KEY.Length` (length only). Use User scope, not Machine. The value is stored unencrypted in the registry and ends up in the VM snapshot, so keep the snapshot private and never show the environment on screen. Never paste the value into chat or files (source: Haflidi). Set, length 43 (VM, 2026-10-13)
 - [x] Verify: start `copilot --agent terraform-reviewer` in that folder; `/mcp` shows `terraform` connected with the tools. Laptop: connected with key set, 403 with key cleared, so the profile edit and env expansion work (source: Haflidi, verified 2026-10-13 on laptop; VM verified, `terraform` and `microsoft-learn` connected) (VM, 2026-10-13)
-- [ ] Rate limits: 10 req/s global, 5 req/s per session (source: Haflidi)
+- [x] Rate limits: 10 req/s global, 5 req/s per session (source: Haflidi)
 
 ## 3. Clones
 
@@ -58,7 +76,7 @@ All commands run in PowerShell 7.
   Set-Location 'C:\demo\session-repo'
   copilot --agent squad
   ```
-- [ ] Origin guard: each VM clone's origin must match the runbook string exactly, including `.git` (`https://github.com/martinopedal/squad-terraform-session-2026-10-14.git`). If a clone lacks the suffix, run `git remote set-url origin <url>.git` before the preparation prompt. The consumer repo has the same guard (`https://github.com/martinopedal/aks-automatic-demo-env.git`, checked in the same runbook layout block, "Wrong source origin"); the session guard is also in the runbook C0/preparation block (source: demo-runbook.md)
+- [x] Origin guard: origins are treated as equivalent with or without `.git` (source: Haflidi, 2026-10-13). Earlier wording required an exact match including `.git` (`https://github.com/martinopedal/squad-terraform-session-2026-10-14.git`); no `set-url` step is needed for a missing suffix. The consumer repo has the same guard (`https://github.com/martinopedal/aks-automatic-demo-env.git`, checked in the same runbook layout block, "Wrong source origin"); the session guard is also in the runbook C0/preparation block (source: demo-runbook.md) (VM, 2026-10-13)
 - [x] Upstream module repo: do NOT pre-clone `terraform-azapi-aks-automatic` to `$HOME\demo\aks-module` (C0 clones it live, then `squad init`). Keep that path empty, with no `.squad` folder and no squad CLI there. Test GitHub reachability by cloning `martinopedal/terraform-azapi-aks-automatic` into a throwaway folder, then delete it. Optional backup copy outside the demo path (e.g. `C:\demo\backup\aks-module`) in case the network fails during C0. Path absent; throwaway clone worked and was deleted (VM, 2026-10-13)
 - [ ] Never start Copilot from the private coordinator folder; existing checkouts are never overwritten (source: short-talk-track.md, demo-runbook.md)
 - [ ] `Set-Location C:\demo\session-repo; git status --short` is clean (source: short-talk-track.md Essentials)
@@ -132,7 +150,7 @@ All commands run in PowerShell 7.
 - [ ] C6 rehearsal: the guided session must be named `guided-clean-run` (`/rename guided-clean-run` at C2 start, source: demo-runbook.md C2). Then Scribe records the public decision under `.squad\decisions\inbox\` BEFORE `/new`, `/resume guided-clean-run`, `/cwd`, `/context`, `/usage`; ask it to cite the file (source: demo-runbook.md C6, short-talk-track.md C6). Keep unrelated sessions off screen; sanitized decision excerpt ready; offline fallback `c6-decision.md`
 - [ ] Runbook has no section titled "VM demo cues"; C6 is the only such cue found, covered above. Confirm with Martin whether another cue list exists. UNKNOWN
 - [ ] Confirm the original hash is restored after C5 (check in the C5 log block, source: demo-runbook.md)
-- [ ] Switch rule: if C0 is not done by 07:45 (cut line), show fallback evidence and move on (source: clean-machine-demo.md, short-talk-track.md). Switch to laptop backup rule: UNKNOWN, ask Martin
+- [ ] Switch rule: if C0 is not done by 07:45 (cut line), show fallback evidence and move on (source: clean-machine-demo.md, short-talk-track.md). Switch to laptop backup: no formal rule, backup only (resolved, section 1)
 
 ## 7. Leakage checklist
 
@@ -193,7 +211,7 @@ Order: pre-snapshot checks, snapshot, rehearse C0-C7 once, restore, post-restore
   | Total | |
 
 - [ ] After restore, from `C:\demo\session-repo`: `copilot --agent terraform-reviewer -p "Reply with exactly: READY"`; expect `READY`
-- [ ] The runbook wording "network-restricted" does not mean real network isolation in this demo; it only shows wrong parameters or changes. Network isolation is not a prep step here (runbook left unchanged)
+- [x] Closed: the runbook wording "network-restricted" does not mean real network isolation in this demo; it only shows wrong parameters or changes. Network isolation is not a prep step here (runbook left unchanged)
 - [x] Open questions for Martin: none
   - RESOLVED: drivers after C0 are decided live between the speakers (source: Haflidi 2026-10-13); prompt-pack headings still name drivers and may be neutralized after rehearsal
 
