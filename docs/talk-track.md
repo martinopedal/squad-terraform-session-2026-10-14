@@ -12,7 +12,7 @@ Released deck 0.22.6 on main/Pages has 39 full and five short slides:
 PR22 normally merged October 13, Pages succeeded and full/short HTTP 200 bodies
 matched the initially accepted exports. Later local correction bytes remain
 unpublished pending independent review, normal merge and Pages byte verification.
-The grounded operator-note revision is **candidate 0.22.7**, unpublished until
+The ownerless-how-to/operator-note revision is **candidate 0.22.8**, unpublished until
 independent review, normal merge, and byte verification. It preserves all
 39/5 visual slides, clock/design, and immutable producer pins. The accepted
 native engineering result/publication are not hosted or human stage proof.
@@ -128,7 +128,22 @@ Use `/new`, `/agent` Squad, `/model`, `/plan`, `/rename C1-A`; repeat as `C1-B`.
 
 > DRIVER Martin. Cut at 20:30. Must be out by 21:30.
 
-Use `/new`, `/rename guided-clean-run`, `/agent` Squad, `/instructions`, `/plan`. Reference `main.tf`, `variables.tf`, and `tests\contract.tftest.hcl`; plan the regression and README explanation; keep eight inputs, six outputs, and AzAPI intact; plan a labeled mutation and repair; no implementation, Azure lookup, apply, dependency upgrade, or state operation. Revise: `Put unchanged payload assertions and offline checks before documentation; exclude infrastructure redesign.` Inspect `/session plan`.
+First [create and verify the guided root](demo-runbook.md#create-the-disposable-c1-c7-checkpoints).
+Start real `copilot --agent squad` there; confirm `/cwd` and selected Squad.
+Use `/new`, `/rename guided-clean-run`, `/instructions`, `/plan`; show native
+Plan mode. Paste the [C2 read-only request, human scope revision and exact
+code-only approval](prompt-pack.md#c2---martin-1730-2130-cut-2030).
+Squad plans affected files/invariants/one future writer/checks, not code.
+Inspect the actual revised plan. Press Shift+Tab until the indicator visibly
+says Interactive, not Plan or Autopilot, **before** coder/commands.
+Selecting Squad or saying “plan” isn't native Plan entry; `squad init` isn't
+planning; `/exit` exits the CLI. These help-backed controls still require
+actual target-build human UI rehearsal.
+The read-only batch check used actual bundled CLI 1.0.95 (`--no-auto-update`),
+not launcher/help 1.0.96: fresh child Squad 1.0.1/native Plan selection and 52/52
+unchanged source hashes passed. It did not reload the parent or exercise the
+human revision/approval/indicator/exit UI; those remain untested. Use the
+[dry-run matrix](demo-runbook.md#october-13-command-dry-run-matrix) for evidence limits.
 
 **Martin:** Native Plan mode is the control. Approval authorizes this code change only, not an Azure apply.
 

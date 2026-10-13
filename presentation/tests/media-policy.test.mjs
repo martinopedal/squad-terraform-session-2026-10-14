@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
+import { marked } from 'marked';
 import { applyNoteFactOverrides, demoContent, slides } from '../src/slides.mjs';
 import { createShortSlides } from '../src/short-slides.mjs';
 
@@ -42,16 +43,17 @@ const documentPaths = [
 const documentText = path => readFileSync(new URL(`../../${path}`, import.meta.url), 'utf8');
 
 function assertShortTrackC6Recording(text) {
-  const cue = text.split('## C6 |')[1]?.split('\n## ')[0] ?? '';
+  const cue = text.split('## C6 -')[1]?.split('\n## ')[0] ?? '';
   const canonicalCue = documentText('docs/prompt-pack.md').split('### C6 -')[1]?.split('\n### ')[0] ?? '';
   const prompt = canonicalCue.match(/```text\r?\n([\s\S]*?)\r?\n```/)?.[1];
   assert.ok(prompt?.startsWith('Scribe: record the public-only decision'), 'canonical C6 recording prompt exists');
-  const typeIndex = cue.indexOf('**TYPE:** `/agent squad`');
-  const recordIndex = cue.indexOf(`\`\`\`text\n${prompt}\n\`\`\``, typeIndex);
-  const newIndex = cue.indexOf('TUI `/new`');
+  const typeIndex = cue.indexOf('`/agent squad`');
+  const recordIndex = cue.indexOf('[public Scribe request and resume sequence]', typeIndex);
+  const newIndex = cue.indexOf('`/new`');
   const resumeIndex = cue.indexOf('`/resume guided-clean-run`');
-  const readIndex = cue.indexOf('Prompt: `Read the saved decision; cite its file and the constraints for the next change.`');
-  assert.ok(typeIndex >= 0 && recordIndex > typeIndex, 'C6 TYPE contains the exact bounded public-only recording prompt');
+  const readIndex = cue.indexOf("next task's cited constraints");
+  assert.ok(typeIndex >= 0 && recordIndex > typeIndex, 'C6 directly links the canonical bounded recording prompt');
+  assert.match(cue, /prompt-pack\.md#c6---haflidi-4200-4500-cut-4415/);
   assert.ok(newIndex > recordIndex && resumeIndex > newIndex && readIndex > resumeIndex,
     'C6 records the decision before starting a new session, resuming and reading it');
 }
@@ -62,8 +64,8 @@ test('short monitor C6 records the public decision before resume and citation', 
 
 test('short monitor C6 rejects an empty or late recording prompt', () => {
   const text = documentText('docs/short-talk-track.md');
-  const recordingBlock = text.split('## C6 |')[1].match(/```text\n[\s\S]*?\n```/)[0];
-  const readPrompt = 'Prompt: `Read the saved decision; cite its file and the constraints for the next change.`';
+  const recordingBlock = text.match(/\[public Scribe request and resume sequence\]\([^)]+\)/)[0];
+  const readPrompt = "next task's cited constraints";
   for (const [name, mutant] of [
     ['empty TYPE prompt', text.replace(recordingBlock, '``')],
     ['recording after resume/read', text.replace(recordingBlock, '').replace(readPrompt, `${readPrompt}\n${recordingBlock}`)]
@@ -74,39 +76,34 @@ test('short monitor C6 rejects an empty or late recording prompt', () => {
 });
 
 function assertShortTrackLocalPaths(text) {
-  const localRoot = String.raw`C:\git\squad-terraform-session-2026-10-14`;
   const section = heading => text.split(`## ${heading}`)[1]?.split('\n## ')[0] ?? '';
-  for (const folder of ['public', 'demo-env', 'module-public', 'aca-sandboxes']) {
-    assert.ok(text.includes(`\`${localRoot}\\${folder}\``), `${folder} has a dated existing local path`);
-  }
-  assert.match(text, /WORKSTATION PREPARATION ONLY/);
-  assert.match(text, /verified October 13, 2026[\s\S]*not the separately qualified C0 clean VM/);
-  assert.match(text, /canonical Corp module, read-only.*not the upstream Automatic module/);
-  assert.match(text, /Session checkpoint directory.*not an independent native consumer clone or a private target/);
-  assert.match(text, /Native consumer source belongs in `demo-env\\deployments\\aca-sandboxes-online`/);
-  assert.match(text, /Stage context[\s\S]*on the VM[\s\S]*unverified[\s\S]*off-stage setup/);
+  assert.match(section('Workstation'), /C:\\git\\squad-terraform-session-2026-10-14/);
+  for (const folder of ['public', 'demo-env', 'module-public', 'aca-sandboxes'])
+    assert.ok(section('Workstation').includes(`\`${folder}\``));
+  assert.match(section('Workstation'), /not VM stage commands/);
+  assert.match(section('Workstation'), /canonical Corp module \(read-only\)/);
+  assert.match(section('Workstation'), /session checkpoint directory, \*\*not\*\* a native consumer clone/);
+  assert.match(section('Workstation'), /demo-env\\deployments\\aca-sandboxes-online/);
+  assert.match(text, /Prepare once, before opening Copilot/);
+  assert.match(text, /VM paths remain unverified until those checks pass/);
+  assert.match(text, /scripts\\prepare-demo-checkpoints\.ps1/);
   assert.ok(section('Essentials').includes(String.raw`Set-Location 'C:\demo\session-repo'`));
-  assert.ok(section('Technical evidence / core wrap').includes(String.raw`Set-Location 'C:\demo\aks-automatic-demo-env'`));
   assert.doesNotMatch(text, /Set-Location 'C:\\git\\/);
-  assert.match(section('Technical evidence / core wrap'), /Get-Content \.\\manifests\\online\\ingress-controller\.yaml, \.\\manifests\\online\\ingress\.yaml, \.\\manifests\\online\\service\.yaml/);
-  assert.match(section('C0'), /creates a \*\*new\*\* upstream Automatic clone/);
-  assert.match(section('C0'), /git clone https:\/\/github\.com\/martinopedal\/terraform-azapi-aks-automatic\.git \$HOME\\demo\\aks-module/);
-  assert.match(section('C1'), /SETUP, paths not yet verified on VM/);
-  assert.match(section('C1'), /same starting commit and clean status/);
-  assert.match(section('C2'), /SETUP, guided path not yet verified on VM/);
-  assert.match(section('C2'), /Confirm `\/cwd` and the shell's actual\s+directory before each whole `!` block/);
-  assert.match(section('Optional final extras'), /C:\\demo\\hosted-target[\s\S]*not verified/);
-  assert.match(section('Optional final extras'), /existing approved README task/);
-  assert.match(section('Optional final extras'), /current prepared ID\/guest staging not yet established/);
+  assert.match(section('Technical evidence'), /demo-runbook\.md#s20-consumer/);
+  assert.match(section('C0'), /creates a new `\$HOME\\demo\\aks-module` clone/);
+  assert.match(section('C1'), /creator verified both roots at the same checkpoint/);
+  assert.match(section('C2'), /start guided/);
+  assert.match(section('Hosted'), /C:\\demo\\hosted-target[\s\S]*operator-created\/verified/);
+  assert.match(section('Hosted'), /existing approved README task/);
+  assert.match(section('Native'), /no current prepared sandbox ID,[\s\S]*guest staging or human stage GO established/);
   for (let chapter = 0; chapter < 8; chapter++) {
     const cue = section(`C${chapter}`);
-    for (const label of ['WHERE', 'TYPE', 'SHOW', 'EXPECT', 'STOP']) {
-      assert.ok(cue.includes(`**${label}:**`), `C${chapter} contains ${label}`);
-    }
+    assert.match(cue, /\*\*(?:Shell|TUI)/, `C${chapter} names its actual surface`);
+    assert.match(cue, /\*\*STOP:/, `C${chapter} has one stop cue`);
   }
   for (const chapter of ['C5', 'C7']) {
     assert.match(section(chapter), /whole/);
-    assert.match(section(chapter), /demo-runbook\.md#/);
+    assert.match(section(chapter), /prompt-pack\.md#/);
     assert.doesNotMatch(section(chapter), /```powershell/, 'monitor links complete logging blocks rather than duplicating weaker checks');
   }
 }
@@ -118,18 +115,16 @@ test('short monitor track distinguishes verified local roots from clean and unre
 test('short monitor local-path contract rejects fake roots and unqualified checkpoints', () => {
   const text = documentText('docs/short-talk-track.md');
   const publicLocation = String.raw`Set-Location 'C:\demo\session-repo'`;
-  const consumerLocation = String.raw`Set-Location 'C:\demo\aks-automatic-demo-env'`;
   const mutations = [
     ['workstation used on stage', text.replace(publicLocation, String.raw`Set-Location 'C:\git\squad-terraform-session-2026-10-14\public'`)],
-    ['wrong consumer stage location', text.replace(consumerLocation, String.raw`Set-Location 'C:\demo\session-repo'`)],
-    ['wrong existing consumer root', text.replace(consumerLocation, publicLocation)],
-    ['preparation host labeled clean', text.replace('not the separately qualified C0 clean VM', 'the qualified C0 clean VM')],
-    ['silent A/B checkpoint', text.replace('SETUP, paths not yet verified on VM', 'Prepared A/B paths')],
-    ['silent guided checkpoint', text.replace('SETUP, guided path not yet verified on VM', 'Prepared guided path')],
-    ['checkpoint mislabeled consumer', text.replace('not an independent native consumer clone or a private target', 'the native consumer clone')],
-    ['missing native binding stop', text.replace('current prepared ID/guest staging not yet established', 'current prepared ID/guest staging ready')],
-    ['missing stop cue', text.replace('**STOP:** unqualified host', '**NEXT:** unqualified host')],
-    ['C0 upstream confused with Corp', text.replace('git clone https://github.com/martinopedal/terraform-azapi-aks-automatic.git', 'git clone https://github.com/alz-avm-tf-demo/terraform-azapi-aks-automatic-corp.git')]
+    ['VM claimed verified', text.replace('VM paths remain unverified until those checks pass', 'VM paths are verified')],
+    ['missing creator', text.replace('scripts\\prepare-demo-checkpoints.ps1', 'scripts\\invented.ps1')],
+    ['silent A/B checkpoint', text.replace('creator verified both roots at the same checkpoint', 'paths may differ')],
+    ['missing guided entry', text.replace('[start guided]', '[continue]')],
+    ['checkpoint mislabeled consumer', text.replace('session checkpoint directory, **not** a native consumer clone', 'native consumer clone')],
+    ['missing native binding stop', text.replace('no current prepared sandbox ID,', 'current prepared sandbox ID ready,')],
+    ['missing stop cue', text.replace('**STOP:** unqualified clean host', '**NEXT:** unqualified clean host')],
+    ['C0 clone omitted', text.replace('creates a new `$HOME\\demo\\aks-module` clone', 'uses existing checkout')]
   ];
   for (const [name, mutant] of mutations) {
     assert.notEqual(mutant, text, `${name} must change the actual short track`);
@@ -138,6 +133,96 @@ test('short monitor local-path contract rejects fake roots and unqualified check
 });
 
 const fixtureHash = '75d8fc0f08005317bbdc21c8de9ad43f3b7e06736e419014e7cf8678b9cab2a5';
+function assertOwnerlessMonitor(text) {
+  assert.doesNotMatch(text, /\b(?:Martin|Haflidi)\b/);
+  assert.ok(Buffer.byteLength(text) < 13000, 'monitor remains materially shorter than the prior 15KB track');
+  const rendered = marked(text);
+  for (const heading of ['C2 - Squad', 'Hosted Squad on ACA Apps/Jobs', 'Native ACA Sandboxes'])
+    assert.match(rendered, new RegExp(`<h2>${heading.replaceAll('/', '\\/')}[^<]*<\\/h2>`));
+  const section = name => text.split(`## ${name}`)[1]?.split('\n## ')[0] ?? '';
+  for (const [name, count] of [['Hosted Squad', 5], ['Native ACA', 4]]) {
+    const body = section(name);
+    const html = marked(body);
+    assert.match(html, /<ol>\s*<li>/, `${name} starts a separately numbered rendered list at 1`);
+    assert.equal((html.match(/<li>/g) ?? []).length, count);
+    assert.equal((body.match(/\*\*STOP:/g) ?? []).length, 1);
+    assert.match(body, /1\. \*\*(?:Shell|Browser)/);
+    assert.match(body, /prompt-pack\.md#/);
+    assert.doesNotMatch(body, /Card [AB]/);
+  }
+  const hosted = section('Hosted Squad');
+  const stages = ['existing approved README task', 'one-label trigger block', 'same-issue queue receipt',
+    'matching queue execution', "that issue's linked App-bot PR", 'README.md'];
+  let last = -1;
+  for (const stage of stages) {
+    const next = hosted.indexOf(stage, last + 1);
+    assert.ok(next > last, `hosted stage ${stage} follows the previous stage`);
+    last = next;
+  }
+  const native = section('Native ACA');
+  for (const pattern of [/prepared-ID\/source precheck/, /native-basic-fixture-paste/,
+    /sh \/root\/native-validation\.sh/, /three true checks/, /new same-sandbox denied audit/,
+    /validator/, /independent review/, /no create\/upload\/install\/auth-copy\/retry/])
+    assert.match(native, pattern);
+  const plan = section('C2');
+  for (const pattern of [/native `\/plan`/, /displayed \*\*Plan\*\*/, /read-only test planning/,
+    /scope revision/, /code-only approval/, /\*\*Shift\+Tab\*\*/, /\*\*Interactive\*\*/,
+    /\*\*before\*\* selecting the[\s\S]*coder/, /not automatic approval or deployment consent/])
+    assert.match(plan, pattern);
+  assert.ok(plan.indexOf('code-only approval') < plan.indexOf('**Shift+Tab**'));
+  const pack = documentText('docs/prompt-pack.md').split('### C2 -')[1].split('### C3 -')[0];
+  for (const phrase of ['Do not edit files, run shell commands', 'Revise the plan:',
+    'I approve repository code only:', 'Do not implement yet.', 'Leave native Plan before implementation'])
+    assert.ok(pack.includes(phrase), `canonical paste includes ${phrase}`);
+  for (const link of [...text.matchAll(/\]\(([^)]+\.md)(#[^)]+)?\)/g)]) {
+    const target = documentText(`docs/${link[1]}`);
+    if (link[2] && target.includes(`<a id="${link[2].slice(1)}"`)) continue;
+    if (link[2]) {
+      const slug = value => value.toLowerCase().replace(/[^\p{L}\p{N}_ -]/gu, '').replaceAll(' ', '-');
+      assert.ok([...target.matchAll(/^#{1,6} (.+)$/gm)]
+        .some(match => slug(match[1]) === link[2].slice(1)), `exact paste anchor resolves: ${link[0]}`);
+    }
+  }
+}
+
+test('ownerless monitor renders distinct numbered recipes and real native Plan sequence', () => {
+  assertOwnerlessMonitor(documentText('docs/short-talk-track.md'));
+});
+
+test('ownerless monitor rejects realistic dense, assigned, reordered and missing-control regressions', () => {
+  const text = documentText('docs/short-talk-track.md');
+  for (const [before, after] of [
+    ['## Native ACA Sandboxes', 'Native ACA Sandboxes'],
+    ['1. **Shell, VM `C:\\demo\\session-repo`', '6. **Shell, VM `C:\\demo\\session-repo`'],
+    ['**Browser, approved target Issues:**', '**Browser, Martin:**'],
+    ['same-issue queue receipt', 'unrelated queue receipt'],
+    ["that issue's linked App-bot PR", 'any available PR'],
+    ['native-basic-fixture-paste', 'nonexistent-paste'],
+    ['new same-sandbox denied audit', 'HTTP403 alone'],
+    ['**Shift+Tab**', '`/exit`'],
+    ['**before** selecting the', 'after selecting the'],
+    ['code-only approval', 'automatic approval'],
+    ['no create/upload/install/auth-copy/retry', 'create and retry if needed']
+  ]) {
+    assert.ok(text.includes(before), `negative case changes actual text: ${before}`);
+    assert.throws(() => assertOwnerlessMonitor(text.replace(before, after)), { name: 'AssertionError' });
+  }
+});
+
+test('Plan carriers distinguish tested child runtime from help and unobserved human UI', () => {
+  for (const path of ['docs/short-talk-track.md', 'docs/prompt-pack.md', 'docs/talk-track.md', 'docs/demo-runbook.md']) {
+    const text = documentText(path);
+    assert.match(text, /1\.0\.95/);
+    assert.match(text, /1\.0\.96/);
+    assert.match(text, /untested|not interactively rehearsed|Not interactively rehearsed/i);
+    assert.doesNotMatch(text, /1\.0\.96 AI test passed|parent reload verified|interactive Plan exit passed/i);
+  }
+  const notes = applyNoteFactOverrides('demo-c2', '');
+  for (const pattern of [/runtime 1\.0\.95/, /launcher\/help 1\.0\.96/, /Fresh child selected Squad 1\.0\.1/,
+    /52\/52 source hashes unchanged/, /Not parent reload/, /Plan exit remain untested/])
+    assert.match(notes, pattern);
+});
+
 function assertNativeFixture(bytes) {
   assert.equal(bytes.length, 684, 'accepted public fixture byte count');
   assert.ok(!bytes.includes(13), 'shell fixture must remain LF');
@@ -183,7 +268,15 @@ function assertRunningRecipes(text) {
   assert.match(native, /\$beforeEvents -notcontains/);
   assert.match(native, /\$stamp -ge \$probeStart -and \$stamp -le \$auditEnd/);
   assert.match(native, /curlExit=0[\s\S]*exec exit `0`/);
-  assert.doesNotMatch(native, /--sandbox-group|8a6c3e9a-1723-459d-b5e6-179a35553a9b/);
+  assert.doesNotMatch(native, /8a6c3e9a-1723-459d-b5e6-179a35553a9b/);
+  const blocks = [...native.matchAll(/```powershell\r?\n([\s\S]*?)```/g)].map(match => match[1]);
+  const diagnostic = blocks.find(block => block.includes('aca auth status'));
+  assert.match(diagnostic, /--sandbox-group/);
+  assert.doesNotMatch(diagnostic, /'--group'/);
+  for (const block of blocks.filter(block => /aca sandbox (?:get|exec|fs|egress)/.test(block))) {
+    assert.match(block, /'--group'/);
+    assert.doesNotMatch(block, /--sandbox-group/);
+  }
 }
 
 test('actual running cards reject duplicate hosted triggers and wrong native result/denial contracts', () => {
@@ -1456,7 +1549,7 @@ test('actual source and emitted presenter notes call the published version relea
 
 test('actual candidate version and generated headers retain published0226 and source-freeze history', () => {
   const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8'));
-  assert.equal(version.version, '0.22.7');
+  assert.equal(version.version, '0.22.8');
   const full = documentText('presentation/index.html');
   const short = documentText('presentation/short/index.html');
   for (const [name, current] of [
@@ -1464,7 +1557,7 @@ test('actual candidate version and generated headers retain published0226 and so
     ['full generated header', full.match(/<!-- Document version: ([^\n]+)/)?.[1]],
     ['short generated header', short.match(/<!-- Document version: ([^\n]+)/)?.[1]]
   ]) {
-    assert.match(current, /unpublished candidate 0\.22\.7/, name);
+    assert.match(current, /unpublished candidate 0\.22\.8/, name);
     assert.match(current, /released main\/Pages 0\.22\.6 remains verified/, name);
     assert.match(current, /2026-10-13/, name);
     assert.match(current, /independent semantic review/, name);
