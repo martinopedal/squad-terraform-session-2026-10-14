@@ -83,6 +83,7 @@ Show files/diagnostics, not correctness.
 
 ## C1 - compare two bounded plans
 
+Continue only after preparation verified both roots at the same checkpoint.
 **Shell, each verified A/B root:** run `copilot --agent squad --plan`.
 **TUI:** confirm `/cwd`, Squad and the **Plan** indicator; use sessions
 `C1-A`/`C1-B` and the same model. Paste the
