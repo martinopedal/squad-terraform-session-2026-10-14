@@ -182,13 +182,16 @@ Use "runtime check" or "runtime evidence". Do not use stronger certainty languag
 - [ ] Presentation laptop on power; notifications off; display duplicated; terminal font 16+.
 - [ ] Local deck opens; speaker view works; appendix links return to close/appendix path.
 - [ ] All presenter preflight checks pass.
+- [ ] Inside the actual VM, [create/verify agreed `C:\demo` layout](demo-runbook.md#create-and-verify-the-agreed-vm-layout) and qualify `C:\demo\checkpoints\take-20261014\A`, `\B`, `\guided` plus mirror/evidence. These are intended paths until verified; workstation `C:\git` isn't on-stage context.
+- [ ] Before Plan, HUMAN completes only missing sign-in for the selected host/operation: Copilot session; GitHub only for authenticated GitHub work; Azure only for separately authorized local Azure work. [Setup boundary](demo-runbook.md#conditional-human-setup-before-plan). Source/mocked C1-C7 need no Azure login; no repeated agent login, token/config export, or auth mint.
+- [ ] Keep working `gh` for PR operations. Optional GitHub MCP exposes five read/context tools here, no PR/issue/workflow mutations; missing optional MCP isn't a blocker.
 - [ ] Docker Desktop running before C4.
 - [ ] `/mcp` shows required public documentation/registry tools connected.
 - [ ] C4 is base skill/MCP only. Cloud extras are final-tail options, never a core chapter or catch-up. Their approved IaC/read-back, exact access/policy, fixture/archive, full coverage, permissions, human rehearsal, fallback and cleanup gates are checked separately; leave Corp untouched.
 - [ ] Start Copilot CLI from the session repo folder, not the coordinator root:
 
 ```powershell
-cd C:\git\session-repo   # your public repo clone or checkpoint worktree
+Set-Location 'C:\demo\session-repo'
 copilot --agent squad
 ```
 
@@ -203,6 +206,7 @@ Expected in `/agent`: `Squad` (user) plus `terraform-coder`, `terraform-reviewer
 
 - [ ] Timer reset to 60:00; Martin owns clock calls.
 - [ ] Haflidi confirms C0 VM state and C5 validator shell.
+- [ ] Existing sessions/target readiness still valid; no new login loop or setup during this check. Missing readiness means fallback/SKIP, not automatic repair.
 - [ ] Martin confirms s20 app tab still returns the branded page.
 - [ ] Network fallback agreed: if venue network fails, use local deck and appendix evidence.
 - [ ] No private identifiers visible in terminal history, browser address bar beyond the public app URL, or speaker notes.
@@ -395,8 +399,14 @@ cleanup instructions are in [Card A and Card B](demo-runbook.md#two-product-demo
 
 | Card | Repo / folder / owner | Trigger and required proof | Clock / cut / fallback / cleanup |
 | --- | --- | --- | --- |
-| A, hosted Squad ACA Jobs | Haflidi authored `haflidif/squad-on-aca`; independently accepted owned MIT fork is `martinopedal/squad-on-aca`; approved private target at `C:\demo\hosted-target`. Login/current target rights remain human gates | One approved README issue -> private scheduled poller -> existing queue -> genuine Squad UID10001 worker -> trusted App-bot PR/diff. Owned fork/target source accepted, live E2E pending publisher/owner-native Terraform/image/auth/actual PR gates; original service unchanged | Final optional tail after complete core wrap, only genuine early-finish spare time and new GO; cut before 55:00, no use of recovery. Dated reviewed original excerpt or skip; no stage repair/retry. Old queued run untouched; exact newly owned cleanup only |
+| A, hosted Squad ACA Jobs | Haflidi authored `haflidif/squad-on-aca`; owned MIT fork `martinopedal/squad-on-aca` accepted. Intended VM `C:\demo\hosted-target` needs authorized setup/verification; login/current target rights remain human gates | One existing approved README issue -> private scheduled poller -> existing queue -> genuine Squad UID10001 worker -> trusted App-bot PR/diff. Route `squad:ripley` once, wait for automatic event worker, verify same-issue README diff. Status workflow isn't enqueue/proof. Runtime image/auth/chain holds remain; original service unchanged | Final optional tail after complete core wrap, genuine early-finish spare time/new GO; cut before 55:00. Dated original evidence/SKIP; no new issue, manual Job start, retry or recovery spend. Owned cleanup off-stage |
 | B, native ACA isolation for host Copilot CLI/Squad | Public session prompt/fixture on host; verified separate Online group/RG, not AKS/hosted Jobs. Martin coordinates, native operator/worker runs, independent validator/reviewer checks | Actual host prompt/Squad/ACA tools -> three guest checks/JSON+SHA -> exit23/causal denial -> cleanup/handoff. Corrected receipt PASS; independent acceptance complete, runtime-ready after acceptance, human stage GO separate | Final optional tail after hosted Apps/Jobs and complete core wrap; cut before 55:00 only after successful-work/rehearsal GO. Accepted trace or skip; no retry or slack spend. Exact owned cleanup off-stage |
+
+Live actions: use the two short numbered [Card A/Card B running recipes](demo-runbook.md#two-product-demo-flows-hosted-squad-and-native-aca-sandboxes).
+Native basic source is `docs\fixtures\native-validation.sh`; guest
+`sh /root/native-validation.sh`, filesystem `/root/native-result.json`, approved
+exit23 and causal audit. Current prepared ID/guest staging/human GO remain
+unbound. Status/doctor isn't a demo; the Terraform archive is a separate variant.
 
 No full runtime QA is promised in four minutes. Host Copilot/Squad orchestrating
 isolated fixture work is the primary native flow; actual coordinator prompt,

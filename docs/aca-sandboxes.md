@@ -277,6 +277,23 @@ The prepared shell-only path was faster, but that does not predict a fresh Copil
 
 ## Recommended live use
 
+**Basic host-Squad demo first:** use the numbered
+[Card B running recipe](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad)
+from VM `C:\demo\session-repo` and the
+[basic LF fixture prompt](prompt-pack.md#native-host-squad-isolated-work).
+The exact accepted source is [fixtures/native-validation.sh](fixtures/native-validation.sh),
+guest `/root/native-validation.sh`, result `/root/native-result.json`; Card B
+binds its 684-byte LF source/hash and source-backed exec/readback/exit23 commands.
+Current prepared ID and off-stage guest staging still require the existing
+operator before human GO; the accepted earlier sandbox was deleted.
+SHOW real host skill/tools -> guest JSON/hashes/numeric exits -> independent
+handoff. Status/doctor isn't execution. The accepted basic run isn't the
+Terraform archive below; don't invent a script or substitute this variant.
+
+**The retained procedure below is the separately qualified Terraform variant,
+not the accepted basic fixture.** It needs its own prepared source/archive,
+guest tools/mocks, exact target, and rehearsal GO.
+
 Keep C4 base-only: skill, read-only MCP lookup and permissions. Native Sandboxes never replace it. If useful in the final optional tail, show a sanitized saved excerpt explicitly labeled **Management-side execution evidence, not Corp validation**. Never rerun the Management target to stand in for Corp.
 
 Only after complete core wrap and a genuine early finish may hosted Apps/Jobs, then native Sandboxes, be considered as optional extras. Native work also requires independently approved selected-target IaC, access/policy read-back, full required runtime coverage and exact presenter preflight/rehearsal. Online basic provisioning/access/probe and corrected host fixture engineering are independently accepted; human stage GO and any selected Terraform variant remain separate gates. Approved Corp IaC was the earlier condition, not the current exclusive placement rule. Do not compress core content to buy time. Cut before **55:00**; never use **55:00-58:00** protected recovery or **58:00-60:00** close. See [the final native procedure](demo-runbook.md#native-procedure-reference---final-optional-tail-never-c4).

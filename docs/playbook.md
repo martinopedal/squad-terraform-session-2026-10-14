@@ -14,6 +14,15 @@ For legacy templates, historical verification refers to a concretely bound run, 
 
 ## 1. Prerequisites
 
+For the live show, open [short monitor cues](short-talk-track.md) first and use
+[prompt-pack.md](prompt-pack.md) for exact C1-C7 paste. This playbook retains
+generic bootstrapping/reference recipes, not permission to overwrite the
+prepared public clone. Before Plan, follow
+[conditional HUMAN setup](demo-runbook.md#conditional-human-setup-before-plan):
+reuse authorized sessions, no repeated agent login, no Azure login for source
+or mocked checks. Optional GitHub MCP has five exposed read/context tools here;
+working `gh` remains the GitHub lifecycle path.
+
 1. Windows 11 with PowerShell 7. Install or verify the tools.
 
 ```powershell
@@ -155,7 +164,7 @@ Expected result: Squad-owned files refresh, customized `squad.agent.md` is backe
 
 Copy the three profiles into `.github\agents\`. In this repo they already exist at the root and inside the reusable module copy.
 
-Legacy command template, resolve before paste: replace every `<session-repo>` (including angle brackets) with the actual public session clone path, for example `C:\git\session-repo`, and quote each complete source path. PowerShell reserves unquoted `<`; this block is not runnable as written.
+Legacy command template, resolve before paste: replace every `<session-repo>` (including angle brackets) with the VM path `C:\demo\session-repo` only after [creating/verifying it](demo-runbook.md#create-and-verify-the-agreed-vm-layout), and quote each complete source path. This is a reference for a separately approved new repo; the profiles already exist in the prepared public source/checkpoints. PowerShell reserves unquoted `<`; this block is not runnable as written.
 
 ```powershell
 New-Item -ItemType Directory -Force .github\agents | Out-Null
@@ -170,7 +179,7 @@ Expected result: `squad.agent.md`, `terraform-coder.agent.md`, `terraform-valida
 Start Copilot CLI from the **session repo folder**. For a live checkpoint chapter, open Copilot from that checkpoint worktree's repo folder.
 
 ```powershell
-cd C:\git\session-repo   # your public repo clone or checkpoint worktree
+Set-Location 'C:\demo\session-repo'
 copilot --agent squad
 ```
 
