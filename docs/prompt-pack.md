@@ -40,10 +40,6 @@ for PR operations. No token retrieval, authentication MCP, or new permissions.
 Confirm the public root and project profiles; pin `claude-sonnet-5` for eval
 parity. Wrong root/missing profiles: stop, exit and restart in the right root.
 Already prepared Squad 1.0.1: do not init/upgrade/regenerate the roster.
-Before using the VM, [check both launcher and bundled CLI versions](demo-runbook.md#conditional-human-setup-before-plan).
-The actual read-only batch test used bundled 1.0.95 with `--no-auto-update`;
-launcher/help was 1.0.96. Fresh-child Squad 1.0.1/native Plan selection passed
-with 52/52 source hashes unchanged, not a parent reload or interactive UI proof.
 
 **Small task first - `/agent terraform-reviewer`, conversational prompt:**
 
@@ -110,10 +106,7 @@ copilot --agent squad
 ```
 
 TUI in guided: `/new`, `/rename guided-clean-run`, `/agent` → Squad,
-`/cwd`, `/instructions`, `/plan`. Confirm the displayed native **Plan** mode
-and selected Squad before pasting this bounded read-only request. Selecting
-Squad or merely saying “plan” is not entering native Plan mode; `squad init`
-only scaffolds a team.
+`/instructions`, `/plan`. Paste:
 
 ```text
 @terraform\modules\aks-automatic-corp\main.tf
@@ -123,44 +116,10 @@ This is prepared, qualified code. Plan the C1 regression test and its README
 explanation. Keep all eight inputs, six outputs, and the AzAPI resource intact.
 Plan a separately labeled enablePrivateCluster mutation and repair.
 No implementation, Azure lookup, apply, dependency upgrade, or state operation.
-Squad: coordinate read-only planning of affected files, the four invariant
-assertions, one future test writer, and offline validation/review handoffs.
-Do not edit files, run shell commands, or start an implementation task.
 ```
 
-Inspect the proposed plan and its affected-file list. Send this **scope revision**:
-
-```text
-Revise the plan: put unchanged payload assertions and offline checks before
-documentation; exclude infrastructure redesign. For C3 approve only the test
-file, not a README edit. Keep the labeled one-field C5 mutation/restoration
-separate. Remain plan-only; show the revised plan and acceptance criteria.
-```
-
-Inspect the revised plan (use `/session` plan view if exposed by this build;
-the visible response is sufficient). The human sends this **code-only approval**:
-
-```text
-I approve repository code only: C3 may add alternate_network_payload in
-terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl with exactly four
-assertions and the stated CIDRs/DNS. C5 may separately change then restore only
-body.properties.apiServerAccessProfile.enablePrivateCluster in main.tf, in this
-disposable guided worktree. Preserve all other source, mocks, providers and locks.
-Do not implement yet. No Azure, deployment, installation, dependency upgrade,
-state operation, publication, blanket tool approval or automatic plan approval.
-```
-
-**Leave native Plan before implementation:** press **Shift+Tab** to cycle modes
-until the indicator visibly says **Interactive**, not Plan or Autopilot.
-Only then continue C3/select coder or approve commands. `/exit` closes the CLI,
-not just Plan. Installed CLI 1.0.96 help and the
-[official Plan-mode guide](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli)
-verify `/plan` and Shift+Tab; actual target-build UI/trust/agent discovery and
-timed rehearsal remain a human preflight gate. No invented approval-button name
-or `/plan off` command; never combine `--plan` with `--mode autopilot`.
-The [dry-run matrix](demo-runbook.md#october-13-command-dry-run-matrix) distinguishes
-that actual 1.0.95 programmatic check from untested human revision/approval/
-visible-indicator/Plan-exit steps; these are documented manual instructions.
+Revise: "Put unchanged payload assertions and offline checks before documentation; exclude infrastructure redesign." Inspect `/session plan`.
+Human approves only named repository changes, then leaves Plan mode via actual UI.
 
 ### C3 - Martin, 22:00-26:00; cut 25:00
 
@@ -607,13 +566,7 @@ stage it off-stage at `C:\demo\native-fixture\native-validation.sh`, guest
 sandbox. Don't invent an ID/create a replacement or call the Terraform archive
 the accepted basic fixture.
 
-<a id="native-basic-fixture-paste"></a>
-
 **Basic fixture prompt, host Squad, only after HUMAN GO and exact bindings:**
-First run the [prepared-ID/source precheck](demo-runbook.md#native-prepared-id-and-source-precheck).
-In this host conversation, supply its actual current ID/readback and the
-operator's explicit approval, not the deleted historical ID or a guessed ID.
-The prompt below refers to that captured binding; absent binding is BLOCKED.
 
 ```text
 Invoke aca-sandboxes. Use only the operator-supplied, approved prepared sandbox

@@ -12,7 +12,7 @@ Released deck 0.22.6 on main/Pages has 39 full and five short slides:
 PR22 normally merged October 13, Pages succeeded and full/short HTTP 200 bodies
 matched the initially accepted exports. Later local correction bytes remain
 unpublished pending independent review, normal merge and Pages byte verification.
-The ownerless-how-to/operator-note revision is **candidate 0.22.8**, unpublished until
+The grounded operator-note revision is **candidate 0.22.7**, unpublished until
 independent review, normal merge, and byte verification. It preserves all
 39/5 visual slides, clock/design, and immutable producer pins. The accepted
 native engineering result/publication are not hosted or human stage proof.
@@ -25,6 +25,12 @@ use `\guided`, from the disclosed public `0abb202f` checkpoint. Workstation
 `C:\git` paths are preparation only. Complete conditional HUMAN sign-in before
 Plan; source/mocked checks need no Azure login. Copy exact prompts from the
 prompt pack, full logging blocks from the runbook; shell variables don't persist.
+The actual Online entry is
+[`aks-automatic-demo-env/deployments/online/main.tf`](https://github.com/martinopedal/aks-automatic-demo-env/blob/main/deployments/online/main.tf),
+VM `C:\demo\aks-automatic-demo-env\deployments\online\main.tf`.
+C1-C7 edit only the disposable copied Corp contract-test fixture, not that
+consumer or its upstream dependency. Corp's private-API assertion is not
+the Online caller's API configuration.
 
 This targets a rehearsed 60-minute show, not exploratory pair programming; the full human rehearsal is still pending. Before the timed show starts, show the untimed legal/futures notice: preview features may change; recheck status before 14 Oct 2026; no warranties; dates are subject to change. C0-C7 remain 29 minutes total. Planned content ends at 55:00, then the protected slack holds 55:00-58:00 before the close.
 
@@ -50,7 +56,12 @@ Use runtime check and runtime evidence language. Local mocks are not Azure accep
 
 ## s03-baseline | 03:00-03:30 | Start with the code you have
 
-**Martin:** The starting point is a public AKS module revision, qualified before this live run. It had useful inputs, outputs, and tests, plus inherited issues we disclose instead of rewriting history.
+**Martin:** Start the Online explanation from the actual caller
+`aks-automatic-demo-env\deployments\online\main.tf`: its inputs and network/
+identity wiring consume `terraform-azapi-aks-automatic` pinned at `v0.6.0`.
+That upstream source is a dependency, not the live entry or an authoring task.
+Our C1-C7 edits instead use the disposable copied Corp contract-test fixture,
+qualified before this run; we are not editing or deploying the Online caller.
 
 **Haflidi:** Keep upstream source, qualified module revision, and clean live checkpoint separate. The live run demonstrates one bounded change. It is not an Azure apply.
 
@@ -128,22 +139,7 @@ Use `/new`, `/agent` Squad, `/model`, `/plan`, `/rename C1-A`; repeat as `C1-B`.
 
 > DRIVER Martin. Cut at 20:30. Must be out by 21:30.
 
-First [create and verify the guided root](demo-runbook.md#create-the-disposable-c1-c7-checkpoints).
-Start real `copilot --agent squad` there; confirm `/cwd` and selected Squad.
-Use `/new`, `/rename guided-clean-run`, `/instructions`, `/plan`; show native
-Plan mode. Paste the [C2 read-only request, human scope revision and exact
-code-only approval](prompt-pack.md#c2---martin-1730-2130-cut-2030).
-Squad plans affected files/invariants/one future writer/checks, not code.
-Inspect the actual revised plan. Press Shift+Tab until the indicator visibly
-says Interactive, not Plan or Autopilot, **before** coder/commands.
-Selecting Squad or saying “plan” isn't native Plan entry; `squad init` isn't
-planning; `/exit` exits the CLI. These help-backed controls still require
-actual target-build human UI rehearsal.
-The read-only batch check used actual bundled CLI 1.0.95 (`--no-auto-update`),
-not launcher/help 1.0.96: fresh child Squad 1.0.1/native Plan selection and 52/52
-unchanged source hashes passed. It did not reload the parent or exercise the
-human revision/approval/indicator/exit UI; those remain untested. Use the
-[dry-run matrix](demo-runbook.md#october-13-command-dry-run-matrix) for evidence limits.
+Use `/new`, `/rename guided-clean-run`, `/agent` Squad, `/instructions`, `/plan`. Reference `main.tf`, `variables.tf`, and `tests\contract.tftest.hcl`; plan the regression and README explanation; keep eight inputs, six outputs, and AzAPI intact; plan a labeled mutation and repair; no implementation, Azure lookup, apply, dependency upgrade, or state operation. Revise: `Put unchanged payload assertions and offline checks before documentation; exclude infrastructure redesign.` Inspect `/session plan`.
 
 **Martin:** Native Plan mode is the control. Approval authorizes this code change only, not an Azure apply.
 
@@ -237,7 +233,19 @@ Select `/agent terraform-validator`; run the C7 PowerShell block from [demo-runb
 > or policy escape. Corp-required private workloads stay Corp. GitHub source
 > visibility is separate from network/authenticated control-plane placement.
 
-**Martin:** 50:00-50:30: show the consumer-to-module diagram. Consumers pin the module code. They do not copy private inputs, backend, state, identities, or secrets.
+**Martin:** 50:00-50:30: show
+[`deployments/online/main.tf`](https://github.com/martinopedal/aks-automatic-demo-env/blob/main/deployments/online/main.tf)
+first, then the consumer-to-module diagram. Read caller inputs/wiring and the
+module `aks` dependency `git::https://github.com/martinopedal/terraform-azapi-aks-automatic.git?ref=v0.6.0`.
+Online has `enable_private_cluster=false` and
+`authorized_ip_ranges=var.api_server_authorized_ip_ranges`: public API with
+environment-owned allow-listed ranges, not the Corp fixture's private API.
+Do not inspect private variable values, backend, state, identities or secrets.
+
+> Source navigation bound October 13 to verified consumer root/origin
+> `martinopedal/aks-automatic-demo-env`, HEAD `dbb7e4c6f19a6c8fcd31ca61085e449d1a9fd87c`;
+> tracked `deployments\online\main.tf` was clean. Recheck VM metadata before use;
+> this is source evidence, not new deployment or runtime qualification.
 
 **Martin:** Ingress is the web entry, not the cluster API. The Azure DNS label reaches a load-balancer frontend for the dedicated App Routing NGINX controller. Its `/` rule sends traffic to Service port 80, then two web pods on 8080. The site ConfigMap supplies the page. HTTP redirects, but TLS uses the default self-signed certificate.
 
@@ -261,7 +269,7 @@ PowerShell source inspection only; no Azure auth, kubeconfig or secret access:
 
 ```powershell
 Set-Location C:\demo\aks-automatic-demo-env
-Get-Content .\manifests\online\ingress-controller.yaml, .\manifests\online\ingress.yaml, .\manifests\online\service.yaml
+Get-Content .\deployments\online\main.tf, .\manifests\online\ingress-controller.yaml, .\manifests\online\ingress.yaml, .\manifests\online\service.yaml
 ```
 
 ```mermaid

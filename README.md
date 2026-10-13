@@ -11,13 +11,6 @@ A two-speaker session by **Martin Opedal, Enterprise Cloud Solution Architect, M
 [deck](presentation/index.html) (audience).
 Double-click the bundled deck to view slides; use [Pages](https://martinopedal.github.io/squad-terraform-session-2026-10-14/presentation/)
 or HTTP for reliable `S` speaker view. Viewing doesn't require npm or Python.
-Before any chapter: [prepare once on the VM](docs/demo-runbook.md#create-the-disposable-c1-c7-checkpoints)
-creates `C:\demo\checkpoints\take-20261014\A`, `B`, `guided`, `offline` and
-`evidence`; `Set-Location` alone cannot create them. The monitor's
-[native Plan steps](docs/short-talk-track.md#native-plan-with-squad),
-[hosted issue-to-PR](docs/short-talk-track.md#hosted-demo)
-and [native MicroVM](docs/short-talk-track.md#native-demo)
-are separate recipes, not live GO.
 
 Released **deck 0.22.6** synchronizes exported speaker notes with accepted
 ACA SANDBOXES engineering, accepted owned-hosted source/runtime holds and VM preservation.
@@ -29,7 +22,7 @@ that new bytes are published. Publication grants no runtime or human stage GO.
 Owner-native source preparation is under review; executable delivery remains
 held, with plan/apply/destroy unconditionally disabled and signer/private-plan
 transport/executable integration not provisioned. This is not deploy-on-merge.
-The current ownerless-how-to/operator-note candidate is **0.22.8**, not yet published;
+The current grounded operator-note candidate is **0.22.7**, not yet published;
 the released 0.22.6 facts above remain unchanged.
 
 ## What this repository contains
