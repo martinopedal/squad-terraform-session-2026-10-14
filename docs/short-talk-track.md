@@ -77,13 +77,42 @@ source/mocked checks need no Azure login.
 ## C0 - install, initialize, confirm a team
 
 **Shell/TUI:** [clean-host recipe](clean-machine-demo.md#the-live-chapter-target-300).
+Repo: upstream clone `terraform-azapi-aks-automatic`; no code change.
 New `$HOME\demo\aks-module` clone → `squad init` → roster → `squad doctor`.
+At the roster step paste [Hire the team](prompt-pack.md#hire-the-team-c0-first-squad-demo-squad-coordinator-plan-mode):
+
+```text
+Cast the team from the Flaaklypa Grand Prix (Flåklypa Grand Prix) characters.
+Use names only, no role-play: fun but professional.
+
+Project: a reusable Terraform child module, terraform-azapi-aks-automatic,
+that deploys an AKS Automatic cluster using the azapi provider. The module
+has no provider blocks, backend or credentials; root consumers own those.
+Needs: secure defaults, typed variables with validation, clear outputs, a
+README with examples, offline tests (terraform validate and tftest, no
+Azure), a security and policy review before shipping, and a consumer
+example pinned to a released module version.
+
+Roles needed: lead (architecture, task boundaries), Terraform module
+author, tester, security reviewer, docs writer.
+Rules: exactly one writer per file; the reviewer is never the author of
+what they review.
+
+Hint, not forced: Reodor Felgen as lead and architect (the inventor who
+owns the design), Ludvig as the cautious security reviewer (the worrier),
+Solan Gundersen as the upbeat docs writer. For the module author and
+tester, pick further well-known Flaaklypa characters yourself.
+
+Propose the team and wait for my confirmation before creating anything.
+```
+
 Show files/diagnostics, not correctness.
 **STOP:** unqualified clean host or cut = dated fallback, no VM repair.
 
 ## C1 - compare two bounded plans
 
 Continue only after preparation verified both roots at the same checkpoint.
+Repo: Corp teaching copy `terraform\modules\aks-automatic-corp` in the session repo, disposable; nothing pushed upstream.
 **Shell, each verified A/B root:** run `copilot --agent squad --plan`.
 **TUI:** confirm `/cwd`, Squad and the **Plan** indicator; use sessions
 `C1-A`/`C1-B` and the same model. Paste the
