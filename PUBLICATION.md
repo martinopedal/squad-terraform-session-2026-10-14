@@ -9,10 +9,12 @@ deployment values/state and the hosted issue/queue/bot-PR target remain private.
 The session clone is not a deployment entry or evidence of target access.
 
 Keep achieved deployment, bounded runtime checks and full demo readiness separate.
-The released full/short deck is 0.22.5 on main/Pages. A later local docs or bootstrap
-change is not published merely because that baseline is live. Local deck 0.22.6
-is the directly coupled notes/status export candidate; independent source/export
-review and normal publication still gate it.
+The released full/short deck 0.22.6 is on main/Pages: PR22 normally merged
+October 13, Pages succeeded, and both HTTP 200 responses matched the accepted
+export bytes. A later local docs or bootstrap correction is not published merely
+because that version is live; it still needs independent source/export review,
+normal merge and Pages byte verification. This publication grants no runtime,
+installer, human preflight or rehearsal GO.
 Owned hosted fork/target/publisher source is accepted/merged, not live E2E proof.
 Private publisher qualification awaits its existing human gate; owner-native
 Terraform, image/authentication and actual README bot PR remain separate.

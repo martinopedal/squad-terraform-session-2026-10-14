@@ -513,6 +513,20 @@ def main():
             notes.wait_for_function("() => document.querySelector('.speaker-controls-notes .value').textContent.includes('/session plan')")
             check("notes follow slide", "Offline fallback:" in notes.locator(".speaker-controls-notes .value").inner_text())
             check("notes show live command block", "/session plan" in notes.locator(".speaker-controls-notes .value").inner_text())
+            for slide_id, cue in (("s04-news", "Operator context only"),
+                                  ("s07-agent-setup", "October 12 host checks")):
+                page.evaluate("""id => Reveal.slide(
+                    Reveal.getIndices(document.getElementById(id)).h, 0, -1)""", slide_id)
+                notes.wait_for_function("""cue => {
+                    const text = document.querySelector('.speaker-controls-notes .value').textContent;
+                    return text.includes(cue) && text.includes('Released deck 0.22.6 on main/Pages');
+                }""", arg=cue)
+                current_notes = notes.locator(".speaker-controls-notes .value").inner_text()
+                check(f"{slide_id} speaker view reflects published release without runtime GO",
+                      "Released deck 0.22.6 on main/Pages" in current_notes
+                      and "unpublished candidate" not in current_notes
+                      and "SQUAD ON ACA APPS/JOBS fresh E2E separately BLOCKED" in current_notes
+                      and ("human stage GO" in current_notes or "Human stage/rehearsal" in current_notes))
             notes.screenshot(path=str(QA / "speaker-view.png"))
             page.evaluate("Reveal.slide(10,0,-1)")
             notes.close()

@@ -711,7 +711,7 @@ test('product prompts require positive guest work, accountable handoff and origi
   assert.doesNotMatch(documentText('docs/repositories.md'), /martinopedal\/squad-on-aca-demo-target/);
 });
 
-test('current release fronts bind live0225 and unpublished0226 without stale release claims', () => {
+test('reconciled release fronts name published0226 while frozen operator snapshots retain their source-stage boundary', () => {
   for (const path of [
     'README.md', 'PUBLICATION.md', 'handoff.md', 'haflidi-overview.html',
     'presentation/README.md', 'docs/run-plan.md', 'docs/source-provenance.md',
@@ -719,6 +719,10 @@ test('current release fronts bind live0225 and unpublished0226 without stale rel
     'docs/whats-new.md', 'docs/demo-runbook.md'
   ]) {
     const text = documentText(path).replace(/\s+/g, ' ');
+    if (['README.md', 'PUBLICATION.md', 'presentation/README.md'].includes(path)) {
+      assertPublishedRelease(currentReleaseFront(path), path);
+      continue;
+    }
     assert.match(text, /(?:Released|released|live)[^.]{0,100}(?:\*\*)?0\.22\.5|0\.22\.5[^.]{0,80}(?:released|main\/Pages)/, path);
     assert.match(text, /(?:Local|local)[^.]{0,80}(?:\*\*)?0\.22\.6/, path);
     assert.match(text, /candidate|review.*publication|unpublished/, path);
@@ -935,3 +939,83 @@ for (const [path, prefix, column] of hostedFlowSurfaces) {
     }
   });
 }
+
+const currentReleaseFront = path => {
+  const text = documentText(path);
+  if (path === 'README.md') return text.split('## What this repository contains')[0];
+  if (path === 'PUBLICATION.md') return text.split('Owned hosted fork/target/publisher source')[0];
+  return text.split('Source qualification may finish before delivery.')[1]
+    ?.split('The live demo consumer is')[0];
+};
+const assertPublishedRelease = (text, name) => {
+  assert.ok(text, `${name} contains its current release surface`);
+  const current = text.replaceAll('*', '').replace(/\s+/g, ' ');
+  assert.match(current, /(?:released|published)(?: main\/Pages)?(?: full\/short)?(?: deck| release)? 0\.22\.6/i, name);
+  assert.match(current, /main\/Pages/i, name);
+  assert.doesNotMatch(current,
+    /local (?:candidate )?(?:deck )?0\.22\.6|0\.22\.6 (?:is )?(?:an? )?(?:unpublished|not (?:a )?published|candidate)|(?:released|live)(?: main\/Pages)?(?: baseline)?(?: (?:is|stays|remains))?(?: deck)? 0\.22\.[245]|live Pages remains (?:the previously released )?0\.22\.[245]/i,
+    `${name} must not label the published version as a current candidate or keep the old live baseline`);
+};
+
+test('actual current release fronts and the entry table reject stale publication state beside valid release text', () => {
+  const surfaces = ['README.md', 'PUBLICATION.md', 'presentation/README.md']
+    .map(path => [path, currentReleaseFront(path)]);
+  const row = documentText('README.md').split(/\r?\n/)
+    .find(line => line.startsWith('| Session docs, deck, skills/native profiles |'));
+  surfaces.push(['README.md session deployment status', row?.split('|')[6]]);
+  for (const [name, current] of surfaces) {
+    assertPublishedRelease(current, name);
+    for (const mutation of [
+      current.replaceAll('0.22.6', '0.22.5'),
+      `${current} Local deck 0.22.6 unpublished candidate.`,
+      `${current} Released main/Pages stays 0.22.4.`,
+      `${current} Live Pages remains the previously released 0.22.2.`
+    ]) {
+      assert.notEqual(mutation, current, `${name} mutation changes the actual current surface`);
+      assert.throws(() => assertPublishedRelease(mutation, name), { code: 'ERR_ASSERTION' });
+    }
+  }
+});
+
+test('actual source and emitted presenter notes call the published version released without clearing runtime gates', () => {
+  const html = documentText('presentation/index.html');
+  for (const id of ['s04-news', 's07-agent-setup']) {
+    const emitted = html.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/section>`))?.[1];
+    const notes = emitted?.match(/<aside class="notes">([\s\S]*?)<\/aside>/)?.[1];
+    for (const [kind, current] of [['source', applyNoteFactOverrides(id, '')], ['emitted', notes]]) {
+      const name = `${kind} ${id}`;
+      assertPublishedRelease(current, name);
+      assert.match(current, /SQUAD ON ACA APPS\/JOBS fresh E2E separately BLOCKED/, name);
+      assert.match(current, /human stage GO|Human stage\/rehearsal/, name);
+      for (const mutation of [
+        current.replaceAll('0.22.6', '0.22.5'),
+        `${current}<p>Local deck 0.22.6 unpublished candidate.</p>`
+      ]) assert.throws(() => assertPublishedRelease(mutation, name), { code: 'ERR_ASSERTION' });
+    }
+  }
+});
+
+test('actual version status and both generated headers separate published0226 from dated source-freeze history', () => {
+  const version = JSON.parse(readFileSync(new URL('../src/version.json', import.meta.url), 'utf8'));
+  assert.equal(version.version, '0.22.6');
+  const full = documentText('presentation/index.html');
+  const short = documentText('presentation/short/index.html');
+  for (const [name, current] of [
+    ['version status', version.status],
+    ['full generated header', full.match(/<!-- Document version: ([^\n]+)/)?.[1]],
+    ['short generated header', short.match(/<!-- Document version: ([^\n]+)/)?.[1]]
+  ]) {
+    assertPublishedRelease(current, name);
+    assert.match(current, /2026-10-13/, name);
+    for (const mutation of [
+      current.replaceAll('0.22.6', '0.22.5'),
+      `${current} Local deck 0.22.6 unpublished candidate.`
+    ]) assert.throws(() => assertPublishedRelease(mutation, name), { code: 'ERR_ASSERTION' });
+  }
+  const freeze = version.changes.find(change => change.startsWith('0.22.6 - '));
+  assert.match(freeze, /2026-10-13 pre-publication source freeze:/);
+  assert.match(freeze, /candidate/);
+  assert.match(freeze, /Released main\/Pages remains0\.22\.5 until exact review/);
+  assert.match(full, /Source-build history below records dated source freezes, not current publication status\./);
+  assert.ok(full.includes(freeze), 'actual full export retains the explicitly frozen historical entry');
+});
