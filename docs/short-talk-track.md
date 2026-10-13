@@ -128,7 +128,13 @@ then restores that one field. `/review` is read-only built-in mutation review.
 don't split environment variables across turns or omit exit guards.
 ## C6 | Haflidi 42:00-45:00, CUT 44:15 | public reason • resume • cite
 **WHERE:** same guided CLI; public decision only.
-**TYPE:** `/agent squad`; prompt: ``
+**TYPE:** `/agent squad`; public-only prompt:
+```text
+Scribe: record the public-only decision under .squad\decisions\inbox\ for later
+merge into .squad\decisions.md. Include private API, caller-owned provider/backend,
+network regression, labeled mutation/restoration, exact checks and evidence
+limits. No private targets, histories, credentials or full conversations.
+```
 TUI `/new`, `/resume guided-clean-run`, `/cwd`, `/context`, `/usage`.
 Prompt: `Read the saved decision; cite its file and the constraints for the next change.`
 **SHOW:** saved public file, resumed session and cited reason; hide unrelated sessions.

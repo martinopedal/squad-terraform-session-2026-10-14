@@ -41,6 +41,38 @@ const documentPaths = [
 ];
 const documentText = path => readFileSync(new URL(`../../${path}`, import.meta.url), 'utf8');
 
+function assertShortTrackC6Recording(text) {
+  const cue = text.split('## C6 |')[1]?.split('\n## ')[0] ?? '';
+  const canonicalCue = documentText('docs/prompt-pack.md').split('### C6 -')[1]?.split('\n### ')[0] ?? '';
+  const prompt = canonicalCue.match(/```text\r?\n([\s\S]*?)\r?\n```/)?.[1];
+  assert.ok(prompt?.startsWith('Scribe: record the public-only decision'), 'canonical C6 recording prompt exists');
+  const typeIndex = cue.indexOf('**TYPE:** `/agent squad`');
+  const recordIndex = cue.indexOf(`\`\`\`text\n${prompt}\n\`\`\``, typeIndex);
+  const newIndex = cue.indexOf('TUI `/new`');
+  const resumeIndex = cue.indexOf('`/resume guided-clean-run`');
+  const readIndex = cue.indexOf('Prompt: `Read the saved decision; cite its file and the constraints for the next change.`');
+  assert.ok(typeIndex >= 0 && recordIndex > typeIndex, 'C6 TYPE contains the exact bounded public-only recording prompt');
+  assert.ok(newIndex > recordIndex && resumeIndex > newIndex && readIndex > resumeIndex,
+    'C6 records the decision before starting a new session, resuming and reading it');
+}
+
+test('short monitor C6 records the public decision before resume and citation', () => {
+  assertShortTrackC6Recording(documentText('docs/short-talk-track.md'));
+});
+
+test('short monitor C6 rejects an empty or late recording prompt', () => {
+  const text = documentText('docs/short-talk-track.md');
+  const recordingBlock = text.split('## C6 |')[1].match(/```text\n[\s\S]*?\n```/)[0];
+  const readPrompt = 'Prompt: `Read the saved decision; cite its file and the constraints for the next change.`';
+  for (const [name, mutant] of [
+    ['empty TYPE prompt', text.replace(recordingBlock, '``')],
+    ['recording after resume/read', text.replace(recordingBlock, '').replace(readPrompt, `${readPrompt}\n${recordingBlock}`)]
+  ]) {
+    assert.notEqual(mutant, text, `${name} must change the actual short track`);
+    assert.throws(() => assertShortTrackC6Recording(mutant), { name: 'AssertionError' }, name);
+  }
+});
+
 function assertShortTrackLocalPaths(text) {
   const localRoot = String.raw`C:\git\squad-terraform-session-2026-10-14`;
   const section = heading => text.split(`## ${heading}`)[1]?.split('\n## ')[0] ?? '';
