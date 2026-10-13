@@ -29,11 +29,22 @@ All commands run in PowerShell 7.
   ```
 - [ ] STOP if `tflint --version` is not 0.64.0. Do not fix it during C7 (source: demo-runbook.md)
 - [ ] Terraform `>=1.14.8,<2.0`: no documented install command. Check with `terraform version` (source: README offline section)
-- [ ] Docker Desktop installed and running. Install is opt-in: `.\scripts\bootstrap-demo-vm.ps1 -InstallDocker -SkipLogin` needs WSL 2 and licence review first (source: bootstrap.md)
-- [ ] Pull the pinned MCP image (source: demo-runbook.md):
+- [ ] AzAPI provider: nothing to install by hand. Terraform must be installed (`>=1.14.8,<2.0`). The offline mirror comes from runbook block "Stage the filesystem-only mirror" (`terraform providers mirror -platform=windows_amd64`; public Registry access once, no Azure login). Result: `take-20261014\offline\providers` and `offline\terraform.tfrc` with no `direct` block (source: demo-runbook.md)
+- [ ] VM decision: no Docker Desktop on the VM (nested virtualization); the VM uses the remote Terraform MCP in the section below. Docker is for the laptop backup only (source: Haflidi). Laptop only: Docker Desktop installed and running. Install is opt-in: `.\scripts\bootstrap-demo-vm.ps1 -InstallDocker -SkipLogin` needs WSL 2 and licence review first (source: bootstrap.md)
+- [ ] Laptop only: pull the pinned MCP image (source: demo-runbook.md):
   ```powershell
   docker pull hashicorp/terraform-mcp-server:1.3.0@sha256:423a6b8e2ee06affcf090892f40c86469caba45fd2448ffa8ca5d717a174f7d5
   ```
+
+### Optional: remote Terraform MCP (local-only, never pushed)
+
+- [ ] The VM uses the Azure Container Apps endpoint (no Docker on the VM). The repo's pinned Docker image (`hashicorp/terraform-mcp-server:1.3.0@sha256:423a6b8e...`) stays the setup for the laptop backup. If the endpoint fails on the VM, there is no local fallback there: continue without the Terraform MCP (Microsoft Learn still works) or switch to the laptop (source: Haflidi; endpoint verified on the VM 2026-10-13: connected, HTTP 200 with key, 403 without)
+- [ ] What it is: an ACA app running the same pinned server image behind a Caddy sidecar that requires header `X-MCP-Key` (otherwise 403). No IP restriction, no Easy Auth, so a VM managed identity does not help. `ENABLE_TF_OPERATIONS=false`, no TFE credentials (registry lookups only) (source: Haflidi, verified 2026-10-13 on laptop)
+- [ ] Local edit only, in the VM's A, B, guided worktrees (and session repo if used): in `terraform-coder.agent.md` and `terraform-reviewer.agent.md`, replace the `terraform:` block (`type: stdio`, `command: docker`, `args`) with `type: http`, `url: https://<aca-fqdn>/mcp`, `headers:` `X-MCP-Key: "$TFMCP_KEY"`. Keep the `tools:` line and everything else. `squad.agent.md` and `terraform-validator.agent.md` need no change. Never commit or push these edits (source: Haflidi, verified 2026-10-13 on laptop)
+- [ ] Conflict: the edited worktrees show a dirty git status, which conflicts with the runbook's expected empty status. Decide with Martin. UNKNOWN: needs Martin sign-off because the profile was qualified with Docker
+- [ ] Set `TFMCP_KEY` in the VM user environment, without printing it or leaving it in shell history: `$k = Read-Host 'TFMCP_KEY' -AsSecureString`, then `[Environment]::SetEnvironmentVariable('TFMCP_KEY', [System.Net.NetworkCredential]::new('', $k).Password, 'User')`. Open a new terminal, then check with `$env:TFMCP_KEY.Length` (length only). Use User scope, not Machine. The value is stored unencrypted in the registry and ends up in the VM snapshot, so keep the snapshot private and never show the environment on screen. Never paste the value into chat or files (source: Haflidi)
+- [ ] Verify: start `copilot --agent terraform-reviewer` in that folder; `/mcp` shows `terraform` connected with the tools. Laptop: connected with key set, 403 with key cleared, so the profile edit and env expansion work (source: Haflidi, verified 2026-10-13 on laptop; VM UNKNOWN)
+- [ ] Rate limits: 10 req/s global, 5 req/s per session (source: Haflidi)
 
 ## 3. Clones
 
@@ -47,6 +58,8 @@ All commands run in PowerShell 7.
   Set-Location 'C:\demo\session-repo'
   copilot --agent squad
   ```
+- [ ] Origin guard: each VM clone's origin must match the runbook string exactly, including `.git` (`https://github.com/martinopedal/squad-terraform-session-2026-10-14.git`). If a clone lacks the suffix, run `git remote set-url origin <url>.git` before the preparation prompt. The consumer repo has the same guard (`https://github.com/martinopedal/aks-automatic-demo-env.git`, checked in the same runbook layout block, "Wrong source origin"); the session guard is also in the runbook C0/preparation block (source: demo-runbook.md)
+- [ ] Upstream module repo: do NOT pre-clone `terraform-azapi-aks-automatic` to `$HOME\demo\aks-module` (C0 clones it live, then `squad init`). Keep that path empty, with no `.squad` folder and no squad CLI there. Test GitHub reachability by cloning `martinopedal/terraform-azapi-aks-automatic` into a throwaway folder, then delete it. Optional backup copy outside the demo path (e.g. `C:\demo\backup\aks-module`) in case the network fails during C0
 - [ ] Never start Copilot from the private coordinator folder; existing checkouts are never overwritten (source: short-talk-track.md, demo-runbook.md)
 - [ ] `Set-Location C:\demo\session-repo; git status --short` is clean (source: short-talk-track.md Essentials)
 - [ ] Hosted checkout `C:\demo\hosted-target` only for optional Card A, by its operator from the approved private URL (source: demo-runbook.md). Not needed for core
@@ -137,14 +150,15 @@ All commands run in PowerShell 7.
 
 ## 8. Laptop backup
 
-- [ ] Repeat sections 2 to 6 on the laptop, same commit as the VM
+- [ ] Repeat sections 2 to 6 on the laptop, same commit as the VM (including the origin `.git` check and the upstream module rule: not pre-cloned)
+- [ ] Laptop: optional backup copy of the upstream module outside the demo path (e.g. `C:\demo\backup\aks-module`) for network failure during C0
 - [ ] Laptop likely has Squad already: use a second clean user profile or uninstall (`winget uninstall --id bradygaster.Squad`), or skip C0 and show the result. UNKNOWN which
 - [ ] `.\scripts\Test-PresenterLaptop.ps1` passes except unpublished-deck checks
 - [ ] Leakage checklist (section 7) done on the laptop too; it is a corporate device, so mind browser profile and signed-in accounts
 
 ## 9. Day-of timeline
 
-- [ ] T-60: VM reachable; Docker running; image pulled; `tflint --version` 0.64.0; clones clean; take A/B/guided and `offline` mirror exist (UNKNOWN: exact T-60 items are not in the sources)
+- [ ] T-60: VM reachable; remote Terraform MCP connected (`/mcp`, key set); laptop only: Docker running, image pulled; `tflint --version` 0.64.0; clones clean; take A/B/guided and `offline` mirror exist (UNKNOWN: exact T-60 items are not in the sources)
 - [ ] T-30: `Test-DemoVm.ps1`, then `Connect-DemoVm.ps1` (Bastion RDP); notifications off, 125% scaling, PowerShell 7 tab open, terminal zoomed (source: clean-machine-demo.md)
 - [ ] T-30: preflight `READY`, `/agent` three profiles, `/mcp` two servers
 - [ ] T-10: Copilot started from `C:\demo\session-repo` or worktree, `/cwd` confirms; no secrets in clipboard; leakage checklist reviewed. T-10 timing itself UNKNOWN
