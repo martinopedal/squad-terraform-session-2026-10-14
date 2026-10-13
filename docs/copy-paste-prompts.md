@@ -148,16 +148,18 @@ No edits/commands/implementation/Azure/deploy.
 Where: TUI, after inspecting the actual plan.
 
 ```text
-Revise only: keep C3 limited to that test file, not README or redesign.
-Unchanged assertions/offline checks first; separate labeled C5
-enablePrivateCluster mutation/restoration. Show criteria; no implementation.
+Revise only: keep the coder step limited to that test file, not README or redesign.
+Unchanged assertions/offline checks first; separate labeled later
+failure-and-repair step: enablePrivateCluster mutation/restoration.
+Show criteria; no implementation.
 ```
 
 Where: TUI, human sends the approval.
 
 ```text
-I approve repository code only: C3 may add the agreed four-assert regression
-in tests\contract.tftest.hcl. C5 may separately change then restore only
+I approve repository code only: The coder step may add the agreed four-assert
+regression in tests\contract.tftest.hcl. The later failure-and-repair step may
+separately change then restore only
 body.properties.apiServerAccessProfile.enablePrivateCluster in main.tf,
 in guided only. Preserve other source/mocks/locks. Do not implement yet.
 No Azure/deploy/install/state/upgrade/publish/blanket or automatic approval.
@@ -347,7 +349,7 @@ Where: TUI, then the reviewer in a new context, then back to Squad for human acc
 Review the supplied exact baseline/current revision and diff for
 terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl. Confirm the
 separately labeled main.tf mutation is restored to its original SHA-256.
-Use the supplied sanitized C5/C7 logs and numeric exits; if absent, stop as
+Use the supplied sanitized failure-and-repair and final-check logs and numeric exits; if absent, stop as
 blocked. Check caller/module ownership, unknown-at-plan
 values in count or for_each, lifecycle guards, test intent, and the
 private API and unchanged payload assertions. Return findings with severity, file and line,
@@ -369,7 +371,7 @@ git::https://github.com/martinopedal/terraform-azapi-aks-automatic.git?ref=v0.6.
 a dependency, not live entry
 or upstream authoring. enable_private_cluster=false; authorized_ip_ranges
 uses env-owned var.api_server_authorized_ip_ranges, not Corp's private API.
-C1-C7 edit a disposable copied Corp test fixture, not this caller/upstream.
+The demo steps edit a disposable copied Corp test fixture, not this caller/upstream.
 Then read manifests/online ingress-controller.yaml, ingress.yaml, service.yaml
 for browser→LB→NGINX→Service→pods. No commands/private values/state/Azure.
 ```

@@ -405,7 +405,7 @@ pass, fail, blocked, or not applicable. Do not edit files.
 Review the supplied exact baseline/current revision and diff for
 terraform\modules\aks-automatic-corp\tests\contract.tftest.hcl. Confirm the
 separately labeled main.tf mutation is restored to its original SHA-256.
-Use the supplied sanitized C5/C7 logs and numeric exits; if absent, stop as
+Use the supplied sanitized failure-and-repair and final-check logs and numeric exits; if absent, stop as
 blocked. Check caller/module ownership, unknown-at-plan
 values in count or for_each, lifecycle guards, test intent, and the
 private API and unchanged payload assertions. Return findings with severity, file and line,
