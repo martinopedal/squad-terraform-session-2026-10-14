@@ -1,5 +1,7 @@
 # Martin Opedal, Enterprise Cloud Solution Architect, Microsoft and Haflidi Fridthjofsson, Sr Cloud Solution Architect, Microsoft: complete delivery script
 
+**Presenter monitor: open the FINAL [short-talk-track.md](short-talk-track.md). This file is the full narration reference, not the monitor sheet.**
+
 Run order: essentials -> C0-C7 walkthrough -> deeper technical evidence -> core wrap -> optional cloud tail. Use [short-talk-track.md](short-talk-track.md) on the additional monitor and [prompt-pack.md](prompt-pack.md) for paste-ready cues. This script mirrors `docs\run-plan.md`: 00:00-03:00 intro, 03:00-55:00 planned content and live chapters, 55:00-58:00 protected slack, and 58:00-60:00 close plus "questions if time allows". There is no planned question block.
 
 ## Delivery contract

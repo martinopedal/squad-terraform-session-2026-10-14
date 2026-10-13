@@ -1,5 +1,7 @@
 # Present and maintain the deck
 
+> Presenter monitor for 2026-10-14: open the FINAL [docs/short-talk-track.md](../docs/short-talk-track.md). The deck build reads narration from `docs\talk-track.md`, which is a reference, not the monitor sheet.
+
 Haflidi's original hosted Squad implementation is completed/previously
 demonstrated; leave source/deployment alone. Owned MIT fork/target/publisher
 source accepted/merged is not live E2E or a native Sandbox prerequisite.

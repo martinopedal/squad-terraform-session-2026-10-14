@@ -1,5 +1,7 @@
 # Run C0-C7 live in the real CLI
 
+> **Monitor sheet for the live session: open the FINAL [short-talk-track.md](short-talk-track.md).** This runbook is the supporting checks/recovery reference.
+
 Audience: both presenters and the approved operator. Purpose: run the bounded
 live chapters and two separate product demo flows without implying that
 the Windows VM, AKS, hosted Jobs and native MicroVMs are the same runtime.

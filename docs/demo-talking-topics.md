@@ -1,6 +1,6 @@
 # Demo cue sheet: C0-C7 and the consumer reveal
 
-Glance sheet for use DURING the live demo. Source of truth: [talk-track.md](talk-track.md). Cross-checked with [demo-runbook.md](demo-runbook.md) and [talking-points.md](talking-points.md). If they differ, the track wins.
+Glance sheet for use DURING the live demo. **Supplementary only; the monitor sheet is the FINAL [short-talk-track.md](short-talk-track.md), which wins on any difference.** Source of truth for narration: [talk-track.md](talk-track.md). Cross-checked with [demo-runbook.md](demo-runbook.md) and [talking-points.md](talking-points.md). If they differ, the track wins.
 
 **Clock:** C0-C7 = 29 min. Content ends 55:00. Slack 55:00-58:00 (recovery only). Close 58:00.
 **Checkpoints:** C0 done 08:30. C2 done 21:30. C5 done 38:30. s20 starts 50:00.
