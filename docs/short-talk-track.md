@@ -1,6 +1,6 @@
 # Short talk track - prompt-first monitor
 
-> **FINAL short talk track for 2026-10-14 - last updated 2026-10-14 07:36 CEST. Evidence is pinned to immutable run IDs and SHAs in the [evidence table](#evidence-links); run `git pull` on `main` and check `git log -1 docs/short-talk-track.md` for the newest edit.**
+> **FINAL short talk track for 2026-10-14 - last updated 2026-10-14 07:51 CEST. Evidence is pinned to immutable run IDs and SHAs in the [evidence table](#evidence-links); run `git pull` on `main` and check `git log -1 docs/short-talk-track.md` for the newest edit.**
 > This is the **one** file to open on the presenter monitor tomorrow. Everything else
 > ([prompt-pack](prompt-pack.md), [full talk track](talk-track.md), [runbook](demo-runbook.md),
 > [cue sheet](demo-talking-topics.md), [talking points](talking-points.md)) is supporting
@@ -530,6 +530,8 @@ Host Squad: read C:\demo\operator-targets.json privately. Expected native bindin
 ```text
 Host Squad: read C:\demo\operator-targets.json privately, never print it. Require exact native.subscription/resourceGroup/group/region and native.sandboxId, else STOP. Delete exactly that ID with `aca sandbox delete --id <native.sandboxId> --yes` (bind --subscription, --resource-group, --group, --region), verify the group list is empty and get returns 404, then clear native.sandboxId and set native.go=false. No other deletes.
 ```
+
+**Rehearsal status (2026-10-14, honest):** the aca steps are proven by CLI/Actions ([run 38479216856](https://github.com/martinopedal/aks-automatic-demo-env/actions/runs/38479216856)), not by a completed child-Copilot run. Child `-p` sessions loaded Squad and the aca-sandboxes skill and created one guest, but `aca sandbox fs write` was denied (non-interactive permission matching), so that guest was deleted by exact ID. An interactive PTY child then stopped at "static system messages and tool definitions exceed the model's usable context budget" before any aca call. When pasting live, approve only the displayed exact `aca sandbox fs write` for the new guest and `/root/native-validation.sh`; deny anything else.
 
 **If it fails (exact fallback):** do not retry or create another guest. Say it is optional, open the green runtime [run 38479216856](https://github.com/martinopedal/aks-automatic-demo-env/actions/runs/38479216856) (OIDC create, fixture, 403 audit, exact-ID delete) from [Evidence links](#evidence-links), say it is the recorded proof, and move on or skip.
 [Full native operations and audit](demo-runbook.md#card-b-native-aca-sandboxes-for-host-copilot-cli-and-squad).
