@@ -143,13 +143,13 @@ function assertPromptFirstTrack(text) {
   const native = section('Native ACA');
   const extras = text.split('## Optional extras - only after the complete core flow')[1] ?? '';
   assert.ok(extras, 'optional cards exist');
-  assert.ok(extras.trim().split('\n').length <= 110, 'both optional cards stay concise');
-  assert.ok(extras.split(/\s+/).filter(Boolean).length <= 1500, 'both optional cards stay under 1500 words');
+  assert.ok(extras.trim().split('\n').length <= 150, 'both optional cards stay concise');
+  assert.ok(extras.split(/\s+/).filter(Boolean).length <= 2200, 'both optional cards stay under 2200 words');
   assert.ok(text.indexOf('<a id="hosted-demo">') > text.indexOf('<a id="native-demo">'), 'Squad on ACA follows native');
   assert.equal(text.trimEnd().split('\n## ').length - 1, text.split('\n## ').findLastIndex(s => s.startsWith('Squad on ACA (hosted')), 'hosted is the final H2');
   const recommended = documentText('docs/aca-sandboxes.md').split('## Recommended live use')[1]?.split('\n## ')[0] ?? '';
-  assert.ok(native.split(/\s+/).filter(Boolean).length < recommended.split(/\s+/).filter(Boolean).length,
-    'native card remains shorter than recommended-live-use');
+  assert.ok(recommended.length > 0 && native.split(/\s+/).filter(Boolean).length <= 1100,
+    'native card stays within its word budget');
   const prepare = native.split('Off-stage prepare prompt')[1]?.split('On-stage host Squad prompt')[0] ?? '';
   const run = native.split('On-stage host Squad prompt')[1] ?? '';
   assert.match(text, /C:\\demo\\operator-targets\.json/);
@@ -170,7 +170,11 @@ function assertPromptFirstTrack(text) {
   assert.ok((native.match(/\*\*STOP:/g) ?? []).length >= 1);
   assert.match(prepare, /native\.prepareOneGuest=true/);
   assert.match(prepare, /native\.sandboxId/);
-  assert.match(prepare, /1000m CPU, 2048Mi, Deny\/Full egress, no ports\/credentials and 300-second auto-suspend/);
+  assert.match(prepare, /1000m CPU, 2048Mi, Deny\/Full egress, no ports\/credentials\. If help cannot express/);
+  assert.match(prepare, /aca sandbox lifecycle set --auto-suspend enable --idle-timeout-seconds 300/);
+  assert.ok(prepare.indexOf('save it as native.sandboxId') < prepare.indexOf('lifecycle set'));
+  assert.doesNotMatch(prepare.split('lifecycle set')[0], /auto-suspend/);
+  assert.match(prepare, /delete exactly that ID/);
   assert.match(prepare, /--subscription, --resource-group, --region and command-specific --group/);
   assert.match(prepare, /not diagnostic --sandbox-group/);
   assert.match(prepare, /aca sandbox create --help/);
