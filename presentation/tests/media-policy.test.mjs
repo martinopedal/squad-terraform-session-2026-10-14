@@ -202,7 +202,7 @@ function assertPromptFirstTrack(text) {
       /enable_private_cluster=false/, /api_server_authorized_ip_ranges/, /dependency/, /copied Corp/])
       assert.match(source, pattern, path);
   }
-  for (const link of text.matchAll(/\]\(([^)]+\.md)(#[^)]+)?\)/g)) {
+  for (const link of text.matchAll(/\]\(((?!https?:)[^)]+\.md)(#[^)]+)?\)/g)) {
     const target = documentText(`docs/${link[1]}`);
     if (!link[2] || target.includes(`<a id="${link[2].slice(1)}"`)) continue;
     const slug = value => value.toLowerCase().replace(/[^\p{L}\p{N}_ -]/gu, '').replaceAll(' ', '-');
