@@ -1322,7 +1322,7 @@ const hostedFlowSurfaces = [
 ];
 const hostedFlowStages = [
   /^One (?:existing )?approved(?: README)? issue$/i,
-  /^private scheduled poller$/,
+  /^(?:private scheduled poller|Actions OIDC enqueue workflow)$/,
   /^existing queue$/,
   /^genuine Squad UID10001 worker$/,
   /^trusted (?:README )?App-bot PR(?:\/diff)?$/
